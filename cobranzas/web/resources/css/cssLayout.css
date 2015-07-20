@@ -14,6 +14,14 @@
     margin: 10px 0px 0px 0px;
 }
 
+#footer {
+    position: relative;
+    background-color: #404e5b;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+    color: #ffffff;
+}
+
 #left {
     float: left;
     background-color: #ece3a5;
