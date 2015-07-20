@@ -6,10 +6,12 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/bootstrap.css"/>
-        <h:outputStylesheet name="./css/bootstrap.min.css"/>
+        
+        <h:outputScript name="./js/jquery-2.1.4.min.js"/>
+        <h:outputScript name="./js/bootstrap.js"/>
         <title>Sistema de Cobranza</title>
     </h:head>
 
@@ -17,37 +19,47 @@
 
         <div id="top">
             <ui:insert name="top">
-                <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active">
-                <a href="#" target="admin"><strong>Principal</strong></a>
-              </li>
-              <li class="active">
-                <a href="#" target="admin"><strong>Usuario/Personal</strong></a>
-              </li>
-              <li class="active">
-                <a href="#" target="admin"><strong>Equipo/Area</strong></a>
-              </li>
-              <li class="active">
-                <a href="#" target="admin"><strong>Reportes</strong></a>
-              </li>
-              
-              <li class="active">
-                <a href="#" target="admin"><strong>Etiquetar</strong></a>
-              </li>
-            </ul>
-          </div>
-        </div>
+            <a class="navbar-brand" href="faces/principal.xhtml">Cobranza</a>
+        </div>        
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            <li class="active"><a href="faces/inicio.xhtml">Inicio</a></li>
+            <li><a href="#about">Mantenimiento</a></li>
+            <li><a href="#contact">Roles</a></li>
+            <li><a href="#contact">Registro</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporte <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+           <ul class="nav pull-right">
+            <li class="dropdown">
+              <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><strong>Hola!</strong> <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" target="admin">Cambiar Contraseña</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-off"></i> Salir</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.navbar-collapse -->
       </div>
-    </div>
+    </nav>
             </ui:insert>
         </div>
 

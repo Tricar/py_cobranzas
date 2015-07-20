@@ -2,9 +2,9 @@
 #top {
     position: relative;
     background-color: #036fab;
-    color: white;
     padding: 5px;
     margin: 0px 0px 10px 0px;
+    margin-top: 50px;
 }
 
 #bottom {
@@ -55,7 +55,6 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
   font-weight : bold;
   text-decoration: none;
 }
