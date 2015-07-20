@@ -2,9 +2,9 @@
 #top {
     position: relative;
     background-color: #036fab;
-    color: white;
     padding: 5px;
     margin: 0px 0px 10px 0px;
+    margin-top: 50px;
 }
 
 #bottom {
@@ -12,6 +12,14 @@
     background-color: #c2dfef;
     padding: 5px;
     margin: 10px 0px 0px 0px;
+}
+
+#footer {
+    position: relative;
+    background-color: #404e5b;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+    color: #ffffff;
 }
 
 #left {
@@ -47,7 +55,6 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
   font-weight : bold;
   text-decoration: none;
 }

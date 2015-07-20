@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/bootstrap.css"/>
+        
+        <h:outputScript name="./js/jquery-2.1.4.min.js"/>
+        <h:outputScript name="./js/bootstrap.js"/>
+        <title>Sistema de Cobranza</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top">
+                <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <a class="navbar-brand" href="faces/principal.xhtml">Cobranza</a>
+        </div>        
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            <li class="active"><a href="faces/inicio.xhtml">Inicio</a></li>
+            <li><a href="#about">Mantenimiento</a></li>
+            <li><a href="#contact">Roles</a></li>
+            <li><a href="#contact">Registro</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporte <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+           <ul class="nav pull-right">
+            <li class="dropdown">
+              <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><strong>Hola!</strong> <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" target="admin">Cambiar Contraseña</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><i class="icon-off"></i> Salir</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Contenido</ui:insert>
+        </div>
+
+        <div id="footer">
+            <ui:insert name="footer">Footer</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>
