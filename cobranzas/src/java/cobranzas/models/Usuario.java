@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entityDB;
+package cobranzas.models;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -124,7 +124,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entityDB.Usuario[ idusuario=" + idusuario + " ]";
+        return "cobranzas.models.Usuario[ idusuario=" + idusuario + " ]";
     }
     
 }

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entityDB;
+package cobranzas.models;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,42 +29,42 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Sistemas2
  */
 @Entity
-@Table(name = "tipo_vehiculo")
+@Table(name = "tipo_anexo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoVehiculo.findAll", query = "SELECT t FROM TipoVehiculo t"),
-    @NamedQuery(name = "TipoVehiculo.findByIdtipovehiculo", query = "SELECT t FROM TipoVehiculo t WHERE t.idtipovehiculo = :idtipovehiculo"),
-    @NamedQuery(name = "TipoVehiculo.findByNombre", query = "SELECT t FROM TipoVehiculo t WHERE t.nombre = :nombre"),
-    @NamedQuery(name = "TipoVehiculo.findByFechareg", query = "SELECT t FROM TipoVehiculo t WHERE t.fechareg = :fechareg")})
-public class TipoVehiculo implements Serializable {
+    @NamedQuery(name = "TipoAnexo.findAll", query = "SELECT t FROM TipoAnexo t"),
+    @NamedQuery(name = "TipoAnexo.findByIdtipoanexo", query = "SELECT t FROM TipoAnexo t WHERE t.idtipoanexo = :idtipoanexo"),
+    @NamedQuery(name = "TipoAnexo.findByNombre", query = "SELECT t FROM TipoAnexo t WHERE t.nombre = :nombre"),
+    @NamedQuery(name = "TipoAnexo.findByFechareg", query = "SELECT t FROM TipoAnexo t WHERE t.fechareg = :fechareg")})
+public class TipoAnexo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idtipovehiculo")
-    private Integer idtipovehiculo;
+    @Column(name = "idtipoanexo")
+    private Integer idtipoanexo;
     @Size(max = 30)
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "fechareg")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechareg;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipovehiculo")
-    private Collection<Vehiculo> vehiculoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipoanexo")
+    private List<Anexo> anexoList;
 
-    public TipoVehiculo() {
+    public TipoAnexo() {
     }
 
-    public TipoVehiculo(Integer idtipovehiculo) {
-        this.idtipovehiculo = idtipovehiculo;
+    public TipoAnexo(Integer idtipoanexo) {
+        this.idtipoanexo = idtipoanexo;
     }
 
-    public Integer getIdtipovehiculo() {
-        return idtipovehiculo;
+    public Integer getIdtipoanexo() {
+        return idtipoanexo;
     }
 
-    public void setIdtipovehiculo(Integer idtipovehiculo) {
-        this.idtipovehiculo = idtipovehiculo;
+    public void setIdtipoanexo(Integer idtipoanexo) {
+        this.idtipoanexo = idtipoanexo;
     }
 
     public String getNombre() {
@@ -84,29 +84,29 @@ public class TipoVehiculo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Vehiculo> getVehiculoCollection() {
-        return vehiculoCollection;
+    public List<Anexo> getAnexoList() {
+        return anexoList;
     }
 
-    public void setVehiculoCollection(Collection<Vehiculo> vehiculoCollection) {
-        this.vehiculoCollection = vehiculoCollection;
+    public void setAnexoList(List<Anexo> anexoList) {
+        this.anexoList = anexoList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idtipovehiculo != null ? idtipovehiculo.hashCode() : 0);
+        hash += (idtipoanexo != null ? idtipoanexo.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipoVehiculo)) {
+        if (!(object instanceof TipoAnexo)) {
             return false;
         }
-        TipoVehiculo other = (TipoVehiculo) object;
-        if ((this.idtipovehiculo == null && other.idtipovehiculo != null) || (this.idtipovehiculo != null && !this.idtipovehiculo.equals(other.idtipovehiculo))) {
+        TipoAnexo other = (TipoAnexo) object;
+        if ((this.idtipoanexo == null && other.idtipoanexo != null) || (this.idtipoanexo != null && !this.idtipoanexo.equals(other.idtipoanexo))) {
             return false;
         }
         return true;
@@ -114,7 +114,7 @@ public class TipoVehiculo implements Serializable {
 
     @Override
     public String toString() {
-        return "entityDB.TipoVehiculo[ idtipovehiculo=" + idtipovehiculo + " ]";
+        return "cobranzas.models.TipoAnexo[ idtipoanexo=" + idtipoanexo + " ]";
     }
     
 }

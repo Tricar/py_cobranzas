@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entityDB;
+package cobranzas.models;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -96,12 +96,12 @@ public class Anexo implements Serializable {
     @Column(name = "email")
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anexo")
-    private Collection<Venta> ventaCollection;
+    private List<Venta> ventaList;
     @JoinColumn(name = "idtipoanexo", referencedColumnName = "idtipoanexo")
     @ManyToOne(optional = false)
     private TipoAnexo idtipoanexo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idanexo")
-    private Collection<Usuario> usuarioCollection;
+    private List<Usuario> usuarioList;
 
     public Anexo() {
     }
@@ -223,12 +223,12 @@ public class Anexo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Venta> getVentaCollection() {
-        return ventaCollection;
+    public List<Venta> getVentaList() {
+        return ventaList;
     }
 
-    public void setVentaCollection(Collection<Venta> ventaCollection) {
-        this.ventaCollection = ventaCollection;
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
     }
 
     public TipoAnexo getIdtipoanexo() {
@@ -240,12 +240,12 @@ public class Anexo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override
@@ -270,7 +270,7 @@ public class Anexo implements Serializable {
 
     @Override
     public String toString() {
-        return "entityDB.Anexo[ idanexo=" + idanexo + " ]";
+        return "cobranzas.models.Anexo[ idanexo=" + idanexo + " ]";
     }
     
 }

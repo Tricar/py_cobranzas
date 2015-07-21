@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entityDB;
+package cobranzas.models;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -47,7 +47,7 @@ public class CondicionPago implements Serializable {
     @Column(name = "fechareg")
     private String fechareg;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcondicionpago")
-    private Collection<Pago> pagoCollection;
+    private List<Pago> pagoList;
 
     public CondicionPago() {
     }
@@ -81,12 +81,12 @@ public class CondicionPago implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Pago> getPagoCollection() {
-        return pagoCollection;
+    public List<Pago> getPagoList() {
+        return pagoList;
     }
 
-    public void setPagoCollection(Collection<Pago> pagoCollection) {
-        this.pagoCollection = pagoCollection;
+    public void setPagoList(List<Pago> pagoList) {
+        this.pagoList = pagoList;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class CondicionPago implements Serializable {
 
     @Override
     public String toString() {
-        return "entityDB.CondicionPago[ idcondicionpago=" + idcondicionpago + " ]";
+        return "cobranzas.models.CondicionPago[ idcondicionpago=" + idcondicionpago + " ]";
     }
     
 }
