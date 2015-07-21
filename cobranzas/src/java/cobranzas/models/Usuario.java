@@ -42,7 +42,7 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "idusuario")
     private Integer idusuario;
-    @Size(max = 20)
+    @Size(min=1,max = 20, message="Debe ingresar el Usuario")
     @Column(name = "usuario")
     private String usuario;
     @Size(max = 20)
