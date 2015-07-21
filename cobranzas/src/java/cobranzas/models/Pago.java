@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entityDB;
+package cobranzas.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -61,7 +61,7 @@ public class Pago implements Serializable {
     @Column(name = "igv")
     private String igv;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pago")
-    private Collection<Venta> ventaCollection;
+    private List<Venta> ventaList;
     @JoinColumn(name = "idcondicionpago", referencedColumnName = "idcondicionpago")
     @ManyToOne(optional = false)
     private CondicionPago idcondicionpago;
@@ -114,12 +114,12 @@ public class Pago implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Venta> getVentaCollection() {
-        return ventaCollection;
+    public List<Venta> getVentaList() {
+        return ventaList;
     }
 
-    public void setVentaCollection(Collection<Venta> ventaCollection) {
-        this.ventaCollection = ventaCollection;
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
     }
 
     public CondicionPago getIdcondicionpago() {
@@ -152,7 +152,7 @@ public class Pago implements Serializable {
 
     @Override
     public String toString() {
-        return "entityDB.Pago[ idpago=" + idpago + " ]";
+        return "cobranzas.models.Pago[ idpago=" + idpago + " ]";
     }
     
 }

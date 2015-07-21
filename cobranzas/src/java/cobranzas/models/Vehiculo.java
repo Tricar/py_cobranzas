@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entityDB;
+package cobranzas.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -79,7 +79,7 @@ public class Vehiculo implements Serializable {
     @Column(name = "precio")
     private BigDecimal precio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehiculo")
-    private Collection<Venta> ventaCollection;
+    private List<Venta> ventaList;
     @JoinColumn(name = "idtipovehiculo", referencedColumnName = "idtipovehiculo")
     @ManyToOne(optional = false)
     private TipoVehiculo idtipovehiculo;
@@ -172,12 +172,12 @@ public class Vehiculo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Venta> getVentaCollection() {
-        return ventaCollection;
+    public List<Venta> getVentaList() {
+        return ventaList;
     }
 
-    public void setVentaCollection(Collection<Venta> ventaCollection) {
-        this.ventaCollection = ventaCollection;
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
     }
 
     public TipoVehiculo getIdtipovehiculo() {
@@ -210,7 +210,7 @@ public class Vehiculo implements Serializable {
 
     @Override
     public String toString() {
-        return "entityDB.Vehiculo[ idvehiculo=" + idvehiculo + " ]";
+        return "cobranzas.models.Vehiculo[ idvehiculo=" + idvehiculo + " ]";
     }
     
 }

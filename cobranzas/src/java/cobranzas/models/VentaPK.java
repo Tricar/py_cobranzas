@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entityDB;
+package cobranzas.models;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -127,7 +127,7 @@ public class VentaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "entityDB.VentaPK[ idanexo=" + idanexo + ", idvehiculo=" + idvehiculo + ", idempresa=" + idempresa + ", idventa=" + idventa + ", idpago=" + idpago + " ]";
+        return "cobranzas.models.VentaPK[ idanexo=" + idanexo + ", idvehiculo=" + idvehiculo + ", idempresa=" + idempresa + ", idventa=" + idventa + ", idpago=" + idpago + " ]";
     }
     
 }

@@ -6,12 +6,12 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./css/cssLayout.css"/>
-        <h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/bootstrap.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
         
-        <h:outputScript name="./js/jquery-2.1.4.min.js"/>
-        <h:outputScript name="./js/bootstrap.js"/>
+        <h:outputScript library="js" name="jquery-2.1.4.min.js"/>
+        <h:outputScript library="js" name="bootstrap.js"/>
         <title>Sistema de Cobranza</title>
     </h:head>
 
@@ -28,25 +28,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-            <a class="navbar-brand" href="faces/principal.xhtml">Cobranza</a>
-        </div>        
+            <h:form><h:commandLink class="navbar-brand" action="#{homeController.index()}"><h:graphicImage library="images" name="logo.png"/></h:commandLink></h:form>
+        </div>
+        <h:form>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-            <li class="active"><a href="faces/inicio.xhtml">Inicio</a></li>
-            <li><a href="#about">Mantenimiento</a></li>
-            <li><a href="#contact">Roles</a></li>
-            <li><a href="#contact">Registro</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporte <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
+            <ul class="nav navbar-nav">                
+                <li><h:commandLink action="#{homeController.inicio()}">Inicio</h:commandLink></li>
+                <li><h:commandLink action="#{homeController.acercaDe()}">Mantenimiento</h:commandLink></li>
+                <li><h:commandLink action="#{homeController.index()}">Roles</h:commandLink></li>
+                <li><h:commandLink action="#{homeController.acercaDe()}">Registro</h:commandLink></li>
           </ul>
            <ul class="nav pull-right">
             <li class="dropdown">
@@ -58,6 +48,7 @@
             </li>
           </ul>
         </div><!--/.navbar-collapse -->
+        </h:form>
       </div>
     </nav>
             </ui:insert>
@@ -68,7 +59,9 @@
         </div>
 
         <div id="footer">
-            <ui:insert name="footer">Footer</ui:insert>
+            <ui:insert name="footer">
+                <h:outputText value="#{homeController.infoDelPie()}"/>
+            </ui:insert>
         </div>
 
     </h:body>
