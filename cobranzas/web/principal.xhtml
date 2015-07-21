@@ -6,12 +6,13 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./css/cssLayout.css"/>
-        <h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/bootstrap.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputLink 
         
-        <h:outputScript name="./js/jquery-2.1.4.min.js"/>
-        <h:outputScript name="./js/bootstrap.js"/>
+        <h:outputScript library="js" name="jquery-2.1.4.min.js"/>
+        <h:outputScript library="js" name="bootstrap.js"/>
         <title>Sistema de Cobranza</title>
     </h:head>
 
@@ -68,7 +69,9 @@
         </div>
 
         <div id="footer">
-            <ui:insert name="footer">Footer</ui:insert>
+            <ui:insert name="footer">
+                <div class="info-danger">Copyring@TRICAR.com.pe - 2015</div>
+            </ui:insert>
         </div>
 
     </h:body>
