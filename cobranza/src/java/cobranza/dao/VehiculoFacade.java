@@ -5,7 +5,7 @@
  */
 package cobranza.dao;
 
-import cobranza.models.Menu;
+import cobranza.models.Vehiculo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Sistemas2
  */
 @Stateless
-public class MenuDAO extends AbstractDAO<Menu> {
+public class VehiculoFacade extends AbstractDAO<Vehiculo> {
     @PersistenceContext(unitName = "cobranzaPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class MenuDAO extends AbstractDAO<Menu> {
         return em;
     }
 
-    public MenuDAO() {
-        super(Menu.class);
+    public VehiculoFacade() {
+        super(Vehiculo.class);
     }
     
 }

@@ -5,7 +5,7 @@
  */
 package cobranza.dao;
 
-import cobranza.models.Pago;
+import cobranza.models.CondicionPago;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Sistemas2
  */
 @Stateless
-public class PagoDAO extends AbstractDAO<Pago> {
+public class CondicionPagoFacade extends AbstractDAO<CondicionPago> {
     @PersistenceContext(unitName = "cobranzaPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class PagoDAO extends AbstractDAO<Pago> {
         return em;
     }
 
-    public PagoDAO() {
-        super(Pago.class);
+    public CondicionPagoFacade() {
+        super(CondicionPago.class);
     }
     
 }

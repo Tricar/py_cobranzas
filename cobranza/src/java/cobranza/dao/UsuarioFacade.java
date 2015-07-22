@@ -9,14 +9,13 @@ import cobranza.models.Usuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author Sistemas2
  */
 @Stateless
-public class UsuarioDAO extends AbstractDAO<Usuario> {
+public class UsuarioFacade extends AbstractDAO<Usuario> {
     @PersistenceContext(unitName = "cobranzaPU")
     private EntityManager em;
 
@@ -25,19 +24,8 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
         return em;
     }
 
-    public UsuarioDAO() {
+    public UsuarioFacade() {
         super(Usuario.class);
-    }
-    
-    public Usuario getLogin(String usuario, String clave){
-        try {
-            Query query = em.createNamedQuery("Usuario.findLogin");
-            query.setParameter("usuario", usuario);
-            query.setParameter("clave", clave);
-            return (Usuario)query.getSingleResult();
-        } catch (Exception e) {
-            return null;
-        }
     }
     
 }

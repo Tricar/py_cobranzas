@@ -6,16 +6,18 @@
 package cobranza.models;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -28,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MenuTipoanexo.findAll", query = "SELECT m FROM MenuTipoanexo m"),
-    @NamedQuery(name = "MenuTipoanexo.findByIdmenutipo", query = "SELECT m FROM MenuTipoanexo m WHERE m.idmenutipo = :idmenutipo")})
+    @NamedQuery(name = "MenuTipoanexo.findByIdmenutipo", query = "SELECT m FROM MenuTipoanexo m WHERE m.idmenutipo = :idmenutipo"),
+    @NamedQuery(name = "MenuTipoanexo.findByFechareg", query = "SELECT m FROM MenuTipoanexo m WHERE m.fechareg = :fechareg")})
 public class MenuTipoanexo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,19 +39,15 @@ public class MenuTipoanexo implements Serializable {
     @NotNull
     @Column(name = "idmenutipo")
     private Integer idmenutipo;
-    @Lob
     @Column(name = "fechareg")
-    private byte[] fechareg;
-    @NotNull(message="Debe Seleccionar un Tipo Menu")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechareg;
     @JoinColumn(name = "idmenu", referencedColumnName = "idmenu")
     @ManyToOne(optional = false)
     private Menu idmenu;
-    @NotNull(message="Debe Seleccionar un Tipo Anexo")
     @JoinColumn(name = "idtipoanexo", referencedColumnName = "idtipoanexo")
     @ManyToOne(optional = false)
     private TipoAnexo idtipoanexo;
-    
-    //------------- constructores --------------
 
     public MenuTipoanexo() {
     }
@@ -56,8 +55,6 @@ public class MenuTipoanexo implements Serializable {
     public MenuTipoanexo(Integer idmenutipo) {
         this.idmenutipo = idmenutipo;
     }
-    
-    //------------ getters y setters
 
     public Integer getIdmenutipo() {
         return idmenutipo;
@@ -67,11 +64,11 @@ public class MenuTipoanexo implements Serializable {
         this.idmenutipo = idmenutipo;
     }
 
-    public byte[] getFechareg() {
+    public Date getFechareg() {
         return fechareg;
     }
 
-    public void setFechareg(byte[] fechareg) {
+    public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
 
@@ -90,8 +87,6 @@ public class MenuTipoanexo implements Serializable {
     public void setIdtipoanexo(TipoAnexo idtipoanexo) {
         this.idtipoanexo = idtipoanexo;
     }
-    
-    //------------- metodos de la clases --------------
 
     @Override
     public int hashCode() {
@@ -115,7 +110,7 @@ public class MenuTipoanexo implements Serializable {
 
     @Override
     public String toString() {
-        return idtipoanexo.getNombre() +" - " + idmenu.getNombre();
+        return "cobranza.models.MenuTipoanexo[ idmenutipo=" + idmenutipo + " ]";
     }
     
 }

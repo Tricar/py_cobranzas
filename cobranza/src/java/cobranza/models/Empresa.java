@@ -6,17 +6,19 @@
 package cobranza.models;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empresa.findByDireccion", query = "SELECT e FROM Empresa e WHERE e.direccion = :direccion"),
     @NamedQuery(name = "Empresa.findByTelefono", query = "SELECT e FROM Empresa e WHERE e.telefono = :telefono"),
     @NamedQuery(name = "Empresa.findByCelular", query = "SELECT e FROM Empresa e WHERE e.celular = :celular"),
-    @NamedQuery(name = "Empresa.findByCiudad", query = "SELECT e FROM Empresa e WHERE e.ciudad = :ciudad")})
+    @NamedQuery(name = "Empresa.findByCiudad", query = "SELECT e FROM Empresa e WHERE e.ciudad = :ciudad"),
+    @NamedQuery(name = "Empresa.findByFechareg", query = "SELECT e FROM Empresa e WHERE e.fechareg = :fechareg")})
 public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,11 +62,11 @@ public class Empresa implements Serializable {
     @Size(max = 20)
     @Column(name = "ciudad")
     private String ciudad;
-    @Lob
     @Column(name = "fechareg")
-    private byte[] fechareg;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechareg;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresa")
-    private List<Venta> ventaList;
+    private Collection<Venta> ventaCollection;
 
     public Empresa() {
     }
@@ -120,21 +123,21 @@ public class Empresa implements Serializable {
         this.ciudad = ciudad;
     }
 
-    public byte[] getFechareg() {
+    public Date getFechareg() {
         return fechareg;
     }
 
-    public void setFechareg(byte[] fechareg) {
+    public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
 
     @XmlTransient
-    public List<Venta> getVentaList() {
-        return ventaList;
+    public Collection<Venta> getVentaCollection() {
+        return ventaCollection;
     }
 
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
+    public void setVentaCollection(Collection<Venta> ventaCollection) {
+        this.ventaCollection = ventaCollection;
     }
 
     @Override

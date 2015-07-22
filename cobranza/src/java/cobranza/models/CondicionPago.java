@@ -6,17 +6,19 @@
 package cobranza.models;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "CondicionPago.findAll", query = "SELECT c FROM CondicionPago c"),
     @NamedQuery(name = "CondicionPago.findByIdcondicionpago", query = "SELECT c FROM CondicionPago c WHERE c.idcondicionpago = :idcondicionpago"),
-    @NamedQuery(name = "CondicionPago.findByNombre", query = "SELECT c FROM CondicionPago c WHERE c.nombre = :nombre")})
+    @NamedQuery(name = "CondicionPago.findByNombre", query = "SELECT c FROM CondicionPago c WHERE c.nombre = :nombre"),
+    @NamedQuery(name = "CondicionPago.findByFechareg", query = "SELECT c FROM CondicionPago c WHERE c.fechareg = :fechareg")})
 public class CondicionPago implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,11 +46,11 @@ public class CondicionPago implements Serializable {
     @Size(max = 30)
     @Column(name = "nombre")
     private String nombre;
-    @Lob
     @Column(name = "fechareg")
-    private byte[] fechareg;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechareg;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcondicionpago")
-    private List<Pago> pagoList;
+    private Collection<Pago> pagoCollection;
 
     public CondicionPago() {
     }
@@ -72,21 +75,21 @@ public class CondicionPago implements Serializable {
         this.nombre = nombre;
     }
 
-    public byte[] getFechareg() {
+    public Date getFechareg() {
         return fechareg;
     }
 
-    public void setFechareg(byte[] fechareg) {
+    public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
 
     @XmlTransient
-    public List<Pago> getPagoList() {
-        return pagoList;
+    public Collection<Pago> getPagoCollection() {
+        return pagoCollection;
     }
 
-    public void setPagoList(List<Pago> pagoList) {
-        this.pagoList = pagoList;
+    public void setPagoCollection(Collection<Pago> pagoCollection) {
+        this.pagoCollection = pagoCollection;
     }
 
     @Override

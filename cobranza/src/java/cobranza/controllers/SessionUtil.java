@@ -19,14 +19,14 @@ import javax.servlet.http.HttpSession;
 public class SessionUtil {
 
     // Se crean las variables de sesion.
-    public static void addSession(Integer userId, String userNombre, Integer tipo, Integer Anexo, String userTipo) {
+    public static void addSession(Integer userId, String userNombre, Integer anexoID, Integer tipoId, String userTipo) {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession sesion = (HttpSession)context.getExternalContext().getSession(true);
 
         sesion.setAttribute("userLog", userId);
         sesion.setAttribute("userNombre", userNombre);
-        sesion.setAttribute("userAnexoId", Anexo);
-        sesion.setAttribute("userTipoId", tipo);
+        sesion.setAttribute("userAnexoId", anexoID);
+        sesion.setAttribute("userTipoId", tipoId);
         sesion.setAttribute("userTipo", userTipo);
     }
 
@@ -56,16 +56,16 @@ public class SessionUtil {
     public static Integer getIdUserAnexoLog() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession sesion = (HttpSession)context.getExternalContext().getSession(false);
-        Integer tipo = (Integer)sesion.getAttribute("userAnexoId");
-        return tipo;
+        Integer anexo = (Integer)sesion.getAttribute("userAnexoId");
+        return anexo;
     }
 
     // Recupera el tipo de usuario del usuario logueado (el nombre).
-    public static String getIdUserTipoLog() {
+    public static Integer getIdUserTipoLog() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession sesion = (HttpSession)context.getExternalContext().getSession(false);
-        String tipo = (String)sesion.getAttribute("userTipoId");
-        return tipo;
+        Integer tipoid = (Integer)sesion.getAttribute("userTipoId");
+        return tipoid;
     }
     
     public static String getUserTipoLog() {

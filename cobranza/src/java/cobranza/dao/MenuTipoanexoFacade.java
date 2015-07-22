@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Sistemas2
  */
 @Stateless
-public class MenuTipoanexoDAO extends AbstractDAO<MenuTipoanexo> {
+public class MenuTipoanexoFacade extends AbstractDAO<MenuTipoanexo> {
     @PersistenceContext(unitName = "cobranzaPU")
     private EntityManager em;
 
@@ -24,7 +24,7 @@ public class MenuTipoanexoDAO extends AbstractDAO<MenuTipoanexo> {
         return em;
     }
 
-    public MenuTipoanexoDAO() {
+    public MenuTipoanexoFacade() {
         super(MenuTipoanexo.class);
     }
     

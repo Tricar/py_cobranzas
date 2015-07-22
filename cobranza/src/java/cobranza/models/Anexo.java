@@ -6,15 +6,14 @@
 package cobranza.models;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,7 +22,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -46,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Anexo.findByCelular", query = "SELECT a FROM Anexo a WHERE a.celular = :celular"),
     @NamedQuery(name = "Anexo.findByEdad", query = "SELECT a FROM Anexo a WHERE a.edad = :edad"),
     @NamedQuery(name = "Anexo.findByFechanac", query = "SELECT a FROM Anexo a WHERE a.fechanac = :fechanac"),
+    @NamedQuery(name = "Anexo.findByFechareg", query = "SELECT a FROM Anexo a WHERE a.fechareg = :fechareg"),
     @NamedQuery(name = "Anexo.findBySexo", query = "SELECT a FROM Anexo a WHERE a.sexo = :sexo"),
     @NamedQuery(name = "Anexo.findByApepat", query = "SELECT a FROM Anexo a WHERE a.apepat = :apepat"),
     @NamedQuery(name = "Anexo.findByApemat", query = "SELECT a FROM Anexo a WHERE a.apemat = :apemat"),
@@ -57,22 +56,22 @@ public class Anexo implements Serializable {
     @NotNull
     @Column(name = "idanexo")
     private Integer idanexo;
-    @Size(min=1, max = 30, message="Debe ingresar el Nombre")
+    @Size(max = 30)
     @Column(name = "nombre")
     private String nombre;
-    @Size(max = 8, message="Debe ingresar el DNI")
+    @Size(max = 8)
     @Column(name = "dni")
     private String dni;
-    @Size(max = 11, message="Debe ingresar el RUC")
+    @Size(max = 11)
     @Column(name = "ruc")
     private String ruc;
-    @Size(min=10, max = 50, message="Debe ingresar el Direccion")
+    @Size(max = 50)
     @Column(name = "direccion")
     private String direccion;
-    @Size(max = 9, message="Debe ingresar el Telefono")
+    @Size(max = 9)
     @Column(name = "telefono")
     private String telefono;
-    @Size(max = 9, message="Debe ingresar el Celular")
+    @Size(max = 9)
     @Column(name = "celular")
     private String celular;
     @Column(name = "edad")
@@ -80,29 +79,29 @@ public class Anexo implements Serializable {
     @Column(name = "fechanac")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechanac;
-    @Lob
     @Column(name = "fechareg")
-    private byte[] fechareg;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechareg;
     @Size(max = 20)
     @Column(name = "sexo")
     private String sexo;
-    @Size(min=1, max = 30, message="Debe ingresar Apellido Paterno")
+    @Size(max = 30)
     @Column(name = "apepat")
     private String apepat;
-    @Size(min=1, max = 30, message="Debe ingresar Apellido Materno")
+    @Size(max = 30)
     @Column(name = "apemat")
     private String apemat;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 20, message="Debe ingresar el Email")
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 20)
     @Column(name = "email")
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anexo")
-    private List<Venta> ventaList;
+    private Collection<Venta> ventaCollection;
     @JoinColumn(name = "idtipoanexo", referencedColumnName = "idtipoanexo")
     @ManyToOne(optional = false)
     private TipoAnexo idtipoanexo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idanexo")
-    private List<Usuario> usuarioList;
+    private Collection<Usuario> usuarioCollection;
 
     public Anexo() {
     }
@@ -183,11 +182,11 @@ public class Anexo implements Serializable {
         this.fechanac = fechanac;
     }
 
-    public byte[] getFechareg() {
+    public Date getFechareg() {
         return fechareg;
     }
 
-    public void setFechareg(byte[] fechareg) {
+    public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
 
@@ -224,12 +223,12 @@ public class Anexo implements Serializable {
     }
 
     @XmlTransient
-    public List<Venta> getVentaList() {
-        return ventaList;
+    public Collection<Venta> getVentaCollection() {
+        return ventaCollection;
     }
 
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
+    public void setVentaCollection(Collection<Venta> ventaCollection) {
+        this.ventaCollection = ventaCollection;
     }
 
     public TipoAnexo getIdtipoanexo() {
@@ -241,12 +240,12 @@ public class Anexo implements Serializable {
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
     }
 
     @Override
@@ -271,7 +270,7 @@ public class Anexo implements Serializable {
 
     @Override
     public String toString() {
-        return nombre + "(" + idanexo + ")";
+        return "cobranza.models.Anexo[ idanexo=" + idanexo + " ]";
     }
     
 }

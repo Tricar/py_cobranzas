@@ -5,7 +5,7 @@
  */
 package cobranza.dao;
 
-import cobranza.models.Empresa;
+import cobranza.models.Anexo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Sistemas2
  */
 @Stateless
-public class EmpresaDAO extends AbstractDAO<Empresa> {
+public class AnexoFacade extends AbstractDAO<Anexo> {
     @PersistenceContext(unitName = "cobranzaPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class EmpresaDAO extends AbstractDAO<Empresa> {
         return em;
     }
 
-    public EmpresaDAO() {
-        super(Empresa.class);
+    public AnexoFacade() {
+        super(Anexo.class);
     }
     
 }

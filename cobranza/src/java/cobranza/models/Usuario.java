@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
     @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario"),
-    @NamedQuery(name = "Usuario.findLogin", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario and u.clave = :clave"),
     @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -40,10 +39,10 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "idusuario")
     private Integer idusuario;
-    @Size(min=6, max = 20, message="Debe Ingresar Usuario")
+    @Size(max = 20)
     @Column(name = "usuario")
     private String usuario;
-    @Size(min=6, max = 20, message="Debe Ingresar Clave")
+    @Size(max = 20)
     @Column(name = "clave")
     private String clave;
     @Lob
@@ -122,7 +121,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return usuario + "(" + idusuario + ")";
+        return "cobranza.models.Usuario[ idusuario=" + idusuario + " ]";
     }
     
 }

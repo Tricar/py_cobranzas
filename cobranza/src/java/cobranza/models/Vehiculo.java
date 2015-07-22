@@ -7,19 +7,21 @@ package cobranza.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Vehiculo.findBySerie", query = "SELECT v FROM Vehiculo v WHERE v.serie = :serie"),
     @NamedQuery(name = "Vehiculo.findByColor", query = "SELECT v FROM Vehiculo v WHERE v.color = :color"),
     @NamedQuery(name = "Vehiculo.findByAnofabri", query = "SELECT v FROM Vehiculo v WHERE v.anofabri = :anofabri"),
+    @NamedQuery(name = "Vehiculo.findByFechareg", query = "SELECT v FROM Vehiculo v WHERE v.fechareg = :fechareg"),
     @NamedQuery(name = "Vehiculo.findByMotor", query = "SELECT v FROM Vehiculo v WHERE v.motor = :motor"),
     @NamedQuery(name = "Vehiculo.findByStock", query = "SELECT v FROM Vehiculo v WHERE v.stock = :stock"),
     @NamedQuery(name = "Vehiculo.findByPrecio", query = "SELECT v FROM Vehiculo v WHERE v.precio = :precio")})
@@ -64,9 +67,9 @@ public class Vehiculo implements Serializable {
     private String color;
     @Column(name = "anofabri")
     private Integer anofabri;
-    @Lob
     @Column(name = "fechareg")
-    private byte[] fechareg;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechareg;
     @Size(max = 20)
     @Column(name = "motor")
     private String motor;
@@ -76,7 +79,7 @@ public class Vehiculo implements Serializable {
     @Column(name = "precio")
     private BigDecimal precio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vehiculo")
-    private List<Venta> ventaList;
+    private Collection<Venta> ventaCollection;
     @JoinColumn(name = "idtipovehiculo", referencedColumnName = "idtipovehiculo")
     @ManyToOne(optional = false)
     private TipoVehiculo idtipovehiculo;
@@ -136,11 +139,11 @@ public class Vehiculo implements Serializable {
         this.anofabri = anofabri;
     }
 
-    public byte[] getFechareg() {
+    public Date getFechareg() {
         return fechareg;
     }
 
-    public void setFechareg(byte[] fechareg) {
+    public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
 
@@ -169,12 +172,12 @@ public class Vehiculo implements Serializable {
     }
 
     @XmlTransient
-    public List<Venta> getVentaList() {
-        return ventaList;
+    public Collection<Venta> getVentaCollection() {
+        return ventaCollection;
     }
 
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
+    public void setVentaCollection(Collection<Venta> ventaCollection) {
+        this.ventaCollection = ventaCollection;
     }
 
     public TipoVehiculo getIdtipovehiculo() {

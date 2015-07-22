@@ -6,17 +6,19 @@
 package cobranza.models;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "TipoVehiculo.findAll", query = "SELECT t FROM TipoVehiculo t"),
     @NamedQuery(name = "TipoVehiculo.findByIdtipovehiculo", query = "SELECT t FROM TipoVehiculo t WHERE t.idtipovehiculo = :idtipovehiculo"),
-    @NamedQuery(name = "TipoVehiculo.findByNombre", query = "SELECT t FROM TipoVehiculo t WHERE t.nombre = :nombre")})
+    @NamedQuery(name = "TipoVehiculo.findByNombre", query = "SELECT t FROM TipoVehiculo t WHERE t.nombre = :nombre"),
+    @NamedQuery(name = "TipoVehiculo.findByFechareg", query = "SELECT t FROM TipoVehiculo t WHERE t.fechareg = :fechareg")})
 public class TipoVehiculo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,11 +46,11 @@ public class TipoVehiculo implements Serializable {
     @Size(max = 30)
     @Column(name = "nombre")
     private String nombre;
-    @Lob
     @Column(name = "fechareg")
-    private byte[] fechareg;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechareg;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipovehiculo")
-    private List<Vehiculo> vehiculoList;
+    private Collection<Vehiculo> vehiculoCollection;
 
     public TipoVehiculo() {
     }
@@ -72,21 +75,21 @@ public class TipoVehiculo implements Serializable {
         this.nombre = nombre;
     }
 
-    public byte[] getFechareg() {
+    public Date getFechareg() {
         return fechareg;
     }
 
-    public void setFechareg(byte[] fechareg) {
+    public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
 
     @XmlTransient
-    public List<Vehiculo> getVehiculoList() {
-        return vehiculoList;
+    public Collection<Vehiculo> getVehiculoCollection() {
+        return vehiculoCollection;
     }
 
-    public void setVehiculoList(List<Vehiculo> vehiculoList) {
-        this.vehiculoList = vehiculoList;
+    public void setVehiculoCollection(Collection<Vehiculo> vehiculoCollection) {
+        this.vehiculoCollection = vehiculoCollection;
     }
 
     @Override

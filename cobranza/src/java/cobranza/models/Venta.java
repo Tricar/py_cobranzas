@@ -6,6 +6,7 @@
 package cobranza.models;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,6 +37,8 @@ public class Venta implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected VentaPK ventaPK;
+    @Basic(optional = false)
+    @NotNull
     @Lob
     @Column(name = "fechareg")
     private byte[] fechareg;
@@ -56,6 +60,11 @@ public class Venta implements Serializable {
 
     public Venta(VentaPK ventaPK) {
         this.ventaPK = ventaPK;
+    }
+
+    public Venta(VentaPK ventaPK, byte[] fechareg) {
+        this.ventaPK = ventaPK;
+        this.fechareg = fechareg;
     }
 
     public Venta(int idanexo, int idvehiculo, int idempresa, int idventa, int idpago) {

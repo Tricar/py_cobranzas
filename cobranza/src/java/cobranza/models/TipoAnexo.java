@@ -6,17 +6,19 @@
 package cobranza.models;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "TipoAnexo.findAll", query = "SELECT t FROM TipoAnexo t"),
     @NamedQuery(name = "TipoAnexo.findByIdtipoanexo", query = "SELECT t FROM TipoAnexo t WHERE t.idtipoanexo = :idtipoanexo"),
-    @NamedQuery(name = "TipoAnexo.findByNombre", query = "SELECT t FROM TipoAnexo t WHERE t.nombre = :nombre")})
+    @NamedQuery(name = "TipoAnexo.findByNombre", query = "SELECT t FROM TipoAnexo t WHERE t.nombre = :nombre"),
+    @NamedQuery(name = "TipoAnexo.findByFechareg", query = "SELECT t FROM TipoAnexo t WHERE t.fechareg = :fechareg")})
 public class TipoAnexo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,16 +43,16 @@ public class TipoAnexo implements Serializable {
     @NotNull
     @Column(name = "idtipoanexo")
     private Integer idtipoanexo;
-    @Size(min=1, max = 30, message="Debe ingresar el Nombre")
+    @Size(max = 30)
     @Column(name = "nombre")
     private String nombre;
-    @Lob
     @Column(name = "fechareg")
-    private byte[] fechareg;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechareg;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipoanexo")
-    private List<MenuTipoanexo> menuTipoanexoList;
+    private Collection<MenuTipoanexo> menuTipoanexoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idtipoanexo")
-    private List<Anexo> anexoList;
+    private Collection<Anexo> anexoCollection;
 
     public TipoAnexo() {
     }
@@ -74,30 +77,30 @@ public class TipoAnexo implements Serializable {
         this.nombre = nombre;
     }
 
-    public byte[] getFechareg() {
+    public Date getFechareg() {
         return fechareg;
     }
 
-    public void setFechareg(byte[] fechareg) {
+    public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
 
     @XmlTransient
-    public List<MenuTipoanexo> getMenuTipoanexoList() {
-        return menuTipoanexoList;
+    public Collection<MenuTipoanexo> getMenuTipoanexoCollection() {
+        return menuTipoanexoCollection;
     }
 
-    public void setMenuTipoanexoList(List<MenuTipoanexo> menuTipoanexoList) {
-        this.menuTipoanexoList = menuTipoanexoList;
+    public void setMenuTipoanexoCollection(Collection<MenuTipoanexo> menuTipoanexoCollection) {
+        this.menuTipoanexoCollection = menuTipoanexoCollection;
     }
 
     @XmlTransient
-    public List<Anexo> getAnexoList() {
-        return anexoList;
+    public Collection<Anexo> getAnexoCollection() {
+        return anexoCollection;
     }
 
-    public void setAnexoList(List<Anexo> anexoList) {
-        this.anexoList = anexoList;
+    public void setAnexoCollection(Collection<Anexo> anexoCollection) {
+        this.anexoCollection = anexoCollection;
     }
 
     @Override
@@ -122,7 +125,7 @@ public class TipoAnexo implements Serializable {
 
     @Override
     public String toString() {
-        return nombre + "(" + idtipoanexo + ")";
+        return "cobranza.models.TipoAnexo[ idtipoanexo=" + idtipoanexo + " ]";
     }
     
 }

@@ -6,17 +6,19 @@
 package cobranza.models;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,9 +33,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM Menu m"),
-    @NamedQuery(name = "Menu.findAllOrderMenu", query = "SELECT m FROM Menu m order by m.raiz, m.orden"),
     @NamedQuery(name = "Menu.findByIdmenu", query = "SELECT m FROM Menu m WHERE m.idmenu = :idmenu"),
     @NamedQuery(name = "Menu.findByNombre", query = "SELECT m FROM Menu m WHERE m.nombre = :nombre"),
+    @NamedQuery(name = "Menu.findByFechareg", query = "SELECT m FROM Menu m WHERE m.fechareg = :fechareg"),
     @NamedQuery(name = "Menu.findByImagen", query = "SELECT m FROM Menu m WHERE m.imagen = :imagen"),
     @NamedQuery(name = "Menu.findByUrl", query = "SELECT m FROM Menu m WHERE m.url = :url"),
     @NamedQuery(name = "Menu.findByAction", query = "SELECT m FROM Menu m WHERE m.action = :action"),
@@ -46,12 +48,12 @@ public class Menu implements Serializable {
     @NotNull
     @Column(name = "idmenu")
     private Integer idmenu;
-    @Size(min=1, max = 50, message="Debe ingresar nombre")
+    @Size(max = 50)
     @Column(name = "nombre")
     private String nombre;
-    @Lob
     @Column(name = "fechareg")
-    private byte[] fechareg;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechareg;
     @Size(max = 100)
     @Column(name = "imagen")
     private String imagen;
@@ -62,13 +64,11 @@ public class Menu implements Serializable {
     @Column(name = "action")
     private String action;
     @Column(name = "raiz")
-    @NotNull(message="Debe ingresar Raiz")
     private Integer raiz;
     @Column(name = "orden")
-    @NotNull(message="Debe ingresar Orden")
     private Integer orden;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmenu")
-    private List<MenuTipoanexo> menuTipoanexoList;
+    private Collection<MenuTipoanexo> menuTipoanexoCollection;
 
     public Menu() {
     }
@@ -93,11 +93,11 @@ public class Menu implements Serializable {
         this.nombre = nombre;
     }
 
-    public byte[] getFechareg() {
+    public Date getFechareg() {
         return fechareg;
     }
 
-    public void setFechareg(byte[] fechareg) {
+    public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
 
@@ -142,12 +142,12 @@ public class Menu implements Serializable {
     }
 
     @XmlTransient
-    public List<MenuTipoanexo> getMenuTipoanexoList() {
-        return menuTipoanexoList;
+    public Collection<MenuTipoanexo> getMenuTipoanexoCollection() {
+        return menuTipoanexoCollection;
     }
 
-    public void setMenuTipoanexoList(List<MenuTipoanexo> menuTipoanexoList) {
-        this.menuTipoanexoList = menuTipoanexoList;
+    public void setMenuTipoanexoCollection(Collection<MenuTipoanexo> menuTipoanexoCollection) {
+        this.menuTipoanexoCollection = menuTipoanexoCollection;
     }
 
     @Override
@@ -172,7 +172,7 @@ public class Menu implements Serializable {
 
     @Override
     public String toString() {
-        return nombre + "(" + idmenu + ")";
+        return "cobranza.models.Menu[ idmenu=" + idmenu + " ]";
     }
     
 }

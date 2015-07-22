@@ -7,8 +7,8 @@ package cobranza.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -61,7 +61,7 @@ public class Pago implements Serializable {
     @Column(name = "igv")
     private String igv;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pago")
-    private List<Venta> ventaList;
+    private Collection<Venta> ventaCollection;
     @JoinColumn(name = "idcondicionpago", referencedColumnName = "idcondicionpago")
     @ManyToOne(optional = false)
     private CondicionPago idcondicionpago;
@@ -114,12 +114,12 @@ public class Pago implements Serializable {
     }
 
     @XmlTransient
-    public List<Venta> getVentaList() {
-        return ventaList;
+    public Collection<Venta> getVentaCollection() {
+        return ventaCollection;
     }
 
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
+    public void setVentaCollection(Collection<Venta> ventaCollection) {
+        this.ventaCollection = ventaCollection;
     }
 
     public CondicionPago getIdcondicionpago() {

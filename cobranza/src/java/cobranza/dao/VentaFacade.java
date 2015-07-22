@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Sistemas2
  */
 @Stateless
-public class VentaDAO extends AbstractDAO<Venta> {
+public class VentaFacade extends AbstractDAO<Venta> {
     @PersistenceContext(unitName = "cobranzaPU")
     private EntityManager em;
 
@@ -24,7 +24,7 @@ public class VentaDAO extends AbstractDAO<Venta> {
         return em;
     }
 
-    public VentaDAO() {
+    public VentaFacade() {
         super(Venta.class);
     }
     
