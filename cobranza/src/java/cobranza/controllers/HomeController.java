@@ -28,12 +28,20 @@ public class HomeController {
         return "/index";
     }
     
-    public String inicio(){
-        return "/index";
+    public String menu(){
+        return "/menu";
     }
     
-    public String acercaDe(){
-        return "/acerca_de";
+    public String usuario(){
+        return "/usuario";
+    }
+    
+    public String empresa(){
+        return "/empresa";
+    }
+    
+    public String vehiculo(){
+        return "/vehiculo";
     }
     
     public String infoDelPie(){

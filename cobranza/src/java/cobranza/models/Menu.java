@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM Menu m"),
+    @NamedQuery(name = "Menu.findAllOrderMenu", query = "SELECT m FROM Menu m order by m.raiz, m.orden"),
     @NamedQuery(name = "Menu.findByIdmenu", query = "SELECT m FROM Menu m WHERE m.idmenu = :idmenu"),
     @NamedQuery(name = "Menu.findByNombre", query = "SELECT m FROM Menu m WHERE m.nombre = :nombre"),
     @NamedQuery(name = "Menu.findByImagen", query = "SELECT m FROM Menu m WHERE m.imagen = :imagen"),
@@ -45,7 +46,7 @@ public class Menu implements Serializable {
     @NotNull
     @Column(name = "idmenu")
     private Integer idmenu;
-    @Size(max = 50)
+    @Size(min=1, max = 50, message="Debe ingresar nombre")
     @Column(name = "nombre")
     private String nombre;
     @Lob
@@ -61,8 +62,10 @@ public class Menu implements Serializable {
     @Column(name = "action")
     private String action;
     @Column(name = "raiz")
+    @NotNull(message="Debe ingresar Raiz")
     private Integer raiz;
     @Column(name = "orden")
+    @NotNull(message="Debe ingresar Orden")
     private Integer orden;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idmenu")
     private List<MenuTipoanexo> menuTipoanexoList;
@@ -169,7 +172,7 @@ public class Menu implements Serializable {
 
     @Override
     public String toString() {
-        return "cobranza.models.Menu[ idmenu=" + idmenu + " ]";
+        return nombre + "(" + idmenu + ")";
     }
     
 }

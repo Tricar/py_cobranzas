@@ -39,12 +39,16 @@ public class MenuTipoanexo implements Serializable {
     @Lob
     @Column(name = "fechareg")
     private byte[] fechareg;
+    @NotNull(message="Debe Seleccionar un Tipo Menu")
     @JoinColumn(name = "idmenu", referencedColumnName = "idmenu")
     @ManyToOne(optional = false)
     private Menu idmenu;
+    @NotNull(message="Debe Seleccionar un Tipo Anexo")
     @JoinColumn(name = "idtipoanexo", referencedColumnName = "idtipoanexo")
     @ManyToOne(optional = false)
     private TipoAnexo idtipoanexo;
+    
+    //------------- constructores --------------
 
     public MenuTipoanexo() {
     }
@@ -52,6 +56,8 @@ public class MenuTipoanexo implements Serializable {
     public MenuTipoanexo(Integer idmenutipo) {
         this.idmenutipo = idmenutipo;
     }
+    
+    //------------ getters y setters
 
     public Integer getIdmenutipo() {
         return idmenutipo;
@@ -84,6 +90,8 @@ public class MenuTipoanexo implements Serializable {
     public void setIdtipoanexo(TipoAnexo idtipoanexo) {
         this.idtipoanexo = idtipoanexo;
     }
+    
+    //------------- metodos de la clases --------------
 
     @Override
     public int hashCode() {
@@ -107,7 +115,7 @@ public class MenuTipoanexo implements Serializable {
 
     @Override
     public String toString() {
-        return "cobranza.models.MenuTipoanexo[ idmenutipo=" + idmenutipo + " ]";
+        return idtipoanexo.getNombre() +" - " + idmenu.getNombre();
     }
     
 }
