@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -56,22 +57,22 @@ public class Anexo implements Serializable {
     @NotNull
     @Column(name = "idanexo")
     private Integer idanexo;
-    @Size(max = 30)
+    @Size(min=1, max = 30, message="Debe ingresar el Nombre")
     @Column(name = "nombre")
     private String nombre;
-    @Size(max = 8)
+    @Size(max = 8, message="Debe ingresar el DNI")
     @Column(name = "dni")
     private String dni;
-    @Size(max = 11)
+    @Size(max = 11, message="Debe ingresar el RUC")
     @Column(name = "ruc")
     private String ruc;
-    @Size(max = 50)
+    @Size(min=10, max = 50, message="Debe ingresar el Direccion")
     @Column(name = "direccion")
     private String direccion;
-    @Size(max = 9)
+    @Size(max = 9, message="Debe ingresar el Telefono")
     @Column(name = "telefono")
     private String telefono;
-    @Size(max = 9)
+    @Size(max = 9, message="Debe ingresar el Celular")
     @Column(name = "celular")
     private String celular;
     @Column(name = "edad")
@@ -85,14 +86,14 @@ public class Anexo implements Serializable {
     @Size(max = 20)
     @Column(name = "sexo")
     private String sexo;
-    @Size(max = 30)
+    @Size(min=1, max = 30, message="Debe ingresar Apellido Paterno")
     @Column(name = "apepat")
     private String apepat;
-    @Size(max = 30)
+    @Size(min=1, max = 30, message="Debe ingresar Apellido Materno")
     @Column(name = "apemat")
     private String apemat;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 20)
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 20, message="Debe ingresar el Email")
     @Column(name = "email")
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anexo")
@@ -270,7 +271,7 @@ public class Anexo implements Serializable {
 
     @Override
     public String toString() {
-        return "cobranza.models.Anexo[ idanexo=" + idanexo + " ]";
+        return nombre + "(" + idanexo + ")";
     }
     
 }

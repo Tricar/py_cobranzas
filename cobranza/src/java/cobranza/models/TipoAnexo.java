@@ -40,7 +40,7 @@ public class TipoAnexo implements Serializable {
     @NotNull
     @Column(name = "idtipoanexo")
     private Integer idtipoanexo;
-    @Size(max = 30)
+    @Size(min=1, max = 30, message="Debe ingresar el Nombre")
     @Column(name = "nombre")
     private String nombre;
     @Lob
@@ -122,7 +122,7 @@ public class TipoAnexo implements Serializable {
 
     @Override
     public String toString() {
-        return "cobranza.models.TipoAnexo[ idtipoanexo=" + idtipoanexo + " ]";
+        return nombre + "(" + idtipoanexo + ")";
     }
     
 }
