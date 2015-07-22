@@ -5,7 +5,7 @@
  */
 package cobranza.dao;
 
-import cobranza.models.Vehiculo;
+import cobranza.models.Venta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Sistemas2
  */
 @Stateless
-public class VehiculoFacade extends AbstractFacade<Vehiculo> {
+public class VentaDAO extends AbstractDAO<Venta> {
     @PersistenceContext(unitName = "cobranzaPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class VehiculoFacade extends AbstractFacade<Vehiculo> {
         return em;
     }
 
-    public VehiculoFacade() {
-        super(Vehiculo.class);
+    public VentaDAO() {
+        super(Venta.class);
     }
     
 }

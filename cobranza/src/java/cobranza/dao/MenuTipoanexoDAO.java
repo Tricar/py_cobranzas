@@ -5,7 +5,7 @@
  */
 package cobranza.dao;
 
-import cobranza.models.Usuario;
+import cobranza.models.MenuTipoanexo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Sistemas2
  */
 @Stateless
-public class UsuarioFacade extends AbstractFacade<Usuario> {
+public class MenuTipoanexoDAO extends AbstractDAO<MenuTipoanexo> {
     @PersistenceContext(unitName = "cobranzaPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         return em;
     }
 
-    public UsuarioFacade() {
-        super(Usuario.class);
+    public MenuTipoanexoDAO() {
+        super(MenuTipoanexo.class);
     }
     
 }

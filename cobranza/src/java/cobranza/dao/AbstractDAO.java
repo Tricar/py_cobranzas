@@ -12,10 +12,10 @@ import javax.persistence.EntityManager;
  *
  * @author Sistemas2
  */
-public abstract class AbstractFacade<T> {
+public abstract class AbstractDAO<T> {
     private Class<T> entityClass;
 
-    public AbstractFacade(Class<T> entityClass) {
+    public AbstractDAO(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
