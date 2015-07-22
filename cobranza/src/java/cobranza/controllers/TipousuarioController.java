@@ -5,7 +5,6 @@
  */
 package cobranza.controllers;
 
-import cobranza.models.TipoAnexo;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
