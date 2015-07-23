@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2015 09:19:55 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cobranza.entidad.MenuTipoanexo" table="menu_tipoanexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idmenutipo" type="int">
+            <column name="idmenutipo" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="menu" class="cobranza.entidad.Menu" fetch="select">
+            <column name="idmenu" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoAnexo" class="cobranza.entidad.TipoAnexo" fetch="select">
+            <column name="idtipoanexo" not-null="true" />
+        </many-to-one>
+        <property name="fechareg" type="timestamp">
+            <column name="fechareg" length="23" />
+        </property>
+    </class>
+</hibernate-mapping>

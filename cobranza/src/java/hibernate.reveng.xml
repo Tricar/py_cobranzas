@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="cobranzas" match-schema="dbo"/>
+  <table-filter match-name="vehiculo"/>
+  <table-filter match-name="tipo_anexo"/>
+  <table-filter match-name="condicion_pago"/>
+  <table-filter match-name="pago"/>
+  <table-filter match-name="anexo"/>
+  <table-filter match-name="tipo_vehiculo"/>
+  <table-filter match-name="venta"/>
+  <table-filter match-name="usuario"/>
+  <table-filter match-name="menu"/>
+  <table-filter match-name="empresa"/>
+  <table-filter match-name="menu_tipoanexo"/>
+</hibernate-reverse-engineering>

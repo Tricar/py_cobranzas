@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2015 09:19:55 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cobranza.entidad.Vehiculo" table="vehiculo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idvehiculo" type="int">
+            <column name="idvehiculo" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tipoVehiculo" class="cobranza.entidad.TipoVehiculo" fetch="select">
+            <column name="idtipovehiculo" not-null="true" />
+        </many-to-one>
+        <property name="marca" type="string">
+            <column name="marca" length="20" />
+        </property>
+        <property name="modelo" type="string">
+            <column name="modelo" length="20" />
+        </property>
+        <property name="serie" type="string">
+            <column name="serie" length="20" />
+        </property>
+        <property name="color" type="string">
+            <column name="color" length="20" />
+        </property>
+        <property name="anofabri" type="java.lang.Integer">
+            <column name="anofabri" />
+        </property>
+        <property name="fechareg" type="timestamp">
+            <column name="fechareg" length="23" />
+        </property>
+        <property name="motor" type="string">
+            <column name="motor" length="20" />
+        </property>
+        <property name="stock" type="java.lang.Integer">
+            <column name="stock" />
+        </property>
+        <property name="precio" type="big_decimal">
+            <column name="precio" precision="17" scale="4" />
+        </property>
+        <set name="ventas" table="venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idvehiculo" not-null="true" />
+            </key>
+            <one-to-many class="cobranza.entidad.Venta" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -5,8 +5,6 @@
  */
 package cobranza.controllers;
 
-import cobranza.dao.TipoAnexoDAO;
-import cobranza.models.TipoAnexo;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -20,18 +18,12 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class TipousuarioController {
 
-    @EJB
-    TipoAnexoDAO dao = new TipoAnexoDAO();
     
     public TipousuarioController() {
     }
     
     public String index(){
         return "/tipousuario/index";
-    }
-    
-    public List<TipoAnexo> listado(){
-        return dao.findAll();
     }
         
 }
