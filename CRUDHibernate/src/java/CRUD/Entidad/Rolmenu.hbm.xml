@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="CRUD.Entidad.Rolmenu" table="rolmenu" catalog="cobranzas" optimistic-lock="version">
+        <id name="idRolmenu" type="java.lang.Integer">
+            <column name="idRolmenu" />
+            <generator class="identity" />
+        </id>
+        <property name="rolIdRol" type="int">
+            <column name="Rol_idRol" not-null="true" />
+        </property>
+        <property name="menuIdMenu" type="int">
+            <column name="Menu_idMenu" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
