@@ -1,5 +1,5 @@
 package Dao;
-import Model.TipoAnexo;
+import Model.Tipoanexo;
 import java.util.List;
 
 /**
@@ -7,8 +7,8 @@ import java.util.List;
  * @author Dajoh
  */
 public interface TipoAnexoDao {
-    public List<TipoAnexo> mostrarTipoAnexo();
-    public void insertarTipoAnexo(TipoAnexo tipoanexo);
-    public void modificarTipoAnexo (TipoAnexo tipoanexo);
-    public void eliminarTipoAnexo (TipoAnexo tipoanexo);
+    public List<Tipoanexo> mostrarTipoAnexo();
+    public void insertarTipoAnexo(Tipoanexo tipoanexo);
+    public void modificarTipoAnexo (Tipoanexo tipoanexo);
+    public void eliminarTipoAnexo (Tipoanexo tipoanexo);
 }

@@ -7,7 +7,7 @@ package Bean;
 
 import Dao.TipoAnexoDao;
 import Dao.TipoAnexoDaoImplements;
-import Model.TipoAnexo;
+import Model.Tipoanexo;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -20,22 +20,22 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class tipoAnexoBean {
     
-    public TipoAnexo tipoanexo = new TipoAnexo();
-    public List<TipoAnexo> tipoanexos;
+    public Tipoanexo tipoanexo = new Tipoanexo();
+    public List<Tipoanexo> tipoanexos;
 
-    public TipoAnexo getTipoanexo() {
+    public Tipoanexo getTipoanexo() {
         return tipoanexo;
     }
 
-    public void setTipoanexo(TipoAnexo tipoanexo) {
+    public void setTipoanexo(Tipoanexo tipoanexo) {
         this.tipoanexo = tipoanexo;
     }
 
-    public List<TipoAnexo> getTipoanexos() {
+    public List<Tipoanexo> getTipoanexos() {
         return tipoanexos;
     }
 
-    public void setTipoanexos(List<TipoAnexo> tipoanexos) {
+    public void setTipoanexos(List<Tipoanexo> tipoanexos) {
         this.tipoanexos = tipoanexos;
     }
     /**
@@ -47,18 +47,18 @@ public class tipoAnexoBean {
     public void insertar (){
         TipoAnexoDao linkDao = new TipoAnexoDaoImplements();
         linkDao.insertarTipoAnexo(tipoanexo);
-        tipoanexo = new TipoAnexo();
+        tipoanexo = new Tipoanexo();
     }
     
     public void modificar(){
         TipoAnexoDao linkDao = new TipoAnexoDaoImplements();
         linkDao.modificarTipoAnexo(tipoanexo);
-        tipoanexo = new TipoAnexo();
+        tipoanexo = new Tipoanexo();
     }
     
     public void eliminar(){
         TipoAnexoDao linkDao = new TipoAnexoDaoImplements();
         linkDao.eliminarTipoAnexo(tipoanexo);
-        tipoanexo = new TipoAnexo();
+        tipoanexo = new Tipoanexo();
     }
 }

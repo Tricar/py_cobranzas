@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24/07/2015 09:15:21 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 24/07/2015 05:48:55 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Anexo" table="anexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idanexo" type="int">
             <column name="idanexo" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="tipoAnexo" class="Model.TipoAnexo" fetch="select">
+        <many-to-one name="tipoanexo" class="Model.Tipoanexo" fetch="select">
             <column name="idtipoanexo" not-null="true" />
         </many-to-one>
         <property name="nombre" type="string">

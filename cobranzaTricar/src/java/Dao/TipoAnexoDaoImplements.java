@@ -1,6 +1,6 @@
 package Dao;
 
-import Model.TipoAnexo;
+import Model.Tipoanexo;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -14,13 +14,13 @@ import org.hibernate.Session;
 public class TipoAnexoDaoImplements implements TipoAnexoDao{
 
     @Override
-    public List<TipoAnexo> mostrarTipoAnexo() {
+    public List<Tipoanexo> mostrarTipoAnexo() {
         Session session = null;
-        List<TipoAnexo> lista = null;
+        List<Tipoanexo> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from TipoAnexo");
-            lista = (List<TipoAnexo>)query.list();
+            Query query = session.createQuery("from Tipoanexo");
+            lista = (List<Tipoanexo>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }
@@ -33,7 +33,7 @@ public class TipoAnexoDaoImplements implements TipoAnexoDao{
     }
 
     @Override
-    public void insertarTipoAnexo(TipoAnexo tipoanexo) {
+    public void insertarTipoAnexo(Tipoanexo tipoanexo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -52,7 +52,7 @@ public class TipoAnexoDaoImplements implements TipoAnexoDao{
     }
 
     @Override
-    public void modificarTipoAnexo(TipoAnexo tipoanexo) {
+    public void modificarTipoAnexo(Tipoanexo tipoanexo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -71,7 +71,7 @@ public class TipoAnexoDaoImplements implements TipoAnexoDao{
     }
 
     @Override
-    public void eliminarTipoAnexo(TipoAnexo tipoanexo) {
+    public void eliminarTipoAnexo(Tipoanexo tipoanexo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
