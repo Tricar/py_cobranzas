@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Dajoh
  */
-public interface tipoUsuarioDao {
+public interface TipoAnexoDao {
     public List<TipoAnexo> mostrarTipoAnexo();
     public void insertarTipoAnexo(TipoAnexo tipoanexo);
     public void modificarTipoAnexo (TipoAnexo tipoanexo);
