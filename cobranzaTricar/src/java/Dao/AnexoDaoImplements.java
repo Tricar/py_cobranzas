@@ -11,7 +11,7 @@ import org.hibernate.Session;
  *
  * @author Dajoh
  */
-public class AnexoDaoImplements implements AbstractDao{
+public class AnexoDaoImplements implements AnexoDao{
 
     @Override
     public List<Anexo> mostrarAnexo() {

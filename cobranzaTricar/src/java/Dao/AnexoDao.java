@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author Dajoh
  */
-public interface AbstractDao {
+public interface AnexoDao {
     
     public List<Anexo> mostrarAnexo();
     public void insertarAnexo(Anexo anexo);
