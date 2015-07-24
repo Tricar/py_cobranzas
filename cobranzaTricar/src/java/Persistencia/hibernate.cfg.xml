@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+    <property name="hibernate.connection.url">jdbc:sqlserver://servertricar:1433;databaseName=cobranzas</property>
+    <property name="hibernate.connection.username">sa</property>
+    <property name="hibernate.connection.password">tricar2012</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="Model/TipoAnexo.hbm.xml"/>
+    <mapping resource="Model/TipoVehiculo.hbm.xml"/>
+    <mapping resource="Model/Empresa.hbm.xml"/>
+    <mapping resource="Model/Pago.hbm.xml"/>
+    <mapping resource="Model/Vehiculo.hbm.xml"/>
+    <mapping resource="Model/Venta.hbm.xml"/>
+    <mapping resource="Model/Menu.hbm.xml"/>
+    <mapping resource="Model/CondicionPago.hbm.xml"/>
+    <mapping resource="Model/MenuTipoanexo.hbm.xml"/>
+    <mapping resource="Model/Anexo.hbm.xml"/>
+    <mapping resource="Model/Usuario.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

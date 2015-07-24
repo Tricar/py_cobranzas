@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/07/2015 09:15:21 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Venta" table="venta" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <composite-id name="id" class="Model.VentaId">
+            <key-property name="idanexo" type="int">
+                <column name="idanexo" />
+            </key-property>
+            <key-property name="idvehiculo" type="int">
+                <column name="idvehiculo" />
+            </key-property>
+            <key-property name="idempresa" type="int">
+                <column name="idempresa" />
+            </key-property>
+            <key-property name="idventa" type="int">
+                <column name="idventa" />
+            </key-property>
+            <key-property name="idpago" type="int">
+                <column name="idpago" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="anexo" class="Model.Anexo" update="false" insert="false" fetch="select">
+            <column name="idanexo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="empresa" class="Model.Empresa" update="false" insert="false" fetch="select">
+            <column name="idempresa" not-null="true" />
+        </many-to-one>
+        <many-to-one name="pago" class="Model.Pago" update="false" insert="false" fetch="select">
+            <column name="idpago" not-null="true" />
+        </many-to-one>
+        <many-to-one name="vehiculo" class="Model.Vehiculo" update="false" insert="false" fetch="select">
+            <column name="idvehiculo" not-null="true" />
+        </many-to-one>
+        <property name="fechareg" type="timestamp">
+            <column name="fechareg" length="23" />
+        </property>
+    </class>
+</hibernate-mapping>
