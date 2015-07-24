@@ -1,6 +1,6 @@
 package Bean;
 
-import Dao.AnexoDao;
+import Dao.AbstractDao;
 import Dao.AnexoDaoImplements;
 import Model.Anexo;
 import java.util.List;
@@ -27,7 +27,7 @@ public class anexoBean {
     }
     
     public List<Anexo> getAnexos() {
-        AnexoDao linkDao = new AnexoDaoImplements();
+        AbstractDao linkDao = new AnexoDaoImplements();
         anexos = linkDao.mostrarAnexo();
         return anexos;
     }
@@ -40,19 +40,19 @@ public class anexoBean {
     }
     
     public void insertar (){
-        AnexoDao linkDao = new AnexoDaoImplements();
+        AbstractDao linkDao = new AnexoDaoImplements();
         linkDao.insertarAnexo(anexo);
         anexo = new Anexo();
     }
     
     public void modificar (){
-        AnexoDao linkDao = new AnexoDaoImplements();
+        AbstractDao linkDao = new AnexoDaoImplements();
         linkDao.modificarAnexo(anexo);
         anexo = new Anexo();
     }
     
     public void eliminar (){
-        AnexoDao linkDao = new AnexoDaoImplements();
+        AbstractDao linkDao = new AnexoDaoImplements();
         linkDao.eliminarAnexo(anexo);
         anexo = new Anexo();
     }
