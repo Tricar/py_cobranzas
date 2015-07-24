@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2015 09:19:55 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cobranza.entidad.TipoAnexo" table="tipo_anexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idtipoanexo" type="int">
+            <column name="idtipoanexo" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="30" />
+        </property>
+        <property name="fechareg" type="timestamp">
+            <column name="fechareg" length="23" />
+        </property>
+        <set name="menuTipoanexos" table="menu_tipoanexo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idtipoanexo" not-null="true" />
+            </key>
+            <one-to-many class="cobranza.entidad.MenuTipoanexo" />
+        </set>
+        <set name="anexos" table="anexo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idtipoanexo" not-null="true" />
+            </key>
+            <one-to-many class="cobranza.entidad.Anexo" />
+        </set>
+    </class>
+</hibernate-mapping>

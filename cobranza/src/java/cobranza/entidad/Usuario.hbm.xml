@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2015 09:19:55 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cobranza.entidad.Usuario" table="usuario" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idusuario" type="int">
+            <column name="idusuario" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="anexo" class="cobranza.entidad.Anexo" fetch="select">
+            <column name="idanexo" not-null="true" />
+        </many-to-one>
+        <property name="usuario" type="string">
+            <column name="usuario" length="20" />
+        </property>
+        <property name="clave" type="string">
+            <column name="clave" length="20" />
+        </property>
+        <property name="fechareg" type="binary">
+            <column name="fechareg" />
+        </property>
+    </class>
+</hibernate-mapping>

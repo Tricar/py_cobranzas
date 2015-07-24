@@ -3,25 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cobranza.controllers;
+package CRUD.beans;
 
+import HibernateUtil.MyUtil;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ApplicationScoped;
 
 /**
  *
  * @author Sistemas2
  */
 @ManagedBean
-@SessionScoped
-public class TipousuarioController {
+@ApplicationScoped
+public class CRUDBean {
 
-    
-    public TipousuarioController() {
+    /**
+     * Creates a new instance of CRUDBean
+     */
+    public CRUDBean() {
     }
     
-    public String index(){
-        return "/tipousuario/index";
+    public String getBaseUrl(){
+        return MyUtil.baseurl();
     }
-        
+    
 }

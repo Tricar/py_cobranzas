@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="CRUD.Entidad.Usuario" table="usuario" catalog="cobranzas" optimistic-lock="version">
+        <id name="idUsuario" type="java.lang.Integer">
+            <column name="idUsuario" />
+            <generator class="identity" />
+        </id>
+        <property name="rolIdRol" type="int">
+            <column name="Rol_idRol" not-null="true" />
+        </property>
+        <property name="usuario" type="string">
+            <column name="usuario" length="30" />
+        </property>
+        <property name="clave" type="string">
+            <column name="clave" length="32" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="60" />
+        </property>
+        <property name="estado" type="java.lang.Boolean">
+            <column name="estado" />
+        </property>
+        <property name="usuariocre" type="string">
+            <column name="usuariocre" length="25" />
+        </property>
+        <property name="fechacre" type="timestamp">
+            <column name="fechacre" length="19" />
+        </property>
+        <property name="usuariomod" type="string">
+            <column name="usuariomod" length="25" />
+        </property>
+        <property name="fechamod" type="timestamp">
+            <column name="fechamod" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

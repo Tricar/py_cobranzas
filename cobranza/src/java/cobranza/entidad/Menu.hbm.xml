@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23/07/2015 09:19:55 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cobranza.entidad.Menu" table="menu" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idmenu" type="int">
+            <column name="idmenu" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" />
+        </property>
+        <property name="fechareg" type="timestamp">
+            <column name="fechareg" length="23" />
+        </property>
+        <property name="imagen" type="string">
+            <column name="imagen" length="100" />
+        </property>
+        <property name="url" type="string">
+            <column name="url" length="100" />
+        </property>
+        <property name="action" type="string">
+            <column name="action" length="100" />
+        </property>
+        <property name="raiz" type="java.lang.Integer">
+            <column name="raiz" />
+        </property>
+        <property name="orden" type="java.lang.Integer">
+            <column name="orden" />
+        </property>
+        <set name="menuTipoanexos" table="menu_tipoanexo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idmenu" not-null="true" />
+            </key>
+            <one-to-many class="cobranza.entidad.MenuTipoanexo" />
+        </set>
+    </class>
+</hibernate-mapping>
