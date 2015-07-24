@@ -6,7 +6,7 @@
     <class name="Model.Venta" table="venta" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <composite-id name="id" class="Model.VentaId">
             <key-property name="idanexo" type="int">
-                <column name="idanexo" />
+                <column name="identity" />
             </key-property>
             <key-property name="idvehiculo" type="int">
                 <column name="idvehiculo" />

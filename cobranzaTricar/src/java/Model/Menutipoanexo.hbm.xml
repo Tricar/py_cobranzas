@@ -6,7 +6,7 @@
     <class name="Model.Menutipoanexo" table="menutipoanexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idmenutipo" type="int">
             <column name="idmenutipo" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="menu" class="Model.Menu" fetch="select">
             <column name="idmenu" not-null="true" />
