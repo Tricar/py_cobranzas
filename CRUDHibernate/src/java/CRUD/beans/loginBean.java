@@ -5,6 +5,9 @@
  */
 package CRUD.beans;
 
+import CRUD.DAO.UsuarioDAO;
+import CRUD.DAO.UsuarioDAOImpl;
+import CRUD.Entidad.Usuario;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -19,38 +22,35 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 @SessionScoped
 public class loginBean {
+    
+    private Usuario usuario;
+    private UsuarioDAO usuariodao;
           
     public loginBean(){
+        this.usuariodao = new UsuarioDAOImpl();
+        if (this.usuario == null) {
+            this.usuario = new Usuario();
+        }
     }
- 
-    private String usuario;
-     
-    private String clave;
- 
-    public String getUsuario() {
+
+    public Usuario getUsuario() {
         return usuario;
     }
- 
-    public void setUsuario(String usuario) {
+
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
- 
-    public String getClave() {
-        return clave;
-    }
- 
-    public void setClave(String clave) {
-        this.clave = clave;
     }
    
     public void login(ActionEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
-        FacesMessage message = null;
-        boolean loggedIn = false;
+        FacesMessage message;
+        boolean loggedIn;
+        String ruta = "";
          
-        if(usuario != null && usuario.equals("admin") && clave != null && clave.equals("admin")) {
+        this.usuario = usuariodao.Login(this.usuario);
+        if(this.usuario != null) {
             loggedIn = true;
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", usuario);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getUsuario());
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Acceso Invalido");
