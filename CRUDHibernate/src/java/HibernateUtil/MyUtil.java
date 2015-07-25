@@ -15,4 +15,8 @@ public class MyUtil {
         return "http://localhost:8080/CRUDHibernate/";
     }
     
+    public static String basePachLogin(){
+        return "/CRUDHibernate/faces/";
+    }
+    
 }

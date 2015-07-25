@@ -1,12 +1,18 @@
 package CRUD.Entidad;
-// Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1
+// Generated 25/07/2015 09:13:04 AM by Hibernate Tools 4.3.1
 
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -19,72 +25,82 @@ import javax.persistence.Table;
 public class Menu  implements java.io.Serializable {
 
 
-     private Integer idMenu;
-     private Integer menuIdMenu;
-     private Integer nivel;
-     private Integer orden;
+     private Integer id;
+     private Menu menu;
+     private int nivel;
+     private int orden;
      private String nombre;
      private String url;
      private String icono;
      private Boolean estado;
+     private Set menus = new HashSet(0);
+     private Set rolmenus = new HashSet(0);
 
     public Menu() {
     }
 
-    public Menu(Integer menuIdMenu, Integer nivel, Integer orden, String nombre, String url, String icono, Boolean estado) {
-       this.menuIdMenu = menuIdMenu;
+	
+    public Menu(int nivel, int orden, String nombre) {
+        this.nivel = nivel;
+        this.orden = orden;
+        this.nombre = nombre;
+    }
+    public Menu(Menu menu, int nivel, int orden, String nombre, String url, String icono, Boolean estado, Set menus, Set rolmenus) {
+       this.menu = menu;
        this.nivel = nivel;
        this.orden = orden;
        this.nombre = nombre;
        this.url = url;
        this.icono = icono;
        this.estado = estado;
+       this.menus = menus;
+       this.rolmenus = rolmenus;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
 
     
-    @Column(name="idMenu", unique=true, nullable=false)
-    public Integer getIdMenu() {
-        return this.idMenu;
+    @Column(name="id", unique=true, nullable=false)
+    public Integer getId() {
+        return this.id;
     }
     
-    public void setIdMenu(Integer idMenu) {
-        this.idMenu = idMenu;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="menu_id")
+    public Menu getMenu() {
+        return this.menu;
+    }
+    
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
     
-    @Column(name="Menu_idMenu")
-    public Integer getMenuIdMenu() {
-        return this.menuIdMenu;
-    }
-    
-    public void setMenuIdMenu(Integer menuIdMenu) {
-        this.menuIdMenu = menuIdMenu;
-    }
-
-    
-    @Column(name="nivel")
-    public Integer getNivel() {
+    @Column(name="nivel", nullable=false)
+    public int getNivel() {
         return this.nivel;
     }
     
-    public void setNivel(Integer nivel) {
+    public void setNivel(int nivel) {
         this.nivel = nivel;
     }
 
     
-    @Column(name="orden")
-    public Integer getOrden() {
+    @Column(name="orden", nullable=false)
+    public int getOrden() {
         return this.orden;
     }
     
-    public void setOrden(Integer orden) {
+    public void setOrden(int orden) {
         this.orden = orden;
     }
 
     
-    @Column(name="nombre", length=80)
+    @Column(name="nombre", nullable=false, length=80)
     public String getNombre() {
         return this.nombre;
     }
@@ -121,6 +137,24 @@ public class Menu  implements java.io.Serializable {
     
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="menu")
+    public Set getMenus() {
+        return this.menus;
+    }
+    
+    public void setMenus(Set menus) {
+        this.menus = menus;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="menu")
+    public Set getRolmenus() {
+        return this.rolmenus;
+    }
+    
+    public void setRolmenus(Set rolmenus) {
+        this.rolmenus = rolmenus;
     }
 
 

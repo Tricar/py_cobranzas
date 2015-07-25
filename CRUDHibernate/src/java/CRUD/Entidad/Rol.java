@@ -1,12 +1,16 @@
 package CRUD.Entidad;
-// Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1
+// Generated 25/07/2015 09:13:04 AM by Hibernate Tools 4.3.1
 
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -19,34 +23,42 @@ import javax.persistence.Table;
 public class Rol  implements java.io.Serializable {
 
 
-     private Integer idRol;
+     private Integer id;
      private String nombre;
      private String descripcion;
      private Boolean estado;
+     private Set usuarios = new HashSet(0);
+     private Set rolmenus = new HashSet(0);
 
     public Rol() {
     }
 
-    public Rol(String nombre, String descripcion, Boolean estado) {
+	
+    public Rol(String nombre) {
+        this.nombre = nombre;
+    }
+    public Rol(String nombre, String descripcion, Boolean estado, Set usuarios, Set rolmenus) {
        this.nombre = nombre;
        this.descripcion = descripcion;
        this.estado = estado;
+       this.usuarios = usuarios;
+       this.rolmenus = rolmenus;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
 
     
-    @Column(name="idRol", unique=true, nullable=false)
-    public Integer getIdRol() {
-        return this.idRol;
+    @Column(name="id", unique=true, nullable=false)
+    public Integer getId() {
+        return this.id;
     }
     
-    public void setIdRol(Integer idRol) {
-        this.idRol = idRol;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     
-    @Column(name="nombre", length=30)
+    @Column(name="nombre", nullable=false, length=30)
     public String getNombre() {
         return this.nombre;
     }
@@ -73,6 +85,24 @@ public class Rol  implements java.io.Serializable {
     
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="rol")
+    public Set getUsuarios() {
+        return this.usuarios;
+    }
+    
+    public void setUsuarios(Set usuarios) {
+        this.usuarios = usuarios;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="rol")
+    public Set getRolmenus() {
+        return this.rolmenus;
+    }
+    
+    public void setRolmenus(Set rolmenus) {
+        this.rolmenus = rolmenus;
     }
 
 
