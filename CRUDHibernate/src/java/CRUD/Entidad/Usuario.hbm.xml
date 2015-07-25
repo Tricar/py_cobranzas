@@ -1,39 +1,39 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 25/07/2015 09:13:06 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="CRUD.Entidad.Usuario" table="usuario" catalog="cobranzas" optimistic-lock="version">
-        <id name="idUsuario" type="java.lang.Integer">
-            <column name="idUsuario" />
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="rolIdRol" type="int">
-            <column name="Rol_idRol" not-null="true" />
-        </property>
+        <many-to-one name="rol" class="CRUD.Entidad.Rol" fetch="select">
+            <column name="rol_id" not-null="true" />
+        </many-to-one>
         <property name="usuario" type="string">
-            <column name="usuario" length="30" />
+            <column name="usuario" length="30" not-null="true" />
         </property>
         <property name="clave" type="string">
-            <column name="clave" length="32" />
+            <column name="clave" length="32" not-null="true" />
         </property>
         <property name="email" type="string">
-            <column name="email" length="60" />
+            <column name="email" length="60" not-null="true" />
         </property>
         <property name="estado" type="java.lang.Boolean">
             <column name="estado" />
         </property>
-        <property name="usuariocre" type="string">
-            <column name="usuariocre" length="25" />
+        <property name="usuariocreacion" type="string">
+            <column name="usuariocreacion" length="25" not-null="true" />
         </property>
-        <property name="fechacre" type="timestamp">
-            <column name="fechacre" length="19" />
+        <property name="fechacreacion" type="timestamp">
+            <column name="fechacreacion" length="19" not-null="true" />
         </property>
-        <property name="usuariomod" type="string">
-            <column name="usuariomod" length="25" />
+        <property name="usuariomodificacion" type="string">
+            <column name="usuariomodificacion" length="25" />
         </property>
-        <property name="fechamod" type="timestamp">
-            <column name="fechamod" length="19" />
+        <property name="fechamodificacion" type="timestamp">
+            <column name="fechamodificacion" length="19" />
         </property>
     </class>
 </hibernate-mapping>

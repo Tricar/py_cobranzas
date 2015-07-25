@@ -14,6 +14,6 @@ import CRUD.Entidad.Usuario;
 public interface UsuarioDAO {
     
     public Usuario findByUsuario(Usuario usuario);
-    public Usuario Login(Usuario usuario);
+    public Usuario login(Usuario usuario);
     
 }

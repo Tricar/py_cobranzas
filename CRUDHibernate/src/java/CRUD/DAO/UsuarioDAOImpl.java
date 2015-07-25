@@ -19,7 +19,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
     public Usuario findByUsuario(Usuario usuario) {
         Usuario model = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
-        String sql = "FROM Usuario where usuario = "+ usuario.getUsuario() +"";
+        String sql = "FROM Usuario WHERE usuario = '"+ usuario.getUsuario() +"'";
         try {
             sesion.beginTransaction();
             model = (Usuario) sesion.createQuery(sql).uniqueResult();
@@ -31,7 +31,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
     }
 
     @Override
-    public Usuario Login(Usuario usuario) {
+    public Usuario login(Usuario usuario) {
         Usuario model = this.findByUsuario(usuario);
         if (model != null) {
             if (usuario.getClave().equals(model.getClave())) {

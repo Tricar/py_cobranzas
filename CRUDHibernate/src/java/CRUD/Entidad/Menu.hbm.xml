@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 25/07/2015 09:13:06 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="CRUD.Entidad.Menu" table="menu" catalog="cobranzas" optimistic-lock="version">
-        <id name="idMenu" type="java.lang.Integer">
-            <column name="idMenu" />
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="menuIdMenu" type="java.lang.Integer">
-            <column name="Menu_idMenu" />
+        <many-to-one name="menu" class="CRUD.Entidad.Menu" fetch="select">
+            <column name="menu_id" />
+        </many-to-one>
+        <property name="nivel" type="int">
+            <column name="nivel" not-null="true" />
         </property>
-        <property name="nivel" type="java.lang.Integer">
-            <column name="nivel" />
-        </property>
-        <property name="orden" type="java.lang.Integer">
-            <column name="orden" />
+        <property name="orden" type="int">
+            <column name="orden" not-null="true" />
         </property>
         <property name="nombre" type="string">
-            <column name="nombre" length="80" />
+            <column name="nombre" length="80" not-null="true" />
         </property>
         <property name="url" type="string">
             <column name="url" length="120" />
@@ -29,5 +29,17 @@
         <property name="estado" type="java.lang.Boolean">
             <column name="estado" />
         </property>
+        <set name="menus" table="menu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="menu_id" />
+            </key>
+            <one-to-many class="CRUD.Entidad.Menu" />
+        </set>
+        <set name="rolmenus" table="rolmenu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="menu_id" not-null="true" />
+            </key>
+            <one-to-many class="CRUD.Entidad.Rolmenu" />
+        </set>
     </class>
 </hibernate-mapping>

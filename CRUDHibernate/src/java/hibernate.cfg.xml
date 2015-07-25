@@ -9,9 +9,9 @@
     <property name="hibernate.connection.password">admin</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <mapping resource="CRUD/Entidad/Rolmenu.hbm.xml"/>
     <mapping resource="CRUD/Entidad/Rol.hbm.xml"/>
     <mapping resource="CRUD/Entidad/Usuario.hbm.xml"/>
+    <mapping resource="CRUD/Entidad/Rolmenu.hbm.xml"/>
     <mapping resource="CRUD/Entidad/Menu.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

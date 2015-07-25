@@ -1,13 +1,16 @@
 package CRUD.Entidad;
-// Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1
+// Generated 25/07/2015 09:13:04 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,60 +25,65 @@ import javax.persistence.TemporalType;
 public class Usuario  implements java.io.Serializable {
 
 
-     private Integer idUsuario;
-     private int rolIdRol;
+     private Integer id;
+     private Rol rol;
      private String usuario;
      private String clave;
      private String email;
      private Boolean estado;
-     private String usuariocre;
-     private Date fechacre;
-     private String usuariomod;
-     private Date fechamod;
+     private String usuariocreacion;
+     private Date fechacreacion;
+     private String usuariomodificacion;
+     private Date fechamodificacion;
 
     public Usuario() {
     }
 
 	
-    public Usuario(int rolIdRol) {
-        this.rolIdRol = rolIdRol;
+    public Usuario(Rol rol, String usuario, String clave, String email, String usuariocreacion, Date fechacreacion) {
+        this.rol = rol;
+        this.usuario = usuario;
+        this.clave = clave;
+        this.email = email;
+        this.usuariocreacion = usuariocreacion;
+        this.fechacreacion = fechacreacion;
     }
-    public Usuario(int rolIdRol, String usuario, String clave, String email, Boolean estado, String usuariocre, Date fechacre, String usuariomod, Date fechamod) {
-       this.rolIdRol = rolIdRol;
+    public Usuario(Rol rol, String usuario, String clave, String email, Boolean estado, String usuariocreacion, Date fechacreacion, String usuariomodificacion, Date fechamodificacion) {
+       this.rol = rol;
        this.usuario = usuario;
        this.clave = clave;
        this.email = email;
        this.estado = estado;
-       this.usuariocre = usuariocre;
-       this.fechacre = fechacre;
-       this.usuariomod = usuariomod;
-       this.fechamod = fechamod;
+       this.usuariocreacion = usuariocreacion;
+       this.fechacreacion = fechacreacion;
+       this.usuariomodificacion = usuariomodificacion;
+       this.fechamodificacion = fechamodificacion;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
 
     
-    @Column(name="idUsuario", unique=true, nullable=false)
-    public Integer getIdUsuario() {
-        return this.idUsuario;
+    @Column(name="id", unique=true, nullable=false)
+    public Integer getId() {
+        return this.id;
     }
     
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="rol_id", nullable=false)
+    public Rol getRol() {
+        return this.rol;
+    }
+    
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     
-    @Column(name="Rol_idRol", nullable=false)
-    public int getRolIdRol() {
-        return this.rolIdRol;
-    }
-    
-    public void setRolIdRol(int rolIdRol) {
-        this.rolIdRol = rolIdRol;
-    }
-
-    
-    @Column(name="usuario", length=30)
+    @Column(name="usuario", nullable=false, length=30)
     public String getUsuario() {
         return this.usuario;
     }
@@ -85,7 +93,7 @@ public class Usuario  implements java.io.Serializable {
     }
 
     
-    @Column(name="clave", length=32)
+    @Column(name="clave", nullable=false, length=32)
     public String getClave() {
         return this.clave;
     }
@@ -95,7 +103,7 @@ public class Usuario  implements java.io.Serializable {
     }
 
     
-    @Column(name="email", length=60)
+    @Column(name="email", nullable=false, length=60)
     public String getEmail() {
         return this.email;
     }
@@ -115,43 +123,43 @@ public class Usuario  implements java.io.Serializable {
     }
 
     
-    @Column(name="usuariocre", length=25)
-    public String getUsuariocre() {
-        return this.usuariocre;
+    @Column(name="usuariocreacion", nullable=false, length=25)
+    public String getUsuariocreacion() {
+        return this.usuariocreacion;
     }
     
-    public void setUsuariocre(String usuariocre) {
-        this.usuariocre = usuariocre;
+    public void setUsuariocreacion(String usuariocreacion) {
+        this.usuariocreacion = usuariocreacion;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="fechacre", length=19)
-    public Date getFechacre() {
-        return this.fechacre;
+    @Column(name="fechacreacion", nullable=false, length=19)
+    public Date getFechacreacion() {
+        return this.fechacreacion;
     }
     
-    public void setFechacre(Date fechacre) {
-        this.fechacre = fechacre;
+    public void setFechacreacion(Date fechacreacion) {
+        this.fechacreacion = fechacreacion;
     }
 
     
-    @Column(name="usuariomod", length=25)
-    public String getUsuariomod() {
-        return this.usuariomod;
+    @Column(name="usuariomodificacion", length=25)
+    public String getUsuariomodificacion() {
+        return this.usuariomodificacion;
     }
     
-    public void setUsuariomod(String usuariomod) {
-        this.usuariomod = usuariomod;
+    public void setUsuariomodificacion(String usuariomodificacion) {
+        this.usuariomodificacion = usuariomodificacion;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="fechamod", length=19)
-    public Date getFechamod() {
-        return this.fechamod;
+    @Column(name="fechamodificacion", length=19)
+    public Date getFechamodificacion() {
+        return this.fechamodificacion;
     }
     
-    public void setFechamod(Date fechamod) {
-        this.fechamod = fechamod;
+    public void setFechamodificacion(Date fechamodificacion) {
+        this.fechamodificacion = fechamodificacion;
     }
 
 

@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 25/07/2015 09:13:06 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="CRUD.Entidad.Rolmenu" table="rolmenu" catalog="cobranzas" optimistic-lock="version">
-        <id name="idRolmenu" type="java.lang.Integer">
-            <column name="idRolmenu" />
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="rolIdRol" type="int">
-            <column name="Rol_idRol" not-null="true" />
-        </property>
-        <property name="menuIdMenu" type="int">
-            <column name="Menu_idMenu" not-null="true" />
-        </property>
+        <many-to-one name="menu" class="CRUD.Entidad.Menu" fetch="select">
+            <column name="menu_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="rol" class="CRUD.Entidad.Rol" fetch="select">
+            <column name="rol_id" not-null="true" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

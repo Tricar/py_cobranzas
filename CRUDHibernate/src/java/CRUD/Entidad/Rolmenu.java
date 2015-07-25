@@ -1,12 +1,15 @@
 package CRUD.Entidad;
-// Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1
+// Generated 25/07/2015 09:13:04 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,48 +22,48 @@ import javax.persistence.Table;
 public class Rolmenu  implements java.io.Serializable {
 
 
-     private Integer idRolmenu;
-     private int rolIdRol;
-     private int menuIdMenu;
+     private Integer id;
+     private Menu menu;
+     private Rol rol;
 
     public Rolmenu() {
     }
 
-    public Rolmenu(int rolIdRol, int menuIdMenu) {
-       this.rolIdRol = rolIdRol;
-       this.menuIdMenu = menuIdMenu;
+    public Rolmenu(Menu menu, Rol rol) {
+       this.menu = menu;
+       this.rol = rol;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
 
     
-    @Column(name="idRolmenu", unique=true, nullable=false)
-    public Integer getIdRolmenu() {
-        return this.idRolmenu;
+    @Column(name="id", unique=true, nullable=false)
+    public Integer getId() {
+        return this.id;
     }
     
-    public void setIdRolmenu(Integer idRolmenu) {
-        this.idRolmenu = idRolmenu;
-    }
-
-    
-    @Column(name="Rol_idRol", nullable=false)
-    public int getRolIdRol() {
-        return this.rolIdRol;
-    }
-    
-    public void setRolIdRol(int rolIdRol) {
-        this.rolIdRol = rolIdRol;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    
-    @Column(name="Menu_idMenu", nullable=false)
-    public int getMenuIdMenu() {
-        return this.menuIdMenu;
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="menu_id", nullable=false)
+    public Menu getMenu() {
+        return this.menu;
     }
     
-    public void setMenuIdMenu(int menuIdMenu) {
-        this.menuIdMenu = menuIdMenu;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="rol_id", nullable=false)
+    public Rol getRol() {
+        return this.rol;
+    }
+    
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
 

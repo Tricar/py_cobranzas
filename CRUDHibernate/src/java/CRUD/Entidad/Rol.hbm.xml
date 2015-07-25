@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 23/07/2015 03:57:55 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 25/07/2015 09:13:06 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="CRUD.Entidad.Rol" table="rol" catalog="cobranzas" optimistic-lock="version">
-        <id name="idRol" type="java.lang.Integer">
-            <column name="idRol" />
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
             <generator class="identity" />
         </id>
         <property name="nombre" type="string">
-            <column name="nombre" length="30" />
+            <column name="nombre" length="30" not-null="true" />
         </property>
         <property name="descripcion" type="string">
             <column name="descripcion" length="100" />
@@ -17,5 +17,17 @@
         <property name="estado" type="java.lang.Boolean">
             <column name="estado" />
         </property>
+        <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="rol_id" not-null="true" />
+            </key>
+            <one-to-many class="CRUD.Entidad.Usuario" />
+        </set>
+        <set name="rolmenus" table="rolmenu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="rol_id" not-null="true" />
+            </key>
+            <one-to-many class="CRUD.Entidad.Rolmenu" />
+        </set>
     </class>
 </hibernate-mapping>
