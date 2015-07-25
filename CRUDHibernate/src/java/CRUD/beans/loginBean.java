@@ -49,7 +49,7 @@ public class loginBean implements Serializable {
         boolean loggedIn;
         String ruta = "";
 
-        this.usuario = usuariodao.Login(this.usuario);
+        this.usuario = this.usuariodao.login(this.usuario);
         if (this.usuario != null) {
             loggedIn = true;
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario.getUsuario());
