@@ -19,7 +19,7 @@ public class TipoAnexoDaoImplements implements TipoAnexoDao{
         List<Tipoanexo> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Tipoanexo");
+            Query query = session.createQuery("FROM Tipoanexo");
             lista = (List<Tipoanexo>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());

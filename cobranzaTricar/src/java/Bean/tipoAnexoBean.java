@@ -32,6 +32,8 @@ public class tipoAnexoBean {
     }
 
     public List<Tipoanexo> getTipoanexos() {
+        TipoAnexoDao tipodao = new TipoAnexoDaoImplements();
+        tipoanexos = tipodao.mostrarTipoAnexo();
         return tipoanexos;
     }
 
