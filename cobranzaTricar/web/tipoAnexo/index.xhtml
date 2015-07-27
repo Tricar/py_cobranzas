@@ -5,66 +5,66 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Gestion de Tipo de Anexos</title>
+        <title>Gestion de Condicion de Pago</title>
     </h:head>
     <h:body>
         <h:form id="formInsertar">
             <p:panelGrid columns="2">
 
-                <p:outputLabel value="Nombre de tipo:" />
-                <p:inputText value="#{tipoAnexoBean.tipoanexo.nombre}" id="txtnombre"/>
+                <p:outputLabel value="Nombre de condicion:" />
+                <p:inputText value="#{condicionPagoBean.condpago.nombre}" id="txtnombre"/>
 
                 <p:outputLabel value="Fecha:" />
-                <p:calendar value="#{tipoAnexoBean.tipoanexo.fechareg}" id="txtfecha"/>
+                <p:calendar value="#{condicionPagoBean.condpago.fechareg}" id="txtfecha"/>
             </p:panelGrid>
-            <p:commandButton actionListener="#{tipoAnexoBean.insertar()}" value="Ingresar T. Anexo" update=":formMostrar"/>
+            <p:commandButton actionListener="#{condicionPagoBean.insertar()}" value="Ingresar Cond. Pago" update=":formMostrar"/>
         </h:form>
         <h:form id="formMostrar">
-            <p:dataTable var="tipo" value="#{tipoAnexoBean.tipoanexos}" 
-                         emptyMessage="No hay Personas Disponibles" 
+            <p:dataTable var="condicion" value="#{condicionPagoBean.condpagos}" 
+                         emptyMessage="No hay nada para mostrar" 
                          paginator="true" rows="10" paginatorPosition="top" 
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
                          {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                          rowsPerPageTemplate="10">
-                <p:column headerText="Id Anexo">
-                    <h:outputText value="#{tipo.idtipoanexo}" />
+                <p:column headerText="Id Cond.">
+                    <h:outputText value="#{condicion.idcondicionpago}" />
                 </p:column>
                 <p:column headerText="Nombre">
-                    <h:outputText value="#{tipo.nombre}" />
+                    <h:outputText value="#{condicion.nombre}" />
                 </p:column>
                 <p:column headerText="Fecha">
-                    <h:outputText value="#{tipo.fechareg}" />
+                    <h:outputText value="#{condicion.fechareg}" />
                 </p:column>
                 <p:column headerText="Modificar">
                     <p:commandButton value="Modificar" oncomplete="dlgmodificar.show()" update=":formModificar">
-                        <f:setPropertyActionListener target="#{tipoAnexoBean.tipoanexo}" value="#{tipo}" />
+                        <f:setPropertyActionListener target="#{condicionPagoBean.condpago}" value="#{condicion}" />
                     </p:commandButton>
                 </p:column>
                 <p:column headerText="Eliminar">
                     <p:commandButton value="Eliminar" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                        <f:setPropertyActionListener target="#{tipoAnexoBean.tipoanexo}" value="#{tipo}" />
+                        <f:setPropertyActionListener target="#{condicionPagoBean.condpago}" value="#{condicion}" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
         </h:form>
-        <p:dialog id="dlg" header="Modificar Tipo" showEffect="explode" hideEffect="explode" 
+        <p:dialog id="dlg" header="Modificar Condicion" showEffect="explode" hideEffect="explode" 
                   widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
             <h:form id="formModificar">
                 <p:panelGrid columns="2">
                     <p:outputLabel value="Nombre" />
-                    <p:inputText value="#{tipoAnexoBean.tipoanexo.nombre}" />
+                    <p:inputText value="#{condicionPagoBean.condpago.nombre}" />
                     <p:outputLabel value="Fecha" />
-                    <p:calendar value="#{tipoAnexoBean.tipoanexo.fechareg}" />
+                    <p:calendar value="#{condicionPagoBean.condpago.fechareg}" />
                 </p:panelGrid>
-                <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{tipoAnexoBean.modificar()}" 
+                <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{condicionPagoBean.modificar()}" 
                                  oncomplete="dlgmodificar.hide();" />
             </h:form>
         </p:dialog>
-        <p:dialog id="dlg2" header="Eliminar T. Anexo" showEffect="explode" hideEffect="explode" 
+        <p:dialog id="dlg2" header="Eliminar Cond. Pago" showEffect="explode" hideEffect="explode" 
                   widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
             <h:form id="formEliminar">
                 <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{tipoAnexoBean.eliminar()}" 
+                <p:commandButton value="Si" actionListener="#{condicionPagoBean.eliminar()}" 
                                  update=":formMostrar" oncomplete="dlgeliminar.hide();" />
                 <p:commandButton value="No" onclick="dlg2.hide();" />
             </h:form>
