@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24/07/2015 05:48:55 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 27/07/2015 04:03:00 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Vehiculo" table="vehiculo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idvehiculo" type="int">
             <column name="idvehiculo" />
             <generator class="assigned" />
         </id>
+        <many-to-one name="color" class="Model.Color" fetch="select">
+            <column name="idcolor" not-null="true" />
+        </many-to-one>
+        <many-to-one name="modelo" class="Model.Modelo" fetch="select">
+            <column name="idmodelo" not-null="true" />
+        </many-to-one>
         <many-to-one name="tipovehiculo" class="Model.Tipovehiculo" fetch="select">
             <column name="idtipovehiculo" not-null="true" />
         </many-to-one>
         <property name="marca" type="string">
             <column name="marca" length="20" />
         </property>
-        <property name="modelo" type="string">
-            <column name="modelo" length="20" />
-        </property>
         <property name="serie" type="string">
             <column name="serie" length="20" />
-        </property>
-        <property name="color" type="string">
-            <column name="color" length="20" />
         </property>
         <property name="anofabri" type="java.lang.Integer">
             <column name="anofabri" />

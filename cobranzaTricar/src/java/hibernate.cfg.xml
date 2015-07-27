@@ -6,18 +6,19 @@
     <property name="hibernate.connection.url">jdbc:sqlserver://servertricar:1433;databaseName=cobranzas</property>
     <property name="hibernate.connection.username">sa</property>
     <property name="hibernate.connection.password">tricar2012</property>
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.current_session_context_class">thread</property>
     <mapping resource="Model/Tipoanexo.hbm.xml"/>
     <mapping resource="Model/Tipovehiculo.hbm.xml"/>
-    <mapping resource="Model/Empresa.hbm.xml"/>
     <mapping resource="Model/Pago.hbm.xml"/>
     <mapping resource="Model/Vehiculo.hbm.xml"/>
     <mapping resource="Model/Venta.hbm.xml"/>
     <mapping resource="Model/Menu.hbm.xml"/>
-    <mapping resource="Model/Condicionpago.hbm.xml"/>
     <mapping resource="Model/Menutipoanexo.hbm.xml"/>
-    <mapping resource="Model/Anexo.hbm.xml"/>
     <mapping resource="Model/Usuario.hbm.xml"/>
+    <mapping resource="Model/Modelo.hbm.xml"/>
+    <mapping resource="Model/Sysdiagrams.hbm.xml"/>
+    <mapping resource="Model/Empresa.hbm.xml"/>
+    <mapping resource="Model/Condicionpago.hbm.xml"/>
+    <mapping resource="Model/Anexo.hbm.xml"/>
+    <mapping resource="Model/Color.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

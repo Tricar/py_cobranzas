@@ -1,5 +1,5 @@
 package Model;
-// Generated 24/07/2015 05:48:55 PM by Hibernate Tools 4.3.1
+// Generated 27/07/2015 04:02:59 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -29,11 +29,11 @@ public class Vehiculo  implements java.io.Serializable {
 
 
      private int idvehiculo;
+     private Color color;
+     private Modelo modelo;
      private Tipovehiculo tipovehiculo;
      private String marca;
-     private String modelo;
      private String serie;
-     private String color;
      private Integer anofabri;
      private Date fechareg;
      private String motor;
@@ -45,17 +45,19 @@ public class Vehiculo  implements java.io.Serializable {
     }
 
 	
-    public Vehiculo(int idvehiculo, Tipovehiculo tipovehiculo) {
+    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo) {
         this.idvehiculo = idvehiculo;
+        this.color = color;
+        this.modelo = modelo;
         this.tipovehiculo = tipovehiculo;
     }
-    public Vehiculo(int idvehiculo, Tipovehiculo tipovehiculo, String marca, String modelo, String serie, String color, Integer anofabri, Date fechareg, String motor, Integer stock, BigDecimal precio, Set ventas) {
+    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo, String marca, String serie, Integer anofabri, Date fechareg, String motor, Integer stock, BigDecimal precio, Set ventas) {
        this.idvehiculo = idvehiculo;
+       this.color = color;
+       this.modelo = modelo;
        this.tipovehiculo = tipovehiculo;
        this.marca = marca;
-       this.modelo = modelo;
        this.serie = serie;
-       this.color = color;
        this.anofabri = anofabri;
        this.fechareg = fechareg;
        this.motor = motor;
@@ -74,6 +76,26 @@ public class Vehiculo  implements java.io.Serializable {
     
     public void setIdvehiculo(int idvehiculo) {
         this.idvehiculo = idvehiculo;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="idcolor", nullable=false)
+    public Color getColor() {
+        return this.color;
+    }
+    
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="idmodelo", nullable=false)
+    public Modelo getModelo() {
+        return this.modelo;
+    }
+    
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -97,16 +119,6 @@ public class Vehiculo  implements java.io.Serializable {
     }
 
     
-    @Column(name="modelo", length=20)
-    public String getModelo() {
-        return this.modelo;
-    }
-    
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    
     @Column(name="serie", length=20)
     public String getSerie() {
         return this.serie;
@@ -114,16 +126,6 @@ public class Vehiculo  implements java.io.Serializable {
     
     public void setSerie(String serie) {
         this.serie = serie;
-    }
-
-    
-    @Column(name="color", length=20)
-    public String getColor() {
-        return this.color;
-    }
-    
-    public void setColor(String color) {
-        this.color = color;
     }
 
     
