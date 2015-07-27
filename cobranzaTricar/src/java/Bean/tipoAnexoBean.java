@@ -50,6 +50,7 @@ public class tipoAnexoBean {
         TipoAnexoDao linkDao = new TipoAnexoDaoImplements();
         linkDao.insertarTipoAnexo(tipoanexo);
         tipoanexo = new Tipoanexo();
+        
     }
     
     public void modificar(){
@@ -63,4 +64,5 @@ public class tipoAnexoBean {
         linkDao.eliminarTipoAnexo(tipoanexo);
         tipoanexo = new Tipoanexo();
     }
-}
+    
+ }

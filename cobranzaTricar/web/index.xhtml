@@ -8,14 +8,14 @@
         <title>Gestion de Tipo de Anexos</title>
     </h:head>
     <h:body>
-        <h:form id="formInsertarTipo">
+        <h:form id="formInsertar">
             <p:panelGrid columns="2">
 
                 <p:outputLabel value="Nombre de tipo:" />
-                <p:inputText value="#{tipoAnexoBean.tipoanexo.nombre}" />
+                <p:inputText value="#{tipoAnexoBean.tipoanexo.nombre}" id="txtnombre"/>
 
                 <p:outputLabel value="Fecha:" />
-                <p:calendar value="#{tipoAnexoBean.tipoanexo.fechareg}"/>
+                <p:calendar value="#{tipoAnexoBean.tipoanexo.fechareg}" id="txtfecha"/>
             </p:panelGrid>
             <p:commandButton actionListener="#{tipoAnexoBean.insertar()}" value="Ingresar T. Anexo" update=":formMostrar"/>
         </h:form>
@@ -47,7 +47,7 @@
                 </p:column>
             </p:dataTable>
         </h:form>
-        <p:dialog id="dlg" header="Modificar T. Anexo" showEffect="explode" hideEffect="explode" 
+        <p:dialog id="dlg" header="Modificar Tipo" showEffect="explode" hideEffect="explode" 
                   widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
             <h:form id="formModificar">
                 <p:panelGrid columns="2">
@@ -65,10 +65,9 @@
             <h:form id="formEliminar">
                 <h:outputText value="¿Desea eliminar?" />
                 <p:commandButton value="Si" actionListener="#{tipoAnexoBean.eliminar()}" 
-                                 update=":formEliminar" oncomplete="dlgeliminar.hide();" />
+                                 update=":formMostrar" oncomplete="dlgeliminar.hide();" />
                 <p:commandButton value="No" onclick="dlg2.hide();" />
             </h:form>
         </p:dialog>
     </h:body>
 </html>
-
