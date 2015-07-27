@@ -13,9 +13,7 @@
 
                 <p:outputLabel value="Nombre de condicion:" />
                 <p:inputText value="#{condicionPagoBean.condpago.nombre}" id="txtnombre"/>
-
-                <p:outputLabel value="Fecha:" />
-                <p:calendar value="#{condicionPagoBean.condpago.fechareg}" id="txtfecha"/>
+                
             </p:panelGrid>
             <p:commandButton actionListener="#{condicionPagoBean.insertar()}" value="Ingresar Cond. Pago" update=":formMostrar"/>
         </h:form>
@@ -53,8 +51,7 @@
                 <p:panelGrid columns="2">
                     <p:outputLabel value="Nombre" />
                     <p:inputText value="#{condicionPagoBean.condpago.nombre}" />
-                    <p:outputLabel value="Fecha" />
-                    <p:calendar value="#{condicionPagoBean.condpago.fechareg}" />
+                    
                 </p:panelGrid>
                 <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{condicionPagoBean.modificar()}" 
                                  oncomplete="dlgmodificar.hide();" />

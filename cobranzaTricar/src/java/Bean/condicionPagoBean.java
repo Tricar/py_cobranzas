@@ -3,6 +3,7 @@ package Bean;
 import Dao.CondicionPagoDao;
 import Dao.CondicionPagoDaoImplements;
 import Model.Condicionpago;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -44,6 +45,8 @@ public class condicionPagoBean {
 
     public void insertar() {
         CondicionPagoDao linkDao = new CondicionPagoDaoImplements();
+        Date d = new Date();
+        condpago.setFechareg(d);
         linkDao.insertarCondicion(condpago);
         condpago = new Condicionpago();
     }

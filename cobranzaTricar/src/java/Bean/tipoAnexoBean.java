@@ -8,6 +8,7 @@ package Bean;
 import Dao.TipoAnexoDao;
 import Dao.TipoAnexoDaoImplements;
 import Model.Tipoanexo;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -48,6 +49,8 @@ public class tipoAnexoBean {
     
     public void insertar (){
         TipoAnexoDao linkDao = new TipoAnexoDaoImplements();
+        Date d = new Date();
+        tipoanexo.setFechareg(d);
         linkDao.insertarTipoAnexo(tipoanexo);
         tipoanexo = new Tipoanexo();
         
