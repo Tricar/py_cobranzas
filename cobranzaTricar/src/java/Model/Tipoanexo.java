@@ -1,5 +1,5 @@
 package Model;
-// Generated 27/07/2015 04:12:04 PM by Hibernate Tools 4.3.1
+// Generated 30/07/2015 11:43:35 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -95,4 +95,10 @@ public class Tipoanexo  implements java.io.Serializable {
     public void setAnexos(Set anexos) {
         this.anexos = anexos;
     }
+
+
+
+
 }
+
+

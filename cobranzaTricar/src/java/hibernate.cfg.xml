@@ -6,6 +6,8 @@
     <property name="hibernate.connection.url">jdbc:sqlserver://servertricar:1433;databaseName=cobranzas</property>
     <property name="hibernate.connection.username">sa</property>
     <property name="hibernate.connection.password">tricar2012</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
     <mapping resource="Model/Tipoanexo.hbm.xml"/>
     <mapping resource="Model/Tipovehiculo.hbm.xml"/>
     <mapping resource="Model/Pago.hbm.xml"/>

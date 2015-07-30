@@ -1,5 +1,5 @@
 package Model;
-// Generated 27/07/2015 04:12:04 PM by Hibernate Tools 4.3.1
+// Generated 30/07/2015 11:43:35 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -32,16 +32,18 @@ public class Empresa  implements java.io.Serializable {
      private String celular;
      private String ciudad;
      private Date fechareg;
+     private String ruc;
      private Set ventas = new HashSet(0);
 
     public Empresa() {
     }
 
 	
-    public Empresa(int idempresa) {
+    public Empresa(int idempresa, String ruc) {
         this.idempresa = idempresa;
+        this.ruc = ruc;
     }
-    public Empresa(int idempresa, String nombre, String direccion, String telefono, String celular, String ciudad, Date fechareg, Set ventas) {
+    public Empresa(int idempresa, String nombre, String direccion, String telefono, String celular, String ciudad, Date fechareg, String ruc, Set ventas) {
        this.idempresa = idempresa;
        this.nombre = nombre;
        this.direccion = direccion;
@@ -49,6 +51,7 @@ public class Empresa  implements java.io.Serializable {
        this.celular = celular;
        this.ciudad = ciudad;
        this.fechareg = fechareg;
+       this.ruc = ruc;
        this.ventas = ventas;
     }
    
@@ -122,6 +125,16 @@ public class Empresa  implements java.io.Serializable {
     
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
+    }
+
+    
+    @Column(name="ruc", nullable=false, length=11)
+    public String getRuc() {
+        return this.ruc;
+    }
+    
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="empresa")
