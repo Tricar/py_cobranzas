@@ -6,14 +6,14 @@ import Model.Empresa;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author master
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class empresaBean {
 
     public Empresa empresa = new Empresa();

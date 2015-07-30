@@ -89,5 +89,13 @@ public class EmpresaDaoImplements implements EmpresaDao{
         }
     }
     
+    public Empresa objEmpresa(int id) {
+        Empresa obj = new Empresa();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        session.load(obj, id);
+        session.close();
+        return obj;
+    }
     
 }

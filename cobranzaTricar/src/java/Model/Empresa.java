@@ -1,5 +1,5 @@
 package Model;
-// Generated 30/07/2015 11:43:35 AM by Hibernate Tools 4.3.1
+// Generated 30/07/2015 04:02:17 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -26,13 +26,13 @@ public class Empresa  implements java.io.Serializable {
 
 
      private int idempresa;
+     private String ruc;
      private String nombre;
      private String direccion;
      private String telefono;
      private String celular;
      private String ciudad;
      private Date fechareg;
-     private String ruc;
      private Set ventas = new HashSet(0);
 
     public Empresa() {
@@ -43,15 +43,15 @@ public class Empresa  implements java.io.Serializable {
         this.idempresa = idempresa;
         this.ruc = ruc;
     }
-    public Empresa(int idempresa, String nombre, String direccion, String telefono, String celular, String ciudad, Date fechareg, String ruc, Set ventas) {
+    public Empresa(int idempresa, String ruc, String nombre, String direccion, String telefono, String celular, String ciudad, Date fechareg, Set ventas) {
        this.idempresa = idempresa;
+       this.ruc = ruc;
        this.nombre = nombre;
        this.direccion = direccion;
        this.telefono = telefono;
        this.celular = celular;
        this.ciudad = ciudad;
        this.fechareg = fechareg;
-       this.ruc = ruc;
        this.ventas = ventas;
     }
    
@@ -65,6 +65,16 @@ public class Empresa  implements java.io.Serializable {
     
     public void setIdempresa(int idempresa) {
         this.idempresa = idempresa;
+    }
+
+    
+    @Column(name="ruc", nullable=false, length=11)
+    public String getRuc() {
+        return this.ruc;
+    }
+    
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
 
     
@@ -125,16 +135,6 @@ public class Empresa  implements java.io.Serializable {
     
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
-    }
-
-    
-    @Column(name="ruc", nullable=false, length=11)
-    public String getRuc() {
-        return this.ruc;
-    }
-    
-    public void setRuc(String ruc) {
-        this.ruc = ruc;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="empresa")
