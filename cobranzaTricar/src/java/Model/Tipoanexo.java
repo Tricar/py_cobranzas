@@ -95,10 +95,4 @@ public class Tipoanexo  implements java.io.Serializable {
     public void setAnexos(Set anexos) {
         this.anexos = anexos;
     }
-
-
-
-
 }
-
-
