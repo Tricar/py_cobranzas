@@ -2,20 +2,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
         <h:outputStylesheet library="css" name="style.css" />
-        <title>Facelets Template</title>
+        <title>Login con Permisos</title>
     </h:head>
 
     <h:body>
 
-        <div id="top">
-            <ui:insert name="top">Top</ui:insert>
+        <div id="cabecera">
+            <ui:insert name="top">
+                <h:form id="frmMenu">
+                    <p:menubar autoDisplay="false">
+                        <p:menuitem value="Inicio" url="index.xhtml" icon="ui-icon-pencil" />  
+                        <p:submenu rendered="#" label="Mantenimiento" icon="ui-icon-document">  
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.mantCli}" value="Clientes" url="#" icon="cliente"/> 
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.mantProv}" value="Proveedores" url="#" icon="proveedor"/>  
+                        </p:submenu>
+
+                        <p:submenu rendered="#" label="Reportes" icon="ui-icon-search">  
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.repCli}" value="Reporte de clientes" url="#" icon="reporte"/>
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.repProv}" value="Reporte de proveedores" url="#" icon="reporte"/>
+                        </p:submenu>  
+
+                        <p:submenu rendered="#" label="Configuracion" icon="ui-icon-gear">  
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.confPerf}" value="Perfiles" url="perfil.xhtml" icon="perfil"/>
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.confUsu}" value="Usuarios" url="usuario.xhtml" icon="usuarios"/>
+                        </p:submenu>  
+
+                        <p:menuitem value="Contrase&ntilde;a" url="#" icon="ui-icon-newwin" />
+                        <p:menuitem value="Salir" url="../login.xhtml" icon="ui-icon-close" />  
+                    </p:menubar>
+                </h:form>
+            </ui:insert>
         </div>
 
         <div id="content" class="center_content">
