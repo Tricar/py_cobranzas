@@ -19,7 +19,7 @@ public class ModeloDaoImplements implements ModeloDao{
         List<Modelo> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Color");
+            Query query = session.createQuery("from Modelo");
             lista = (List<Modelo>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
