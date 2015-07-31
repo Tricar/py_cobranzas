@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet library="css" name="style.css" />
+        <title>Gestion de Empresas</title>
+    </h:head>
+    <h:body>
+        <div class="conteiner">
+            <h:form id="formInsertar">
+                <p:panelGrid columns="2">
+
+                    <p:outputLabel value="Nombre:" />
+                    <p:inputText value="#{menuBean.menu.nombre}" id="txtnombre"/>
+                    
+                    <p:outputLabel value="Imagen:" />
+                    <p:inputText value="#{menuBean.menu.imagen}" id="txtimagen"/>
+
+                    <p:outputLabel value="URL:" />
+                    <p:inputText value="#{menuBean.menu.url}" id="txturl"/>
+
+                    <p:outputLabel value="Acción:" />
+                    <p:inputText value="#{menuBean.menu.action}" id="txtaction"/>
+
+                    <p:outputLabel value="Raiz:" />
+                    <p:inputText value="#{menuBean.menu.raiz}" id="txtraiz"/>
+
+                    <p:outputLabel value="Orden:" />
+                    <p:inputText value="#{menuBean.menu.orden}" id="txtorden"/>
+
+
+                </p:panelGrid>
+                <p:commandButton actionListener="#{menuBean.insertar()}" value="Ingresar Menu" update=":formMostrar"/>
+            </h:form>
+            <h:form id="formMostrar">
+                <p:dataTable var="menu" value="#{menuBean.menus}" 
+                             emptyMessage="No hay nada para mostrar" 
+                             paginator="true" rows="10" paginatorPosition="top" 
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                             rowsPerPageTemplate="10">
+                    <p:column headerText="Id Menu">
+                        <h:outputText value="#{menu.idmenu}" />
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{menu.nombre}" />
+                    </p:column>
+                    <p:column headerText="Imagen">
+                        <h:outputText value="#{menu.imagen}" />
+                    </p:column>
+                    <p:column headerText="URL">
+                        <h:outputText value="#{menu.url}" />
+                    </p:column>
+                    <p:column headerText="Acción">
+                        <h:outputText value="#{menu.action}" />
+                    </p:column>
+                    <p:column headerText="Raiz">
+                        <h:outputText value="#{menu.raiz}" />
+                    </p:column>
+                    <p:column headerText="Orden">
+                        <h:outputText value="#{menu.orden}" />
+                    </p:column>
+                    <p:column headerText=" ">
+                        <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
+                            <f:setPropertyActionListener target="#{menuBean.menu}" value="#{menu}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText=" ">
+                        <p:commandButton oncomplete="dlgeliminar.show()" update=":formEliminar" icon="b-delete">
+                            <f:setPropertyActionListener target="#{menuBean.menu}" value="#{menu}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+            <p:dialog id="dlg" header="Modificar Menu" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
+                <h:form id="formModificar">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Nombre" />
+                        <p:inputText value="#{menuBean.menu.nombre}" maxlength="11" required="true"/>
+                        <p:outputLabel value="Imagen" />
+                        <p:inputText value="#{menuBean.menu.imagen}" />
+                        <p:outputLabel value="URL" />
+                        <p:inputText value="#{menuBean.menu.url}" />
+                        <p:outputLabel value="Acción" />
+                        <p:inputText value="#{menuBean.menu.action}" />
+                        <p:outputLabel value="Raiz" />
+                        <p:inputText value="#{menuBean.menu.raiz}" />
+                        <p:outputLabel value="Orden" />
+                        <p:inputText value="#{menuBean.menu.orden}" />
+
+                    </p:panelGrid>
+                    <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{menuBean.modificar()}" 
+                                     oncomplete="dlgmodificar.hide();" />
+                </h:form>
+            </p:dialog>
+            <p:dialog id="dlg2" header="Eliminar Menu" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+                <h:form id="formEliminar">
+                    <h:outputText value="¿Desea eliminar?" />
+                    <p:commandButton value="Si" actionListener="#{menuBean.eliminar()}" 
+                                     update=":formMostrar" oncomplete="dlgeliminar.hide();" />
+                    <p:commandButton value="No" onclick="dlg2.hide();" />
+                </h:form>
+            </p:dialog>
+        </div>
+    </h:body>
+</html>
