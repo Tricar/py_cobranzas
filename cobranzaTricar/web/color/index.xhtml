@@ -17,6 +17,8 @@
                   widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
             <h:form id="formInsertar">
                 <p:panelGrid columns="2">
+                    <p:outputLabel value="Id:" />
+                    <p:inputText value="#{colorBean.color.idcolor}" disabled="true"/>
                     <p:outputLabel value="Nombre" />
                     <p:inputText value="#{colorBean.color.color}" />
                     
@@ -57,7 +59,9 @@
                   widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
             <h:form id="formModificar">
                 <p:panelGrid columns="2">
-                    <p:outputLabel value="Nombre" />
+                    <p:outputLabel value="Id:" />
+                    <p:inputText value="#{colorBean.color.idcolor}" disabled="true"/>
+                    <p:outputLabel value="Nombre:" />
                     <p:inputText value="#{colorBean.color.color}" />
                     
                 </p:panelGrid>
