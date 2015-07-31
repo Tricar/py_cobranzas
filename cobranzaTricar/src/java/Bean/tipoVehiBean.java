@@ -3,10 +3,14 @@ package Bean;
 import Dao.TipoVehiDao;
 import Dao.TipoVehiDaoImplements;
 import Model.Tipovehiculo;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -18,7 +22,11 @@ public class tipoVehiBean {
 
     public Tipovehiculo vehiculo = new Tipovehiculo();
     public List<Tipovehiculo> vehiculos;
+    private List<SelectItem> SelectItemsTipoVehi;
 
+    public tipoVehiBean() {
+    }
+    
     public Tipovehiculo getVehiculo() {
         return vehiculo;
     }
@@ -36,8 +44,16 @@ public class tipoVehiBean {
     public void setVehiculos(List<Tipovehiculo> vehiculos) {
         this.vehiculos = vehiculos;
     }
-    
-    public tipoVehiBean() {
+
+    public List<SelectItem> getSelectItemsTipoVehi() {
+        this.SelectItemsTipoVehi = new ArrayList<SelectItem>();
+        TipoVehiDao tipoVehiDao = new TipoVehiDaoImplements();
+        List<Tipovehiculo> tipos = tipoVehiDao.mostrarTipoVehiculo();
+        for (Tipovehiculo tipo : tipos) {
+            SelectItem selecItem = new SelectItem(tipo.getIdtipovehiculo(),tipo.getNombre());
+            this.SelectItemsTipoVehi.add(selecItem);
+        }
+        return SelectItemsTipoVehi;
     }
     
     public void insertar (){
@@ -60,5 +76,6 @@ public class tipoVehiBean {
         linkDao.eliminarTipoVehiculo(vehiculo);
         vehiculo = new Tipovehiculo();
     }
+    
     
 }

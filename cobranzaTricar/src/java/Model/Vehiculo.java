@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -186,10 +187,7 @@ public class Vehiculo  implements java.io.Serializable {
     public void setVentas(Set ventas) {
         this.ventas = ventas;
     }
-
-
-
-
+    
 }
 
 

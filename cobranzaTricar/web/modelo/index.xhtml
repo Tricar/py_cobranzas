@@ -3,80 +3,86 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
+        <h:outputStylesheet library="css" name="style.css" />
         <title>Gestion de Modelo</title>
     </h:head>
     <h:body>
-        <div class="conteiner">
-            <h:form>
-                <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
-            </h:form>
-            <p:dialog id="dlg1" header="Crear Modelo" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
-                <h:form id="formInsertar">
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="Id:" />
-                        <p:inputText value="#{modeloBean.modelo.idmodelo}" disabled="true"/>
-                        <p:outputLabel value="Nombre:" />
-                        <p:inputText value="#{modeloBean.modelo.modelo}" />
-                        
-                    </p:panelGrid>
-                    <p:commandButton value="Crear" update=":formMostrar" actionListener="#{modeloBean.insertar()}" 
-                                     oncomplete="dlginsertar.hide();" />
-                </h:form>
-            </p:dialog>
-            <h:form id="formMostrar">
-                <p:dataTable var="modelo" value="#{modeloBean.modelos}" 
-                             emptyMessage="No hay nada para mostrar" 
-                             paginator="true" rows="10" paginatorPosition="top" 
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
-                             {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-                             rowsPerPageTemplate="10">
-                    <p:column headerText="Id Cond.">
-                        <h:outputText value="#{modelo.idmodelo}" />
-                    </p:column>
-                    <p:column headerText="Nombre">
-                        <h:outputText value="#{modelo.modelo}" />
-                    </p:column>
-                    <p:column headerText="Fecha">
-                        <h:outputText value="#{modelo.fecreg}" />
-                    </p:column>
-                    <p:column headerText="Modificar">
-                        <p:commandButton value="Modificar" oncomplete="dlgmodificar.show()" update=":formModificar">
-                            <f:setPropertyActionListener target="#{modeloBean.modelo}" value="#{modelo}" />
-                        </p:commandButton>
-                    </p:column>
-                    <p:column headerText="Eliminar">
-                        <p:commandButton value="Eliminar" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                            <f:setPropertyActionListener target="#{modeloBean.modelo}" value="#{modelo}" />
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-            <p:dialog id="dlg" header="Modificar Modelo" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
-                <h:form id="formModificar">
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="Id:" />
-                        <p:inputText value="#{modeloBean.modelo.idmodelo }" disabled="true"/>
-                        <p:outputLabel value="Nombre:" />
-                        <p:inputText value="#{modeloBean.modelo.modelo}" />
-                        
-                    </p:panelGrid>
-                    <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{modeloBean.modificar()}" 
-                                     oncomplete="dlgmodificar.hide();" />
-                </h:form>
-            </p:dialog>
-            <p:dialog id="dlg2" header="Eliminar Tipo Anexo" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
-                <h:form id="formEliminar">
-                    <h:outputText value="¿Desea eliminar?" />
-                    <p:commandButton value="Si" actionListener="#{modeloBean.eliminar()}" 
-                                     update=":formMostrar" oncomplete="dlgeliminar.hide();" />
-                    <p:commandButton value="No" onclick="dlg2.hide();" />
-                </h:form>
-            </p:dialog>
-        </div>
+        <ui:composition template="./../views/template.xhtml">
+            <ui:define name="content">
+                <div class="conteiner">
+                    <h:form>
+                        <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
+                    </h:form>
+                    <p:dialog id="dlg1" header="Crear Modelo" showEffect="explode" hideEffect="explode" 
+                              widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
+                        <h:form id="formInsertar">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Id:" />
+                                <p:inputText value="#{modeloBean.modelo.idmodelo}" disabled="true"/>
+                                <p:outputLabel value="Nombre:" />
+                                <p:inputText value="#{modeloBean.modelo.modelo}" />
+
+                            </p:panelGrid>
+                            <p:commandButton value="Crear" update=":formMostrar" actionListener="#{modeloBean.insertar()}" 
+                                             oncomplete="dlginsertar.hide();" />
+                        </h:form>
+                    </p:dialog>
+                    <h:form id="formMostrar">
+                        <p:dataTable var="modelo" value="#{modeloBean.modelos}" 
+                                     emptyMessage="No hay nada para mostrar" 
+                                     paginator="true" rows="10" paginatorPosition="top" 
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+                                     {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                     rowsPerPageTemplate="10">
+                            <p:column headerText="Id Cond.">
+                                <h:outputText value="#{modelo.idmodelo}" />
+                            </p:column>
+                            <p:column headerText="Nombre">
+                                <h:outputText value="#{modelo.modelo}" />
+                            </p:column>
+                            <p:column headerText="Fecha">
+                                <h:outputText value="#{modelo.fecreg}" />
+                            </p:column>
+                            <p:column headerText=" ">
+                                <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
+                                    <f:setPropertyActionListener target="#{modeloBean.modelo}" value="#{modelo}" />
+                                </p:commandButton>
+                            </p:column>
+                            <p:column headerText=" ">
+                                <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
+                                    <f:setPropertyActionListener target="#{modeloBean.modelo}" value="#{modelo}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                    <p:dialog id="dlg" header="Modificar Modelo" showEffect="explode" hideEffect="explode" 
+                              widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
+                        <h:form id="formModificar">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Id:" />
+                                <p:inputText value="#{modeloBean.modelo.idmodelo }" disabled="true"/>
+                                <p:outputLabel value="Nombre:" />
+                                <p:inputText value="#{modeloBean.modelo.modelo}" />
+
+                            </p:panelGrid>
+                            <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{modeloBean.modificar()}" 
+                                             oncomplete="dlgmodificar.hide();" />
+                        </h:form>
+                    </p:dialog>
+                    <p:dialog id="dlg2" header="Eliminar Tipo Anexo" showEffect="explode" hideEffect="explode" 
+                              widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+                        <h:form id="formEliminar">
+                            <h:outputText value="¿Desea eliminar?" />
+                            <p:commandButton value="Si" actionListener="#{modeloBean.eliminar()}" 
+                                             update=":formMostrar" oncomplete="dlgeliminar.hide();" />
+                            <p:commandButton value="No" onclick="dlg2.hide();" />
+                        </h:form>
+                    </p:dialog>
+                </div>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>

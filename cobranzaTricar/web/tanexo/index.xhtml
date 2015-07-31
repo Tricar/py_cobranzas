@@ -7,75 +7,76 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <h:outputStylesheet library="css" name="style.css" />
-        <title>Gestion de Condicion de Pago</title>
+        <title>Gestion de Tipo de Anexo</title>
     </h:head>
-    <h:body>
+    <body>
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                 <div class="conteiner">
                     <h:form>
                         <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                     </h:form>
-                    <p:dialog id="dlg1" header="Crear Condicion" showEffect="explode" hideEffect="explode" 
+                    <p:dialog id="dlg1" header="Crear Tipo Anexo" showEffect="explode" hideEffect="explode" 
                               widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
                         <h:form id="formInsertar">
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Id:" />
-                                <p:inputText value="#{condicionPagoBean.condpago.idcondicionpago}" disabled="true"/>
+                                <p:inputText value="#{tipoAnexoBean.tipoanexo.idtipoanexo}" disabled="true"/>
                                 <p:outputLabel value="Nombre:" />
-                                <p:inputText value="#{condicionPagoBean.condpago.nombre}" />
+                                <p:inputText value="#{tipoAnexoBean.tipoanexo.nombre}" />
 
                             </p:panelGrid>
-                            <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{condicionPagoBean.insertar()}" 
+                            <p:commandButton value="Crear" update=":formMostrar" actionListener="#{tipoAnexoBean.insertar()}" 
                                              oncomplete="dlginsertar.hide();" />
                         </h:form>
                     </p:dialog>
                     <h:form id="formMostrar">
-                        <p:dataTable var="condicion" value="#{condicionPagoBean.condpagos}" 
+                        <p:dataTable var="tipo" value="#{tipoAnexoBean.tipoanexos}" 
                                      emptyMessage="No hay nada para mostrar" 
                                      paginator="true" rows="10" paginatorPosition="top" 
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
                                      {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                                      rowsPerPageTemplate="10">
                             <p:column headerText="Id Cond.">
-                                <h:outputText value="#{condicion.idcondicionpago}" />
+                                <h:outputText value="#{tipo.idtipoanexo}" />
                             </p:column>
                             <p:column headerText="Nombre">
-                                <h:outputText value="#{condicion.nombre}" />
+                                <h:outputText value="#{tipo.nombre}" />
                             </p:column>
                             <p:column headerText="Fecha">
-                                <h:outputText value="#{condicion.fechareg}" />
+                                <h:outputText value="#{tipo.fechareg}" />
                             </p:column>
                             <p:column headerText=" ">
                                 <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
-                                    <f:setPropertyActionListener target="#{condicionPagoBean.condpago}" value="#{condicion}" />
+                                    <f:setPropertyActionListener target="#{tipoAnexoBean.tipoanexo}" value="#{tipo}" />
                                 </p:commandButton>
                             </p:column>
                             <p:column headerText=" ">
                                 <p:commandButton oncomplete="dlgeliminar.show()" update=":formEliminar" icon="b-delete">
-                                    <f:setPropertyActionListener target="#{condicionPagoBean.condpago}" value="#{condicion}" />
+                                    <f:setPropertyActionListener target="#{tipoAnexoBean.tipoanexo}" value="#{tipo}" />
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
                     </h:form>
-                    <p:dialog id="dlg" header="Modificar Condicion" showEffect="explode" hideEffect="explode" 
+                    <p:dialog id="dlg" header="Modificar Tipo Anexo" showEffect="explode" hideEffect="explode" 
                               widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
                         <h:form id="formModificar">
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="Id:" />
-                                <p:inputText value="#{condicionPagoBean.condpago.idcondicionpago}" disabled="true"/>
+                                <p:inputText value="#{tipoAnexoBean.tipoanexo.idtipoanexo}" disabled="true"/>
                                 <p:outputLabel value="Nombre:" />
-                                <p:inputText value="#{condicionPagoBean.condpago.nombre}" />
+                                <p:inputText value="#{tipoAnexoBean.tipoanexo.nombre}" />
+
                             </p:panelGrid>
-                            <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{condicionPagoBean.modificar()}" 
+                            <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{tipoAnexoBean.modificar()}" 
                                              oncomplete="dlgmodificar.hide();" />
                         </h:form>
                     </p:dialog>
-                    <p:dialog id="dlg2" header="Eliminar Cond. Pago" showEffect="explode" hideEffect="explode" 
+                    <p:dialog id="dlg2" header="Eliminar Tipo Anexo" showEffect="explode" hideEffect="explode" 
                               widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
                         <h:form id="formEliminar">
                             <h:outputText value="¿Desea eliminar?" />
-                            <p:commandButton value="Si" actionListener="#{condicionPagoBean.eliminar()}" 
+                            <p:commandButton value="Si" actionListener="#{tipoAnexoBean.eliminar()}" 
                                              update=":formMostrar" oncomplete="dlgeliminar.hide();" />
                             <p:commandButton value="No" onclick="dlg2.hide();" />
                         </h:form>
@@ -83,5 +84,5 @@
                 </div>
             </ui:define>
         </ui:composition>
-    </h:body>
+    </body>
 </html>

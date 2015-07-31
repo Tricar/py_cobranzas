@@ -12,4 +12,5 @@ public interface TipoVehiDao {
     public void insertarTipoVehiculo(Tipovehiculo tipovehi);
     public void modificarTipoVehiculo (Tipovehiculo tipovehi);
     public void eliminarTipoVehiculo (Tipovehiculo tipovehi);
+    
 }

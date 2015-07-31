@@ -1,6 +1,6 @@
 package Dao;
 
-import Model.Tipovehiculo;
+import Model.Vehiculo;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -11,16 +11,16 @@ import org.hibernate.Session;
  *
  * @author master
  */
-public class TipoVehiDaoImplements implements TipoVehiDao{
+public class VehiculoDaoImplements implements VehiculoDao{
 
     @Override
-    public List<Tipovehiculo> mostrarTipoVehiculo() {
+    public List<Vehiculo> mostrarVehiculo() {
         Session session = null;
-        List<Tipovehiculo> lista = null;
+        List<Vehiculo> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Tipovehiculo");
-            lista = (List<Tipovehiculo>)query.list();
+            Query query = session.createQuery("FROM Vehiculo");
+            lista = (List<Vehiculo>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }
@@ -33,12 +33,12 @@ public class TipoVehiDaoImplements implements TipoVehiDao{
     }
 
     @Override
-    public void insertarTipoVehiculo(Tipovehiculo tipovehi) {
+    public void insertarTipoVehiculo(Vehiculo vehiculo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(tipovehi);
+            session.save(vehiculo);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -52,12 +52,12 @@ public class TipoVehiDaoImplements implements TipoVehiDao{
     }
 
     @Override
-    public void modificarTipoVehiculo(Tipovehiculo tipovehi) {
+    public void modificarTipoVehiculo(Vehiculo vehiculo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(tipovehi);
+            session.update(vehiculo);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -71,12 +71,12 @@ public class TipoVehiDaoImplements implements TipoVehiDao{
     }
 
     @Override
-    public void eliminarTipoVehiculo(Tipovehiculo tipovehi) {
+    public void eliminarTipoVehiculo(Vehiculo vehiculo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(tipovehi);
+            session.delete(vehiculo);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
