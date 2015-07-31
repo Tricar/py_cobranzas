@@ -1,36 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30/07/2015 04:02:17 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 31/07/2015 10:46:04 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Venta" table="venta" schema="dbo" catalog="cobranzas" optimistic-lock="version">
-        <composite-id name="id" class="Model.VentaId">
-            <key-property name="idanexo" type="int">
-                <column name="idanexo" />
-            </key-property>
-            <key-property name="idvehiculo" type="int">
-                <column name="idvehiculo" />
-            </key-property>
-            <key-property name="idempresa" type="int">
-                <column name="idempresa" />
-            </key-property>
-            <key-property name="idventa" type="int">
-                <column name="idventa" />
-            </key-property>
-            <key-property name="idpago" type="int">
-                <column name="idpago" />
-            </key-property>
-        </composite-id>
-        <many-to-one name="anexo" class="Model.Anexo" update="false" insert="false" fetch="select">
-            <column name="idanexo" not-null="true" />
+        <id name="idventa" type="int">
+            <column name="idventa" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="anexo" class="Model.Anexo" fetch="select">
+            <column name="idanexo" />
         </many-to-one>
-        <many-to-one name="empresa" class="Model.Empresa" update="false" insert="false" fetch="select">
-            <column name="idempresa" not-null="true" />
+        <many-to-one name="empresa" class="Model.Empresa" fetch="select">
+            <column name="idempresa" />
         </many-to-one>
-        <many-to-one name="pago" class="Model.Pago" update="false" insert="false" fetch="select">
+        <many-to-one name="pago" class="Model.Pago" fetch="select">
             <column name="idpago" not-null="true" />
         </many-to-one>
-        <many-to-one name="vehiculo" class="Model.Vehiculo" update="false" insert="false" fetch="select">
+        <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" not-null="true" />
         </many-to-one>
         <property name="fechareg" type="timestamp">
