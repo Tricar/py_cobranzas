@@ -15,16 +15,23 @@
             <ui:define name="content">
         
         <div class="conteiner">
-            <h:form id="formInsertar">
-                <p:panelGrid columns="2">
-
-                    <p:outputLabel value="Tipo Vehículo:" />
-                    <p:inputText value="#{tipoVehiBean.vehiculo.nombre}" id="txtnombre"/>
-
-                    
-                </p:panelGrid>
-                <p:commandButton actionListener="#{tipoVehiBean.insertar()}" value="Ingresar T. Veh." update=":formMostrar"/>
+            <h:form>
+                <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
             </h:form>
+            <p:dialog id="dlg1" header="Crear Tipo Anexo" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
+                <h:form id="formInsertar">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Id:" />
+                        <p:inputText value="#{tipoVehiBean.vehiculo.idtipovehiculo}" disabled="true"/>
+                        <p:outputLabel value="Nombre:" />
+                        <p:inputText value="#{tipoVehiBean.vehiculo.nombre}" />
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="Crear" update=":formMostrar" actionListener="#{tipoVehiBean.insertar()}" 
+                                     oncomplete="dlginsertar.hide();" />
+                </h:form>
+            </p:dialog>
             <h:form id="formMostrar">
                 <p:dataTable var="tipo" value="#{tipoVehiBean.vehiculos}" 
                              emptyMessage="No hay nada para mostrar" 
@@ -57,7 +64,9 @@
                       widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
                 <h:form id="formModificar">
                     <p:panelGrid columns="2">
-                        <p:outputLabel value="Nombre" />
+                        <p:outputLabel value="Id:" />
+                        <p:inputText value="#{tipoVehiBean.vehiculo.idtipovehiculo}" disabled="true"/>
+                        <p:outputLabel value="Nombre:" />
                         <p:inputText value="#{tipoVehiBean.vehiculo.nombre}" />
                         
                     </p:panelGrid>

@@ -9,15 +9,23 @@
         <title>Gestion de Condicion de Pago</title>
     </h:head>
     <h:body>
-        <h:form id="formInsertar">
-            <p:panelGrid columns="2">
-
-                <p:outputLabel value="Nombre de condicion:" />
-                <p:inputText value="#{condicionPagoBean.condpago.nombre}" id="txtnombre"/>
-                
-            </p:panelGrid>
-            <p:commandButton actionListener="#{condicionPagoBean.insertar()}" value="Ingresar Cond. Pago" update=":formMostrar"/>
+        <h:form>
+            <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
         </h:form>
+        <p:dialog id="dlg1" header="Crear Condicion" showEffect="explode" hideEffect="explode" 
+                  widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formInsertar">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Id:" />
+                    <p:inputText value="#{condicionPagoBean.condpago.idcondicionpago}" disabled="true"/>
+                    <p:outputLabel value="Nombre:" />
+                    <p:inputText value="#{condicionPagoBean.condpago.nombre}" />
+                    
+                </p:panelGrid>
+                <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{condicionPagoBean.insertar()}" 
+                                 oncomplete="dlginsertar.hide();" />
+            </h:form>
+        </p:dialog>
         <h:form id="formMostrar">
             <p:dataTable var="condicion" value="#{condicionPagoBean.condpagos}" 
                          emptyMessage="No hay nada para mostrar" 
@@ -50,9 +58,10 @@
                   widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
             <h:form id="formModificar">
                 <p:panelGrid columns="2">
-                    <p:outputLabel value="Nombre" />
+                    <p:outputLabel value="Id:" />
+                    <p:inputText value="#{condicionPagoBean.condpago.idcondicionpago}" disabled="true"/>
+                    <p:outputLabel value="Nombre:" />
                     <p:inputText value="#{condicionPagoBean.condpago.nombre}" />
-                    
                 </p:panelGrid>
                 <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{condicionPagoBean.modificar()}" 
                                  oncomplete="dlgmodificar.hide();" />

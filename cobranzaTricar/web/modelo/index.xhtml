@@ -9,16 +9,23 @@
     </h:head>
     <h:body>
         <div class="conteiner">
-            <h:form id="formInsertar">
-                <p:panelGrid columns="2">
-
-                    <p:outputLabel value="Modelo:" />
-                    <p:inputText value="#{modeloBean.modelo.modelo}" id="txtnombre"/>
-
-                    
-                </p:panelGrid>
-                <p:commandButton actionListener="#{modeloBean.insertar()}" value="Ingresar Modelo" update=":formMostrar"/>
+            <h:form>
+                <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
             </h:form>
+            <p:dialog id="dlg1" header="Crear Modelo" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
+                <h:form id="formInsertar">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Id:" />
+                        <p:inputText value="#{modeloBean.modelo.idmodelo}" disabled="true"/>
+                        <p:outputLabel value="Nombre:" />
+                        <p:inputText value="#{modeloBean.modelo.modelo}" />
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="Crear" update=":formMostrar" actionListener="#{modeloBean.insertar()}" 
+                                     oncomplete="dlginsertar.hide();" />
+                </h:form>
+            </p:dialog>
             <h:form id="formMostrar">
                 <p:dataTable var="modelo" value="#{modeloBean.modelos}" 
                              emptyMessage="No hay nada para mostrar" 
@@ -51,7 +58,9 @@
                       widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
                 <h:form id="formModificar">
                     <p:panelGrid columns="2">
-                        <p:outputLabel value="Nombre" />
+                        <p:outputLabel value="Id:" />
+                        <p:inputText value="#{modeloBean.modelo.idmodelo }" disabled="true"/>
+                        <p:outputLabel value="Nombre:" />
                         <p:inputText value="#{modeloBean.modelo.modelo}" />
                         
                     </p:panelGrid>

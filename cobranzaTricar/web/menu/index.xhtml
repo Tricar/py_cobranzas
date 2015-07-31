@@ -10,31 +10,33 @@
     </h:head>
     <h:body>
         <div class="conteiner">
-            <h:form id="formInsertar">
-                <p:panelGrid columns="2">
-
-                    <p:outputLabel value="Nombre:" />
-                    <p:inputText value="#{menuBean.menu.nombre}" id="txtnombre"/>
-                    
-                    <p:outputLabel value="Imagen:" />
-                    <p:inputText value="#{menuBean.menu.imagen}" id="txtimagen"/>
-
-                    <p:outputLabel value="URL:" />
-                    <p:inputText value="#{menuBean.menu.url}" id="txturl"/>
-
-                    <p:outputLabel value="Acción:" />
-                    <p:inputText value="#{menuBean.menu.action}" id="txtaction"/>
-
-                    <p:outputLabel value="Raiz:" />
-                    <p:inputText value="#{menuBean.menu.raiz}" id="txtraiz"/>
-
-                    <p:outputLabel value="Orden:" />
-                    <p:inputText value="#{menuBean.menu.orden}" id="txtorden"/>
-
-
-                </p:panelGrid>
-                <p:commandButton actionListener="#{menuBean.insertar()}" value="Ingresar Menu" update=":formMostrar"/>
+            <h:form>
+                <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
             </h:form>
+            <p:dialog id="dlg1" header="Crear Menu" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
+                <h:form id="formInsertar">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Id:" />
+                        <p:inputText value="#{menuBean.menu.idmenu}" disabled="true"/>
+                        <p:outputLabel value="Nombre:" />
+                        <p:inputText value="#{menuBean.menu.nombre}" maxlength="11" required="true"/>
+                        <p:outputLabel value="Imagen:" />
+                        <p:inputText value="#{menuBean.menu.imagen}" />
+                        <p:outputLabel value="URL:" />
+                        <p:inputText value="#{menuBean.menu.url}" />
+                        <p:outputLabel value="Acción:" />
+                        <p:inputText value="#{menuBean.menu.action}" />
+                        <p:outputLabel value="Raiz:" />
+                        <p:inputText value="#{menuBean.menu.raiz}" />
+                        <p:outputLabel value="Orden:" />
+                        <p:inputText value="#{menuBean.menu.orden}" />
+
+                    </p:panelGrid>
+                    <p:commandButton value="Crear" update=":formMostrar" actionListener="#{menuBean.insertar()}" 
+                                     oncomplete="dlginsertar.hide();" />
+                </h:form>
+            </p:dialog>
             <h:form id="formMostrar">
                 <p:dataTable var="menu" value="#{menuBean.menus}" 
                              emptyMessage="No hay nada para mostrar" 
@@ -79,17 +81,19 @@
                       widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
                 <h:form id="formModificar">
                     <p:panelGrid columns="2">
-                        <p:outputLabel value="Nombre" />
+                        <p:outputLabel value="Id:" />
+                        <p:inputText value="#{menuBean.menu.idmenu}" disabled="true"/>
+                        <p:outputLabel value="Nombre:" />
                         <p:inputText value="#{menuBean.menu.nombre}" maxlength="11" required="true"/>
-                        <p:outputLabel value="Imagen" />
+                        <p:outputLabel value="Imagen:" />
                         <p:inputText value="#{menuBean.menu.imagen}" />
-                        <p:outputLabel value="URL" />
+                        <p:outputLabel value="URL:" />
                         <p:inputText value="#{menuBean.menu.url}" />
-                        <p:outputLabel value="Acción" />
+                        <p:outputLabel value="Acción:" />
                         <p:inputText value="#{menuBean.menu.action}" />
-                        <p:outputLabel value="Raiz" />
+                        <p:outputLabel value="Raiz:" />
                         <p:inputText value="#{menuBean.menu.raiz}" />
-                        <p:outputLabel value="Orden" />
+                        <p:outputLabel value="Orden:" />
                         <p:inputText value="#{menuBean.menu.orden}" />
 
                     </p:panelGrid>
