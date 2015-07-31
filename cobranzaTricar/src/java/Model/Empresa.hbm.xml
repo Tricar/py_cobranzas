@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 27/07/2015 04:12:04 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 30/07/2015 04:02:17 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Empresa" table="empresa" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idempresa" type="int">
             <column name="idempresa" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
+        <property name="ruc" type="string">
+            <column name="ruc" length="11" not-null="true" />
+        </property>
         <property name="nombre" type="string">
             <column name="nombre" length="30" />
         </property>

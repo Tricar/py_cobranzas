@@ -1,5 +1,5 @@
 package Model;
-// Generated 27/07/2015 04:12:04 PM by Hibernate Tools 4.3.1
+// Generated 30/07/2015 04:02:17 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -26,6 +26,7 @@ public class Empresa  implements java.io.Serializable {
 
 
      private int idempresa;
+     private String ruc;
      private String nombre;
      private String direccion;
      private String telefono;
@@ -38,11 +39,13 @@ public class Empresa  implements java.io.Serializable {
     }
 
 	
-    public Empresa(int idempresa) {
+    public Empresa(int idempresa, String ruc) {
         this.idempresa = idempresa;
+        this.ruc = ruc;
     }
-    public Empresa(int idempresa, String nombre, String direccion, String telefono, String celular, String ciudad, Date fechareg, Set ventas) {
+    public Empresa(int idempresa, String ruc, String nombre, String direccion, String telefono, String celular, String ciudad, Date fechareg, Set ventas) {
        this.idempresa = idempresa;
+       this.ruc = ruc;
        this.nombre = nombre;
        this.direccion = direccion;
        this.telefono = telefono;
@@ -62,6 +65,16 @@ public class Empresa  implements java.io.Serializable {
     
     public void setIdempresa(int idempresa) {
         this.idempresa = idempresa;
+    }
+
+    
+    @Column(name="ruc", nullable=false, length=11)
+    public String getRuc() {
+        return this.ruc;
+    }
+    
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
 
     

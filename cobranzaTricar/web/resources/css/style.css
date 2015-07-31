@@ -19,3 +19,11 @@ body{
     margin-right: auto;
     font-size: 85%;
 }
+
+.ui-state-default .b-delete{
+    background-image: url(images/delete.gif);
+}
+
+.ui-state-default .b-update{
+    background-image: url(images/edit.gif);
+}
