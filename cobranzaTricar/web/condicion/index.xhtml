@@ -12,7 +12,6 @@
     <h:body>
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
-                <div class="conteiner">
                     <h:form>
                         <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                     </h:form>
@@ -80,7 +79,6 @@
                             <p:commandButton value="No" onclick="dlg2.hide();" />
                         </h:form>
                     </p:dialog>
-                </div>
             </ui:define>
         </ui:composition>
     </h:body>
