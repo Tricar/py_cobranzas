@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -18,39 +19,62 @@
         <div id="cabecera">
             <ui:insert name="top">
                 <h:form id="frmMenu">
-                    <p:menubar autoDisplay="false">
-                        <p:menuitem value="Inicio" url="index.xhtml" icon="ui-icon-pencil" />  
-                        <p:submenu rendered="#" label="Mantenimiento" icon="ui-icon-document">  
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.mantCli}" value="Clientes" url="#" icon="cliente"/> 
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.mantProv}" value="Proveedores" url="#" icon="proveedor"/>  
+                    <p:menubar>
+                        <p:menuitem value="Inicio" icon="ui-icon-home" url="../views/index.xhtml" />
+
+                        <p:submenu label="Usuario" icon="ui-icon-person">
+                            <p:menuitem value="Ver" url="../usuario/index.xhtml" icon="ui-icon-bookmark" />
+                            <p:menuitem value="Anexo" url="../tipoAnexo/index.xhtml" icon="ui-icon-note" />
+                            <p:menuitem value="Tipo Anexo" url="../anexo/index.xhtml" icon="ui-icon-note" />
                         </p:submenu>
 
-                        <p:submenu rendered="#" label="Reportes" icon="ui-icon-search">  
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.repCli}" value="Reporte de clientes" url="#" icon="reporte"/>
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.repProv}" value="Reporte de proveedores" url="#" icon="reporte"/>
-                        </p:submenu>  
+                        <p:submenu label="Menu" icon="ui-icon-tag">
+                            <p:menuitem value="Ver" url="#" icon="ui-icon-bookmark" />
+                            <p:menuitem value="Asignar Menu" icon="ui-icon-eject" />
+                        </p:submenu>
 
-                        <p:submenu rendered="#" label="Configuracion" icon="ui-icon-gear">  
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.confPerf}" value="Perfiles" url="perfil.xhtml" icon="perfil"/>
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.confUsu}" value="Usuarios" url="usuario.xhtml" icon="usuarios"/>
-                        </p:submenu>  
+                        <p:submenu label="Empresa" icon="ui-icon-gear">
+                            <p:menuitem value="Ver" url="../empresa/index.xhtml" icon="ui-icon-disk" />
+                            <p:menuitem value="Update" url="../empresa/index.xhtml" icon="ui-icon-arrowrefresh-1-w" />
+                            <p:menuitem value="Delete" url="../empresa/index.xhtml" icon="ui-icon-close" ajax="false"/>
+                        </p:submenu>
+                        
+                        <p:submenu label="Vehiculo" icon="ui-icon-wrench">
+                            <p:menuitem value="Ver" url="../vehiculo/index.xhtml" icon="ui-icon-disk" />
+                            <p:menuitem value="Update" url="../empresa/index.xhtml" icon="ui-icon-arrowrefresh-1-w" />
+                            <p:menuitem value="Delete" url="../empresa/index.xhtml" icon="ui-icon-close" ajax="false"/>
+                        </p:submenu>
 
-                        <p:menuitem value="Contrase&ntilde;a" url="#" icon="ui-icon-newwin" />
-                        <p:menuitem value="Salir" url="../login.xhtml" icon="ui-icon-close" />  
+                        <p:menuitem value="Clave" url="#" icon="ui-icon-suitcase" />
+                        <p:menuitem value="Salir" actionListener="#{loginBean.logout}" icon="ui-icon-power" 
+                                    oncomplete="handleLoginRequest(xhr, status, args)"/>
+
+                        <f:facet name="options">
+                            <p:inputText style="margin-right:10px" placeholder="Buscar"/>
+                            <p:commandButton type="button" value="Salir" icon="ui-icon-extlink" />
+                        </f:facet>
+
                     </p:menubar>
                 </h:form>
             </ui:insert>
         </div>
 
         <div id="content" class="center_content">
-            
+
             <ui:insert name="content">Content</ui:insert>
-            
+
         </div>
 
         <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
+            <ui:insert name="bottom">INDUSTRIASTRICAR &copy; 2015</ui:insert>
         </div>
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.loggetOut) {
+                    location.href = args.ruta;
+                }
+            }
+        </script>
 
     </h:body>
 

@@ -13,11 +13,10 @@ body{
 }
 
 .conteiner{
-    margin-top: 10%;
-    width: 800px;
+    width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 85%;
+    font-size: 95%;
 }
 
 .ui-state-default .b-delete{

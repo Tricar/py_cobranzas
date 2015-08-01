@@ -8,6 +8,8 @@
 }
 
 #bottom {
+    text-align: center;
+    text-decoration-style: inherit;
     position: relative;
     background-color: #c2dfef;
     padding: 5px;
@@ -58,4 +60,18 @@
   text-decoration : underline;
 }
 
+#cabecera {
+    position: relative;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
 
+#centrar {
+    position:absolute;
+    top:50%;
+    left: 50%;
+    margin-top: -210px;
+    margin-left: -320px;
+    margin: 0px 0px 30px 0px;
+}

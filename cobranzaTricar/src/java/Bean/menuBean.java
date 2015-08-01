@@ -1,64 +1,41 @@
+
 package Bean;
 
-import Dao.MenuDao;
-import Dao.MenuDaoImplements;
-import Model.Menu;
-import java.util.Date;
-import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
- * @author master
+ * @author Ricardo
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class menuBean {
-    
-    public Menu menu = new Menu();
-    public List<Menu> menus;
 
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public List<Menu> getMenus() {
-        MenuDao menudao = new MenuDaoImplements();
-        menus = menudao.mostrarMenu();
-        return menus;
-    }
-
-    public void setMenus(List<Menu> menus) {
-        this.menus = menus;
-    }
-    
+    /**
+     * Creates a new instance of menuBean
+     */
     public menuBean() {
     }
     
-    public void insertar (){
-        MenuDao linkDao = new MenuDaoImplements();
-        Date d = new Date();
-        menu.setFechareg(d);
-        linkDao.insertarMenu(menu);
-        menu = new Menu();
+    public void save() {
         
     }
-    
-    public void modificar(){
-        MenuDao linkDao = new MenuDaoImplements();
-        linkDao.modificarMenu(menu);
-        menu = new Menu();
+     
+    public void update() {
+        
     }
-    
-    public void eliminar(){
-        MenuDao linkDao = new MenuDaoImplements();
-        linkDao.eliminarMenu(menu);
-        menu = new Menu();
+     
+    public void delete() {
+        
+    }
+     
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+
     }
     
 }

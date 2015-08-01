@@ -6,32 +6,33 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <h:outputStylesheet library="css" name="style.css" />
-        <title>Gestion de Vehiculos</title>
+        <title>Gestion de Tipo de Anexo</title>
     </h:head>
     <body>
 
         <ui:composition template="./../views/template.xhtml">
+
             <ui:define name="content">
+
                 <h:form id="formInsertar">
                     <p:panelGrid columns="2">
 
-                        <p:outputLabel value="Tipo Vehículo:" />
-                        <p:inputText value="#{tipoVehiBean.vehiculo.nombre}" id="txtnombre"/>
+                        <p:outputLabel value="Tipo Anexo:" />
+                        <p:inputText value="#{tipoAnexoBean.tipoanexo.nombre}" id="txtnombre"/>
 
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{tipoVehiBean.insertar()}" value="Ingresar T. Veh." update=":formMostrar"/>
+                    <p:commandButton actionListener="#{tipoAnexoBean.insertar()}" value="Ingresar Tipo Anexo" update=":formMostrar"/>
                 </h:form>
                 <h:form id="formMostrar">
-                    <p:dataTable var="tipo" value="#{tipoVehiBean.vehiculos}" 
+                    <p:dataTable var="tipo" value="#{tipoAnexoBean.tipoanexos}" 
                                  emptyMessage="No hay nada para mostrar" 
                                  paginator="true" rows="10" paginatorPosition="top" 
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
                                  {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                                  rowsPerPageTemplate="10">
                         <p:column headerText="Id Cond.">
-                            <h:outputText value="#{tipo.idtipovehiculo}" />
+                            <h:outputText value="#{tipo.idtipoanexo}" />
                         </p:column>
                         <p:column headerText="Nombre">
                             <h:outputText value="#{tipo.nombre}" />
@@ -41,12 +42,12 @@
                         </p:column>
                         <p:column headerText="Modificar">
                             <p:commandButton value="Modificar" oncomplete="dlgmodificar.show()" update=":formModificar">
-                                <f:setPropertyActionListener target="#{tipoVehiBean.vehiculo}" value="#{tipo}" />
+                                <f:setPropertyActionListener target="#{tipoAnexoBean.tipoanexo}" value="#{tipo}" />
                             </p:commandButton>
                         </p:column>
                         <p:column headerText="Eliminar">
                             <p:commandButton value="Eliminar" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                                <f:setPropertyActionListener target="#{tipoVehiBean.vehiculo}" value="#{tipo}" />
+                                <f:setPropertyActionListener target="#{tipoAnexoBean.tipoanexo}" value="#{tipo}" />
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -56,10 +57,10 @@
                     <h:form id="formModificar">
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Nombre" />
-                            <p:inputText value="#{tipoVehiBean.vehiculo.nombre}" />
+                            <p:inputText value="#{tipoAnexoBean.tipoanexo.nombre}" />
 
                         </p:panelGrid>
-                        <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{tipoVehiBean.modificar()}" 
+                        <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{tipoAnexoBean.modificar()}" 
                                          oncomplete="dlgmodificar.hide();" />
                     </h:form>
                 </p:dialog>
@@ -67,7 +68,7 @@
                           widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formEliminar">
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{tipoVehiBean.eliminar()}" 
+                        <p:commandButton value="Si" actionListener="#{tipoAnexoBean.eliminar()}" 
                                          update=":formMostrar" oncomplete="dlgeliminar.hide();" />
                         <p:commandButton value="No" onclick="dlg2.hide();" />
                     </h:form>

@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../views/template.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form>
+                    <p:commandButton update=":formCreate" oncomplete="PF('diagUsucre').show()" 
+                                     icon="ui-icon-plusthick" title="Insertar" value="Nuevo" />                        
+                </h:form>
+                <h:form id="formDataTable">
+                    <p:dataTable id="basicDT" var="usu" value="#{usuarioBean.usuarios}">
+                        <f:facet name="header">Lista de Usuarios</f:facet>
+                        <p:column headerText="Id">
+                            <h:outputText value="#{usu.idusuario}" />
+                        </p:column>
+                        <p:column headerText="Usuario">
+                            <h:outputText value="#{usu.usuario}" />
+                        </p:column>
+                        <p:column headerText="Clave">
+                            <h:outputText value="#{usu.clave}" />
+                        </p:column>
+                        <p:column headerText="Anexo">
+                            <h:outputText value="#{usu.anexo.nombre}" />
+                        </p:column>
+                        <p:column style="width:32px;text-align: center" headerText="Operaciones">
+                            <p:commandButton update=":formUpdate" oncomplete="PF('diagUsuMod').show()" 
+                                             icon="b-update" title="Modificar">
+                                <f:setPropertyActionListener value="#{usu}" target="#{usuarioBean.usuario}" />
+                            </p:commandButton>
+                            <p:commandButton update=":formDelete" oncomplete="PF('dlgUsudel').show()" 
+                                             icon="b-delete" title="Eliminar">
+                                <f:setPropertyActionListener value="#{usu}" target="#{usuarioBean.usuario}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <h:form id="formCreate">
+                    <p:dialog header="Insertar Usuario" widgetVar="diagUsucre" modal="true" id="dlgusu" 
+                              showEffect="explode" hideEffect="explode" resizable="false">
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" columnClasses="label,value">
+                                <h:outputText value="Id:" />
+                                <p:inputText value="#{usuarioBean.usuario.idusuario}" />
+
+                                <h:outputText value="Usuario:" />
+                                <p:inputText value="#{usuarioBean.usuario.usuario}" />
+
+                                <h:outputText value="Clave:" />
+                                <p:inputText value="#{usuarioBean.usuario.clave}" />
+
+                                <h:outputText value="Anexo:" />
+                                <p:inputText value="#{usuarioBean.usuario.anexo.idanexo}" />
+
+                                <f:facet name="footer">
+                                    <p:separator />
+                                    <p:commandButton update=":formDataTable" oncomplete="diagUsucre.hide()" icon="ui-icon-disk" 
+                                                     actionListener="#{usuarioBean.btnCreateUsuario(Event)}" title="Insertar" value="Guargar" />
+                                    <p:commandButton oncomplete="diagUsucre.hide()" icon="ui-icon-close" title="Insertar" value="Cancelar" />
+                                </f:facet>
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>                  
+                </h:form>
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar Usuario" widgetVar="diagUsuMod" modal="true" id="dlgusu" 
+                              showEffect="explode" hideEffect="explode" resizable="false">
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" columnClasses="label,value">
+                                <h:outputText value="Id:" />
+                                <p:inputText value="#{usuarioBean.usuario.idusuario}" />
+
+                                <h:outputText value="Usuario:" />
+                                <p:inputText value="#{usuarioBean.usuario.usuario}" />
+
+                                <h:outputText value="Clave:" />
+                                <p:inputText value="#{usuarioBean.usuario.clave}" />
+
+                                <h:outputText value="Anexo:" />
+                                <p:inputText value="#{usuarioBean.usuario.anexo.nombre}" />
+
+                                <f:facet name="footer">
+                                    <p:separator />
+                                    <p:commandButton update=":formDataTable" oncomplete="diagUsuMod.hide()" icon="ui-icon-disk" 
+                                                     title="Insertar" value="Guargar" />
+                                    <p:commandButton oncomplete="diagUsuMod.hide()" icon="ui-icon-close" title="Insertar" value="Cancelar" />
+                                </f:facet>
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>                  
+                </h:form>
+                <h:form id="formDelete">
+                    <p:confirmDialog showEffect="explode" hideEffect="explode" header="Eliminar Usuario" 
+                                     message="¿Esta seguro de Eliminar el registro?" widgetVar="dlgUsudel">
+                        <p:commandButton id="btnyes" value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                         update=":msgs" oncomplete="dlgUsudel.hide()" actionListener="#{usuarioBean.btnDeleteUsuario}" />
+                        <p:commandButton id="btnno" value="No" type="button" styleClass="ui-confirmdialog-no" 
+                                         icon="ui-icon-close" onclick="dlgUsudel.hide()" />
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
