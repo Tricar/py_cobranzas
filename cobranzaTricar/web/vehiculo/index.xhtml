@@ -25,7 +25,7 @@
                                 <p:outputLabel value="Marca:" />
                                 <p:inputText value="#{vehiculoBean.vehiculo.marca}" />
                                 <p:outputLabel value="Tipo:" />
-                                <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo.idtipovehiculo}">
+                                <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}">
                                     <f:selectItem itemLabel="-Seleccione-" itemValue=" "/>
                                     <f:selectItems value="#{tipoVehiBean.selectItemsTipoVehi}"/>
                                 </p:selectOneMenu>
@@ -35,9 +35,7 @@
                                 <p:inputText value="#{vehiculoBean.vehiculo.motor}" />
                                 <p:outputLabel value="Año:" />
                                 <p:inputText value="#{vehiculoBean.vehiculo.anofabri}" />
-                                <p:outputLabel value="Precio:" />
-                                <p:inputText value="#{vehiculoBean.vehiculo.precio}" />
-                            </p:panelGrid>
+                                </p:panelGrid>
                             <p:commandButton value="Crear" update=":formMostrar" actionListener="#{vehiculoBean.insertar()}" 
                                              oncomplete="dlginsertar.hide();" />
                         </h:form>
@@ -55,6 +53,9 @@
                             <p:column headerText="Marca">
                                 <h:outputText value="#{vehiculo.marca}" />
                             </p:column>
+                            <p:column headerText="Tipo">
+                                <h:outputText value="#{vehiculo.tipovehiculo}" />
+                            </p:column>
                             <p:column headerText="Serie">
                                 <h:outputText value="#{vehiculo.serie}" />
                             </p:column>
@@ -63,9 +64,6 @@
                             </p:column>
                             <p:column headerText="Año">
                                 <h:outputText value="#{vehiculo.anofabri}" />
-                            </p:column>
-                            <p:column headerText="Precio">
-                                <h:outputText value="#{vehiculo.precio}" />
                             </p:column>
                             <p:column headerText=" ">
                                 <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
@@ -94,8 +92,7 @@
                                 <p:inputText value="#{vehiculoBean.vehiculo.motor}" />
                                 <p:outputLabel value="Año:" />
                                 <p:inputText value="#{vehiculoBean.vehiculo.anofabri}" />
-                                <p:outputLabel value="Precio:" />
-                                <p:inputText value="#{vehiculoBean.vehiculo.precio}" />
+                                
                             </p:panelGrid>
                             <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{vehiculoBean.modificar()}" 
                                              oncomplete="dlgmodificar.hide();" />

@@ -2,11 +2,9 @@ package Bean;
 
 import Dao.VehiculoDao;
 import Dao.VehiculoDaoImplements;
-import Model.Tipovehiculo;
 import Model.Vehiculo;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -16,8 +14,10 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
+
 public class vehiculoBean {
     
+//    public Tipovehiculo tipovehiculo = new Tipovehiculo();
     public Vehiculo vehiculo = new Vehiculo();
     public List<Vehiculo> vehiculos;
        
@@ -63,8 +63,5 @@ public class vehiculoBean {
         vehiculo = new Vehiculo();
     }
     
-    @PostConstruct
-    public void init(){
-        Tipovehiculo tipovehiculo = new Tipovehiculo();
-    }
+    
 }

@@ -32,12 +32,6 @@
         <property name="motor" type="string">
             <column name="motor" length="20" />
         </property>
-        <property name="stock" type="java.lang.Integer">
-            <column name="stock" />
-        </property>
-        <property name="precio" type="big_decimal">
-            <column name="precio" precision="17" scale="4" />
-        </property>
         <set name="ventas" table="venta" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idvehiculo" not-null="true" />

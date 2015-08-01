@@ -38,8 +38,6 @@ public class Vehiculo  implements java.io.Serializable {
      private Integer anofabri;
      private Date fechareg;
      private String motor;
-     private Integer stock;
-     private BigDecimal precio;
      private Set ventas = new HashSet(0);
 
     public Vehiculo() {
@@ -62,8 +60,6 @@ public class Vehiculo  implements java.io.Serializable {
        this.anofabri = anofabri;
        this.fechareg = fechareg;
        this.motor = motor;
-       this.stock = stock;
-       this.precio = precio;
        this.ventas = ventas;
     }
    
@@ -157,26 +153,6 @@ public class Vehiculo  implements java.io.Serializable {
     
     public void setMotor(String motor) {
         this.motor = motor;
-    }
-
-    
-    @Column(name="stock")
-    public Integer getStock() {
-        return this.stock;
-    }
-    
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    
-    @Column(name="precio", precision=17, scale=4)
-    public BigDecimal getPrecio() {
-        return this.precio;
-    }
-    
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="vehiculo")
