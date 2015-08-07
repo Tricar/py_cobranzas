@@ -8,10 +8,13 @@ package Bean;
 import Dao.ColorDao;
 import Dao.ColorDaoImplements;
 import Model.Color;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -19,11 +22,15 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class colorBean {
+public class colorBean implements Serializable{
     
     public Color color = new Color();
     public List<Color> colores;
+    private List<SelectItem> SelectItemsColor;
 
+    public colorBean() {
+    }
+    
     public Color getColor() {
         return color;
     }
@@ -41,8 +48,20 @@ public class colorBean {
     public void setColores(List<Color> colores) {
         this.colores = colores;
     }
-    
-    public colorBean() {
+
+    public List<SelectItem> getSelectItemsColor() {
+        this.SelectItemsColor = new ArrayList<SelectItem>();
+        ColorDao colorDao = new ColorDaoImplements();
+        List<Color> colores = colorDao.mostrarColor();
+        for (Color color : colores) {
+            SelectItem selecItem = new SelectItem(color.getIdcolor(), color.getColor());
+            this.SelectItemsColor.add(selecItem);
+        }
+        return SelectItemsColor;
+    }
+
+    public void setSelectItemsColor(List<SelectItem> SelectItemsColor) {
+        this.SelectItemsColor = SelectItemsColor;
     }
     
     public void insertar (){

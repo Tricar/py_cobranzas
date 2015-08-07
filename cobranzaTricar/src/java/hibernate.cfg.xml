@@ -8,6 +8,7 @@
     <property name="hibernate.connection.password">tricar2012</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <mapping resource="Model/Tipoanexo.hbm.xml"/>
     <mapping resource="Model/Tipovehiculo.hbm.xml"/>
     <mapping resource="Model/Pago.hbm.xml"/>

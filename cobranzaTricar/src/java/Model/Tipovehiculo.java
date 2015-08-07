@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Tipovehiculo  implements java.io.Serializable {
 
 
-     private int idtipovehiculo;
+     private Integer idtipovehiculo;
      private String nombre;
      private Date fechareg;
      private Set vehiculos = new HashSet(0);
@@ -34,10 +34,10 @@ public class Tipovehiculo  implements java.io.Serializable {
     }
 
 	
-    public Tipovehiculo(int idtipovehiculo) {
+    public Tipovehiculo(Integer idtipovehiculo) {
         this.idtipovehiculo = idtipovehiculo;
     }
-    public Tipovehiculo(int idtipovehiculo, String nombre, Date fechareg, Set vehiculos) {
+    public Tipovehiculo(Integer idtipovehiculo, String nombre, Date fechareg, Set vehiculos) {
        this.idtipovehiculo = idtipovehiculo;
        this.nombre = nombre;
        this.fechareg = fechareg;
@@ -48,11 +48,11 @@ public class Tipovehiculo  implements java.io.Serializable {
 
     
     @Column(name="idtipovehiculo", unique=true, nullable=false)
-    public int getIdtipovehiculo() {
+    public Integer getIdtipovehiculo() {
         return this.idtipovehiculo;
     }
     
-    public void setIdtipovehiculo(int idtipovehiculo) {
+    public void setIdtipovehiculo(Integer idtipovehiculo) {
         this.idtipovehiculo = idtipovehiculo;
     }
 
@@ -85,7 +85,19 @@ public class Tipovehiculo  implements java.io.Serializable {
         this.vehiculos = vehiculos;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idtipovehiculo != null)
+            ? idtipovehiculo.equals(((Tipovehiculo) other).idtipovehiculo)
+            : (other == this);
+    }
 
+    @Override
+    public int hashCode() {
+        return (idtipovehiculo != null) 
+            ? (getClass().hashCode() + idtipovehiculo.hashCode())
+            : super.hashCode();
+    }
 
 
 }

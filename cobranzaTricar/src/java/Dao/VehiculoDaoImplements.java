@@ -33,7 +33,7 @@ public class VehiculoDaoImplements implements VehiculoDao{
     }
 
     @Override
-    public void insertarTipoVehiculo(Vehiculo vehiculo) {
+    public void insertarVehiculo(Vehiculo vehiculo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -52,7 +52,7 @@ public class VehiculoDaoImplements implements VehiculoDao{
     }
 
     @Override
-    public void modificarTipoVehiculo(Vehiculo vehiculo) {
+    public void modificarVehiculo(Vehiculo vehiculo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -71,7 +71,7 @@ public class VehiculoDaoImplements implements VehiculoDao{
     }
 
     @Override
-    public void eliminarTipoVehiculo(Vehiculo vehiculo) {
+    public void eliminarVehiculo(Vehiculo vehiculo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();

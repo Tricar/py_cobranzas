@@ -3,10 +3,13 @@ package Bean;
 import Dao.ModeloDao;
 import Dao.ModeloDaoImplements;
 import Model.Modelo;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -14,11 +17,15 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class modeloBean {
+public class modeloBean implements Serializable{
     
     public Modelo modelo = new Modelo();
     public List<Modelo> modelos;
-
+    private List<SelectItem> SelectItemsmodelo;
+  
+    public modeloBean() {
+    }
+    
     public Modelo getModelo() {
         return modelo;
     }
@@ -36,8 +43,20 @@ public class modeloBean {
     public void setModelos(List<Modelo> modelos) {
         this.modelos = modelos;
     }
-    
-    public modeloBean() {
+
+    public void setSelectItemsmodelo(List<SelectItem> SelectItemsmodelo) {
+        this.SelectItemsmodelo = SelectItemsmodelo;
+    }
+
+    public List<SelectItem> getSelectItemsmodelo() {
+        this.SelectItemsmodelo = new ArrayList<SelectItem>();
+        ModeloDao modeloDao = new ModeloDaoImplements();
+        List<Modelo> modelos = modeloDao.mostrarModelo();
+        for (Modelo modelo : modelos) {
+            SelectItem selecItem = new SelectItem(modelo.getIdmodelo(),modelo.getModelo());
+            this.SelectItemsmodelo.add(selecItem);
+        }
+        return SelectItemsmodelo;
     }
     
     public void insertar (){

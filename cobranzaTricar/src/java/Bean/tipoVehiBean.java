@@ -3,12 +3,11 @@ package Bean;
 import Dao.TipoVehiDao;
 import Dao.TipoVehiDaoImplements;
 import Model.Tipovehiculo;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
@@ -18,7 +17,7 @@ import javax.faces.model.SelectItem;
  */
 @ManagedBean
 @SessionScoped
-public class tipoVehiBean {
+public class tipoVehiBean implements Serializable{
 
     public Tipovehiculo vehiculo = new Tipovehiculo();
     public List<Tipovehiculo> vehiculos;
@@ -50,7 +49,7 @@ public class tipoVehiBean {
         TipoVehiDao tipoVehiDao = new TipoVehiDaoImplements();
         List<Tipovehiculo> tipos = tipoVehiDao.mostrarTipoVehiculo();
         for (Tipovehiculo tipo : tipos) {
-            SelectItem selecItem = new SelectItem(tipo.getIdtipovehiculo(),tipo.getNombre());
+            SelectItem selecItem = new SelectItem(tipo,tipo.getNombre());
             this.SelectItemsTipoVehi.add(selecItem);
         }
         return SelectItemsTipoVehi;

@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Color  implements java.io.Serializable {
 
 
-     private int idcolor;
+     private Integer idcolor;
      private String color;
      private Date fecreg;
      private Set vehiculos = new HashSet(0);
@@ -34,12 +34,12 @@ public class Color  implements java.io.Serializable {
     }
 
 	
-    public Color(int idcolor, String color, Date fecreg) {
+    public Color(Integer idcolor, String color, Date fecreg) {
         this.idcolor = idcolor;
         this.color = color;
         this.fecreg = fecreg;
     }
-    public Color(int idcolor, String color, Date fecreg, Set vehiculos) {
+    public Color(Integer idcolor, String color, Date fecreg, Set vehiculos) {
        this.idcolor = idcolor;
        this.color = color;
        this.fecreg = fecreg;
@@ -50,11 +50,11 @@ public class Color  implements java.io.Serializable {
 
     
     @Column(name="idcolor", unique=true, nullable=false)
-    public int getIdcolor() {
+    public Integer getIdcolor() {
         return this.idcolor;
     }
     
-    public void setIdcolor(int idcolor) {
+    public void setIdcolor(Integer idcolor) {
         this.idcolor = idcolor;
     }
 
@@ -87,6 +87,19 @@ public class Color  implements java.io.Serializable {
         this.vehiculos = vehiculos;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idcolor != null)
+            ? idcolor.equals(((Color) other).idcolor)
+            : (other == this);
+    }
+
+    @Override
+    public int hashCode() {
+        return (idcolor != null) 
+            ? (getClass().hashCode() + idcolor.hashCode())
+            : super.hashCode();
+    }
 
 
 

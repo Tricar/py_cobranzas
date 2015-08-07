@@ -62,7 +62,8 @@ public class Vehiculo  implements java.io.Serializable {
        this.motor = motor;
        this.ventas = ventas;
     }
-   
+
+
      @Id 
 
     
@@ -125,7 +126,6 @@ public class Vehiculo  implements java.io.Serializable {
         this.serie = serie;
     }
 
-    
     @Column(name="anofabri")
     public Integer getAnofabri() {
         return this.anofabri;
@@ -163,7 +163,7 @@ public class Vehiculo  implements java.io.Serializable {
     public void setVentas(Set ventas) {
         this.ventas = ventas;
     }
-    
+  
 }
 
 
