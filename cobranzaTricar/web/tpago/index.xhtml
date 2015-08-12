@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <h:outputStylesheet library="css" name="style.css" />
+        <title>Gestion de Tiempo de Pago </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../views/template.xhtml">
+
+            <ui:define name="content">
+                    <h:form>
+                        <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" update=":formInsertar">
+
+                        </p:commandButton>
+                    </h:form>
+                    <p:dialog id="dlg1" header="Nuevo T. Pago" showEffect="explode" hideEffect="explode" 
+                              widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
+                        <h:form id="formInsertar">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Id:" />
+                                <p:inputText value="#{tiempoPagoBean.tpago.idtiempo}" disabled="true"/>
+                                <p:outputLabel value="Nombre" />
+                                <p:inputText value="#{tiempoPagoBean.tpago.descripcion}" />
+                            </p:panelGrid>
+                            <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{tiempoPagoBean.insertar()}" 
+                                             oncomplete="dlginsertar.hide();" />
+                        </h:form>
+                    </p:dialog>
+                    <h:form id="formMostrar">
+                        <p:dataTable var="tpago" value="#{tiempoPagoBean.tpagos}" 
+                                     emptyMessage="No hay nada para mostrar" 
+                                     paginator="true" rows="10" paginatorPosition="top" 
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+                                     {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                                     rowsPerPageTemplate="10">
+                            <p:column headerText="Id.">
+                                <h:outputText value="#{tpago.idtiempo}" />
+                            </p:column>
+                            <p:column headerText="Descripción">
+                                <h:outputText value="#{tpago.descripcion}" />
+                            </p:column>
+                            <p:column headerText=" ">
+                                <p:commandButton icon="b-update" oncomplete="dlgmodificar.show()" update=":formModificar">
+                                    <f:setPropertyActionListener target="#{tiempoPagoBean.tpago}" value="#{tpago}" />
+                                </p:commandButton>
+                            </p:column>
+                            <p:column headerText=" ">
+                                <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
+                                    <f:setPropertyActionListener target="#{tiempoPagoBean.tpago}" value="#{tpago}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                    <p:dialog id="dlg" header="Modificar Tiempo" showEffect="explode" hideEffect="explode" 
+                              widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
+                        <h:form id="formModificar">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Id:" />
+                                <p:inputText value="#{tiempoPagoBean.tpago.idtiempo}" disabled="true"/>
+                                <p:outputLabel value="Nombre" />
+                                <p:inputText value="#{tiempoPagoBean.tpago.descripcion}" />
+                            </p:panelGrid>
+                            <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{tiempoPagoBean.modificar()}" 
+                                             oncomplete="dlgmodificar.hide();" />
+                        </h:form>
+                    </p:dialog>
+                    <p:dialog id="dlg2" header="Eliminar T. Pago" showEffect="explode" hideEffect="explode" 
+                              widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+                        <h:form id="formEliminar">
+                            <h:outputText value="¿Desea eliminar?" />
+                            <p:commandButton value="Si" actionListener="#{tiempoPagoBean.eliminar()}" 
+                                             update=":formMostrar" oncomplete="dlgeliminar.hide();" />
+                            <p:commandButton value="No" onclick="dlg2.hide();" />
+                        </h:form>
+                    </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
