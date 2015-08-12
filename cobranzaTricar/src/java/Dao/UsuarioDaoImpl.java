@@ -70,12 +70,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public boolean eliminar(Integer id) {
+    public boolean eliminar(String user) {
         boolean flag;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.beginTransaction();
-            Usuario usuario = (Usuario) session.load(Usuario.class, id);
+            Usuario usuario = (Usuario) session.load(Usuario.class, user);
             session.delete(usuario);
             session.beginTransaction().commit();
             flag = true;

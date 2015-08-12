@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 31/07/2015 10:46:04 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 12/08/2015 09:28:58 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Venta" table="venta" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idventa" type="int">
@@ -11,17 +11,29 @@
         <many-to-one name="anexo" class="Model.Anexo" fetch="select">
             <column name="idanexo" />
         </many-to-one>
-        <many-to-one name="empresa" class="Model.Empresa" fetch="select">
-            <column name="idempresa" />
+        <many-to-one name="condicionpago" class="Model.Condicionpago" fetch="select">
+            <column name="idcondicionpago" />
         </many-to-one>
-        <many-to-one name="pago" class="Model.Pago" fetch="select">
-            <column name="idpago" not-null="true" />
+        <many-to-one name="tiempopago" class="Model.Tiempopago" fetch="select">
+            <column name="idtiempo" />
         </many-to-one>
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" not-null="true" />
         </many-to-one>
+        <property name="idempresa" type="java.lang.Integer">
+            <column name="idempresa" />
+        </property>
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" />
         </property>
+        <property name="codven" type="string">
+            <column name="codven" length="10" not-null="true" />
+        </property>
+        <set name="datoscreditos" table="datoscredito" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idventa" not-null="true" />
+            </key>
+            <one-to-many class="Model.Datoscredito" />
+        </set>
     </class>
 </hibernate-mapping>

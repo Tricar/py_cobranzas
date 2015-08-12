@@ -3,11 +3,10 @@ package Bean;
 import Dao.AnexoDao;
 import Dao.AnexoDaoImplements;
 import Model.Anexo;
+import java.io.Serializable;
 import java.util.List;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 /**
  *
@@ -15,7 +14,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class anexoBean {
+public class anexoBean implements Serializable{
 
     public Anexo anexo = new Anexo();
     public List<Anexo> anexos;

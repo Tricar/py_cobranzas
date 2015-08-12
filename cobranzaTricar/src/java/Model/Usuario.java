@@ -1,14 +1,17 @@
 package Model;
-// Generated 31/07/2015 10:46:03 AM by Hibernate Tools 4.3.1
+// Generated 12/08/2015 09:28:57 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,38 +27,38 @@ import javax.persistence.TemporalType;
 public class Usuario  implements java.io.Serializable {
 
 
-     private int idusuario;
-     private Anexo anexo;
      private String usuario;
+     private Anexo anexo;
      private String clave;
      private Date fechareg;
+     private Set datoscreditos = new HashSet(0);
 
     public Usuario() {
     }
 
 	
-    public Usuario(int idusuario, Anexo anexo) {
-        this.idusuario = idusuario;
+    public Usuario(String usuario, Anexo anexo) {
+        this.usuario = usuario;
         this.anexo = anexo;
     }
-    public Usuario(int idusuario, Anexo anexo, String usuario, String clave, Date fechareg) {
-       this.idusuario = idusuario;
-       this.anexo = anexo;
+    public Usuario(String usuario, Anexo anexo, String clave, Date fechareg, Set datoscreditos) {
        this.usuario = usuario;
+       this.anexo = anexo;
        this.clave = clave;
        this.fechareg = fechareg;
+       this.datoscreditos = datoscreditos;
     }
    
      @Id 
 
     
-    @Column(name="idusuario", unique=true, nullable=false)
-    public int getIdusuario() {
-        return this.idusuario;
+    @Column(name="usuario", unique=true, nullable=false, length=10)
+    public String getUsuario() {
+        return this.usuario;
     }
     
-    public void setIdusuario(int idusuario) {
-        this.idusuario = idusuario;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -66,16 +69,6 @@ public class Usuario  implements java.io.Serializable {
     
     public void setAnexo(Anexo anexo) {
         this.anexo = anexo;
-    }
-
-    
-    @Column(name="usuario", length=20)
-    public String getUsuario() {
-        return this.usuario;
-    }
-    
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     
@@ -96,6 +89,15 @@ public class Usuario  implements java.io.Serializable {
     
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="usuario")
+    public Set getDatoscreditos() {
+        return this.datoscreditos;
+    }
+    
+    public void setDatoscreditos(Set datoscreditos) {
+        this.datoscreditos = datoscreditos;
     }
 
 

@@ -1,14 +1,17 @@
 package Model;
-// Generated 31/07/2015 10:46:03 AM by Hibernate Tools 4.3.1
+// Generated 12/08/2015 09:28:57 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,27 +29,33 @@ public class Venta  implements java.io.Serializable {
 
      private int idventa;
      private Anexo anexo;
-     private Empresa empresa;
-     private Pago pago;
+     private Condicionpago condicionpago;
+     private Tiempopago tiempopago;
      private Vehiculo vehiculo;
+     private Integer idempresa;
      private Date fechareg;
+     private String codven;
+     private Set datoscreditos = new HashSet(0);
 
     public Venta() {
     }
 
 	
-    public Venta(int idventa, Pago pago, Vehiculo vehiculo) {
+    public Venta(int idventa, Vehiculo vehiculo, String codven) {
         this.idventa = idventa;
-        this.pago = pago;
         this.vehiculo = vehiculo;
+        this.codven = codven;
     }
-    public Venta(int idventa, Anexo anexo, Empresa empresa, Pago pago, Vehiculo vehiculo, Date fechareg) {
+    public Venta(int idventa, Anexo anexo, Condicionpago condicionpago, Tiempopago tiempopago, Vehiculo vehiculo, Integer idempresa, Date fechareg, String codven, Set datoscreditos) {
        this.idventa = idventa;
        this.anexo = anexo;
-       this.empresa = empresa;
-       this.pago = pago;
+       this.condicionpago = condicionpago;
+       this.tiempopago = tiempopago;
        this.vehiculo = vehiculo;
+       this.idempresa = idempresa;
        this.fechareg = fechareg;
+       this.codven = codven;
+       this.datoscreditos = datoscreditos;
     }
    
      @Id 
@@ -72,23 +81,23 @@ public class Venta  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idempresa")
-    public Empresa getEmpresa() {
-        return this.empresa;
+    @JoinColumn(name="idcondicionpago")
+    public Condicionpago getCondicionpago() {
+        return this.condicionpago;
     }
     
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setCondicionpago(Condicionpago condicionpago) {
+        this.condicionpago = condicionpago;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idpago", nullable=false)
-    public Pago getPago() {
-        return this.pago;
+    @JoinColumn(name="idtiempo")
+    public Tiempopago getTiempopago() {
+        return this.tiempopago;
     }
     
-    public void setPago(Pago pago) {
-        this.pago = pago;
+    public void setTiempopago(Tiempopago tiempopago) {
+        this.tiempopago = tiempopago;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -101,6 +110,16 @@ public class Venta  implements java.io.Serializable {
         this.vehiculo = vehiculo;
     }
 
+    
+    @Column(name="idempresa")
+    public Integer getIdempresa() {
+        return this.idempresa;
+    }
+    
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="fechareg", length=23)
     public Date getFechareg() {
@@ -109,6 +128,25 @@ public class Venta  implements java.io.Serializable {
     
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
+    }
+
+    
+    @Column(name="codven", nullable=false, length=10)
+    public String getCodven() {
+        return this.codven;
+    }
+    
+    public void setCodven(String codven) {
+        this.codven = codven;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="venta")
+    public Set getDatoscreditos() {
+        return this.datoscreditos;
+    }
+    
+    public void setDatoscreditos(Set datoscreditos) {
+        this.datoscreditos = datoscreditos;
     }
 
 

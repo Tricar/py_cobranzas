@@ -3,6 +3,7 @@ package Bean;
 import Dao.UsuarioDao;
 import Dao.UsuarioDaoImpl;
 import Model.Usuario;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,7 +17,7 @@ import javax.faces.event.ActionEvent;
 @ManagedBean
 @SessionScoped
 
-public class UsuarioBean {
+public class UsuarioBean implements Serializable{
 
     private Usuario usuario;
     private List<Usuario> usuarios;
@@ -75,7 +76,7 @@ public class UsuarioBean {
     public void btnDeleteUsuario(ActionEvent Event) {
         UsuarioDao usuarioDao = new UsuarioDaoImpl();
         String msg;
-        if (usuarioDao.eliminar(this.usuario.getIdusuario())) {
+        if (usuarioDao.eliminar(this.usuario.getUsuario())) {
             msg = "Se Elimino correctamente el registro";
         } else {
             msg = "Error al Eliminar";

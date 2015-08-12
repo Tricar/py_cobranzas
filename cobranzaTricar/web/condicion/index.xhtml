@@ -13,9 +13,9 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                     <h:form>
-                        <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
+                        <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                     </h:form>
-                    <p:dialog id="dlg1" header="Crear Condicion" showEffect="explode" hideEffect="explode" 
+                    <p:dialog id="dlg1" header="Nueva Condicion" showEffect="explode" hideEffect="explode" 
                               widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
                         <h:form id="formInsertar">
                             <p:panelGrid columns="2">
@@ -25,7 +25,7 @@
                                 <p:inputText value="#{condicionPagoBean.condpago.nombre}" />
 
                             </p:panelGrid>
-                            <p:commandButton value="Crear" update=":formMostrar" actionListener="#{condicionPagoBean.insertar()}" 
+                            <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{condicionPagoBean.insertar()}" 
                                              oncomplete="dlginsertar.hide();" />
                         </h:form>
                     </p:dialog>

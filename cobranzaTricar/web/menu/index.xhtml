@@ -14,9 +14,9 @@
             <ui:define name="content">
                 <div class="conteiner">
                     <h:form>
-                        <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
+                        <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                     </h:form>
-                    <p:dialog id="dlg1" header="Crear Menu" showEffect="explode" hideEffect="explode" 
+                    <p:dialog id="dlg1" header="Nuevo Menu" showEffect="explode" hideEffect="explode" 
                               widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
                         <h:form id="formInsertar">
                             <p:panelGrid columns="2">
@@ -36,7 +36,7 @@
                                 <p:inputText value="#{menuBean.menu.orden}" />
 
                             </p:panelGrid>
-                            <p:commandButton value="Crear" update=":formMostrar" actionListener="#{menuBean.insertar()}" 
+                            <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{menuBean.insertar()}" 
                                              oncomplete="dlginsertar.hide();" />
                         </h:form>
                     </p:dialog>

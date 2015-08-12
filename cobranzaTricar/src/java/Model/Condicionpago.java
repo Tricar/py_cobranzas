@@ -1,5 +1,5 @@
 package Model;
-// Generated 31/07/2015 10:46:03 AM by Hibernate Tools 4.3.1
+// Generated 12/08/2015 09:28:57 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -28,7 +28,7 @@ public class Condicionpago  implements java.io.Serializable {
      private int idcondicionpago;
      private String nombre;
      private Date fechareg;
-     private Set pagos = new HashSet(0);
+     private Set ventas = new HashSet(0);
 
     public Condicionpago() {
     }
@@ -37,11 +37,11 @@ public class Condicionpago  implements java.io.Serializable {
     public Condicionpago(int idcondicionpago) {
         this.idcondicionpago = idcondicionpago;
     }
-    public Condicionpago(int idcondicionpago, String nombre, Date fechareg, Set pagos) {
+    public Condicionpago(int idcondicionpago, String nombre, Date fechareg, Set ventas) {
        this.idcondicionpago = idcondicionpago;
        this.nombre = nombre;
        this.fechareg = fechareg;
-       this.pagos = pagos;
+       this.ventas = ventas;
     }
    
      @Id 
@@ -77,12 +77,12 @@ public class Condicionpago  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="condicionpago")
-    public Set getPagos() {
-        return this.pagos;
+    public Set getVentas() {
+        return this.ventas;
     }
     
-    public void setPagos(Set pagos) {
-        this.pagos = pagos;
+    public void setVentas(Set ventas) {
+        this.ventas = ventas;
     }
 
 

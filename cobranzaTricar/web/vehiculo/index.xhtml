@@ -14,9 +14,9 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Crear" oncomplete="dlginsertar.show()" update=":formInsertar"/>
+                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                 </h:form>
-                <p:dialog id="dlg1" header="Crear Vehículo" showEffect="explode" hideEffect="explode" 
+                <p:dialog id="dlg1" header="Nuevo Vehículo" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formInsertar">
                         <p:messages autoUpdate="true"/>
@@ -47,7 +47,7 @@
                             <p:outputLabel value="Motor:" />
                             <p:inputText value="#{vehiculoBean.vehiculo.motor}" />
                         </p:panelGrid>
-                        <p:commandButton value="Crear" update=":formMostrar" actionListener="#{vehiculoBean.insertar()}" 
+                        <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{vehiculoBean.insertar()}" 
                                          oncomplete="dlginsertar.hide()"/>
                     </h:form>
                 </p:dialog>

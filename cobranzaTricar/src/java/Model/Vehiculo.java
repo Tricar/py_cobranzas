@@ -1,12 +1,10 @@
 package Model;
-// Generated 31/07/2015 10:46:03 AM by Hibernate Tools 4.3.1
+// Generated 12/08/2015 09:28:57 AM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,13 +42,14 @@ public class Vehiculo  implements java.io.Serializable {
     }
 
 	
-    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo) {
+    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo, String serie) {
         this.idvehiculo = idvehiculo;
         this.color = color;
         this.modelo = modelo;
         this.tipovehiculo = tipovehiculo;
+        this.serie = serie;
     }
-    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo, String marca, String serie, Integer anofabri, Date fechareg, String motor, Integer stock, BigDecimal precio, Set ventas) {
+    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo, String marca, String serie, Integer anofabri, Date fechareg, String motor, Set ventas) {
        this.idvehiculo = idvehiculo;
        this.color = color;
        this.modelo = modelo;
@@ -62,8 +61,7 @@ public class Vehiculo  implements java.io.Serializable {
        this.motor = motor;
        this.ventas = ventas;
     }
-
-
+   
      @Id 
 
     
@@ -117,7 +115,7 @@ public class Vehiculo  implements java.io.Serializable {
     }
 
     
-    @Column(name="serie", length=20)
+    @Column(name="serie", nullable=false, length=20)
     public String getSerie() {
         return this.serie;
     }
@@ -126,6 +124,7 @@ public class Vehiculo  implements java.io.Serializable {
         this.serie = serie;
     }
 
+    
     @Column(name="anofabri")
     public Integer getAnofabri() {
         return this.anofabri;
@@ -163,7 +162,10 @@ public class Vehiculo  implements java.io.Serializable {
     public void setVentas(Set ventas) {
         this.ventas = ventas;
     }
-  
+
+
+
+
 }
 
 

@@ -10,5 +10,5 @@ public interface UsuarioDao {
     public List<Usuario> buscarTodos();
     public boolean registrar(Usuario usuario);
     public boolean modificar(Usuario usuario);
-    public boolean eliminar(Integer id);
+    public boolean eliminar(String user);
 }

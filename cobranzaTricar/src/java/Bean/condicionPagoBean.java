@@ -3,6 +3,7 @@ package Bean;
 import Dao.CondicionPagoDao;
 import Dao.CondicionPagoDaoImplements;
 import Model.Condicionpago;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -14,7 +15,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class condicionPagoBean {
+public class condicionPagoBean implements Serializable{
 
     public Condicionpago condpago = new Condicionpago();
     public List<Condicionpago> condpagos;
