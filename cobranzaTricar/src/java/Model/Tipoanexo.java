@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Tipoanexo  implements java.io.Serializable {
 
 
-     private int idtipoanexo;
+     private Integer idtipoanexo;
      private String nombre;
      private Date fechareg;
      private Set menutipoanexos = new HashSet(0);
@@ -35,10 +35,10 @@ public class Tipoanexo  implements java.io.Serializable {
     }
 
 	
-    public Tipoanexo(int idtipoanexo) {
+    public Tipoanexo(Integer idtipoanexo) {
         this.idtipoanexo = idtipoanexo;
     }
-    public Tipoanexo(int idtipoanexo, String nombre, Date fechareg, Set menutipoanexos, Set anexos) {
+    public Tipoanexo(Integer idtipoanexo, String nombre, Date fechareg, Set menutipoanexos, Set anexos) {
        this.idtipoanexo = idtipoanexo;
        this.nombre = nombre;
        this.fechareg = fechareg;
@@ -50,11 +50,11 @@ public class Tipoanexo  implements java.io.Serializable {
 
     
     @Column(name="idtipoanexo", unique=true, nullable=false)
-    public int getIdtipoanexo() {
+    public Integer getIdtipoanexo() {
         return this.idtipoanexo;
     }
     
-    public void setIdtipoanexo(int idtipoanexo) {
+    public void setIdtipoanexo(Integer idtipoanexo) {
         this.idtipoanexo = idtipoanexo;
     }
 
@@ -96,9 +96,19 @@ public class Tipoanexo  implements java.io.Serializable {
         this.anexos = anexos;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idtipoanexo != null)
+            ? idtipoanexo.equals(((Tipoanexo) other).idtipoanexo)
+            : (other == this);
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return (idtipoanexo != null) 
+            ? (getClass().hashCode() + idtipoanexo.hashCode())
+            : super.hashCode();
+    }
 }
 
 
