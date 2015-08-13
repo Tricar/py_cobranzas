@@ -8,10 +8,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-/**
- *
- * @author Dajoh
- */
+
 @ManagedBean
 @ViewScoped
 public class anexoBean implements Serializable{
@@ -57,4 +54,5 @@ public class anexoBean implements Serializable{
         linkDao.eliminarAnexo(anexo);
         anexo = new Anexo();
     }
+        
 }

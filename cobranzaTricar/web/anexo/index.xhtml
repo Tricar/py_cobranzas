@@ -56,8 +56,7 @@
                             <p:outputLabel value="Cod. vendedor:" />
                             <p:inputText id="vend" disabled="#{anexoBean.anexo.tipoanexo.nombre != 'Vendedor'}" value="#{anexoBean.anexo.codven}" />                                                        
                         </p:panelGrid>
-                        <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{anexoBean.insertar()}" 
-                                         oncomplete="dlginsertar.hide()"/>
+                        <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{anexoBean.insertar()}" oncomplete="dlginsertar.hide()"/>
                     </h:form>
                 </p:dialog>
 
@@ -140,8 +139,7 @@
                             <p:outputLabel value="Cod. vendedor:" />
                             <p:inputText id="vend" disabled="#{anexoBean.anexo.tipoanexo.nombre != 'Vendedor'}" value="#{anexoBean.anexo.codven}" />
                         </p:panelGrid>
-                        <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{anexoBean.modificar()}" 
-                                         oncomplete="dlgmodificar.hide()"/>
+                        <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{anexoBean.modificar()}" oncomplete="dlgmodificar.hide()"/>
                     </h:form>
                 </p:dialog>
                 <p:dialog id="dlg2" header="Eliminar Anexo" showEffect="explode" hideEffect="explode" 

@@ -31,7 +31,6 @@ public class Datoscredito  implements java.io.Serializable {
      private int iddatoscredito;
      private Anexo anexoByVerificador;
      private Anexo anexoByAprobado;
-     private Usuario usuario;
      private Venta venta;
      private Integer nletras;
      private BigDecimal total;
@@ -53,11 +52,10 @@ public class Datoscredito  implements java.io.Serializable {
         this.anexoByAprobado = anexoByAprobado;
         this.venta = venta;
     }
-    public Datoscredito(int iddatoscredito, Anexo anexoByVerificador, Anexo anexoByAprobado, Usuario usuario, Venta venta, Integer nletras, BigDecimal total, BigDecimal interes, BigDecimal tasainteres, Boolean cronograma, Boolean contrato, Date fecreg, Set letrases, Set detcreditos) {
+    public Datoscredito(int iddatoscredito, Anexo anexoByVerificador, Anexo anexoByAprobado, Venta venta, Integer nletras, BigDecimal total, BigDecimal interes, BigDecimal tasainteres, Boolean cronograma, Boolean contrato, Date fecreg, Set letrases, Set detcreditos) {
        this.iddatoscredito = iddatoscredito;
        this.anexoByVerificador = anexoByVerificador;
        this.anexoByAprobado = anexoByAprobado;
-       this.usuario = usuario;
        this.venta = venta;
        this.nletras = nletras;
        this.total = total;
@@ -100,16 +98,6 @@ public class Datoscredito  implements java.io.Serializable {
     
     public void setAnexoByAprobado(Anexo anexoByAprobado) {
         this.anexoByAprobado = anexoByAprobado;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="aprobadoxusuario")
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-    
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)

@@ -35,6 +35,7 @@ public class Venta  implements java.io.Serializable {
      private Integer idempresa;
      private Date fechareg;
      private String codven;
+     private Usuario usuario;
      private Set datoscreditos = new HashSet(0);
 
     public Venta() {
@@ -46,9 +47,10 @@ public class Venta  implements java.io.Serializable {
         this.vehiculo = vehiculo;
         this.codven = codven;
     }
-    public Venta(int idventa, Anexo anexo, Condicionpago condicionpago, Tiempopago tiempopago, Vehiculo vehiculo, Integer idempresa, Date fechareg, String codven, Set datoscreditos) {
+    public Venta(int idventa, Anexo anexo, Condicionpago condicionpago, Tiempopago tiempopago, Usuario usuario, Vehiculo vehiculo, Integer idempresa, Date fechareg, String codven, Set datoscreditos) {
        this.idventa = idventa;
        this.anexo = anexo;
+       this.usuario = usuario;
        this.condicionpago = condicionpago;
        this.tiempopago = tiempopago;
        this.vehiculo = vehiculo;
@@ -149,7 +151,15 @@ public class Venta  implements java.io.Serializable {
         this.datoscreditos = datoscreditos;
     }
 
-
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="aprobadoxusuario")
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+    
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
 
 }

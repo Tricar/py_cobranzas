@@ -14,9 +14,6 @@
         <many-to-one name="anexoByAprobado" class="Model.Anexo" fetch="select">
             <column name="aprobado" not-null="true" />
         </many-to-one>
-        <many-to-one name="usuario" class="Model.Usuario" fetch="select">
-            <column name="aprobadoxusuario" length="10" />
-        </many-to-one>
         <many-to-one name="venta" class="Model.Venta" fetch="select">
             <column name="idventa" not-null="true" />
         </many-to-one>

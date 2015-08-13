@@ -20,6 +20,9 @@
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" not-null="true" />
         </many-to-one>
+        <many-to-one name="usuario" class="Model.Usuario" fetch="select">
+            <column name="aprobadoxusuario" length="10" />
+        </many-to-one>
         <property name="idempresa" type="java.lang.Integer">
             <column name="idempresa" />
         </property>
