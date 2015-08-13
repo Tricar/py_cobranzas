@@ -1,5 +1,5 @@
 package Model;
-// Generated 12/08/2015 09:28:57 AM by Hibernate Tools 4.3.1
+// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -35,28 +35,32 @@ public class Venta  implements java.io.Serializable {
      private Integer idempresa;
      private Date fechareg;
      private String codven;
-     private Usuario usuario;
+     private String aprobadox;
+     private String liqventa;
      private Set datoscreditos = new HashSet(0);
 
     public Venta() {
     }
 
 	
-    public Venta(int idventa, Vehiculo vehiculo, String codven) {
+    public Venta(int idventa, Vehiculo vehiculo, String codven, String aprobadox, String liqventa) {
         this.idventa = idventa;
         this.vehiculo = vehiculo;
         this.codven = codven;
+        this.aprobadox = aprobadox;
+        this.liqventa = liqventa;
     }
-    public Venta(int idventa, Anexo anexo, Condicionpago condicionpago, Tiempopago tiempopago, Usuario usuario, Vehiculo vehiculo, Integer idempresa, Date fechareg, String codven, Set datoscreditos) {
+    public Venta(int idventa, Anexo anexo, Condicionpago condicionpago, Tiempopago tiempopago, Vehiculo vehiculo, Integer idempresa, Date fechareg, String codven, String aprobadox, String liqventa, Set datoscreditos) {
        this.idventa = idventa;
        this.anexo = anexo;
-       this.usuario = usuario;
        this.condicionpago = condicionpago;
        this.tiempopago = tiempopago;
        this.vehiculo = vehiculo;
        this.idempresa = idempresa;
        this.fechareg = fechareg;
        this.codven = codven;
+       this.aprobadox = aprobadox;
+       this.liqventa = liqventa;
        this.datoscreditos = datoscreditos;
     }
    
@@ -142,6 +146,26 @@ public class Venta  implements java.io.Serializable {
         this.codven = codven;
     }
 
+    
+    @Column(name="aprobadox", nullable=false, length=10)
+    public String getAprobadox() {
+        return this.aprobadox;
+    }
+    
+    public void setAprobadox(String aprobadox) {
+        this.aprobadox = aprobadox;
+    }
+
+    
+    @Column(name="liqventa", nullable=false, length=10)
+    public String getLiqventa() {
+        return this.liqventa;
+    }
+    
+    public void setLiqventa(String liqventa) {
+        this.liqventa = liqventa;
+    }
+
 @OneToMany(fetch=FetchType.LAZY, mappedBy="venta")
     public Set getDatoscreditos() {
         return this.datoscreditos;
@@ -151,15 +175,7 @@ public class Venta  implements java.io.Serializable {
         this.datoscreditos = datoscreditos;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="aprobadoxusuario")
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-    
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+
 
 
 }

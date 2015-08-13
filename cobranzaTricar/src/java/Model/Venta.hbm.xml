@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 12/08/2015 09:28:58 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 13/08/2015 11:16:32 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Venta" table="venta" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idventa" type="int">
@@ -20,9 +20,6 @@
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" not-null="true" />
         </many-to-one>
-        <many-to-one name="usuario" class="Model.Usuario" fetch="select">
-            <column name="aprobadoxusuario" length="10" />
-        </many-to-one>
         <property name="idempresa" type="java.lang.Integer">
             <column name="idempresa" />
         </property>
@@ -31,6 +28,12 @@
         </property>
         <property name="codven" type="string">
             <column name="codven" length="10" not-null="true" />
+        </property>
+        <property name="aprobadox" type="string">
+            <column name="aprobadox" length="10" not-null="true" />
+        </property>
+        <property name="liqventa" type="string">
+            <column name="liqventa" length="10" not-null="true" />
         </property>
         <set name="datoscreditos" table="datoscredito" inverse="true" lazy="true" fetch="select">
             <key>

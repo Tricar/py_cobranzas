@@ -1,17 +1,14 @@
 package Model;
-// Generated 12/08/2015 09:28:57 AM by Hibernate Tools 4.3.1
+// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,7 +28,6 @@ public class Usuario  implements java.io.Serializable {
      private Anexo anexo;
      private String clave;
      private Date fechareg;
-     private Set datoscreditos = new HashSet(0);
 
     public Usuario() {
     }
@@ -41,12 +37,11 @@ public class Usuario  implements java.io.Serializable {
         this.usuario = usuario;
         this.anexo = anexo;
     }
-    public Usuario(String usuario, Anexo anexo, String clave, Date fechareg, Set datoscreditos) {
+    public Usuario(String usuario, Anexo anexo, String clave, Date fechareg) {
        this.usuario = usuario;
        this.anexo = anexo;
        this.clave = clave;
        this.fechareg = fechareg;
-       this.datoscreditos = datoscreditos;
     }
    
      @Id 
@@ -89,15 +84,6 @@ public class Usuario  implements java.io.Serializable {
     
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="usuario")
-    public Set getDatoscreditos() {
-        return this.datoscreditos;
-    }
-    
-    public void setDatoscreditos(Set datoscreditos) {
-        this.datoscreditos = datoscreditos;
     }
 
 
