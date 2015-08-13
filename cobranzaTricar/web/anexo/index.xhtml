@@ -74,7 +74,7 @@
                         <p:column headerText="T. anexo:">
                             <h:outputText value="#{anexo.tipoanexo.nombre}" />
                         </p:column>
-                        <p:column headerText="Nombre">
+                        <p:column headerText="Nombre" filterBy="#{anexo.nombre}" filterMatchMode="contains">
                             <h:outputText value="#{anexo.nombre}" />
                         </p:column>
                         <p:column headerText="Ap. Pat.">
