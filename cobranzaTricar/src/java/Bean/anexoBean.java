@@ -3,6 +3,7 @@ package Bean;
 import Dao.AnexoDao;
 import Dao.AnexoDaoImplements;
 import Model.Anexo;
+import Model.Tipoanexo;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -53,6 +54,12 @@ public class anexoBean implements Serializable{
         AnexoDao linkDao = new AnexoDaoImplements();
         linkDao.eliminarAnexo(anexo);
         anexo = new Anexo();
+    }
+    
+    public List<Anexo> filtrarTipoAnexo(int tipo){
+        AnexoDao linkDao = new AnexoDaoImplements();
+        anexos = linkDao.filtarTipoAnexo(tipo);
+        return anexos;
     }
         
 }
