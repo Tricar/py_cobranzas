@@ -1,5 +1,5 @@
 package Model;
-// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
+// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Tiempopago  implements java.io.Serializable {
 
 
-     private int idtiempo;
+     private Integer idtiempo;
      private String descripcion;
      private Date fecreg;
      private Set ventas = new HashSet(0);
@@ -34,11 +34,11 @@ public class Tiempopago  implements java.io.Serializable {
     }
 
 	
-    public Tiempopago(int idtiempo, String descripcion) {
+    public Tiempopago(Integer idtiempo, String descripcion) {
         this.idtiempo = idtiempo;
         this.descripcion = descripcion;
     }
-    public Tiempopago(int idtiempo, String descripcion, Date fecreg, Set ventas) {
+    public Tiempopago(Integer idtiempo, String descripcion, Date fecreg, Set ventas) {
        this.idtiempo = idtiempo;
        this.descripcion = descripcion;
        this.fecreg = fecreg;
@@ -49,11 +49,11 @@ public class Tiempopago  implements java.io.Serializable {
 
     
     @Column(name="idtiempo", unique=true, nullable=false)
-    public int getIdtiempo() {
+    public Integer getIdtiempo() {
         return this.idtiempo;
     }
     
-    public void setIdtiempo(int idtiempo) {
+    public void setIdtiempo(Integer idtiempo) {
         this.idtiempo = idtiempo;
     }
 
@@ -86,7 +86,19 @@ public class Tiempopago  implements java.io.Serializable {
         this.ventas = ventas;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idtiempo != null)
+            ? idtiempo.equals(((Tiempopago) other).idtiempo)
+            : (other == this);
+    }
 
+    @Override
+    public int hashCode() {
+        return (idtiempo != null) 
+            ? (getClass().hashCode() + idtiempo.hashCode())
+            : super.hashCode();
+    }
 
 
 }

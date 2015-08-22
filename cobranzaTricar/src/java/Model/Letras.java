@@ -1,5 +1,5 @@
 package Model;
-// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
+// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -28,7 +28,7 @@ import javax.persistence.TemporalType;
 public class Letras  implements java.io.Serializable {
 
 
-     private int idletras;
+     private Integer idletras;
      private Datoscredito datoscredito;
      private BigDecimal montoletra;
      private Date fecini;
@@ -43,10 +43,10 @@ public class Letras  implements java.io.Serializable {
     }
 
 	
-    public Letras(int idletras) {
+    public Letras(Integer idletras) {
         this.idletras = idletras;
     }
-    public Letras(int idletras, Datoscredito datoscredito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, Set pagoses) {
+    public Letras(Integer idletras, Datoscredito datoscredito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, Set pagoses) {
        this.idletras = idletras;
        this.datoscredito = datoscredito;
        this.montoletra = montoletra;
@@ -63,11 +63,11 @@ public class Letras  implements java.io.Serializable {
 
     
     @Column(name="idletras", unique=true, nullable=false)
-    public int getIdletras() {
+    public Integer getIdletras() {
         return this.idletras;
     }
     
-    public void setIdletras(int idletras) {
+    public void setIdletras(Integer idletras) {
         this.idletras = idletras;
     }
 
@@ -160,7 +160,19 @@ public class Letras  implements java.io.Serializable {
         this.pagoses = pagoses;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idletras != null)
+            ? idletras.equals(((Letras) other).idletras)
+            : (other == this);
+    }
 
+    @Override
+    public int hashCode() {
+        return (idletras != null) 
+            ? (getClass().hashCode() + idletras.hashCode())
+            : super.hashCode();
+    }
 
 
 }

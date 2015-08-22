@@ -4,6 +4,7 @@ import Dao.VentaDao;
 import Dao.VentaDaoImplements;
 import Model.Venta;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -38,6 +39,8 @@ public class ventaBean implements Serializable{
     
     public void insertar (){
         VentaDao linkDao = new VentaDaoImplements();
+//        Date d = new Date();
+//        venta.setFechareg(d);
         linkDao.insertarVenta(venta);
         venta = new Venta();
         

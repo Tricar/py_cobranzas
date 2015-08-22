@@ -38,6 +38,12 @@ public class vehiculoBean implements Serializable{
         vehiculos = tipodao.mostrarVehiculo();
         return vehiculos;
     }
+    
+    public List<Vehiculo> completarTipo(String nombre){
+        VehiculoDao tipodao = new VehiculoDaoImplements();
+        vehiculos = tipodao.buscarxNombre(nombre);
+        return vehiculos;
+    }
 
     public void setVehiculos(List<Vehiculo> vehiculos) {
         this.vehiculos = vehiculos;

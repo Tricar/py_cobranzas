@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 13/08/2015 11:16:32 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 21/08/2015 05:10:26 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Vehiculo" table="vehiculo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idvehiculo" type="int">
@@ -34,7 +34,7 @@
         </property>
         <set name="ventas" table="venta" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idvehiculo" not-null="true" />
+                <column name="idvehiculo" />
             </key>
             <one-to-many class="Model.Venta" />
         </set>

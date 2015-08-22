@@ -1,5 +1,5 @@
 package Model;
-// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
+// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -27,14 +27,13 @@ import javax.persistence.TemporalType;
 public class Venta  implements java.io.Serializable {
 
 
-     private int idventa;
-     private Anexo anexo;
+     private Integer idventa;
+     private Anexo anexoByCodven;
+     private Anexo anexoByIdanexo;
      private Condicionpago condicionpago;
      private Tiempopago tiempopago;
      private Vehiculo vehiculo;
-     private Integer idempresa;
      private Date fechareg;
-     private String codven;
      private String aprobadox;
      private String liqventa;
      private Set datoscreditos = new HashSet(0);
@@ -43,22 +42,18 @@ public class Venta  implements java.io.Serializable {
     }
 
 	
-    public Venta(int idventa, Vehiculo vehiculo, String codven, String aprobadox, String liqventa) {
+    public Venta(Integer idventa, Anexo anexoByIdanexo) {
         this.idventa = idventa;
-        this.vehiculo = vehiculo;
-        this.codven = codven;
-        this.aprobadox = aprobadox;
-        this.liqventa = liqventa;
+        this.anexoByIdanexo = anexoByIdanexo;
     }
-    public Venta(int idventa, Anexo anexo, Condicionpago condicionpago, Tiempopago tiempopago, Vehiculo vehiculo, Integer idempresa, Date fechareg, String codven, String aprobadox, String liqventa, Set datoscreditos) {
+    public Venta(Integer idventa, Anexo anexoByCodven, Anexo anexoByIdanexo, Condicionpago condicionpago, Tiempopago tiempopago, Vehiculo vehiculo, Date fechareg, String aprobadox, String liqventa, Set datoscreditos) {
        this.idventa = idventa;
-       this.anexo = anexo;
+       this.anexoByCodven = anexoByCodven;
+       this.anexoByIdanexo = anexoByIdanexo;
        this.condicionpago = condicionpago;
        this.tiempopago = tiempopago;
        this.vehiculo = vehiculo;
-       this.idempresa = idempresa;
        this.fechareg = fechareg;
-       this.codven = codven;
        this.aprobadox = aprobadox;
        this.liqventa = liqventa;
        this.datoscreditos = datoscreditos;
@@ -68,22 +63,32 @@ public class Venta  implements java.io.Serializable {
 
     
     @Column(name="idventa", unique=true, nullable=false)
-    public int getIdventa() {
+    public Integer getIdventa() {
         return this.idventa;
     }
     
-    public void setIdventa(int idventa) {
+    public void setIdventa(Integer idventa) {
         this.idventa = idventa;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idanexo")
-    public Anexo getAnexo() {
-        return this.anexo;
+    @JoinColumn(name="codven")
+    public Anexo getAnexoByCodven() {
+        return this.anexoByCodven;
     }
     
-    public void setAnexo(Anexo anexo) {
-        this.anexo = anexo;
+    public void setAnexoByCodven(Anexo anexoByCodven) {
+        this.anexoByCodven = anexoByCodven;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="idanexo", nullable=false)
+    public Anexo getAnexoByIdanexo() {
+        return this.anexoByIdanexo;
+    }
+    
+    public void setAnexoByIdanexo(Anexo anexoByIdanexo) {
+        this.anexoByIdanexo = anexoByIdanexo;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -107,23 +112,13 @@ public class Venta  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idvehiculo", nullable=false)
+    @JoinColumn(name="idvehiculo")
     public Vehiculo getVehiculo() {
         return this.vehiculo;
     }
     
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
-    }
-
-    
-    @Column(name="idempresa")
-    public Integer getIdempresa() {
-        return this.idempresa;
-    }
-    
-    public void setIdempresa(Integer idempresa) {
-        this.idempresa = idempresa;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -137,17 +132,7 @@ public class Venta  implements java.io.Serializable {
     }
 
     
-    @Column(name="codven", nullable=false, length=10)
-    public String getCodven() {
-        return this.codven;
-    }
-    
-    public void setCodven(String codven) {
-        this.codven = codven;
-    }
-
-    
-    @Column(name="aprobadox", nullable=false, length=10)
+    @Column(name="aprobadox", length=10)
     public String getAprobadox() {
         return this.aprobadox;
     }
@@ -157,7 +142,7 @@ public class Venta  implements java.io.Serializable {
     }
 
     
-    @Column(name="liqventa", nullable=false, length=10)
+    @Column(name="liqventa", length=10)
     public String getLiqventa() {
         return this.liqventa;
     }
@@ -175,7 +160,19 @@ public class Venta  implements java.io.Serializable {
         this.datoscreditos = datoscreditos;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idventa != null)
+            ? idventa.equals(((Venta) other).idventa)
+            : (other == this);
+    }
 
+    @Override
+    public int hashCode() {
+        return (idventa != null) 
+            ? (getClass().hashCode() + idventa.hashCode())
+            : super.hashCode();
+    }
 
 
 }

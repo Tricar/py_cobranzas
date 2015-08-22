@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/08/2015 05:10:26 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Perfil" table="perfil" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idperfil" type="int">
+            <column name="idperfil" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="20" />
+        </property>
+        <property name="mananexo" type="java.lang.Boolean">
+            <column name="mananexo" />
+        </property>
+        <property name="mancolor" type="java.lang.Boolean">
+            <column name="mancolor" />
+        </property>
+        <property name="mancondicion" type="java.lang.Boolean">
+            <column name="mancondicion" />
+        </property>
+        <property name="manmodelo" type="java.lang.Boolean">
+            <column name="manmodelo" />
+        </property>
+        <property name="mantanexo" type="java.lang.Boolean">
+            <column name="mantanexo" />
+        </property>
+        <property name="mantpago" type="java.lang.Boolean">
+            <column name="mantpago" />
+        </property>
+        <property name="mantvehiculo" type="java.lang.Boolean">
+            <column name="mantvehiculo" />
+        </property>
+        <property name="manusuario" type="java.lang.Boolean">
+            <column name="manusuario" />
+        </property>
+        <property name="manvehiculo" type="java.lang.Boolean">
+            <column name="manvehiculo" />
+        </property>
+        <property name="manventa" type="java.lang.Boolean">
+            <column name="manventa" />
+        </property>
+        <property name="mandatoscre" type="java.lang.Boolean">
+            <column name="mandatoscre" />
+        </property>
+        <property name="manpago" type="java.lang.Boolean">
+            <column name="manpago" />
+        </property>
+        <property name="manletras" type="java.lang.Boolean">
+            <column name="manletras" />
+        </property>
+        <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idperfil" />
+            </key>
+            <one-to-many class="Model.Usuario" />
+        </set>
+    </class>
+</hibernate-mapping>

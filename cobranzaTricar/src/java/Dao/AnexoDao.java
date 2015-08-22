@@ -1,6 +1,5 @@
 package Dao;
 import Model.Anexo;
-import Model.Tipoanexo;
 import java.util.List;
 
 /**
@@ -14,4 +13,6 @@ public interface AnexoDao {
     public void modificarAnexo (Anexo anexo);
     public void eliminarAnexo (Anexo anexo);
     public List<Anexo> filtarTipoAnexo (int tipo);
+    public List<Anexo> filtarTipoCliente(int tipo1, int tipo2);
+    public List<Anexo> buscarxNombre(String nombre);
 }

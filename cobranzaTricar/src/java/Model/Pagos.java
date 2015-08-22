@@ -1,5 +1,5 @@
 package Model;
-// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
+// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Pagos  implements java.io.Serializable {
 
 
-     private int idpagos;
+     private Integer idpagos;
      private Letras letras;
      private String operacion;
      private BigDecimal monto;
@@ -36,10 +36,10 @@ public class Pagos  implements java.io.Serializable {
     }
 
 	
-    public Pagos(int idpagos) {
+    public Pagos(Integer idpagos) {
         this.idpagos = idpagos;
     }
-    public Pagos(int idpagos, Letras letras, String operacion, BigDecimal monto, Date fecreg, String descripcion) {
+    public Pagos(Integer idpagos, Letras letras, String operacion, BigDecimal monto, Date fecreg, String descripcion) {
        this.idpagos = idpagos;
        this.letras = letras;
        this.operacion = operacion;
@@ -52,11 +52,11 @@ public class Pagos  implements java.io.Serializable {
 
     
     @Column(name="idpagos", unique=true, nullable=false)
-    public int getIdpagos() {
+    public Integer getIdpagos() {
         return this.idpagos;
     }
     
-    public void setIdpagos(int idpagos) {
+    public void setIdpagos(Integer idpagos) {
         this.idpagos = idpagos;
     }
 
@@ -110,7 +110,19 @@ public class Pagos  implements java.io.Serializable {
         this.descripcion = descripcion;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idpagos != null)
+            ? idpagos.equals(((Pagos) other).idpagos)
+            : (other == this);
+    }
 
+    @Override
+    public int hashCode() {
+        return (idpagos != null) 
+            ? (getClass().hashCode() + idpagos.hashCode())
+            : super.hashCode();
+    }
 
 
 }

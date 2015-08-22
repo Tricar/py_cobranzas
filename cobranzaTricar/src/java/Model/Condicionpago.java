@@ -1,5 +1,5 @@
 package Model;
-// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
+// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Condicionpago  implements java.io.Serializable {
 
 
-     private int idcondicionpago;
+     private Integer idcondicionpago;
      private String nombre;
      private Date fechareg;
      private Set ventas = new HashSet(0);
@@ -34,10 +34,10 @@ public class Condicionpago  implements java.io.Serializable {
     }
 
 	
-    public Condicionpago(int idcondicionpago) {
+    public Condicionpago(Integer idcondicionpago) {
         this.idcondicionpago = idcondicionpago;
     }
-    public Condicionpago(int idcondicionpago, String nombre, Date fechareg, Set ventas) {
+    public Condicionpago(Integer idcondicionpago, String nombre, Date fechareg, Set ventas) {
        this.idcondicionpago = idcondicionpago;
        this.nombre = nombre;
        this.fechareg = fechareg;
@@ -48,11 +48,11 @@ public class Condicionpago  implements java.io.Serializable {
 
     
     @Column(name="idcondicionpago", unique=true, nullable=false)
-    public int getIdcondicionpago() {
+    public Integer getIdcondicionpago() {
         return this.idcondicionpago;
     }
     
-    public void setIdcondicionpago(int idcondicionpago) {
+    public void setIdcondicionpago(Integer idcondicionpago) {
         this.idcondicionpago = idcondicionpago;
     }
 
@@ -85,7 +85,19 @@ public class Condicionpago  implements java.io.Serializable {
         this.ventas = ventas;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idcondicionpago != null)
+            ? idcondicionpago.equals(((Condicionpago) other).idcondicionpago)
+            : (other == this);
+    }
 
+    @Override
+    public int hashCode() {
+        return (idcondicionpago != null) 
+            ? (getClass().hashCode() + idcondicionpago.hashCode())
+            : super.hashCode();
+    }
 
 
 }

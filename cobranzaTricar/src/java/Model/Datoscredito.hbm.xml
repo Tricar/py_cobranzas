@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 13/08/2015 11:16:32 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 21/08/2015 05:10:26 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Datoscredito" table="datoscredito" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="iddatoscredito" type="int">
             <column name="iddatoscredito" />
             <generator class="identity" />
         </id>
-        <many-to-one name="anexoByVerificador" class="Model.Anexo" fetch="select">
-            <column name="verificador" not-null="true" />
-        </many-to-one>
         <many-to-one name="anexoByAprobado" class="Model.Anexo" fetch="select">
             <column name="aprobado" not-null="true" />
+        </many-to-one>
+        <many-to-one name="anexoByVerificador" class="Model.Anexo" fetch="select">
+            <column name="verificador" not-null="true" />
         </many-to-one>
         <many-to-one name="venta" class="Model.Venta" fetch="select">
             <column name="idventa" not-null="true" />

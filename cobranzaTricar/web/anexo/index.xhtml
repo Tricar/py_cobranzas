@@ -47,7 +47,7 @@
                             <p:outputLabel value="Edad:" />
                             <p:inputText id="edad" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.edad}" />
                             <p:outputLabel value="Fec. Nac:" />
-                            <p:calendar value="#{anexoBean.anexo.fechanac}" />
+                            <p:calendar value="#{anexoBean.anexo.fechanac}" navigator="true"/>
                             <p:outputLabel value="Sexo:" />
                             <p:inputText id="sex" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.sexo}" />
                             <p:outputLabel value="eMail:" />

@@ -30,59 +30,78 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public List<Usuario> buscarTodos() {
-        List<Usuario> listado = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        listado = session.createQuery("from Usuario").list();
-        return listado;
+    public List<Usuario> mostrarUsuario() {
+        Session session = null;
+        List<Usuario> lista = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Usuario");
+            lista = (List<Usuario>)query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
     }
 
     @Override
-    public boolean registrar(Usuario usuario) {
-        boolean flag;
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    public void insertarUsuario(Usuario usuario) {
+        Session session = null;
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(usuario);
-            session.beginTransaction().commit();
-            flag = true;
-        } catch (Exception e) {
-            flag = false;
-            session.beginTransaction().rollback();
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
         }
-        return flag;
+        finally {
+            if(session != null){
+                session.close();
+            }
+        }
     }
 
     @Override
-    public boolean modificar(Usuario usuario) {
-        boolean flag;
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    public void modificarUsuario(Usuario usuario) {
+        Session session = null;
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.update(usuario);
-            session.beginTransaction().commit();
-            flag = true;
-        } catch (Exception e) {
-            flag = false;
-            session.beginTransaction().rollback();
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
         }
-        return flag;
+        finally {
+            if(session != null){
+                session.close();
+            }
+        }
     }
 
     @Override
-    public boolean eliminar(String user) {
-        boolean flag;
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    public void eliminarUsuario(Usuario usuario) {
+        Session session = null;
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            Usuario usuario = (Usuario) session.load(Usuario.class, user);
             session.delete(usuario);
-            session.beginTransaction().commit();
-            flag = true;
-        } catch (Exception e) {
-            flag = false;
-            session.beginTransaction().rollback();
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
         }
-        return flag;
+        finally {
+            if(session != null){
+                session.close();
+            }
+        }
     }
 }

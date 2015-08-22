@@ -1,5 +1,5 @@
 package Model;
-// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
+// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -28,7 +28,6 @@ public class Tipoanexo  implements java.io.Serializable {
      private Integer idtipoanexo;
      private String nombre;
      private Date fechareg;
-     private Set menutipoanexos = new HashSet(0);
      private Set anexos = new HashSet(0);
 
     public Tipoanexo() {
@@ -38,11 +37,10 @@ public class Tipoanexo  implements java.io.Serializable {
     public Tipoanexo(Integer idtipoanexo) {
         this.idtipoanexo = idtipoanexo;
     }
-    public Tipoanexo(Integer idtipoanexo, String nombre, Date fechareg, Set menutipoanexos, Set anexos) {
+    public Tipoanexo(Integer idtipoanexo, String nombre, Date fechareg, Set anexos) {
        this.idtipoanexo = idtipoanexo;
        this.nombre = nombre;
        this.fechareg = fechareg;
-       this.menutipoanexos = menutipoanexos;
        this.anexos = anexos;
     }
    
@@ -76,15 +74,6 @@ public class Tipoanexo  implements java.io.Serializable {
     
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="tipoanexo")
-    public Set getMenutipoanexos() {
-        return this.menutipoanexos;
-    }
-    
-    public void setMenutipoanexos(Set menutipoanexos) {
-        this.menutipoanexos = menutipoanexos;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="tipoanexo")

@@ -1,5 +1,5 @@
 package Model;
-// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
+// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -26,6 +26,7 @@ public class Usuario  implements java.io.Serializable {
 
      private String usuario;
      private Anexo anexo;
+     private Perfil perfil;
      private String clave;
      private Date fechareg;
 
@@ -33,13 +34,15 @@ public class Usuario  implements java.io.Serializable {
     }
 
 	
-    public Usuario(String usuario, Anexo anexo) {
+    public Usuario(String usuario, Anexo anexo, String clave) {
         this.usuario = usuario;
         this.anexo = anexo;
+        this.clave = clave;
     }
-    public Usuario(String usuario, Anexo anexo, String clave, Date fechareg) {
+    public Usuario(String usuario, Anexo anexo, Perfil perfil, String clave, Date fechareg) {
        this.usuario = usuario;
        this.anexo = anexo;
+       this.perfil = perfil;
        this.clave = clave;
        this.fechareg = fechareg;
     }
@@ -66,8 +69,18 @@ public class Usuario  implements java.io.Serializable {
         this.anexo = anexo;
     }
 
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="idperfil")
+    public Perfil getPerfil() {
+        return this.perfil;
+    }
     
-    @Column(name="clave", length=20)
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+
+    
+    @Column(name="clave", nullable=false, length=20)
     public String getClave() {
         return this.clave;
     }

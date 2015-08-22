@@ -1,5 +1,5 @@
 package Model;
-// Generated 13/08/2015 11:16:31 AM by Hibernate Tools 4.3.1
+// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -28,9 +28,9 @@ import javax.persistence.TemporalType;
 public class Datoscredito  implements java.io.Serializable {
 
 
-     private int iddatoscredito;
-     private Anexo anexoByVerificador;
+     private Integer iddatoscredito;
      private Anexo anexoByAprobado;
+     private Anexo anexoByVerificador;
      private Venta venta;
      private Integer nletras;
      private BigDecimal total;
@@ -46,16 +46,16 @@ public class Datoscredito  implements java.io.Serializable {
     }
 
 	
-    public Datoscredito(int iddatoscredito, Anexo anexoByVerificador, Anexo anexoByAprobado, Venta venta) {
+    public Datoscredito(Integer iddatoscredito, Anexo anexoByAprobado, Anexo anexoByVerificador, Venta venta) {
         this.iddatoscredito = iddatoscredito;
-        this.anexoByVerificador = anexoByVerificador;
         this.anexoByAprobado = anexoByAprobado;
+        this.anexoByVerificador = anexoByVerificador;
         this.venta = venta;
     }
-    public Datoscredito(int iddatoscredito, Anexo anexoByVerificador, Anexo anexoByAprobado, Venta venta, Integer nletras, BigDecimal total, BigDecimal interes, BigDecimal tasainteres, Boolean cronograma, Boolean contrato, Date fecreg, Set letrases, Set detcreditos) {
+    public Datoscredito(Integer iddatoscredito, Anexo anexoByAprobado, Anexo anexoByVerificador, Venta venta, Integer nletras, BigDecimal total, BigDecimal interes, BigDecimal tasainteres, Boolean cronograma, Boolean contrato, Date fecreg, Set letrases, Set detcreditos) {
        this.iddatoscredito = iddatoscredito;
-       this.anexoByVerificador = anexoByVerificador;
        this.anexoByAprobado = anexoByAprobado;
+       this.anexoByVerificador = anexoByVerificador;
        this.venta = venta;
        this.nletras = nletras;
        this.total = total;
@@ -72,22 +72,12 @@ public class Datoscredito  implements java.io.Serializable {
 
     
     @Column(name="iddatoscredito", unique=true, nullable=false)
-    public int getIddatoscredito() {
+    public Integer getIddatoscredito() {
         return this.iddatoscredito;
     }
     
-    public void setIddatoscredito(int iddatoscredito) {
+    public void setIddatoscredito(Integer iddatoscredito) {
         this.iddatoscredito = iddatoscredito;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="verificador", nullable=false)
-    public Anexo getAnexoByVerificador() {
-        return this.anexoByVerificador;
-    }
-    
-    public void setAnexoByVerificador(Anexo anexoByVerificador) {
-        this.anexoByVerificador = anexoByVerificador;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -98,6 +88,16 @@ public class Datoscredito  implements java.io.Serializable {
     
     public void setAnexoByAprobado(Anexo anexoByAprobado) {
         this.anexoByAprobado = anexoByAprobado;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="verificador", nullable=false)
+    public Anexo getAnexoByVerificador() {
+        return this.anexoByVerificador;
+    }
+    
+    public void setAnexoByVerificador(Anexo anexoByVerificador) {
+        this.anexoByVerificador = anexoByVerificador;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -197,8 +197,20 @@ public class Datoscredito  implements java.io.Serializable {
     public void setDetcreditos(Set detcreditos) {
         this.detcreditos = detcreditos;
     }
+    
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && iddatoscredito != null)
+            ? iddatoscredito.equals(((Datoscredito) other).iddatoscredito)
+            : (other == this);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return (iddatoscredito != null) 
+            ? (getClass().hashCode() + iddatoscredito.hashCode())
+            : super.hashCode();
+    }
 
 
 }
