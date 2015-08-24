@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Modelo  implements java.io.Serializable {
 
 
-     private int idmodelo;
+     private Integer idmodelo;
      private String modelo;
      private Date fecreg;
      private Set vehiculos = new HashSet(0);
@@ -34,10 +34,10 @@ public class Modelo  implements java.io.Serializable {
     }
 
 	
-    public Modelo(int idmodelo) {
+    public Modelo(Integer idmodelo) {
         this.idmodelo = idmodelo;
     }
-    public Modelo(int idmodelo, String modelo, Date fecreg, Set vehiculos) {
+    public Modelo(Integer idmodelo, String modelo, Date fecreg, Set vehiculos) {
        this.idmodelo = idmodelo;
        this.modelo = modelo;
        this.fecreg = fecreg;
@@ -48,11 +48,11 @@ public class Modelo  implements java.io.Serializable {
 
     
     @Column(name="idmodelo", unique=true, nullable=false)
-    public int getIdmodelo() {
+    public Integer getIdmodelo() {
         return this.idmodelo;
     }
     
-    public void setIdmodelo(int idmodelo) {
+    public void setIdmodelo(Integer idmodelo) {
         this.idmodelo = idmodelo;
     }
 
@@ -85,7 +85,19 @@ public class Modelo  implements java.io.Serializable {
         this.vehiculos = vehiculos;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idmodelo != null)
+            ? idmodelo.equals(((Modelo) other).idmodelo)
+            : (other == this);
+    }
 
+    @Override
+    public int hashCode() {
+        return (idmodelo != null) 
+            ? (getClass().hashCode() + idmodelo.hashCode())
+            : super.hashCode();
+    }
 
 
 }
