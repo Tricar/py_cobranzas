@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/08/2015 05:10:26 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 22/08/2015 12:24:15 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Anexo" table="anexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idanexo" type="int">
             <column name="idanexo" />
-            <generator class="identity" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="tipoanexo" class="Model.Tipoanexo" fetch="select">
             <column name="idtipoanexo" not-null="true" />

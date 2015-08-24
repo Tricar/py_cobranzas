@@ -21,12 +21,16 @@
 
                         <h:outputLabel for="password" value="Clave:" />  
                         <p:password value="#{loginBean.usuario.clave}"   
-                                    id="clave" required="true" label="clave" />  
+                                    id="clave" required="true" label="clave" />
+                        
+                        <div id="cargando" style="width: 40px; height: 35px" class="precarga">
+                            <a href=""></a>
+                        </div>
 
                         <f:facet name="footer">  
                             <p:commandButton id="loginButton" value="Ingresar" update=":growl"   
                                              actionListener="#{loginBean.login}" icon="icon-login"   
-                                             oncomplete="handleLoginRequest(xhr, status, args)"/>  
+                                             oncomplete="$('#cargando').show(),handleLoginRequest(xhr, status, args)"/>  
                         </f:facet>  
                     </h:panelGrid>  
                 </p:panel>
@@ -35,7 +39,8 @@
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
                 if (args.validationFailed || !args.loggedIn) {
-                    jQuery('#dialog').effect("shake", {times: 3}, 100);
+                    jQuery('#dialog').effect("shake", {times: 5}, 100);
+                    $('#cargando').hide();
                 } else {
                     location.href = args.ruta;
                 }

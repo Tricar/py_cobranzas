@@ -1,5 +1,5 @@
 package Model;
-// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
+// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 public class Detcredito  implements java.io.Serializable {
 
 
-     private Integer iddetcredito;
+     private int iddetcredito;
      private Anexo anexo;
      private Datoscredito datoscredito;
      private Date fecreg;
@@ -33,10 +33,10 @@ public class Detcredito  implements java.io.Serializable {
     }
 
 	
-    public Detcredito(Integer iddetcredito) {
+    public Detcredito(int iddetcredito) {
         this.iddetcredito = iddetcredito;
     }
-    public Detcredito(Integer iddetcredito, Anexo anexo, Datoscredito datoscredito, Date fecreg) {
+    public Detcredito(int iddetcredito, Anexo anexo, Datoscredito datoscredito, Date fecreg) {
        this.iddetcredito = iddetcredito;
        this.anexo = anexo;
        this.datoscredito = datoscredito;
@@ -47,11 +47,11 @@ public class Detcredito  implements java.io.Serializable {
 
     
     @Column(name="iddetcredito", unique=true, nullable=false)
-    public Integer getIddetcredito() {
+    public int getIddetcredito() {
         return this.iddetcredito;
     }
     
-    public void setIddetcredito(Integer iddetcredito) {
+    public void setIddetcredito(int iddetcredito) {
         this.iddetcredito = iddetcredito;
     }
 
@@ -85,19 +85,7 @@ public class Detcredito  implements java.io.Serializable {
         this.fecreg = fecreg;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && iddetcredito != null)
-            ? iddetcredito.equals(((Detcredito) other).iddetcredito)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (iddetcredito != null) 
-            ? (getClass().hashCode() + iddetcredito.hashCode())
-            : super.hashCode();
-    }
 
 
 }

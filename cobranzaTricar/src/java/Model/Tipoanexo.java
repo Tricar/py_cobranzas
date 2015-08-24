@@ -1,5 +1,5 @@
 package Model;
-// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
+// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Tipoanexo  implements java.io.Serializable {
 
 
-     private Integer idtipoanexo;
+     private int idtipoanexo;
      private String nombre;
      private Date fechareg;
      private Set anexos = new HashSet(0);
@@ -34,10 +34,10 @@ public class Tipoanexo  implements java.io.Serializable {
     }
 
 	
-    public Tipoanexo(Integer idtipoanexo) {
+    public Tipoanexo(int idtipoanexo) {
         this.idtipoanexo = idtipoanexo;
     }
-    public Tipoanexo(Integer idtipoanexo, String nombre, Date fechareg, Set anexos) {
+    public Tipoanexo(int idtipoanexo, String nombre, Date fechareg, Set anexos) {
        this.idtipoanexo = idtipoanexo;
        this.nombre = nombre;
        this.fechareg = fechareg;
@@ -48,11 +48,11 @@ public class Tipoanexo  implements java.io.Serializable {
 
     
     @Column(name="idtipoanexo", unique=true, nullable=false)
-    public Integer getIdtipoanexo() {
+    public int getIdtipoanexo() {
         return this.idtipoanexo;
     }
     
-    public void setIdtipoanexo(Integer idtipoanexo) {
+    public void setIdtipoanexo(int idtipoanexo) {
         this.idtipoanexo = idtipoanexo;
     }
 
@@ -85,19 +85,7 @@ public class Tipoanexo  implements java.io.Serializable {
         this.anexos = anexos;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && idtipoanexo != null)
-            ? idtipoanexo.equals(((Tipoanexo) other).idtipoanexo)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (idtipoanexo != null) 
-            ? (getClass().hashCode() + idtipoanexo.hashCode())
-            : super.hashCode();
-    }
 
 
 }

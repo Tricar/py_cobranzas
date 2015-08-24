@@ -1,5 +1,5 @@
 package Model;
-// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
+// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Tipovehiculo  implements java.io.Serializable {
 
 
-     private Integer idtipovehiculo;
+     private int idtipovehiculo;
      private String nombre;
      private Date fechareg;
      private Set vehiculos = new HashSet(0);
@@ -34,10 +34,10 @@ public class Tipovehiculo  implements java.io.Serializable {
     }
 
 	
-    public Tipovehiculo(Integer idtipovehiculo) {
+    public Tipovehiculo(int idtipovehiculo) {
         this.idtipovehiculo = idtipovehiculo;
     }
-    public Tipovehiculo(Integer idtipovehiculo, String nombre, Date fechareg, Set vehiculos) {
+    public Tipovehiculo(int idtipovehiculo, String nombre, Date fechareg, Set vehiculos) {
        this.idtipovehiculo = idtipovehiculo;
        this.nombre = nombre;
        this.fechareg = fechareg;
@@ -48,11 +48,11 @@ public class Tipovehiculo  implements java.io.Serializable {
 
     
     @Column(name="idtipovehiculo", unique=true, nullable=false)
-    public Integer getIdtipovehiculo() {
+    public int getIdtipovehiculo() {
         return this.idtipovehiculo;
     }
     
-    public void setIdtipovehiculo(Integer idtipovehiculo) {
+    public void setIdtipovehiculo(int idtipovehiculo) {
         this.idtipovehiculo = idtipovehiculo;
     }
 
@@ -85,19 +85,7 @@ public class Tipovehiculo  implements java.io.Serializable {
         this.vehiculos = vehiculos;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && idtipovehiculo != null)
-            ? idtipovehiculo.equals(((Tipovehiculo) other).idtipovehiculo)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (idtipovehiculo != null) 
-            ? (getClass().hashCode() + idtipovehiculo.hashCode())
-            : super.hashCode();
-    }
 
 
 }

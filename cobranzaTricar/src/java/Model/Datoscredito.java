@@ -1,5 +1,5 @@
 package Model;
-// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
+// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -28,7 +28,7 @@ import javax.persistence.TemporalType;
 public class Datoscredito  implements java.io.Serializable {
 
 
-     private Integer iddatoscredito;
+     private int iddatoscredito;
      private Anexo anexoByAprobado;
      private Anexo anexoByVerificador;
      private Venta venta;
@@ -46,13 +46,13 @@ public class Datoscredito  implements java.io.Serializable {
     }
 
 	
-    public Datoscredito(Integer iddatoscredito, Anexo anexoByAprobado, Anexo anexoByVerificador, Venta venta) {
+    public Datoscredito(int iddatoscredito, Anexo anexoByAprobado, Anexo anexoByVerificador, Venta venta) {
         this.iddatoscredito = iddatoscredito;
         this.anexoByAprobado = anexoByAprobado;
         this.anexoByVerificador = anexoByVerificador;
         this.venta = venta;
     }
-    public Datoscredito(Integer iddatoscredito, Anexo anexoByAprobado, Anexo anexoByVerificador, Venta venta, Integer nletras, BigDecimal total, BigDecimal interes, BigDecimal tasainteres, Boolean cronograma, Boolean contrato, Date fecreg, Set letrases, Set detcreditos) {
+    public Datoscredito(int iddatoscredito, Anexo anexoByAprobado, Anexo anexoByVerificador, Venta venta, Integer nletras, BigDecimal total, BigDecimal interes, BigDecimal tasainteres, Boolean cronograma, Boolean contrato, Date fecreg, Set letrases, Set detcreditos) {
        this.iddatoscredito = iddatoscredito;
        this.anexoByAprobado = anexoByAprobado;
        this.anexoByVerificador = anexoByVerificador;
@@ -72,11 +72,11 @@ public class Datoscredito  implements java.io.Serializable {
 
     
     @Column(name="iddatoscredito", unique=true, nullable=false)
-    public Integer getIddatoscredito() {
+    public int getIddatoscredito() {
         return this.iddatoscredito;
     }
     
-    public void setIddatoscredito(Integer iddatoscredito) {
+    public void setIddatoscredito(int iddatoscredito) {
         this.iddatoscredito = iddatoscredito;
     }
 
@@ -197,20 +197,8 @@ public class Datoscredito  implements java.io.Serializable {
     public void setDetcreditos(Set detcreditos) {
         this.detcreditos = detcreditos;
     }
-    
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && iddatoscredito != null)
-            ? iddatoscredito.equals(((Datoscredito) other).iddatoscredito)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (iddatoscredito != null) 
-            ? (getClass().hashCode() + iddatoscredito.hashCode())
-            : super.hashCode();
-    }
+
 
 
 }

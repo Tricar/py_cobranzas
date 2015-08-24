@@ -1,5 +1,5 @@
 package Model;
-// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
+// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 public class Anexo  implements java.io.Serializable {
 
 
-     private Integer idanexo;
+     private int idanexo;
      private Tipoanexo tipoanexo;
      private String nombre;
      private String dni;
@@ -54,11 +54,11 @@ public class Anexo  implements java.io.Serializable {
     }
 
 	
-    public Anexo(Integer idanexo, Tipoanexo tipoanexo) {
+    public Anexo(int idanexo, Tipoanexo tipoanexo) {
         this.idanexo = idanexo;
         this.tipoanexo = tipoanexo;
     }
-    public Anexo(Integer idanexo, Tipoanexo tipoanexo, String nombre, String dni, String ruc, String direccion, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String codven, Set datoscreditosForAprobado, Set datoscreditosForVerificador, Set detcreditos, Set ventasForCodven, Set usuarios, Set ventasForIdanexo) {
+    public Anexo(int idanexo, Tipoanexo tipoanexo, String nombre, String dni, String ruc, String direccion, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String codven, Set datoscreditosForAprobado, Set datoscreditosForVerificador, Set detcreditos, Set ventasForCodven, Set usuarios, Set ventasForIdanexo) {
        this.idanexo = idanexo;
        this.tipoanexo = tipoanexo;
        this.nombre = nombre;
@@ -87,11 +87,11 @@ public class Anexo  implements java.io.Serializable {
 
     
     @Column(name="idanexo", unique=true, nullable=false)
-    public Integer getIdanexo() {
+    public int getIdanexo() {
         return this.idanexo;
     }
     
-    public void setIdanexo(Integer idanexo) {
+    public void setIdanexo(int idanexo) {
         this.idanexo = idanexo;
     }
 
@@ -299,19 +299,7 @@ public class Anexo  implements java.io.Serializable {
         this.ventasForIdanexo = ventasForIdanexo;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && idanexo != null)
-            ? idanexo.equals(((Anexo) other).idanexo)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (idanexo != null) 
-            ? (getClass().hashCode() + idanexo.hashCode())
-            : super.hashCode();
-    }
 
 
 }

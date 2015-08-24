@@ -1,5 +1,5 @@
 package Model;
-// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
+// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -22,46 +22,54 @@ import javax.persistence.Table;
 public class Perfil  implements java.io.Serializable {
 
 
-     private Integer idperfil;
+     private int idperfil;
      private String descripcion;
-     private Boolean mananexo;
-     private Boolean mancolor;
-     private Boolean mancondicion;
-     private Boolean manmodelo;
-     private Boolean mantanexo;
-     private Boolean mantpago;
-     private Boolean mantvehiculo;
-     private Boolean manusuario;
-     private Boolean manvehiculo;
-     private Boolean manventa;
-     private Boolean mandatoscre;
-     private Boolean manpago;
-     private Boolean manletras;
+     private Boolean sistema;
+     private Boolean sisUsu;
+     private Boolean sisPer;
+     private Boolean sisTipAne;
+     private Boolean sisEmp;
+     private Boolean sisTie;
+     private Boolean mante;
+     private Boolean manCli;
+     private Boolean manArt;
+     private Boolean manTipArt;
+     private Boolean manMod;
+     private Boolean manCol;
+     private Boolean manPag;
+     private Boolean manConPag;
+     private Boolean venta;
+     private Boolean venLis;
+     private Boolean venReg;
      private Set usuarios = new HashSet(0);
 
     public Perfil() {
     }
 
 	
-    public Perfil(Integer idperfil) {
+    public Perfil(int idperfil) {
         this.idperfil = idperfil;
     }
-    public Perfil(Integer idperfil, String descripcion, Boolean mananexo, Boolean mancolor, Boolean mancondicion, Boolean manmodelo, Boolean mantanexo, Boolean mantpago, Boolean mantvehiculo, Boolean manusuario, Boolean manvehiculo, Boolean manventa, Boolean mandatoscre, Boolean manpago, Boolean manletras, Set usuarios) {
+    public Perfil(int idperfil, String descripcion, Boolean sistema, Boolean sisUsu, Boolean sisPer, Boolean sisTipAne, Boolean sisEmp, Boolean sisTie, Boolean mante, Boolean manCli, Boolean manArt, Boolean manTipArt, Boolean manMod, Boolean manCol, Boolean manPag, Boolean manConPag, Boolean venta, Boolean venLis, Boolean venReg, Set usuarios) {
        this.idperfil = idperfil;
        this.descripcion = descripcion;
-       this.mananexo = mananexo;
-       this.mancolor = mancolor;
-       this.mancondicion = mancondicion;
-       this.manmodelo = manmodelo;
-       this.mantanexo = mantanexo;
-       this.mantpago = mantpago;
-       this.mantvehiculo = mantvehiculo;
-       this.manusuario = manusuario;
-       this.manvehiculo = manvehiculo;
-       this.manventa = manventa;
-       this.mandatoscre = mandatoscre;
-       this.manpago = manpago;
-       this.manletras = manletras;
+       this.sistema = sistema;
+       this.sisUsu = sisUsu;
+       this.sisPer = sisPer;
+       this.sisTipAne = sisTipAne;
+       this.sisEmp = sisEmp;
+       this.sisTie = sisTie;
+       this.mante = mante;
+       this.manCli = manCli;
+       this.manArt = manArt;
+       this.manTipArt = manTipArt;
+       this.manMod = manMod;
+       this.manCol = manCol;
+       this.manPag = manPag;
+       this.manConPag = manConPag;
+       this.venta = venta;
+       this.venLis = venLis;
+       this.venReg = venReg;
        this.usuarios = usuarios;
     }
    
@@ -69,11 +77,11 @@ public class Perfil  implements java.io.Serializable {
 
     
     @Column(name="idperfil", unique=true, nullable=false)
-    public Integer getIdperfil() {
+    public int getIdperfil() {
         return this.idperfil;
     }
     
-    public void setIdperfil(Integer idperfil) {
+    public void setIdperfil(int idperfil) {
         this.idperfil = idperfil;
     }
 
@@ -88,133 +96,173 @@ public class Perfil  implements java.io.Serializable {
     }
 
     
-    @Column(name="mananexo")
-    public Boolean getMananexo() {
-        return this.mananexo;
+    @Column(name="sistema")
+    public Boolean getSistema() {
+        return this.sistema;
     }
     
-    public void setMananexo(Boolean mananexo) {
-        this.mananexo = mananexo;
-    }
-
-    
-    @Column(name="mancolor")
-    public Boolean getMancolor() {
-        return this.mancolor;
-    }
-    
-    public void setMancolor(Boolean mancolor) {
-        this.mancolor = mancolor;
+    public void setSistema(Boolean sistema) {
+        this.sistema = sistema;
     }
 
     
-    @Column(name="mancondicion")
-    public Boolean getMancondicion() {
-        return this.mancondicion;
+    @Column(name="sisUsu")
+    public Boolean getSisUsu() {
+        return this.sisUsu;
     }
     
-    public void setMancondicion(Boolean mancondicion) {
-        this.mancondicion = mancondicion;
-    }
-
-    
-    @Column(name="manmodelo")
-    public Boolean getManmodelo() {
-        return this.manmodelo;
-    }
-    
-    public void setManmodelo(Boolean manmodelo) {
-        this.manmodelo = manmodelo;
+    public void setSisUsu(Boolean sisUsu) {
+        this.sisUsu = sisUsu;
     }
 
     
-    @Column(name="mantanexo")
-    public Boolean getMantanexo() {
-        return this.mantanexo;
+    @Column(name="sisPer")
+    public Boolean getSisPer() {
+        return this.sisPer;
     }
     
-    public void setMantanexo(Boolean mantanexo) {
-        this.mantanexo = mantanexo;
-    }
-
-    
-    @Column(name="mantpago")
-    public Boolean getMantpago() {
-        return this.mantpago;
-    }
-    
-    public void setMantpago(Boolean mantpago) {
-        this.mantpago = mantpago;
+    public void setSisPer(Boolean sisPer) {
+        this.sisPer = sisPer;
     }
 
     
-    @Column(name="mantvehiculo")
-    public Boolean getMantvehiculo() {
-        return this.mantvehiculo;
+    @Column(name="sisTipAne")
+    public Boolean getSisTipAne() {
+        return this.sisTipAne;
     }
     
-    public void setMantvehiculo(Boolean mantvehiculo) {
-        this.mantvehiculo = mantvehiculo;
-    }
-
-    
-    @Column(name="manusuario")
-    public Boolean getManusuario() {
-        return this.manusuario;
-    }
-    
-    public void setManusuario(Boolean manusuario) {
-        this.manusuario = manusuario;
+    public void setSisTipAne(Boolean sisTipAne) {
+        this.sisTipAne = sisTipAne;
     }
 
     
-    @Column(name="manvehiculo")
-    public Boolean getManvehiculo() {
-        return this.manvehiculo;
+    @Column(name="sisEmp")
+    public Boolean getSisEmp() {
+        return this.sisEmp;
     }
     
-    public void setManvehiculo(Boolean manvehiculo) {
-        this.manvehiculo = manvehiculo;
-    }
-
-    
-    @Column(name="manventa")
-    public Boolean getManventa() {
-        return this.manventa;
-    }
-    
-    public void setManventa(Boolean manventa) {
-        this.manventa = manventa;
+    public void setSisEmp(Boolean sisEmp) {
+        this.sisEmp = sisEmp;
     }
 
     
-    @Column(name="mandatoscre")
-    public Boolean getMandatoscre() {
-        return this.mandatoscre;
+    @Column(name="sisTie")
+    public Boolean getSisTie() {
+        return this.sisTie;
     }
     
-    public void setMandatoscre(Boolean mandatoscre) {
-        this.mandatoscre = mandatoscre;
-    }
-
-    
-    @Column(name="manpago")
-    public Boolean getManpago() {
-        return this.manpago;
-    }
-    
-    public void setManpago(Boolean manpago) {
-        this.manpago = manpago;
+    public void setSisTie(Boolean sisTie) {
+        this.sisTie = sisTie;
     }
 
     
-    @Column(name="manletras")
-    public Boolean getManletras() {
-        return this.manletras;
+    @Column(name="mante")
+    public Boolean getMante() {
+        return this.mante;
     }
     
-    public void setManletras(Boolean manletras) {
-        this.manletras = manletras;
+    public void setMante(Boolean mante) {
+        this.mante = mante;
+    }
+
+    
+    @Column(name="manCli")
+    public Boolean getManCli() {
+        return this.manCli;
+    }
+    
+    public void setManCli(Boolean manCli) {
+        this.manCli = manCli;
+    }
+
+    
+    @Column(name="manArt")
+    public Boolean getManArt() {
+        return this.manArt;
+    }
+    
+    public void setManArt(Boolean manArt) {
+        this.manArt = manArt;
+    }
+
+    
+    @Column(name="manTipArt")
+    public Boolean getManTipArt() {
+        return this.manTipArt;
+    }
+    
+    public void setManTipArt(Boolean manTipArt) {
+        this.manTipArt = manTipArt;
+    }
+
+    
+    @Column(name="manMod")
+    public Boolean getManMod() {
+        return this.manMod;
+    }
+    
+    public void setManMod(Boolean manMod) {
+        this.manMod = manMod;
+    }
+
+    
+    @Column(name="manCol")
+    public Boolean getManCol() {
+        return this.manCol;
+    }
+    
+    public void setManCol(Boolean manCol) {
+        this.manCol = manCol;
+    }
+
+    
+    @Column(name="manPag")
+    public Boolean getManPag() {
+        return this.manPag;
+    }
+    
+    public void setManPag(Boolean manPag) {
+        this.manPag = manPag;
+    }
+
+    
+    @Column(name="manConPag")
+    public Boolean getManConPag() {
+        return this.manConPag;
+    }
+    
+    public void setManConPag(Boolean manConPag) {
+        this.manConPag = manConPag;
+    }
+
+    
+    @Column(name="venta")
+    public Boolean getVenta() {
+        return this.venta;
+    }
+    
+    public void setVenta(Boolean venta) {
+        this.venta = venta;
+    }
+
+    
+    @Column(name="venLis")
+    public Boolean getVenLis() {
+        return this.venLis;
+    }
+    
+    public void setVenLis(Boolean venLis) {
+        this.venLis = venLis;
+    }
+
+    
+    @Column(name="venReg")
+    public Boolean getVenReg() {
+        return this.venReg;
+    }
+    
+    public void setVenReg(Boolean venReg) {
+        this.venReg = venReg;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="perfil")
@@ -226,19 +274,7 @@ public class Perfil  implements java.io.Serializable {
         this.usuarios = usuarios;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && idperfil != null)
-            ? idperfil.equals(((Perfil) other).idperfil)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (idperfil != null) 
-            ? (getClass().hashCode() + idperfil.hashCode())
-            : super.hashCode();
-    }
 
 
 }

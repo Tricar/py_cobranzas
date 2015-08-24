@@ -22,32 +22,32 @@
                     <p:menubar>
                         <p:menuitem value="Inicio" icon="ui-icon-home" url="../views/index.xhtml" />
 
-                        <p:submenu label="Usuario" icon="ui-icon-person">
-                            <p:menuitem value="Ver" url="../usuario/index.xhtml" icon="ui-icon-bookmark" />
-                            <p:menuitem value="Anexo" url="../anexo/index.xhtml" icon="ui-icon-note" />
-                            <p:menuitem value="Tipo Anexo" url="../tanexo/index.xhtml" icon="ui-icon-note" />
+                        <p:submenu rendered="#{loginBean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-tag">
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisUsu}" value="Usuario" url="../sistema/usuario.xhtml" icon="ui-icon-bookmark" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisPer}" value="Perfil" url="../sistema/perfil.xhtml" icon="ui-icon-eject" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisTipAne}" value="Tipo Anexo" url="../sistema/tanexo.xhtml" icon="ui-icon-eject" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisEmp}" value="Empresa" url="../sistema/empresa.xhtml" icon="ui-icon-eject" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisTie}" value="Tienda" url="../sistema/tienda.xhtml" icon="ui-icon-eject" />
                         </p:submenu>
 
-                        <p:submenu label="Menu" icon="ui-icon-tag">
+                        <p:submenu rendered="#{loginBean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-person">
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manCli}" value="Cliente" url="../mantenimiento/cliente.xhtml" icon="ui-icon-bookmark" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manArt}" value="Articulo" url="../mantenimiento/articulo.xhtml" icon="ui-icon-note" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manTipArt}" value="Tipo Articulo" url="../mantenimiento/tarticulo.xhtml" icon="ui-icon-note" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manMod}" value="Modelo Articulo" url="../mantenimiento/modarticulo.xhtml" icon="ui-icon-note" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manCol}" value="Color Articulo" url="../mantenimiento/colorart.xhtml" icon="ui-icon-note" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manPag}" value="Pago" url="../mantenimiento/pago.xhtml" icon="ui-icon-note" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manConPag}" value="Condicion pago" url="../mantenimiento/condipago.xhtml" icon="ui-icon-note" />
+                        </p:submenu>
+                        
+                        <p:submenu rendered="#{loginBean.usuario.perfil.venta}" label="Venta" icon="ui-icon-wrench">
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.venLis}" value="Listar" url="../venta/index.xhtml" icon="ui-icon-eject" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.venReg}" value="Generar" url="../venta/index.xhtml" icon="ui-icon-eject" />
+                        </p:submenu>
+
+                        <p:submenu label="Reporte" icon="ui-icon-tag">
                             <p:menuitem value="Ver" url="#" icon="ui-icon-bookmark" />
                             <p:menuitem value="Asignar Menu" icon="ui-icon-eject" />
-                        </p:submenu>
-                        
-                        <p:submenu label="Vehiculo" icon="ui-icon-wrench">
-                            <p:menuitem value="Ver" url="../vehiculo/index.xhtml" icon="ui-icon-disk" />
-                            <p:menuitem value="Color" url="../color/index.xhtml" icon="ui-icon-arrowrefresh-1-w" />
-                            <p:menuitem value="Modelo" url="../modelo/index.xhtml" icon="ui-icon-close" ajax="false"/>
-                            <p:menuitem value="Tipo Vehiculo" url="../tvehiculo/index.xhtml" icon="ui-icon-close" ajax="false"/>
-                        </p:submenu>
-                        
-                        <p:submenu label="Pago" icon="ui-icon-wrench">
-                            <p:menuitem value="Ver" url="../vehiculo/index.xhtml" icon="ui-icon-disk" />
-                            <p:menuitem value="Codicion" url="../condicion/index.xhtml" icon="ui-icon-arrowrefresh-1-w" />
-                            <p:menuitem value="Tiempo pago" url="../tpago/index.xhtml" icon="ui-icon-arrowrefresh-1-w" />
-                        </p:submenu>
-                        
-                        <p:submenu label="Venta" icon="ui-icon-wrench">
-                            <p:menuitem value="Realizar" url="../venta/index.xhtml" icon="ui-icon-disk" />
                         </p:submenu>
 
                         <p:menuitem value="Clave" url="#" icon="ui-icon-suitcase" />
@@ -55,7 +55,7 @@
                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
 
                         <f:facet name="options">
-                            <p:inputText style="margin-right:10px" placeholder="Buscar"/>
+                            <p:outputLabel value="#{loginBean.usuario.anexo.nombre}"/>
                             <p:commandButton type="button" value="Salir" icon="ui-icon-extlink" />
                         </f:facet>
 

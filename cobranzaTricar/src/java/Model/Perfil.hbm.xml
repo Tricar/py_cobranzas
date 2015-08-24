@@ -1,54 +1,66 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/08/2015 05:10:26 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 22/08/2015 12:24:15 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Perfil" table="perfil" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idperfil" type="int">
             <column name="idperfil" />
-            <generator class="identity" />
+            <generator class="assigned" />
         </id>
         <property name="descripcion" type="string">
             <column name="descripcion" length="20" />
         </property>
-        <property name="mananexo" type="java.lang.Boolean">
-            <column name="mananexo" />
+        <property name="sistema" type="java.lang.Boolean">
+            <column name="sistema" />
         </property>
-        <property name="mancolor" type="java.lang.Boolean">
-            <column name="mancolor" />
+        <property name="sisUsu" type="java.lang.Boolean">
+            <column name="sisUsu" />
         </property>
-        <property name="mancondicion" type="java.lang.Boolean">
-            <column name="mancondicion" />
+        <property name="sisPer" type="java.lang.Boolean">
+            <column name="sisPer" />
         </property>
-        <property name="manmodelo" type="java.lang.Boolean">
-            <column name="manmodelo" />
+        <property name="sisTipAne" type="java.lang.Boolean">
+            <column name="sisTipAne" />
         </property>
-        <property name="mantanexo" type="java.lang.Boolean">
-            <column name="mantanexo" />
+        <property name="sisEmp" type="java.lang.Boolean">
+            <column name="sisEmp" />
         </property>
-        <property name="mantpago" type="java.lang.Boolean">
-            <column name="mantpago" />
+        <property name="sisTie" type="java.lang.Boolean">
+            <column name="sisTie" />
         </property>
-        <property name="mantvehiculo" type="java.lang.Boolean">
-            <column name="mantvehiculo" />
+        <property name="mante" type="java.lang.Boolean">
+            <column name="mante" />
         </property>
-        <property name="manusuario" type="java.lang.Boolean">
-            <column name="manusuario" />
+        <property name="manCli" type="java.lang.Boolean">
+            <column name="manCli" />
         </property>
-        <property name="manvehiculo" type="java.lang.Boolean">
-            <column name="manvehiculo" />
+        <property name="manArt" type="java.lang.Boolean">
+            <column name="manArt" />
         </property>
-        <property name="manventa" type="java.lang.Boolean">
-            <column name="manventa" />
+        <property name="manTipArt" type="java.lang.Boolean">
+            <column name="manTipArt" />
         </property>
-        <property name="mandatoscre" type="java.lang.Boolean">
-            <column name="mandatoscre" />
+        <property name="manMod" type="java.lang.Boolean">
+            <column name="manMod" />
         </property>
-        <property name="manpago" type="java.lang.Boolean">
-            <column name="manpago" />
+        <property name="manCol" type="java.lang.Boolean">
+            <column name="manCol" />
         </property>
-        <property name="manletras" type="java.lang.Boolean">
-            <column name="manletras" />
+        <property name="manPag" type="java.lang.Boolean">
+            <column name="manPag" />
+        </property>
+        <property name="manConPag" type="java.lang.Boolean">
+            <column name="manConPag" />
+        </property>
+        <property name="venta" type="java.lang.Boolean">
+            <column name="venta" />
+        </property>
+        <property name="venLis" type="java.lang.Boolean">
+            <column name="venLis" />
+        </property>
+        <property name="venReg" type="java.lang.Boolean">
+            <column name="venReg" />
         </property>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>

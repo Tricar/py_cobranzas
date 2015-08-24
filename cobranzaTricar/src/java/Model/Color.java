@@ -1,5 +1,5 @@
 package Model;
-// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
+// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Color  implements java.io.Serializable {
 
 
-     private Integer idcolor;
+     private int idcolor;
      private String color;
      private Date fecreg;
      private Set vehiculos = new HashSet(0);
@@ -34,12 +34,12 @@ public class Color  implements java.io.Serializable {
     }
 
 	
-    public Color(Integer idcolor, String color, Date fecreg) {
+    public Color(int idcolor, String color, Date fecreg) {
         this.idcolor = idcolor;
         this.color = color;
         this.fecreg = fecreg;
     }
-    public Color(Integer idcolor, String color, Date fecreg, Set vehiculos) {
+    public Color(int idcolor, String color, Date fecreg, Set vehiculos) {
        this.idcolor = idcolor;
        this.color = color;
        this.fecreg = fecreg;
@@ -50,11 +50,11 @@ public class Color  implements java.io.Serializable {
 
     
     @Column(name="idcolor", unique=true, nullable=false)
-    public Integer getIdcolor() {
+    public int getIdcolor() {
         return this.idcolor;
     }
     
-    public void setIdcolor(Integer idcolor) {
+    public void setIdcolor(int idcolor) {
         this.idcolor = idcolor;
     }
 
@@ -87,19 +87,7 @@ public class Color  implements java.io.Serializable {
         this.vehiculos = vehiculos;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && idcolor != null)
-            ? idcolor.equals(((Color) other).idcolor)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (idcolor != null) 
-            ? (getClass().hashCode() + idcolor.hashCode())
-            : super.hashCode();
-    }
 
 
 }

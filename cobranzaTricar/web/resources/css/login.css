@@ -20,6 +20,11 @@ body{
     font-size: 85%;
 }
 
+.precarga{
+    background:transparent url(../images/load.gif) center no-repeat;
+    display: none;
+}
+
 .ui-state-default .icon-login{
     background-image: url(images/login.png);
 }

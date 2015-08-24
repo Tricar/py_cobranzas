@@ -3,22 +3,22 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 22/08/2015 12:24:15 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="Model.Modelo" table="modelo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
-        <id name="idmodelo" type="int">
-            <column name="idmodelo" />
+    <class name="Model.Tienda" table="tienda" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idtienda" type="int">
+            <column name="idtienda" />
             <generator class="assigned" />
         </id>
-        <property name="modelo" type="string">
-            <column name="modelo" length="50" />
+        <property name="nombre" type="string">
+            <column name="nombre" length="15" />
         </property>
         <property name="fecreg" type="timestamp">
             <column name="fecreg" length="23" />
         </property>
-        <set name="vehiculos" table="vehiculo" inverse="true" lazy="true" fetch="select">
+        <set name="ventas" table="venta" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idmodelo" not-null="true" />
+                <column name="idtienda" />
             </key>
-            <one-to-many class="Model.Vehiculo" />
+            <one-to-many class="Model.Venta" />
         </set>
     </class>
 </hibernate-mapping>

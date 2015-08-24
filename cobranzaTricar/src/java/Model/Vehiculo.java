@@ -1,5 +1,5 @@
 package Model;
-// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
+// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 public class Vehiculo  implements java.io.Serializable {
 
 
-     private Integer idvehiculo;
+     private int idvehiculo;
      private Color color;
      private Modelo modelo;
      private Tipovehiculo tipovehiculo;
@@ -42,14 +42,14 @@ public class Vehiculo  implements java.io.Serializable {
     }
 
 	
-    public Vehiculo(Integer idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo, String serie) {
+    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo, String serie) {
         this.idvehiculo = idvehiculo;
         this.color = color;
         this.modelo = modelo;
         this.tipovehiculo = tipovehiculo;
         this.serie = serie;
     }
-    public Vehiculo(Integer idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo, String marca, String serie, Integer anofabri, Date fechareg, String motor, Set ventas) {
+    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Tipovehiculo tipovehiculo, String marca, String serie, Integer anofabri, Date fechareg, String motor, Set ventas) {
        this.idvehiculo = idvehiculo;
        this.color = color;
        this.modelo = modelo;
@@ -66,11 +66,11 @@ public class Vehiculo  implements java.io.Serializable {
 
     
     @Column(name="idvehiculo", unique=true, nullable=false)
-    public Integer getIdvehiculo() {
+    public int getIdvehiculo() {
         return this.idvehiculo;
     }
     
-    public void setIdvehiculo(Integer idvehiculo) {
+    public void setIdvehiculo(int idvehiculo) {
         this.idvehiculo = idvehiculo;
     }
 
@@ -163,19 +163,7 @@ public class Vehiculo  implements java.io.Serializable {
         this.ventas = ventas;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && idvehiculo != null)
-            ? idvehiculo.equals(((Vehiculo) other).idvehiculo)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (idvehiculo != null) 
-            ? (getClass().hashCode() + idvehiculo.hashCode())
-            : super.hashCode();
-    }
 
 
 }

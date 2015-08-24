@@ -1,5 +1,5 @@
 package Model;
-// Generated 21/08/2015 05:10:25 PM by Hibernate Tools 4.3.1
+// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Modelo  implements java.io.Serializable {
 
 
-     private Integer idmodelo;
+     private int idmodelo;
      private String modelo;
      private Date fecreg;
      private Set vehiculos = new HashSet(0);
@@ -34,10 +34,10 @@ public class Modelo  implements java.io.Serializable {
     }
 
 	
-    public Modelo(Integer idmodelo) {
+    public Modelo(int idmodelo) {
         this.idmodelo = idmodelo;
     }
-    public Modelo(Integer idmodelo, String modelo, Date fecreg, Set vehiculos) {
+    public Modelo(int idmodelo, String modelo, Date fecreg, Set vehiculos) {
        this.idmodelo = idmodelo;
        this.modelo = modelo;
        this.fecreg = fecreg;
@@ -48,11 +48,11 @@ public class Modelo  implements java.io.Serializable {
 
     
     @Column(name="idmodelo", unique=true, nullable=false)
-    public Integer getIdmodelo() {
+    public int getIdmodelo() {
         return this.idmodelo;
     }
     
-    public void setIdmodelo(Integer idmodelo) {
+    public void setIdmodelo(int idmodelo) {
         this.idmodelo = idmodelo;
     }
 
@@ -85,19 +85,7 @@ public class Modelo  implements java.io.Serializable {
         this.vehiculos = vehiculos;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && idmodelo != null)
-            ? idmodelo.equals(((Modelo) other).idmodelo)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (idmodelo != null) 
-            ? (getClass().hashCode() + idmodelo.hashCode())
-            : super.hashCode();
-    }
 
 
 }
