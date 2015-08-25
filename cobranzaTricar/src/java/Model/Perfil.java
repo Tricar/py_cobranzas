@@ -3,9 +3,12 @@ package Model;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -70,7 +73,8 @@ public class Perfil implements java.io.Serializable {
     }
 
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
+    @Basic(optional = false)
     @Column(name = "idperfil", unique = true, nullable = false)
     public Integer getIdperfil() {
         return this.idperfil;

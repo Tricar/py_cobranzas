@@ -6,7 +6,7 @@
     <class name="Model.Perfil" table="perfil" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idperfil" type="int">
             <column name="idperfil" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="descripcion" type="string">
             <column name="descripcion" length="20" />

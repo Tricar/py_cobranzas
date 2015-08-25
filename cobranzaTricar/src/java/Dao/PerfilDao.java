@@ -18,5 +18,7 @@ public interface PerfilDao {
     public Perfil buscarPorId(Integer id);
     public List<Perfil> buscarTodos();
     public void crearperfil(Perfil perfil);
+    public List<Perfil> mostrarPerfil();
+    public void eliminarperfil(Perfil perfil);
     
 }
