@@ -9,11 +9,13 @@ import Dao.PerfilDao;
 import Dao.PerfilDaoImpl;
 import Model.Perfil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -22,8 +24,9 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 public class PerfilBean implements Serializable{
-    private Perfil perfil;
+    private Perfil perfil = new Perfil();
     private List<Perfil> perfiles;
+    private List<SelectItem> SelectItemsPerfil;
     
     public PerfilBean() {
     }
@@ -78,6 +81,29 @@ public class PerfilBean implements Serializable{
         PerfilDao perfilDao = new PerfilDaoImpl();
         perfiles = perfilDao.buscarTodos();
         return perfiles;
+    }
+    
+    public List<SelectItem> getSelectItemsPerfil() {
+        this.SelectItemsPerfil = new ArrayList<SelectItem>();
+        PerfilDao perfilDao = new PerfilDaoImpl();
+        List<Perfil> tipos = perfilDao.mostrarPerfil();
+        for (Perfil tipo : tipos) {
+            SelectItem selecItem = new SelectItem(tipo, tipo.getDescripcion());
+            this.SelectItemsPerfil.add(selecItem);
+        }
+        return SelectItemsPerfil;
+    }
+    
+    public void insertarPerfil() {
+        PerfilDao linkDao = new PerfilDaoImpl();
+        linkDao.crearperfil(perfil);
+        perfil = new Perfil();
+    }
+    
+    public void eliminarPerfil() {
+        PerfilDao linkDao = new PerfilDaoImpl();
+        linkDao.eliminarperfil(perfil);
+        perfil = new Perfil();
     }
     
 }

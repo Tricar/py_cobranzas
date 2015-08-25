@@ -20,32 +20,32 @@
             <ui:insert name="top">
                 <h:form id="frmMenu">
                     <p:menubar>
-                        <p:menuitem value="Inicio" icon="ui-icon-home" url="../views/index.xhtml" />
+                        <p:menuitem value="Inicio" icon="ui-icon-home" outcome="/views/index" />
 
-                        <p:submenu rendered="#{loginBean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-tag">
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisUsu}" value="Usuario" url="../sistema/usuario.xhtml" icon="ui-icon-bookmark" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisPer}" value="Perfil" url="../sistema/perfil.xhtml" icon="ui-icon-eject" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisTipAne}" value="Tipo Anexo" url="../sistema/tanexo.xhtml" icon="ui-icon-eject" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisEmp}" value="Empresa" url="../sistema/empresa.xhtml" icon="ui-icon-eject" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisTie}" value="Tienda" url="../sistema/tienda.xhtml" icon="ui-icon-eject" />
+                        <p:submenu rendered="#{loginBean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-suitcase">
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisUsu}" value="Usuario" outcome="/sistema/usuario" icon="ui-icon-person" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisPer}" value="Perfil" outcome="/sistema/perfil" icon="ui-icon-clipboard" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisTipAne}" value="Tipo Anexo" outcome="/sistema/tanexo" icon="ui-icon-pin-s" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisEmp}" value="Empresa" url="#" icon="ui-icon-carat-1-ne" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisTie}" value="Tienda" url="#" icon="ui-icon-carat-1-ne" />
                         </p:submenu>
 
-                        <p:submenu rendered="#{loginBean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-person">
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manCli}" value="Cliente" url="../mantenimiento/cliente.xhtml" icon="ui-icon-bookmark" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manArt}" value="Articulo" url="../mantenimiento/articulo.xhtml" icon="ui-icon-note" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manTipArt}" value="Tipo Articulo" url="../mantenimiento/tarticulo.xhtml" icon="ui-icon-note" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manMod}" value="Modelo Articulo" url="../mantenimiento/modarticulo.xhtml" icon="ui-icon-note" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manCol}" value="Color Articulo" url="../mantenimiento/colorart.xhtml" icon="ui-icon-note" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manPag}" value="Pago" url="../mantenimiento/pago.xhtml" icon="ui-icon-note" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manConPag}" value="Condicion pago" url="../mantenimiento/condipago.xhtml" icon="ui-icon-note" />
+                        <p:submenu rendered="#{loginBean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manCli}" value="Cliente" outcome="/mantenimiento/cliente" icon="ui-icon-person" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manArt}" value="Articulo" outcome="/mantenimiento/articulo" icon="ui-icon-flag" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manTipArt}" value="Tipo Articulo" outcome="/mantenimiento/tarticulo" icon="ui-icon-bullet" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manMod}" value="Modelo Articulo" outcome="/mantenimiento/modarticulo" icon="ui-icon-star" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manCol}" value="Color Articulo" outcome="/mantenimiento/colorart" icon="ui-icon-pencil" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manPag}" value="Pago" outcome="/mantenimiento/tpago" icon="ui-icon-tag" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.manConPag}" value="Condicion pago" outcome="/mantenimiento/condipago" icon="ui-icon-clock" />
                         </p:submenu>
                         
-                        <p:submenu rendered="#{loginBean.usuario.perfil.venta}" label="Venta" icon="ui-icon-wrench">
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.venLis}" value="Listar" url="../venta/index.xhtml" icon="ui-icon-eject" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.venReg}" value="Generar" url="../venta/index.xhtml" icon="ui-icon-eject" />
+                        <p:submenu rendered="#{loginBean.usuario.perfil.venta}" label="Venta" icon="ui-icon-cart">
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.venLis}" value="Listar" outcome="/venta/index" icon="ui-icon-grip-dotted-vertical" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.venReg}" value="Generar" outcome="/venta/index" icon="ui-icon-newwin" />
                         </p:submenu>
 
-                        <p:submenu label="Reporte" icon="ui-icon-tag">
+                        <p:submenu label="Reporte" icon="ui-icon-print">
                             <p:menuitem value="Ver" url="#" icon="ui-icon-bookmark" />
                             <p:menuitem value="Asignar Menu" icon="ui-icon-eject" />
                         </p:submenu>
@@ -56,7 +56,6 @@
 
                         <f:facet name="options">
                             <p:outputLabel value="#{loginBean.usuario.anexo.nombre}"/>
-                            <p:commandButton type="button" value="Salir" icon="ui-icon-extlink" />
                         </f:facet>
 
                     </p:menubar>

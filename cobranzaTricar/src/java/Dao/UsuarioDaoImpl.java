@@ -54,7 +54,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(usuario);
+            session.merge(usuario);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());

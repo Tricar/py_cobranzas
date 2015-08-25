@@ -2,6 +2,7 @@ package Bean;
 
 import Dao.UsuarioDao;
 import Dao.UsuarioDaoImpl;
+import Model.Perfil;
 import Model.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
 
 @ManagedBean
 @SessionScoped
@@ -17,10 +17,19 @@ import javax.faces.event.ActionEvent;
 public class usuarioBean implements Serializable{
 
     private Usuario user = new Usuario();
+    private Perfil per = new Perfil();
     private List<Usuario> usuarios;
 
     public usuarioBean() {
         this.usuarios = new ArrayList<Usuario>();
+    }
+
+    public Perfil getPer() {
+        return per;
+    }
+
+    public void setPer(Perfil per) {
+        this.per = per;
     }
 
     public Usuario getUser() {

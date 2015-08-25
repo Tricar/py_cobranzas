@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -11,7 +12,7 @@
 
             <ui:define name="content">
                 <h:form id="frmNuevo">
-                    <p:commandButton value="Nuevo Perfil" icon="ui-icon-plus"/>
+                    <p:commandButton value="Nuevo Perfil" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
                 </h:form>
 
                 <br/>
@@ -24,16 +25,53 @@
                         </p:column>
 
                         <p:column style="width:12%; text-align: center">  
-                            <p:commandButton icon="ui-icon-refresh" title="Editar" />
-                            <p:commandButton icon="ui-icon-trash" title="Eliminar"/>
+                            <p:commandButton oncomplete="dlgPerfil.show()" icon="ui-icon-refresh" title="Editar" 
+                                             update=":frmPerfil:dlgPerfil" actionListener="#{perfilBean.prepararPerfil(perfil.idperfil)}"/>
+                            <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
+                                <f:setPropertyActionListener target="#{perfilBean.perfil}" value="#{perfil}" />
+                            </p:commandButton>
                             <p:commandButton oncomplete="dlgPermisos.show()" icon="ui-icon-key" title="Permisos"
                                              update=":frmPermisos:dlgPermisos" actionListener="#{perfilBean.prepararPerfil(perfil.idperfil)}"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
 
+                <p:dialog id="dlg1" header="Nuevo Usuario" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
+                    <h:form id="formInsertar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Descripcion:" />
+                            <p:inputText value="#{perfilBean.perfil.descripcion}" />
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" update=":frmPerfiles" actionListener="#{perfilBean.insertarPerfil()}" 
+                                         oncomplete="dlginsertar.hide();" />
+                    </h:form>
+                </p:dialog>
+                
+                <p:dialog id="dlg2" header="Eliminar Perfil" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+                    <h:form id="formEliminar">
+                        <h:outputText value="¿Desea Eliminar?"/>
+                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" 
+                                         update=":frmPerfiles" oncomplete="dlgeliminar.hide();"/>
+                        <p:commandButton value="No" onclick="dlg2.hide();"/>
+                    </h:form>
+                </p:dialog>
+
+                <h:form id="frmPerfil">  
+                    <p:dialog id="dlgPerfil" header="Perfil" widgetVar="dlgPerfil" resizable="false" modal="true">
+                        <p:growl id="grow2" showDetail="false" sticky="true" />
+                        
+                        <p:inputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
+                        <br/><br/>
+                        <p:commandButton value="Guardar" icon="ui-icon ui-icon-disk" oncomplete="dlgPerfil.hide();"
+                                         update="grow2" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                        <p:commandButton value="Cancelar" icon="ui-icon ui-icon-close" />
+                    </p:dialog>
+                </h:form>
+
                 <h:form id="frmPermisos">
-                    <p:dialog id="dlgPermisos" header="Permisos" widgetVar="dlgPermisos" resizable="false" modal="true">  
+                    <p:dialog id="dlgPermisos" header="Permisos" widgetVar="dlgPermisos" resizable="false" modal="true"> 
                         <p:growl id="growl" showDetail="false" sticky="true" />
 
                         <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
@@ -54,9 +92,19 @@
 
                         <br/><h:outputText value="Mantenimiento:" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>
-                        <h:outputText value="Mantenimiento Clientes" />
+                        <h:outputText value="Clientes" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manArt}"/>
-                        <h:outputText value="mantenimiento Articulo" />
+                        <h:outputText value="Articulo" />                        
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manTipArt}"/>
+                        <h:outputText value="Tipo Articulo" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manMod}"/>
+                        <h:outputText value="Modelo Articulo" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCol}"/>
+                        <h:outputText value="Color Articulo" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manPag}"/>
+                        <h:outputText value="Pago" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manConPag}"/>
+                        <h:outputText value="Condicion Pago" />
                         <br/>
 
                         <br/><h:outputText value="Venta" />
@@ -68,7 +116,6 @@
                         <p:commandButton value="Guardar" icon="ui-icon ui-icon-disk" oncomplete="dlgPermisos.hide();"
                                          update="growl" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         <p:commandButton value="Cancelar" icon="ui-icon ui-icon-close" />
-
                     </p:dialog>
                 </h:form>
             </ui:define>

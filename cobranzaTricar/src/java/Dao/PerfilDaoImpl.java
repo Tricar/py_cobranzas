@@ -9,6 +9,7 @@ import Model.Perfil;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /**
@@ -58,6 +59,44 @@ public class PerfilDaoImpl implements PerfilDao{
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(perfil);
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        }
+        finally {
+            if(session != null){
+                session.close();
+            }
+        }
+    }
+    
+    @Override
+    public List<Perfil> mostrarPerfil() {
+        Session session = null;
+        List<Perfil> lista = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Perfil");
+            lista = (List<Perfil>)query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public void eliminarperfil(Perfil perfil) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.delete(perfil);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
