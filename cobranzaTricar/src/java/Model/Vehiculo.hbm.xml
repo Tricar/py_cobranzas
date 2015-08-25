@@ -6,7 +6,7 @@
     <class name="Model.Vehiculo" table="vehiculo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idvehiculo" type="int">
             <column name="idvehiculo" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="color" class="Model.Color" fetch="select">
             <column name="idcolor" not-null="true" />

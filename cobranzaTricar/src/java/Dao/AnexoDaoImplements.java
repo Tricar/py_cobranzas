@@ -141,7 +141,7 @@ public class AnexoDaoImplements implements AnexoDao{
         session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Anexo.class);
         if (StringUtils.isNotBlank(nombre)){
-            criteria.add(Restrictions.ilike("nombre",nombre.toUpperCase(),MatchMode.START)); 
+            criteria.add(Restrictions.ilike("nombre"+"appat"+"apmat",nombre.toUpperCase(),MatchMode.START)); 
         }
         return criteria.list();
         } catch (HibernateException e){

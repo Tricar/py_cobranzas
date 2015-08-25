@@ -6,7 +6,7 @@
     <class name="Model.Venta" table="venta" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idventa" type="int">
             <column name="idventa" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="anexoByCodven" class="Model.Anexo" fetch="select">
             <column name="codven" />

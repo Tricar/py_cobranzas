@@ -6,7 +6,7 @@
     <class name="Model.Tipovehiculo" table="tipovehiculo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idtipovehiculo" type="int">
             <column name="idtipovehiculo" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="nombre" type="string">
             <column name="nombre" length="30" />

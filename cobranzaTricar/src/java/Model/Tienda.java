@@ -92,5 +92,4 @@ public class Tienda implements java.io.Serializable {
                 ? (getClass().hashCode() + idtienda.hashCode())
                 : super.hashCode();
     }
-
 }
