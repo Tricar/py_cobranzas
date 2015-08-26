@@ -26,3 +26,7 @@ body{
 .ui-state-default .b-update{
     background-image: url(images/edit.gif);
 }
+
+.ui-state-default .b-new{
+    background-image: url(images/ok.png);
+}
