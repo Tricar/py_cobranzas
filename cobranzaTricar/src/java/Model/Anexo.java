@@ -1,5 +1,5 @@
 package Model;
-// Generated 22/08/2015 12:24:13 PM by Hibernate Tools 4.3.1
+// Generated 31/08/2015 11:12:21 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -9,8 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -27,8 +25,7 @@ import javax.persistence.TemporalType;
 public class Anexo  implements java.io.Serializable {
 
 
-     private Integer idanexo;
-     private Tipoanexo tipoanexo;
+     private int idanexo;
      private String nombre;
      private String dni;
      private String ruc;
@@ -42,25 +39,25 @@ public class Anexo  implements java.io.Serializable {
      private String apepat;
      private String apemat;
      private String email;
+     private String tipoanexo;
      private String codven;
      private Set datoscreditosForAprobado = new HashSet(0);
      private Set datoscreditosForVerificador = new HashSet(0);
-     private Set detcreditos = new HashSet(0);
-     private Set ventasForCodven = new HashSet(0);
+     private Set anexodatcredavals = new HashSet(0);
+     private Set creditosForCodven = new HashSet(0);
      private Set usuarios = new HashSet(0);
-     private Set ventasForIdanexo = new HashSet(0);
+     private Set creditosForIdanexo = new HashSet(0);
 
     public Anexo() {
     }
 
 	
-    public Anexo(Integer idanexo, Tipoanexo tipoanexo) {
+    public Anexo(int idanexo, String tipoanexo) {
         this.idanexo = idanexo;
         this.tipoanexo = tipoanexo;
     }
-    public Anexo(Integer idanexo, Tipoanexo tipoanexo, String nombre, String dni, String ruc, String direccion, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String codven, Set datoscreditosForAprobado, Set datoscreditosForVerificador, Set detcreditos, Set ventasForCodven, Set usuarios, Set ventasForIdanexo) {
+    public Anexo(int idanexo, String nombre, String dni, String ruc, String direccion, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, Set datoscreditosForAprobado, Set datoscreditosForVerificador, Set anexodatcredavals, Set creditosForCodven, Set usuarios, Set creditosForIdanexo) {
        this.idanexo = idanexo;
-       this.tipoanexo = tipoanexo;
        this.nombre = nombre;
        this.dni = dni;
        this.ruc = ruc;
@@ -74,35 +71,26 @@ public class Anexo  implements java.io.Serializable {
        this.apepat = apepat;
        this.apemat = apemat;
        this.email = email;
+       this.tipoanexo = tipoanexo;
        this.codven = codven;
        this.datoscreditosForAprobado = datoscreditosForAprobado;
        this.datoscreditosForVerificador = datoscreditosForVerificador;
-       this.detcreditos = detcreditos;
-       this.ventasForCodven = ventasForCodven;
+       this.anexodatcredavals = anexodatcredavals;
+       this.creditosForCodven = creditosForCodven;
        this.usuarios = usuarios;
-       this.ventasForIdanexo = ventasForIdanexo;
+       this.creditosForIdanexo = creditosForIdanexo;
     }
    
      @Id 
 
     
     @Column(name="idanexo", unique=true, nullable=false)
-    public Integer getIdanexo() {
+    public int getIdanexo() {
         return this.idanexo;
     }
     
-    public void setIdanexo(Integer idanexo) {
+    public void setIdanexo(int idanexo) {
         this.idanexo = idanexo;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idtipoanexo", nullable=false)
-    public Tipoanexo getTipoanexo() {
-        return this.tipoanexo;
-    }
-    
-    public void setTipoanexo(Tipoanexo tipoanexo) {
-        this.tipoanexo = tipoanexo;
     }
 
     
@@ -236,6 +224,16 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
+    @Column(name="tipoanexo", nullable=false, length=2)
+    public String getTipoanexo() {
+        return this.tipoanexo;
+    }
+    
+    public void setTipoanexo(String tipoanexo) {
+        this.tipoanexo = tipoanexo;
+    }
+
+    
     @Column(name="codven", length=10)
     public String getCodven() {
         return this.codven;
@@ -264,21 +262,21 @@ public class Anexo  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="anexo")
-    public Set getDetcreditos() {
-        return this.detcreditos;
+    public Set getAnexodatcredavals() {
+        return this.anexodatcredavals;
     }
     
-    public void setDetcreditos(Set detcreditos) {
-        this.detcreditos = detcreditos;
+    public void setAnexodatcredavals(Set anexodatcredavals) {
+        this.anexodatcredavals = anexodatcredavals;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="anexoByCodven")
-    public Set getVentasForCodven() {
-        return this.ventasForCodven;
+    public Set getCreditosForCodven() {
+        return this.creditosForCodven;
     }
     
-    public void setVentasForCodven(Set ventasForCodven) {
-        this.ventasForCodven = ventasForCodven;
+    public void setCreditosForCodven(Set creditosForCodven) {
+        this.creditosForCodven = creditosForCodven;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="anexo")
@@ -291,27 +289,15 @@ public class Anexo  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="anexoByIdanexo")
-    public Set getVentasForIdanexo() {
-        return this.ventasForIdanexo;
+    public Set getCreditosForIdanexo() {
+        return this.creditosForIdanexo;
     }
     
-    public void setVentasForIdanexo(Set ventasForIdanexo) {
-        this.ventasForIdanexo = ventasForIdanexo;
+    public void setCreditosForIdanexo(Set creditosForIdanexo) {
+        this.creditosForIdanexo = creditosForIdanexo;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && idanexo != null)
-            ? idanexo.equals(((Anexo) other).idanexo)
-            : (other == this);
-    }
 
-    @Override
-    public int hashCode() {
-        return (idanexo != null) 
-            ? (getClass().hashCode() + idanexo.hashCode())
-            : super.hashCode();
-    }
 
 
 }

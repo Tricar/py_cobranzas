@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22/08/2015 12:24:15 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 31/08/2015 11:12:23 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Letras" table="letras" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idletras" type="int">
             <column name="idletras" />
-            <generator class="identity" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="datoscredito" class="Model.Datoscredito" fetch="select">
             <column name="iddatoscredito" />
@@ -31,6 +31,9 @@
         </property>
         <property name="fecreg" type="timestamp">
             <column name="fecreg" length="23" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" length="2" />
         </property>
         <set name="pagoses" table="pagos" inverse="true" lazy="true" fetch="select">
             <key>

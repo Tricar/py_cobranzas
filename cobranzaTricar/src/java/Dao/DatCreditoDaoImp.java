@@ -1,6 +1,6 @@
 package Dao;
 
-import Model.Tiempopago;
+import Model.Datoscredito;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -11,16 +11,16 @@ import org.hibernate.Session;
  *
  * @author master
  */
-public class TiempoPagoDaoImplements implements TiempoPagoDao{
+public class DatCreditoDaoImp implements DatCreditoDao{
 
     @Override
-    public List<Tiempopago> mostrarTpago() {
+    public List<Datoscredito> mostrarDatCredito() {
         Session session = null;
-        List<Tiempopago> lista = null;
+        List<Datoscredito> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Tiempopago");
-            lista = (List<Tiempopago>)query.list();
+            Query query = session.createQuery("FROM Datoscredito");
+            lista = (List<Datoscredito>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }
@@ -33,12 +33,12 @@ public class TiempoPagoDaoImplements implements TiempoPagoDao{
     }
 
     @Override
-    public void insertarTpago(Tiempopago tpago) {
+    public void insertarDatCredito(Datoscredito datcredito) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(tpago);
+            session.save(datcredito);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -52,12 +52,12 @@ public class TiempoPagoDaoImplements implements TiempoPagoDao{
     }
 
     @Override
-    public void modificarTpago(Tiempopago tpago) {
+    public void modificarDatCredito(Datoscredito datcredito) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(tpago);
+            session.update(datcredito);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -71,12 +71,12 @@ public class TiempoPagoDaoImplements implements TiempoPagoDao{
     }
 
     @Override
-    public void eliminarTpago(Tiempopago tpago) {
+    public void eliminarDatCredito(Datoscredito datcredito) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(tpago);
+            session.delete(datcredito);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());

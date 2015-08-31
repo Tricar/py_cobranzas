@@ -13,7 +13,7 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                     <h:form>
-                        <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" update=":formInsertar"/>
+                        <p:commandButton value="Nuevo" icon="b-add" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                     </h:form>
                     <p:dialog id="dlg1" header="Nuevo Modelo" showEffect="explode" hideEffect="explode" 
                               widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
@@ -25,7 +25,7 @@
                                 <p:inputText value="#{modeloBean.modelo.modelo}" />
 
                             </p:panelGrid>
-                            <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{modeloBean.insertar()}" 
+                            <p:commandButton value="Guardar" icon="b-new" update=":formMostrar" actionListener="#{modeloBean.insertar()}" 
                                              oncomplete="dlginsertar.hide();" />
                         </h:form>
                     </p:dialog>

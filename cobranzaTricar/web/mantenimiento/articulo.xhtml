@@ -14,15 +14,13 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" update=":formInsertar"/>
+                    <p:commandButton value="Nuevo" icon="b-add" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                 </h:form>
                 <p:dialog id="dlg1" header="Nuevo Vehículo" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formInsertar">
                         <p:messages autoUpdate="true"/>
                         <p:panelGrid columns="2">
-                            <p:outputLabel value="Id:" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.idvehiculo}" disabled="true"/>
                             <p:outputLabel value="Tipo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
@@ -47,7 +45,7 @@
                             <p:outputLabel value="Motor:" />
                             <p:inputText value="#{vehiculoBean.vehiculo.motor}" />
                         </p:panelGrid>
-                        <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{vehiculoBean.insertar()}" 
+                        <p:commandButton value="Guardar" icon="b-new" update=":formMostrar" actionListener="#{vehiculoBean.insertar()}" 
                                          oncomplete="dlginsertar.hide()"/>
                     </h:form>
                 </p:dialog>
@@ -63,7 +61,7 @@
                             <h:outputText value="#{vehiculo.idvehiculo}" />
                         </p:column>
                         <p:column headerText="Tipo">
-                            <h:outputText value="#{vehiculo.tipovehiculo.nombre}" />
+                            <h:outputText value="#{vehiculo.tipovehiculo}" />
                         </p:column>
                         <p:column headerText="Marca">
                             <h:outputText value="#{vehiculo.marca}" />
@@ -100,8 +98,6 @@
                     <h:form id="formModificar">
                         <p:messages autoUpdate="true"/>
                         <p:panelGrid columns="2">
-                            <p:outputLabel value="Id:" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.idvehiculo}" disabled="true"/>
                             <p:outputLabel value="Tipo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>

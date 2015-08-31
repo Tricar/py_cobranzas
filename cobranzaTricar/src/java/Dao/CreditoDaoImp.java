@@ -1,31 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Dao;
 
-import Model.Condicionpago;
+import Model.Credito;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-/**
- *
- * @author master
- */
-public class CondicionPagoDaoImplements implements CondicionPagoDao{
+
+public class CreditoDaoImp implements CreditoDao{
 
     @Override
-    public List<Condicionpago> mostrarCondicion() {
+    public List<Credito> mostrarVentas() {
         Session session = null;
-        List<Condicionpago> lista = null;
+        List<Credito> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Condicionpago");
-            lista = (List<Condicionpago>)query.list();
+            Query query = session.createQuery("FROM Credito");
+            lista = (List<Credito>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }
@@ -38,12 +30,12 @@ public class CondicionPagoDaoImplements implements CondicionPagoDao{
     }
 
     @Override
-    public void insertarCondicion(Condicionpago condicion) {
+    public void insertarVenta(Credito credito) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(condicion);
+            session.save(credito);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -57,12 +49,12 @@ public class CondicionPagoDaoImplements implements CondicionPagoDao{
     }
 
     @Override
-    public void modificarCondicion(Condicionpago condicion) {
+    public void modificarVenta(Credito credito) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(condicion);
+            session.update(credito);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -76,12 +68,12 @@ public class CondicionPagoDaoImplements implements CondicionPagoDao{
     }
 
     @Override
-    public void eliminarcondicion(Condicionpago condicion) {
+    public void eliminarVenta(Credito credito) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(condicion);
+            session.delete(credito);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
