@@ -6,7 +6,7 @@
     <class name="Model.Datoscredito" table="datoscredito" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="iddatoscredito" type="int">
             <column name="iddatoscredito" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="anexoByAprobado" class="Model.Anexo" fetch="select">
             <column name="aprobado" not-null="true" />

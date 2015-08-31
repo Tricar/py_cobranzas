@@ -6,7 +6,7 @@
     <class name="Model.Color" table="color" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idcolor" type="int">
             <column name="idcolor" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="color" type="string">
             <column name="color" length="50" not-null="true" />
