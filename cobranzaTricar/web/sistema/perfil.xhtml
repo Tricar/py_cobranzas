@@ -17,7 +17,8 @@
 
                 <br/>
 
-                <h:form id="frmPerfiles">
+                <h:form id="frmPerfiles">                    
+                    <p:growl id="growl" showDetail="false" sticky="false" />
                     <p:dataTable var="perfil" value="#{perfilBean.perfiles}">
                         <h:inputHidden value="#{perfil.idperfil}" />
                         <p:column headerText="Descripcion">
@@ -47,7 +48,7 @@
                                          oncomplete="dlginsertar.hide();" />
                     </h:form>
                 </p:dialog>
-                
+
                 <p:dialog id="dlg2" header="Eliminar Perfil" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formEliminar">
@@ -60,20 +61,17 @@
 
                 <h:form id="frmPerfil">  
                     <p:dialog id="dlgPerfil" header="Perfil" widgetVar="dlgPerfil" resizable="false" modal="true">
-                        <p:growl id="grow2" showDetail="false" sticky="true" />
-                        
+
                         <p:inputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
                         <br/><br/>
                         <p:commandButton value="Guardar" icon="ui-icon ui-icon-disk" oncomplete="dlgPerfil.hide();"
-                                         update="grow2" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                                         update=":frmPerfiles" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         <p:commandButton value="Cancelar" icon="ui-icon ui-icon-close" />
                     </p:dialog>
                 </h:form>
 
                 <h:form id="frmPermisos">
                     <p:dialog id="dlgPermisos" header="Permisos" widgetVar="dlgPermisos" resizable="false" modal="true"> 
-                        <p:growl id="growl" showDetail="false" sticky="true" />
-
                         <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
                         <br/>
 
@@ -114,7 +112,7 @@
                         <h:outputText value="Vender" />
                         <p:separator/>
                         <p:commandButton value="Guardar" icon="ui-icon ui-icon-disk" oncomplete="dlgPermisos.hide();"
-                                         update="growl" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                                         update=":frmPerfiles" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         <p:commandButton value="Cancelar" icon="ui-icon ui-icon-close" />
                     </p:dialog>
                 </h:form>
