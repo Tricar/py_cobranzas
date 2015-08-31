@@ -13,7 +13,7 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" update=":formInsertar"/>
+                    <p:commandButton value="Nuevo" icon="b-add" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                 </h:form>
                 <p:dialog id="dlg1" header="Nuevo Anexo" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
@@ -55,7 +55,7 @@
                             <p:outputLabel value="Cod. vendedor:" />
                             <p:inputText id="vend" disabled="#{anexoBean.anexo.tipoanexo.nombre != 'Vendedor'}" value="#{anexoBean.anexo.codven}" />                                                        
                         </p:panelGrid>
-                        <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{anexoBean.insertar()}" oncomplete="dlginsertar.hide()"/>
+                        <p:commandButton value="Guardar" icon="b-new" update=":formMostrar" actionListener="#{anexoBean.insertar()}" oncomplete="dlginsertar.hide()"/>
                     </h:form>
                 </p:dialog>
 

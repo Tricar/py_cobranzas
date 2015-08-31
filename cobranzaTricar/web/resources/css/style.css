@@ -20,9 +20,17 @@ body{
 }
 
 .ui-state-default .b-delete{
-    background-image: url(images/delete.gif);
+    background-image: url(images/trash_full.png);
 }
 
 .ui-state-default .b-update{
-    background-image: url(images/edit.gif);
+    background-image: url(images/file_edit.png);
+}
+
+.ui-state-default .b-new{
+    background-image: url(images/save_alt.png);
+}
+
+.ui-state-default .b-add{
+    background-image: url(images/add.png);
 }

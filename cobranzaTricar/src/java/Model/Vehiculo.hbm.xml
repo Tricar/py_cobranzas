@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 22/08/2015 12:24:15 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 31/08/2015 11:12:23 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Vehiculo" table="vehiculo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idvehiculo" type="int">
@@ -13,9 +13,6 @@
         </many-to-one>
         <many-to-one name="modelo" class="Model.Modelo" fetch="select">
             <column name="idmodelo" not-null="true" />
-        </many-to-one>
-        <many-to-one name="tipovehiculo" class="Model.Tipovehiculo" fetch="select">
-            <column name="idtipovehiculo" not-null="true" />
         </many-to-one>
         <property name="marca" type="string">
             <column name="marca" length="20" />
@@ -32,11 +29,14 @@
         <property name="motor" type="string">
             <column name="motor" length="20" />
         </property>
-        <set name="ventas" table="venta" inverse="true" lazy="true" fetch="select">
+        <property name="tipovehiculo" type="string">
+            <column name="tipovehiculo" length="2" not-null="true" />
+        </property>
+        <set name="creditos" table="credito" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idvehiculo" />
+                <column name="idvehiculo" not-null="true" />
             </key>
-            <one-to-many class="Model.Venta" />
+            <one-to-many class="Model.Credito" />
         </set>
     </class>
 </hibernate-mapping>

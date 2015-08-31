@@ -14,168 +14,146 @@
         <ui:composition template="./../views/template.xhtml">
 
             <ui:define name="content">
-                <h:form id="formInsertar">
+                <h:form>
+                    <p:commandButton value="Crear Anexo" icon="b-add" oncomplete="dlginsertar.show()" update=":formCrear"/>
+                </h:form>
+                <p:dialog id="dlg1" header="Nuevo Anexo" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
+                    <h:form id="formCrear">
+                        <p:messages autoUpdate="true"/>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Id:" />
+                            <p:inputText value="#{anexoBean.anexo.idanexo}" disabled="true"/>
+                            <p:outputLabel value="Tipo Anexo:" />
+                            <p:selectOneMenu value="#{anexoBean.anexo.tipoanexo}" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
+                                <f:selectItems value="#{tipoAnexoBean.tipoanexos}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
+                                <p:ajax update="ruc vend ap am dni sex edad" immediate="true"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Nombre o Razon Social:" />
+                            <p:inputText value="#{anexoBean.anexo.nombre}" />
+                            <p:outputLabel value="Ap. Paterno:" />
+                            <p:inputText  id="ap" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.apepat}" />
+                            <p:outputLabel value="Ap. Materno:" />
+                            <p:inputText id="am" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.apemat}" />
+                            <p:outputLabel value="DNI:" />
+                            <p:inputText id="dni" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.dni}" />
+                            <p:outputLabel value="RUC:" />
+                            <p:inputText id="ruc" disabled="#{anexoBean.anexo.tipoanexo.nombre != 'Empresa'}" value="#{anexoBean.anexo.ruc}" />
+                            <p:outputLabel value="Dirección:" />
+                            <p:inputText value="#{anexoBean.anexo.direccion}" />
+                            <p:outputLabel value="Tel. Fijo:" />
+                            <p:inputText value="#{anexoBean.anexo.telefono}" />
+                            <p:outputLabel value="Tel. cel:" />
+                            <p:inputText value="#{anexoBean.anexo.celular}" />
+                            <p:outputLabel value="Edad:" />
+                            <p:inputText id="edad" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.edad}" />
+                            <p:outputLabel value="Fec. Nac:" />
+                            <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
+                            <p:outputLabel value="Sexo:" />
+                            <p:inputText id="sex" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.sexo}" />
+                            <p:outputLabel value="eMail:" />
+                            <p:inputText value="#{anexoBean.anexo.email}" />
+                            <p:outputLabel value="Cod. vendedor:" />
+                            <p:inputText id="vend" disabled="#{anexoBean.anexo.tipoanexo.nombre != 'Vendedor'}" value="#{anexoBean.anexo.codven}" />                                                        
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" icon="b-new" actionListener="#{anexoBean.insertar()}" oncomplete="dlginsertar.hide()"/>
+                    </h:form>
+                </p:dialog>                
+                <h:form id="formInsertarVenta">
+                    <p:messages autoUpdate="true"/>
                     <p:panelGrid columns="4">
                         <p:outputLabel value="Fecha:" />
-                        <p:calendar value="#{ventaBean.venta.fechareg}" navigator="true"/>
+                        <p:calendar showOn="button" value="#{creditoBean.venta.fechareg}" navigator="true"/>
                         <p:outputLabel value="Cod venta:" />
-                        <p:inputText value="#{ventaBean.venta.liqventa}" />
+                        <p:inputText value="creditoBeanan.venta.liqventa}" required="true" requiredMessage="Ingrese un código de venta"/>
                         <p:outputLabel value="Empresa:" />
-                        <p:selectOneMenu value="#{ventaBean.venta.empresa}" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu valuecreditoBeanBean.venta.empresa}" converter="omnifaces.SelectItemsConverter" 
+                                         required="true" requiredMessage="Elija una empresa">
                             <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                             <f:selectItems value="#{empresaBean.empresas}" var="empresa"
                                            itemLabel="#{empresa.nombre}" itemValue="#{empresa}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Tienda:" />
-                        <p:selectOneMenu value="#{ventaBean.venta.tienda}" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu valcreditoBeantaBean.venta.tienda}" converter="omnifaces.SelectItemsConverter"
+                                         required="true" requiredMessage="Elija una tienda">
                             <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                             <f:selectItems value="#{tiendaBean.tiendas}" var="tienda"
                                            itemLabel="#{tienda.nombre}" itemValue="#{tienda}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Condicion:" />
-                        <p:selectOneMenu value="#{ventaBean.venta.condicionpago}" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu vcreditoBeanentaBean.venta.condicionpago}" converter="omnifaces.SelectItemsConverter"
+                                         required="true" requiredMessage="Elija una condición de pago">
                             <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                             <f:selectItems value="#{condicionPagoBean.condpagos}" var="cpago"
                                            itemLabel="#{cpago.nombre}" itemValue="#{cpago}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Nro. Letras:" />
-                        <p:selectOneMenu value="#{ventaBean.venta.tiempopago}" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenucreditoBean{ventaBean.venta.tiempopago}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                             <f:selectItems value="#{tiempoPagoBean.tpagos}" var="tpago"
                                            itemLabel="#{tpago.descripcion}" itemValue="#{tpago}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Buscar cliente:" for="anexocli"/>
-                        <p:autoComplete id="anexocli" value="#{ventaBean.venta.anexoByIdanexo}" 
+                        <p:autoComplete id="anexoclcreditoBean"#{ventaBean.venta.anexoByIdanexo}" 
                                         completeMethod="#{anexoBean.getQueryCliente}" var="cliente"
-                                        itemLabel="#{cliente.nombre}" itemValue="#{cliente}" forceSelection="true">
-                            <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                            <p:ajax event="itemSelect" process="@form" />
+                                        itemLabel="#{cliente.nombre}" itemValue="#{cliente}" forceSelection="true" 
+                                        required="true" requiredMessage="Elija un cliente">
+                            <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                                    
+                        </p:autoComplete>
+                        <p:outputLabel value="Buscar vendedor:" for="anexovend"/>
+                        <p:autoComplete id="anexovcreditoBeane="#{ventaBean.venta.anexoByCodven}" 
+                                        completeMethod="#{anexoBean.getQueryVendedor}" var="anexo"
+                                        itemLabel="#{anexo.nombre}" itemValue="#{anexo}" forceSelection="true"
+                                        required="true" requiredMessage="Elija un vendedor">
+                            <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                                    
                         </p:autoComplete>
                         <p:outputLabel value="Buscar vehiculo:" for="vehi"/>
-                        <p:autoComplete id="vehi" value="#{ventaBean.venta.vehiculo}" 
+                        <p:autoComplete id=creditoBeanlue="#{ventaBean.venta.vehiculo}" 
                                         completeMethod="#{vehiculoBean.completarTipo}" var="v"
-                                        itemLabel="#{v.serie}" itemValue="#{v}" forceSelection="true">
-                            <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
-                            <p:ajax event="itemSelect" process="@form" />
+                                        itemLabel="#{v.serie}" itemValue="#{v}" forceSelection="true"
+                                        required="true" requiredMessage="Elija un vehículo">
+                            <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>                                    
                         </p:autoComplete>
-                        <p:outputLabel value="Fecha:" />
-                        <p:calendar value="#{ventaBean.venta.fechareg}" />
-                        <p:outputLabel value="Buscar vendedor:" for="anexovend"/>
-                        <p:autoComplete id="anexovend" value="#{ventaBean.venta.anexoByCodven}" 
-                                        completeMethod="#{anexoBean.getQueryVendedor}" var="anexo"
-                                        itemLabel="#{anexo.nombre}" itemValue="#{anexo}" forceSelection="true">
-                            <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                            <p:ajax event="itemSelect" process="@form" />
-                        </p:autoComplete>                            
+                        <p:outputLabel value="Precio:" />
+                        <p:icreditoBeanvalue="#{ventaBean.venta.precio}" required="true" requiredMessage="Ingrese precio venta"/>
                     </p:panelGrid>
-                    <p:commandButton value="Guardar" update=":formMostrar" actionListener="#{ventaBean.insertar()}" 
-                                     oncomplete="dlginsertar.hide();" />
+                    <p:commandButton value="Agregar DatoscreditoBeanistener="#{ventaBean.insertar()}" icon="b-add"
+                                     oncomplete="dlgInsertardat.show();">
+                        <f:setPropertyActcreditoBeaner target="#{ventaBean.venta}" value="#{venta}"/>
+                    </p:commandButton>
                 </h:form>
-
                 <h:form id="formMostrar">
-                    <p:dataTable var="venta" value="#{ventaBean.ventas}" 
-                                 emptyMessage="No hay nada para mostrar" 
-                                 paginator="true" rows="10" paginatorPosition="top" 
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
-                                 {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-                                 rowsPerPageTemplate="10">
-                        <p:column headerText="Cod venta">
-                            <h:outputText value="#{venta.liqventa}" />
+                    <p:dataTable var="datcredito" value="#{datCreditoBean.datocreditos}" 
+                                 emptyMessage="No hay nada para mostrar">
+                        <p:column headerText="Id.">
+                            <h:outputText value="#{datcredito.iddatoscredito}" />
                         </p:column>
-                        <p:column headerText="Cliente">
-                            <h:outputText value="#{venta.anexoByIdanexo.nombre}" />
-                        </p:column>
-                        <p:column headerText="Vehiculo">
-                            <h:outputText value="#{venta.vehiculo.serie}" />
-                        </p:column>
-                        <p:column headerText="Condicion">
-                            <h:outputText value="#{venta.condicionpago.nombre}" />
-                        </p:column>
-                        <p:column headerText="Tiempo">
-                            <h:outputText value="#{venta.tiempopago.descripcion}" />
-                        </p:column>
-                        <p:column headerText="Vendedor">
-                            <h:outputText value="#{venta.anexoByCodven.codven}" />
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{datcredito.total}" />
                         </p:column>
                         <p:column headerText=" ">
-                            <p:commandButton icon="b-update" oncomplete="dlgmodificar.show()" update=":formModificar">
-                                <f:setPropertyActionListener target="#{ventaBean.venta}" value="#{venta}" />
+                            <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
+                                <f:setPropertyActionListener target="#{datCreditoBean.datocredito}" value="#{datcredito}" />
                             </p:commandButton>
                         </p:column>
                         <p:column headerText=" ">
-                            <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                                <f:setPropertyActionListener target="#{ventaBean.venta}" value="#{venta}" />
+                            <p:commandButton oncomplete="dlgeliminar.show()" update=":formEliminar" icon="b-delete">
+                                
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </h:form>
-                <p:dialog id="dlg" header="Modificar Color" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
-                    <h:form id="formModificar">
-                        <p:panelGrid columns="4">
-                            <p:outputLabel value="Fecha:" />
-                        <p:calendar value="#{ventaBean.venta.fechareg}" navigator="true"/>
-                            <p:outputLabel value="Cod venta:" />
-                            <p:inputText value="#{ventaBean.venta.liqventa}" />
-                            <p:outputLabel value="Empresa:" />
-                            <p:selectOneMenu value="#{ventaBean.venta.empresa}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{empresaBean.empresas}" var="empresa"
-                                               itemLabel="#{empresa.nombre}" itemValue="#{empresa}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Tienda:" />
-                            <p:selectOneMenu value="#{ventaBean.venta.tienda}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{tiendaBean.tiendas}" var="tienda"
-                                               itemLabel="#{tienda.nombre}" itemValue="#{tienda}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Condicion:" />
-                            <p:selectOneMenu value="#{ventaBean.venta.condicionpago}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{condicionPagoBean.condpagos}" var="cpago"
-                                               itemLabel="#{cpago.nombre}" itemValue="#{cpago}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Nro. Letras:" />
-                            <p:selectOneMenu value="#{ventaBean.venta.tiempopago}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{tiempoPagoBean.tpagos}" var="tpago"
-                                               itemLabel="#{tpago.descripcion}" itemValue="#{tpago}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Buscar cliente:" for="anexocli"/>
-                            <p:autoComplete id="anexocli" value="#{ventaBean.venta.anexoByIdanexo}" 
-                                            completeMethod="#{anexoBean.getQueryCliente}" var="cliente"
-                                            itemLabel="#{cliente.nombre}" itemValue="#{cliente}" forceSelection="true">
-                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                <p:ajax event="itemSelect" process="@form" />
-                            </p:autoComplete>
-                            <p:outputLabel value="Buscar vehiculo:" for="vehi"/>
-                            <p:autoComplete id="vehi" value="#{ventaBean.venta.vehiculo}" 
-                                            completeMethod="#{vehiculoBean.completarTipo}" var="v"
-                                            itemLabel="#{v.serie}" itemValue="#{v}" forceSelection="true">
-                                <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
-                                <p:ajax event="itemSelect" process="@form" />
-                            </p:autoComplete>
-                            <p:outputLabel value="Fecha:" />
-                            <p:calendar value="#{ventaBean.venta.fechareg}" />
-                            <p:outputLabel value="Buscar vendedor:" for="anexovend"/>
-                            <p:autoComplete id="anexovend" value="#{ventaBean.venta.anexoByCodven}" 
-                                            completeMethod="#{anexoBean.getQueryVendedor}" var="anexo"
-                                            itemLabel="#{anexo.nombre}" itemValue="#{anexo}" forceSelection="true">
-                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                <p:ajax event="itemSelect" process="@form" />
-                            </p:autoComplete>                            
+                <p:dialog id="dlg" header="Ingresar Datos" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlgInsertardat" modal="true" resizable="false" minWidth="200">
+                    <h:form id="formInsertarDatos">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value=" " />
+                            <p:inputText id="nletras" reacreditoBeanue" binding="#{ventaBean.nletras}"/>
+                            
                         </p:panelGrid>
-                        <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{ventaBean.modificar()}" 
-                                         oncomplete="dlgmodificar.hide();" />
-                    </h:form>
-                </p:dialog>
-                <p:dialog id="dlg2" header="Eliminar Usuario" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
-                    <h:form id="formEliminar">
-                        <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{ventaBean.eliminar()}" 
-                                         update=":formMostrar" oncomplete="dlgeliminar.hide();" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" />
+                        <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{datCreditoBean.insertar()}" 
+                                         oncomplete="dlgInsertardat.hide();" />
                     </h:form>
                 </p:dialog>
             </ui:define>
