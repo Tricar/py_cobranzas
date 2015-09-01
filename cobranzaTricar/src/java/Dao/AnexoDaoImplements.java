@@ -94,34 +94,13 @@ public class AnexoDaoImplements implements AnexoDao{
     }
 
     @Override
-    public List<Anexo> filtarTipoAnexo(int tipo) {
+    public List<Anexo> filtarTipoCliente(String tipo) {
         Session session = null;
         List<Anexo> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Anexo where idtipoanexo=:v");
-            query.setParameter("v", tipo);
-            lista = (List<Anexo>)query.list();
-        }catch (HibernateException e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
-                session.close();
-            }
-        }
-        return lista;
-    }
-    
-    @Override
-    public List<Anexo> filtarTipoCliente(int tipo1, int tipo2) {
-        Session session = null;
-        List<Anexo> lista = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Anexo where idtipoanexo=:u or idtipoanexo=:v");
-            query.setParameter("u", tipo1);
-            query.setParameter("v", tipo2);
+            Query query = session.createQuery("from Anexo where tipoanexo=:u");
+            query.setParameter("u", tipo);            
             lista = (List<Anexo>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());

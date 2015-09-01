@@ -184,7 +184,7 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
-    @Column(name="sexo", length=20)
+    @Column(name="sexo", length=1)
     public String getSexo() {
         return this.sexo;
     }
@@ -295,6 +295,27 @@ public class Anexo  implements java.io.Serializable {
     
     public void setCreditosForIdanexo(Set creditosForIdanexo) {
         this.creditosForIdanexo = creditosForIdanexo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Anexo other = (Anexo) obj;
+        if (this.idanexo != other.idanexo) {
+            return false;
+        }
+        return true;
     }
 
 
