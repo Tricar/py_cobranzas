@@ -95,7 +95,7 @@ public class Vehiculo  implements java.io.Serializable {
     }
 
     
-    @Column(name="marca", length=20)
+    @Column(name="marca", length=1)
     public String getMarca() {
         return this.marca;
     }

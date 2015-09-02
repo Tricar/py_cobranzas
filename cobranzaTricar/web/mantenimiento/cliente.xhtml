@@ -11,7 +11,7 @@
     </h:head>
     <body>
         <ui:composition template="./../views/template.xhtml">
-            <ui:define name="content">
+            <ui:define name="content">                
                 <h:form>
                     <p:commandButton value="Nuevo" icon="b-add" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                 </h:form>
@@ -23,21 +23,24 @@
                             <p:outputLabel value="Id:" />
                             <p:inputText value="#{anexoBean.anexo.idanexo}" disabled="true"/>
                             <p:outputLabel value="Tipo Anexo:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.tipoanexo}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{tipoAnexoBean.tipoanexos}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
-                                <p:ajax update="ruc vend ap am dni sex edad" immediate="true"/>
+                            <p:selectOneMenu value="#{anexoBean.anexo.tipoanexo}" >
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="Administrador" itemValue="AD" />
+                                <f:selectItem itemLabel="Cliente" itemValue="CL" />
+                                <f:selectItem itemLabel="Vendedor" itemValue="VE" />
+                                <f:selectItem itemLabel="Gestor Cob." itemValue="GE" />
+                                <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Nombre o Razon Social:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" />
                             <p:outputLabel value="Ap. Paterno:" />
-                            <p:inputText  id="ap" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.apepat}" />
+                            <p:inputText  id="ap" value="#{anexoBean.anexo.apepat}" />
                             <p:outputLabel value="Ap. Materno:" />
-                            <p:inputText id="am" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.apemat}" />
+                            <p:inputText id="am" value="#{anexoBean.anexo.apemat}" />
                             <p:outputLabel value="DNI:" />
-                            <p:inputText id="dni" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.dni}" />
+                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
                             <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" disabled="#{anexoBean.anexo.tipoanexo.nombre != 'Empresa'}" value="#{anexoBean.anexo.ruc}" />
+                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
                             <p:outputLabel value="Dirección:" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" />
                             <p:outputLabel value="Tel. Fijo:" />
@@ -45,15 +48,20 @@
                             <p:outputLabel value="Tel. cel:" />
                             <p:inputText value="#{anexoBean.anexo.celular}" />
                             <p:outputLabel value="Edad:" />
-                            <p:inputText id="edad" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.edad}" />
+                            <p:inputText id="edad" value="#{anexoBean.anexo.edad}" />
                             <p:outputLabel value="Fec. Nac:" />
                             <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
                             <p:outputLabel value="Sexo:" />
-                            <p:inputText id="sex" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.sexo}" />
+                            <p:selectOneMenu value="#{anexoBean.anexo.sexo}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                <f:selectItem itemLabel="Femenino" itemValue="F" />
+                                <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
+                            </p:selectOneMenu>
                             <p:outputLabel value="eMail:" />
                             <p:inputText value="#{anexoBean.anexo.email}" />
                             <p:outputLabel value="Cod. vendedor:" />
-                            <p:inputText id="vend" disabled="#{anexoBean.anexo.tipoanexo.nombre != 'Vendedor'}" value="#{anexoBean.anexo.codven}" />                                                        
+                            <p:inputText id="vend" value="#{anexoBean.anexo.codven}" />                                                        
                         </p:panelGrid>
                         <p:commandButton value="Guardar" icon="b-new" update=":formMostrar" actionListener="#{anexoBean.insertar()}" oncomplete="dlginsertar.hide()"/>
                     </h:form>
@@ -70,7 +78,9 @@
                             <h:outputText value="#{anexo.idanexo}" />
                         </p:column>
                         <p:column headerText="T. anexo:">
-                            <h:outputText value="#{anexo.tipoanexo.nombre}" />
+                            <h:outputText value="#{anexo.tipoanexo}">
+                                <f:converter converterId="tanexoconverter"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Nombre" filterBy="#{anexo.nombre}" filterMatchMode="contains">
                             <h:outputText value="#{anexo.nombre}" />
@@ -107,20 +117,23 @@
                             <p:inputText value="#{anexoBean.anexo.idanexo}" disabled="true"/>
                             <p:outputLabel value="Tipo Anexo:" />
                             <p:selectOneMenu value="#{anexoBean.anexo.tipoanexo}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{tipoAnexoBean.tipoanexos}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
-                                <p:ajax update="ruc vend ap am dni sex edad" immediate="true"/>
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="Administrador" itemValue="AD" />
+                                <f:selectItem itemLabel="Cliente" itemValue="CL" />
+                                <f:selectItem itemLabel="Vendedor" itemValue="VE" />
+                                <f:selectItem itemLabel="Gestor Cob." itemValue="GE" />
+                                <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Nombre o Razon Social:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" />
                             <p:outputLabel value="Ap. Paterno:" />
-                            <p:inputText  id="ap" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.apepat}" />
+                            <p:inputText  id="ap" value="#{anexoBean.anexo.apepat}" />
                             <p:outputLabel value="Ap. Materno:" />
-                            <p:inputText id="am" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.apemat}" />
+                            <p:inputText id="am" value="#{anexoBean.anexo.apemat}" />
                             <p:outputLabel value="DNI:" />
-                            <p:inputText id="dni" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.dni}" />
+                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
                             <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" disabled="#{anexoBean.anexo.tipoanexo.nombre != 'Empresa'}" value="#{anexoBean.anexo.ruc}" />
+                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
                             <p:outputLabel value="Dirección:" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" />
                             <p:outputLabel value="Tel. Fijo:" />
@@ -128,15 +141,20 @@
                             <p:outputLabel value="Tel. cel:" />
                             <p:inputText value="#{anexoBean.anexo.celular}" />
                             <p:outputLabel value="Edad:" />
-                            <p:inputText id="edad" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.edad}" />
+                            <p:inputText id="edad" value="#{anexoBean.anexo.edad}" />
                             <p:outputLabel value="Fec. Nac:" />
                             <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" />
                             <p:outputLabel value="Sexo:" />
-                            <p:inputText id="sex" disabled="#{anexoBean.anexo.tipoanexo.nombre == 'Empresa'}" value="#{anexoBean.anexo.sexo}" />
+                            <p:selectOneMenu value="#{anexoBean.anexo.sexo}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                <f:selectItem itemLabel="Femenino" itemValue="F" />
+                                <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
+                            </p:selectOneMenu>
                             <p:outputLabel value="eMail:" />
                             <p:inputText value="#{anexoBean.anexo.email}" />
                             <p:outputLabel value="Cod. vendedor:" />
-                            <p:inputText id="vend" disabled="#{anexoBean.anexo.tipoanexo.nombre != 'Vendedor'}" value="#{anexoBean.anexo.codven}" />
+                            <p:inputText id="vend" value="#{anexoBean.anexo.codven}" />
                         </p:panelGrid>
                         <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{anexoBean.modificar()}" oncomplete="dlgmodificar.hide()"/>
                     </h:form>
@@ -149,9 +167,8 @@
                                          update=":formMostrar" oncomplete="dlgeliminar.hide();" />
                         <p:commandButton value="No" onclick="dlg2.hide();" />
                     </h:form>
-                </p:dialog>
+                </p:dialog>                
             </ui:define>
-
         </ui:composition>
     </body>
 </html>

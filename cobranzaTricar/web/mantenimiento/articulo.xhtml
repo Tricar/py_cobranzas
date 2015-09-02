@@ -22,12 +22,18 @@
                         <p:messages autoUpdate="true"/>
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Tipo:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{tipoVehiBean.vehiculos}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="MTX" itemValue="MX" />
+                                <f:selectItem itemLabel="ML" itemValue="ML" />
+                                <f:selectItem itemLabel="MTF" itemValue="MF" />                                
                             </p:selectOneMenu>
                             <p:outputLabel value="Marca:" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.marca}" />
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.marca}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="VELOREX" itemValue="V" />
+                                <f:selectItem itemLabel="TRICAR" itemValue="T" />                                                              
+                            </p:selectOneMenu>
                             <p:outputLabel value="Modelo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
@@ -61,10 +67,14 @@
                             <h:outputText value="#{vehiculo.idvehiculo}" />
                         </p:column>
                         <p:column headerText="Tipo">
-                            <h:outputText value="#{vehiculo.tipovehiculo}" />
+                            <h:outputText value="#{vehiculo.tipovehiculo}">
+                                <f:converter converterId="tvehiculo"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Marca">
-                            <h:outputText value="#{vehiculo.marca}" />
+                            <h:outputText value="#{vehiculo.marca}">
+                                <f:converter converterId="marcaconverter"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Modelo">
                             <h:outputText value="#{vehiculo.modelo.modelo}" />
@@ -99,12 +109,19 @@
                         <p:messages autoUpdate="true"/>
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Tipo:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="MTX" itemValue="MX" />
+                                <f:selectItem itemLabel="ML" itemValue="ML" />
+                                <f:selectItem itemLabel="MTF" itemValue="MF" />
                                 <f:selectItems value="#{tipoVehiBean.vehiculos}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Marca:" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.marca}" />
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.marca}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="VELOREX" itemValue="V" />
+                                <f:selectItem itemLabel="TRICAR" itemValue="T" />                                                              
+                            </p:selectOneMenu>
                             <p:outputLabel value="Modelo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
