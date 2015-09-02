@@ -41,12 +41,7 @@
         <property name="estado" type="string">
             <column name="estado" length="2" />
         </property>
-        <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="iddatoscredito" />
-            </key>
-            <one-to-many class="Model.Letras" />
-        </set>
+        
         <set name="anexodatcredavals" table="anexodatcredaval" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="iddatoscredito" />

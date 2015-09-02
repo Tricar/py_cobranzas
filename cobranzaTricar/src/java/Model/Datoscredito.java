@@ -39,8 +39,7 @@ public class Datoscredito  implements java.io.Serializable {
      private Boolean cronograma;
      private Boolean contrato;
      private Date fecreg;
-     private String estado;
-     private Set letrases = new HashSet(0);
+     private String estado;     
      private Set anexodatcredavals = new HashSet(0);
 
     public Datoscredito() {
@@ -53,7 +52,7 @@ public class Datoscredito  implements java.io.Serializable {
         this.anexoByVerificador = anexoByVerificador;
         this.credito = credito;
     }
-    public Datoscredito(int iddatoscredito, Anexo anexoByAprobado, Anexo anexoByVerificador, Credito credito, Integer nletras, BigDecimal total, BigDecimal interes, BigDecimal tasainteres, Boolean cronograma, Boolean contrato, Date fecreg, String estado, Set letrases, Set anexodatcredavals) {
+    public Datoscredito(int iddatoscredito, Anexo anexoByAprobado, Anexo anexoByVerificador, Credito credito, Integer nletras, BigDecimal total, BigDecimal interes, BigDecimal tasainteres, Boolean cronograma, Boolean contrato, Date fecreg, String estado, Set anexodatcredavals) {
        this.iddatoscredito = iddatoscredito;
        this.anexoByAprobado = anexoByAprobado;
        this.anexoByVerificador = anexoByVerificador;
@@ -65,8 +64,7 @@ public class Datoscredito  implements java.io.Serializable {
        this.cronograma = cronograma;
        this.contrato = contrato;
        this.fecreg = fecreg;
-       this.estado = estado;
-       this.letrases = letrases;
+       this.estado = estado;       
        this.anexodatcredavals = anexodatcredavals;
     }
    
@@ -190,15 +188,6 @@ public class Datoscredito  implements java.io.Serializable {
     
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="datoscredito")
-    public Set getLetrases() {
-        return this.letrases;
-    }
-    
-    public void setLetrases(Set letrases) {
-        this.letrases = letrases;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="datoscredito")

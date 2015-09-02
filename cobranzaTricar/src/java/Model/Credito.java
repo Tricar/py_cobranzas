@@ -44,6 +44,7 @@ public class Credito  implements java.io.Serializable {
      private BigDecimal saldo;
      private BigDecimal interes;
      private Set datoscreditos = new HashSet(0);
+     private Set letrases = new HashSet(0);
 
     public Credito() {
     }
@@ -59,7 +60,7 @@ public class Credito  implements java.io.Serializable {
         this.liqventa = liqventa;
         this.precio = precio;
     }
-    public Credito(int idventa, Anexo anexoByCodven, Anexo anexoByIdanexo, Vehiculo vehiculo, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String liqventa, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Set datoscreditos) {
+    public Credito(int idventa, Anexo anexoByCodven, Anexo anexoByIdanexo, Vehiculo vehiculo, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String liqventa, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Set datoscreditos, Set letrases) {
        this.idventa = idventa;
        this.anexoByCodven = anexoByCodven;
        this.anexoByIdanexo = anexoByIdanexo;
@@ -76,6 +77,7 @@ public class Credito  implements java.io.Serializable {
        this.saldo = saldo;
        this.interes = interes;
        this.datoscreditos = datoscreditos;
+       this.letrases = letrases;
     }
    
      @Id 
@@ -239,7 +241,14 @@ public class Credito  implements java.io.Serializable {
         this.datoscreditos = datoscreditos;
     }
 
-
+@OneToMany(fetch=FetchType.LAZY, mappedBy="datoscredito")
+    public Set getLetrases() {
+        return this.letrases;
+    }
+    
+    public void setLetrases(Set letrases) {
+        this.letrases = letrases;
+    }
 
 
 }

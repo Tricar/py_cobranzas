@@ -29,7 +29,7 @@ public class Letras  implements java.io.Serializable {
 
 
      private int idletras;
-     private Datoscredito datoscredito;
+     private Credito idventa;
      private BigDecimal montoletra;
      private Date fecini;
      private Date fecven;
@@ -47,9 +47,9 @@ public class Letras  implements java.io.Serializable {
     public Letras(int idletras) {
         this.idletras = idletras;
     }
-    public Letras(int idletras, Datoscredito datoscredito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, Set pagoses) {
+    public Letras(int idletras, Credito idventa, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, Set pagoses) {
        this.idletras = idletras;
-       this.datoscredito = datoscredito;
+       this.idventa = idventa;
        this.montoletra = montoletra;
        this.fecini = fecini;
        this.fecven = fecven;
@@ -74,13 +74,13 @@ public class Letras  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="iddatoscredito")
-    public Datoscredito getDatoscredito() {
-        return this.datoscredito;
+    @JoinColumn(name="idventa")
+    public Credito getCredito() {
+        return this.idventa;
     }
     
-    public void setDatoscredito(Datoscredito datoscredito) {
-        this.datoscredito = datoscredito;
+    public void setCredito(Credito idventa) {
+        this.idventa = idventa;
     }
 
     

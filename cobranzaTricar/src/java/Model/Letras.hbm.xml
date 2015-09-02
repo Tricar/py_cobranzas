@@ -8,8 +8,8 @@
             <column name="idletras" />
             <generator class="identity" />
         </id>
-        <many-to-one name="datoscredito" class="Model.Datoscredito" fetch="select">
-            <column name="iddatoscredito" />
+        <many-to-one name="credito" class="Model.Credito" fetch="select">
+            <column name="idventa" />
         </many-to-one>
         <property name="montoletra" type="big_decimal">
             <column name="montoletra" precision="17" scale="5" />
