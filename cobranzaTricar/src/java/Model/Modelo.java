@@ -105,10 +105,4 @@ public class Modelo  implements java.io.Serializable {
         }
         return true;
     }
-
-    
-
-
 }
-
-

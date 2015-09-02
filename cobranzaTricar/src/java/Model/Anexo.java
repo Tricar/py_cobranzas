@@ -317,10 +317,4 @@ public class Anexo  implements java.io.Serializable {
         }
         return true;
     }
-
-
-
-
 }
-
-

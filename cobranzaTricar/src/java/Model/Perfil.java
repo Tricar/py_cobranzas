@@ -274,9 +274,24 @@ public class Perfil  implements java.io.Serializable {
         this.usuarios = usuarios;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
 
-
-
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Perfil other = (Perfil) obj;
+        if (this.idperfil != other.idperfil) {
+            return false;
+        }
+        return true;
+    }
 }
-
-

@@ -107,10 +107,4 @@ public class Color  implements java.io.Serializable {
         }
         return true;
     }
-
-    
-
-
 }
-
-
