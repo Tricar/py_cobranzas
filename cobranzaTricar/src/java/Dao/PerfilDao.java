@@ -7,6 +7,7 @@ package Dao;
 
 import Model.Perfil;
 import java.util.List;
+import org.hibernate.Session;
 
 /**
  *
@@ -14,11 +15,11 @@ import java.util.List;
  */
 public interface PerfilDao {
     
-    public void actualizar(Perfil perfil);
-    public Perfil buscarPorId(Integer id);
-    public List<Perfil> buscarTodos();
-    public void crearperfil(Perfil perfil);
-    public List<Perfil> mostrarPerfil();
-    public void eliminarperfil(Perfil perfil);
+    public boolean registrar(Session session, Perfil perfil)throws Exception;
+    public List<Perfil> verTodo(Session session) throws Exception;
+    public Perfil verByCodigo(Session session, Integer idperfil) throws Exception;
+    public Perfil verByDescripcion(Session session, String descripcion) throws Exception;
+    public boolean modificar(Session session, Perfil perfil) throws Exception;
+    public boolean eliminarPerfil (Session session, Perfil perfil) throws Exception;
     
 }

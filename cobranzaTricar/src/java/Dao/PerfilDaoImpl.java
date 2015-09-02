@@ -6,9 +6,7 @@
 package Dao;
 
 import Model.Perfil;
-import Persistencia.HibernateUtil;
 import java.util.List;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -16,97 +14,50 @@ import org.hibernate.Session;
  *
  * @author Ricardo
  */
-public class PerfilDaoImpl implements PerfilDao{
-    
+public class PerfilDaoImpl implements PerfilDao {
+
     @Override
-    public void actualizar(Perfil perfil) {
-        
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-//            session.beginTransaction();
-            session.merge(perfil);
-            session.beginTransaction().commit();
-        } catch (HibernateException e) {
-            System.out.println("Error en actualizar perfil " + e.getMessage());
-            session.beginTransaction().rollback();
-        }
-        finally{
-            if (session != null) {
-                
-                session.close();
-                
-            }
-        }
+    public Perfil verByCodigo(Session session, Integer codigoUsuario) throws Exception {
+        return (Perfil) session.get(Perfil.class, codigoUsuario);
     }
 
     @Override
-    public Perfil buscarPorId(Integer id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        return (Perfil) session.load(Perfil.class, id);
+    public boolean registrar(Session session, Perfil perfil) throws Exception {
+        session.save(perfil);
+        return true;
     }
 
     @Override
-    public List<Perfil> buscarTodos() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        return session.createQuery("from Perfil").list();
+    public List<Perfil> verTodo(Session session) throws Exception {
+        String hql = "FROM Perfil";
+        Query query = session.createQuery(hql);
+
+        List<Perfil> listaPerfil = (List<Perfil>) query.list();
+
+        return listaPerfil;
     }
 
     @Override
-    public void crearperfil(Perfil perfil) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(perfil);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
-    }
-    
-    @Override
-    public List<Perfil> mostrarPerfil() {
-        Session session = null;
-        List<Perfil> lista = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Perfil");
-            lista = (List<Perfil>)query.list();
-        }catch (HibernateException e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
-                session.close();
-            }
-        }
-        return lista;
+    public boolean modificar(Session session, Perfil perfil) throws Exception {
+        session.update(perfil);
+        return true;
     }
 
     @Override
-    public void eliminarperfil(Perfil perfil) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(perfil);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
+    public Perfil verByDescripcion(Session session, String descripcion) throws Exception {
+        String hql = "FROM Perfil WHERE descripcion=:descripcion";
+        Query query = session.createQuery(hql);
+        query.setParameter("descripcion", descripcion);
+
+        Perfil perfil = (Perfil) query.uniqueResult();
+
+        return perfil;
     }
-    
+
+    @Override
+    public boolean eliminarPerfil(Session session, Perfil perfil) throws Exception {
+        session.delete(perfil);
+        return true;
+    }
+
 }

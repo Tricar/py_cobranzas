@@ -12,108 +12,89 @@
 
             <ui:define name="content">
                 <h:form id="frmNuevo">
-                    <p:commandButton value="Nuevo Perfil" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
+                    <p:commandButton value="Nuevo Perfil" update=":formInsertar:panelcrearperfil" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
                 </h:form>
-
                 <br/>
 
-                <h:form id="frmPerfiles">                    
-                    <p:growl id="growl" showDetail="false" sticky="false" />
-                    <p:dataTable var="perfil" value="#{perfilBean.perfiles}">
-                        <h:inputHidden value="#{perfil.idperfil}" />
-                        <p:column headerText="Descripcion">
-                            <h:outputText value="#{perfil.descripcion}" />
+                <h2>Lista de Perfiles</h2>
+                <hr/>
+                <h:form id="frmlistarperfil">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable id="tablalistarperfil" var="item" value="#{perfilBean.verTodo()}" paginator="true" rows="20" 
+                                 rowKey="#{item.idperfil}">
+                        <f:facet name="header">
+                            Lista de Usuario
+                        </f:facet>
+                        <p:column headerText="DESCRIPCION">
+                            <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-
-                        <p:column style="width:12%; text-align: center">  
-                            <p:commandButton oncomplete="dlgPerfil.show()" icon="ui-icon-refresh" title="Editar" 
-                                             update=":frmPerfil:dlgPerfil" actionListener="#{perfilBean.prepararPerfil(perfil.idperfil)}"/>
-                            <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                                <f:setPropertyActionListener target="#{perfilBean.perfil}" value="#{perfil}" />
-                            </p:commandButton>
-                            <p:commandButton oncomplete="dlgPermisos.show()" icon="ui-icon-key" title="Permisos"
-                                             update=":frmPermisos:dlgPermisos" actionListener="#{perfilBean.prepararPerfil(perfil.idperfil)}"/>
+                        <p:column width="10%" style="text-align: center">
+                            <p:commandButton actionListener="#{perfilBean.cargarPerfilEditar(item.idperfil)}" icon="ui-icon ui-icon-pencil"/>
+                            <p:commandButton actionListener="#{perfilBean.cargarPerfilEliminar(item.idperfil)}" icon="ui-icon ui-icon-trash"/>
+                            <p:commandButton actionListener="#{perfilBean.cargarMenuAsignar(item.idperfil)}" icon="ui-icon ui-icon-wrench"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
-
-                <p:dialog id="dlg1" header="Nuevo Usuario" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
-                    <h:form id="formInsertar">
-                        <p:panelGrid columns="2">
-                            <p:outputLabel value="Descripcion:" />
-                            <p:inputText value="#{perfilBean.perfil.descripcion}" />
-                        </p:panelGrid>
-                        <p:commandButton value="Guardar" update=":frmPerfiles" actionListener="#{perfilBean.insertarPerfil()}" 
-                                         oncomplete="dlginsertar.hide();" />
-                    </h:form>
-                </p:dialog>
-
-                <p:dialog id="dlg2" header="Eliminar Perfil" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
-                    <h:form id="formEliminar">
-                        <h:outputText value="¿Desea Eliminar?"/>
-                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" 
-                                         update=":frmPerfiles" oncomplete="dlgeliminar.hide();"/>
-                        <p:commandButton value="No" onclick="dlg2.hide();"/>
-                    </h:form>
-                </p:dialog>
-
-                <h:form id="frmPerfil">  
-                    <p:dialog id="dlgPerfil" header="Perfil" widgetVar="dlgPerfil" resizable="false" modal="true">
-
-                        <p:inputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
-                        <br/><br/>
-                        <p:commandButton value="Guardar" icon="ui-icon ui-icon-disk" oncomplete="dlgPerfil.hide();"
-                                         update=":frmPerfiles" actionListener="#{perfilBean.actualizarPerfil()}"/>
-                        <p:commandButton value="Cancelar" icon="ui-icon ui-icon-close" />
+                <h:form id="frmEditarPerfil">
+                    <p:dialog header="Datos del usuario" widgetVar="dialogoEditarPerfil" modal="true">
+                        <h:panelGrid id="panelEditarPerfil" columns="3">
+                            <p:outputLabel value="Descripción: " for="txtDescripcion"/>
+                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtDescripcion"/>
+                            <h:panelGroup></h:panelGroup>
+                            <p:commandButton value="Guardar cambios" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                        </h:panelGrid>
                     </p:dialog>
-                </h:form>
-
-                <h:form id="frmPermisos">
-                    <p:dialog id="dlgPermisos" header="Permisos" widgetVar="dlgPermisos" resizable="false" modal="true"> 
+                </h:form>                
+                <h:form id="frmAsignarMenu">
+                    <p:dialog header="Datos del usuario" widgetVar="dialogoAsignarMenu" modal="true">
                         <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
                         <br/>
 
-                        <br/><h:outputText value="Sistema" />
+                        <br/><h:outputText value="Sistema:" />
                         <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisUsu}"/>
-                        <h:outputText value="Usuario" />
+                        <p:outputLabel value="Usuarios" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
-                        <h:outputText value="Perfil" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisTipAne}"/>
-                        <h:outputText value="Tipo anexo" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisEmp}"/>
-                        <h:outputText value="Empresa" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisTie}"/>
-                        <h:outputText value="Tienda" />
+                        <p:outputLabel value="Perfiles" />
                         <br/>
 
                         <br/><h:outputText value="Mantenimiento:" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>
                         <h:outputText value="Clientes" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manArt}"/>
-                        <h:outputText value="Articulo" />                        
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manTipArt}"/>
-                        <h:outputText value="Tipo Articulo" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manMod}"/>
-                        <h:outputText value="Modelo Articulo" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCol}"/>
-                        <h:outputText value="Color Articulo" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manPag}"/>
-                        <h:outputText value="Pago" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manConPag}"/>
-                        <h:outputText value="Condicion Pago" />
+                        <h:outputText value="Articulos" />
                         <br/>
 
-                        <br/><h:outputText value="Venta" />
+                        <br/><h:outputText value="Venta:" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venLis}"/>
                         <h:outputText value="Listar" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venReg}"/>
                         <h:outputText value="Vender" />
                         <p:separator/>
-                        <p:commandButton value="Guardar" icon="ui-icon ui-icon-disk" oncomplete="dlgPermisos.hide();"
-                                         update=":frmPerfiles" actionListener="#{perfilBean.actualizarPerfil()}"/>
-                        <p:commandButton value="Cancelar" icon="ui-icon ui-icon-close" />
+
+                        <p:commandButton value="Guardar cambios" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                    </p:dialog>
+                </h:form>
+                <h:form id="formInsertar">
+                    <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
+                        <p:panelGrid id="panelcrearperfil" columns="3">
+                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtDescripcion"/>
+                            <p:commandButton value="Registrar Perfil" icon="b-new" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+                <h:form id="frmEliminarPerfil">
+                    <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarPerfil" modal="true">
+                        <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
+                        <h:outputText value="¿Desea eliminar?" />
+                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" />
                     </p:dialog>
                 </h:form>
             </ui:define>
