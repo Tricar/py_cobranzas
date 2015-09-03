@@ -94,7 +94,7 @@ public class AnexoDaoImplements implements AnexoDao{
     }
 
     @Override
-    public List<Anexo> filtarTipoCliente(String tipo) {
+    public List<Anexo> filtarTipo(String tipo) {
         Session session = null;
         List<Anexo> lista = null;
         try{

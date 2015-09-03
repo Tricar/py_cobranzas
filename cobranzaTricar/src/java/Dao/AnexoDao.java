@@ -12,6 +12,6 @@ public interface AnexoDao {
     public void insertarAnexo(Anexo anexo);
     public void modificarAnexo (Anexo anexo);
     public void eliminarAnexo (Anexo anexo);    
-    public List<Anexo> filtarTipoCliente(String tipo);
+    public List<Anexo> filtarTipo(String tipo);
     public List<Anexo> buscarxNombre(String nombre);
 }

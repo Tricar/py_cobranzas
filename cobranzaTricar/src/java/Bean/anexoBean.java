@@ -81,7 +81,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarCliente(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarTipoCliente("CL");
+        List<Anexo> tipos = anexoDao.filtarTipo("CL");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().toLowerCase().startsWith(name)) {
                 query.add(tipo);                
@@ -93,7 +93,19 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarVendedor(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarTipoCliente("VE");
+        List<Anexo> tipos = anexoDao.filtarTipo("VE");
+        for (Anexo tipo : tipos) {
+            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+                query.add(tipo);                
+            }           
+        }        
+        return query;
+    }
+    
+    public List<Anexo> filtrarGestor(String name) {
+        this.query = new ArrayList<Anexo>();
+        AnexoDao anexoDao = new AnexoDaoImplements();
+        List<Anexo> tipos = anexoDao.filtarTipo("GE");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().toLowerCase().startsWith(name)) {
                 query.add(tipo);                

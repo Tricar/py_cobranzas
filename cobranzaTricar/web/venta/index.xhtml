@@ -99,8 +99,8 @@
                             </p:autoComplete>
                         </p:tab>
                         <p:tab title="Datos de Credito">
-                            <p:panelGrid columns="4">
-                                <p:outputLabel value="Condicion:" />
+                            <p:panelGrid columns="8">
+                                <p:outputLabel value="Modalidad:" />
                                 <p:selectOneMenu value="#{creditoBean.venta.condicionpago}" >
                                     <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                     <f:selectItem itemLabel="Contado" itemValue="CO" />
@@ -146,6 +146,26 @@
                                 <p:inputText value="#{creditoBean.venta.saldo}" readonly="true" required="true" requiredMessage="Ingrese precio venta"/>
                                 <p:outputLabel value="Interés:" />
                                 <p:inputText value="#{creditoBean.venta.interes}" readonly="true" required="true" requiredMessage="Ingrese precio venta"/>
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab title="Detalles Adicionales">
+                            <p:panelGrid columns="6">
+                                <p:outputLabel value="Verificado:" />
+                                <p:autoComplete value="#{creditoBean.venta.anexoByVerificado}"
+                                                completeMethod="#{anexoBean.filtrarGestor}" var="veri"
+                                                itemLabel="#{veri.nombre}" itemValue="#{veri}" forceSelection="true">
+                                    <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                                </p:autoComplete>
+                                <p:outputLabel value="Contrato:" />
+                                <p:selectOneRadio value="#{creditoBean.venta.contrato}" >
+                                    <f:selectItem itemLabel="SI" itemValue="true" />
+                                    <f:selectItem itemLabel="NO" itemValue="false"/>
+                                </p:selectOneRadio>
+                                <p:outputLabel value="Cronograma:" />
+                                <p:selectOneRadio value="#{creditoBean.venta.cronograma}" >
+                                    <f:selectItem itemLabel="SI" itemValue="true"/>
+                                    <f:selectItem itemLabel="NO" itemValue="false"/>
+                                </p:selectOneRadio>
                             </p:panelGrid>
                         </p:tab>
                     </p:accordionPanel>
