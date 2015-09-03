@@ -1,5 +1,5 @@
 package Model;
-// Generated 31/08/2015 11:12:21 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -110,9 +110,24 @@ public class Pagos  implements java.io.Serializable {
         this.descripcion = descripcion;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
 
-
-
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pagos other = (Pagos) obj;
+        if (this.idpagos != other.idpagos) {
+            return false;
+        }
+        return true;
+    }
 }
-
-

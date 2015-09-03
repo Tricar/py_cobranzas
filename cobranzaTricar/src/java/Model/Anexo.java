@@ -1,5 +1,5 @@
 package Model;
-// Generated 31/08/2015 11:12:21 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -30,22 +30,22 @@ public class Anexo  implements java.io.Serializable {
      private String dni;
      private String ruc;
      private String direccion;
+     private String referencia;
      private String telefono;
      private String celular;
      private Integer edad;
      private Date fechanac;
      private Date fechareg;
-     private String sexo;
+     private Character sexo;
      private String apepat;
      private String apemat;
      private String email;
      private String tipoanexo;
-     private String codven;
-     private Set datoscreditosForAprobado = new HashSet(0);
-     private Set datoscreditosForVerificador = new HashSet(0);
+     private String codven;     
      private Set anexodatcredavals = new HashSet(0);
      private Set creditosForCodven = new HashSet(0);
      private Set usuarios = new HashSet(0);
+     private Set creditosForVerificado = new HashSet(0);
      private Set creditosForIdanexo = new HashSet(0);
 
     public Anexo() {
@@ -56,12 +56,13 @@ public class Anexo  implements java.io.Serializable {
         this.idanexo = idanexo;
         this.tipoanexo = tipoanexo;
     }
-    public Anexo(int idanexo, String nombre, String dni, String ruc, String direccion, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, Set datoscreditosForAprobado, Set datoscreditosForVerificador, Set anexodatcredavals, Set creditosForCodven, Set usuarios, Set creditosForIdanexo) {
+    public Anexo(int idanexo, String nombre, String dni, String ruc, String direccion, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, Set anexodatcredavals, Set creditosForCodven, Set usuarios, Set creditosForVerificado, Set creditosForIdanexo) {
        this.idanexo = idanexo;
        this.nombre = nombre;
        this.dni = dni;
        this.ruc = ruc;
        this.direccion = direccion;
+       this.referencia = referencia;
        this.telefono = telefono;
        this.celular = celular;
        this.edad = edad;
@@ -73,11 +74,10 @@ public class Anexo  implements java.io.Serializable {
        this.email = email;
        this.tipoanexo = tipoanexo;
        this.codven = codven;
-       this.datoscreditosForAprobado = datoscreditosForAprobado;
-       this.datoscreditosForVerificador = datoscreditosForVerificador;
        this.anexodatcredavals = anexodatcredavals;
        this.creditosForCodven = creditosForCodven;
        this.usuarios = usuarios;
+       this.creditosForVerificado = creditosForVerificado;
        this.creditosForIdanexo = creditosForIdanexo;
     }
    
@@ -134,6 +134,16 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
+    @Column(name="referencia", length=80)
+    public String getReferencia() {
+        return this.referencia;
+    }
+    
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
+
+    
     @Column(name="telefono", length=9)
     public String getTelefono() {
         return this.telefono;
@@ -185,11 +195,11 @@ public class Anexo  implements java.io.Serializable {
 
     
     @Column(name="sexo", length=1)
-    public String getSexo() {
+    public Character getSexo() {
         return this.sexo;
     }
     
-    public void setSexo(String sexo) {
+    public void setSexo(Character sexo) {
         this.sexo = sexo;
     }
 
@@ -243,24 +253,6 @@ public class Anexo  implements java.io.Serializable {
         this.codven = codven;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="anexoByAprobado")
-    public Set getDatoscreditosForAprobado() {
-        return this.datoscreditosForAprobado;
-    }
-    
-    public void setDatoscreditosForAprobado(Set datoscreditosForAprobado) {
-        this.datoscreditosForAprobado = datoscreditosForAprobado;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="anexoByVerificador")
-    public Set getDatoscreditosForVerificador() {
-        return this.datoscreditosForVerificador;
-    }
-    
-    public void setDatoscreditosForVerificador(Set datoscreditosForVerificador) {
-        this.datoscreditosForVerificador = datoscreditosForVerificador;
-    }
-
 @OneToMany(fetch=FetchType.LAZY, mappedBy="anexo")
     public Set getAnexodatcredavals() {
         return this.anexodatcredavals;
@@ -288,6 +280,15 @@ public class Anexo  implements java.io.Serializable {
         this.usuarios = usuarios;
     }
 
+@OneToMany(fetch=FetchType.LAZY, mappedBy="anexoByVerificado")
+    public Set getCreditosForVerificado() {
+        return this.creditosForVerificado;
+    }
+    
+    public void setCreditosForVerificado(Set creditosForVerificado) {
+        this.creditosForVerificado = creditosForVerificado;
+    }
+
 @OneToMany(fetch=FetchType.LAZY, mappedBy="anexoByIdanexo")
     public Set getCreditosForIdanexo() {
         return this.creditosForIdanexo;
@@ -299,7 +300,7 @@ public class Anexo  implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 7;
         return hash;
     }
 
@@ -317,10 +318,4 @@ public class Anexo  implements java.io.Serializable {
         }
         return true;
     }
-
-
-
-
 }
-
-

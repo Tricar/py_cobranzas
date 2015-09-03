@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 31/08/2015 11:12:23 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 03/09/2015 09:53:04 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Letras" table="letras" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idletras" type="int">
             <column name="idletras" />
             <generator class="identity" />
         </id>
-        <many-to-one name="datoscredito" class="Model.Datoscredito" fetch="select">
-            <column name="iddatoscredito" />
+        <many-to-one name="credito" class="Model.Credito" fetch="select">
+            <column name="idventa" />
         </many-to-one>
         <property name="montoletra" type="big_decimal">
             <column name="montoletra" precision="17" scale="5" />

@@ -1,5 +1,5 @@
 package Model;
-// Generated 31/08/2015 11:12:21 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -34,9 +34,8 @@ public class Usuario  implements java.io.Serializable {
     }
 
 	
-    public Usuario(String usuario, Anexo anexo, String clave) {
+    public Usuario(String usuario, String clave) {
         this.usuario = usuario;
-        this.anexo = anexo;
         this.clave = clave;
     }
     public Usuario(String usuario, Anexo anexo, Perfil perfil, String clave, Date fechareg) {
@@ -60,7 +59,7 @@ public class Usuario  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idanexo", nullable=false)
+    @JoinColumn(name="idanexo")
     public Anexo getAnexo() {
         return this.anexo;
     }

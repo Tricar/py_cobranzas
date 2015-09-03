@@ -1,5 +1,5 @@
 package Model;
-// Generated 31/08/2015 11:12:21 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -29,7 +29,7 @@ public class Letras  implements java.io.Serializable {
 
 
      private int idletras;
-     private Datoscredito datoscredito;
+     private Credito credito;
      private BigDecimal montoletra;
      private Date fecini;
      private Date fecven;
@@ -47,9 +47,9 @@ public class Letras  implements java.io.Serializable {
     public Letras(int idletras) {
         this.idletras = idletras;
     }
-    public Letras(int idletras, Datoscredito datoscredito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, Set pagoses) {
+    public Letras(int idletras, Credito credito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, Set pagoses) {
        this.idletras = idletras;
-       this.datoscredito = datoscredito;
+       this.credito = credito;
        this.montoletra = montoletra;
        this.fecini = fecini;
        this.fecven = fecven;
@@ -74,13 +74,13 @@ public class Letras  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="iddatoscredito")
-    public Datoscredito getDatoscredito() {
-        return this.datoscredito;
+    @JoinColumn(name="idventa")
+    public Credito getCredito() {
+        return this.credito;
     }
     
-    public void setDatoscredito(Datoscredito datoscredito) {
-        this.datoscredito = datoscredito;
+    public void setCredito(Credito credito) {
+        this.credito = credito;
     }
 
     
@@ -172,9 +172,24 @@ public class Letras  implements java.io.Serializable {
         this.pagoses = pagoses;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
 
-
-
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Letras other = (Letras) obj;
+        if (this.idletras != other.idletras) {
+            return false;
+        }
+        return true;
+    }
 }
-
-

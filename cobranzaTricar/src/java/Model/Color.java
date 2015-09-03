@@ -1,5 +1,5 @@
 package Model;
-// Generated 31/08/2015 11:12:21 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -107,10 +107,4 @@ public class Color  implements java.io.Serializable {
         }
         return true;
     }
-
-    
-
-
 }
-
-

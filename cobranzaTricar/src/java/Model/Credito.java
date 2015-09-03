@@ -1,5 +1,5 @@
 package Model;
-// Generated 31/08/2015 11:12:21 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -30,52 +30,60 @@ public class Credito  implements java.io.Serializable {
 
      private int idventa;
      private Anexo anexoByCodven;
+     private Anexo anexoByVerificado;
      private Anexo anexoByIdanexo;
+     private Anexodatcredaval anexodatcredaval;
      private Vehiculo vehiculo;
+     private String liqventa;
      private String condicionpago;
      private Integer nletras;
      private Date fechareg;
      private String aprobadox;
-     private String liqventa;
      private String tienda;
      private String empresa;
      private BigDecimal precio;
      private BigDecimal inicial;
      private BigDecimal saldo;
      private BigDecimal interes;
-     private Set datoscreditos = new HashSet(0);
+     private Boolean cronograma;
+     private Boolean contrato;
+     private Set letrases = new HashSet(0);
 
     public Credito() {
     }
 
 	
-    public Credito(int idventa, Anexo anexoByCodven, Anexo anexoByIdanexo, Vehiculo vehiculo, String condicionpago, Date fechareg, String liqventa, BigDecimal precio) {
+    public Credito(int idventa, Anexo anexoByCodven, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Date fechareg, BigDecimal precio) {
         this.idventa = idventa;
         this.anexoByCodven = anexoByCodven;
         this.anexoByIdanexo = anexoByIdanexo;
         this.vehiculo = vehiculo;
+        this.liqventa = liqventa;
         this.condicionpago = condicionpago;
         this.fechareg = fechareg;
-        this.liqventa = liqventa;
         this.precio = precio;
     }
-    public Credito(int idventa, Anexo anexoByCodven, Anexo anexoByIdanexo, Vehiculo vehiculo, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String liqventa, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Set datoscreditos) {
-       this.idventa = idventa;
+    public Credito(int idventa, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Anexodatcredaval anexodatcredaval, Vehiculo vehiculo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases) {
+       this.idventa = idventa;       
        this.anexoByCodven = anexoByCodven;
+       this.anexoByVerificado = anexoByVerificado;
        this.anexoByIdanexo = anexoByIdanexo;
+       this.anexodatcredaval = anexodatcredaval;
        this.vehiculo = vehiculo;
+       this.liqventa = liqventa;
        this.condicionpago = condicionpago;
        this.nletras = nletras;
        this.fechareg = fechareg;
        this.aprobadox = aprobadox;
-       this.liqventa = liqventa;
        this.tienda = tienda;
        this.empresa = empresa;
        this.precio = precio;
        this.inicial = inicial;
        this.saldo = saldo;
        this.interes = interes;
-       this.datoscreditos = datoscreditos;
+       this.cronograma = cronograma;
+       this.contrato = contrato;
+       this.letrases = letrases;
     }
    
      @Id 
@@ -101,6 +109,16 @@ public class Credito  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="verificado")
+    public Anexo getAnexoByVerificado() {
+        return this.anexoByVerificado;
+    }
+    
+    public void setAnexoByVerificado(Anexo anexoByVerificado) {
+        this.anexoByVerificado = anexoByVerificado;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idanexo", nullable=false)
     public Anexo getAnexoByIdanexo() {
         return this.anexoByIdanexo;
@@ -111,6 +129,16 @@ public class Credito  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="idavalcredito")
+    public Anexodatcredaval getAnexodatcredaval() {
+        return this.anexodatcredaval;
+    }
+    
+    public void setAnexodatcredaval(Anexodatcredaval anexodatcredaval) {
+        this.anexodatcredaval = anexodatcredaval;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="idvehiculo", nullable=false)
     public Vehiculo getVehiculo() {
         return this.vehiculo;
@@ -118,6 +146,16 @@ public class Credito  implements java.io.Serializable {
     
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
+    }
+
+    
+    @Column(name="liqventa", nullable=false, length=10)
+    public String getLiqventa() {
+        return this.liqventa;
+    }
+    
+    public void setLiqventa(String liqventa) {
+        this.liqventa = liqventa;
     }
 
     
@@ -158,16 +196,6 @@ public class Credito  implements java.io.Serializable {
     
     public void setAprobadox(String aprobadox) {
         this.aprobadox = aprobadox;
-    }
-
-    
-    @Column(name="liqventa", nullable=false, length=10)
-    public String getLiqventa() {
-        return this.liqventa;
-    }
-    
-    public void setLiqventa(String liqventa) {
-        this.liqventa = liqventa;
     }
 
     
@@ -230,18 +258,53 @@ public class Credito  implements java.io.Serializable {
         this.interes = interes;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="credito")
-    public Set getDatoscreditos() {
-        return this.datoscreditos;
+    
+    @Column(name="cronograma")
+    public Boolean getCronograma() {
+        return this.cronograma;
     }
     
-    public void setDatoscreditos(Set datoscreditos) {
-        this.datoscreditos = datoscreditos;
+    public void setCronograma(Boolean cronograma) {
+        this.cronograma = cronograma;
     }
 
+    
+    @Column(name="contrato")
+    public Boolean getContrato() {
+        return this.contrato;
+    }
+    
+    public void setContrato(Boolean contrato) {
+        this.contrato = contrato;
+    }
 
+@OneToMany(fetch=FetchType.LAZY, mappedBy="credito")
+    public Set getLetrases() {
+        return this.letrases;
+    }
+    
+    public void setLetrases(Set letrases) {
+        this.letrases = letrases;
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Credito other = (Credito) obj;
+        if (this.idventa != other.idventa) {
+            return false;
+        }
+        return true;
+    }
 }
-
-

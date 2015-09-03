@@ -7,9 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
-
         <ui:composition template="./../views/template.xhtml">
-
             <ui:define name="content">
                 <h:form id="frmNuevo">
                     <p:commandButton value="Nuevo Perfil" update=":formInsertar:panelcrearperfil" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
@@ -52,28 +50,24 @@
                     <p:dialog header="Datos del usuario" widgetVar="dialogoAsignarMenu" modal="true">
                         <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
                         <br/>
-
                         <br/><h:outputText value="Sistema:" />
                         <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisUsu}"/>
                         <p:outputLabel value="Usuarios" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
                         <p:outputLabel value="Perfiles" />
                         <br/>
-
                         <br/><h:outputText value="Mantenimiento:" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>
                         <h:outputText value="Clientes" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manArt}"/>
                         <h:outputText value="Articulos" />
                         <br/>
-
                         <br/><h:outputText value="Venta:" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venLis}"/>
                         <h:outputText value="Listar" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venReg}"/>
                         <h:outputText value="Vender" />
                         <p:separator/>
-
                         <p:commandButton value="Guardar cambios" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>
                 </h:form>
@@ -98,8 +92,6 @@
                     </p:dialog>
                 </h:form>
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

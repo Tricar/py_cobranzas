@@ -7,97 +7,39 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <h:outputStylesheet library="css" name="style.css" />
-        <title>Gestion de Anexo</title>
+        <title>Creditos</title>
     </h:head>
     <body>
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">                
-                <h:form>
-                    <p:commandButton value="Nuevo" icon="b-add" oncomplete="dlginsertar.show()" update=":formInsertar"/>
-                </h:form>
-                <p:dialog id="dlg1" header="Nuevo Anexo" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
-                    <h:form id="formInsertar">
-                        <p:messages autoUpdate="true"/>
-                        <p:panelGrid columns="4">
-                            <p:outputLabel value="Id:" />
-                            <p:inputText value="#{anexoBean.anexo.idanexo}" disabled="true"/>
-                            <p:outputLabel value="Tipo Anexo:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.tipoanexo}" >
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="Administrador" itemValue="AD" />
-                                <f:selectItem itemLabel="Cliente" itemValue="CL" />
-                                <f:selectItem itemLabel="Vendedor" itemValue="VE" />
-                                <f:selectItem itemLabel="Gestor Cob." itemValue="GE" />
-                                <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Nombre o Razon Social:" />
-                            <p:inputText value="#{anexoBean.anexo.nombre}" />
-                            <p:outputLabel value="Ap. Paterno:" />
-                            <p:inputText  id="ap" value="#{anexoBean.anexo.apepat}" />
-                            <p:outputLabel value="Ap. Materno:" />
-                            <p:inputText id="am" value="#{anexoBean.anexo.apemat}" />
-                            <p:outputLabel value="DNI:" />
-                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
-                            <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
-                            <p:outputLabel value="Dirección:" />
-                            <p:inputText value="#{anexoBean.anexo.direccion}" />
-                            <p:outputLabel value="Referencia:" />
-                            <p:inputText value="#{anexoBean.anexo.referencia}" />
-                            <p:outputLabel value="Tel. Fijo:" />
-                            <p:inputText value="#{anexoBean.anexo.telefono}" />
-                            <p:outputLabel value="Tel. cel:" />
-                            <p:inputText value="#{anexoBean.anexo.celular}" />
-                            <p:outputLabel value="Edad:" />
-                            <p:inputText id="edad" value="#{anexoBean.anexo.edad}" />
-                            <p:outputLabel value="Fec. Nac:" />
-                            <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
-                            <p:outputLabel value="Sexo:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.sexo}">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="Masculino" itemValue="M" />
-                                <f:selectItem itemLabel="Femenino" itemValue="F" />
-                                <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="eMail:" />
-                            <p:inputText value="#{anexoBean.anexo.email}" />
-                            <p:outputLabel value="Cod. vendedor:" />
-                            <p:inputText id="vend" value="#{anexoBean.anexo.codven}" />                                                        
-                        </p:panelGrid>
-                        <p:commandButton value="Guardar" icon="b-new" update=":formMostrar" actionListener="#{anexoBean.insertar()}" oncomplete="dlginsertar.hide()"/>
-                    </h:form>
-                </p:dialog>
-
                 <h:form id="formMostrar">
-                    <p:dataTable var="anexo" value="#{anexoBean.anexos}" 
+                    <p:dataTable var="cred" value="#{creditoBean.ventas}" 
                                  emptyMessage="No hay nada para mostrar" 
                                  paginator="true" rows="10" paginatorPosition="top" 
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
                                  {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                                  rowsPerPageTemplate="10">
-                        <p:column headerText="Id.">
-                            <h:outputText value="#{anexo.idanexo}" />
+                        <p:column headerText="Cod.">
+                            <h:outputText value="#{cred.liqventa}" />
                         </p:column>
-                        <p:column headerText="T. anexo:">
-                            <h:outputText value="#{anexo.tipoanexo}">
-                                <f:converter converterId="tanexoconverter"/>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{cred.anexoByIdanexo.nombre}" />
+                        </p:column>
+                        <p:column headerText="Tienda" filterBy="#{cred.tienda}" filterMatchMode="contains">
+                            <h:outputText value="#{cred.tienda}">
+                                <f:converter converterId="tiendaconverter"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Nombre" filterBy="#{anexo.nombre}" filterMatchMode="contains">
-                            <h:outputText value="#{anexo.nombre}" />
+                        <p:column headerText="Empresa" filterBy="#{cred.empresa}" filterMatchMode="contains">
+                            <h:outputText value="#{cred.empresa}">
+                                <f:converter converterId="empresaconverter"/>
+                            </h:outputText>
                         </p:column>
-                        <p:column headerText="Ap. Pat.">
-                            <h:outputText value="#{anexo.apepat}" />
+                        <p:column headerText="Vehículo">
+                            <h:outputText value="#{cred.vehiculo.tipovehiculo}" />
                         </p:column>
-                        <p:column headerText="Ap. Mat.">
-                            <h:outputText value="#{anexo.apemat}" />
-                        </p:column>
-                        <p:column headerText="DNI">
-                            <h:outputText value="#{anexo.dni}" />
-                        </p:column>
-                        <p:column headerText="RUC">
-                            <h:outputText value="#{anexo.ruc}" />
+                        <p:column headerText="Saldo">
+                            <h:outputText value="#{cred.saldo}" />
                         </p:column>
                         <p:column headerText=" ">
                             <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
@@ -106,15 +48,15 @@
                         </p:column>
                         <p:column headerText=" ">
                             <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                                <f:setPropertyActionListener target="#{anexoBean.anexo}" value="#{anexo}" />
+                                <f:setPropertyActionListener target="#{creditoBean.venta}" value="#{cred}" />
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
                 </h:form>
-                <p:dialog id="dlg" header="Modificar Anexo" showEffect="explode" hideEffect="explode" 
+                <p:dialog id="dlg" header="Modificar Credito" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formModificar">
-                        <p:panelGrid columns="4">
+                        <p:panelGrid columns="2">
                             <p:outputLabel value="Id:" />
                             <p:inputText value="#{anexoBean.anexo.idanexo}" disabled="true"/>
                             <p:outputLabel value="Tipo Anexo:" />
@@ -138,8 +80,6 @@
                             <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
                             <p:outputLabel value="Dirección:" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" />
-                            <p:outputLabel value="Referencia:" />
-                            <p:inputText value="#{anexoBean.anexo.referencia}" />
                             <p:outputLabel value="Tel. Fijo:" />
                             <p:inputText value="#{anexoBean.anexo.telefono}" />
                             <p:outputLabel value="Tel. cel:" />
@@ -167,7 +107,7 @@
                           widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formEliminar">
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{anexoBean.eliminar()}" 
+                        <p:commandButton value="Si" actionListener="#{creditoBean.eliminar()}" 
                                          update=":formMostrar" oncomplete="dlgeliminar.hide();" />
                         <p:commandButton value="No" onclick="dlg2.hide();" />
                     </h:form>

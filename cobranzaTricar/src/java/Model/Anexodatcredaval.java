@@ -1,14 +1,17 @@
 package Model;
-// Generated 31/08/2015 11:12:21 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,8 +29,9 @@ public class Anexodatcredaval  implements java.io.Serializable {
 
      private int iddetcredito;
      private Anexo anexo;
-     private Datoscredito datoscredito;
+     private Integer iddatoscredito;
      private Date fecreg;
+     private Set creditos = new HashSet(0);
 
     public Anexodatcredaval() {
     }
@@ -36,11 +40,12 @@ public class Anexodatcredaval  implements java.io.Serializable {
     public Anexodatcredaval(int iddetcredito) {
         this.iddetcredito = iddetcredito;
     }
-    public Anexodatcredaval(int iddetcredito, Anexo anexo, Datoscredito datoscredito, Date fecreg) {
+    public Anexodatcredaval(int iddetcredito, Anexo anexo, Integer iddatoscredito, Date fecreg, Set creditos) {
        this.iddetcredito = iddetcredito;
        this.anexo = anexo;
-       this.datoscredito = datoscredito;
+       this.iddatoscredito = iddatoscredito;
        this.fecreg = fecreg;
+       this.creditos = creditos;
     }
    
      @Id 
@@ -65,14 +70,14 @@ public class Anexodatcredaval  implements java.io.Serializable {
         this.anexo = anexo;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="iddatoscredito")
-    public Datoscredito getDatoscredito() {
-        return this.datoscredito;
+    
+    @Column(name="iddatoscredito")
+    public Integer getIddatoscredito() {
+        return this.iddatoscredito;
     }
     
-    public void setDatoscredito(Datoscredito datoscredito) {
-        this.datoscredito = datoscredito;
+    public void setIddatoscredito(Integer iddatoscredito) {
+        this.iddatoscredito = iddatoscredito;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -83,6 +88,15 @@ public class Anexodatcredaval  implements java.io.Serializable {
     
     public void setFecreg(Date fecreg) {
         this.fecreg = fecreg;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="anexodatcredaval")
+    public Set getCreditos() {
+        return this.creditos;
+    }
+    
+    public void setCreditos(Set creditos) {
+        this.creditos = creditos;
     }
 
 
