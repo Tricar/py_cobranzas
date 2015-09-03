@@ -21,10 +21,10 @@ body{
 }
 
 .precarga{
-    background:transparent url(../images/load.gif) center no-repeat;
+    background:transparent url(images/loader.gif) center no-repeat;
     display: none;
 }
 
 .ui-state-default .icon-login{
-    background-image: url(images/login.png);
+    background-image: url(images/people.png);
 }
