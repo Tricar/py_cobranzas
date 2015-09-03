@@ -30,7 +30,7 @@ public class Vehiculo  implements java.io.Serializable {
      private int idvehiculo;
      private Color color;
      private Modelo modelo;
-     private Character marca;
+     private String marca;
      private String serie;
      private Integer anofabri;
      private Date fechareg;
@@ -48,7 +48,7 @@ public class Vehiculo  implements java.io.Serializable {
         this.modelo = modelo;
         this.serie = serie;
     }
-    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Character marca, String serie, Integer anofabri, Date fechareg, String motor, String tipovehiculo, Set creditos) {
+    public Vehiculo(int idvehiculo, Color color, Modelo modelo, String marca, String serie, Integer anofabri, Date fechareg, String motor, String tipovehiculo, Set creditos) {
        this.idvehiculo = idvehiculo;
        this.color = color;
        this.modelo = modelo;
@@ -95,11 +95,11 @@ public class Vehiculo  implements java.io.Serializable {
 
     
     @Column(name="marca", length=1)
-    public Character getMarca() {
+    public String getMarca() {
         return this.marca;
     }
     
-    public void setMarca(Character marca) {
+    public void setMarca(String marca) {
         this.marca = marca;
     }
 

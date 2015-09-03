@@ -14,7 +14,7 @@
         <many-to-one name="modelo" class="Model.Modelo" fetch="select">
             <column name="idmodelo" not-null="true" />
         </many-to-one>
-        <property name="marca" type="java.lang.Character">
+        <property name="marca" type="string">
             <column name="marca" length="1" />
         </property>
         <property name="serie" type="string">
