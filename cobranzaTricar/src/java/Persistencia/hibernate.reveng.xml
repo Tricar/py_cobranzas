@@ -2,16 +2,15 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="cobranzas" match-schema="dbo"/>
+  <table-filter match-name="usuario"/>
+  <table-filter match-name="anexodatcredaval"/>
+  <table-filter match-name="vehiculo"/>
+  <table-filter match-name="pagos"/>
+  <table-filter match-name="credito"/>
+  <table-filter match-name="modelo"/>
   <table-filter match-name="sysdiagrams"/>
   <table-filter match-name="anexo"/>
-  <table-filter match-name="letras"/>
   <table-filter match-name="perfil"/>
-  <table-filter match-name="modelo"/>
-  <table-filter match-name="vehiculo"/>
-  <table-filter match-name="datoscredito"/>
-  <table-filter match-name="credito"/>
-  <table-filter match-name="pagos"/>
-  <table-filter match-name="anexodatcredaval"/>
-  <table-filter match-name="usuario"/>
   <table-filter match-name="color"/>
+  <table-filter match-name="letras"/>
 </hibernate-reverse-engineering>

@@ -2,7 +2,6 @@ package Bean;
 
 import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
-import Model.Datoscredito;
 import Model.Credito;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,8 +15,7 @@ import javax.faces.component.html.HtmlInputText;
 public class creditoBean implements Serializable{
 
     public Credito credito = new Credito();
-    public List<Credito> creditos;
-    private List<Datoscredito> lista = new ArrayList();
+    public List<Credito> creditos;    
     private HtmlInputText nletras = new HtmlInputText();
 
     public HtmlInputText getNletras() {
@@ -26,14 +24,6 @@ public class creditoBean implements Serializable{
 
     public void setNletras(HtmlInputText nletras) {
         this.nletras = nletras;
-    }
-    
-    public List<Datoscredito> getLista() {
-        return lista;
-    }
-
-    public void setLista(List<Datoscredito> lista) {
-        this.lista = lista;
     }
     
     public creditoBean() {

@@ -1,22 +1,31 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 31/08/2015 11:12:23 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 03/09/2015 09:53:04 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Credito" table="credito" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idventa" type="int">
             <column name="idventa" />
             <generator class="identity" />
-        </id>
+        </id>        
         <many-to-one name="anexoByCodven" class="Model.Anexo" fetch="select">
             <column name="codven" not-null="true" />
+        </many-to-one>
+        <many-to-one name="anexoByVerificado" class="Model.Anexo" fetch="select">
+            <column name="verificado" />
         </many-to-one>
         <many-to-one name="anexoByIdanexo" class="Model.Anexo" fetch="select">
             <column name="idanexo" not-null="true" />
         </many-to-one>
+        <many-to-one name="anexodatcredaval" class="Model.Anexodatcredaval" fetch="select">
+            <column name="idavalcredito" />
+        </many-to-one>
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" not-null="true" />
         </many-to-one>
+        <property name="liqventa" type="string">
+            <column name="liqventa" length="10" not-null="true" />
+        </property>
         <property name="condicionpago" type="string">
             <column name="condicionpago" length="2" not-null="true" />
         </property>
@@ -28,9 +37,6 @@
         </property>
         <property name="aprobadox" type="string">
             <column name="aprobadox" length="10" />
-        </property>
-        <property name="liqventa" type="string">
-            <column name="liqventa" length="10" not-null="true" />
         </property>
         <property name="tienda" type="string">
             <column name="tienda" length="2" />
@@ -50,12 +56,12 @@
         <property name="interes" type="big_decimal">
             <column name="interes" precision="17" scale="5" />
         </property>
-        <set name="datoscreditos" table="datoscredito" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="idventa" not-null="true" />
-            </key>
-            <one-to-many class="Model.Datoscredito" />
-        </set>
+        <property name="cronograma" type="java.lang.Boolean">
+            <column name="cronograma" />
+        </property>
+        <property name="contrato" type="java.lang.Boolean">
+            <column name="contrato" />
+        </property>
         <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idventa" />

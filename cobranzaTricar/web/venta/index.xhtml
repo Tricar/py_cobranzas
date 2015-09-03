@@ -70,27 +70,33 @@
                 </p:dialog>
                 <h:form id="formInsertarVenta">
                     <p:messages autoUpdate="true"/>
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Fecha:" />
+                        <p:calendar showOn="button" value="#{creditoBean.venta.fechareg}" navigator="true"/>
+                        <p:outputLabel value="Cod venta:" />
+                        <p:inputText value="#{creditoBean.venta.liqventa}" required="true" requiredMessage="Ingrese un código de venta"/>
+                        <p:outputLabel value="Empresa:" />
+                        <p:selectOneMenu value="#{creditoBean.venta.empresa}" >
+                            <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="CASCO" itemValue="CA" />
+                            <f:selectItem itemLabel="TRICAR" itemValue="TR" />
+                            <f:selectItem itemLabel="SEDNA" itemValue="SE" />                                
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Tienda:" />
+                        <p:selectOneMenu value="#{creditoBean.venta.tienda}" >
+                            <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="VX1" itemValue="V1" />
+                            <f:selectItem itemLabel="VX2" itemValue="V2" />                            
+                        </p:selectOneMenu>
+                    </p:panelGrid>
                     <p:accordionPanel>
-                        <p:tab title="Datos de Tienda">
-                            <p:panelGrid columns="4">
-                                <p:outputLabel value="Fecha:" />
-                                <p:calendar showOn="button" value="#{creditoBean.venta.fechareg}" navigator="true"/>
-                                <p:outputLabel value="Cod venta:" />
-                                <p:inputText value="#{creditoBean.venta.liqventa}" required="true" requiredMessage="Ingrese un código de venta"/>
-                                <p:outputLabel value="Empresa:" />
-                                <p:selectOneMenu value="#{creditoBean.venta.empresa}" >
-                                    <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                    <f:selectItem itemLabel="CASCO" itemValue="CA" />
-                                    <f:selectItem itemLabel="TRICAR" itemValue="TR" />
-                                    <f:selectItem itemLabel="SEDNA" itemValue="SE" />                                
-                                </p:selectOneMenu>
-                                <p:outputLabel value="Tienda:" />
-                                <p:selectOneMenu value="#{creditoBean.venta.tienda}" >
-                                    <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                    <f:selectItem itemLabel="VX1" itemValue="V1" />
-                                    <f:selectItem itemLabel="VX2" itemValue="V2" />                            
-                                </p:selectOneMenu>
-                            </p:panelGrid>
+                        <p:tab title="Datos de Cliente">
+                            <p:outputLabel value="Buscar cliente:" />
+                            <p:autoComplete value="#{creditoBean.venta.anexoByIdanexo}"
+                                            completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
+                                            itemLabel="#{cliente.nombre}" itemValue="#{cliente}" forceSelection="true">
+                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                            </p:autoComplete>
                         </p:tab>
                         <p:tab title="Datos de Credito">
                             <p:panelGrid columns="4">
@@ -117,12 +123,8 @@
                                     <f:selectItem itemLabel="11" itemValue='11'/>
                                     <f:selectItem itemLabel="12" itemValue='12'/>
                                 </p:selectOneMenu>
-                                <p:outputLabel value="Buscar cliente:" />
-                                <p:autoComplete value="#{creditoBean.venta.anexoByIdanexo}"
-                                                completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
-                                                itemLabel="#{cliente.nombre}" itemValue="#{cliente}" forceSelection="true">
-                                    <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                </p:autoComplete>
+
+
                                 <p:outputLabel value="Buscar vendedor:"/>
                                 <p:autoComplete value="#{creditoBean.venta.anexoByCodven}"
                                                 completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"

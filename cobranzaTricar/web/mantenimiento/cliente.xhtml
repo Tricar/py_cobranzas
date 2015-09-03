@@ -19,7 +19,7 @@
                           widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formInsertar">
                         <p:messages autoUpdate="true"/>
-                        <p:panelGrid columns="2">
+                        <p:panelGrid columns="4">
                             <p:outputLabel value="Id:" />
                             <p:inputText value="#{anexoBean.anexo.idanexo}" disabled="true"/>
                             <p:outputLabel value="Tipo Anexo:" />
@@ -43,6 +43,8 @@
                             <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
                             <p:outputLabel value="Dirección:" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" />
+                            <p:outputLabel value="Referencia:" />
+                            <p:inputText value="#{anexoBean.anexo.referencia}" />
                             <p:outputLabel value="Tel. Fijo:" />
                             <p:inputText value="#{anexoBean.anexo.telefono}" />
                             <p:outputLabel value="Tel. cel:" />
@@ -112,7 +114,7 @@
                 <p:dialog id="dlg" header="Modificar Anexo" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formModificar">
-                        <p:panelGrid columns="2">
+                        <p:panelGrid columns="4">
                             <p:outputLabel value="Id:" />
                             <p:inputText value="#{anexoBean.anexo.idanexo}" disabled="true"/>
                             <p:outputLabel value="Tipo Anexo:" />
@@ -136,6 +138,8 @@
                             <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
                             <p:outputLabel value="Dirección:" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" />
+                            <p:outputLabel value="Referencia:" />
+                            <p:inputText value="#{anexoBean.anexo.referencia}" />
                             <p:outputLabel value="Tel. Fijo:" />
                             <p:inputText value="#{anexoBean.anexo.telefono}" />
                             <p:outputLabel value="Tel. cel:" />

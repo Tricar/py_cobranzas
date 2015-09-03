@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 31/08/2015 11:12:23 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 03/09/2015 09:53:04 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Sysdiagrams" table="sysdiagrams" schema="dbo" catalog="cobranzas">
         <id name="diagramId" type="int">

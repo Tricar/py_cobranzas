@@ -1,5 +1,5 @@
 package Model;
-// Generated 31/08/2015 11:12:21 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -274,24 +274,9 @@ public class Perfil  implements java.io.Serializable {
         this.usuarios = usuarios;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        return hash;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Perfil other = (Perfil) obj;
-        if (this.idperfil != other.idperfil) {
-            return false;
-        }
-        return true;
-    }
+
+
 }
+
+
