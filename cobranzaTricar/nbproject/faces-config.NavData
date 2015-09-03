@@ -3,19 +3,17 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="views/index.xhtml" x="150" y="600" zoom="true"/>
-        <Node id="anexo/index.xhtml" x="400" y="450" zoom="true"/>
-        <Node id="vehiculo/index.xhtml" x="650" y="450" zoom="true"/>
-        <Node id="menu/index.xhtml" x="900" y="300" zoom="true"/>
-        <Node id="usuario/index.xhtml" x="150" y="450" zoom="true"/>
-        <Node id="tanexo/index.xhtml" x="400" y="600" zoom="true"/>
-        <Node id="modelo/index.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="venta/index.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="sistema/usuario.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="mantenimiento/modarticulo.xhtml" x="400" y="450" zoom="true"/>
         <Node id="index-old.xhtml" x="900" y="150" zoom="true"/>
         <Node id="login.xhtml" x="150" y="300" zoom="true"/>
-        <Node id="tvehiculo/index.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="mantenimiento/cliente.xhtml" x="650" y="150" zoom="true"/>
         <Node id="views/template.xhtml" x="1150" y="150" zoom="true"/>
-        <Node id="condicion/index.xhtml" x="650" y="300" zoom="true"/>
-        <Node id="color/index.xhtml" x="400" y="300" zoom="true"/>
-        <Node id="tpago/index.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="venta/listarv.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="sistema/perfil.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="mantenimiento/articulo.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="mantenimiento/colorart.xhtml" x="400" y="300" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
