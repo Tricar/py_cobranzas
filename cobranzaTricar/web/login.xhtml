@@ -16,18 +16,18 @@
                 <p:panel header="Acceso al Sistema">
                     <h:panelGrid columns="2" cellpadding="5">  
                         <h:outputLabel for="username" value="Usuario:" />  
-                        <p:inputText value="#{loginBean.usuario.usuario}"   
+                        <p:inputText value="#{loginBean.tusuario}"   
                                      id="usuario" required="true" label="usuario" />  
 
                         <h:outputLabel for="password" value="Clave:" />  
-                        <p:password value="#{loginBean.usuario.clave}"   
+                        <p:password value="#{loginBean.clave}"   
                                     id="clave" required="true" label="clave" />
 
                         <div id="cargando" style="width: 50px; height: 50px" class="precarga"/>
                         <f:facet name="footer">  
                             <p:commandButton id="loginButton" value="Ingresar" update=":growl"   
                                              actionListener="#{loginBean.login}" icon="icon-login"   
-                                             oncomplete="handleLoginRequest(xhr, status, args)"/>  
+                                             oncomplete="handleLoginRequest(xhr, status, args)" onclick="ActivarCampoOtroTema();"/>  
                         </f:facet>  
                     </h:panelGrid>  
                 </p:panel>
@@ -35,15 +35,17 @@
         </div>
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
-                $('#cargando').show();
                 if (args.validationFailed || !args.loggedIn) {
                     jQuery('#dialog').effect("shake", {times: 5}, 100);
-                    setInterval(function () {
-                        $('#cargando').hide();
-                    }, 5000);
                 } else {
                     location.href = args.ruta;
                 }
+            }
+
+            function ActivarCampoOtroTema() {
+                var contenedor = document.getElementById("cargando");
+                contenedor.style.display = "block";
+                return true;
             }
         </script>
     </h:body>

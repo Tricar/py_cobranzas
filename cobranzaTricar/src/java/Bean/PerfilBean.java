@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,8 +23,8 @@ import org.primefaces.context.RequestContext;
  * @author Ricardo
  */
 @ManagedBean
-@SessionScoped
-public class PerfilBean implements Serializable{
+@RequestScoped
+public class PerfilBean implements Serializable {
 
     private Session session;
     private Transaction transaction;
@@ -147,7 +147,7 @@ public class PerfilBean implements Serializable{
             }
         }
     }
-    
+
     public void cargarPerfilEliminar(Integer codigoUsuario) {
         this.session = null;
         this.transaction = null;
@@ -177,7 +177,7 @@ public class PerfilBean implements Serializable{
             }
         }
     }
-    
+
     public void cargarMenuAsignar(Integer codigoUsuario) {
         this.session = null;
         this.transaction = null;
@@ -245,8 +245,8 @@ public class PerfilBean implements Serializable{
             linkDao.registrar(this.session, this.perfil);
 
             this.transaction.commit();
-            
-            perfil = new Perfil();
+
+            this.perfil = new Perfil();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
 
@@ -262,7 +262,7 @@ public class PerfilBean implements Serializable{
         }
 
     }
-    
+
     public void eliminarPerfil() {
         this.session = null;
         this.transaction = null;
@@ -271,15 +271,15 @@ public class PerfilBean implements Serializable{
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            
+
             PerfilDaoImpl perfilDao = new PerfilDaoImpl();
             perfilDao.eliminarPerfil(this.session, this.perfil);
 
             this.transaction.commit();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Perfil Correctamente."));
-            
-            perfil = new Perfil();
+
+            this.perfil = new Perfil();
 
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -292,7 +292,7 @@ public class PerfilBean implements Serializable{
             }
         }
     }
-    
+
     public Perfil getPerfil() {
         return perfil;
     }
