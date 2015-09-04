@@ -1,5 +1,5 @@
 package Model;
-// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -30,7 +30,7 @@ public class Vehiculo  implements java.io.Serializable {
      private int idvehiculo;
      private Color color;
      private Modelo modelo;
-     private String marca;
+     private Character marca;
      private String serie;
      private Integer anofabri;
      private Date fechareg;
@@ -48,7 +48,7 @@ public class Vehiculo  implements java.io.Serializable {
         this.modelo = modelo;
         this.serie = serie;
     }
-    public Vehiculo(int idvehiculo, Color color, Modelo modelo, String marca, String serie, Integer anofabri, Date fechareg, String motor, String tipovehiculo, Set creditos) {
+    public Vehiculo(int idvehiculo, Color color, Modelo modelo, Character marca, String serie, Integer anofabri, Date fechareg, String motor, String tipovehiculo, Set creditos) {
        this.idvehiculo = idvehiculo;
        this.color = color;
        this.modelo = modelo;
@@ -95,11 +95,11 @@ public class Vehiculo  implements java.io.Serializable {
 
     
     @Column(name="marca", length=1)
-    public String getMarca() {
+    public Character getMarca() {
         return this.marca;
     }
     
-    public void setMarca(String marca) {
+    public void setMarca(Character marca) {
         this.marca = marca;
     }
 
@@ -182,4 +182,10 @@ public class Vehiculo  implements java.io.Serializable {
         }
         return true;
     }
+
+    
+
+
 }
+
+

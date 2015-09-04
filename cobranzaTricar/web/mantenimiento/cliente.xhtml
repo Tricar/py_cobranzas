@@ -31,16 +31,29 @@
                                 <f:selectItem itemLabel="Gestor Cob." itemValue="GE" />
                                 <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
                             </p:selectOneMenu>
+                            <p:outputLabel value="RUC:" />
+                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
+                            <p:outputLabel value="DNI:" />
+                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
                             <p:outputLabel value="Nombre o Razon Social:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" />
                             <p:outputLabel value="Ap. Paterno:" />
                             <p:inputText  id="ap" value="#{anexoBean.anexo.apepat}" />
                             <p:outputLabel value="Ap. Materno:" />
                             <p:inputText id="am" value="#{anexoBean.anexo.apemat}" />
-                            <p:outputLabel value="DNI:" />
-                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
-                            <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
+                            <p:outputLabel value="Estado civil:" />
+                            <p:selectOneMenu value="#{anexoBean.anexo.estcivil}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="Soltero(a)" itemValue="SO" />
+                                <f:selectItem itemLabel="Conviviente" itemValue="CO" />
+                                <f:selectItem itemLabel="Casado(a)" itemValue="CA" />
+                                <f:selectItem itemLabel="Divorciado(a)" itemValue="DI" />
+                                <f:selectItem itemLabel="Viudo(a)" itemValue="VI" />                                
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Nombre cónyuge:" />
+                            <p:inputText value="#{anexoBean.anexo.conyuge}" />
+                            <p:outputLabel value="DNI cónyuge:" />
+                            <p:inputText value="#{anexoBean.anexo.dniconyu}" />
                             <p:outputLabel value="Dirección:" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" />
                             <p:outputLabel value="Referencia:" />
@@ -126,16 +139,29 @@
                                 <f:selectItem itemLabel="Gestor Cob." itemValue="GE" />
                                 <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
                             </p:selectOneMenu>
+                            <p:outputLabel value="DNI:" />
+                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
+                            <p:outputLabel value="RUC:" />
+                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
                             <p:outputLabel value="Nombre o Razon Social:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" />
                             <p:outputLabel value="Ap. Paterno:" />
                             <p:inputText  id="ap" value="#{anexoBean.anexo.apepat}" />
                             <p:outputLabel value="Ap. Materno:" />
                             <p:inputText id="am" value="#{anexoBean.anexo.apemat}" />
-                            <p:outputLabel value="DNI:" />
-                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
-                            <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
+                            <p:outputLabel value="Estado civil:" />
+                            <p:selectOneMenu value="#{anexoBean.anexo.estcivil}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="Soltero(a)" itemValue="SO" />
+                                <f:selectItem itemLabel="Conviviente" itemValue="CO" />
+                                <f:selectItem itemLabel="Casado(a)" itemValue="CA" />
+                                <f:selectItem itemLabel="Divorciado(a)" itemValue="DI" />
+                                <f:selectItem itemLabel="Viudo(a)" itemValue="VI" />                                
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Nombre cónyuge:" />
+                            <p:inputText value="#{anexoBean.anexo.conyuge}" />
+                            <p:outputLabel value="DNI cónyuge:" />
+                            <p:inputText value="#{anexoBean.anexo.dniconyu}" />                           
                             <p:outputLabel value="Dirección:" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" />
                             <p:outputLabel value="Referencia:" />

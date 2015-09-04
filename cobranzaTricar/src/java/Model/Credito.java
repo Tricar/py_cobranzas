@@ -1,5 +1,5 @@
 package Model;
-// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -29,10 +29,10 @@ public class Credito  implements java.io.Serializable {
 
 
      private int idventa;
+     private Anexo anexoByIdaval;
      private Anexo anexoByCodven;
      private Anexo anexoByVerificado;
      private Anexo anexoByIdanexo;
-     private Anexodatcredaval anexodatcredaval;
      private Vehiculo vehiculo;
      private String liqventa;
      private String condicionpago;
@@ -63,12 +63,12 @@ public class Credito  implements java.io.Serializable {
         this.fechareg = fechareg;
         this.precio = precio;
     }
-    public Credito(int idventa, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Anexodatcredaval anexodatcredaval, Vehiculo vehiculo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases) {
-       this.idventa = idventa;       
+    public Credito(int idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases) {
+       this.idventa = idventa;
+       this.anexoByIdaval = anexoByIdaval;
        this.anexoByCodven = anexoByCodven;
        this.anexoByVerificado = anexoByVerificado;
        this.anexoByIdanexo = anexoByIdanexo;
-       this.anexodatcredaval = anexodatcredaval;
        this.vehiculo = vehiculo;
        this.liqventa = liqventa;
        this.condicionpago = condicionpago;
@@ -99,6 +99,16 @@ public class Credito  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="idaval")
+    public Anexo getAnexoByIdaval() {
+        return this.anexoByIdaval;
+    }
+    
+    public void setAnexoByIdaval(Anexo anexoByIdaval) {
+        this.anexoByIdaval = anexoByIdaval;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="codven", nullable=false)
     public Anexo getAnexoByCodven() {
         return this.anexoByCodven;
@@ -126,16 +136,6 @@ public class Credito  implements java.io.Serializable {
     
     public void setAnexoByIdanexo(Anexo anexoByIdanexo) {
         this.anexoByIdanexo = anexoByIdanexo;
-    }
-
-@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="idavalcredito")
-    public Anexodatcredaval getAnexodatcredaval() {
-        return this.anexodatcredaval;
-    }
-    
-    public void setAnexodatcredaval(Anexodatcredaval anexodatcredaval) {
-        this.anexodatcredaval = anexodatcredaval;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -289,7 +289,7 @@ public class Credito  implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 5;
         return hash;
     }
 
@@ -307,4 +307,10 @@ public class Credito  implements java.io.Serializable {
         }
         return true;
     }
+
+    
+
+
 }
+
+

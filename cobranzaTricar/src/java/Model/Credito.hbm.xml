@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 03/09/2015 09:53:04 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Credito" table="credito" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idventa" type="int">
             <column name="idventa" />
             <generator class="identity" />
-        </id>        
+        </id>
+        <many-to-one name="anexoByIdaval" class="Model.Anexo" fetch="select">
+            <column name="idaval" />
+        </many-to-one>
         <many-to-one name="anexoByCodven" class="Model.Anexo" fetch="select">
             <column name="codven" not-null="true" />
         </many-to-one>
@@ -16,9 +19,6 @@
         </many-to-one>
         <many-to-one name="anexoByIdanexo" class="Model.Anexo" fetch="select">
             <column name="idanexo" not-null="true" />
-        </many-to-one>
-        <many-to-one name="anexodatcredaval" class="Model.Anexodatcredaval" fetch="select">
-            <column name="idavalcredito" />
         </many-to-one>
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" not-null="true" />

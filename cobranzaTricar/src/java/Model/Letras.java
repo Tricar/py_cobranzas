@@ -1,5 +1,5 @@
 package Model;
-// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -38,6 +38,7 @@ public class Letras  implements java.io.Serializable {
      private BigDecimal saldo;
      private Date fecreg;
      private String estado;
+     private String descripcion;
      private Set pagoses = new HashSet(0);
 
     public Letras() {
@@ -47,7 +48,7 @@ public class Letras  implements java.io.Serializable {
     public Letras(int idletras) {
         this.idletras = idletras;
     }
-    public Letras(int idletras, Credito credito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, Set pagoses) {
+    public Letras(int idletras, Credito credito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, String descripcion, Set pagoses) {
        this.idletras = idletras;
        this.credito = credito;
        this.montoletra = montoletra;
@@ -58,6 +59,7 @@ public class Letras  implements java.io.Serializable {
        this.saldo = saldo;
        this.fecreg = fecreg;
        this.estado = estado;
+       this.descripcion = descripcion;
        this.pagoses = pagoses;
     }
    
@@ -162,6 +164,15 @@ public class Letras  implements java.io.Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+    
+    @Column(name="descripcion", length=2)
+    public String getDescripcion() {
+        return this.descripcion;
+    }
+    
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="letras")
     public Set getPagoses() {
@@ -192,4 +203,10 @@ public class Letras  implements java.io.Serializable {
         }
         return true;
     }
+
+    
+
+
 }
+
+

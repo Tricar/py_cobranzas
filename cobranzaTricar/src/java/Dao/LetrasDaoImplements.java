@@ -1,24 +1,27 @@
 package Dao;
 
 import Model.Credito;
+import Model.Letras;
 import Persistencia.HibernateUtil;
-import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-
-public class CreditoDaoImp implements CreditoDao{
+/**
+ *
+ * @author master
+ */
+public class LetrasDaoImplements implements LetrasDao{
 
     @Override
-    public List<Credito> mostrarVentas() {
+    public List<Letras> mostrarLetras() {
         Session session = null;
-        List<Credito> lista = null;
+        List<Letras> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito");
-            lista = (List<Credito>)query.list();
+            Query query = session.createQuery("from Letras");
+            lista = (List<Letras>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }
@@ -31,12 +34,12 @@ public class CreditoDaoImp implements CreditoDao{
     }
 
     @Override
-    public void insertarVenta(Credito credito) {
+    public void insertarLetra(Letras letras) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(credito);
+            session.save(letras);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -50,12 +53,12 @@ public class CreditoDaoImp implements CreditoDao{
     }
 
     @Override
-    public void modificarVenta(Credito credito) {
+    public void modificarLetra(Letras letras) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(credito);
+            session.update(letras);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -69,12 +72,12 @@ public class CreditoDaoImp implements CreditoDao{
     }
 
     @Override
-    public void eliminarVenta(Credito credito) {
+    public void eliminarLetra(Letras letras) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(credito);
+            session.delete(letras);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -88,15 +91,17 @@ public class CreditoDaoImp implements CreditoDao{
     }
 
     @Override
-    public List<Credito> filtrarFechas(Date date1, Date date2) {
+    public List<Letras> mostrarLetrasXCred(Credito credito) {
         Session session = null;
-        List<Credito> lista = null;
+        List<Letras> lista = null;
+        Credito cred = new Credito();
+        cred = credito;
+        int idcred = cred.getIdventa();
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE fechareg BETWEEN :start_date AND :end_date" );
-            query.setParameter("start_date", date1);
-            query.setParameter("end_date", date2);
-            lista = (List<Credito>)query.list();
+            Query query = session.createQuery("from Letras where idventa=:v");
+            query.setParameter("v", idcred);
+            lista = (List<Letras>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }

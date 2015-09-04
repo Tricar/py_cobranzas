@@ -1,6 +1,7 @@
 package Dao;
 
 import Model.Credito;
+import java.util.Date;
 import java.util.List;
 
 
@@ -9,4 +10,5 @@ public interface CreditoDao {
     public void insertarVenta(Credito credito);
     public void modificarVenta (Credito credito);
     public void eliminarVenta (Credito credito);
+    public List<Credito> filtrarFechas (Date date1, Date date2);
 }

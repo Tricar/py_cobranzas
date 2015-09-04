@@ -113,4 +113,16 @@ public class anexoBean implements Serializable {
         }        
         return query;
     }
+    
+    public List<Anexo> filtrarAval(String name) {
+        this.query = new ArrayList<Anexo>();
+        AnexoDao anexoDao = new AnexoDaoImplements();
+        List<Anexo> tipos = anexoDao.filtarTipoDos("VE", "GE", "CL");
+        for (Anexo tipo : tipos) {
+            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+                query.add(tipo);                
+            }           
+        }        
+        return query;
+    }
 }

@@ -1,5 +1,5 @@
 package Model;
-// Generated 03/09/2015 09:53:02 AM by Hibernate Tools 4.3.1
+// Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -89,7 +89,7 @@ public class Color  implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         return hash;
     }
 
@@ -107,4 +107,10 @@ public class Color  implements java.io.Serializable {
         }
         return true;
     }
+
+    
+
+
 }
+
+

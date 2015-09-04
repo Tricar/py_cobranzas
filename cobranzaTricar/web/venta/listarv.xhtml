@@ -10,15 +10,25 @@
         <title>Creditos</title>
     </h:head>
     <body>
-        <ui:composition template="./../views/template.xhtml">
-            <ui:define name="content">                
+        <ui:composition template="./../views/template.xhtml">            
+            <ui:define name="content">
+                <h:form>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Fecha Inicio:"/>
+                        <p:calendar navigator="true" value="#{creditoBean.fecha1}"/>
+                        <p:outputLabel value="Fecha Fin:"/>
+                        <p:calendar navigator="true" value="#{creditoBean.fecha2}"/>
+                        <p:commandButton value="Cargar" actionListener="#{creditoBean.filtrarFechas()}"
+                                         update=":formMostrar"/>
+                    </p:panelGrid>
+                </h:form>
                 <h:form id="formMostrar">
-                    <p:dataTable var="cred" value="#{creditoBean.ventas}" 
+                    <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" 
                                  emptyMessage="No hay nada para mostrar" 
-                                 paginator="true" rows="10" paginatorPosition="top" 
+                                 paginator="true" rows="20" paginatorPosition="top" 
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
                                  {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-                                 rowsPerPageTemplate="10">
+                                 rowsPerPageTemplate="20">
                         <p:column headerText="Cod.">
                             <h:outputText value="#{cred.liqventa}" />
                         </p:column>
@@ -113,6 +123,6 @@
                     </h:form>
                 </p:dialog>                
             </ui:define>
-        </ui:composition>
+        </ui:composition>        
     </body>
 </html>

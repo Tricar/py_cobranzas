@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 03/09/2015 09:53:04 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Anexo" table="anexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idanexo" type="int">
@@ -38,7 +38,7 @@
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" />
         </property>
-        <property name="sexo" type="java.lang.Character">
+        <property name="sexo" type="string">
             <column name="sexo" length="1" />
         </property>
         <property name="apepat" type="string">
@@ -56,11 +56,20 @@
         <property name="codven" type="string">
             <column name="codven" length="10" />
         </property>
-        <set name="anexodatcredavals" table="anexodatcredaval" inverse="true" lazy="true" fetch="select">
+        <property name="estcivil" type="string">
+            <column name="estcivil" length="2" />
+        </property>
+        <property name="conyuge" type="string">
+            <column name="conyuge" length="120" />
+        </property>
+        <property name="dniconyu" type="string">
+            <column name="dniconyu" length="8" />
+        </property>
+        <set name="creditosForIdaval" table="credito" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idanexo" />
+                <column name="idaval" />
             </key>
-            <one-to-many class="Model.Anexodatcredaval" />
+            <one-to-many class="Model.Credito" />
         </set>
         <set name="creditosForCodven" table="credito" inverse="true" lazy="true" fetch="select">
             <key>

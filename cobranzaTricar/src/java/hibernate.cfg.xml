@@ -16,7 +16,6 @@
     <mapping resource="Model/Modelo.hbm.xml"/>
     <mapping resource="Model/Pagos.hbm.xml"/>
     <mapping resource="Model/Perfil.hbm.xml"/>
-    <mapping resource="Model/Anexodatcredaval.hbm.xml"/>
     <mapping resource="Model/Anexo.hbm.xml"/>
     <mapping resource="Model/Letras.hbm.xml"/>
     <mapping resource="Model/Sysdiagrams.hbm.xml"/>
