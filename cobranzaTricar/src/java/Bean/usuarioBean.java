@@ -8,12 +8,12 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @RequestScoped
@@ -79,7 +79,8 @@ public class usuarioBean implements Serializable {
 
             UsuarioDaoImpl daotusuario = new UsuarioDaoImpl();
             if (daotusuario.verByUsuario(this.session, this.tusuario.getUsuario()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Correo ya existe en DB."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya existe en DB."));
+                this.tusuario = new Usuario();
                 return;
             }
             this.tusuario.setClave(Encrypt.sha512(this.tusuario.getClave()));
@@ -95,6 +96,7 @@ public class usuarioBean implements Serializable {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            this.tusuario = new Usuario();
         } finally {
             if (this.session != null) {
                 this.session.close();
@@ -112,18 +114,13 @@ public class usuarioBean implements Serializable {
             this.transaction = session.beginTransaction();
 
             UsuarioDaoImpl daotusuario = new UsuarioDaoImpl();
-            if (daotusuario.verByUsuarioDifer(this.session, this.tusuario.getUsuario(), this.tusuario.getClave()) != null) {
+            if (daotusuario.verByUsuarioDifer(this.session, this.tusuario.getUsuario()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
                 return;
             }
             daotusuario.modificar(this.session, this.tusuario);
 
             this.transaction.commit();
-            
-            this.loginbeans.setTusuario(this.tusuario.getUsuario());
-
-            HttpSession httpsession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-            httpsession.setAttribute("correoElectronico", this.tusuario.getUsuario());
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
 
@@ -157,6 +154,66 @@ public class usuarioBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Perfil Correctamente."));
 
              this.tusuario = new Usuario();
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public void cargarUsuarioEditar(String codigoUsuario) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            this.tusuario = usuarioDao.verByUsuario(this.session, codigoUsuario);
+
+            this.transaction.commit();
+
+            RequestContext.getCurrentInstance().update("frmEditarUsuario:panelEditarUsuario");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEditarUsuario').show()");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void cargarUsuarioEliminar(String codigoUsuario) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            this.tusuario = usuarioDao.verByUsuario(this.session, codigoUsuario);
+
+            this.transaction.commit();
+
+            RequestContext.getCurrentInstance().update("frmEliminarUsuario");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarUsuario').show()");
 
         } catch (Exception e) {
             if (this.transaction != null) {

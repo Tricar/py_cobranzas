@@ -79,7 +79,7 @@ public class Usuario  implements java.io.Serializable {
     }
 
     
-    @Column(name="clave", nullable=false, length=20)
+    @Column(name="clave", nullable=false, length=150)
     public String getClave() {
         return this.clave;
     }
