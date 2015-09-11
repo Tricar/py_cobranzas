@@ -36,6 +36,7 @@
                 <h:form id="frmEditarPerfil">
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEditarPerfil" modal="true">
                         <h:panelGrid id="panelEditarPerfil" columns="3">
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                             <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                             <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}">
                                 <f:validator validatorId="validatorVacio"/>
