@@ -38,7 +38,7 @@ public class LoginBean implements Serializable {
         this.transaction = null;
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage msg = null;
-        boolean loggedIn;
+        boolean loggedIn = false;
         String ruta = "";
 
         try {
@@ -50,8 +50,8 @@ public class LoginBean implements Serializable {
             usuario = usuarioDao.verByUsuario(this.session, this.tusuario);
 
             if (usuario != null) {
-                loggedIn = true;
                 if (usuario.getClave().equals(Encrypt.sha512(this.clave))) {
+                    loggedIn = true;
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.tusuario);
                     msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.tusuario);
                     ruta = MyUtil.basepathlogin() + "views/index.xhtml";
