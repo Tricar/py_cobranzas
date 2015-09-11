@@ -16,12 +16,13 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 
-public class letrasBean implements Serializable{
-    
+public class letrasBean implements Serializable {
+
     public Letras letra = new Letras();
     public List<Letras> letras;
     public List<Letras> letrasventa;
     private Credito credito = new Credito();
+
     /**
      * Creates a new instance of letrasBean
      */
@@ -47,7 +48,7 @@ public class letrasBean implements Serializable{
         letrasventa = linkdao.mostrarLetrasXCred(credito);
         return letrasventa;
     }
-    
+
     public void setLetras(List<Letras> letras) {
         this.letras = letras;
     }
@@ -59,23 +60,23 @@ public class letrasBean implements Serializable{
     public void setCredito(Credito credito) {
         this.credito = credito;
     }
-    
-    public void insertar (){
-        LetrasDao linkDao = new LetrasDaoImplements();        
+
+    public void insertar(Credito credito) {
+        LetrasDao linkDao = new LetrasDaoImplements();
         linkDao.insertarLetra(letra);
         letra = new Letras();
-        
     }
-    
-    public void modificar(){
+
+    public void modificar() {
         LetrasDao linkDao = new LetrasDaoImplements();
         linkDao.modificarLetra(letra);
         letra = new Letras();
     }
-    
-    public void eliminar(){
+
+    public void eliminar() {
         LetrasDao linkDao = new LetrasDaoImplements();
         linkDao.eliminarLetra(letra);
         letra = new Letras();
     }
+    
 }

@@ -20,7 +20,7 @@ public class LetrasDaoImplements implements LetrasDao{
         List<Letras> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Letras");
+            Query query = session.createQuery("FROM Letras");
             lista = (List<Letras>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
