@@ -6,7 +6,7 @@
     <class name="Model.Usuario" table="usuario" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="usuario" type="string">
             <column name="usuario" length="10" />
-            <generator class="identity" />
+            <generator class="assigned" />
         </id>
         <many-to-one name="anexo" class="Model.Anexo" fetch="select">
             <column name="idanexo" />
@@ -15,7 +15,7 @@
             <column name="idperfil" />
         </many-to-one>
         <property name="clave" type="string">
-            <column name="clave" length="20" not-null="true" />
+            <column name="clave" length="150" not-null="true" />
         </property>
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" />

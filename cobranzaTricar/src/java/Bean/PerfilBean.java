@@ -302,7 +302,32 @@ public class PerfilBean implements Serializable {
     }
 
     public List<Perfil> getPerfiles() {
-        return perfiles;
+        this.session = null;
+        this.transaction = null;
+        try {
+            PerfilDaoImpl daoperfil = new PerfilDaoImpl();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+
+            this.perfiles = daoperfil.verTodo(this.session);
+
+            this.transaction.commit();
+
+            return perfiles;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
     }
 
     public void setPerfiles(List<Perfil> perfiles) {
