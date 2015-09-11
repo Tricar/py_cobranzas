@@ -53,12 +53,12 @@
                         </p:column>
                         <p:column headerText=" ">
                             <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
-                                <f:setPropertyActionListener target="#{anexoBean.anexo}" value="#{anexo}" />
+                                <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                             </p:commandButton>
                         </p:column>
                         <p:column headerText=" ">
                             <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                                <f:setPropertyActionListener target="#{creditoBean.venta}" value="#{cred}" />
+                                <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -113,12 +113,12 @@
                         <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{anexoBean.modificar()}" oncomplete="dlgmodificar.hide()"/>
                     </h:form>
                 </p:dialog>
-                <p:dialog id="dlg2" header="Eliminar Anexo" showEffect="explode" hideEffect="explode" 
+                <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formEliminar">
                         <h:outputText value="¿Desea eliminar?" />
                         <p:commandButton value="Si" actionListener="#{creditoBean.eliminar()}" 
-                                         update=":formMostrar" oncomplete="dlgeliminar.hide();" />
+                                         ajax="false" oncomplete="dlgeliminar.hide();" />
                         <p:commandButton value="No" onclick="dlg2.hide();" />
                     </h:form>
                 </p:dialog>                

@@ -4,6 +4,7 @@ import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Dao.LetrasDao;
 import Dao.LetrasDaoImplements;
+import Model.Anexo;
 import Model.Credito;
 import Model.Letras;
 import java.io.Serializable;
@@ -27,7 +28,7 @@ public class creditoBean implements Serializable {
     private Date fecha1 = new Date();
     private Date fecha2 = new Date();
     private List<Letras> letraslista = new ArrayList();
-
+        
     public creditoBean() {
     }
 
@@ -93,8 +94,8 @@ public class creditoBean implements Serializable {
     
     public void insertar() {
         CreditoDao linkDao = new CreditoDaoImp();
-        linkDao.insertarVenta(credito);        
         credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
+        linkDao.insertarVenta(credito);        
         Letras letras = new Letras();
         BigDecimal nletras = new BigDecimal(credito.getNletras());
         BigDecimal montoletras = credito.getSaldo().divide(nletras,2);
@@ -120,7 +121,7 @@ public class creditoBean implements Serializable {
             letras.setSaldo(montoletras.add(mtointeres));
             letras.setEstado("PN");
             letras.setDescripcion("L" + i);
-            letraslista.add(letras);
+            letrasdao.insertarLetra(letras);
         }
     }
     
@@ -147,5 +148,18 @@ public class creditoBean implements Serializable {
         CreditoDao linkdao = new CreditoDaoImp();
         filtradafecha=linkdao.filtrarFechas(fecha1, fecha2);        
     }
-
+    
+    public void resultadoSaldo (){
+        BigDecimal r = new BigDecimal(0);
+        r = credito.getPrecio().subtract(credito.getInicial());        
+    }
+    
+    public Credito cargarCredito(Anexo anexo){
+        CreditoDao linkdao = new CreditoDaoImp();
+        credito = linkdao.cargarCredito(anexo);
+        System.out.println(" Carga :"+credito.getIdventa());
+        LetrasDao letras = new LetrasDaoImplements();
+        letraslista=letras.mostrarLetrasXCred(credito);
+        return credito;        
+    }
 }
