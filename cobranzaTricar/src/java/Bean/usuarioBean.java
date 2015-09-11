@@ -10,7 +10,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
@@ -26,8 +25,6 @@ public class usuarioBean implements Serializable {
     private Usuario tusuario;
     private List<Usuario> listatusuario;
     private List<Usuario> listatusuariofiltrado;
-    
-    private LoginBean loginbeans;
 
     public Usuario getTusuario() {
         return tusuario;
@@ -114,7 +111,7 @@ public class usuarioBean implements Serializable {
             this.transaction = session.beginTransaction();
 
             UsuarioDaoImpl daotusuario = new UsuarioDaoImpl();
-            if (daotusuario.verByUsuarioDifer(this.session, this.tusuario.getUsuario()) != null) {
+            if (daotusuario.verByUsuarioDifer(this.session, this.tusuario.getIdusuario(), this.tusuario.getUsuario()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
                 return;
             }
@@ -130,6 +127,7 @@ public class usuarioBean implements Serializable {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            this.tusuario = new Usuario();
         } finally {
             if (this.session != null) {
                 this.session.close();
@@ -167,7 +165,7 @@ public class usuarioBean implements Serializable {
         }
     }
     
-    public void cargarUsuarioEditar(String codigoUsuario) {
+    public void cargarUsuarioEditar(int codigoUsuario) {
         this.session = null;
         this.transaction = null;
 
@@ -178,7 +176,7 @@ public class usuarioBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
 
-            this.tusuario = usuarioDao.verByUsuario(this.session, codigoUsuario);
+            this.tusuario = usuarioDao.verByIdusuario(this.session, codigoUsuario);
 
             this.transaction.commit();
 
@@ -197,7 +195,7 @@ public class usuarioBean implements Serializable {
         }
     }
 
-    public void cargarUsuarioEliminar(String codigoUsuario) {
+    public void cargarUsuarioEliminar(int codigoUsuario) {
         this.session = null;
         this.transaction = null;
 
@@ -208,7 +206,7 @@ public class usuarioBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
 
-            this.tusuario = usuarioDao.verByUsuario(this.session, codigoUsuario);
+            this.tusuario = usuarioDao.verByIdusuario(this.session, codigoUsuario);
 
             this.transaction.commit();
 

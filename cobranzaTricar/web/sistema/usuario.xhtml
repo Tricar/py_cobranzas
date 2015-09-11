@@ -48,8 +48,8 @@
                             <h:outputText value="#{item.perfil.descripcion}" />
                         </p:column>
                         <p:column width="10%" style="text-align: center">
-                            <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEditar(item.usuario)}" icon="ui-icon ui-icon-pencil"/>
-                            <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEliminar(item.usuario)}" icon="ui-icon ui-icon-trash"/>
+                            <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEditar(item.idusuario)}" icon="ui-icon ui-icon-pencil"/>
+                            <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEliminar(item.idusuario)}" icon="ui-icon ui-icon-trash"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>

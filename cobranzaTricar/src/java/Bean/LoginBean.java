@@ -15,7 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
 
-@ManagedBean(name = "loginBean")
+@ManagedBean
 @SessionScoped
 public class LoginBean implements Serializable {
 
