@@ -4,9 +4,12 @@ import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Dao.LetrasDao;
 import Dao.LetrasDaoImplements;
+import Dao.PagosDao;
+import Dao.PagosDaoImp;
 import Model.Anexo;
 import Model.Credito;
 import Model.Letras;
+import Model.Pagos;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ public class creditoBean implements Serializable {
     public List<Credito> filtradafecha;
     private Date fecha1 = new Date();
     private Date fecha2 = new Date();
-    private List<Letras> letraslista = new ArrayList();
+    private List<Letras> letraslista = new ArrayList();    
 
     public creditoBean() {
     }
@@ -181,4 +184,5 @@ public class creditoBean implements Serializable {
         letraslista = letras.mostrarLetrasXCred(credito);
 //      return credito;
     }
+    
 }

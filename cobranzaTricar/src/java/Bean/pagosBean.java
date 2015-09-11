@@ -71,7 +71,7 @@ public class pagosBean implements Serializable{
         return pagosxletra;
     }
     
-    public void insertar() {
+    public void insertar(Letras letras) {
         PagosDao linkDao = new PagosDaoImp();
         pago.setLetras(letra);
         linkDao.insertarPago(pago);

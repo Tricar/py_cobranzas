@@ -95,7 +95,7 @@
                             <p:inputText value="#{pagosBean.pago.monto}"/>
                             <p:outputLabel value="Descripción"/>
                             <p:inputText value="#{pagosBean.pago.descripcion}"/>
-                            <p:commandButton actionListener="#{pagosBean.insertar()}" value="Pagar"/>
+                            <p:commandButton actionListener="#{pagosBean.insertar(letras)}" value="Pagar"/>
                         </p:panelGrid>
                     </h:form>                        
                 </p:dialog>
