@@ -1,5 +1,5 @@
 package Model;
-// Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1
+// Generated 11/09/2015 02:53:24 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -24,9 +24,10 @@ import javax.persistence.TemporalType;
 public class Usuario  implements java.io.Serializable {
 
 
-     private String usuario;
+     private Integer idusuario;
      private Anexo anexo;
      private Perfil perfil;
+     private String usuario;
      private String clave;
      private Date fechareg;
 
@@ -34,14 +35,16 @@ public class Usuario  implements java.io.Serializable {
     }
 
 	
-    public Usuario(String usuario, String clave) {
+    public Usuario(Integer idusuario, String usuario, String clave) {
+        this.idusuario = idusuario;
         this.usuario = usuario;
         this.clave = clave;
     }
-    public Usuario(String usuario, Anexo anexo, Perfil perfil, String clave, Date fechareg) {
-       this.usuario = usuario;
+    public Usuario(Integer idusuario, Anexo anexo, Perfil perfil, String usuario, String clave, Date fechareg) {
+       this.idusuario = idusuario;
        this.anexo = anexo;
        this.perfil = perfil;
+       this.usuario = usuario;
        this.clave = clave;
        this.fechareg = fechareg;
     }
@@ -49,13 +52,13 @@ public class Usuario  implements java.io.Serializable {
      @Id 
 
     
-    @Column(name="usuario", unique=true, nullable=false, length=10)
-    public String getUsuario() {
-        return this.usuario;
+    @Column(name="idusuario", unique=true, nullable=false)
+    public Integer getIdusuario() {
+        return this.idusuario;
     }
     
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setIdusuario(Integer idusuario) {
+        this.idusuario = idusuario;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -79,6 +82,16 @@ public class Usuario  implements java.io.Serializable {
     }
 
     
+    @Column(name="usuario", nullable=false, length=10)
+    public String getUsuario() {
+        return this.usuario;
+    }
+    
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    
     @Column(name="clave", nullable=false, length=150)
     public String getClave() {
         return this.clave;
@@ -98,9 +111,19 @@ public class Usuario  implements java.io.Serializable {
         this.fechareg = fechareg;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idusuario != null)
+                ? idusuario.equals(((Usuario) other).idusuario)
+                : (other == this);
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return (idusuario != null)
+                ? (getClass().hashCode() + idusuario.hashCode())
+                : super.hashCode();
+    }
 }
 
 

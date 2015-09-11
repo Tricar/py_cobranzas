@@ -1,5 +1,6 @@
 package Bean;
 
+import Clases.Encrypt;
 import Dao.UsuarioDaoImpl;
 import Model.Usuario;
 import Persistencia.HibernateUtil;
@@ -15,13 +16,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
 
-@ManagedBean(name = "loginBean")
+@ManagedBean
 @SessionScoped
 public class LoginBean implements Serializable {
 
     private Session session;
     private Transaction transaction;
-    
+
     private Usuario usuario;
 
     private String tusuario;
@@ -36,7 +37,7 @@ public class LoginBean implements Serializable {
         this.session = null;
         this.transaction = null;
         RequestContext context = RequestContext.getCurrentInstance();
-        FacesMessage msg;
+        FacesMessage msg = null;
         boolean loggedIn;
         String ruta = "";
 
@@ -50,9 +51,11 @@ public class LoginBean implements Serializable {
 
             if (usuario != null) {
                 loggedIn = true;
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.tusuario);
-                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.tusuario);
-                ruta = MyUtil.basepathlogin() + "views/index.xhtml";
+                if (usuario.getClave().equals(Encrypt.sha512(this.clave))) {
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.tusuario);
+                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.tusuario);
+                    ruta = MyUtil.basepathlogin() + "views/index.xhtml";
+                }
             } else {
                 loggedIn = false;
                 msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Usuario y/o Clave es incorrecta");
