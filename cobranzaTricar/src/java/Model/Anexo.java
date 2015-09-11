@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Anexo  implements java.io.Serializable {
 
 
-     private int idanexo;
+     private Integer idanexo;
      private String nombre;
      private String dni;
      private String ruc;
@@ -55,11 +55,11 @@ public class Anexo  implements java.io.Serializable {
     }
 
 	
-    public Anexo(int idanexo, String tipoanexo) {
+    public Anexo(Integer idanexo, String tipoanexo) {
         this.idanexo = idanexo;
         this.tipoanexo = tipoanexo;
     }
-    public Anexo(int idanexo, String nombre, String dni, String ruc, String direccion, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, Set creditosForIdaval, Set creditosForCodven, Set usuarios, Set creditosForVerificado, Set creditosForIdanexo) {
+    public Anexo(Integer idanexo, String nombre, String dni, String ruc, String direccion, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, Set creditosForIdaval, Set creditosForCodven, Set usuarios, Set creditosForVerificado, Set creditosForIdanexo) {
        this.idanexo = idanexo;
        this.nombre = nombre;
        this.dni = dni;
@@ -91,11 +91,11 @@ public class Anexo  implements java.io.Serializable {
 
     
     @Column(name="idanexo", unique=true, nullable=false)
-    public int getIdanexo() {
+    public Integer getIdanexo() {
         return this.idanexo;
     }
     
-    public void setIdanexo(int idanexo) {
+    public void setIdanexo(Integer idanexo) {
         this.idanexo = idanexo;
     }
 
@@ -334,25 +334,18 @@ public class Anexo  implements java.io.Serializable {
         this.creditosForIdanexo = creditosForIdanexo;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
+    @Override    
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idanexo != null)
+            ? idanexo.equals(((Anexo) other).idanexo)
+            : (other == this);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Anexo other = (Anexo) obj;
-        if (this.idanexo != other.idanexo) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return (idanexo != null) 
+            ? (getClass().hashCode() + idanexo.hashCode())
+            : super.hashCode();
     }
 
     

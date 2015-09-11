@@ -96,7 +96,7 @@ public class LetrasDaoImplements implements LetrasDao{
         List<Letras> lista = null;
         Credito cred = new Credito();
         cred = credito;
-        int idcred = cred.getIdventa();
+        Integer idcred = cred.getIdventa();
         try{
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Letras where idventa=:v");
