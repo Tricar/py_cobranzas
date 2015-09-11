@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -28,7 +29,7 @@ public class creditoBean implements Serializable {
     private Date fecha1 = new Date();
     private Date fecha2 = new Date();
     private List<Letras> letraslista = new ArrayList();
-        
+
     public creditoBean() {
     }
 
@@ -52,10 +53,10 @@ public class creditoBean implements Serializable {
         return letrasventa;
     }
 
-    public List<Credito> getFiltradafecha() {        
+    public List<Credito> getFiltradafecha() {
         return filtradafecha;
     }
-    
+
     public void setVentas(List<Credito> creditos) {
         this.creditos = creditos;
     }
@@ -91,14 +92,14 @@ public class creditoBean implements Serializable {
     public void setLetraslista(List<Letras> letraslista) {
         this.letraslista = letraslista;
     }
-    
+
     public void insertar() {
         CreditoDao linkDao = new CreditoDaoImp();
         credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
-        linkDao.insertarVenta(credito);        
+        linkDao.insertarVenta(credito);
         Letras letras = new Letras();
         BigDecimal nletras = new BigDecimal(credito.getNletras());
-        BigDecimal montoletras = credito.getSaldo().divide(nletras,2);
+        BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
         BigDecimal interes = new BigDecimal(0);
         for (int i = 1; i <= (credito.getNletras()); i++) {
             interes = interes.add(credito.getInteres());
@@ -124,7 +125,7 @@ public class creditoBean implements Serializable {
             letrasdao.insertarLetra(letras);
         }
     }
-    
+
     public void modificar() {
         CreditoDao linkDao = new CreditoDaoImp();
         linkDao.modificarVenta(credito);
@@ -143,23 +144,41 @@ public class creditoBean implements Serializable {
         cal.add(Calendar.DAY_OF_YEAR, dias);
         return cal.getTime();
     }
-    
-    public void filtrarFechas(){
+
+    public void filtrarFechas() {
         CreditoDao linkdao = new CreditoDaoImp();
-        filtradafecha=linkdao.filtrarFechas(fecha1, fecha2);        
+        filtradafecha = linkdao.filtrarFechas(fecha1, fecha2);
     }
-    
-    public void resultadoSaldo (){
+
+    public void resultadoSaldo() {
         BigDecimal r = new BigDecimal(0);
-        r = credito.getPrecio().subtract(credito.getInicial());        
+        r = credito.getPrecio().subtract(credito.getInicial());
     }
-    
-    public Credito cargarCredito(Anexo anexo){
+
+    public void cargarCredito(Anexo anexo) {
         CreditoDao linkdao = new CreditoDaoImp();
+        List<Letras> letritas = new ArrayList();
+        BigDecimal cero = new BigDecimal(0);
+        Calendar calendario = GregorianCalendar.getInstance();
+        Date fecha = calendario.getTime();
         credito = linkdao.cargarCredito(anexo);
-        System.out.println(" Carga :"+credito.getIdventa());
         LetrasDao letras = new LetrasDaoImplements();
-        letraslista=letras.mostrarLetrasXCred(credito);
-        return credito;        
+        letritas = letras.mostrarLetrasXCred(credito);
+        for (int i = 0; i < letritas.size(); i++) {
+            Letras get = letritas.get(i);
+            if (get.getSaldo().compareTo(cero) == 0) {
+                get.setEstado("CN");
+            } else {
+                if (get.getSaldo().compareTo(cero) == 1) {
+                    if (get.getFecini().after(fecha)) {
+                        get.setEstado("PN");
+                    }else
+                        get.setEstado("VN");
+                }
+            }
+            letrasdao.modificarLetra(get);
+        }
+        letraslista = letras.mostrarLetrasXCred(credito);
+//      return credito;
     }
 }

@@ -146,6 +146,18 @@ public class anexoBean implements Serializable {
         }
         return query;
     }
+    
+    public List<Anexo> filtrarEmpleado(String name) {
+        this.query = new ArrayList<Anexo>();
+        AnexoDao anexoDao = new AnexoDaoImplements();
+        List<Anexo> tipos = anexoDao.filtarTipoDos("VE", "GE", "AD");
+        for (Anexo tipo : tipos) {
+            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
 
     public List<Credito> getCreditos() {        
         return creditos;
