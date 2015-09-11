@@ -17,13 +17,15 @@
                     <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()">
                     </p:commandButton>
                 </h:form>
+                
+                <br/>
+
+                <h2>Lista de Usuario</h2>
+                <hr/>
                 <h:form id="formMostrar">
                     <p:dataTable var="usuario" value="#{usuarioBean.verTodo()}" 
-                                 emptyMessage="No hay nada para mostrar" 
-                                 paginator="true" rows="10" paginatorPosition="top" 
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
-                                 {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-                                 rowsPerPageTemplate="10">
+                                 emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
+                                 paginatorPosition="top" rowsPerPageTemplate="10">
                         <p:column headerText="Usuario">
                             <h:outputText value="#{usuario.usuario}" />
                         </p:column>

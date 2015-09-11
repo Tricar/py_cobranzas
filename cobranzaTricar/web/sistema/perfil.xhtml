@@ -19,7 +19,7 @@
                 <h:form id="frmlistarperfil">
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                     <p:dataTable id="tablalistarperfil" var="item" value="#{perfilBean.verTodo()}" paginator="true" rows="20" 
-                                 rowKey="#{item.idperfil}">
+                                 paginatorPosition="top" rowKey="#{item.idperfil}">
                         <f:facet name="header">
                             Lista de Usuario
                         </f:facet>
