@@ -197,7 +197,8 @@ public class creditoBean implements Serializable {
     
     public void insertarPago() {
         PagosDao linkDao = new PagosDaoImp();
-        pago.setLetras(letra);
+        System.out.println("Este es el Id de letra :"+letra.getIdletras());
+//        pago.setLetras(letra);
         linkDao.insertarPago(pago);
         pago = new Pagos();
     }

@@ -1,11 +1,14 @@
 package Bean;
 
+import Dao.LetrasDao;
+import Dao.LetrasDaoImplements;
 import Dao.PagosDao;
 import Dao.PagosDaoImp;
 import Model.Credito;
 import Model.Letras;
 import Model.Pagos;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -71,10 +74,30 @@ public class pagosBean implements Serializable{
         return pagosxletra;
     }
     
-    public void insertar(Letras letras) {
+    public void insertar() {
         PagosDao linkDao = new PagosDaoImp();
+        LetrasDao letritas = new LetrasDaoImplements();
+//        System.out.println("Este es el Id de letra :"+letra.getIdletras());
         pago.setLetras(letra);
-        linkDao.insertarPago(pago);
+        if((pago.getMonto().compareTo(letra.getSaldo()))==0){
+            letra.setSaldo(BigDecimal.ZERO);
+            letritas.modificarLetra(letra);
+            linkDao.insertarPago(pago);
+        }else {
+            if((pago.getMonto().compareTo(letra.getSaldo()))==-1){
+                letra.setSaldo(letra.getSaldo().subtract(pago.getMonto()));
+                letritas.modificarLetra(letra);
+                linkDao.insertarPago(pago);
+            }else{
+                
+            }
+        }
         pago = new Pagos();
+    }
+    
+    public Letras cargarLetra(Letras letras){
+        letra=letras;
+//        System.out.println("Este es el Id de letra en cargar:"+letra.getIdletras());
+        return letra;
     }
 }

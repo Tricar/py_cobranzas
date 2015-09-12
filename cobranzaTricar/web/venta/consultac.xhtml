@@ -41,6 +41,7 @@
                     <h:form id="formModificar">
                         <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
                                      emptyMessage="No hay nada para mostrar">
+                            <p:inputText type="hidden" value="#{letras.idletras}"/>
                             <p:column headerText="Cod venta.">
                                 <h:outputText value="#{letras.credito.liqventa}" />
                             </p:column>
@@ -75,9 +76,8 @@
                                 </h:outputText>
                             </p:column>                        
                             <p:column headerText="Pagar">                                
-                               <p:commandButton oncomplete="dlgpagar.show()" value="P" update=":formPagar">
-                                   <f:setPropertyActionListener target="#{creditoBean.pago}" value="#{letras}"/>
-                                </p:commandButton>
+                                <p:commandButton oncomplete="dlgpagar.show()" value="P" update=":formPagar"
+                                                 actionListener="#{pagosBean.cargarLetra(letras)}"/>
                             </p:column>
                         </p:dataTable>
                         <p:commandButton value="Modificar" update=":formPagar" 
@@ -88,15 +88,16 @@
                           widgetVar="dlgpagar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formPagar">
                         <p:panelGrid columns="4">
-                            <p:outputLabel value="Fecha"/>
-                            <p:calendar navigator="true" value="#{creditoBean.pago.fecreg}"/>
-                            <p:outputLabel value="Comprobante"/>
-                            <p:inputText value="#{creditoBean.pago.operacion}"/>
-                            <p:outputLabel value="Monto"/>
-                            <p:inputText value="#{creditoBean.pago.monto}"/>
-                            <p:outputLabel value="Descripción"/>
-                            <p:inputText value="#{creditoBean.pago.descripcion}"/>
-                            <p:commandButton actionListener="#{creditoBean.insertarPago()}" value="Pagar"/>
+                            <p:outputLabel value="Fecha:"/>
+                            <p:calendar navigator="true" value="#{pagosBean.pago.fecreg}"/>
+                            <p:outputLabel value="Referencia:"/>
+                            <p:inputText value="#{pagosBean.pago.operacion}"/>
+                            <p:outputLabel value="Monto:"/>
+                            <p:inputText value="#{pagosBean.pago.monto}"/>
+                            <p:outputLabel value="Descripción:"/>
+                            <p:inputText value="#{pagosBean.pago.descripcion}"/>
+                            <p:commandButton actionListener="#{pagosBean.insertar()}" value="Pagar" oncomplete="dlgpagar.hide()"
+                                             update=":formModificar"/>
                         </p:panelGrid>
                     </h:form>                        
                 </p:dialog>

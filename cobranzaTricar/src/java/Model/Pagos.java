@@ -74,7 +74,7 @@ public class Pagos implements java.io.Serializable {
         this.operacion = operacion;
     }
 
-    @Column(name = "monto", precision = 17, scale = 5)
+    @Column(name = "monto", precision = 17, scale = 2)
     public BigDecimal getMonto() {
         return this.monto;
     }
