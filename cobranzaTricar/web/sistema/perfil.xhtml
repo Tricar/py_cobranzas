@@ -18,11 +18,8 @@
                 <hr/>
                 <h:form id="frmlistarperfil">
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                    <p:dataTable id="tablalistarperfil" var="item" value="#{perfilBean.verTodo()}" paginator="true" rows="20" 
-                                 paginatorPosition="top" rowKey="#{item.idperfil}">
-                        <f:facet name="header">
-                            Lista de Usuario
-                        </f:facet>
+                    <p:dataTable id="tablalistarperfil" var="item" value="#{perfilBean.verTodo()}" 
+                                 paginator="true" rows="20" paginatorPosition="top">                        
                         <p:column headerText="DESCRIPCION">
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
@@ -49,12 +46,13 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venLis}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venReg}"/>
                             <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}">
+                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" 
+                                         autocomplete="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:message for="txtDescripcion"/>
                             <h:panelGroup></h:panelGroup>
-                            <p:commandButton value="Guardar cambios" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                            <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>                
@@ -86,14 +84,15 @@
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venReg}"/>
                         <h:outputText value="Vender" />
                         <p:separator/>
-                        <p:commandButton value="Guardar cambios" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                        <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>
                 </h:form>
                 <h:form id="formInsertar">
                     <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
                         <p:panelGrid id="panelcrearperfil" columns="3">
                             <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" autocomplete="off">
+                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" 
+                                         style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value=this.value.toUpperCase();"> 
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:message for="txtDescripcion"/>
@@ -105,8 +104,8 @@
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarPerfil" modal="true">
                         <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" />
+                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" icon="b-ok" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
                     </p:dialog>
                 </h:form>
             </ui:define>

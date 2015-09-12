@@ -6,9 +6,9 @@ import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Model.Anexo;
 import Model.Credito;
+import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -16,12 +16,17 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.model.SelectItem;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
 @ManagedBean
 @ViewScoped
 public class anexoBean implements Serializable {
+    
+    private Session session;
+    private Transaction transaction;
 
     public Anexo anexo = new Anexo();
     public List<Anexo> anexos;
@@ -50,9 +55,34 @@ public class anexoBean implements Serializable {
     }
 
     public List<Anexo> getAnexos() {
-        AnexoDao linkDao = new AnexoDaoImplements();
-        anexos = linkDao.mostrarAnexo();
-        return anexos;
+        
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+
+            this.anexos = daotanexo.verTodo(this.session);
+
+            this.transaction.commit();
+
+            return anexos;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
     }
 
     public List<Anexo> completarTipo(String nombre) {
@@ -62,14 +92,15 @@ public class anexoBean implements Serializable {
     }
 
     public List<SelectItem> getSelectItemsAnexo() {
-        this.SelectItemsAnexo = new ArrayList<SelectItem>();
-        AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.mostrarAnexo();
-        for (Anexo tipo : tipos) {
-            SelectItem selecItem = new SelectItem(tipo, tipo.getNombre());
-            this.SelectItemsAnexo.add(selecItem);
-        }
-        return SelectItemsAnexo;
+//        this.SelectItemsAnexo = new ArrayList<SelectItem>();
+//        AnexoDao anexoDao = new AnexoDaoImplements();
+//        List<Anexo> tipos = anexoDao.verTodo(null);
+//        for (Anexo tipo : tipos) {
+//            SelectItem selecItem = new SelectItem(tipo, tipo.getNombre());
+//            this.SelectItemsAnexo.add(selecItem);
+//        }
+//        return SelectItemsAnexo;
+        return null;
     }
 
     public void setAnexo(List<Anexo> anexo) {
@@ -80,23 +111,15 @@ public class anexoBean implements Serializable {
     }
 
     public void insertar() {
-        AnexoDao linkDao = new AnexoDaoImplements();
-        Date d = new Date();
-        anexo.setFechareg(d);
-        linkDao.insertarAnexo(anexo);
-        anexo = new Anexo();
+        return;
     }
 
     public void modificar() {
-        AnexoDao linkDao = new AnexoDaoImplements();
-        linkDao.modificarAnexo(anexo);
-        anexo = new Anexo();
+        return;
     }
 
     public void eliminar() {
-        AnexoDao linkDao = new AnexoDaoImplements();
-        linkDao.eliminarAnexo(anexo);
-        anexo = new Anexo();
+        return;
     }
 
     public List<Anexo> filtrarCliente(String name) {

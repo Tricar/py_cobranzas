@@ -34,3 +34,11 @@ body{
 .ui-state-default .b-add{
     background-image: url(images/add.png);
 }
+
+.ui-state-default .b-ok{
+    background-image: url(images/accept.png);
+}
+
+.ui-state-default .b-cancel{
+    background-image: url(images/crossout.png);
+}

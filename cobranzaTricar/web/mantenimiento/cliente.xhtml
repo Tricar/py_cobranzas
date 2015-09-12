@@ -15,6 +15,42 @@
                 <h:form>
                     <p:commandButton value="Nuevo" icon="b-add" oncomplete="dlginsertar.show()" update=":formInsertar"/>
                 </h:form>
+                
+                <br/>
+                <h2>Lista de Clientes</h2>
+                <hr/>
+                
+                <h:form id="formMostrar">
+                    <p:dataTable var="anexo" value="#{anexoBean.anexos}" emptyMessage="No hay nada para mostrar" 
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10">
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{anexo.nombre}" />
+                        </p:column>
+                        <p:column headerText="Ap. Pat.">
+                            <h:outputText value="#{anexo.apepat}" />
+                        </p:column>
+                        <p:column headerText="Ap. Mat.">
+                            <h:outputText value="#{anexo.apemat}" />
+                        </p:column>
+                        <p:column headerText="TIPO DOC.">
+                            <h:outputText value="#{anexo.tipodocumento}" />
+                        </p:column>
+                        <p:column headerText="NUMERO DOC.">
+                            <h:outputText value="#{anexo.numdocumento}" />
+                        </p:column>                        
+                        <p:column headerText="Direccion">
+                            <h:outputText value="#{anexo.direccion}" />
+                        </p:column>
+                        <p:column headerText="Telefono">
+                            <h:outputText value="#{anexo.telefono}" />
+                        </p:column>
+                        <p:column width="10%" style="text-align: center">
+                            <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEditar(item.idusuario)}" icon="ui-icon ui-icon-pencil"/>
+                            <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEliminar(item.idusuario)}" icon="ui-icon ui-icon-trash"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                
                 <p:dialog id="dlg1" header="Nuevo Anexo" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formInsertar">
@@ -32,9 +68,9 @@
                                 <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
+                            <p:inputText id="ruc" value="#{anexoBean.anexo.tipodocumento}" />
                             <p:outputLabel value="DNI:" />
-                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
+                            <p:inputText id="dni" value="#{anexoBean.anexo.numdocumento}" />
                             <p:outputLabel value="Nombre o Razon Social:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" />
                             <p:outputLabel value="Ap. Paterno:" />
@@ -81,49 +117,7 @@
                         <p:commandButton value="Guardar" icon="b-new" update=":formMostrar" actionListener="#{anexoBean.insertar()}" oncomplete="dlginsertar.hide()"/>
                     </h:form>
                 </p:dialog>
-
-                <h:form id="formMostrar">
-                    <p:dataTable var="anexo" value="#{anexoBean.anexos}" 
-                                 emptyMessage="No hay nada para mostrar" 
-                                 paginator="true" rows="10" paginatorPosition="top" 
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
-                                 {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-                                 rowsPerPageTemplate="10">
-                        <p:column headerText="Id.">
-                            <h:outputText value="#{anexo.idanexo}" />
-                        </p:column>
-                        <p:column headerText="T. anexo:">
-                            <h:outputText value="#{anexo.tipoanexo}">
-                                <f:converter converterId="tanexoconverter"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Nombre" filterBy="#{anexo.nombre}" filterMatchMode="contains">
-                            <h:outputText value="#{anexo.nombre}" />
-                        </p:column>
-                        <p:column headerText="Ap. Pat.">
-                            <h:outputText value="#{anexo.apepat}" />
-                        </p:column>
-                        <p:column headerText="Ap. Mat.">
-                            <h:outputText value="#{anexo.apemat}" />
-                        </p:column>
-                        <p:column headerText="DNI">
-                            <h:outputText value="#{anexo.dni}" />
-                        </p:column>
-                        <p:column headerText="RUC">
-                            <h:outputText value="#{anexo.ruc}" />
-                        </p:column>
-                        <p:column headerText=" ">
-                            <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
-                                <f:setPropertyActionListener target="#{anexoBean.anexo}" value="#{anexo}" />
-                            </p:commandButton>
-                        </p:column>
-                        <p:column headerText=" ">
-                            <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                                <f:setPropertyActionListener target="#{anexoBean.anexo}" value="#{anexo}" />
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
-                </h:form>
+                
                 <p:dialog id="dlg" header="Modificar Anexo" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formModificar">
@@ -140,9 +134,9 @@
                                 <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="DNI:" />
-                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
+                            <p:inputText id="dni" value="#{anexoBean.anexo.tipodocumento}" />
                             <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
+                            <p:inputText id="ruc" value="#{anexoBean.anexo.numdocumento}" />
                             <p:outputLabel value="Nombre o Razon Social:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" />
                             <p:outputLabel value="Ap. Paterno:" />

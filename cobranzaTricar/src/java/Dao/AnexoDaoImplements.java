@@ -2,6 +2,7 @@ package Dao;
 
 import Model.Anexo;
 import Persistencia.HibernateUtil;
+import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
@@ -16,78 +17,6 @@ import org.hibernate.criterion.Restrictions;
  * @author Dajoh
  */
 public class AnexoDaoImplements implements AnexoDao {
-
-    @Override
-    public List<Anexo> mostrarAnexo() {
-        Session session = null;
-        List<Anexo> lista = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Anexo");
-            lista = (List<Anexo>) query.list();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return lista;
-    }
-
-    @Override
-    public void insertarAnexo(Anexo anexo) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(anexo);
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
-
-    @Override
-    public void modificarAnexo(Anexo anexo) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(anexo);
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
-
-    @Override
-    public void eliminarAnexo(Anexo anexo) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(anexo);
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
 
     @Override
     public List<Anexo> filtarTipo(String tipo) {
@@ -190,5 +119,69 @@ public class AnexoDaoImplements implements AnexoDao {
             }
         }
         return anexito;
+    }
+
+    @Override
+    public boolean registrar(Session session, Anexo anexo) throws Exception {
+        Date d = new Date();
+        anexo.setFechareg(d);
+        session.save(anexo);
+        return true;
+    }
+
+    @Override
+    public List<Anexo> verTodo(Session session) throws Exception {
+        String hql = "FROM Anexo";
+        Query query = session.createQuery(hql);
+        
+        List<Anexo> listaanexo = (List<Anexo>)query.list();
+        
+        return listaanexo;
+    }
+
+    @Override
+    public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception {
+        String hql = "FROM Anexo WHERE idanexo=:idanexo";
+        Query query = session.createQuery(hql);
+        query.setParameter("idanexo", idanexo);
+        
+        Anexo anexo = (Anexo) query.uniqueResult();
+        
+        return anexo;
+    }
+
+    @Override
+    public Anexo verByAnexo(Session session, String nombre) throws Exception {
+        String hql = "FROM Anexo WHERE nombre=:nombre";
+        Query query = session.createQuery(hql);
+        query.setParameter("nombre", nombre);
+        
+        Anexo anexo = (Anexo) query.uniqueResult();
+        
+        return anexo;
+    }
+
+    @Override
+    public Anexo verByAnexoDifer(Session session, Integer idanexo, String nombre) throws Exception {
+        String hql = "FROM Anexo WHERE idanexo!=:idanexo and nombre=:nombre";
+        Query query = session.createQuery(hql);
+        query.setParameter("idanexo", idanexo);
+        query.setParameter("nombre", nombre);
+        
+        Anexo anexo = (Anexo) query.uniqueResult();
+        
+        return anexo;
+    }
+
+    @Override
+    public boolean modificar(Session session, Anexo anexo) throws Exception {
+        session.update(anexo);
+        return true;
+    }
+
+    @Override
+    public boolean eliminar(Session session, Anexo anexo) throws Exception {
+        session.delete(anexo);
+        return true;
     }
 }
