@@ -1,7 +1,6 @@
 package Dao;
 
 import Model.Anexo;
-import Model.Credito;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;

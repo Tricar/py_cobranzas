@@ -19,6 +19,7 @@ public interface PerfilDao {
     public List<Perfil> verTodo(Session session) throws Exception;
     public Perfil verByCodigo(Session session, Integer idperfil) throws Exception;
     public Perfil verByDescripcion(Session session, String descripcion) throws Exception;
+    public Perfil verByPerfilDifer(Session session,Integer idperfil, String descripcion) throws Exception;
     public boolean modificar(Session session, Perfil perfil) throws Exception;
     public boolean eliminarPerfil (Session session, Perfil perfil) throws Exception;
     

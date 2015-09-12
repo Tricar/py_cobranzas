@@ -76,20 +76,25 @@ public class PerfilBean implements Serializable {
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
+            
+            PerfilDaoImpl linkDao = new PerfilDaoImpl();
+            if (linkDao.verByPerfilDifer(this.session, this.perfil.getIdperfil(), this.perfil.getDescripcion()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Perfil ya existe en DB."));
+                perfil = new Perfil();
+                return;
+            }
 
-            if (perfil.getSisEmp() == true || perfil.getSisPer() == true || perfil.getSisTie() == true
-                    || perfil.getSisTipAne() == true || perfil.getSisUsu() == true) {
+            if (perfil.getSisPer() == true || perfil.getSisUsu() == true) {
                 perfil.setSistema(true);
-            } else if (perfil.getSisEmp() == false && perfil.getSisPer() == false && perfil.getSisTie() == false
-                    && perfil.getSisTipAne() == false && perfil.getSisUsu() == false) {
+            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false) {
                 perfil.setSistema(false);
             }
 
             if (perfil.getManArt() == true || perfil.getManCli() == true || perfil.getManCol() == true
-                    || perfil.getManConPag() == true || perfil.getManMod() == true || perfil.getManPag() == true || perfil.getManTipArt() == true) {
+                    || perfil.getManMod() == true) {
                 perfil.setMante(true);
             } else if (perfil.getManArt() == false && perfil.getManCli() == false && perfil.getManCol() == false
-                    && perfil.getManConPag() == false && perfil.getManMod() == false && perfil.getManPag() == false && perfil.getManTipArt() == false) {
+                    &&perfil.getManMod() == false) {
                 perfil.setMante(false);
             }
 
@@ -220,25 +225,19 @@ public class PerfilBean implements Serializable {
 
             PerfilDaoImpl linkDao = new PerfilDaoImpl();
             if (linkDao.verByDescripcion(this.session, this.perfil.getDescripcion()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Perfil ya existe en DB."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Perfil ya esta registrado."));
                 perfil = new Perfil();
                 return;
             }
 
             perfil.setSistema(false);
-            perfil.setSisEmp(false);
             perfil.setSisPer(false);
-            perfil.setSisTie(false);
-            perfil.setSisTipAne(false);
             perfil.setSisUsu(false);
             perfil.setMante(false);
             perfil.setManArt(false);
             perfil.setManCli(false);
             perfil.setManCol(false);
-            perfil.setManConPag(false);
             perfil.setManMod(false);
-            perfil.setManPag(false);
-            perfil.setManTipArt(false);
             perfil.setVenta(false);
             perfil.setVenLis(false);
             perfil.setVenReg(false);

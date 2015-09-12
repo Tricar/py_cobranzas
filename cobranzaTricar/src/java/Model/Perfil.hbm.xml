@@ -20,15 +20,6 @@
         <property name="sisPer" type="java.lang.Boolean">
             <column name="sisPer" />
         </property>
-        <property name="sisTipAne" type="java.lang.Boolean">
-            <column name="sisTipAne" />
-        </property>
-        <property name="sisEmp" type="java.lang.Boolean">
-            <column name="sisEmp" />
-        </property>
-        <property name="sisTie" type="java.lang.Boolean">
-            <column name="sisTie" />
-        </property>
         <property name="mante" type="java.lang.Boolean">
             <column name="mante" />
         </property>
@@ -38,20 +29,11 @@
         <property name="manArt" type="java.lang.Boolean">
             <column name="manArt" />
         </property>
-        <property name="manTipArt" type="java.lang.Boolean">
-            <column name="manTipArt" />
-        </property>
         <property name="manMod" type="java.lang.Boolean">
             <column name="manMod" />
         </property>
         <property name="manCol" type="java.lang.Boolean">
             <column name="manCol" />
-        </property>
-        <property name="manPag" type="java.lang.Boolean">
-            <column name="manPag" />
-        </property>
-        <property name="manConPag" type="java.lang.Boolean">
-            <column name="manConPag" />
         </property>
         <property name="venta" type="java.lang.Boolean">
             <column name="venta" />
