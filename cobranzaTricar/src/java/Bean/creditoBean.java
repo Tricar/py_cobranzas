@@ -31,7 +31,9 @@ public class creditoBean implements Serializable {
     public List<Credito> filtradafecha;
     private Date fecha1 = new Date();
     private Date fecha2 = new Date();
-    private List<Letras> letraslista = new ArrayList();    
+    private List<Letras> letraslista = new ArrayList();
+    private Pagos pago = new Pagos();
+    private Letras letra = new Letras();
 
     public creditoBean() {
     }
@@ -96,6 +98,14 @@ public class creditoBean implements Serializable {
         this.letraslista = letraslista;
     }
 
+    public Pagos getPago() {
+        return pago;
+    }
+
+    public void setPago(Pagos pago) {
+        this.pago = pago;
+    }
+    
     public void insertar() {
         CreditoDao linkDao = new CreditoDaoImp();
         credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
@@ -183,6 +193,13 @@ public class creditoBean implements Serializable {
         }
         letraslista = letras.mostrarLetrasXCred(credito);
 //      return credito;
+    }
+    
+    public void insertarPago() {
+        PagosDao linkDao = new PagosDaoImp();
+        pago.setLetras(letra);
+        linkDao.insertarPago(pago);
+        pago = new Pagos();
     }
     
 }

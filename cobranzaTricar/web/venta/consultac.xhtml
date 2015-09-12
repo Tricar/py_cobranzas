@@ -75,8 +75,9 @@
                                 </h:outputText>
                             </p:column>                        
                             <p:column headerText="Pagar">                                
-                                <p:commandButton oncomplete="dlgpagar.show()" value="P" update=":formPagar"
-                                                 />
+                               <p:commandButton oncomplete="dlgpagar.show()" value="P" update=":formPagar">
+                                   <f:setPropertyActionListener target="#{creditoBean.pago}" value="#{letras}"/>
+                                </p:commandButton>
                             </p:column>
                         </p:dataTable>
                         <p:commandButton value="Modificar" update=":formPagar" 
@@ -88,14 +89,14 @@
                     <h:form id="formPagar">
                         <p:panelGrid columns="4">
                             <p:outputLabel value="Fecha"/>
-                            <p:calendar navigator="true" value="#{pagosBean.pago.fecreg}"/>
+                            <p:calendar navigator="true" value="#{creditoBean.pago.fecreg}"/>
                             <p:outputLabel value="Comprobante"/>
-                            <p:inputText value="#{pagosBean.pago.operacion}"/>
+                            <p:inputText value="#{creditoBean.pago.operacion}"/>
                             <p:outputLabel value="Monto"/>
-                            <p:inputText value="#{pagosBean.pago.monto}"/>
+                            <p:inputText value="#{creditoBean.pago.monto}"/>
                             <p:outputLabel value="Descripción"/>
-                            <p:inputText value="#{pagosBean.pago.descripcion}"/>
-                            <p:commandButton actionListener="#{pagosBean.insertar(letras)}" value="Pagar"/>
+                            <p:inputText value="#{creditoBean.pago.descripcion}"/>
+                            <p:commandButton actionListener="#{creditoBean.insertarPago()}" value="Pagar"/>
                         </p:panelGrid>
                     </h:form>                        
                 </p:dialog>
