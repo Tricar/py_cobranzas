@@ -14,7 +14,7 @@
 
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()">
+                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="b-add">
                     </p:commandButton>
                 </h:form>
 
@@ -24,7 +24,7 @@
                 <hr/>
                 <h:form id="formMostrar">
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                    <p:dataTable var="item" value="#{usuarioBean.verTodo()}" rowKey="#{item.idusuario}"
+                    <p:dataTable var="item" value="#{usuarioBean.listatusuario}" 
                                  emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
                                  paginatorPosition="top" rowsPerPageTemplate="10">
                         <p:column headerText="Usuario">
@@ -34,7 +34,7 @@
                             <h:outputText value="#{item.anexo.nombre}" />
                         </p:column>                        
                         <p:column headerText="DNI">
-                            <h:outputText value="#{item.anexo.dni}" />
+                            <h:outputText value="#{item.anexo.numdocumento}" />
                         </p:column>
                         <p:column headerText="Direccion">
                             <h:outputText value="#{item.anexo.direccion}" />
@@ -110,7 +110,7 @@
                                 <f:selectItems value="#{perfilBean.perfiles}" var="perfil" itemLabel="#{perfil.descripcion}" itemValue="#{perfil}"/>
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
-                            <p:commandButton value="Guardar cambios" ajax="false" actionListener="#{usuarioBean.modificar()}"/>
+                            <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{usuarioBean.modificar()}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
@@ -119,8 +119,8 @@
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarUsuario" modal="true">
                         <p:inputText type="hidden" value="#{usuarioBean.tusuario.idusuario}"/>
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{usuarioBean.eliminar()}" ajax="false" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" />
+                        <p:commandButton value="Si" actionListener="#{usuarioBean.eliminar()}" ajax="false" icon="b-ok" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
                     </p:dialog>
                 </h:form>
             </ui:define>

@@ -11,11 +11,11 @@
         <property name="nombre" type="string">
             <column name="nombre" length="30" />
         </property>
-        <property name="dni" type="string">
-            <column name="dni" length="8" />
+        <property name="tipodocumento" type="string">
+            <column name="tipodocumento" length="3" />
         </property>
-        <property name="ruc" type="string">
-            <column name="ruc" length="11" />
+        <property name="numdocumento" type="string">
+            <column name="numdocumento" length="11" />
         </property>
         <property name="direccion" type="string">
             <column name="direccion" length="50" />

@@ -27,8 +27,8 @@ public class Anexo  implements java.io.Serializable {
 
      private Integer idanexo;
      private String nombre;
-     private String dni;
-     private String ruc;
+     private String tipodocumento;
+     private String numdocumento;
      private String direccion;
      private String referencia;
      private String telefono;
@@ -59,11 +59,11 @@ public class Anexo  implements java.io.Serializable {
         this.idanexo = idanexo;
         this.tipoanexo = tipoanexo;
     }
-    public Anexo(Integer idanexo, String nombre, String dni, String ruc, String direccion, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, Set creditosForIdaval, Set creditosForCodven, Set usuarios, Set creditosForVerificado, Set creditosForIdanexo) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, Set creditosForIdaval, Set creditosForCodven, Set usuarios, Set creditosForVerificado, Set creditosForIdanexo) {
        this.idanexo = idanexo;
        this.nombre = nombre;
-       this.dni = dni;
-       this.ruc = ruc;
+       this.tipodocumento = tipodocumento;
+       this.numdocumento = numdocumento;
        this.direccion = direccion;
        this.referencia = referencia;
        this.telefono = telefono;
@@ -110,23 +110,23 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
-    @Column(name="dni", length=8)
-    public String getDni() {
-        return this.dni;
+    @Column(name="tipodocumento", length=3)
+    public String getTipodocumento() {
+        return this.tipodocumento;
     }
     
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setTipodocumento(String tipodocumento) {
+        this.tipodocumento = tipodocumento;
     }
 
     
-    @Column(name="ruc", length=11)
-    public String getRuc() {
-        return this.ruc;
+    @Column(name="numdocumento", length=11)
+    public String getNumdocumento() {
+        return this.numdocumento;
     }
     
-    public void setRuc(String ruc) {
-        this.ruc = ruc;
+    public void setNumdocumento(String numdocumento) {
+        this.numdocumento = numdocumento;
     }
 
     

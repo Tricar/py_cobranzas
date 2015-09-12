@@ -76,7 +76,7 @@ public class PerfilBean implements Serializable {
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            
+
             PerfilDaoImpl linkDao = new PerfilDaoImpl();
             if (linkDao.verByPerfilDifer(this.session, this.perfil.getIdperfil(), this.perfil.getDescripcion()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Perfil ya existe en DB."));
@@ -94,7 +94,7 @@ public class PerfilBean implements Serializable {
                     || perfil.getManMod() == true) {
                 perfil.setMante(true);
             } else if (perfil.getManArt() == false && perfil.getManCli() == false && perfil.getManCol() == false
-                    &&perfil.getManMod() == false) {
+                    && perfil.getManMod() == false) {
                 perfil.setMante(false);
             }
 

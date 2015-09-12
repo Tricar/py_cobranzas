@@ -1,6 +1,7 @@
 package Dao;
 import Model.Anexo;
 import java.util.List;
+import org.hibernate.Session;
 
 /**
  *
@@ -8,10 +9,13 @@ import java.util.List;
  */
 public interface AnexoDao {
     
-    public List<Anexo> mostrarAnexo();
-    public void insertarAnexo(Anexo anexo);
-    public void modificarAnexo (Anexo anexo);
-    public void eliminarAnexo (Anexo anexo);    
+    public boolean registrar(Session session, Anexo anexo)throws Exception;
+    public List<Anexo> verTodo(Session session) throws Exception;
+    public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception;
+    public Anexo verByAnexo(Session session, String nombre) throws Exception;
+    public Anexo verByAnexoDifer(Session session,Integer idanexo, String nombre) throws Exception;
+    public boolean modificar(Session session, Anexo anexo) throws Exception;
+    public boolean eliminar (Session session, Anexo anexo) throws Exception;   
     public List<Anexo> filtarTipo(String tipo);
     public List<Anexo> filtarTipoDos(String tipo, String tipo1, String tipo2);
     public List<Anexo> buscarxNombre(String nombre);
