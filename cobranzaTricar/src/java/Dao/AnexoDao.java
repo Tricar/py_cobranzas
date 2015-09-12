@@ -1,6 +1,5 @@
 package Dao;
 import Model.Anexo;
-import Model.Credito;
 import java.util.List;
 
 /**

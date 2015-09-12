@@ -37,6 +37,17 @@
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEditarPerfil" modal="true">
                         <h:panelGrid id="panelEditarPerfil" columns="3">
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.sistema}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisUsu}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisPer}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.mante}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manArt}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manCli}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manMod}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manCol}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.venta}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.venLis}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.venReg}"/>
                             <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                             <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}">
                                 <f:validator validatorId="validatorVacio"/>
@@ -49,6 +60,8 @@
                 </h:form>                
                 <h:form id="frmAsignarMenu">
                     <p:dialog header="Datos del usuario" widgetVar="dialogoAsignarMenu" modal="true">
+                        <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
+                        <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
                         <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
                         <br/>
                         <br/><h:outputText value="Sistema:" />
@@ -62,6 +75,10 @@
                         <h:outputText value="Clientes" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manArt}"/>
                         <h:outputText value="Articulos" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manMod}"/>
+                        <h:outputText value="Modelos" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCol}"/>
+                        <h:outputText value="Colores" />
                         <br/>
                         <br/><h:outputText value="Venta:" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venLis}"/>

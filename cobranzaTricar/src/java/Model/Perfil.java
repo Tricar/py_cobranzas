@@ -23,17 +23,11 @@ public class Perfil implements java.io.Serializable {
     private Boolean sistema;
     private Boolean sisUsu;
     private Boolean sisPer;
-    private Boolean sisTipAne;
-    private Boolean sisEmp;
-    private Boolean sisTie;
     private Boolean mante;
     private Boolean manCli;
     private Boolean manArt;
-    private Boolean manTipArt;
     private Boolean manMod;
     private Boolean manCol;
-    private Boolean manPag;
-    private Boolean manConPag;
     private Boolean venta;
     private Boolean venLis;
     private Boolean venReg;
@@ -46,23 +40,17 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisUsu, Boolean sisPer, Boolean sisTipAne, Boolean sisEmp, Boolean sisTie, Boolean mante, Boolean manCli, Boolean manArt, Boolean manTipArt, Boolean manMod, Boolean manCol, Boolean manPag, Boolean manConPag, Boolean venta, Boolean venLis, Boolean venReg, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.sistema = sistema;
         this.sisUsu = sisUsu;
         this.sisPer = sisPer;
-        this.sisTipAne = sisTipAne;
-        this.sisEmp = sisEmp;
-        this.sisTie = sisTie;
         this.mante = mante;
         this.manCli = manCli;
         this.manArt = manArt;
-        this.manTipArt = manTipArt;
         this.manMod = manMod;
         this.manCol = manCol;
-        this.manPag = manPag;
-        this.manConPag = manConPag;
         this.venta = venta;
         this.venLis = venLis;
         this.venReg = venReg;
@@ -116,33 +104,6 @@ public class Perfil implements java.io.Serializable {
         this.sisPer = sisPer;
     }
 
-    @Column(name = "sisTipAne")
-    public Boolean getSisTipAne() {
-        return this.sisTipAne;
-    }
-
-    public void setSisTipAne(Boolean sisTipAne) {
-        this.sisTipAne = sisTipAne;
-    }
-
-    @Column(name = "sisEmp")
-    public Boolean getSisEmp() {
-        return this.sisEmp;
-    }
-
-    public void setSisEmp(Boolean sisEmp) {
-        this.sisEmp = sisEmp;
-    }
-
-    @Column(name = "sisTie")
-    public Boolean getSisTie() {
-        return this.sisTie;
-    }
-
-    public void setSisTie(Boolean sisTie) {
-        this.sisTie = sisTie;
-    }
-
     @Column(name = "mante")
     public Boolean getMante() {
         return this.mante;
@@ -170,15 +131,6 @@ public class Perfil implements java.io.Serializable {
         this.manArt = manArt;
     }
 
-    @Column(name = "manTipArt")
-    public Boolean getManTipArt() {
-        return this.manTipArt;
-    }
-
-    public void setManTipArt(Boolean manTipArt) {
-        this.manTipArt = manTipArt;
-    }
-
     @Column(name = "manMod")
     public Boolean getManMod() {
         return this.manMod;
@@ -195,24 +147,6 @@ public class Perfil implements java.io.Serializable {
 
     public void setManCol(Boolean manCol) {
         this.manCol = manCol;
-    }
-
-    @Column(name = "manPag")
-    public Boolean getManPag() {
-        return this.manPag;
-    }
-
-    public void setManPag(Boolean manPag) {
-        this.manPag = manPag;
-    }
-
-    @Column(name = "manConPag")
-    public Boolean getManConPag() {
-        return this.manConPag;
-    }
-
-    public void setManConPag(Boolean manConPag) {
-        this.manConPag = manConPag;
     }
 
     @Column(name = "venta")

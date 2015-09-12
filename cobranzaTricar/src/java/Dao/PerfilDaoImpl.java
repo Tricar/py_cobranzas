@@ -60,4 +60,16 @@ public class PerfilDaoImpl implements PerfilDao {
         return true;
     }
 
+    @Override
+    public Perfil verByPerfilDifer(Session session, Integer idperfil, String descripcion) throws Exception {
+        String hql = "FROM Perfil WHERE idperfil!=:idperfil and descripcion=:descripcion";
+        Query query = session.createQuery(hql);
+        query.setParameter("idperfil", idperfil);
+        query.setParameter("descripcion", descripcion);
+        
+        Perfil perfil = (Perfil) query.uniqueResult();
+        
+        return perfil;
+    }
+
 }

@@ -38,7 +38,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public Usuario verByUsuarioDifer(Session session, int idusuario, String usuario) throws Exception {
+    public Usuario verByUsuarioDifer(Session session, Integer idusuario, String usuario) throws Exception {
         String hql = "FROM Usuario WHERE idusuario!=:idusuario and usuario=:usuario";
         Query query = session.createQuery(hql);
         query.setParameter("idusuario", idusuario);
@@ -62,7 +62,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
     }
 
     @Override
-    public Usuario verByIdusuario(Session session, int idusuario) throws Exception {
+    public Usuario verByIdusuario(Session session, Integer idusuario) throws Exception {
         String hql = "FROM Usuario WHERE idusuario=:idusuario";
         Query query = session.createQuery(hql);
         query.setParameter("idusuario", idusuario);
