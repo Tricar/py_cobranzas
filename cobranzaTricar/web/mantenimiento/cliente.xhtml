@@ -64,19 +64,22 @@
                                 <f:selectItem itemLabel="Administrador" itemValue="AD" />
                                 <f:selectItem itemLabel="Cliente" itemValue="CL" />
                                 <f:selectItem itemLabel="Vendedor" itemValue="VE" />
-                                <f:selectItem itemLabel="Gestor Cob." itemValue="GE" />
-                                <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
+                                <f:selectItem itemLabel="Gestor Cob." itemValue="GE" />                                
                             </p:selectOneMenu>
-                            <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" value="#{anexoBean.anexo.tipodocumento}" />
+                            <p:outputLabel value="Tipo Doc:" />
+                            <p:selectOneMenu value="#{anexoBean.anexo.tipodocumento}" >
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="DNI" itemValue="DN" />
+                                <f:selectItem itemLabel="RUC" itemValue="RU" />
+                            </p:selectOneMenu>
                             <p:outputLabel value="DNI:" />
-                            <p:inputText id="dni" value="#{anexoBean.anexo.numdocumento}" />
+                            <p:inputText value="#{anexoBean.anexo.numdocumento}" />
                             <p:outputLabel value="Nombre o Razon Social:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" />
                             <p:outputLabel value="Ap. Paterno:" />
-                            <p:inputText  id="ap" value="#{anexoBean.anexo.apepat}" />
+                            <p:inputText  value="#{anexoBean.anexo.apepat}" />
                             <p:outputLabel value="Ap. Materno:" />
-                            <p:inputText id="am" value="#{anexoBean.anexo.apemat}" />
+                            <p:inputText value="#{anexoBean.anexo.apemat}" />
                             <p:outputLabel value="Estado civil:" />
                             <p:selectOneMenu value="#{anexoBean.anexo.estcivil}">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
@@ -99,7 +102,7 @@
                             <p:outputLabel value="Tel. cel:" />
                             <p:inputText value="#{anexoBean.anexo.celular}" />
                             <p:outputLabel value="Edad:" />
-                            <p:inputText id="edad" value="#{anexoBean.anexo.edad}" />
+                            <p:inputText value="#{anexoBean.anexo.edad}" />
                             <p:outputLabel value="Fec. Nac:" />
                             <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
                             <p:outputLabel value="Sexo:" />
@@ -136,7 +139,7 @@
                             <p:outputLabel value="DNI:" />
                             <p:inputText id="dni" value="#{anexoBean.anexo.tipodocumento}" />
                             <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" value="#{anexoBean.anexo.numdocumento}" />
+                            <p:inputText value="#{anexoBean.anexo.numdocumento}" />
                             <p:outputLabel value="Nombre o Razon Social:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" />
                             <p:outputLabel value="Ap. Paterno:" />

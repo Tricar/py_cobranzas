@@ -110,7 +110,7 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
-    @Column(name="tipodocumento", length=3)
+    @Column(name="tipodocumento", length=2)
     public String getTipodocumento() {
         return this.tipodocumento;
     }
