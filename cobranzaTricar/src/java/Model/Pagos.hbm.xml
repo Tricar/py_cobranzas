@@ -15,7 +15,7 @@
             <column name="operacion" length="20" />
         </property>
         <property name="monto" type="big_decimal">
-            <column name="monto" precision="17" scale="5" />
+            <column name="monto" precision="17" scale="2" />
         </property>
         <property name="fecreg" type="timestamp">
             <column name="fecreg" length="23" />
