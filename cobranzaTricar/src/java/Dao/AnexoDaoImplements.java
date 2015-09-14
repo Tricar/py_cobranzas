@@ -184,4 +184,28 @@ public class AnexoDaoImplements implements AnexoDao {
         session.delete(anexo);
         return true;
     }
+
+    @Override
+    public List<Anexo> buscarClientexDoc(String dni, String tipo, String tipo1) {
+        Session session = null;
+//        Anexo anexo = null;
+        List<Anexo> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Anexo WHERE numdocumento=:d and tipoanexo=:t or tipoanexo=:t1");
+            query.setParameter("t", tipo);
+            query.setParameter("t1", tipo1);
+            query.setParameter("d", dni);
+            lista = (List<Anexo>) query.list();
+//            anexo = (Anexo)query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+//        return anexo;
+        return lista;
+    }
 }

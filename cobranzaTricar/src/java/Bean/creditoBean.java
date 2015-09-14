@@ -174,7 +174,7 @@ public class creditoBean implements Serializable {
         BigDecimal cero = new BigDecimal(0);
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
-        credito = linkdao.cargarCredito(anexo);
+        credito = linkdao.cargarCreditoxAnexo(anexo);
         LetrasDao letras = new LetrasDaoImplements();
         letritas = letras.mostrarLetrasXCred(credito);
         for (int i = 0; i < letritas.size(); i++) {
@@ -183,7 +183,7 @@ public class creditoBean implements Serializable {
                 get.setEstado("CN");
             } else {
                 if (get.getSaldo().compareTo(cero) == 1) {
-                    if (get.getFecini().after(fecha)) {
+                    if (get.getFecven().after(fecha)) {
                         get.setEstado("PN");
                     }else
                         get.setEstado("VN");

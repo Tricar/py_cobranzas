@@ -2,6 +2,7 @@ package Dao;
 
 import Model.Anexo;
 import Model.Credito;
+import Model.Letras;
 import Persistencia.HibernateUtil;
 import java.util.Date;
 import java.util.List;
@@ -110,7 +111,7 @@ public class CreditoDaoImp implements CreditoDao{
     }
 
     @Override
-    public Credito cargarCredito(Anexo anexo) {
+    public Credito cargarCreditoxAnexo(Anexo anexo) {
         Session session = null;
         Credito credito = new Credito();
         Integer idanexo;
@@ -129,4 +130,25 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return credito;
     }    
+
+    @Override
+    public Credito cargarCreditoxLetra(Letras letra) {
+        Session session = null;
+        Credito credito = new Credito();
+        Integer idcredito;
+        idcredito = letra.getCredito().getIdventa();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE idventa=:w");
+            query.setParameter("w", idcredito);
+            credito = (Credito) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return credito;
+    }
 }

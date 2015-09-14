@@ -1,5 +1,7 @@
 package Bean;
 
+import Dao.CreditoDao;
+import Dao.CreditoDaoImp;
 import Dao.LetrasDao;
 import Dao.LetrasDaoImplements;
 import Dao.PagosDao;
@@ -19,13 +21,15 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class pagosBean implements Serializable{
+public class pagosBean implements Serializable {
+
     private Pagos pago = new Pagos();
     private List<Pagos> pagos;
-    private List<Pagos> pagosxcredito;    
+    private List<Pagos> pagosxcredito;
     private List<Pagos> pagosxletra;
     private Letras letra = new Letras();
     private Credito credito = new Credito();
+
     /**
      * Creates a new instance of pagosBean
      */
@@ -55,7 +59,7 @@ public class pagosBean implements Serializable{
     public void setCredito(Credito credito) {
         this.credito = credito;
     }
-    
+
     public List<Pagos> getPagos() {
         PagosDao linkdao = new PagosDaoImp();
         pagos = linkdao.mostrarPagos();
@@ -70,34 +74,35 @@ public class pagosBean implements Serializable{
 
     public List<Pagos> getPagosxletra() {
         PagosDao linkdao = new PagosDaoImp();
-        pagos = linkdao.mostrarPagosxLetras(letra);        
+        pagos = linkdao.mostrarPagosxLetras(letra);
         return pagosxletra;
     }
-    
+
     public void insertar() {
-        PagosDao linkDao = new PagosDaoImp();
-        LetrasDao letritas = new LetrasDaoImplements();
+        PagosDao pagosdao = new PagosDaoImp();
+        LetrasDao letrasdao = new LetrasDaoImplements();
+        CreditoDao creditodao = new CreditoDaoImp();
 //        System.out.println("Este es el Id de letra :"+letra.getIdletras());
         pago.setLetras(letra);
-        if((pago.getMonto().compareTo(letra.getSaldo()))==0){
+        if ((pago.getMonto().compareTo(letra.getSaldo())) == 0) {
             letra.setSaldo(BigDecimal.ZERO);
-            letritas.modificarLetra(letra);
-            linkDao.insertarPago(pago);
-        }else {
-            if((pago.getMonto().compareTo(letra.getSaldo()))==-1){
+        } else {
+            if ((pago.getMonto().compareTo(letra.getSaldo())) == -1) {
                 letra.setSaldo(letra.getSaldo().subtract(pago.getMonto()));
-                letritas.modificarLetra(letra);
-                linkDao.insertarPago(pago);
-            }else{
-                
             }
         }
+        letrasdao.modificarLetra(letra);
+        pagosdao.insertarPago(pago);
+        credito.setSaldo(credito.getSaldo().subtract(pago.getMonto()));
+        creditodao.modificarVenta(credito);
         pago = new Pagos();
     }
-    
-    public Letras cargarLetra(Letras letras){
-        letra=letras;
+
+    public Letras cargarLetra(Letras letras) {
+        letra = letras;
 //        System.out.println("Este es el Id de letra en cargar:"+letra.getIdletras());
+        CreditoDao linkdao = new CreditoDaoImp();
+        credito = linkdao.cargarCreditoxLetra(letra);
         return letra;
     }
 }

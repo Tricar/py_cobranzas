@@ -36,6 +36,7 @@ public class anexoBean implements Serializable {
     private List<Anexo> filtradaCredito = new ArrayList();
     private String text;
     private String nombre;
+    private String dni;
     private List<Credito> creditos = new ArrayList();
 
     public Anexo getAnexo() {
@@ -54,6 +55,14 @@ public class anexoBean implements Serializable {
         this.anexo = anexo;
     }
 
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+    
     public List<Anexo> getAnexos() {
         
         this.session = null;
@@ -187,19 +196,20 @@ public class anexoBean implements Serializable {
     }
 
     public void filtrarClientEnter() {
-        AnexoDao anex = new AnexoDaoImplements();
-        filtradaEnter = anex.buscarCliente(nombre, "CL");
-        CreditoDao linkdao = new CreditoDaoImp();
-        creditos = linkdao.mostrarVentas();
+//        AnexoDao anex = new AnexoDaoImplements();
+//        filtradaEnter = anex.buscarClientexDoc(dni, "CN", "CJ");        
+        CreditoDao linkdao = new CreditoDaoImp();        
+        creditos = linkdao.mostrarVentas();        
     }
 
     public List<Anexo> getFiltradaCredito() {
         Credito credito = new Credito();
         AnexoDao anexito = new AnexoDaoImplements();
+        this.filtradaCredito = new ArrayList();
         int sw=0;
         for (int i = 0; i < creditos.size(); i++) {
             credito = creditos.get(i);            
-            if(credito.getAnexoByIdanexo().getNombre().startsWith(nombre)){
+            if(credito.getAnexoByIdanexo().getNumdocumento().startsWith(dni)){
                 sw=1;                
                 anexo = anexito.cargarxCredito(credito.getAnexoByIdanexo().getIdanexo());
                 filtradaCredito.add(anexo);
@@ -209,8 +219,8 @@ public class anexoBean implements Serializable {
             return filtradaCredito;
         }else {
             filtradaCredito= new ArrayList();
-        }
-        return filtradaCredito;        
+        }        
+        return filtradaCredito;
     }
 
     public void handleKeyEvent() {

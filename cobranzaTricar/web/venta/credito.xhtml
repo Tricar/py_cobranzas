@@ -33,10 +33,10 @@
                                 <f:selectItem itemLabel="Gestor Cob." itemValue="GE" />
                                 <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
                             </p:selectOneMenu>
-                            <p:outputLabel value="RUC:" />
-                            <p:inputText id="ruc" value="#{anexoBean.anexo.ruc}" />
-                            <p:outputLabel value="DNI:" />
-                            <p:inputText id="dni" value="#{anexoBean.anexo.dni}" />
+                            <p:outputLabel value="T. Doc:" />
+                            <p:inputText id="ruc" value="#{anexoBean.anexo.tipodocumento}" />
+                            <p:outputLabel value="Num Doc:" />
+                            <p:inputText id="dni" value="#{anexoBean.anexo.numdocumento}" />
                             <p:outputLabel value="Nombre o Razon Social:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" />
                             <p:outputLabel value="Ap. Paterno:" />

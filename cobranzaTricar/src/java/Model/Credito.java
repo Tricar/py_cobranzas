@@ -207,7 +207,7 @@ public class Credito implements java.io.Serializable {
         this.empresa = empresa;
     }
 
-    @Column(name = "precio", nullable = false, precision = 17, scale = 5)
+    @Column(name = "precio", nullable = false, precision = 17, scale = 2)
     public BigDecimal getPrecio() {
         return this.precio;
     }
@@ -216,7 +216,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
     }
 
-    @Column(name = "inicial", precision = 17, scale = 5)
+    @Column(name = "inicial", precision = 17, scale = 2)
     public BigDecimal getInicial() {
         return this.inicial;
     }
@@ -225,7 +225,7 @@ public class Credito implements java.io.Serializable {
         this.inicial = inicial;
     }
 
-    @Column(name = "saldo", precision = 17, scale = 5)
+    @Column(name = "saldo", precision = 17, scale = 2)
     public BigDecimal getSaldo() {
         return this.saldo;
     }
@@ -234,7 +234,7 @@ public class Credito implements java.io.Serializable {
         this.saldo = saldo;
     }
 
-    @Column(name = "interes", precision = 17, scale = 5)
+    @Column(name = "interes", precision = 17, scale = 2)
     public BigDecimal getInteres() {
         return this.interes;
     }
