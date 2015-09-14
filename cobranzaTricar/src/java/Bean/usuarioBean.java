@@ -118,11 +118,11 @@ public class usuarioBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
                 return;
             }
-
-            if (this.txtclavevacia != null) {
+            
+            if(!this.txtclavevacia.equals("")){
                 this.tusuario.setClave(Encrypt.sha512(this.txtclavevacia));
             }
-
+            
             daotusuario.modificar(this.session, this.tusuario);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
@@ -235,8 +235,7 @@ public class usuarioBean implements Serializable {
         this.tusuario = tusuario;
     }
 
-    public List<Usuario> getListatusuario() {
-        
+    public List<Usuario> getListatusuario() {        
         this.session = null;
         this.transaction = null;
 
