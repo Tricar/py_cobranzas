@@ -44,6 +44,47 @@ public class anexoBean implements Serializable {
 
     public anexoBean() {
     }
+
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
+    }
+
+    public List<Anexo> getFiltradaEnter() {
+        return filtradaEnter;
+    }
+
+    public void setFiltradaEnter(List<Anexo> filtradaEnter) {
+        this.filtradaEnter = filtradaEnter;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+    
     
     public List<Anexo> verCliente() {
 
