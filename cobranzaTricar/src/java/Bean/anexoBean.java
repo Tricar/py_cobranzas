@@ -213,8 +213,13 @@ public class anexoBean implements Serializable {
                 this.anexo.setApemat("");
                 this.anexo.setApepat("");
             }
-
-            if (this.anexo.getTipodocumento().equals("DNI")) {
+            
+            if(this.anexo.getEstcivil() != null){
+                this.anexo.setConyuge("");
+                this.anexo.setDniconyu("");
+            }
+            
+            if(this.anexo.getTipodocumento().equals("DNI")){
                 this.anexo.setTipoanexo("CN");
             } else {
                 this.anexo.setTipoanexo("CJ");

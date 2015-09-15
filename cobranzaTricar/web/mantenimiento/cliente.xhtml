@@ -82,18 +82,21 @@
                                 <f:validator validatorId="validatorLetra"/>
                             </p:inputText>
                             <p:outputLabel value="ESTADO CIVIL:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.estcivil}" required="true" requiredMessage="Debe Seleccionar estado civil">
+                            <p:selectOneMenu id="estado" value="#{anexoBean.anexo.estcivil}" required="true" requiredMessage="Debe Seleccionar estado civil">
                                 <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
                                 <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO" />
                                 <f:selectItem itemLabel="CONVIVIENTE" itemValue="CO" />
                                 <f:selectItem itemLabel="CASADO(A)" itemValue="CA" />
                                 <f:selectItem itemLabel="DIVORCIADO(A)" itemValue="DI" />
-                                <f:selectItem itemLabel="VIUDO(A)" itemValue="VI" />                                
+                                <f:selectItem itemLabel="VIUDO(A)" itemValue="VI" />
+                                <f:ajax render="txtConyuge txtDniCon" />
                             </p:selectOneMenu>
                             <p:outputLabel value="CONYUGE:" />
-                            <p:inputText value="#{anexoBean.anexo.conyuge}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                            <p:inputText disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtConyuge" value="#{anexoBean.anexo.conyuge}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorLetra"/>
+                            </p:inputText>
                             <p:outputLabel value="DNI:" />
-                            <p:inputMask mask="9?999999" value="#{anexoBean.anexo.dniconyu}" maxlength="8"/>
+                            <p:inputMask disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtDniCon" mask="9?999999" value="#{anexoBean.anexo.dniconyu}" maxlength="8"/>
                             <p:outputLabel value="DIRECCION:" for="txtDireccion" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" id="txtDireccion" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
                                 <f:validator validatorId="validatorVacio"/>
@@ -147,19 +150,28 @@
                             <p:selectOneMenu value="#{anexoBean.anexo.tipodocumento}" >
                                 <f:selectItem itemLabel="DNI" itemValue="DNI" />
                                 <f:selectItem itemLabel="RUC" itemValue="RUC" />
+                                <f:ajax render="txtRazon txtNombre txtApellido1 txtApellido2" />
                             </p:selectOneMenu>
                             <p:outputLabel value="NUMERO DOC.:" for="txtDocumento"/>
                             <p:inputMask mask="9?9999999999" id="txtDocumento" label="Documento" value="#{anexoBean.anexo.numdocumento}" maxlength="11">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputMask>
-                            <p:outputLabel value="RAZON SOCIAL" />
-                            <p:inputText id="rsocial" value="#{anexoBean.razonsocial}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <p:outputLabel value="NOMBRE:" />
-                            <p:inputText value="#{anexoBean.anexo.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <p:outputLabel value="APELLIDO 1:" />
-                            <p:inputText  id="ap" value="#{anexoBean.anexo.apepat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <p:outputLabel value="APELLIDO 2:" />
-                            <p:inputText id="am" value="#{anexoBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                            <p:outputLabel value="RAZON SOCIAL" for="txtRazon"/>
+                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'RUC'}" id="txtRazon" value="#{anexoBean.razonsocial}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorLetra"/>
+                            </p:inputText>
+                            <p:outputLabel value="NOMBRE:" for="txtNombre"/>
+                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtNombre" value="#{anexoBean.anexo.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorLetra"/>
+                            </p:inputText>
+                            <p:outputLabel value="APELLIDO 1:" for="txtApellido1"/>
+                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtApellido1" value="#{anexoBean.anexo.apepat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorLetra"/>
+                            </p:inputText>
+                            <p:outputLabel value="APELLIDO 2:" for="txtApellido2"/>
+                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtApellido2" value="#{anexoBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorLetra"/>
+                            </p:inputText>
                             <p:outputLabel value="ESTADO CIVIL:" />
                             <p:selectOneMenu value="#{anexoBean.anexo.estcivil}">
                                 <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO" />
