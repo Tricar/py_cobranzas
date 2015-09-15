@@ -55,22 +55,29 @@
                 <h:form id="formInsertar">
                     <p:dialog header="NUEVO EMPLEADO" widgetVar="dlginsertar" modal="true">
                         <h:panelGrid columns="4">
-                            <p:outputLabel value="TIPO EMPLEADO:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.tipodocumento}" required="true" requiredMessage="Debe Seleccionar Tipo Documento">
+                            <p:outputLabel value="TIPO:" />
+                            <p:selectOneMenu value="#{anexoBean.anexo.tipoanexo}" required="true" requiredMessage="Debe Seleccionar Tipo Documento">
                                 <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="DNI" itemValue="DNI" />
-                                <f:selectItem itemLabel="RUC" itemValue="RUC" />
+                                <f:selectItem itemLabel="ADMINISTRADOR" itemValue="AD" />
+                                <f:selectItem itemLabel="GESTOR" itemValue="GE" />
+                                <f:selectItem itemLabel="VENDEDOR" itemValue="VE" />
                             </p:selectOneMenu>
                             <p:outputLabel value="DNI:" for="txtDocumento"/>
                             <p:inputMask mask="9?9999999" id="txtDocumento" label="Documento" value="#{anexoBean.anexo.numdocumento}" maxlength="8">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputMask>
-                            <p:outputLabel value="NOMBRE:" />
-                            <p:inputText id="natural" value="#{anexoBean.anexo.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <p:outputLabel value="APELLIDO 1:" />
-                            <p:inputText  id="natural1" value="#{anexoBean.anexo.apepat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <p:outputLabel value="APELLIDO 2:" />
-                            <p:inputText id="natural2" value="#{anexoBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                            <p:outputLabel value="NOMBRE:" for="txtNombre"/>
+                            <p:inputText id="txtNombre" value="#{anexoBean.anexo.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="APELLIDO 1:" for="txtApellido1"/>
+                            <p:inputText  id="txtApellido1" value="#{anexoBean.anexo.apepat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="APELLIDO 2:" for="txtApellido2"/>
+                            <p:inputText id="txtApellido2" value="#{anexoBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
                             <p:outputLabel value="ESTADO CIVIL:" />
                             <p:selectOneMenu value="#{anexoBean.anexo.estcivil}" required="true" requiredMessage="Debe Seleccionar estado civil">
                                 <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
@@ -82,6 +89,18 @@
                             </p:selectOneMenu>
                             <p:outputLabel value="DIRECCION:" for="txtDireccion" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" id="txtDireccion" label="Direccion" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="AAHH:" for="txtAAHH"/>
+                            <p:inputText value="#{anexoBean.anexo.aahh}" id="txtAAHH" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="DISTRITO:" for="txtDistrito"/>
+                            <p:inputText value="#{anexoBean.anexo.distrito}" id="txtDistrito" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="SECTOR:" for="txtSector"/>
+                            <p:inputText value="#{anexoBean.anexo.sector}" id="txtSector" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
@@ -104,42 +123,41 @@
                             </p:selectOneMenu>
                             <p:outputLabel value="EMAIL:" />
                             <p:inputText value="#{anexoBean.anexo.email}" />
+                            <p:outputLabel value="CODIGO:" for="txtCodigo"/>
+                            <p:inputText  value="#{anexoBean.anexo.codven}" id="txtCodigo" maxlength="6" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                 <f:validator validatorId="validatorVacio"/>
+                                 <f:validator validatorId="validatorLetraNumero"/>
+                            </p:inputText>
                         </h:panelGrid>                        
                         <p:separator/>
-                        <p:commandButton value="Registrar Empleado" icon="b-new" ajax="false" actionListener="#{anexoBean.insertarcliente()}" />
+                        <p:commandButton value="Registrar Empleado" icon="b-new" ajax="false" actionListener="#{anexoBean.insertar()}" />
                     </p:dialog>
                 </h:form>
 
                 <h:form id="frmEditarAnexo">
                     <p:dialog header="DATOS DEL EMPLEADO" widgetVar="dialogoEditarAnexo" modal="true">
-                        <p:panelGrid id="panelEditarAnexo" columns="6">
+                        <p:panelGrid id="panelEditarAnexo" columns="4">
                             <p:inputText type="hidden" value="#{anexoBean.anexo.idanexo}"/>
-                            <h:panelGroup></h:panelGroup><h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup><h:panelGroup></h:panelGroup>
                             <h:panelGroup></h:panelGroup>
-                            <p:outputLabel value="TIPO DOC.:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.tipodocumento}" >
-                                <f:selectItem itemLabel="DNI" itemValue="DNI" />
-                                <f:selectItem itemLabel="RUC" itemValue="RUC" />
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="TIPO:" />
+                            <p:selectOneMenu value="#{anexoBean.anexo.tipoanexo}" required="true" requiredMessage="Debe Seleccionar Tipo Documento">
+                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="ADMINISTRADOR" itemValue="AD" />
+                                <f:selectItem itemLabel="GESTOR" itemValue="GE" />
+                                <f:selectItem itemLabel="VENDEDOR" itemValue="VE" />
                             </p:selectOneMenu>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="NUMERO DOC.:" for="txtDocumento"/>
                             <p:inputMask mask="9?9999999999" id="txtDocumento" label="Documento" value="#{anexoBean.anexo.numdocumento}" maxlength="11">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputMask>
-                            <p:message for="txtDocumento"/>
-                            <p:outputLabel value="RAZON SOCIAL" />
-                            <p:inputText id="dni" value="#{anexoBean.razonsocial}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="NOMBRE:" />
                             <p:inputText value="#{anexoBean.anexo.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="APELLIDO 1:" />
                             <p:inputText  id="ap" value="#{anexoBean.anexo.apepat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="APELLIDO 2:" />
                             <p:inputText id="am" value="#{anexoBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="ESTADO CIVIL:" />
                             <p:selectOneMenu value="#{anexoBean.anexo.estcivil}">
                                 <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO" />
@@ -148,39 +166,46 @@
                                 <f:selectItem itemLabel="DIVORCIADO(A)" itemValue="DI" />
                                 <f:selectItem itemLabel="VIUDO(A)" itemValue="VI" />                                
                             </p:selectOneMenu>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="CONYUGE:" />
                             <p:inputText value="#{anexoBean.anexo.conyuge}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="DNI:" />
                             <p:inputMask mask="9?9999999" value="#{anexoBean.anexo.dniconyu}" maxlength="8"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="DIRECCION:" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="AAHH:" for="txtAAHH"/>
+                            <p:inputText value="#{anexoBean.anexo.aahh}" id="txtAAHH" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="DISTRITO:" for="txtDistrito"/>
+                            <p:inputText value="#{anexoBean.anexo.distrito}" id="txtDistrito" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="SECTOR:" for="txtSector"/>
+                            <p:inputText value="#{anexoBean.anexo.sector}" id="txtSector" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
                             <p:outputLabel value="REFERENCIA:" />
                             <p:inputText value="#{anexoBean.anexo.referencia}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="TELEFONO:" />
                             <p:inputMask mask="9?99999999" value="#{anexoBean.anexo.telefono}" maxlength="9"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="CELULAR:" />
                             <p:inputMask mask="9?99999999" value="#{anexoBean.anexo.celular}" maxlength="9"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="EDAD:" />
                             <p:inputMask mask="9?9" id="edad" value="#{anexoBean.anexo.edad}" maxlength="2"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="NACIMIENTO" />
                             <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="SEXO:" />
                             <p:selectOneMenu value="#{anexoBean.anexo.sexo}">
                                 <f:selectItem itemLabel="MASCULINO" itemValue="M" />
                                 <f:selectItem itemLabel="FEMENINO" itemValue="F" />
                             </p:selectOneMenu>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="EMAIL:" />
                             <p:inputText value="#{anexoBean.anexo.email}" />
+                            <p:outputLabel value="CODIGO:" for="txtCodigo"/>
+                            <p:inputText value="#{anexoBean.anexo.codven}" id="txtCodigo" maxlength="6" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                 <f:validator validatorId="validatorVacio"/>
+                                 <f:validator validatorId="validatorLetraNumero"/>
+                            </p:inputText>
                         </p:panelGrid>                        
                         <p:separator/>
                         <p:commandButton value="Actualizar Empleado" icon="b-new" ajax="false" actionListener="#{anexoBean.modificar()}" />

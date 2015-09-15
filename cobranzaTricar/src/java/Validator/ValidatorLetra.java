@@ -31,7 +31,7 @@ public class ValidatorLetra implements Validator{
             label = htmlinputtext.getLabel();
         }
         
-        Pattern pattern = Pattern.compile("([A-Za-z ])*");
+        Pattern pattern = Pattern.compile("([A-ZÑa-z ])*");
         Matcher matcher = pattern.matcher((CharSequence) value);
         
         if (!matcher.matches()) {

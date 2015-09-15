@@ -5,6 +5,8 @@
  */
 package Validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlInputText;
@@ -13,9 +15,9 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-@FacesValidator("validatorVacio")
+@FacesValidator("validatorLetraNumero")
 
-public class ValidatorVacio implements Validator{
+public class ValidatorLetraNumero implements Validator{
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
@@ -28,8 +30,12 @@ public class ValidatorVacio implements Validator{
         } else {
             label = htmlinputtext.getLabel();
         }
-        if (value.toString().trim().equals("")) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", label+": es requerido"));
+        
+        Pattern pattern = Pattern.compile("([A-ZÑa-z0-9])*");
+        Matcher matcher = pattern.matcher((CharSequence) value);
+        
+        if (!matcher.matches()) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", label+": Ingrese letras y numeros"));
         }
     }
     

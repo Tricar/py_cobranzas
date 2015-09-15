@@ -56,32 +56,31 @@
                     <p:dialog header="NUEVO CLIENTE" widgetVar="dlginsertar" modal="true">
                         <h:panelGrid columns="4">
                             <p:outputLabel value="TIPO:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.tipodocumento}" required="true" requiredMessage="Debe Seleccionar Tipo Documento">
+                            <p:selectOneMenu id="tipodoc" value="#{anexoBean.anexo.tipodocumento}" required="true" requiredMessage="Debe Seleccionar Tipo Documento">
                                 <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
                                 <f:selectItem itemLabel="DNI" itemValue="DNI" />
                                 <f:selectItem itemLabel="RUC" itemValue="RUC" />
-                                <f:ajax event="change" execute="@this" render="tipodocumento" />
+                                <f:ajax render="txtRazon txtNombre txtApellido1 txtApellido2" />
                             </p:selectOneMenu>
                             <p:outputLabel value="DOCUMENTO:" for="txtDocumento"/>
                             <p:inputMask mask="9?9999999999" id="txtDocumento" value="#{anexoBean.anexo.numdocumento}" maxlength="11">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputMask>
-                            <h:panelGroup  id="tipodocumento">
-                                <p:outputLabel rendered="#{anexoBean.anexo.tipodocumento eq 'RUC'}" value="RAZON SOCIAL" />
-                                <p:inputText rendered="#{anexoBean.anexo.tipodocumento eq 'RUC'}" value="#{anexoBean.razonsocial}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                                <p:outputLabel rendered="#{anexoBean.anexo.tipodocumento eq 'DNI'}" value="NOMBRE:" for="txtNombre"/>
-                                <p:inputText rendered="#{anexoBean.anexo.tipodocumento eq 'DNI'}" value="#{anexoBean.anexo.nombre}" id="txtNombre" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
-                                    <f:validator validatorId="validatorLetra"/>
-                                </p:inputText>
-                                <p:outputLabel rendered="#{anexoBean.anexo.tipodocumento eq 'DNI'}" value="APELLIDO 1:" for="txtApellido1"/>
-                                <p:inputText  rendered="#{anexoBean.anexo.tipodocumento eq 'DNI'}" id="txtApellido1" value="#{anexoBean.anexo.apepat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
-                                    <f:validator validatorId="validatorLetra"/>
-                                </p:inputText>
-                                <p:outputLabel rendered="#{anexoBean.anexo.tipodocumento eq 'DNI'}" value="APELLIDO 2:" for="txtApellido2"/>
-                                <p:inputText rendered="#{anexoBean.anexo.tipodocumento eq 'DNI'}" id="txtApellido2" value="#{anexoBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
-                                    <f:validator validatorId="validatorLetra"/>
-                                </p:inputText>
-                            </h:panelGroup>
+                            <p:outputLabel value="RAZON SOCIAL" for="txtRazon"/>
+                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'RUC'}" id="txtRazon" value="#{anexoBean.razonsocial}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorLetra"/>
+                            </p:inputText>                                <p:outputLabel  value="NOMBRE:" for="txtNombre"/>
+                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtNombre" value="#{anexoBean.anexo.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorLetra"/>
+                            </p:inputText>
+                            <p:outputLabel value="APELLIDO 1:" for="txtApellido1"/>
+                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtApellido1" value="#{anexoBean.anexo.apepat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorLetra"/>
+                            </p:inputText>
+                            <p:outputLabel value="APELLIDO 2:" for="txtApellido2"/>
+                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtApellido2" value="#{anexoBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                <f:validator validatorId="validatorLetra"/>
+                            </p:inputText>
                             <p:outputLabel value="ESTADO CIVIL:" />
                             <p:selectOneMenu value="#{anexoBean.anexo.estcivil}" required="true" requiredMessage="Debe Seleccionar estado civil">
                                 <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
