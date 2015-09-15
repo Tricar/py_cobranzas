@@ -42,6 +42,10 @@ public class anexoBean implements Serializable {
     private List<Credito> creditos = new ArrayList();    
     private String razonsocial;
 
+    private String text;
+    private String nombre;
+    private String razonsocial;
+
     public anexoBean() {
     }
 
@@ -94,26 +98,86 @@ public class anexoBean implements Serializable {
             AnexoDao daotusuario = new AnexoDaoImplements();
 
             this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = this.session.beginTransaction();
+            this.transaction = session.beginTransaction();
 
-            this.anexos = daotusuario.verTodo(this.session);
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            if (daotanexo.verByAnexo(this.session, this.anexo.getNombre()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya existe en DB."));
+                this.anexo = new Anexo();
+                return;
+            }
+
+            daotanexo.registrar(this.session, this.anexo);
 
             this.transaction.commit();
 
-            return anexos;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+
+            this.anexo = new Anexo();
 
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
 
-            return null;
+            this.anexo = new Anexo();
+
         } finally {
             if (this.session != null) {
                 this.session.close();
             }
         } 
+    }
+
+    public void insertarcliente() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            if (daotanexo.verByAnexo(this.session, this.anexo.getNombre()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Cliente ya existe en DB."));
+                this.anexo = new Anexo();
+                return;
+            }
+            
+            if(!this.razonsocial.equals("")){
+                this.anexo.setNombre(this.razonsocial);
+            }
+
+            this.anexo.setTipoanexo("CL");
+            Date d = new Date();
+            this.anexo.setFechareg(d);
+            this.anexo.setCodven("");
+
+            daotanexo.registrar(this.session, this.anexo);
+
+            this.transaction.commit();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+
+            this.anexo = new Anexo();
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            this.anexo = new Anexo();
+
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
     }
 
     public void insertarcliente() {
@@ -370,8 +434,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> getFiltradaCredito() {
         Credito credito = new Credito();
         AnexoDao anexito = new AnexoDaoImplements();
-        this.filtradaCredito = new ArrayList();
-        int sw=0;
+        int sw = 0;
         for (int i = 0; i < creditos.size(); i++) {
             credito = creditos.get(i);            
             if(credito.getAnexoByIdanexo().getNumdocumento().startsWith(dni)){
@@ -382,10 +445,109 @@ public class anexoBean implements Serializable {
         }
         if (sw == 1) {
             return filtradaCredito;
-        }else {
-            filtradaCredito= new ArrayList();
-        }        
+        } else {
+            filtradaCredito = new ArrayList();
+        }
         return filtradaCredito;
+    }
+
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(List<Anexo> anexo) {
+        this.anexos = anexo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
+    }
+
+    public String getRazonsocial() {
+        return razonsocial;
+    }
+
+    public void setRazonsocial(String razonsocial) {
+        this.razonsocial = razonsocial;
+    }
+
+    public List<Anexo> getAnexos() {
+
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+
+            this.anexos = daotanexo.verTodo(this.session);
+
+            this.transaction.commit();
+
+            return anexos;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public List<Anexo> completarTipo(String nombre) {
+        AnexoDao tipodao = new AnexoDaoImplements();
+        anexos = tipodao.buscarxNombre(nombre);
+        return anexos;
+    }
+
+    public List<SelectItem> getSelectItemsAnexo() {
+
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+
+            this.SelectItemsAnexo = new ArrayList<SelectItem>();
+            AnexoDao anexoDao = new AnexoDaoImplements();
+            List<Anexo> tipos = anexoDao.verTodo(null);
+            for (Anexo tipo : tipos) {
+                SelectItem selecItem = new SelectItem(tipo, tipo.getNombre());
+                this.SelectItemsAnexo.add(selecItem);
+            }
+            return SelectItemsAnexo;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+
     }
 
     public void handleKeyEvent() {
