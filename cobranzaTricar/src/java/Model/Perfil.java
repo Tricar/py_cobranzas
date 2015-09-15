@@ -22,6 +22,7 @@ public class Perfil implements java.io.Serializable {
     private String descripcion;
     private Boolean sistema;
     private Boolean sisUsu;
+    private Boolean sisEmp;
     private Boolean sisPer;
     private Boolean mante;
     private Boolean manCli;
@@ -31,6 +32,7 @@ public class Perfil implements java.io.Serializable {
     private Boolean venta;
     private Boolean venLis;
     private Boolean venReg;
+    private Boolean venCon;
     private Set usuarios = new HashSet(0);
 
     public Perfil() {
