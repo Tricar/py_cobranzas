@@ -447,6 +447,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> getFiltradaCredito() {
         Credito credito = new Credito();
         AnexoDao anexito = new AnexoDaoImplements();
+        filtradaCredito = new ArrayList();
         int sw = 0;
         for (int i = 0; i < creditos.size(); i++) {
             credito = creditos.get(i);
