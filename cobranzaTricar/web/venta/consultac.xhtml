@@ -89,6 +89,11 @@
                         <p:panelGrid columns="4">
                             <p:outputLabel value="Fecha:"/>
                             <p:calendar navigator="true" value="#{pagosBean.pago.fecreg}"/>
+                            <p:outputLabel value="Tipo:"/>
+                            <p:selectOneMenu value="#{pagosBean.pago.tipo}">
+                                <f:selectItem itemLabel="Letra" itemValue="LE" />
+                                <f:selectItem itemLabel="Nota de Credito" itemValue="NC" />
+                            </p:selectOneMenu>
                             <p:outputLabel value="Referencia:"/>
                             <p:inputText value="#{pagosBean.pago.operacion}"/>
                             <p:outputLabel value="Monto:"/>

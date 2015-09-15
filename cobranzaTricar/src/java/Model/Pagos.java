@@ -27,6 +27,7 @@ public class Pagos implements java.io.Serializable {
     private BigDecimal monto;
     private Date fecreg;
     private String descripcion;
+    private String tipo;
 
     public Pagos() {
     }
@@ -35,13 +36,14 @@ public class Pagos implements java.io.Serializable {
         this.idpagos = idpagos;
     }
 
-    public Pagos(Integer idpagos, Letras letras, String operacion, BigDecimal monto, Date fecreg, String descripcion) {
+    public Pagos(Integer idpagos, Letras letras, String operacion, BigDecimal monto, Date fecreg, String descripcion, String tipo) {
         this.idpagos = idpagos;
         this.letras = letras;
         this.operacion = operacion;
         this.monto = monto;
         this.fecreg = fecreg;
         this.descripcion = descripcion;
+        this.tipo=tipo;
     }
 
     @Id
@@ -100,6 +102,15 @@ public class Pagos implements java.io.Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+    @Column(name = "tipo", length = 2)
+    public String getTipo() {
+        return this.tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @Override
