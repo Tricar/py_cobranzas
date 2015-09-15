@@ -29,7 +29,6 @@ public class anexoBean implements Serializable {
 
     private Session session;
     private Transaction transaction;
-
     public Anexo anexo = new Anexo();
     public List<Anexo> anexos;
     private List<SelectItem> SelectItemsAnexo;
