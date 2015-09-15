@@ -37,7 +37,7 @@ public class anexoBean implements Serializable {
     private List<Anexo> filtradaCredito = new ArrayList();
     private String text;
     private String nombre;
-    private String dni;
+    private String dni = "";
     private List<Credito> creditos = new ArrayList();
     private String razonsocial;
 
@@ -83,8 +83,7 @@ public class anexoBean implements Serializable {
     public void setDni(String dni) {
         this.dni = dni;
     }
-    
-    
+
     public List<Anexo> verCliente() {
 
         this.session = null;
@@ -115,7 +114,7 @@ public class anexoBean implements Serializable {
             }
         }
     }
-    
+
     public List<Anexo> verEmpleado() {
 
         this.session = null;
@@ -202,12 +201,12 @@ public class anexoBean implements Serializable {
                 this.anexo = new Anexo();
                 return;
             }
-            
-            if(!this.razonsocial.equals("")){
+
+            if (!this.razonsocial.equals("")) {
                 this.anexo.setNombre(this.razonsocial);
             }
-            
-            if(this.anexo.getTipodocumento().equals("DNI")){
+
+            if (this.anexo.getTipodocumento().equals("DNI")) {
                 this.anexo.setTipoanexo("CN");
             } else {
                 this.anexo.setTipoanexo("CJ");
@@ -256,12 +255,12 @@ public class anexoBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya Existe."));
                 return;
             }
-            
-            if(!this.razonsocial.equals("")){
+
+            if (!this.razonsocial.equals("")) {
                 this.anexo.setNombre(this.razonsocial);
             }
-            
-            if(this.anexo.getTipodocumento().equals("DNI")){
+
+            if (this.anexo.getTipodocumento().equals("DNI")) {
                 this.anexo.setTipoanexo("CN");
             } else {
                 this.anexo.setTipoanexo("CJ");
@@ -449,21 +448,26 @@ public class anexoBean implements Serializable {
     public void filtrarClientEnter() {
 //        AnexoDao anex = new AnexoDaoImplements();
 //        filtradaEnter = anex.buscarClientexDoc(dni, "CN", "CJ");        
-        CreditoDao linkdao = new CreditoDaoImp();
-        creditos = linkdao.mostrarVentas();
+        CreditoDao creditodao = new CreditoDaoImp();
+        creditos = creditodao.mostrarVentas();
     }
 
     public List<Anexo> getFiltradaCredito() {
         Credito credito = new Credito();
-        AnexoDao anexito = new AnexoDaoImplements();
+        AnexoDao anexodao = new AnexoDaoImplements();
+        Anexo anexito = new Anexo();
         filtradaCredito = new ArrayList();
         int sw = 0;
         for (int i = 0; i < creditos.size(); i++) {
             credito = creditos.get(i);
-            if (credito.getAnexoByIdanexo().getNumdocumento().startsWith(dni)) {
-                sw = 1;
-                anexo = anexito.cargarxCredito(credito.getAnexoByIdanexo().getIdanexo());
-                filtradaCredito.add(anexo);
+            if (dni.equals("")) {
+                filtradaCredito = new ArrayList();
+            } else {
+                if (credito.getAnexoByIdanexo().getNumdocumento().startsWith(dni)) {
+                    sw = 1;
+                    anexito = anexodao.cargarxCredito(credito.getAnexoByIdanexo().getIdanexo());
+                    filtradaCredito.add(anexito);
+                }
             }
         }
         if (sw == 1) {
@@ -485,7 +489,6 @@ public class anexoBean implements Serializable {
     public String getRazonsocial() {
         return razonsocial;
     }
-       
 
     public List<Anexo> getAnexos() {
 

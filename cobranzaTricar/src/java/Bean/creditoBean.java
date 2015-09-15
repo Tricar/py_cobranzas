@@ -105,14 +105,14 @@ public class creditoBean implements Serializable {
     public void setPago(Pagos pago) {
         this.pago = pago;
     }
-    
+
     public void insertar() {
         CreditoDao creditodao = new CreditoDaoImp();
         credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
         credito.setTotaldeuda(BigDecimal.ZERO);
         Letras letras = new Letras();
         BigDecimal nletras = new BigDecimal(credito.getNletras());
-        BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);        
+        BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
         BigDecimal interes = new BigDecimal(0);
         creditodao.insertarVenta(credito);
         for (int i = 1; i <= (credito.getNletras()); i++) {
@@ -124,6 +124,7 @@ public class creditoBean implements Serializable {
         fechafin = sumaDias(fechaini, 30);
         BigDecimal cien = new BigDecimal(100);
         BigDecimal mtointeres = (montoletras.multiply(interes)).divide(cien);
+        letras.setFecreg(credito.getFechareg());
         for (int i = 1; i <= (credito.getNletras()); i++) {
             letras.setCredito(credito);
             letras.setMontoletra(montoletras);
@@ -137,7 +138,7 @@ public class creditoBean implements Serializable {
             letras.setEstado("PN");
             letras.setDescripcion("L" + i);
             credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
-            letrasdao.insertarLetra(letras);            
+            letrasdao.insertarLetra(letras);
         }
         creditodao.modificarVenta(credito);
 //        credito = new Credito();
@@ -174,12 +175,12 @@ public class creditoBean implements Serializable {
 
     public void cargarCredito(Anexo anexo) {
         letraslista = new ArrayList();
-        CreditoDao linkdao = new CreditoDaoImp();
+        CreditoDao creditodao = new CreditoDaoImp();
         List<Letras> letritas = new ArrayList();
         BigDecimal cero = new BigDecimal(0);
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
-        credito = linkdao.cargarCreditoxAnexo(anexo);
+        credito = creditodao.cargarCreditoxAnexo(anexo);
         LetrasDao letras = new LetrasDaoImplements();
         letritas = letras.mostrarLetrasXCred(credito);
         for (int i = 0; i < letritas.size(); i++) {
@@ -190,8 +191,9 @@ public class creditoBean implements Serializable {
                 if (get.getSaldo().compareTo(cero) == 1) {
                     if (get.getFecven().after(fecha)) {
                         get.setEstado("PN");
-                    }else
+                    } else {
                         get.setEstado("VN");
+                    }
                 }
             }
             letrasdao.modificarLetra(get);
@@ -199,13 +201,28 @@ public class creditoBean implements Serializable {
         letraslista = letras.mostrarLetrasXCred(credito);
 //      return credito;
     }
-    
+
     public void insertarPago() {
         PagosDao linkDao = new PagosDaoImp();
-        System.out.println("Este es el Id de letra :"+letra.getIdletras());
+        System.out.println("Este es el Id de letra :" + letra.getIdletras());
 //        pago.setLetras(letra);
         linkDao.insertarPago(pago);
         pago = new Pagos();
     }
-    
+
+    public void insertarNotaDebito() {
+        CreditoDao creditodao = new CreditoDaoImp();
+        LetrasDao letrasdao = new LetrasDaoImplements();        
+        Date d = new Date();
+//        credito = creditodao.cargarCreditoxLetra(letra);
+        letra.setCredito(credito);
+        letra.setDescripcion("ND");
+        letra.setFecreg(d);
+        letra.setMontoletra(BigDecimal.ZERO);
+        letra.setInteres(BigDecimal.ZERO);
+        letra.setSaldo(letra.getMonto());
+        letra.setEstado("PN");
+        letrasdao.insertarLetra(letra);
+        
+    }
 }

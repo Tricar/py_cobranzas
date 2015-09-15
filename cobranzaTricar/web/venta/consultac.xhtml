@@ -80,8 +80,8 @@
                                                  actionListener="#{pagosBean.cargarLetra(letras)}"/>
                             </p:column>
                         </p:dataTable>
-                        <p:commandButton value="Modificar" update=":formPagar" 
-                                         oncomplete="dlgpagar.hide()"/>
+                        <p:commandButton value="Nota de Débito" update=":formPagar" icon="b-add" 
+                                         oncomplete="dlgnotadebito.show()" />
                     </h:form>
                 </div>
                 <p:dialog id="dlg1" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
@@ -102,6 +102,21 @@
                             <p:outputLabel value="Descripción:"/>
                             <p:inputText value="#{pagosBean.pago.descripcion}"/>
                             <p:commandButton actionListener="#{pagosBean.insertar()}" value="Pagar" oncomplete="dlgpagar.hide()"
+                                             update=":formModificar"/>
+                        </p:panelGrid>
+                    </h:form>                        
+                </p:dialog>
+                <p:dialog id="dlg2" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlgnotadebito" modal="true" resizable="false" minWidth="200">
+                    <h:form id="formNotadebito">
+                        <p:panelGrid columns="4">
+                            <p:outputLabel value="Fecha Inicio:"/>
+                            <p:calendar navigator="true" value="#{letrasBean.letra.fecini}"/>
+                            <p:outputLabel value="Fecha Venc:"/>
+                            <p:calendar navigator="true" value="#{letrasBean.letra.fecven}"/>                            
+                            <p:outputLabel value="Monto:"/>
+                            <p:inputText value="#{letrasBean.letra.monto}"/>                            
+                            <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" oncomplete="dlgnotadebito.hide()"
                                              update=":formModificar"/>
                         </p:panelGrid>
                     </h:form>                        
