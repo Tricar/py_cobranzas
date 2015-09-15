@@ -23,5 +23,8 @@
         <property name="descripcion" type="string">
             <column name="descripcion" length="50" />
         </property>
+        <property name="tipo" type="string">
+            <column name="tipo" length="2" />
+        </property>
     </class>
 </hibernate-mapping>
