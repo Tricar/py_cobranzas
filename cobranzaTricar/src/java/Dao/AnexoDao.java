@@ -11,6 +11,8 @@ public interface AnexoDao {
     
     public boolean registrar(Session session, Anexo anexo)throws Exception;
     public List<Anexo> verTodo(Session session) throws Exception;
+    public List<Anexo> verCliente(Session session) throws Exception;
+    public List<Anexo> verEmpleado(Session session) throws Exception;
     public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception;
     public Anexo verByAnexo(Session session, String nombre) throws Exception;
     public Anexo verByAnexoDifer(Session session,Integer idanexo, String nombre) throws Exception;

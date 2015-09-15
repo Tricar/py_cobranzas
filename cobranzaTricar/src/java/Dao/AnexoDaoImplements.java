@@ -184,4 +184,24 @@ public class AnexoDaoImplements implements AnexoDao {
         session.delete(anexo);
         return true;
     }
+
+    @Override
+    public List<Anexo> verCliente(Session session) throws Exception {
+        String hql = "FROM Anexo WHERE tipoanexo IN ('CN','CJ')";
+        Query query = session.createQuery(hql);
+        
+        List<Anexo> listaanexo = (List<Anexo>)query.list();
+        
+        return listaanexo;
+    }
+
+    @Override
+    public List<Anexo> verEmpleado(Session session) throws Exception {
+        String hql = "FROM Anexo WHERE tipoanexo IN ('VE','AD','GE')";
+        Query query = session.createQuery(hql);
+        
+        List<Anexo> listaanexo = (List<Anexo>)query.list();
+        
+        return listaanexo;
+    }
 }
