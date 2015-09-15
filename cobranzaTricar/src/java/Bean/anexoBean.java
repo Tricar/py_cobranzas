@@ -209,9 +209,9 @@ public class anexoBean implements Serializable {
             }
             
             if(this.anexo.getTipodocumento().equals("DNI")){
-                this.anexo.setTipodocumento("CN");
+                this.anexo.setTipoanexo("CN");
             } else {
-                this.anexo.setTipodocumento("CJ");
+                this.anexo.setTipoanexo("CJ");
             }
 
             Date d = new Date();
@@ -256,6 +256,16 @@ public class anexoBean implements Serializable {
             if (daotanexo.verByAnexoDifer(this.session, this.anexo.getIdanexo(), this.anexo.getNombre()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya Existe."));
                 return;
+            }
+            
+            if(!this.razonsocial.equals("")){
+                this.anexo.setNombre(this.razonsocial);
+            }
+            
+            if(this.anexo.getTipodocumento().equals("DNI")){
+                this.anexo.setTipoanexo("CN");
+            } else {
+                this.anexo.setTipoanexo("CJ");
             }
 
             daotanexo.modificar(this.session, this.anexo);
