@@ -42,3 +42,7 @@ body{
 .ui-state-default .b-cancel{
     background-image: url(images/crossout.png);
 }
+
+.campo{
+    display: none;
+}

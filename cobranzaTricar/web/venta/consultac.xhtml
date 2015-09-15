@@ -14,11 +14,11 @@
             <ui:define name="content">
                 <h:form>
                     <p:panelGrid columns="2">
-                        <p:outputLabel value="Buscar Cliente x DNI:"/>
+                        <p:outputLabel value="Ingrese DNI o RUC:"/>
                         <p:inputMask mask="9?9999999999" maxlength="11" value="#{anexoBean.dni}"/>                        
                         <p:commandButton value="Buscar" actionListener="#{anexoBean.filtrarClientEnter()}"
                                          ajax="false"/>
-                        
+
                     </p:panelGrid>
                 </h:form>                
                 <h:form id="formMostrar">
@@ -31,13 +31,12 @@
                             <h:outputText value="#{null}" />
                         </p:column>
                         <p:column headerText="Cargar">                            
-                            <p:commandButton oncomplete="dlgmodificar.show()" value="C" update=":formModificar"
-                                             actionListener="#{creditoBean.cargarCredito(cliente)}"/>
+                            <p:commandButton value="C" update=":formModificar" 
+                                             actionListener="#{creditoBean.cargarCredito(cliente)}" onclick="ActivarCampo();"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
-                <p:dialog id="dlg" header="Detalles del credito" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
+                <div id="tablaletras" class="campo">
                     <h:form id="formModificar">
                         <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
                                      emptyMessage="No hay nada para mostrar">
@@ -83,7 +82,7 @@
                         <p:commandButton value="Modificar" update=":formPagar" 
                                          oncomplete="dlgpagar.hide()"/>
                     </h:form>
-                </p:dialog>
+                </div>
                 <p:dialog id="dlg1" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgpagar" modal="true" resizable="false" minWidth="200">
                     <h:form id="formPagar">
@@ -103,5 +102,12 @@
                 </p:dialog>
             </ui:define>
         </ui:composition>
+        <script type="text/javascript">
+            function ActivarCampo() {
+                var contenedor = document.getElementById("tablaletras");
+                contenedor.style.display = "block";
+                return true;
+            }
+        </script>
     </h:body>
 </html>
