@@ -40,6 +40,7 @@ public class Credito implements java.io.Serializable {
     private BigDecimal precio;
     private BigDecimal inicial;
     private BigDecimal saldo;
+    private BigDecimal totaldeuda;
     private BigDecimal interes;
     private Boolean cronograma;
     private Boolean contrato;
@@ -59,7 +60,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases) {
+    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases) {
         this.idventa = idventa;
         this.anexoByIdaval = anexoByIdaval;
         this.anexoByCodven = anexoByCodven;
@@ -76,6 +77,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
         this.inicial = inicial;
         this.saldo = saldo;
+        this.totaldeuda = totaldeuda;
         this.interes = interes;
         this.cronograma = cronograma;
         this.contrato = contrato;
@@ -232,6 +234,15 @@ public class Credito implements java.io.Serializable {
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
+    }
+    
+    @Column(name = "totaldeuda", precision = 17, scale = 2)
+    public BigDecimal getTotaldeuda() {
+        return this.totaldeuda;
+    }
+
+    public void setTotaldeuda(BigDecimal totaldeuda) {
+        this.totaldeuda = totaldeuda;
     }
 
     @Column(name = "interes", precision = 17, scale = 2)

@@ -48,8 +48,8 @@
                         <p:column headerText="Vehículo">
                             <h:outputText value="#{cred.vehiculo.tipovehiculo}" />
                         </p:column>
-                        <p:column headerText="Saldo">
-                            <h:outputText value="#{cred.saldo}" />
+                        <p:column headerText="Deuda">
+                            <h:outputText value="#{cred.totaldeuda}" />
                         </p:column>
                         <p:column headerText=" ">
                             <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">

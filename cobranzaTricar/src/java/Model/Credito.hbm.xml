@@ -45,16 +45,19 @@
             <column name="empresa" length="2" />
         </property>
         <property name="precio" type="big_decimal">
-            <column name="precio" precision="17" scale="5" not-null="true" />
+            <column name="precio" precision="17" scale="2" not-null="true" />
         </property>
         <property name="inicial" type="big_decimal">
-            <column name="inicial" precision="17" scale="5" />
+            <column name="inicial" precision="17" scale="2" />
         </property>
         <property name="saldo" type="big_decimal">
-            <column name="saldo" precision="17" scale="5" />
+            <column name="saldo" precision="17" scale="2" />
+        </property>
+        <property name="totaldeuda" type="big_decimal">
+            <column name="totaldeuda" precision="17" scale="2" />
         </property>
         <property name="interes" type="big_decimal">
-            <column name="interes" precision="17" scale="5" />
+            <column name="interes" precision="17" scale="2" />
         </property>
         <property name="cronograma" type="java.lang.Boolean">
             <column name="cronograma" />

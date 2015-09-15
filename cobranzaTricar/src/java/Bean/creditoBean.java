@@ -107,9 +107,9 @@ public class creditoBean implements Serializable {
     }
     
     public void insertar() {
-        CreditoDao linkDao = new CreditoDaoImp();
+        CreditoDao creditodao = new CreditoDaoImp();
         credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
-        linkDao.insertarVenta(credito);
+        creditodao.insertarVenta(credito);
         Letras letras = new Letras();
         BigDecimal nletras = new BigDecimal(credito.getNletras());
         BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
@@ -135,8 +135,11 @@ public class creditoBean implements Serializable {
             letras.setSaldo(montoletras.add(mtointeres));
             letras.setEstado("PN");
             letras.setDescripcion("L" + i);
-            letrasdao.insertarLetra(letras);
+            credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
+            letrasdao.insertarLetra(letras);            
         }
+        creditodao.modificarVenta(credito);
+        credito = new Credito();        
     }
 
     public void modificar() {

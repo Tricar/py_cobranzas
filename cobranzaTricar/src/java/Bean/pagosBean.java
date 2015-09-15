@@ -93,7 +93,7 @@ public class pagosBean implements Serializable {
         }
         letrasdao.modificarLetra(letra);
         pagosdao.insertarPago(pago);
-        credito.setSaldo(credito.getSaldo().subtract(pago.getMonto()));
+        credito.setTotaldeuda(credito.getTotaldeuda().subtract(pago.getMonto()));
         creditodao.modificarVenta(credito);
         pago = new Pagos();
     }

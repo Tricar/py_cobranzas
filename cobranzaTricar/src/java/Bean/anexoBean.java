@@ -39,7 +39,7 @@ public class anexoBean implements Serializable {
     private String text;
     private String nombre;
     private String dni;
-    private List<Credito> creditos = new ArrayList();    
+    private List<Credito> creditos = new ArrayList();
     private String razonsocial;
 
     public anexoBean() {
@@ -72,7 +72,7 @@ public class anexoBean implements Serializable {
     public String getRazonsocial() {
         return razonsocial;
     }
-        
+
     public void setAnexo(Anexo anexo) {
         this.anexo = anexo;
     }
@@ -84,7 +84,7 @@ public class anexoBean implements Serializable {
     public void setDni(String dni) {
         this.dni = dni;
     }
-    
+
     public void insertarcliente() {
         this.session = null;
         this.transaction = null;
@@ -100,12 +100,15 @@ public class anexoBean implements Serializable {
                 this.anexo = new Anexo();
                 return;
             }
-            
-            if(!this.razonsocial.equals("")){
+
+            if (!this.razonsocial.equals("")) {
                 this.anexo.setNombre(this.razonsocial);
             }
-
-            this.anexo.setTipoanexo("CL");
+            if(anexo.getTipodocumento().equals("DNI")){
+                this.anexo.setTipoanexo("CN");
+            }else{
+                this.anexo.setTipoanexo("CJ");
+            }            
             Date d = new Date();
             this.anexo.setFechareg(d);
             this.anexo.setCodven("");
@@ -148,6 +151,11 @@ public class anexoBean implements Serializable {
             if (daotanexo.verByAnexoDifer(this.session, this.anexo.getIdanexo(), this.anexo.getNombre()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya Existe."));
                 return;
+            }
+            if(anexo.getTipodocumento().equals("DNI")){
+                this.anexo.setTipoanexo("CN");
+            }else{
+                this.anexo.setTipoanexo("CJ");
             }
 
             daotanexo.modificar(this.session, this.anexo);
@@ -332,8 +340,8 @@ public class anexoBean implements Serializable {
     public void filtrarClientEnter() {
 //        AnexoDao anex = new AnexoDaoImplements();
 //        filtradaEnter = anex.buscarClientexDoc(dni, "CN", "CJ");        
-        CreditoDao linkdao = new CreditoDaoImp();        
-        creditos = linkdao.mostrarVentas();        
+        CreditoDao linkdao = new CreditoDaoImp();
+        creditos = linkdao.mostrarVentas();
     }
 
     public List<Anexo> getFiltradaCredito() {
@@ -341,9 +349,9 @@ public class anexoBean implements Serializable {
         AnexoDao anexito = new AnexoDaoImplements();
         int sw = 0;
         for (int i = 0; i < creditos.size(); i++) {
-            credito = creditos.get(i);            
-            if(credito.getAnexoByIdanexo().getNumdocumento().startsWith(dni)){
-                sw=1;                
+            credito = creditos.get(i);
+            if (credito.getAnexoByIdanexo().getNumdocumento().startsWith(dni)) {
+                sw = 1;
                 anexo = anexito.cargarxCredito(credito.getAnexoByIdanexo().getIdanexo());
                 filtradaCredito.add(anexo);
             }
