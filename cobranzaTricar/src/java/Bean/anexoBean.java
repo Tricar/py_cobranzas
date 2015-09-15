@@ -45,6 +45,317 @@ public class anexoBean implements Serializable {
     public anexoBean() {
     }
     
+    public List<Anexo> verCliente() {
+
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            AnexoDaoImplements anexoDao = new AnexoDaoImplements();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+
+            this.anexos = anexoDao.verCliente(this.session);
+
+            this.transaction.commit();
+
+            return anexos;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public List<Anexo> verEmpleado() {
+
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            AnexoDaoImplements anexoDao = new AnexoDaoImplements();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+
+            this.anexos = anexoDao.verEmpleado(this.session);
+
+            this.transaction.commit();
+
+            return anexos;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void insertar() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            if (daotanexo.verByAnexo(this.session, this.anexo.getNombre()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya existe en DB."));
+                this.anexo = new Anexo();
+                return;
+            }
+
+            daotanexo.registrar(this.session, this.anexo);
+
+            this.transaction.commit();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+
+            this.anexo = new Anexo();
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            this.anexo = new Anexo();
+
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void insertarcliente() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            if (daotanexo.verByAnexo(this.session, this.anexo.getNombre()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Cliente ya existe en DB."));
+                this.anexo = new Anexo();
+                return;
+            }
+            
+            if(!this.razonsocial.equals("")){
+                this.anexo.setNombre(this.razonsocial);
+            }
+            
+            if(this.anexo.getTipodocumento().equals("DNI")){
+                this.anexo.setTipodocumento("CN");
+            } else {
+                this.anexo.setTipodocumento("CJ");
+            }
+
+            Date d = new Date();
+            this.anexo.setFechareg(d);
+            this.anexo.setCodven("");
+
+            daotanexo.registrar(this.session, this.anexo);
+
+            this.transaction.commit();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+
+            this.anexo = new Anexo();
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            this.anexo = new Anexo();
+
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void modificar() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+
+            if (daotanexo.verByAnexoDifer(this.session, this.anexo.getIdanexo(), this.anexo.getNombre()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya Existe."));
+                return;
+            }
+
+            daotanexo.modificar(this.session, this.anexo);
+
+            this.transaction.commit();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
+
+            this.anexo = new Anexo();
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            this.anexo = new Anexo();
+
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void eliminar() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+
+            daotanexo.eliminar(this.session, this.anexo);
+
+            this.transaction.commit();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Anexo Correctamente."));
+
+            this.anexo = new Anexo();
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void cargarAnexoEditar(int idanexo) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            this.anexo = daotanexo.verByIdanexo(this.session, idanexo);
+
+            this.transaction.commit();
+
+            RequestContext.getCurrentInstance().update("frmEditarAnexo:panelEditarAnexo");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEditarAnexo').show()");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void cargarAnexoEliminar(int idanexo) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            this.anexo = daotanexo.verByIdanexo(this.session, idanexo);
+
+            this.transaction.commit();
+
+            RequestContext.getCurrentInstance().update("frmEliminarAnexo");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarAnexo').show()");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public List<Anexo> filtrarCliente(String name) {
+        this.query = new ArrayList<Anexo>();
+        AnexoDao anexoDao = new AnexoDaoImplements();
+        List<Anexo> tipos = anexoDao.filtarTipo("CL");
+        for (Anexo tipo : tipos) {
+            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
+
+    public List<Anexo> filtrarVendedor(String name) {
+        this.query = new ArrayList<Anexo>();
+        AnexoDao anexoDao = new AnexoDaoImplements();
+        List<Anexo> tipos = anexoDao.filtarTipo("VE");
+        for (Anexo tipo : tipos) {
+            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
+
     public List<Anexo> filtrarGestor(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
