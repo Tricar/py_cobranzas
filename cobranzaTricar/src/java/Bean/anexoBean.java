@@ -45,22 +45,6 @@ public class anexoBean implements Serializable {
     public anexoBean() {
     }
     
-    public List<Anexo> verCliente() {
-            if(anexo.getTipodocumento().equals("DNI")){
-                this.anexo.setTipoanexo("CN");
-            }else{
-                this.anexo.setTipoanexo("CJ");
-            }            
-        AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarTipo("VE");
-        for (Anexo tipo : tipos) {
-            if (tipo.getNombre().toLowerCase().startsWith(name)) {
-                query.add(tipo);
-            }
-        }
-        return query;
-    }
-
     public List<Anexo> filtrarGestor(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
