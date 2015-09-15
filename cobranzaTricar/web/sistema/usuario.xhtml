@@ -14,8 +14,7 @@
 
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="b-add">
-                    </p:commandButton>
+                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="b-add"/>
                 </h:form>
 
                 <br/>
@@ -24,7 +23,7 @@
                 <hr/>
                 <h:form id="formMostrar">
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                    <p:dataTable var="item" value="#{usuarioBean.listatusuario}" 
+                    <p:dataTable var="item" value="#{usuarioBean.verTodo()}" 
                                  emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
                                  paginatorPosition="top" rowsPerPageTemplate="10">
                         <p:column headerText="Usuario">
@@ -76,7 +75,7 @@
                             <p:outputLabel value="Perfil:"/>
                             <p:selectOneMenu value="#{usuarioBean.tusuario.perfil}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                <f:selectItems value="#{perfilBean.perfiles}" var="perfil" itemLabel="#{perfil.descripcion}" itemValue="#{perfil}"/>
+                                <f:selectItems value="#{perfilBean.verTodo()}" var="perfil" itemLabel="#{perfil.descripcion}" itemValue="#{perfil}"/>
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
                             <p:commandButton value="Registrar Usuario" icon="b-new" ajax="false" actionListener="#{usuarioBean.registrar()}" />
@@ -88,14 +87,14 @@
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEditarUsuario" modal="true">
                         <h:panelGrid id="panelEditarUsuario" columns="3">
                             <p:inputText type="hidden" value="#{usuarioBean.tusuario.idusuario}"/>
+                            <p:inputText type="hidden" value="#{usuarioBean.tusuario.clave}"/>                            
                             <p:inputText type="hidden" value="#{usuarioBean.tusuario.fechareg}"/>
-                            <p:inputText type="hidden" value="#{usuarioBean.tusuario.clave}"/>
                             <p:outputLabel value="Usuario:" for="txtUsuario"/>
                             <p:inputText id="txtUsuario" label="Usuario" value="#{usuarioBean.tusuario.usuario}" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:message for="txtUsuario"/>
-                            <p:outputLabel value="Clave:" for="txtClave"/>
+                            <p:outputLabel value="Clave:"/>
                             <p:inputText id="txtClave" label="Clave" value="#{usuarioBean.txtclavevacia}" autocomplete="off"/>
                             <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Anexo:"/>

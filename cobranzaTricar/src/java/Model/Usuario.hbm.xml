@@ -18,7 +18,7 @@
             <column name="usuario" length="10" not-null="true" />
         </property>
         <property name="clave" type="string">
-            <column name="clave" length="150" not-null="true" />
+            <column name="clave" length="350" not-null="true" />
         </property>
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" />
