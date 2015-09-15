@@ -14,6 +14,9 @@
         <property name="sistema" type="java.lang.Boolean">
             <column name="sistema" />
         </property>
+        <property name="sisEmp" type="java.lang.Boolean">
+            <column name="sisEmp" />
+        </property>
         <property name="sisUsu" type="java.lang.Boolean">
             <column name="sisUsu" />
         </property>
@@ -43,6 +46,9 @@
         </property>
         <property name="venReg" type="java.lang.Boolean">
             <column name="venReg" />
+        </property>
+        <property name="venCon" type="java.lang.Boolean">
+            <column name="venCon" />
         </property>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>

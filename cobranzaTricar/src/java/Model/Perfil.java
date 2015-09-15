@@ -42,10 +42,11 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.sistema = sistema;
+        this.sisEmp = sisEmp;
         this.sisUsu = sisUsu;
         this.sisPer = sisPer;
         this.mante = mante;
@@ -56,6 +57,7 @@ public class Perfil implements java.io.Serializable {
         this.venta = venta;
         this.venLis = venLis;
         this.venReg = venReg;
+        this.venCon = venCon;
         this.usuarios = usuarios;
     }
 
@@ -95,6 +97,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setSisUsu(Boolean sisUsu) {
         this.sisUsu = sisUsu;
+    }
+    
+    @Column(name = "sisEmp")
+    public Boolean getSisEmp() {
+        return this.sisEmp;
+    }
+
+    public void setSisEmp(Boolean sisEmp) {
+        this.sisEmp = sisEmp;
     }
 
     @Column(name = "sisPer")
@@ -176,6 +187,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setVenReg(Boolean venReg) {
         this.venReg = venReg;
+    }
+    
+    @Column(name = "venCon")
+    public Boolean getVenCon() {
+        return this.venCon;
+    }
+
+    public void setVenCon(Boolean venCon) {
+        this.venCon = venCon;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "perfil")

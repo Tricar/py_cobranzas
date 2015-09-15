@@ -32,10 +32,11 @@
                         </p:column>
                         <p:column headerText="Cargar">                            
                             <p:commandButton value="C" update=":formModificar" 
-                                             actionListener="#{creditoBean.cargarCredito(cliente)}" onclick="ActivarCampo();"/>
+                                             actionListener="#{creditoBean.cargarCredito(cliente)}" onclick="$('#tablaletras').show();"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
+                
                 <div id="tablaletras" class="campo">
                     <h:form id="formModificar">
                         <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
@@ -107,12 +108,5 @@
                 </p:dialog>
             </ui:define>
         </ui:composition>
-        <script type="text/javascript">
-            function ActivarCampo() {
-                var contenedor = document.getElementById("tablaletras");
-                contenedor.style.display = "block";
-                return true;
-            }
-        </script>
     </h:body>
 </html>

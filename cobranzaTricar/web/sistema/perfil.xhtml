@@ -33,9 +33,18 @@
 
                 <h:form id="frmEditarPerfil">
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEditarPerfil" modal="true">
-                        <h:panelGrid id="panelEditarPerfil" columns="3">
+                        <h:panelGrid id="panelEditarPerfil" columns="3">                        
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" 
+                                         autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtDescripcion"/>
+                            <h:panelGroup></h:panelGroup>                            
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sistema}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisEmp}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisUsu}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisPer}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.mante}"/>
@@ -46,13 +55,7 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venta}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venLis}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venReg}"/>
-                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" 
-                                         autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:message for="txtDescripcion"/>
-                            <h:panelGroup></h:panelGroup>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.venCon}"/>    
                             <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
@@ -65,6 +68,8 @@
                         <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
                         <br/>
                         <br/><h:outputText value="Sistema:" />
+                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisEmp}"/>
+                        <p:outputLabel value="Empleados" />
                         <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisUsu}"/>
                         <p:outputLabel value="Usuarios" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
@@ -85,6 +90,8 @@
                         <h:outputText value="Listar" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venReg}"/>
                         <h:outputText value="Vender" />
+                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.venCon}"/>
+                        <p:outputLabel value="Consultar" />
                         <p:separator/>
                         <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>
