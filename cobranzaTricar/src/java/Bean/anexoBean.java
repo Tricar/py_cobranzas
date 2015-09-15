@@ -42,10 +42,6 @@ public class anexoBean implements Serializable {
     private List<Credito> creditos = new ArrayList();    
     private String razonsocial;
 
-    private String text;
-    private String nombre;
-    private String razonsocial;
-
     public anexoBean() {
     }
 
@@ -89,97 +85,6 @@ public class anexoBean implements Serializable {
         this.dni = dni;
     }
     
-    public List<Anexo> getAnexos() {
-        
-        this.session = null;
-        this.transaction = null;
-
-        try {
-            AnexoDao daotusuario = new AnexoDaoImplements();
-
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-
-            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
-            if (daotanexo.verByAnexo(this.session, this.anexo.getNombre()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya existe en DB."));
-                this.anexo = new Anexo();
-                return;
-            }
-
-            daotanexo.registrar(this.session, this.anexo);
-
-            this.transaction.commit();
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-
-            this.anexo = new Anexo();
-
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-
-            this.anexo = new Anexo();
-
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
-        } 
-    }
-
-    public void insertarcliente() {
-        this.session = null;
-        this.transaction = null;
-
-        try {
-
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-
-            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
-            if (daotanexo.verByAnexo(this.session, this.anexo.getNombre()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Cliente ya existe en DB."));
-                this.anexo = new Anexo();
-                return;
-            }
-            
-            if(!this.razonsocial.equals("")){
-                this.anexo.setNombre(this.razonsocial);
-            }
-
-            this.anexo.setTipoanexo("CL");
-            Date d = new Date();
-            this.anexo.setFechareg(d);
-            this.anexo.setCodven("");
-
-            daotanexo.registrar(this.session, this.anexo);
-
-            this.transaction.commit();
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-
-            this.anexo = new Anexo();
-
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-
-            this.anexo = new Anexo();
-
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
-        }
-    }
-
     public void insertarcliente() {
         this.session = null;
         this.transaction = null;
@@ -451,28 +356,8 @@ public class anexoBean implements Serializable {
         return filtradaCredito;
     }
 
-    public Anexo getAnexo() {
-        return anexo;
-    }
-
     public void setAnexo(List<Anexo> anexo) {
         this.anexos = anexo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setAnexo(Anexo anexo) {
-        this.anexo = anexo;
-    }
-
-    public String getRazonsocial() {
-        return razonsocial;
     }
 
     public void setRazonsocial(String razonsocial) {
