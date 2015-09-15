@@ -8,5 +8,4 @@
         <converter-for-class>java.util.Date</converter-for-class>
         <converter-class>Clases.NdevDateTimeConverter</converter-class>
     </converter>
-
 </faces-config>

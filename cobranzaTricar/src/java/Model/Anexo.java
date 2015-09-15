@@ -30,6 +30,9 @@ public class Anexo  implements java.io.Serializable {
      private String tipodocumento;
      private String numdocumento;
      private String direccion;
+     private String aahh;
+     private String distrito;
+     private String sector;
      private String referencia;
      private String telefono;
      private String celular;
@@ -59,12 +62,15 @@ public class Anexo  implements java.io.Serializable {
         this.idanexo = idanexo;
         this.tipoanexo = tipoanexo;
     }
-    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, Set creditosForIdaval, Set creditosForCodven, Set usuarios, Set creditosForVerificado, Set creditosForIdanexo) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, Set creditosForIdaval, Set creditosForCodven, Set usuarios, Set creditosForVerificado, Set creditosForIdanexo) {
        this.idanexo = idanexo;
        this.nombre = nombre;
        this.tipodocumento = tipodocumento;
        this.numdocumento = numdocumento;
        this.direccion = direccion;
+       this.aahh = aahh;
+       this.distrito = distrito;
+       this.sector = sector;
        this.referencia = referencia;
        this.telefono = telefono;
        this.celular = celular;
@@ -138,7 +144,33 @@ public class Anexo  implements java.io.Serializable {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
+    
+    @Column(name="aahh", length=50)
+    public String getAahh() {
+        return this.aahh;
+    }
+    
+    public void setAahh(String aahh) {
+        this.aahh = aahh;
+    }
+    
+    @Column(name="distrito", length=50)
+    public String getDistrito() {
+        return this.distrito;
+    }
+    
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
+    }
+    
+    @Column(name="sector", length=50)
+    public String getSector() {
+        return this.sector;
+    }
+    
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
     
     @Column(name="referencia", length=80)
     public String getReferencia() {

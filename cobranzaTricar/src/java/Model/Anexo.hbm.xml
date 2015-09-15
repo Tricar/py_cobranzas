@@ -20,6 +20,15 @@
         <property name="direccion" type="string">
             <column name="direccion" length="50" />
         </property>
+        <property name="aahh" type="string">
+            <column name="aahh" length="50" />
+        </property>
+        <property name="distrito" type="string">
+            <column name="distrito" length="50" />
+        </property>
+        <property name="sector" type="string">
+            <column name="sector" length="50" />
+        </property>
         <property name="referencia" type="string">
             <column name="referencia" length="80" />
         </property>

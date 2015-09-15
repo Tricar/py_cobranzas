@@ -3,17 +3,20 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="views/index.xhtml" x="150" y="600" zoom="true"/>
-        <Node id="venta/index.xhtml" x="650" y="300" zoom="true"/>
-        <Node id="sistema/usuario.xhtml" x="900" y="300" zoom="true"/>
-        <Node id="mantenimiento/modarticulo.xhtml" x="400" y="450" zoom="true"/>
-        <Node id="index-old.xhtml" x="900" y="150" zoom="true"/>
-        <Node id="login.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="sistema/usuario.xhtml" x="953" y="242" zoom="true"/>
+        <Node id="mantenimiento/modarticulo.xhtml" x="400" y="450" zoom="false"/>
+        <Node id="sistema/empleado.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="index-old.xhtml" x="1028" y="48" zoom="true"/>
+        <Node id="login.xhtml" x="142" y="169" zoom="false"/>
+        <Node id="views/sessionTimeOut.xhtml" x="650" y="300" zoom="false"/>
         <Node id="views/template.xhtml" x="1150" y="150" zoom="true"/>
-        <Node id="mantenimiento/cliente.xhtml" x="650" y="150" zoom="true"/>
-        <Node id="venta/listarv.xhtml" x="150" y="150" zoom="true"/>
-        <Node id="sistema/perfil.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="mantenimiento/cliente.xhtml" x="650" y="150" zoom="false"/>
+        <Node id="venta/listarv.xhtml" x="123" y="72" zoom="false"/>
+        <Node id="sistema/perfil.xhtml" x="150" y="450" zoom="false"/>
+        <Node id="venta/consultac.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="venta/credito.xhtml" x="400" y="600" zoom="true"/>
         <Node id="mantenimiento/colorart.xhtml" x="400" y="300" zoom="true"/>
-        <Node id="mantenimiento/articulo.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="mantenimiento/articulo.xhtml" x="400" y="150" zoom="false"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
