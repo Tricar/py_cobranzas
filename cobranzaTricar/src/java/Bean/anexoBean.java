@@ -166,8 +166,13 @@ public class anexoBean implements Serializable {
             if(!this.razonsocial.equals("")){
                 this.anexo.setNombre(this.razonsocial);
             }
+            
+            if(this.anexo.getTipodocumento().equals("DNI")){
+                this.anexo.setTipodocumento("CN");
+            } else {
+                this.anexo.setTipodocumento("CJ");
+            }
 
-            this.anexo.setTipoanexo("CN");
             Date d = new Date();
             this.anexo.setFechareg(d);
             this.anexo.setCodven("");
