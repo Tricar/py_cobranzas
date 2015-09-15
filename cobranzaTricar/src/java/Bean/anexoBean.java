@@ -376,7 +376,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarCliente(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarTipo("CL");
+        List<Anexo> tipos = anexoDao.filtarTipoDos("CN", "CJ");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().toLowerCase().startsWith(name)) {
                 query.add(tipo);
@@ -412,7 +412,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarAval(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarTipoDos("VE", "GE", "CL");
+        List<Anexo> tipos = anexoDao.filtarAval("AD");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().toLowerCase().startsWith(name)) {
                 query.add(tipo);
@@ -424,7 +424,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarEmpleado(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarTipoDos("VE", "GE", "AD");
+        List<Anexo> tipos = anexoDao.filtarTipoTres("VE", "GE", "AD");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().toLowerCase().startsWith(name)) {
                 query.add(tipo);
@@ -471,6 +471,11 @@ public class anexoBean implements Serializable {
     public void setRazonsocial(String razonsocial) {
         this.razonsocial = razonsocial;
     }
+
+    public String getRazonsocial() {
+        return razonsocial;
+    }
+       
 
     public List<Anexo> getAnexos() {
 

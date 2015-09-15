@@ -19,7 +19,9 @@ public interface AnexoDao {
     public boolean modificar(Session session, Anexo anexo) throws Exception;
     public boolean eliminar (Session session, Anexo anexo) throws Exception;   
     public List<Anexo> filtarTipo(String tipo);
-    public List<Anexo> filtarTipoDos(String tipo, String tipo1, String tipo2);
+    public List<Anexo> filtarTipoTres(String tipo, String tipo1, String tipo2);
+    public List<Anexo> filtarTipoDos(String tipo, String tipo1);
+    public List<Anexo> filtarAval(String tipo);
     public List<Anexo> buscarxNombre(String nombre);
     public List<Anexo> buscarCliente(String nombre, String tipo);
     public List<Anexo> buscarClientexDoc(String dni, String tipo, String tipo1);

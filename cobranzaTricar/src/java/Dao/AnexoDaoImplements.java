@@ -59,7 +59,7 @@ public class AnexoDaoImplements implements AnexoDao {
     }
 
     @Override
-    public List<Anexo> filtarTipoDos(String tipo, String tipo1, String tipo2) {
+    public List<Anexo> filtarTipoTres(String tipo, String tipo1, String tipo2) {
         Session session = null;
         List<Anexo> lista = null;
         try {
@@ -226,6 +226,45 @@ public class AnexoDaoImplements implements AnexoDao {
             }
         }
 //        return anexo;
+        return lista;
+    }
+
+    @Override
+    public List<Anexo> filtarTipoDos(String tipo, String tipo1) {
+        Session session = null;
+        List<Anexo> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Anexo WHERE tipoanexo=:u OR tipoanexo=:v");
+            query.setParameter("u", tipo);
+            query.setParameter("v", tipo1);            
+            lista = (List<Anexo>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Anexo> filtarAval(String tipo) {
+        Session session = null;
+        List<Anexo> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Anexo WHERE tipoanexo<>:u");
+            query.setParameter("u", tipo);            
+            lista = (List<Anexo>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
         return lista;
     }
 }
