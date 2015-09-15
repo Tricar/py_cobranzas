@@ -157,10 +157,16 @@ public class anexoBean implements Serializable {
 
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
             if (daotanexo.verByAnexo(this.session, this.anexo.getNombre()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya existe en DB."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Empleado ya existe en DB."));
                 this.anexo = new Anexo();
                 return;
-            }
+            }            
+            
+            this.anexo.setConyuge("");
+            this.anexo.setDniconyu("");
+            this.anexo.setTipodocumento("DNI");
+            Date d = new Date();
+            this.anexo.setFechareg(d);
 
             daotanexo.registrar(this.session, this.anexo);
 
@@ -201,9 +207,11 @@ public class anexoBean implements Serializable {
                 this.anexo = new Anexo();
                 return;
             }
-
-            if (!this.razonsocial.equals("")) {
+            
+            if(this.razonsocial != null){
                 this.anexo.setNombre(this.razonsocial);
+                this.anexo.setApemat("");
+                this.anexo.setApepat("");
             }
 
             if (this.anexo.getTipodocumento().equals("DNI")) {
