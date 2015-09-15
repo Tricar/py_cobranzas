@@ -23,6 +23,7 @@
                         <p:menuitem value="Inicio" icon="ui-icon-home" outcome="/views/index" />
 
                         <p:submenu rendered="#{loginBean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-suitcase">
+                            <p:menuitem value="Empleado" outcome="/sistema/empleado" icon="ui-icon-newwin" />
                             <p:menuitem rendered="#{loginBean.usuario.perfil.sisUsu}" value="Usuario" outcome="/sistema/usuario" icon="ui-icon-person" />
                             <p:menuitem rendered="#{loginBean.usuario.perfil.sisPer}" value="Perfil" outcome="/sistema/perfil" icon="ui-icon-clipboard" />
                         </p:submenu>

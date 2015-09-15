@@ -44,6 +44,68 @@ public class anexoBean implements Serializable {
 
     public anexoBean() {
     }
+    
+    public List<Anexo> verCliente() {
+
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            AnexoDaoImplements anexoDao = new AnexoDaoImplements();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+
+            this.anexos = anexoDao.verCliente(this.session);
+
+            this.transaction.commit();
+
+            return anexos;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public List<Anexo> verEmpleado() {
+
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            AnexoDaoImplements anexoDao = new AnexoDaoImplements();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+
+            this.anexos = anexoDao.verEmpleado(this.session);
+
+            this.transaction.commit();
+
+            return anexos;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
 
     public String getNombre() {
         return nombre;

@@ -186,16 +186,36 @@ public class AnexoDaoImplements implements AnexoDao {
     }
 
     @Override
+    public List<Anexo> verCliente(Session session) throws Exception {
+        String hql = "FROM Anexo WHERE tipoanexo IN ('CN','CJ')";
+        Query query = session.createQuery(hql);
+        
+        List<Anexo> listaanexo = (List<Anexo>)query.list();
+        
+        return listaanexo;
+    }
+
+    @Override
+    public List<Anexo> verEmpleado(Session session) throws Exception {
+        String hql = "FROM Anexo WHERE tipoanexo IN ('VE','AD','GE')";
+        Query query = session.createQuery(hql);
+        
+        List<Anexo> listaanexo = (List<Anexo>)query.list();
+        
+        return listaanexo;
+    }
+
+    @Override
     public List<Anexo> buscarClientexDoc(String dni, String tipo, String tipo1) {
         Session session = null;
 //        Anexo anexo = null;
         List<Anexo> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Anexo WHERE numdocumento=:d and tipoanexo=:t or tipoanexo=:t1");
+            Query query = session.createQuery("FROM Anexo WHERE numdocumento=:n and tipoanexo=:t and tipoanexo=:v");
             query.setParameter("t", tipo);
-            query.setParameter("t1", tipo1);
-            query.setParameter("d", dni);
+            query.setParameter("v", tipo1);
+            query.setParameter("n", dni);
             lista = (List<Anexo>) query.list();
 //            anexo = (Anexo)query.uniqueResult();
         } catch (HibernateException e) {
