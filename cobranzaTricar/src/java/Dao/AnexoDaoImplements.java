@@ -212,7 +212,7 @@ public class AnexoDaoImplements implements AnexoDao {
         List<Anexo> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Anexo WHERE numdocumento=:n and tipoanexo=:t and tipoanexo=:v");
+            Query query = session.createQuery("FROM Anexo WHERE numdocumento=:n and tipoanexo=:t or tipoanexo=:v");
             query.setParameter("t", tipo);
             query.setParameter("v", tipo1);
             query.setParameter("n", dni);
@@ -266,5 +266,28 @@ public class AnexoDaoImplements implements AnexoDao {
             }
         }
         return lista;
+    }
+
+    @Override
+    public Anexo cargarClientexDoc(String dni, String tipo, String tipo1) {
+        Session session = null;
+        Anexo anexo = new Anexo();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Anexo WHERE numdocumento=:n and tipoanexo=:t or tipoanexo=:v");
+            query.setParameter("n", dni);
+            query.setParameter("t", tipo);
+            query.setParameter("v", tipo1);            
+//            lista = (List<Anexo>) query.list();
+            anexo = (Anexo)query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+//        return anexo;
+        return anexo;
     }
 }

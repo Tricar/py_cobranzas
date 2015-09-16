@@ -151,4 +151,45 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return credito;
     }
+
+    @Override
+    public List<Credito> filtrarDni(String dni) {
+        Session session = null;
+        List<Credito> lista = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE " );
+            query.setParameter("start_date", dni);            
+            lista = (List<Credito>)query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Credito> filtrarCreditoxAnexo(Anexo anexo) {
+        Session session = null;
+        List<Credito> lista = null;
+        Integer idanexo;
+        idanexo = anexo.getIdanexo();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE idanexo=:w");
+            query.setParameter("w", idanexo);
+            lista = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
 }

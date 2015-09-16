@@ -21,6 +21,12 @@
                         <p:commandButton value="Cargar" actionListener="#{creditoBean.filtrarFechas()}"
                                          update=":formMostrar"/>
                     </p:panelGrid>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Ingrese DNI o RUC:"/>
+                        <p:inputMask mask="9?9999999999" maxlength="11" value="#{creditoBean.dni}"/>                       
+                        <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarAnexoDNI()}"
+                                         ajax="false"/>
+                    </p:panelGrid>
                 </h:form>
                 <h:form id="formMostrar">
                     <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" 
@@ -35,6 +41,12 @@
                         <p:column headerText="Nombre">
                             <h:outputText value="#{cred.anexoByIdanexo.nombre}" />
                         </p:column>
+                        <p:column headerText="Ape. Pat.">
+                            <h:outputText value="#{cred.anexoByIdanexo.apepat}" />
+                        </p:column>
+                        <p:column headerText="Ape. Mat.">
+                            <h:outputText value="#{cred.anexoByIdanexo.apemat}" />
+                        </p:column>
                         <p:column headerText="Tienda" filterBy="#{cred.tienda}" filterMatchMode="contains">
                             <h:outputText value="#{cred.tienda}">
                                 <f:converter converterId="tiendaconverter"/>
@@ -46,7 +58,9 @@
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Vehículo">
-                            <h:outputText value="#{cred.vehiculo.tipovehiculo}" />
+                            <h:outputText value="#{cred.vehiculo.tipovehiculo}">
+                                <f:converter converterId="tvehiculo"/>
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Deuda">
                             <h:outputText value="#{cred.totaldeuda}" />

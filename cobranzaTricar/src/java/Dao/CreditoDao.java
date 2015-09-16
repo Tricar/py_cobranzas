@@ -15,4 +15,6 @@ public interface CreditoDao {
     public List<Credito> filtrarFechas (Date date1, Date date2);
     public Credito cargarCreditoxAnexo(Anexo anexo);
     public Credito cargarCreditoxLetra(Letras letra);
+    public List<Credito> filtrarDni (String dni);
+    public List<Credito> filtrarCreditoxAnexo(Anexo anexo);
 }

@@ -1,5 +1,7 @@
 package Bean;
 
+import Dao.AnexoDao;
+import Dao.AnexoDaoImplements;
 import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Dao.LetrasDao;
@@ -12,6 +14,7 @@ import Model.Letras;
 import Model.Pagos;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +37,7 @@ public class creditoBean implements Serializable {
     private List<Letras> letraslista = new ArrayList();
     private Pagos pago = new Pagos();
     private Letras letra = new Letras();
+    private String dni;
 
     public creditoBean() {
     }
@@ -113,7 +117,15 @@ public class creditoBean implements Serializable {
     public void setLetra(Letras letra) {
         this.letra = letra;
     }
-    
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
     public void insertar() {
         CreditoDao creditodao = new CreditoDaoImp();
         credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
@@ -159,8 +171,20 @@ public class creditoBean implements Serializable {
     }
 
     public void eliminar() {
-        CreditoDao linkDao = new CreditoDaoImp();
-        linkDao.eliminarVenta(credito);
+        CreditoDao creditodao = new CreditoDaoImp();
+        LetrasDao letrasdao = new LetrasDaoImplements();
+        List<Letras> letrita = new ArrayList();
+        letrita = letrasdao.mostrarLetrasXCred(credito);
+        BigDecimal totaldeuda = new BigDecimal(BigInteger.ZERO);
+        for (int i = 0; i < letrita.size(); i++) {
+            Letras get = letrita.get(i);
+            totaldeuda = totaldeuda.add(get.getMonto());
+        }
+        if (totaldeuda.compareTo(credito.getTotaldeuda()) == 0) {
+            creditodao.eliminarVenta(credito);
+        } else {
+            System.out.println("Mostrar Error de que el credito ya ha sido cobrado y no se puede borrar");
+        }
         credito = new Credito();
     }
 
@@ -184,18 +208,18 @@ public class creditoBean implements Serializable {
     public void cargarCredito(Anexo anexo) {
         letraslista = new ArrayList();
         CreditoDao creditodao = new CreditoDaoImp();
-        List<Letras> letritas = new ArrayList();        
+        List<Letras> letritas = new ArrayList();
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
         credito = creditodao.cargarCreditoxAnexo(anexo);
         LetrasDao letras = new LetrasDaoImplements();
         letritas = letras.mostrarLetrasXCred(credito);
         for (int i = 0; i < letritas.size(); i++) {
-            System.out.println(" Entre al for :"+letritas.get(i));
+            System.out.println(" Entre al for :" + letritas.get(i));
             Letras get = letritas.get(i);
             if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
                 get.setEstado("CN");
-                System.out.println(" Entre al IF :"+get.getEstado());
+                System.out.println(" Entre al IF :" + get.getEstado());
             } else {
                 if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
                     if (get.getFecven().after(fecha)) {
@@ -219,8 +243,8 @@ public class creditoBean implements Serializable {
         pago = new Pagos();
     }
 
-    public void insertarNotaDebito() {        
-        LetrasDao letrasdao = new LetrasDaoImplements();        
+    public void insertarNotaDebito() {
+        LetrasDao letrasdao = new LetrasDaoImplements();
         Date d = new Date();
 //        credito = creditodao.cargarCreditoxLetra(letra);
         letra.setCredito(credito);
@@ -230,6 +254,20 @@ public class creditoBean implements Serializable {
         letra.setInteres(BigDecimal.ZERO);
         letra.setSaldo(letra.getMonto());
         letra.setEstado("PN");
-        letrasdao.insertarLetra(letra);        
+        letrasdao.insertarLetra(letra);
+    }
+
+    public void cargarAnexoDNI() {
+        filtradafecha = new ArrayList();
+        AnexoDao anexodao = new AnexoDaoImplements();
+        Anexo anexo = new Anexo();
+        CreditoDao creditodao = new CreditoDaoImp();
+        try {
+            anexo = anexodao.cargarClientexDoc(dni, "CN", "CJ");
+            credito = creditodao.cargarCreditoxAnexo(anexo);
+            filtradafecha.add(credito);
+        } catch (Exception e) {
+        }
+
     }
 }
