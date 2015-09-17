@@ -23,13 +23,13 @@ public class tAnexoConverter implements Converter{
         if (value != null){
             tanexo = (String) value;
             switch (tanexo) {
-                case "AD": tanexo = "Administrador";
+                case "AD": tanexo = "ADMINISTRADOR";
                     break;
-                case "CL": tanexo = "Cliente";
+                case "CL": tanexo = "CLIENTE";
                     break;
-                case "VE": tanexo = "Vendedor";
+                case "VE": tanexo = "VENDEDOR";
                     break;
-                case "GE": tanexo = "Gestor";
+                case "GE": tanexo = "GESTOR";
                     break;
             }
         }

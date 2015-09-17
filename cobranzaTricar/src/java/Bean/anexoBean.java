@@ -169,8 +169,8 @@ public class anexoBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Empleado ya existe en DB."));
                 this.anexo = new Anexo();
                 return;
-            }            
-            
+            }
+
             this.anexo.setConyuge("");
             this.anexo.setDniconyu("");
             this.anexo.setTipodocumento("DNI");
@@ -216,19 +216,19 @@ public class anexoBean implements Serializable {
                 this.anexo = new Anexo();
                 return;
             }
-            
-            if(this.razonsocial != null){
+
+            if (this.razonsocial != null) {
                 this.anexo.setNombre(this.razonsocial);
                 this.anexo.setApemat("");
                 this.anexo.setApepat("");
             }
-            
-            if(!this.anexo.getEstcivil().equals("CO") || !this.anexo.getEstcivil().equals("CA")){
+
+            if (!this.anexo.getEstcivil().equals("CO") || !this.anexo.getEstcivil().equals("CA")) {
                 this.anexo.setConyuge("");
                 this.anexo.setDniconyu("");
             }
-            
-            if(this.anexo.getTipodocumento().equals("DNI")){
+
+            if (this.anexo.getTipodocumento().equals("DNI")) {
                 this.anexo.setTipoanexo("CN");
             } else {
                 this.anexo.setTipoanexo("CJ");
@@ -278,21 +278,23 @@ public class anexoBean implements Serializable {
                 return;
             }
 
-            if(this.razonsocial != null){
+            if (this.razonsocial != null) {
                 this.anexo.setNombre(this.razonsocial);
                 this.anexo.setApemat("");
                 this.anexo.setApepat("");
             }
-            
-            if(!this.anexo.getEstcivil().equals("CO") || !this.anexo.getEstcivil().equals("CA")){
+
+            if (!this.anexo.getEstcivil().equals("CO") && !this.anexo.getEstcivil().equals("CA")) {
                 this.anexo.setConyuge("");
                 this.anexo.setDniconyu("");
             }
 
-            if (this.anexo.getTipodocumento().equals("DNI")) {
-                this.anexo.setTipoanexo("CN");
-            } else {
-                this.anexo.setTipoanexo("CJ");
+            if (this.anexo.getTipoanexo()==null) {
+                if (this.anexo.getTipodocumento().equals("DNI")) {
+                    this.anexo.setTipoanexo("CN");
+                } else if (this.anexo.getTipodocumento().equals("RUC")) {
+                    this.anexo.setTipoanexo("CJ");
+                }
             }
 
             daotanexo.modificar(this.session, this.anexo);

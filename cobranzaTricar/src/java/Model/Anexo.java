@@ -274,7 +274,7 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
-    @Column(name="email", length=20)
+    @Column(name="email", length=50)
     public String getEmail() {
         return this.email;
     }
