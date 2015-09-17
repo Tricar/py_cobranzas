@@ -60,7 +60,7 @@
             <column name="apemat" length="30" />
         </property>
         <property name="email" type="string">
-            <column name="email" length="20" />
+            <column name="email" length="50" />
         </property>
         <property name="tipoanexo" type="string">
             <column name="tipoanexo" length="2" not-null="true" />
