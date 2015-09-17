@@ -53,6 +53,7 @@ public class Anexo  implements java.io.Serializable {
      private Set usuarios = new HashSet(0);
      private Set creditosForVerificado = new HashSet(0);
      private Set creditosForIdanexo = new HashSet(0);
+     private String nombres;
 
     public Anexo() {
     }
@@ -364,6 +365,15 @@ public class Anexo  implements java.io.Serializable {
     
     public void setCreditosForIdanexo(Set creditosForIdanexo) {
         this.creditosForIdanexo = creditosForIdanexo;
+    }
+
+    public String getNombres() {
+        nombres = nombre+" "+apepat+" "+apemat;
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
     @Override    

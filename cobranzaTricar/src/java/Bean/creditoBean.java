@@ -22,6 +22,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import sun.nio.cs.ext.Big5;
 
 @ManagedBean
 @SessionScoped
@@ -38,6 +39,7 @@ public class creditoBean implements Serializable {
     private Pagos pago = new Pagos();
     private Letras letra = new Letras();
     private String dni;
+    private BigDecimal res;
 
     public creditoBean() {
     }
@@ -126,41 +128,55 @@ public class creditoBean implements Serializable {
         this.dni = dni;
     }
 
+    public BigDecimal getRes() {
+        return res;
+    }
+
+    public void setRes(BigDecimal res) {
+        this.res = res;
+    }
+
+    public void resultadoSaldo() {
+        res = credito.getPrecio().subtract(credito.getInicial());
+    }
+
     public void insertar() {
         CreditoDao creditodao = new CreditoDaoImp();
         credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
-        credito.setTotaldeuda(BigDecimal.ZERO);
-        Letras letras = new Letras();
-        BigDecimal nletras = new BigDecimal(credito.getNletras());
-        BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
-        BigDecimal interes = new BigDecimal(0);
-        creditodao.insertarVenta(credito);
-        for (int i = 1; i <= (credito.getNletras()); i++) {
-            interes = interes.add(credito.getInteres());
-        }
-        Date fechaini = new Date();
-        fechaini = credito.getFechareg();
-        Date fechafin = new Date();
-        fechafin = sumaDias(fechaini, 30);
-        BigDecimal cien = new BigDecimal(100);
-        BigDecimal mtointeres = (montoletras.multiply(interes)).divide(cien);
-        letras.setFecreg(credito.getFechareg());
-        for (int i = 1; i <= (credito.getNletras()); i++) {
-            letras.setCredito(credito);
-            letras.setMontoletra(montoletras);
-            letras.setInteres(mtointeres);
-            letras.setMonto(montoletras.add(mtointeres).setScale(2));
-            letras.setFecini(fechaini);
-            letras.setFecven(fechafin);
-            fechaini = fechafin;
+        if (credito.getPrecio().compareTo(credito.getPrecio())==1) {
+            credito.setTotaldeuda(BigDecimal.ZERO);
+            Letras letras = new Letras();
+            BigDecimal nletras = new BigDecimal(credito.getNletras());
+            BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
+            BigDecimal interes = new BigDecimal(0);
+            creditodao.insertarVenta(credito);
+            for (int i = 1; i <= (credito.getNletras()); i++) {
+                interes = interes.add(credito.getInteres());
+            }
+            Date fechaini = new Date();
+            fechaini = credito.getFechareg();
+            Date fechafin = new Date();
             fechafin = sumaDias(fechaini, 30);
-            letras.setSaldo(montoletras.add(mtointeres));
-            letras.setEstado("PN");
-            letras.setDescripcion("L" + i);
-            credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
-            letrasdao.insertarLetra(letras);
+            BigDecimal cien = new BigDecimal(100);
+            BigDecimal mtointeres = (montoletras.multiply(interes)).divide(cien);
+            letras.setFecreg(credito.getFechareg());
+            for (int i = 1; i <= (credito.getNletras()); i++) {
+                letras.setCredito(credito);
+                letras.setMontoletra(montoletras);
+                letras.setInteres(mtointeres);
+                letras.setMonto(montoletras.add(mtointeres).setScale(2));
+                letras.setFecini(fechaini);
+                letras.setFecven(fechafin);
+                fechaini = fechafin;
+                fechafin = sumaDias(fechaini, 30);
+                letras.setSaldo(montoletras.add(mtointeres));
+                letras.setEstado("PN");
+                letras.setDescripcion("L" + i);
+                credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
+                letrasdao.insertarLetra(letras);
+            }
+            creditodao.modificarVenta(credito);
         }
-        creditodao.modificarVenta(credito);
 //        credito = new Credito();
     }
 
@@ -198,11 +214,6 @@ public class creditoBean implements Serializable {
     public void filtrarFechas() {
         CreditoDao linkdao = new CreditoDaoImp();
         filtradafecha = linkdao.filtrarFechas(fecha1, fecha2);
-    }
-
-    public void resultadoSaldo() {
-        BigDecimal r = new BigDecimal(0);
-        r = credito.getPrecio().subtract(credito.getInicial());
     }
 
     public void cargarCredito(Anexo anexo) {

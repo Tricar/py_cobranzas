@@ -40,6 +40,7 @@ public class anexoBean implements Serializable {
     private String dni = "";
     private List<Credito> creditos = new ArrayList();
     private String razonsocial;
+    private String var;
 
     public anexoBean() {
     }
@@ -82,6 +83,14 @@ public class anexoBean implements Serializable {
 
     public void setDni(String dni) {
         this.dni = dni;
+    }    
+
+    public String getVar() {
+        return var;
+    }
+
+    public void setVar(String var) {
+        this.var = var;
     }
 
     public List<Anexo> verCliente() {
@@ -397,8 +406,9 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarCliente(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarTipoDos("CN", "CJ");
-        for (Anexo tipo : tipos) {
+        List<Anexo> tipos = anexoDao.filtarTipoDos("CN", "CJ");        
+        for (Anexo tipo : tipos) {            
+            var = tipo.getNombre()+" "+tipo.getApepat()+""+tipo.getApemat();
             if (tipo.getNombre().toLowerCase().startsWith(name)) {
                 query.add(tipo);
             }
@@ -580,7 +590,7 @@ public class anexoBean implements Serializable {
 
     public void handleSelect(SelectEvent e) {
         Anexo p = (Anexo) e.getObject();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Anexo agregado :: " + p.getNombre(), ""));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Anexo agregado :: " + p.getNombre()+" "+ p.getApepat()+" "+p.getApemat(), ""));
     }
 
     public void handleUnSelect(UnselectEvent e) {
