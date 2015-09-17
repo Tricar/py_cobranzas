@@ -9,7 +9,7 @@
             <generator class="identity" />
         </id>
         <property name="nombre" type="string">
-            <column name="nombre" length="30" />
+            <column name="nombre" length="50" />
         </property>
         <property name="tipodocumento" type="string">
             <column name="tipodocumento" length="3" />
@@ -18,10 +18,13 @@
             <column name="numdocumento" length="11" />
         </property>
         <property name="direccion" type="string">
-            <column name="direccion" length="50" />
+            <column name="direccion" length="100" />
         </property>
         <property name="aahh" type="string">
             <column name="aahh" length="50" />
+        </property>
+        <property name="cpm" type="string">
+            <column name="cpm" length="50" />
         </property>
         <property name="distrito" type="string">
             <column name="distrito" length="50" />
@@ -30,7 +33,7 @@
             <column name="sector" length="50" />
         </property>
         <property name="referencia" type="string">
-            <column name="referencia" length="80" />
+            <column name="referencia" length="100" />
         </property>
         <property name="telefono" type="string">
             <column name="telefono" length="10" />

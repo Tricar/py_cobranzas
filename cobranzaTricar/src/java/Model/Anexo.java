@@ -31,6 +31,7 @@ public class Anexo  implements java.io.Serializable {
      private String numdocumento;
      private String direccion;
      private String aahh;
+     private String cpm;
      private String distrito;
      private String sector;
      private String referencia;
@@ -63,13 +64,14 @@ public class Anexo  implements java.io.Serializable {
         this.idanexo = idanexo;
         this.tipoanexo = tipoanexo;
     }
-    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, Set creditosForIdaval, Set creditosForCodven, Set usuarios, Set creditosForVerificado, Set creditosForIdanexo) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, String sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, Set creditosForIdaval, Set creditosForCodven, Set usuarios, Set creditosForVerificado, Set creditosForIdanexo) {
        this.idanexo = idanexo;
        this.nombre = nombre;
        this.tipodocumento = tipodocumento;
        this.numdocumento = numdocumento;
        this.direccion = direccion;
        this.aahh = aahh;
+       this.cpm = cpm;
        this.distrito = distrito;
        this.sector = sector;
        this.referencia = referencia;
@@ -107,7 +109,7 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
-    @Column(name="nombre", length=30)
+    @Column(name="nombre", length=50)
     public String getNombre() {
         return this.nombre;
     }
@@ -137,7 +139,7 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
-    @Column(name="direccion", length=50)
+    @Column(name="direccion", length=100)
     public String getDireccion() {
         return this.direccion;
     }
@@ -153,6 +155,15 @@ public class Anexo  implements java.io.Serializable {
     
     public void setAahh(String aahh) {
         this.aahh = aahh;
+    }
+    
+    @Column(name="cpm", length=50)
+    public String getCpm() {
+        return this.cpm;
+    }
+    
+    public void setCpm(String cpm) {
+        this.cpm = cpm;
     }
     
     @Column(name="distrito", length=50)
@@ -173,7 +184,7 @@ public class Anexo  implements java.io.Serializable {
         this.sector = sector;
     }
     
-    @Column(name="referencia", length=80)
+    @Column(name="referencia", length=100)
     public String getReferencia() {
         return this.referencia;
     }

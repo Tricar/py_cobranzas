@@ -14,8 +14,8 @@ public interface AnexoDao {
     public List<Anexo> verCliente(Session session) throws Exception;
     public List<Anexo> verEmpleado(Session session) throws Exception;
     public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception;
-    public Anexo verByAnexo(Session session, String nombre) throws Exception;
-    public Anexo verByAnexoDifer(Session session,Integer idanexo, String nombre) throws Exception;
+    public Anexo verByDocumento(Session session, String dni) throws Exception;
+    public Anexo verByDocumentoDifer(Session session,Integer idanexo, String dni) throws Exception;
     public boolean modificar(Session session, Anexo anexo) throws Exception;
     public boolean eliminar (Session session, Anexo anexo) throws Exception;   
     public List<Anexo> filtarTipo(String tipo);
