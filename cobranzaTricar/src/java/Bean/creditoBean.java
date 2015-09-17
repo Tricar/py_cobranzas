@@ -245,6 +245,36 @@ public class creditoBean implements Serializable {
         letraslista = letras.mostrarLetrasXCred(credito);
 //      return credito;
     }
+    
+    public void cargarLetras(/*Anexo anexo*/) {
+        letraslista = new ArrayList();
+        CreditoDao creditodao = new CreditoDaoImp();
+        List<Letras> letritas = new ArrayList();
+        Calendar calendario = GregorianCalendar.getInstance();
+        Date fecha = calendario.getTime();
+//        credito = creditodao.cargarCreditoxAnexo(anexo);
+        LetrasDao letras = new LetrasDaoImplements();
+        letritas = letras.mostrarLetrasXCred(credito);
+        for (int i = 0; i < letritas.size(); i++) {
+            System.out.println(" Entre al for :" + letritas.get(i));
+            Letras get = letritas.get(i);
+            if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
+                get.setEstado("CN");
+                System.out.println(" Entre al IF :" + get.getEstado());
+            } else {
+                if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
+                    if (get.getFecven().after(fecha)) {
+                        get.setEstado("PN");
+                    } else {
+                        get.setEstado("VN");
+                    }
+                }
+            }
+            letrasdao.modificarLetra(get);
+        }
+        letraslista = letras.mostrarLetrasXCred(credito);
+//      return credito;
+    }
 
     public void insertarPago() {
         PagosDao linkDao = new PagosDaoImp();

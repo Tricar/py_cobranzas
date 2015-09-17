@@ -274,7 +274,7 @@ public class AnexoDaoImplements implements AnexoDao {
         Anexo anexo = new Anexo();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Anexo WHERE numdocumento=:n and tipoanexo=:t or tipoanexo=:v");
+            Query query = session.createQuery("FROM Anexo WHERE numdocumento=:n and (tipoanexo=:t or tipoanexo=:v)");
             query.setParameter("n", dni);
             query.setParameter("t", tipo);
             query.setParameter("v", tipo1);            

@@ -38,15 +38,9 @@
                         <p:column headerText="Cod.">
                             <h:outputText value="#{cred.liqventa}" />
                         </p:column>
-                        <p:column headerText="Nombre">
-                            <h:outputText value="#{cred.anexoByIdanexo.nombre}" />
-                        </p:column>
-                        <p:column headerText="Ape. Pat.">
-                            <h:outputText value="#{cred.anexoByIdanexo.apepat}" />
-                        </p:column>
-                        <p:column headerText="Ape. Mat.">
-                            <h:outputText value="#{cred.anexoByIdanexo.apemat}" />
-                        </p:column>
+                        <p:column headerText="Nombres">
+                            <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
+                        </p:column>                        
                         <p:column headerText="Tienda" filterBy="#{cred.tienda}" filterMatchMode="contains">
                             <h:outputText value="#{cred.tienda}">
                                 <f:converter converterId="tiendaconverter"/>
@@ -65,10 +59,9 @@
                         <p:column headerText="Deuda">
                             <h:outputText value="#{cred.totaldeuda}" />
                         </p:column>
-                        <p:column headerText=" ">
-                            <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
-                                <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
-                            </p:commandButton>
+                        <p:column headerText="Cargar">                            
+                            <p:commandButton value="C" update=":formModificar" 
+                                             actionListener="#{creditoBean.cargarLetras()}" onclick="$('#tablaletras').show();"/>
                         </p:column>
                         <p:column headerText=" ">
                             <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
@@ -77,55 +70,89 @@
                         </p:column>
                     </p:dataTable>
                 </h:form>
-                <p:dialog id="dlg" header="Modificar Credito" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
+                <div id="tablaletras" class="campo">
                     <h:form id="formModificar">
-                        <p:panelGrid columns="2">
-                            <p:outputLabel value="Id:" />
-                            <p:inputText value="#{anexoBean.anexo.idanexo}" disabled="true"/>
-                            <p:outputLabel value="Tipo Anexo:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.tipoanexo}" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="Administrador" itemValue="AD" />
-                                <f:selectItem itemLabel="Cliente" itemValue="CL" />
-                                <f:selectItem itemLabel="Vendedor" itemValue="VE" />
-                                <f:selectItem itemLabel="Gestor Cob." itemValue="GE" />
-                                <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Nombre o Razon Social:" />
-                            <p:inputText value="#{anexoBean.anexo.nombre}" />
-                            <p:outputLabel value="Ap. Paterno:" />
-                            <p:inputText  id="ap" value="#{anexoBean.anexo.apepat}" />
-                            <p:outputLabel value="Ap. Materno:" />
-                            <p:inputText id="am" value="#{anexoBean.anexo.apemat}" />
-                            <p:outputLabel value="T. Doc:" />
-                            <p:inputText id="dni" value="#{anexoBean.anexo.tipodocumento}" />
-                            <p:outputLabel value="Num Doc:" />
-                            <p:inputText id="ruc" value="#{anexoBean.anexo.numdocumento}" />
-                            <p:outputLabel value="Dirección:" />
-                            <p:inputText value="#{anexoBean.anexo.direccion}" />
-                            <p:outputLabel value="Tel. Fijo:" />
-                            <p:inputText value="#{anexoBean.anexo.telefono}" />
-                            <p:outputLabel value="Tel. cel:" />
-                            <p:inputText value="#{anexoBean.anexo.celular}" />
-                            <p:outputLabel value="Edad:" />
-                            <p:inputText id="edad" value="#{anexoBean.anexo.edad}" />
-                            <p:outputLabel value="Fec. Nac:" />
-                            <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" />
-                            <p:outputLabel value="Sexo:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.sexo}">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="Masculino" itemValue="M" />
-                                <f:selectItem itemLabel="Femenino" itemValue="F" />
-                                <p:ajax update="ruc vend ap am dni edad" immediate="true"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="eMail:" />
-                            <p:inputText value="#{anexoBean.anexo.email}" />
-                            <p:outputLabel value="Cod. vendedor:" />
-                            <p:inputText id="vend" value="#{anexoBean.anexo.codven}" />
-                        </p:panelGrid>
-                        <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{anexoBean.modificar()}" oncomplete="dlgmodificar.hide()"/>
+                        <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
+                                     emptyMessage="No hay nada para mostrar">
+                            <p:inputText type="hidden" value="#{letras.idletras}"/>
+                            <p:column headerText="Cod venta.">
+                                <h:outputText value="#{letras.credito.liqventa}" />
+                            </p:column>
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{letras.descripcion}"/>
+                            </p:column>
+                            <p:column headerText="Monto">
+                                <h:outputText value="#{letras.montoletra}"/>
+                            </p:column>
+                            <p:column headerText="Interes">
+                                <h:outputText value="#{letras.interes}"/>
+                            </p:column>
+                            <p:column headerText="Total Letra">
+                                <h:outputText value="#{letras.monto}"/>
+                            </p:column>
+                            <p:column headerText="Fecha In.">
+                                <h:outputText value="#{letras.fecini}">
+                                    <f:convertDateTime/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Fecha Ven.">
+                                <h:outputText value="#{letras.fecven}">
+                                    <f:convertDateTime/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Saldo">
+                                <h:outputText value="#{letras.saldo}"/>
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{letras.estado}">
+                                    <f:converter converterId="letrasconverter"/>
+                                </h:outputText>
+                            </p:column>                        
+                            <p:column headerText="Pagar">                                
+                                <p:commandButton oncomplete="dlgpagar.show()" value="P" update=":formPagar"
+                                                 actionListener="#{pagosBean.cargarLetra(letras)}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton value="Nota de Débito" icon="b-add" update=":formPagar"
+                                         oncomplete="dlgnotadebito.show()" />
                     </h:form>
+                </div>
+                <p:dialog id="dlg1" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlgpagar" modal="true" resizable="false" minWidth="200">
+                    <h:form id="formPagar">
+                        <p:panelGrid columns="4">
+                            <p:outputLabel value="Fecha:"/>
+                            <p:calendar navigator="true" value="#{pagosBean.pago.fecreg}"/>
+                            <p:outputLabel value="Tipo:"/>
+                            <p:selectOneMenu value="#{pagosBean.pago.tipo}">
+                                <f:selectItem itemLabel="Letra" itemValue="LE" />
+                                <f:selectItem itemLabel="Nota de Credito" itemValue="NC" />
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Referencia:"/>
+                            <p:inputText value="#{pagosBean.pago.operacion}"/>
+                            <p:outputLabel value="Monto:"/>
+                            <p:inputText value="#{pagosBean.pago.monto}"/>
+                            <p:outputLabel value="Descripción:"/>
+                            <p:inputText value="#{pagosBean.pago.descripcion}"/>
+                            <p:commandButton actionListener="#{pagosBean.insertar()}" value="Pagar" oncomplete="dlgpagar.hide()"
+                                             update=":formModificar"/>
+                        </p:panelGrid>
+                    </h:form>                        
+                </p:dialog>
+                <p:dialog id="dlg3" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlgnotadebito" modal="true" resizable="false" minWidth="200">
+                    <h:form id="formNotadebito">
+                        <p:panelGrid columns="4">
+                            <p:outputLabel value="Fecha Inicio:"/>
+                            <p:calendar navigator="true" value="#{creditoBean.letra.fecini}"/>
+                            <p:outputLabel value="Fecha Venc:"/>
+                            <p:calendar navigator="true" value="#{creditoBean.letra.fecven}"/>                            
+                            <p:outputLabel value="Monto:"/>
+                            <p:inputText value="#{creditoBean.letra.monto}"/>                            
+                            <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" oncomplete="dlgnotadebito.hide()"
+                                             update=":formModificar"/>
+                        </p:panelGrid>
+                    </h:form>                        
                 </p:dialog>
                 <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
