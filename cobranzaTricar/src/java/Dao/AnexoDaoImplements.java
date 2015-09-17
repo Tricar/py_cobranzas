@@ -151,10 +151,10 @@ public class AnexoDaoImplements implements AnexoDao {
     }
 
     @Override
-    public Anexo verByAnexo(Session session, String nombre) throws Exception {
-        String hql = "FROM Anexo WHERE nombre=:nombre";
+    public Anexo verByDocumento(Session session, String dni) throws Exception {
+        String hql = "FROM Anexo WHERE numdocumento=:documento";
         Query query = session.createQuery(hql);
-        query.setParameter("nombre", nombre);
+        query.setParameter("documento", dni);
         
         Anexo anexo = (Anexo) query.uniqueResult();
         
@@ -162,11 +162,11 @@ public class AnexoDaoImplements implements AnexoDao {
     }
 
     @Override
-    public Anexo verByAnexoDifer(Session session, Integer idanexo, String nombre) throws Exception {
-        String hql = "FROM Anexo WHERE idanexo!=:idanexo and nombre=:nombre";
+    public Anexo verByDocumentoDifer(Session session, Integer idanexo, String dni) throws Exception {
+        String hql = "FROM Anexo WHERE idanexo!=:idanexo and numdocumento=:documento";
         Query query = session.createQuery(hql);
         query.setParameter("idanexo", idanexo);
-        query.setParameter("nombre", nombre);
+        query.setParameter("documento", dni);
         
         Anexo anexo = (Anexo) query.uniqueResult();
         

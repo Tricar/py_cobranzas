@@ -23,27 +23,24 @@
                 <h:form id="formMostrar">
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                     <p:dataTable var="item" value="#{anexoBean.verEmpleado()}" emptyMessage="No hay nada para mostrar" 
-                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10">
-                        <p:column headerText="Nombre">
-                            <h:outputText value="#{item.nombre}" />
-                        </p:column>
-                        <p:column headerText="Ap. Pat.">
-                            <h:outputText value="#{item.apepat}" />
-                        </p:column>
-                        <p:column headerText="Ap. Mat.">
-                            <h:outputText value="#{item.apemat}" />
-                        </p:column>
-                        <p:column headerText="TIPO DOC.">
-                            <h:outputText value="#{item.tipodocumento}" />
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">
+                        <p:column headerText="NOMBRE Y APELLIDO">
+                            <h:outputText value="#{item.nombre} "/><h:outputText value="#{item.apepat} "/><h:outputText value="#{item.apemat}"/>
                         </p:column>
                         <p:column headerText="NUMERO DOC.">
                             <h:outputText value="#{item.numdocumento}" />
                         </p:column>                        
-                        <p:column headerText="Direccion">
+                        <p:column headerText="DIRECCION">
                             <h:outputText value="#{item.direccion}" />
                         </p:column>
-                        <p:column headerText="Telefono">
+                        <p:column headerText="REFERENCIA">
+                            <h:outputText value="#{item.referencia}" />
+                        </p:column>
+                        <p:column headerText="CELULAR">
                             <h:outputText value="#{item.telefono}" />
+                        </p:column>                        
+                        <p:column headerText="TIPO ANEXO">
+                            <h:outputText value="#{item.tipoanexo}" />
                         </p:column>
                         <p:column width="10%" style="text-align: center">
                             <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="ui-icon ui-icon-pencil"/>
@@ -90,27 +87,17 @@
                             <p:outputLabel value="DIRECCION:" for="txtDireccion" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" id="txtDireccion" label="Direccion" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
                                 <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="AAHH:" for="txtAAHH"/>
-                            <p:inputText value="#{anexoBean.anexo.aahh}" id="txtAAHH" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="DISTRITO:" for="txtDistrito"/>
-                            <p:inputText value="#{anexoBean.anexo.distrito}" id="txtDistrito" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="SECTOR:" for="txtSector"/>
-                            <p:inputText value="#{anexoBean.anexo.sector}" id="txtSector" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
-                                <f:validator validatorId="validatorVacio"/>
+                                <f:validator validatorId="validatorLetraNumSig"/>
                             </p:inputText>
                             <p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
                             <p:inputText value="#{anexoBean.anexo.referencia}" id="txtReferencia" label="Referencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
                                 <f:validator validatorId="validatorVacio"/>
+                                <f:validator validatorId="validatorLetraNumSig"/>
                             </p:inputText>
-                            <p:outputLabel value="TELEFONO:" />
-                            <p:inputMask mask="9?99999999" value="#{anexoBean.anexo.telefono}" maxlength="9"/>
                             <p:outputLabel value="CELULAR:" />
-                            <p:inputMask mask="9?99999999" value="#{anexoBean.anexo.celular}" maxlength="9"/>
+                            <p:inputText value="#{anexoBean.anexo.celular}" maxlength="10">
+                                <f:validator validatorId="validatorNumeroCel"/>
+                            </p:inputText>
                             <p:outputLabel value="EDAD:" />
                             <p:inputMask mask="9?9" id="edad" value="#{anexoBean.anexo.edad}" maxlength="2" />
                             <p:outputLabel value="NACIMIENTO" />
@@ -121,8 +108,10 @@
                                 <f:selectItem itemLabel="MASCULINO" itemValue="M" />
                                 <f:selectItem itemLabel="FEMENINO" itemValue="F" />
                             </p:selectOneMenu>
-                            <p:outputLabel value="EMAIL:" />
-                            <p:inputText value="#{anexoBean.anexo.email}" />
+                            <p:outputLabel value="EMAIL:" for="txtEmail"/>
+                            <p:inputText value="#{anexoBean.anexo.email}" id="txtEmail">
+                                <f:validator validatorId="validatorEmail"/>
+                            </p:inputText>
                             <p:outputLabel value="CODIGO:" for="txtCodigo"/>
                             <p:inputText  value="#{anexoBean.anexo.codven}" id="txtCodigo" maxlength="6" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
                                  <f:validator validatorId="validatorVacio"/>

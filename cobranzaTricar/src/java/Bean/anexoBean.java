@@ -156,7 +156,7 @@ public class anexoBean implements Serializable {
             this.transaction = session.beginTransaction();
 
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
-            if (daotanexo.verByAnexo(this.session, this.anexo.getNombre()) != null) {
+            if (daotanexo.verByDocumento(this.session, this.anexo.getNumdocumento()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Empleado ya existe en DB."));
                 this.anexo = new Anexo();
                 return;
@@ -202,7 +202,7 @@ public class anexoBean implements Serializable {
             this.transaction = session.beginTransaction();
 
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
-            if (daotanexo.verByAnexo(this.session, this.anexo.getNombre()) != null) {
+            if (daotanexo.verByDocumento(this.session, this.anexo.getNumdocumento()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Cliente ya existe en DB."));
                 this.anexo = new Anexo();
                 return;
@@ -214,7 +214,7 @@ public class anexoBean implements Serializable {
                 this.anexo.setApepat("");
             }
             
-            if(this.anexo.getEstcivil() != null){
+            if(!this.anexo.getEstcivil().equals("CO") || !this.anexo.getEstcivil().equals("CA")){
                 this.anexo.setConyuge("");
                 this.anexo.setDniconyu("");
             }
@@ -264,13 +264,20 @@ public class anexoBean implements Serializable {
 
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
 
-            if (daotanexo.verByAnexoDifer(this.session, this.anexo.getIdanexo(), this.anexo.getNombre()) != null) {
+            if (daotanexo.verByDocumentoDifer(this.session, this.anexo.getIdanexo(), this.anexo.getNumdocumento()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya Existe."));
                 return;
             }
 
-            if (!this.razonsocial.equals("")) {
+            if(this.razonsocial != null){
                 this.anexo.setNombre(this.razonsocial);
+                this.anexo.setApemat("");
+                this.anexo.setApepat("");
+            }
+            
+            if(!this.anexo.getEstcivil().equals("CO") || !this.anexo.getEstcivil().equals("CA")){
+                this.anexo.setConyuge("");
+                this.anexo.setDniconyu("");
             }
 
             if (this.anexo.getTipodocumento().equals("DNI")) {
