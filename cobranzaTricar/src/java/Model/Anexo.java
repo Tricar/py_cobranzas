@@ -182,7 +182,7 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
-    @Column(name="telefono", length=9)
+    @Column(name="telefono", length=10)
     public String getTelefono() {
         return this.telefono;
     }
@@ -192,7 +192,7 @@ public class Anexo  implements java.io.Serializable {
     }
 
     
-    @Column(name="celular", length=9)
+    @Column(name="celular", length=10)
     public String getCelular() {
         return this.celular;
     }

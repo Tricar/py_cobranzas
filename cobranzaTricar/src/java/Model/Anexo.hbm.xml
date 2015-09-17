@@ -33,10 +33,10 @@
             <column name="referencia" length="80" />
         </property>
         <property name="telefono" type="string">
-            <column name="telefono" length="9" />
+            <column name="telefono" length="10" />
         </property>
         <property name="celular" type="string">
-            <column name="celular" length="9" />
+            <column name="celular" length="10" />
         </property>
         <property name="edad" type="java.lang.Integer">
             <column name="edad" />
