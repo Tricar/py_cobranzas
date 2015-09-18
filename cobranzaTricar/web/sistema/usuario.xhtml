@@ -30,7 +30,7 @@
                             <h:outputText value="#{item.usuario}" />
                         </p:column>
                         <p:column headerText="Nombre y Apellido">
-                            <h:outputText value="#{item.anexo.nombre}" />
+                            <h:outputText value="#{item.anexo.nombres}" />
                         </p:column>                        
                         <p:column headerText="DNI">
                             <h:outputText value="#{item.anexo.numdocumento}" />
@@ -100,7 +100,7 @@
                             <p:outputLabel value="Anexo:"/>
                             <p:selectOneMenu value="#{usuarioBean.tusuario.anexo}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                <f:selectItems value="#{anexoBean.anexos}" var="anexo" itemLabel="#{anexo.nombre}" itemValue="#{anexo}"/>
+                                <f:selectItems value="#{anexoBean.anexos}" var="anexo" itemLabel="#{anexo.nombres}" itemValue="#{anexo}"/>
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Perfil:"/>
