@@ -109,8 +109,8 @@
                                 </h:outputText>
                             </p:column>                        
                             <p:column headerText="Pagar">                                
-                                <p:commandButton oncomplete="dlgpagar.show()" value="P" update=":formPagar"
-                                                 actionListener="#{pagosBean.cargarLetra(letras)}"/>
+                                <p:commandButton oncomplete="dlgpagar.show()" value="P" update=":formPagar" disabled="#{letras.saldo == '0.00'}"
+                                                 actionListener="#{pagosBean.cargarLetra(letras)}" />
                             </p:column>
                         </p:dataTable>
                         <p:commandButton value="Nota de Débito" icon="b-add" update=":formPagar"
