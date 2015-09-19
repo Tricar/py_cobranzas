@@ -27,7 +27,7 @@
                         <p:column headerText="NOMBRE Y APELLIDO" filterBy="#{item.nombres}" filterMatchMode="contains">
                             <h:outputText value="#{item.nombres} " />
                         </p:column>
-                        <p:column headerText="NUMERO DOC.">
+                        <p:column headerText="NUMERO DOC." filterBy="#{item.numdocumento}" filterMatchMode="contains">
                             <h:outputText value="#{item.numdocumento}" />
                         </p:column>                        
                         <p:column headerText="DIRECCION">
@@ -57,7 +57,7 @@
                                 <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
                                 <f:selectItem itemLabel="DNI" itemValue="DNI" />
                                 <f:selectItem itemLabel="RUC" itemValue="RUC" />
-                                <f:ajax render="txtRazon txtNombre txtApellido1 txtApellido2" />
+                                <f:ajax render="txtRazon txtNombre txtApellido1 txtApellido2 txtEdad txtNacimiento txtSexo" />
                             </p:selectOneMenu>
                             <p:outputLabel value="DOCUMENTO:" for="txtDocumento"/>
                             <p:inputMask mask="9?9999999999" id="txtDocumento" value="#{anexoBean.anexo.numdocumento}" maxlength="11">
@@ -135,11 +135,11 @@
                                 <f:validator validatorId="validatorNumeroCel"/>
                             </p:inputText>
                             <p:outputLabel value="EDAD:" />
-                            <p:inputMask mask="9?9" id="edad" value="#{anexoBean.anexo.edad}" maxlength="2" />
+                            <p:inputMask disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" mask="9?9" id="txtEdad" value="#{anexoBean.anexo.edad}" maxlength="2" />
                             <p:outputLabel value="NACIMIENTO" />
-                            <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
+                            <p:calendar disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtNacimiento" showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
                             <p:outputLabel value="SEXO:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.sexo}" required="true" requiredMessage="Debe Seleccionar Sexo!">
+                            <p:selectOneMenu disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtSexo" value="#{anexoBean.anexo.sexo}" required="true" requiredMessage="Debe Seleccionar Sexo!">
                                 <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
                                 <f:selectItem itemLabel="MASCULINO" itemValue="M" />
                                 <f:selectItem itemLabel="FEMENINO" itemValue="F" />
@@ -172,7 +172,7 @@
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputMask>
                             <p:outputLabel value="RAZON SOCIAL" for="txtRazon"/>
-                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'RUC'}" id="txtRazon" value="#{anexoBean.razonsocial}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'RUC'}" id="txtRazon" value="#{anexoBean.anexo.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorLetra"/>
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>                                
@@ -193,7 +193,6 @@
                             </p:inputText>
                             <p:outputLabel value="ESTADO CIVIL:" />
                             <p:selectOneMenu id="estado" value="#{anexoBean.anexo.estcivil}" required="true" requiredMessage="Debe Seleccionar estado civil">
-                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
                                 <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO" />
                                 <f:selectItem itemLabel="CONVIVIENTE" itemValue="CO" />
                                 <f:selectItem itemLabel="CASADO(A)" itemValue="CA" />
@@ -247,8 +246,7 @@
                             <p:outputLabel value="NACIMIENTO" />
                             <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
                             <p:outputLabel value="SEXO:" />
-                            <p:selectOneMenu value="#{anexoBean.anexo.sexo}" required="true" requiredMessage="Debe Seleccionar Sexo!">
-                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
+                            <p:selectOneMenu disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" value="#{anexoBean.anexo.sexo}" required="true" requiredMessage="Debe Seleccionar Sexo!">
                                 <f:selectItem itemLabel="MASCULINO" itemValue="M" />
                                 <f:selectItem itemLabel="FEMENINO" itemValue="F" />
                             </p:selectOneMenu>
