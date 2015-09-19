@@ -76,7 +76,7 @@
                                 </h:outputText>
                             </p:column>                        
                             <p:column headerText="Pagar">                                
-                                <p:commandButton oncomplete="dlgpagar.show()" value="P" update=":formPagar"
+                                <p:commandButton oncomplete="dlgpagar.show()" value="P" update=":formPagar" disabled="#{letras.saldo == '0.00'}"
                                                  actionListener="#{pagosBean.cargarLetra(letras)}"/>
                             </p:column>
                         </p:dataTable>

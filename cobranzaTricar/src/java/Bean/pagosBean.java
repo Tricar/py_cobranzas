@@ -111,5 +111,5 @@ public class pagosBean implements Serializable {
         CreditoDao linkdao = new CreditoDaoImp();
         credito = linkdao.cargarCreditoxLetra(letra);
         return letra;
-    }
+    }   
 }
