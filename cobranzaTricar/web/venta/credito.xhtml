@@ -103,6 +103,7 @@
                         <p:commandButton value="Registrar Cliente" icon="b-new" ajax="false" actionListener="#{anexoBean.insertarcliente()}" />
                     </p:dialog>
                 </h:form>
+
                 <f:view afterPhase="#{anexoBean.phaseListener}">
                     <h:form id="formInsertarVenta" prependId="false ">                        
                         <p:panelGrid columns="8">
@@ -123,111 +124,98 @@
                                 <f:selectItem itemLabel="VX1" itemValue="V1" />
                                 <f:selectItem itemLabel="VX2" itemValue="V2" />                            
                             </p:selectOneMenu>
-                        
-                        
-                            
-                                <p:outputLabel value="Buscar cliente:" for="cliente"/>
-                                <p:autoComplete id="cliente" value="#{creditoBean.credito.anexoByIdanexo}"
-                                                completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
-                                                itemLabel="#{cliente.nombres}" itemValue="#{cliente}">
-                                    <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                    <p:ajax event="itemSelect" process="@form" />
-                                    <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>
-                                    <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
-                                    <p:messages id="msg"/>
-                                </p:autoComplete>
-                                
-                                <p:outputLabel value="Buscar Aval:" />
-                                <p:autoComplete value="#{creditoBean.credito.anexoByIdaval}"
-                                                completeMethod="#{anexoBean.filtrarAval}" var="aval"
-                                                itemLabel="#{aval.nombres}" itemValue="#{aval}" forceSelection="true">
-                                    <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                    <p:ajax event="itemSelect" process="@form" />
-                                    <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg1"/>                                
-                                    <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg1"/>
-                                    <p:messages id="msg1"/>
-                                </p:autoComplete>
-                                
-                            
-                            
-                                
-                                    <p:outputLabel value="Modalidad:" />
-                                    <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >
-                                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>                                        
-                                        <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
-                                        <f:selectItem itemLabel="Financiado" itemValue="FI"/>
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Nro. Letras:" />
-                                    <p:selectOneMenu value="#{creditoBean.credito.nletras}" >
-                                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                        <f:selectItem itemLabel="1" itemValue='1' />
-                                        <f:selectItem itemLabel="2" itemValue='2' />
-                                        <f:selectItem itemLabel="3" itemValue='3'/>
-                                        <f:selectItem itemLabel="4" itemValue='4'/>
-                                        <f:selectItem itemLabel="5" itemValue='5'/>
-                                        <f:selectItem itemLabel="6" itemValue='6'/>
-                                        <f:selectItem itemLabel="7" itemValue='7'/>
-                                        <f:selectItem itemLabel="8" itemValue='8'/>
-                                        <f:selectItem itemLabel="9" itemValue='9'/>
-                                        <f:selectItem itemLabel="10" itemValue='10'/>
-                                        <f:selectItem itemLabel="11" itemValue='11'/>
-                                        <f:selectItem itemLabel="12" itemValue='12'/>
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Buscar vendedor:"/>
-                                    <p:autoComplete value="#{creditoBean.credito.anexoByCodven}"
-                                                    completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
-                                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo}" forceSelection="true">
-                                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                        <p:ajax event="itemSelect" process="@form" />
-                                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>                                
-                                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
-                                    </p:autoComplete>
-                                    <p:outputLabel value="Buscar vehiculo:" for="vehi"/>
-                                    <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
-                                                    completeMethod="#{vehiculoBean.completarTipo}" var="v"
-                                                    itemLabel="#{v.serie}" itemValue="#{v}" forceSelection="true"
-                                                    required="true" requiredMessage="Elija un vehículo">
-                                        <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
-                                    </p:autoComplete>
-                                    <p:outputLabel value="Precio:"/>
-                                    <p:inputText value="#{creditoBean.credito.precio}" required="true" requiredMessage="Ingrese precio credito">
-                                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
-                                    </p:inputText>
-                                    <p:outputLabel value="Inicial:"/>
-                                    <p:inputText value="#{creditoBean.credito.inicial}" required="true" requiredMessage="Ingrese precio credito">
-                                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
-                                    </p:inputText>
-                                    <p:outputLabel value="Saldo:"/>                                    
-                                    <p:inputText id="res" value="#{creditoBean.res}" readonly="true"/>
-                                    <p:outputLabel value="Interés:" />
-                                    <p:inputText value="#{creditoBean.credito.interes}" required="true" requiredMessage="Ingrese precio credito"/>
-                                
-                            
-                            
-                                
-                                    <p:outputLabel value="Verificado:" />
-                                    <p:autoComplete value="#{creditoBean.credito.anexoByVerificado}"
-                                                    completeMethod="#{anexoBean.filtrarGestor}" var="veri"
-                                                    itemLabel="#{veri.nombres}" itemValue="#{veri}" forceSelection="true">
-                                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                    </p:autoComplete>
-                                    <p:outputLabel value="Contrato:" />
-                                    <p:selectOneRadio value="#{creditoBean.credito.contrato}" >
-                                        <f:selectItem itemLabel="SI" itemValue="true" />
-                                        <f:selectItem itemLabel="NO" itemValue="false"/>
-                                    </p:selectOneRadio>
-                                    <p:outputLabel value="Cronograma:" />
-                                    <p:selectOneRadio value="#{creditoBean.credito.cronograma}" >
-                                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                                        <f:selectItem itemLabel="NO" itemValue="false"/>
-                                    </p:selectOneRadio>
-                                </p:panelGrid>
-                            
-                        
-                        <p:commandButton value="Agregar" actionListener="#{creditoBean.insertarCredito()}" icon="b-add"
-                                         update=":formMostrar"/>                    
+                            <p:outputLabel value="Buscar cliente:" for="cliente"/>
+                            <p:autoComplete id="cliente" value="#{creditoBean.credito.anexoByIdanexo}"
+                                            completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
+                                            itemLabel="#{cliente.nombres}" itemValue="#{cliente}">
+                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                                <p:ajax event="itemSelect" process="@form" />
+                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>
+                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
+                                <p:messages id="msg"/>
+                            </p:autoComplete>
+                            <p:outputLabel value="Buscar Aval:" />
+                            <p:autoComplete value="#{creditoBean.credito.anexoByIdaval}"
+                                            completeMethod="#{anexoBean.filtrarAval}" var="aval"
+                                            itemLabel="#{aval.nombres}" itemValue="#{aval}" forceSelection="true">
+                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                                <p:ajax event="itemSelect" process="@form" />
+                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg1"/>                                
+                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg1"/>
+                                <p:messages id="msg1"/>
+                            </p:autoComplete>
+                            <p:outputLabel value="Modalidad:" />
+                            <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>                                        
+                                <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
+                                <f:selectItem itemLabel="Financiado" itemValue="FI"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Nro. Letras:" />
+                            <p:selectOneMenu value="#{creditoBean.credito.nletras}" >
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="1" itemValue='1' />
+                                <f:selectItem itemLabel="2" itemValue='2' />
+                                <f:selectItem itemLabel="3" itemValue='3'/>
+                                <f:selectItem itemLabel="4" itemValue='4'/>
+                                <f:selectItem itemLabel="5" itemValue='5'/>
+                                <f:selectItem itemLabel="6" itemValue='6'/>
+                                <f:selectItem itemLabel="7" itemValue='7'/>
+                                <f:selectItem itemLabel="8" itemValue='8'/>
+                                <f:selectItem itemLabel="9" itemValue='9'/>
+                                <f:selectItem itemLabel="10" itemValue='10'/>
+                                <f:selectItem itemLabel="11" itemValue='11'/>
+                                <f:selectItem itemLabel="12" itemValue='12'/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Buscar vendedor:"/>
+                            <p:autoComplete value="#{creditoBean.credito.anexoByCodven}"
+                                            completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
+                                            itemLabel="#{anexo.nombres}" itemValue="#{anexo}" forceSelection="true">
+                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                                <p:ajax event="itemSelect" process="@form" />
+                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>                                
+                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
+                            </p:autoComplete>
+                            <p:outputLabel value="Buscar vehiculo:" for="vehi"/>
+                            <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
+                                            completeMethod="#{vehiculoBean.completarTipo}" var="v"
+                                            itemLabel="#{v.serie}" itemValue="#{v}" forceSelection="true"
+                                            required="true" requiredMessage="Elija un vehículo">
+                                <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
+                            </p:autoComplete>
+                            <p:outputLabel value="Precio:"/>
+                            <p:inputText value="#{creditoBean.credito.precio}" required="true" requiredMessage="Ingrese precio credito">
+                                <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
+                            </p:inputText>
+                            <p:outputLabel value="Inicial:"/>
+                            <p:inputText value="#{creditoBean.credito.inicial}" required="true" requiredMessage="Ingrese precio credito">
+                                <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
+                            </p:inputText>
+                            <p:outputLabel value="Saldo:"/>                                    
+                            <p:inputText id="res" value="#{creditoBean.res}" readonly="true"/>
+                            <p:outputLabel value="Interés:" />
+                            <p:inputText value="#{creditoBean.credito.interes}" required="true" requiredMessage="Ingrese precio credito"/>
+                            <p:outputLabel value="Verificado:" />
+                            <p:autoComplete value="#{creditoBean.credito.anexoByVerificado}"
+                                            completeMethod="#{anexoBean.filtrarGestor}" var="veri"
+                                            itemLabel="#{veri.nombres}" itemValue="#{veri}" forceSelection="true">
+                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                            </p:autoComplete>
+                            <p:outputLabel value="Contrato:" />
+                            <p:selectOneRadio value="#{creditoBean.credito.contrato}" >
+                                <f:selectItem itemLabel="SI" itemValue="true" />
+                                <f:selectItem itemLabel="NO" itemValue="false"/>
+                            </p:selectOneRadio>
+                            <p:outputLabel value="Cronograma:" />
+                            <p:selectOneRadio value="#{creditoBean.credito.cronograma}" >
+                                <f:selectItem itemLabel="SI" itemValue="true"/>
+                                <f:selectItem itemLabel="NO" itemValue="false"/>
+                            </p:selectOneRadio>
+                        </p:panelGrid>
+
+                        <p:commandButton value="Agregar" actionListener="#{creditoBean.insertarCredito()}" icon="b-add" update=":formMostrar"/>                    
                     </h:form>
                 </f:view>
+
                 <h:form id="formMostrar">
                     <p:dataTable var="letras" value="#{creditoBean.letrasventa}" 
                                  emptyMessage="No hay nada para mostrar">

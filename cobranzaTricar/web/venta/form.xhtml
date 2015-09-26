@@ -89,7 +89,7 @@
                         <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
                     </p:autoComplete>                    
                     <p:outputLabel value="Precio:" for="precio"/>
-                    <p:inputText id="precio" value="#{creditoBean.credito.precio}">
+                    <p:inputText id="precio" class="money" value="#{creditoBean.credito.precio}" >
                         <f:validator validatorId="validatorPrecio"/>
                         <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
                     </p:inputText>

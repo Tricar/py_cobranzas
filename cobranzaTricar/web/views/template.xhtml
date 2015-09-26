@@ -11,6 +11,7 @@
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
         <h:outputStylesheet library="css" name="style.css" />
+        <h:outputScript library="js" name="maskmoney.js" />
         <title>Cobranzas TRICAR SAC</title>         
     </h:head>
 
@@ -40,7 +41,7 @@
                         <p:submenu rendered="#{loginBean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
                             <p:menuitem rendered="#{loginBean.usuario.perfil.venReg}" value="Gestionar" outcome="/venta/index" icon="ui-icon-newwin" />
                             <p:menuitem rendered="#{loginBean.usuario.perfil.venLis}" value="Listar" outcome="/venta/listarv" icon="ui-icon-grip-dotted-vertical" />                            
-                            
+
                         </p:submenu>
 
                         <p:submenu label="Reporte" icon="ui-icon-print">
@@ -75,9 +76,13 @@
                 if (args.loggetOut) {
                     location.href = args.ruta;
                 }
-            }                   
+            }
+
+            $(document).ready(function () {
+                $(".money").maskMoney();
+            });
         </script>
-        
+
 
     </h:body>
 
