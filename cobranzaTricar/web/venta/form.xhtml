@@ -90,11 +90,10 @@
                     </p:autoComplete>                    
                     <p:outputLabel value="Precio:" for="precio"/>
                     <p:inputText id="precio" class="money" value="#{creditoBean.credito.precio}" >
-                        <f:validator validatorId="validatorPrecio"/>
                         <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
                     </p:inputText>
-                    <p:outputLabel value="Inicial:"/>
-                    <p:inputText value="#{creditoBean.credito.inicial}" required="true" requiredMessage="Ingrese precio credito">
+                    <p:outputLabel value="Inicial:" for="inicial"/>
+                    <p:inputText id="inicial" class="money" value="#{creditoBean.credito.inicial}" >
                         <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
                     </p:inputText>
                     <p:outputLabel value="Saldo:"/>                                    
