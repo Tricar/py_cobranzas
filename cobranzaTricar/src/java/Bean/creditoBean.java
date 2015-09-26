@@ -8,10 +8,13 @@ import Dao.LetrasDao;
 import Dao.LetrasDaoImplements;
 import Dao.PagosDao;
 import Dao.PagosDaoImp;
+import Dao.VehiculoDao;
+import Dao.VehiculoDaoImplements;
 import Model.Anexo;
 import Model.Credito;
 import Model.Letras;
 import Model.Pagos;
+import Model.Vehiculo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -22,14 +25,14 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import sun.nio.cs.ext.Big5;
+import org.jboss.weld.context.CreationalContextImpl;
 
 @ManagedBean
 @SessionScoped
 public class creditoBean implements Serializable {
 
     public Credito credito = new Credito();
-    public List<Credito> creditos;
+    public List<Credito> creditos = new ArrayList();
     LetrasDao letrasdao = new LetrasDaoImplements();
     public List<Letras> letrasventa;
     public List<Credito> filtradafecha;
@@ -40,6 +43,8 @@ public class creditoBean implements Serializable {
     private Letras letra = new Letras();
     private String dni;
     private BigDecimal res;
+    private String codigo;
+    private Date fechafin;
 
     public creditoBean() {
     }
@@ -136,19 +141,50 @@ public class creditoBean implements Serializable {
         this.res = res;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public List<Credito> getCreditos() {        
+        return creditos;
+        
+    }
+
+    public void setCreditos(List<Credito> creditos) {
+        this.creditos = creditos;
+    }
+
+    public Date getFechafin() {
+        return fechafin;
+    }
+
+    public void setFechafin(Date fechafin) {
+        this.fechafin = fechafin;
+    }
+
     public void resultadoSaldo() {
         res = credito.getPrecio().subtract(credito.getInicial());
     }
 
-    public void insertar() {
+    public void insertarCredito() {
         CreditoDao creditodao = new CreditoDaoImp();
+        VehiculoDao vehiculodao = new VehiculoDaoImplements();
+        Vehiculo vehiculo = new Vehiculo();
         credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
-        if (credito.getPrecio().compareTo(credito.getPrecio())==1) {
+        if (credito.getPrecio().compareTo(credito.getSaldo()) == 1) {
+            vehiculo = credito.getVehiculo();
+            vehiculo.setEstado("N");
+            vehiculodao.modificarVehiculo(vehiculo);
             credito.setTotaldeuda(BigDecimal.ZERO);
             Letras letras = new Letras();
             BigDecimal nletras = new BigDecimal(credito.getNletras());
             BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
             BigDecimal interes = new BigDecimal(0);
+            credito.setEstado("AP");
             creditodao.insertarVenta(credito);
             for (int i = 1; i <= (credito.getNletras()); i++) {
                 interes = interes.add(credito.getInteres());
@@ -190,6 +226,8 @@ public class creditoBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
         List<Letras> letrita = new ArrayList();
+        Vehiculo vehiculo = new Vehiculo();
+        VehiculoDao vehiculodao = new VehiculoDaoImplements();
         letrita = letrasdao.mostrarLetrasXCred(credito);
         BigDecimal totaldeuda = new BigDecimal(BigInteger.ZERO);
         for (int i = 0; i < letrita.size(); i++) {
@@ -197,6 +235,9 @@ public class creditoBean implements Serializable {
             totaldeuda = totaldeuda.add(get.getMonto());
         }
         if (totaldeuda.compareTo(credito.getTotaldeuda()) == 0) {
+            vehiculo = credito.getVehiculo();
+            vehiculo.setEstado("D");
+            vehiculodao.modificarVehiculo(vehiculo);
             creditodao.eliminarVenta(credito);
         } else {
             System.out.println("Mostrar Error de que el credito ya ha sido cobrado y no se puede borrar");
@@ -245,9 +286,10 @@ public class creditoBean implements Serializable {
         letraslista = letras.mostrarLetrasXCred(credito);
 //      return credito;
     }
-    
-    public void cargarLetras(/*Anexo anexo*/) {
+
+    public void cargarLetras(Credito cred) {
         letraslista = new ArrayList();
+        credito = cred;
         CreditoDao creditodao = new CreditoDaoImp();
         List<Letras> letritas = new ArrayList();
         Calendar calendario = GregorianCalendar.getInstance();
@@ -287,14 +329,18 @@ public class creditoBean implements Serializable {
     public void insertarNotaDebito() {
         LetrasDao letrasdao = new LetrasDaoImplements();
         Date d = new Date();
+        CreditoDao creditodao = new CreditoDaoImp();
 //        credito = creditodao.cargarCreditoxLetra(letra);
         letra.setCredito(credito);
         letra.setDescripcion("ND");
         letra.setFecreg(d);
+        letra.setFecven(fechafin);
         letra.setMontoletra(BigDecimal.ZERO);
         letra.setInteres(BigDecimal.ZERO);
         letra.setSaldo(letra.getMonto());
         letra.setEstado("PN");
+        credito.setTotaldeuda(credito.getTotaldeuda().add(letra.getMonto()));
+        creditodao.modificarVenta(credito);
         letrasdao.insertarLetra(letra);
     }
 
@@ -309,6 +355,32 @@ public class creditoBean implements Serializable {
             filtradafecha.add(credito);
         } catch (Exception e) {
         }
+    }
 
+    public void cargarxCodigo() {
+        creditos = new ArrayList();
+        CreditoDao creditodao = new CreditoDaoImp();
+        Credito modelocredito = new Credito();
+        try {
+            modelocredito = creditodao.cargarxCodigo(codigo);
+            System.out.println("Estoy aca:"+modelocredito.getLiqventa());
+            creditos.add(modelocredito);
+        } catch (Exception e) {
+        }
+    }
+    
+    public void resultadoFecha(){
+        fechafin = sumaDias(letra.getFecini(), 30);
+    }
+
+    public String nuevo() {
+        credito = new Credito();
+        return "/venta/form.xhtml";
+    }
+
+    public String index() {
+        creditos= new ArrayList();
+        codigo = "";
+        return "/venta/index.xhtml";
     }
 }

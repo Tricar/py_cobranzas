@@ -32,6 +32,7 @@ public class Vehiculo implements java.io.Serializable {
     private Date fechareg;
     private String motor;
     private String tipovehiculo;
+    private String estado;
     private Set creditos = new HashSet(0);
 
     public Vehiculo() {
@@ -44,7 +45,7 @@ public class Vehiculo implements java.io.Serializable {
         this.serie = serie;
     }
 
-    public Vehiculo(Integer idvehiculo, Color color, Modelo modelo, String marca, String serie, Integer anofabri, Date fechareg, String motor, String tipovehiculo, Set creditos) {
+    public Vehiculo(Integer idvehiculo, Color color, Modelo modelo, String marca, String serie, Integer anofabri, Date fechareg, String motor, String tipovehiculo, String estado, Set creditos) {
         this.idvehiculo = idvehiculo;
         this.color = color;
         this.modelo = modelo;
@@ -54,6 +55,7 @@ public class Vehiculo implements java.io.Serializable {
         this.fechareg = fechareg;
         this.motor = motor;
         this.tipovehiculo = tipovehiculo;
+        this.estado = estado;
         this.creditos = creditos;
     }
 
@@ -141,6 +143,15 @@ public class Vehiculo implements java.io.Serializable {
 
     public void setTipovehiculo(String tipovehiculo) {
         this.tipovehiculo = tipovehiculo;
+    }
+    
+    @Column(name = "estado", length = 1)
+    public String getEstado() {
+        return this.estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")

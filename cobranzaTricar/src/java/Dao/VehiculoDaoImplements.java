@@ -114,4 +114,23 @@ public class VehiculoDaoImplements implements VehiculoDao{
         }
         return null;
     }
+    
+    @Override
+    public List<Vehiculo> filtarDisponible(String tipo) {
+        Session session = null;
+        List<Vehiculo> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Vehiculo WHERE estado=:v");
+            query.setParameter("v", tipo);            
+            lista = (List<Vehiculo>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
 }

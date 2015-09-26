@@ -44,6 +44,7 @@ public class Credito implements java.io.Serializable {
     private BigDecimal interes;
     private Boolean cronograma;
     private Boolean contrato;
+    private String estado;
     private Set letrases = new HashSet(0);
 
     public Credito() {
@@ -60,7 +61,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases) {
+    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado) {
         this.idventa = idventa;
         this.anexoByIdaval = anexoByIdaval;
         this.anexoByCodven = anexoByCodven;
@@ -81,6 +82,7 @@ public class Credito implements java.io.Serializable {
         this.interes = interes;
         this.cronograma = cronograma;
         this.contrato = contrato;
+        this.estado = estado;
         this.letrases = letrases;
     }
 
@@ -270,6 +272,15 @@ public class Credito implements java.io.Serializable {
 
     public void setContrato(Boolean contrato) {
         this.contrato = contrato;
+    }
+    
+    @Column(name = "estado", nullable = false, length = 2)
+    public String getEstado() {
+        return this.estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "credito")

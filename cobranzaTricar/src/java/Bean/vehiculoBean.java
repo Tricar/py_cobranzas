@@ -4,6 +4,7 @@ import Dao.VehiculoDao;
 import Dao.VehiculoDaoImplements;
 import Model.Vehiculo;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -17,6 +18,7 @@ public class vehiculoBean implements Serializable{
        
     public Vehiculo vehiculo = new Vehiculo();
     public List<Vehiculo> vehiculos;
+    private List<Vehiculo> query;
    
        
     public vehiculoBean() {
@@ -38,7 +40,15 @@ public class vehiculoBean implements Serializable{
         vehiculos = tipodao.mostrarVehiculo();
         return vehiculos;
     }
-    
+
+    public List<Vehiculo> getQuery() {
+        return query;
+    }
+
+    public void setQuery(List<Vehiculo> query) {
+        this.query = query;
+    }
+       
     public List<Vehiculo> completarTipo(String nombre){
         VehiculoDao tipodao = new VehiculoDaoImplements();
         vehiculos = tipodao.buscarxNombre(nombre);
@@ -53,6 +63,7 @@ public class vehiculoBean implements Serializable{
         VehiculoDao linkDao = new VehiculoDaoImplements();
         Date d = new Date();
         vehiculo.setFechareg(d);
+        vehiculo.setEstado("D");
         linkDao.insertarVehiculo(vehiculo);
         vehiculo = new Vehiculo();
         
@@ -68,5 +79,17 @@ public class vehiculoBean implements Serializable{
         VehiculoDao linkDao = new VehiculoDaoImplements();
         linkDao.eliminarVehiculo(vehiculo);
         vehiculo = new Vehiculo();
+    }
+    
+    public List<Vehiculo> filtrarDisponible(String name) {
+        this.query = new ArrayList<Vehiculo>();
+        VehiculoDao vehiculodao = new VehiculoDaoImplements();
+        List<Vehiculo> tipos = vehiculodao.filtarDisponible("D");        
+        for (Vehiculo tipo : tipos) {            
+            if (tipo.getSerie().toLowerCase().startsWith(name)) {
+                query.add(tipo);
+            }
+        }
+        return query;
     }
 }

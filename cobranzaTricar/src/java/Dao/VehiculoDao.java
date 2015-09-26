@@ -10,4 +10,5 @@ public interface VehiculoDao {
     public void modificarVehiculo (Vehiculo vehiculo);
     public void eliminarVehiculo (Vehiculo vehiculo);
     public List<Vehiculo> buscarxNombre(String nombre);
+    public List<Vehiculo> filtarDisponible(String tipo);
 }

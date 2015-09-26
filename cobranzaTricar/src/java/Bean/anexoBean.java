@@ -417,7 +417,7 @@ public class anexoBean implements Serializable {
         AnexoDao anexoDao = new AnexoDaoImplements();
         List<Anexo> tipos = anexoDao.filtarTipoDos("CN", "CJ");        
         for (Anexo tipo : tipos) {            
-            var = tipo.getNombre()+" "+tipo.getApepat()+""+tipo.getApemat();
+//            var = tipo.getNombre()+" "+tipo.getApepat()+""+tipo.getApemat();
             if (tipo.getNombre().toLowerCase().startsWith(name)) {
                 query.add(tipo);
             }

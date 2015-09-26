@@ -11,7 +11,7 @@
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
         <h:outputStylesheet library="css" name="style.css" />
-        <title>Cobranzas TRICAR SAC</title>
+        <title>Cobranzas TRICAR SAC</title>         
     </h:head>
 
     <h:body>
@@ -38,9 +38,9 @@
                         </p:submenu>
 
                         <p:submenu rendered="#{loginBean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.venReg}" value="Generar" outcome="/venta/credito" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginBean.usuario.perfil.venReg}" value="Gestionar" outcome="/venta/index" icon="ui-icon-newwin" />
                             <p:menuitem rendered="#{loginBean.usuario.perfil.venLis}" value="Listar" outcome="/venta/listarv" icon="ui-icon-grip-dotted-vertical" />                            
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.venCon}" value="Consulta" outcome="/venta/consultac" icon="ui-icon-newwin" />
+                            
                         </p:submenu>
 
                         <p:submenu label="Reporte" icon="ui-icon-print">
@@ -75,8 +75,9 @@
                 if (args.loggetOut) {
                     location.href = args.ruta;
                 }
-            }
+            }                   
         </script>
+        
 
     </h:body>
 

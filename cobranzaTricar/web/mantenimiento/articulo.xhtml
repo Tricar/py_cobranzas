@@ -91,6 +91,11 @@
                         <p:column headerText="Motor">
                             <h:outputText value="#{vehiculo.motor}" />
                         </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{vehiculo.estado}">
+                                <f:converter converterId="estadoconverter"/>
+                            </h:outputText>
+                        </p:column>
                         <p:column headerText=" ">
                             <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
                                 <f:setPropertyActionListener target="#{vehiculoBean.vehiculo}" value="#{vehiculo}" />

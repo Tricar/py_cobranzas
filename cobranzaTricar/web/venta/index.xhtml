@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"                
+                template="./../views/template.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <p:commandButton action="#{creditoBean.nuevo()}" value="Nuevo" immediate="true" icon="b-add"/>
+        </h:form>
+        <h:form>            
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Ingrese Codigo:"/>
+                <p:inputText value="#{creditoBean.codigo}"/>                       
+                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarxCodigo()}"
+                                 ajax="false"/>
+            </p:panelGrid>
+        </h:form>
+        <h:form id="formMostrar">
+            <p:dataTable var="cred" value="#{creditoBean.creditos}" 
+                         emptyMessage="No hay nada para mostrar">
+                <p:column headerText="Cod.">
+                    <h:outputText value="#{cred.liqventa}" />
+                </p:column>
+                <p:column headerText="Nombres">
+                    <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
+                </p:column>                        
+                <p:column headerText="Tienda">
+                    <h:outputText value="#{cred.tienda}">
+                        <f:converter converterId="tiendaconverter"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{cred.empresa}">
+                        <f:converter converterId="empresaconverter"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Vehículo">
+                    <h:outputText value="#{cred.vehiculo.tipovehiculo}">
+                        <f:converter converterId="tvehiculo"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Deuda">
+                    <h:outputText value="#{cred.totaldeuda}" />
+                </p:column>
+                <p:column headerText="Ver">                            
+                    <p:commandButton value="V" update=":formVer" icon="b-ver"
+                                     actionListener="#{creditoBean.cargarLetras(cred)}" onclick="$('#tablaletras').show();"/>
+                </p:column>
+                <p:column headerText=" ">
+                    <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
+                        <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
+                  widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+                <h:outputText value="¿Desea eliminar?" />
+                <p:commandButton value="Si" actionListener="#{creditoBean.eliminar()}" 
+                                 ajax="false" oncomplete="dlgeliminar.hide();" />
+                <p:commandButton value="No" onclick="dlg2.hide();" />
+            </h:form>
+        </p:dialog>
+        <div id="tablaletras" class="campo">
+            <h:form id="formVer">
+                <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
+                             emptyMessage="No hay nada para mostrar">                                        
+                    <p:column headerText="Descripcion">
+                        <h:outputText value="#{letras.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{letras.montoletra}"/>
+                    </p:column>
+                    <p:column headerText="Interes">
+                        <h:outputText value="#{letras.interes}"/>
+                    </p:column>
+                    <p:column headerText="Total Letra">
+                        <h:outputText value="#{letras.monto}"/>
+                    </p:column>
+                    <p:column headerText="Fecha In.">
+                        <h:outputText value="#{letras.fecini}">
+                            <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Fecha Ven.">
+                        <h:outputText value="#{letras.fecven}">
+                            <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Saldo">
+                        <h:outputText value="#{letras.saldo}"/>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{letras.estado}">
+                            <f:converter converterId="letrasconverter"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText=" ">
+                        <p:commandButton icon="b-update" oncomplete="dlgmodificar.show()" update=":formModificar">
+                            <f:setPropertyActionListener target="#{letrasBean.letra}" value="#{letras}" />
+                        </p:commandButton>
+                        <p:column headerText=" ">
+                            <p:commandButton disabled="true" icon="b-delete" oncomplete="dlgeliminarletra.show()" update=":formEliminarLetra">
+                                <f:setPropertyActionListener target="#{letrasBean.letra}" value="#{letras}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton value="Nota de Débito" icon="b-add" oncomplete="dlgnotadebito.show()" />
+            </h:form>            
+
+            <p:dialog id="dlg1" header="Modifique los Datos" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
+                <h:form id="formModificar">                    
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Descripcion:"/>
+                        <p:inputText value="#{letrasBean.letra.descripcion}" readonly="true"/>                        
+                        <p:outputLabel value="Monto:"/>
+                        <p:inputText value="#{letrasBean.letra.monto}">
+                            <p:ajax event="keyup" update="res saldo" listener="#{letrasBean.resultadoSaldo()}"/>
+                        </p:inputText>
+                        <p:outputLabel value="Interes:"/>
+                        <p:inputText value="#{letrasBean.letra.interes}">
+                            <p:ajax event="keyup" update="res saldo" listener="#{letrasBean.resultadoSaldo()}"/>
+                        </p:inputText>
+                        <p:outputLabel value="Monto Letra:"/>
+                        <p:inputText id="res" value="#{letrasBean.res}" readonly="true"/>
+                        <p:outputLabel value="Fecha Inicio:"/>
+                        <p:calendar navigator="true" value="#{letrasBean.letra.fecini}">
+                            <p:ajax event="mouseout" update="fecha" listener="#{letrasBean.resultadoFecha()}"/>
+                        </p:calendar>
+                        <p:outputLabel value="Fecha Venc:"/>
+                        <h:outputText id="fecha" value="#{letrasBean.fechafin}" >
+                            <f:convertDateTime/>
+                        </h:outputText>
+                        <p:outputLabel value="Saldo:"/>
+                        <p:inputText id="saldo" value="#{letrasBean.res}" readonly="true"/>
+                        <p:commandButton actionListener="#{letrasBean.modificar()}" value="M" oncomplete="dlgmodificar.hide()"
+                                         update=":formModificar" icon="b-update"/>
+                    </p:panelGrid>
+                </h:form>
+            </p:dialog>
+            <p:dialog id="dlg3" header="Eliminar Letra" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgeliminarletra" modal="true" resizable="false" minWidth="200">
+                <h:form id="formEliminarLetra">
+                    <h:outputText value="¿Desea eliminar?" />
+                    <p:commandButton value="Si" actionListener="#{letrasBean.eliminar()}" 
+                                     ajax="false" oncomplete="dlgeliminarletra.hide();" />
+                    <p:commandButton value="No" onclick="dlg3.hide();" />
+                </h:form>
+            </p:dialog>
+            <p:dialog id="dlg4" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgnotadebito" modal="true" resizable="false" minWidth="200">
+                <h:form id="formNotadebito">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Fecha Inicio:"/>
+                        <p:calendar navigator="true" showOn="button" value="#{creditoBean.letra.fecini}" pattern="dd/MM/yyyy">
+                            <p:ajax event="mouseout" update="fecha" listener="#{creditoBean.resultadoFecha()}"/>
+                        </p:calendar>
+                        <p:outputLabel value="Fecha Venc:"/>
+                        <h:outputText id="fecha" value="#{creditoBean.fechafin}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                        <p:outputLabel value="Monto:"/>
+                        <p:inputText value="#{creditoBean.letra.monto}"/>
+                        <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" oncomplete="dlgnotadebito.hide()"
+                                         ajax="false"/>
+                    </p:panelGrid>
+                </h:form>
+            </p:dialog>
+        </div>
+    </ui:define>
+</ui:composition>

@@ -32,6 +32,9 @@
         <property name="tipovehiculo" type="string">
             <column name="tipovehiculo" length="2" />
         </property>
+        <property name="estado" type="string">
+            <column name="estado" length="1" />
+        </property>
         <set name="creditos" table="credito" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idvehiculo" not-null="true" />
