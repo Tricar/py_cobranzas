@@ -12,30 +12,34 @@
         <h:outputStylesheet name="./css/cssLayout.css"/>
         <h:outputStylesheet library="css" name="style.css" />
         <h:outputScript library="js" name="maskmoney.js" />
+        <h:outputLink rel="shortcut icon" hreflang="../resources/images/favicon.ico"/>
         <title>Cobranzas TRICAR SAC</title>         
     </h:head>
 
     <h:body>
 
+        <ui:include src="./sessionTimeOut.xhtml" />
+
         <div id="cabecera">
             <ui:insert name="top">
-                <h1>Sistema de Cobranzas TRICAR</h1>
+                <h:graphicImage library="images" name="logo_tricar.jpg" alt="hound logo" style="float: left; margin: 0px; padding: 0px;"/>
+                <h1>Sistema Cobranzas</h1>
                 <h:form id="frmMenu">
                     <p:menubar>
                         <p:menuitem value="Inicio" icon="ui-icon-home" outcome="/views/index" />
 
-                        <p:submenu rendered="#{loginBean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-suitcase">
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisEmp}" value="Empleado" outcome="/sistema/empleado" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisUsu}" value="Usuario" outcome="/sistema/usuario" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.sisPer}" value="Perfil" outcome="/sistema/perfil" icon="ui-icon-clipboard" />
+                        <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-suitcase">
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" outcome="/sistema/empleado" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" outcome="/sistema/usuario" icon="ui-icon-person" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" outcome="/sistema/perfil" icon="ui-icon-clipboard" />
                         </p:submenu>
 
-                        <p:submenu rendered="#{loginBean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manCli}" value="Cliente" outcome="/mantenimiento/cliente" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manArt}" value="Articulo" outcome="/mantenimiento/articulo" icon="ui-icon-flag" />
+                        <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" outcome="/mantenimiento/cliente" icon="ui-icon-person" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" outcome="/mantenimiento/articulo" icon="ui-icon-flag" />
 
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manMod}" value="Modelo Articulo" outcome="/mantenimiento/modarticulo" icon="ui-icon-star" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.manCol}" value="Color Articulo" outcome="/mantenimiento/colorart" icon="ui-icon-pencil" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" outcome="/mantenimiento/modarticulo" icon="ui-icon-star" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" outcome="/mantenimiento/colorart" icon="ui-icon-pencil" />
                         </p:submenu>
 
                         <p:submenu rendered="#{loginBean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
@@ -50,12 +54,12 @@
                             <p:menuitem value="Asignar Menu" icon="ui-icon-eject" />
                         </p:submenu>
 
-                        <p:menuitem value="Clave" url="#" icon="ui-icon-suitcase" />
-                        <p:menuitem value="Salir" actionListener="#{loginBean.logout}" icon="ui-icon-power" 
-                                    oncomplete="handleLoginRequest(xhr, status, args)"/>
-
                         <f:facet name="options">
-                            <p:outputLabel value="#{loginBean.usuario.anexo.nombre}"/>
+                            <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>
+                            <p:commandButton icon="ui-icon-power" style="margin-left:50px" actionListener="#{loginbean.logout()}"
+                                             title="Cerrar Session" oncomplete="handleLoginRequest(xhr, status, args)"/>
+
+                            <p:commandButton icon="ui-icon-suitcase" title="Cambiar Clave"/>
                         </f:facet>
 
                     </p:menubar>
