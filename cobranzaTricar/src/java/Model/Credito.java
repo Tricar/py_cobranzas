@@ -45,6 +45,7 @@ public class Credito implements java.io.Serializable {
     private Boolean cronograma;
     private Boolean contrato;
     private String estado;
+    private String vehi;
     private Set letrases = new HashSet(0);
 
     public Credito() {
@@ -61,7 +62,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado) {
+    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi) {
         this.idventa = idventa;
         this.anexoByIdaval = anexoByIdaval;
         this.anexoByCodven = anexoByCodven;
@@ -83,6 +84,7 @@ public class Credito implements java.io.Serializable {
         this.cronograma = cronograma;
         this.contrato = contrato;
         this.estado = estado;
+        this.vehi = vehi;
         this.letrases = letrases;
     }
 
@@ -281,6 +283,15 @@ public class Credito implements java.io.Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+    
+    @Column(name = "vehi", length = 3)
+    public String getVehi() {
+        return this.vehi;
+    }
+
+    public void setVehi(String vehi) {
+        this.vehi = vehi;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "credito")

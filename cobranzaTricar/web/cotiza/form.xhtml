@@ -9,7 +9,7 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <h2>Nuevo Crédito</h2>
+        <h2>Nueva Proforma</h2>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form id="formInsertarVenta" prependId="false ">
 
@@ -40,16 +40,12 @@
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
                         <p:messages id="msg"/>
                     </p:autoComplete>
-                    <p:outputLabel value="Buscar Aval:" />
-                    <p:autoComplete value="#{creditoBean.credito.anexoByIdaval}"
-                                    completeMethod="#{anexoBean.filtrarAval}" var="aval"
-                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" forceSelection="true">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg1"/>                                
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg1"/>
-                        <p:messages id="msg1"/>
-                    </p:autoComplete>
+                    <p:outputLabel value="Tipo Vehículo:"/>
+                    <p:selectOneMenu value="#{creditoBean.credito.vehi}" >                        
+                        <f:selectItem itemLabel="MTX" itemValue="MTX" />
+                        <f:selectItem itemLabel="ML" itemValue="ML" />
+                        <f:selectItem itemLabel="MTF" itemValue="MTF" />                                
+                    </p:selectOneMenu>
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
                         <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
@@ -71,22 +67,6 @@
                         <f:selectItem itemLabel="11" itemValue='11'/>
                         <f:selectItem itemLabel="12" itemValue='12'/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="Buscar vendedor:"/>
-                    <p:autoComplete value="#{creditoBean.credito.anexoByCodven}"
-                                    completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
-                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo}" forceSelection="true">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>                                
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
-                    </p:autoComplete>
-                    <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
-                    <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
-                                    completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
-                                    itemLabel="#{v.serie}" itemValue="#{v}" forceSelection="true"
-                                    required="true" requiredMessage="Elija un vehículo">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
-                    </p:autoComplete>                    
                     <p:outputLabel value="Precio:" for="precio"/>
                     <p:inputText id="precio" class="money" value="#{creditoBean.credito.precio}" >
                         <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
@@ -108,25 +88,9 @@
                         <f:selectItem itemLabel="6" itemValue='6'/>
                         <f:selectItem itemLabel="7" itemValue='7'/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="Verificado:" />
-                    <p:autoComplete value="#{creditoBean.credito.anexoByVerificado}"
-                                    completeMethod="#{anexoBean.filtrarGestor}" var="veri"
-                                    itemLabel="#{veri.nombres}" itemValue="#{veri}" forceSelection="true">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                    </p:autoComplete>
-                    <p:outputLabel value="Contrato:" />
-                    <p:selectOneRadio value="#{creditoBean.credito.contrato}" >
-                        <f:selectItem itemLabel="SI" itemValue="true" />
-                        <f:selectItem itemLabel="NO" itemValue="false"/>
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Cronograma:" />
-                    <p:selectOneRadio value="#{creditoBean.credito.cronograma}" >
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>
-                    </p:selectOneRadio>
                 </p:panelGrid>
-                <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCredito()}" icon="b-ok"
-                                 update=":formMostrar" onclick="$('#tablaletras').show();"/>                    
+                <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCotiza()}" icon="b-ok"
+                                 update=":formMostrar" onclick="$('#tablaletras').show();"/>
             </h:form>
         </f:view>
         <div id="tablaletras" class="campo">
@@ -161,17 +125,12 @@
                     </p:column>
                     <p:column headerText="Saldo">
                         <h:outputText value="#{letras.saldo}"/>
-                    </p:column>
-                    <p:column headerText="Estado">
-                        <h:outputText value="#{letras.estado}">
-                            <f:converter converterId="letrasconverter"/>
-                        </h:outputText>
-                    </p:column>                        
+                    </p:column>                    
                 </p:dataTable>
             </h:form>
         </div>
         <h:form>
-            <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="b-back"/>
+            <p:commandButton action="#{creditoBean.indexcotiza()}" value="Regresar" immediate="true" icon="b-back"/>
         </h:form>
     </ui:define>
 </ui:composition>

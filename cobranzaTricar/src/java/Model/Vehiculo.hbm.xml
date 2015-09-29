@@ -34,7 +34,7 @@
         </property>
         <property name="estado" type="string">
             <column name="estado" length="1" />
-        </property>
+        </property>        
         <set name="creditos" table="credito" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idvehiculo" not-null="true" />

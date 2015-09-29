@@ -7,6 +7,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"                
                 template="./../views/template.xhtml">
     <ui:define name="content">
+        <h2>Gestión de Créditos</h2>
         <h:form>
             <p:commandButton action="#{creditoBean.nuevo()}" value="Nuevo" immediate="true" icon="b-add"/>
         </h:form>
@@ -56,15 +57,15 @@
                 </p:column>
             </p:dataTable>
         </h:form>
-        <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
-                  widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
-            <h:form id="formEliminar">
+        <h:form id="formEliminar">
+            <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
                 <h:outputText value="¿Desea eliminar?" />
                 <p:commandButton value="Si" actionListener="#{creditoBean.eliminar()}" 
                                  ajax="false" oncomplete="dlgeliminar.hide();" />
                 <p:commandButton value="No" onclick="dlg2.hide();" />
-            </h:form>
-        </p:dialog>
+            </p:dialog>
+        </h:form>
         <div id="tablaletras" class="campo">
             <h:form id="formVer">
                 <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
@@ -111,8 +112,7 @@
                     </p:column>
                 </p:dataTable>
                 <p:commandButton value="Nota de Débito" icon="b-add" oncomplete="dlgnotadebito.show()" />
-            </h:form>            
-
+            </h:form>
             <p:dialog id="dlg1" header="Modifique los Datos" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
                 <h:form id="formModificar">                    
@@ -120,7 +120,7 @@
                         <p:outputLabel value="Descripcion:"/>
                         <p:inputText value="#{letrasBean.letra.descripcion}" readonly="true"/>                        
                         <p:outputLabel value="Monto:"/>
-                        <p:inputText value="#{letrasBean.letra.monto}">
+                        <p:inputText value="#{letrasBean.letra.monto}" class="money">
                             <p:ajax event="keyup" update="res saldo" listener="#{letrasBean.resultadoSaldo()}"/>
                         </p:inputText>
                         <p:outputLabel value="Interes:"/>
@@ -142,19 +142,19 @@
                         <p:commandButton actionListener="#{letrasBean.modificar()}" value="M" oncomplete="dlgmodificar.hide()"
                                          update=":formModificar" icon="b-update"/>
                     </p:panelGrid>
-                </h:form>
+                </h:form>                
             </p:dialog>
-            <p:dialog id="dlg3" header="Eliminar Letra" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgeliminarletra" modal="true" resizable="false" minWidth="200">
-                <h:form id="formEliminarLetra">
+            <h:form id="formEliminarLetra">
+                <p:dialog id="dlg3" header="Eliminar Letra" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlgeliminarletra" modal="true" resizable="false" minWidth="200">
                     <h:outputText value="¿Desea eliminar?" />
                     <p:commandButton value="Si" actionListener="#{letrasBean.eliminar()}" 
                                      ajax="false" oncomplete="dlgeliminarletra.hide();" />
                     <p:commandButton value="No" onclick="dlg3.hide();" />
-                </h:form>
-            </p:dialog>
+                </p:dialog>
+            </h:form>
             <p:dialog id="dlg4" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgnotadebito" modal="true" resizable="false" minWidth="200">
+                      widgetVar="dlgnotadebito" modal="true" resizable="true" minWidth="200">
                 <h:form id="formNotadebito">
                     <p:panelGrid columns="4">
                         <p:outputLabel value="Fecha Inicio:"/>
@@ -165,8 +165,8 @@
                         <h:outputText id="fecha" value="#{creditoBean.fechafin}" >
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
-                        <p:outputLabel value="Monto:"/>
-                        <p:inputText value="#{creditoBean.letra.monto}"/>
+                        <p:outputLabel value="Monto:" />
+                        <p:inputText  value="#{creditoBean.letra.monto}" class="money"/>
                         <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" oncomplete="dlgnotadebito.hide()"
                                          ajax="false"/>
                     </p:panelGrid>

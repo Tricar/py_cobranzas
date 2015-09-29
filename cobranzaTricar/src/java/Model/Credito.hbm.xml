@@ -68,6 +68,9 @@
         <property name="estado" type="string">
             <column name="estado" length="2" not-null="true" />
         </property>
+        <property name="vehi" type="string">
+            <column name="vehi" length="3" />
+        </property>
         <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idventa" />
