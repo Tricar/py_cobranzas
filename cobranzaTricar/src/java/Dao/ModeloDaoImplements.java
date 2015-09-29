@@ -1,9 +1,7 @@
 package Dao;
 
 import Model.Modelo;
-import Persistencia.HibernateUtil;
 import java.util.List;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -14,79 +12,59 @@ import org.hibernate.Session;
 public class ModeloDaoImplements implements ModeloDao{
 
     @Override
-    public List<Modelo> mostrarModelo() {
-        Session session = null;
-        List<Modelo> lista = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Modelo");
-            lista = (List<Modelo>)query.list();
-        }catch (HibernateException e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
-                session.close();
-            }
-        }
-        return lista;
+    public boolean registrar(Session session, Modelo model) throws Exception {
+        session.save(model);
+        return true;
     }
 
     @Override
-    public void insertarModelo(Modelo modelo) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(modelo);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
+    public List<Modelo> verTodo(Session session) throws Exception {
+        String hql = "FROM Modelo";
+        Query query = session.createQuery(hql);
+
+        List<Modelo> listaModelo = (List<Modelo>) query.list();
+
+        return listaModelo;
     }
 
     @Override
-    public void modificarModelo(Modelo modelo) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(modelo);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
+    public Modelo verByCodigo(Session session, Integer idmodelo) throws Exception {
+        return (Modelo) session.get(Modelo.class, idmodelo);
     }
 
     @Override
-    public void eliminarModelo(Modelo modelo) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(modelo);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
+    public Modelo verByModelo(Session session, String modelo) throws Exception {
+        String hql = "FROM Modelo WHERE modelo=:modelo";
+        Query query = session.createQuery(hql);
+        query.setParameter("modelo", modelo);
+
+        Modelo model = (Modelo) query.uniqueResult();
+
+        return model;
+    }
+
+    @Override
+    public Modelo verByModeloDifer(Session session, Integer idmodelo, String modelo) throws Exception {
+        String hql = "FROM Modelo WHERE idmodelo!=:idmodelo and modelo=:modelo";
+        Query query = session.createQuery(hql);
+        query.setParameter("idmodelo", idmodelo);
+        query.setParameter("modelo", modelo);
+        
+        Modelo model = (Modelo) query.uniqueResult();
+        
+        return model;
+    }
+
+    @Override
+    public boolean modificar(Session session, Modelo model) throws Exception {
+        session.update(model);
+        return true;
+    }
+
+    @Override
+    public boolean eliminar(Session session, Modelo model) throws Exception {
+        session.delete(model);
+        return true;
     }
     
 }

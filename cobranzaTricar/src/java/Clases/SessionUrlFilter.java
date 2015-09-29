@@ -5,6 +5,7 @@
  */
 package Clases;
 
+import Model.Usuario;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -19,8 +20,9 @@ import javax.servlet.http.HttpSession;
 
 @WebFilter("*.xhtml")
 public class SessionUrlFilter implements Filter {
-    
+
     FilterConfig filterconfig;
+    Usuario usuario;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -37,31 +39,37 @@ public class SessionUrlFilter implements Filter {
 
         String[] UrlPermitidaSinSession = new String[]{
             "faces/login.xhtml",
+            "faces/index-old.xhtml",
         };
 
-        boolean redirectionPeticion = true;
+        boolean redirectionurl = true;
 
         if (session.getAttribute("usuario") == null) {
             for (String item : UrlPermitidaSinSession) {
                 if (requestUrl.contains(item)) {
-                    redirectionPeticion = false;
+                    redirectionurl = false;
                     break;
                 }
             }
         } else {
-            redirectionPeticion = false;
+            redirectionurl = false;
         }
-        
-        if (redirectionPeticion) {
+
+        if (session.getAttribute("usuario") != null && requestUrl.indexOf("/faces/login.xhtml") >= 0) {
+            res.sendRedirect(req.getContextPath() + "/faces/views/index.xhtml");
+        }
+
+        if (redirectionurl) {
             res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
         } else {
             chain.doFilter(request, response);
         }
+
     }
 
     @Override
     public void destroy() {
 
     }
-    
+
 }
