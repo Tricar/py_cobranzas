@@ -37,15 +37,14 @@
                         <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
                             <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" outcome="/mantenimiento/cliente" icon="ui-icon-person" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" outcome="/mantenimiento/articulo" icon="ui-icon-flag" />
-
                             <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" outcome="/mantenimiento/modarticulo" icon="ui-icon-star" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" outcome="/mantenimiento/colorart" icon="ui-icon-pencil" />
                         </p:submenu>
 
-                        <p:submenu rendered="#{loginBean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
+                        <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
                             <p:menuitem value="Proforma" outcome="/cotiza/index" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.venReg}" value="Gestionar" outcome="/venta/index" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginBean.usuario.perfil.venLis}" value="Listar" outcome="/venta/listarv" icon="ui-icon-grip-dotted-vertical" />                            
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Gestionar" outcome="/venta/index" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Listar" outcome="/venta/listarv" icon="ui-icon-grip-dotted-vertical" />                            
 
                         </p:submenu>
 

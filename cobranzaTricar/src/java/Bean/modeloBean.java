@@ -24,14 +24,11 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class modeloBean implements Serializable {
 
-//    public Modelo modelo = new Modelo();
-//    public List<Modelo> modelos;
     private List<SelectItem> SelectItemsmodelo;
     private Session session;
     private Transaction transaction;
 
     private Modelo model;
-
     private List<Modelo> modelos;
 
     public modeloBean() {
@@ -239,22 +236,29 @@ public class modeloBean implements Serializable {
     }
 
     public List<SelectItem> getSelectItemsmodelo() {
+        return SelectItemsmodelo;
+    }
 
+    public Modelo getModel() {
+        return model;
+    }
+
+    public void setModel(Modelo model) {
+        this.model = model;
+    }
+
+    public List<Modelo> getModelos() {        
         this.session = null;
         this.transaction = null;
         try {
             ModeloDaoImplements daomodelo = new ModeloDaoImplements();
-            this.SelectItemsmodelo = new ArrayList<SelectItem>();
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
 
-            List<Modelo> modelos = daomodelo.verTodo(session);
-            for (Modelo modelo : modelos) {
-                SelectItem selecItem = new SelectItem(modelo.getIdmodelo(), modelo.getModelo());
-                this.SelectItemsmodelo.add(selecItem);
-            }
-            return SelectItemsmodelo;
+            modelos = daomodelo.verTodo(session);
+            
+            return modelos;
 
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -268,18 +272,6 @@ public class modeloBean implements Serializable {
                 this.session.close();
             }
         }
-    }
-
-    public Modelo getModel() {
-        return model;
-    }
-
-    public void setModel(Modelo model) {
-        this.model = model;
-    }
-
-    public List<Modelo> getModelos() {
-        return modelos;
     }
 
     public void setModelos(List<Modelo> modelos) {

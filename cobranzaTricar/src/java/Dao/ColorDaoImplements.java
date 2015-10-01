@@ -6,9 +6,7 @@
 package Dao;
 
 import Model.Color;
-import Persistencia.HibernateUtil;
 import java.util.List;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -16,82 +14,62 @@ import org.hibernate.Session;
  *
  * @author master
  */
-public class ColorDaoImplements implements ColorDao{
+public class ColorDaoImplements implements ColorDao{    
 
     @Override
-    public List<Color> mostrarColor() {
-        Session session = null;
-        List<Color> lista = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Color");
-            lista = (List<Color>)query.list();
-        }catch (HibernateException e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
-                session.close();
-            }
-        }
+    public boolean registrar(Session session, Color colo) throws Exception {
+        session.save(colo);
+        return true;
+    }
+
+    @Override
+    public List<Color> verTodo(Session session) throws Exception {
+        String hql = "FROM Color";
+        Query query = session.createQuery(hql);
+
+        List<Color> lista = (List<Color>) query.list();
+
         return lista;
     }
 
     @Override
-    public void insertarColor(Color color) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(color);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
+    public Color verByCodigo(Session session, Integer idcolor) throws Exception {
+        return (Color) session.get(Color.class, idcolor);
     }
 
     @Override
-    public void modificarColor(Color color) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(color);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
+    public Color verByColor(Session session, String color) throws Exception {
+        String hql = "FROM Color WHERE color=:color";
+        Query query = session.createQuery(hql);
+        query.setParameter("color", color);
+
+        Color colo = (Color) query.uniqueResult();
+
+        return colo;
     }
 
     @Override
-    public void eliminarColor(Color color) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(color);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
+    public Color verByColorDifer(Session session, Integer idcolor, String color) throws Exception {
+        String hql = "FROM Color WHERE idcolor!=:idcolor and color=:color";
+        Query query = session.createQuery(hql);
+        query.setParameter("idcolor", idcolor);
+        query.setParameter("color", color);
+        
+        Color colo = (Color) query.uniqueResult();
+
+        return colo;
+    }
+
+    @Override
+    public boolean modificar(Session session, Color colo) throws Exception {
+        session.update(colo);
+        return true;
+    }
+
+    @Override
+    public boolean eliminar(Session session, Color colo) throws Exception {
+        session.delete(colo);
+        return true;
     }
     
 }
