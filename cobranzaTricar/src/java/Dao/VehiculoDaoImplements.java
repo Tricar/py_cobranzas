@@ -18,69 +18,12 @@ import org.hibernate.criterion.Restrictions;
 public class VehiculoDaoImplements implements VehiculoDao{
 
     @Override
-    public List<Vehiculo> mostrarVehiculo() {
-        Session session = null;
-        List<Vehiculo> lista = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Vehiculo");
-            lista = (List<Vehiculo>)query.list();
-        }catch (HibernateException e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
-                session.close();
-            }
-        }
-        return lista;
-    }
-
-    @Override
-    public void insertarVehiculo(Vehiculo vehiculo) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(vehiculo);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
-    }
-
-    @Override
     public void modificarVehiculo(Vehiculo vehiculo) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             session.update(vehiculo);
-            session.getTransaction().commit();
-        } catch (HibernateException e){
-            System.out.println(e.getMessage());
-            session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
-    }
-
-    @Override
-    public void eliminarVehiculo(Vehiculo vehiculo) {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(vehiculo);
             session.getTransaction().commit();
         } catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -132,5 +75,61 @@ public class VehiculoDaoImplements implements VehiculoDao{
             }
         }
         return lista;
+    }
+
+    @Override
+    public boolean registrar(Session session, Vehiculo vehiculo) throws Exception {
+        session.save(vehiculo);
+        return true;
+    }
+
+    @Override
+    public List<Vehiculo> verTodo(Session session) throws Exception {
+        String hql = "FROM Vehiculo";
+        Query query = session.createQuery(hql);
+        
+        List<Vehiculo> lista = (List<Vehiculo>)query.list();
+        
+        return lista;
+    }
+
+    @Override
+    public Vehiculo verByIdvehiculo(Session session, Integer idvehiculo) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Vehiculo verBySerie(Session session, String serie) throws Exception {
+        String hql = "FROM Vehiculo WHERE serie=:serie";
+        Query query = session.createQuery(hql);
+        query.setParameter("serie", serie);
+        
+        Vehiculo tserie = (Vehiculo) query.uniqueResult();
+        
+        return tserie;
+    }
+
+    @Override
+    public Vehiculo verBySerieDifer(Session session, Integer idvehiculo, String serie) throws Exception {
+        String hql = "FROM Vehiculo WHERE idvehiculo!=:idvehiculo and serie=:serie";
+        Query query = session.createQuery(hql);
+        query.setParameter("idvehiculo", idvehiculo);
+        query.setParameter("serie", serie);
+        
+        Vehiculo tserie = (Vehiculo) query.uniqueResult();
+        
+        return tserie;
+    }
+
+    @Override
+    public boolean modificar(Session session, Vehiculo vehiculo) throws Exception {
+        session.update(vehiculo);
+        return true;
+    }
+
+    @Override
+    public boolean eliminar(Session session, Vehiculo vehiculo) throws Exception {
+        session.delete(vehiculo);
+        return true;
     }
 }

@@ -14,13 +14,52 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Nuevo" icon="b-add" oncomplete="dlginsertar.show()" update=":formInsertar"/>
+                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="b-add"/>
                 </h:form>
-                <p:dialog id="dlg1" header="Nuevo Vehículo" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlginsertar" modal="true" resizable="false" minWidth="200">
-                    <h:form id="formInsertar">
-                        <p:messages autoUpdate="true"/>
-                        <p:panelGrid columns="2">
+
+                <br/>
+
+                <h2>Lista de Articulos</h2>
+                <hr/>
+                <h:form id="formMostrar">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable var="item" value="#{vehiculoBean.vehiculos}" emptyMessage="No hay nada para mostrar" 
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">
+                        <p:column headerText="MARCA">
+                            <h:outputText value="#{item.marca}">
+                                <f:converter converterId="marcaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                         <p:column headerText="MODELO">
+                            <h:outputText value="#{item.modelo.modelo}" />
+                        </p:column>
+                        <p:column headerText="COLOR">
+                            <h:outputText value="#{item.color.color}" />
+                        </p:column>
+                        <p:column headerText="AÑO">
+                            <h:outputText value="#{item.anofabri}" />
+                        </p:column>
+                        <p:column headerText="SERIE">
+                            <h:outputText value="#{item.serie}" />
+                        </p:column>
+                        <p:column headerText="MOTOR">
+                            <h:outputText value="#{item.motor}" />
+                        </p:column>
+                        <p:column headerText="ESTADO">
+                            <h:outputText value="#{item.estado}">
+                                <f:converter converterId="estadoconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column width="10%" style="text-align: center">
+                            <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEditar(item.idvehiculo)}" icon="ui-icon ui-icon-pencil"/>
+                            <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEliminar(item.idvehiculo)}" icon="ui-icon ui-icon-trash"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                
+                <h:form id="formInsertar">
+                    <p:dialog header="Nuevo Articulo" widgetVar="dlginsertar" modal="true">                        
+                        <p:panelGrid id="panelcreararticulo" columns="3">
                             <p:outputLabel value="Tipo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
@@ -28,137 +67,105 @@
                                 <f:selectItem itemLabel="ML" itemValue="ML" />
                                 <f:selectItem itemLabel="MTF" itemValue="MF" />                                
                             </p:selectOneMenu>
+                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Marca:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.marca}">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                 <f:selectItem itemLabel="VELOREX" itemValue="V" />
                                 <f:selectItem itemLabel="TRICAR" itemValue="T" />                                                              
                             </p:selectOneMenu>
+                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Modelo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                                 <f:selectItems value="#{modeloBean.modelos}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                             </p:selectOneMenu>
+                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Color:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.color}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                                 <f:selectItems value="#{colorBean.colores}" var="color" itemLabel="#{color.color}" itemValue="#{color}"/>
                             </p:selectOneMenu>
-                            <p:outputLabel value="Año" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.anofabri}" />
-                            <p:outputLabel value="Serie:" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.serie}" />
-                            <p:outputLabel value="Motor:" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.motor}" />
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Año" for="txtAno"/>
+                            <p:inputText id="txtAno" label="Año" value="#{vehiculoBean.vehiculo.anofabri}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Serie:" for="txtSerie"/>
+                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Motor:" for="txtMotor"/>
+                            <p:inputText id="txtMotor" label="Motor" value="#{vehiculoBean.vehiculo.motor}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <h:panelGroup></h:panelGroup>
+                            <p:commandButton value="Registrar Articulo" icon="b-new" ajax="false" actionListener="#{vehiculoBean.registrar()}" />
                         </p:panelGrid>
-                        <p:commandButton value="Guardar" icon="b-new" update=":formMostrar" actionListener="#{vehiculoBean.insertar()}" 
-                                         oncomplete="dlginsertar.hide()"/>
-                    </h:form>
-                </p:dialog>
-
-                <h:form id="formMostrar">
-                    <p:dataTable var="vehiculo" value="#{vehiculoBean.vehiculos}" 
-                                 emptyMessage="No hay nada para mostrar" 
-                                 paginator="true" rows="10" paginatorPosition="top" 
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
-                                 {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-                                 rowsPerPageTemplate="10">
-                        <p:column headerText="Id.">
-                            <h:outputText value="#{vehiculo.idvehiculo}" />
-                        </p:column>
-                        <p:column headerText="Tipo">
-                            <h:outputText value="#{vehiculo.tipovehiculo}">
-                                <f:converter converterId="tvehiculo"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Marca">
-                            <h:outputText value="#{vehiculo.marca}">
-                                <f:converter converterId="marcaconverter"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Modelo">
-                            <h:outputText value="#{vehiculo.modelo.modelo}" />
-                        </p:column>
-                        <p:column headerText="Color">
-                            <h:outputText value="#{vehiculo.color.color}" />
-                        </p:column>
-                        <p:column headerText="Año">
-                            <h:outputText value="#{vehiculo.anofabri}" />
-                        </p:column>
-                        <p:column headerText="Serie">
-                            <h:outputText value="#{vehiculo.serie}" />
-                        </p:column>
-                        <p:column headerText="Motor">
-                            <h:outputText value="#{vehiculo.motor}" />
-                        </p:column>
-                        <p:column headerText="Estado">
-                            <h:outputText value="#{vehiculo.estado}">
-                                <f:converter converterId="estadoconverter"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText=" ">
-                            <p:commandButton oncomplete="dlgmodificar.show()" update=":formModificar" icon="b-update">
-                                <f:setPropertyActionListener target="#{vehiculoBean.vehiculo}" value="#{vehiculo}" />
-                            </p:commandButton>
-                        </p:column>
-                        <p:column headerText=" ">
-                            <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                                <f:setPropertyActionListener target="#{vehiculoBean.vehiculo}" value="#{vehiculo}" />
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
+                    </p:dialog>
                 </h:form>
-                <p:dialog id="dlg" header="Modificar Tipo Anexo" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
-                    <h:form id="formModificar">
-                        <p:messages autoUpdate="true"/>
-                        <p:panelGrid columns="2">
+
+                <h:form id="frmEditarArticulo">
+                    <p:dialog header="Datos del Articulo" widgetVar="dialogoEditarArticulo" modal="true">
+                        <h:panelGrid id="panelEditarArticulo" columns="3">
                             <p:outputLabel value="Tipo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                 <f:selectItem itemLabel="MTX" itemValue="MX" />
                                 <f:selectItem itemLabel="ML" itemValue="ML" />
-                                <f:selectItem itemLabel="MTF" itemValue="MF" />
-                                <f:selectItems value="#{tipoVehiBean.vehiculos}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo}"/>
+                                <f:selectItem itemLabel="MTF" itemValue="MF" />                                
                             </p:selectOneMenu>
+                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Marca:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.marca}">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                 <f:selectItem itemLabel="VELOREX" itemValue="V" />
                                 <f:selectItem itemLabel="TRICAR" itemValue="T" />                                                              
                             </p:selectOneMenu>
+                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Modelo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                                 <f:selectItems value="#{modeloBean.modelos}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                             </p:selectOneMenu>
+                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Color:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.color}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                                 <f:selectItems value="#{colorBean.colores}" var="color" itemLabel="#{color.color}" itemValue="#{color}"/>
                             </p:selectOneMenu>
-                            <p:outputLabel value="Año" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.anofabri}" />
-                            <p:outputLabel value="Serie:" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.serie}" />
-                            <p:outputLabel value="Motor:" />
-                            <p:inputText value="#{vehiculoBean.vehiculo.motor}" />
-                        </p:panelGrid>
-                        <p:commandButton value="Modificar" update=":formMostrar" actionListener="#{vehiculoBean.modificar()}" 
-                                         oncomplete="dlgmodificar.hide()"/>
-                    </h:form>
-                </p:dialog>
-                <p:dialog id="dlg2" header="Eliminar Vehículo" showEffect="explode" hideEffect="explode" 
-                          widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
-                    <h:form id="formEliminar">
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Año" for="txtAno"/>
+                            <p:inputText id="txtAno" label="Año" value="#{vehiculoBean.vehiculo.anofabri}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Serie:" for="txtSerie"/>
+                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Motor:" for="txtMotor"/>
+                            <p:inputText id="txtMotor" label="Motor" value="#{vehiculoBean.vehiculo.motor}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <h:panelGroup></h:panelGroup>
+                            <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{vehiculoBean.modificar()}"/>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+                
+                <h:form id="frmEliminarArticulo">
+                    <p:dialog header="Datos del Articulo" widgetVar="dialogoEliminarArticulo" modal="true">
+                        <p:inputText type="hidden" value="#{vehiculoBean.vehiculo.idvehiculo}"/>
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{vehiculoBean.eliminar()}" 
-                                         update=":formMostrar" oncomplete="dlgeliminar.hide();" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" />
-                    </h:form>
-                </p:dialog>
+                        <p:commandButton value="Si" actionListener="#{vehiculoBean.eliminar()}" ajax="false" icon="b-ok" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
+                    </p:dialog>
+                </h:form>
             </ui:define>
-
         </ui:composition>
     </body>
 </html>
