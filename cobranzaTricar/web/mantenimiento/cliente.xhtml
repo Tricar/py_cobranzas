@@ -103,10 +103,17 @@
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputMask>
                             <p:outputLabel value="DIRECCION:" for="txtDireccion" />
-                            <p:inputText value="#{anexoBean.anexo.direccion}" id="txtDireccion" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorVacio"/>
-                                <f:validator validatorId="validatorLetraNumSig"/>
-                            </p:inputText>
+                            <p:selectOneMenu id="txtDireccion" value="#{anexoBean.anexo.direccion}" required="true" requiredMessage="Debe Seleccionar distrito">
+                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="CALLERIA" itemValue="CA" />
+                                <f:selectItem itemLabel="YARINACOCHA" itemValue="YA" />
+                                <f:selectItem itemLabel="MANANTAY" itemValue="MA" />
+                                <f:selectItem itemLabel="CAMPO VERDE" itemValue="CV" />
+                                <f:selectItem itemLabel="NUEVA REQUENA" itemValue="NR" />
+                                <f:selectItem itemLabel="NESHUYA" itemValue="NE" />
+                                <f:selectItem itemLabel="CURIMANA" itemValue="CU" />
+                                <f:selectItem itemLabel="TOURNAVISTA" itemValue="TV" />
+                            </p:selectOneMenu>                            
                             <p:outputLabel value="AAHH:" for="txtAAHH"/>
                             <p:inputText value="#{anexoBean.anexo.aahh}" id="txtAAHH" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorLetraNumSig"/>
@@ -148,7 +155,7 @@
                             <p:inputText value="#{anexoBean.anexo.email}" id="txtEmail" autocomplete="off">
                                 <f:validator validatorId="validatorEmail"/>
                             </p:inputText>
-                        </h:panelGrid>                        
+                        </h:panelGrid>
                         <p:separator/>
                         <p:commandButton value="Registrar Cliente" icon="b-new" ajax="false" actionListener="#{anexoBean.insertarcliente()}" />
                     </p:dialog>

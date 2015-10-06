@@ -18,6 +18,7 @@ import Model.Vehiculo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -183,71 +184,65 @@ public class creditoBean implements Serializable {
             BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
             BigDecimal interes = new BigDecimal(0);
             credito.setEstado("AP");
+            BigDecimal cien = new BigDecimal(100);            
             creditodao.insertarVenta(credito);
-            for (int i = 1; i <= (credito.getNletras()); i++) {
-                interes = interes.add(credito.getInteres());
-            }
+            interes = (credito.getInteres().multiply(nletras)).divide(cien);
+            System.out.println("interes :"+interes);
             Date fechaini = new Date();
             fechaini = credito.getFechareg();
             Date fechafin = new Date();
-            fechafin = sumaDias(fechaini, 30);
-            BigDecimal cien = new BigDecimal(100);
-            BigDecimal mtointeres = (montoletras.multiply(interes)).divide(cien);
+            fechafin = sumaDias(fechaini, 30);            
+            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1,RoundingMode.HALF_UP);
             letras.setFecreg(credito.getFechareg());
             for (int i = 1; i <= (credito.getNletras()); i++) {
                 letras.setCredito(credito);
                 letras.setMontoletra(montoletras);
                 letras.setInteres(mtointeres);
-                letras.setMonto(montoletras.add(mtointeres).setScale(2));
+                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1,RoundingMode.HALF_UP));
                 letras.setFecini(fechaini);
                 letras.setFecven(fechafin);
                 fechaini = fechafin;
                 fechafin = sumaDias(fechaini, 30);
                 letras.setSaldo(montoletras.add(mtointeres));
                 letras.setEstado("PN");
-                letras.setDescripcion("L" + i);
+                letras.setDescripcion("L"+i+"/L"+credito.getNletras());
                 credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
                 letrasdao.insertarLetra(letras);
             }
             creditodao.modificarVenta(credito);
         }
-//        credito = new Credito();
     }
 
     public void insertarCotiza() {
         CreditoDao creditodao = new CreditoDaoImp();
-        credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
-        System.out.println("No entro aun :"+credito.getPrecio()+" "+credito.getSaldo());
-        if (credito.getSaldo().compareTo(BigDecimal.ZERO)==1) {
-            System.out.println("Ya entré :"+credito.getPrecio()+" "+credito.getSaldo());
+        credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));        
+        if (credito.getSaldo().compareTo(BigDecimal.ZERO)==1) {            
             Letras letras = new Letras();
             BigDecimal nletras = new BigDecimal(credito.getNletras());
             BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
             BigDecimal interes = new BigDecimal(0);
+            BigDecimal cien = new BigDecimal(100);
             credito.setEstado("NA");
             creditodao.insertarVenta(credito);
-            for (int i = 1; i <= (credito.getNletras()); i++) {
-                interes = interes.add(credito.getInteres());
-            }
+            interes = (credito.getInteres().multiply(nletras)).divide(cien);
             Date fechaini = new Date();
             fechaini = credito.getFechareg();
             Date fechafin = new Date();
-            fechafin = sumaDias(fechaini, 30);
-            BigDecimal cien = new BigDecimal(100);
-            BigDecimal mtointeres = (montoletras.multiply(interes)).divide(cien,2);
+            fechafin = sumaDias(fechaini, 30);            
+            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1,RoundingMode.HALF_UP);
             letras.setFecreg(credito.getFechareg());
             for (int i = 1; i <= (credito.getNletras()); i++) {
                 letras.setCredito(credito);
                 letras.setMontoletra(montoletras);
                 letras.setInteres(mtointeres);
-                letras.setMonto(montoletras.add(mtointeres).setScale(2));
+                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1,RoundingMode.HALF_UP));
                 letras.setFecini(fechaini);
                 letras.setFecven(fechafin);
                 fechaini = fechafin;
                 fechafin = sumaDias(fechaini, 30);
                 letras.setSaldo(montoletras.add(mtointeres));
                 letras.setEstado("NA");
-                letras.setDescripcion("L" + i);
+                letras.setDescripcion("L"+i+"/L"+credito.getNletras());
                 letrasdao.insertarLetra(letras);
             }
         }
@@ -299,7 +294,7 @@ public class creditoBean implements Serializable {
 
     public void filtrarFechas() {
         CreditoDao linkdao = new CreditoDaoImp();
-        filtradafecha = linkdao.filtrarFechas(fecha1, fecha2);
+        filtradafecha = linkdao.filtrarFechas(fecha1, fecha2, "AP");
     }
 
     public void cargarCredito(Anexo anexo) {
@@ -402,19 +397,55 @@ public class creditoBean implements Serializable {
         }
     }
 
-    public void cargarxCodigo() {
+    public void cargarxCodigoCredito() {
         creditos = new ArrayList();
         CreditoDao creditodao = new CreditoDaoImp();
         Credito modelocredito = new Credito();
         try {
-            modelocredito = creditodao.cargarxCodigo(codigo);
+            modelocredito = creditodao.cargarxCodigoEstado(codigo, "AP");
             creditos.add(modelocredito);
             if (creditos.get(0) == null) {
                 creditos = null;
             }
         } catch (Exception e) {
         }
-
+        codigo = "";
+    }
+    
+    public void cargarxCodigoCotiza() {
+        creditos = new ArrayList();
+        CreditoDao creditodao = new CreditoDaoImp();
+        Credito modelocredito = new Credito();
+        try {
+            modelocredito = creditodao.cargarxCodigoEstado(codigo, "NA");
+            creditos.add(modelocredito);
+            if (creditos.get(0) == null) {
+                creditos = null;
+            }
+        } catch (Exception e) {
+        }
+        codigo = "";
+    }
+    
+    public void modificarCotiza() {
+        CreditoDao creditodao = new CreditoDaoImp();
+        LetrasDao letrasdao = new LetrasDaoImplements();
+        letrascredito = letrasdao.mostrarLetrasXCred(credito);
+        Letras letra = new Letras();
+        BigDecimal interes = new BigDecimal(0);
+        for (int i = 0; i < credito.getNletras(); i++) {
+            letra = (Letras)letrascredito.get(i);
+            letra.setFecini(credito.getFechareg());
+            letra.setFecven(sumaDias(letra.getFecini(), 30));
+            letra.setEstado("PN");
+            letrasdao.modificarLetra(letra);
+            letra.setFecini(letra.getFecven());
+            interes = interes.add(letra.getMonto());            
+        }
+        credito.setTotaldeuda(interes);        
+        credito.setEstado("AP");
+        creditodao.modificarVenta(credito);        
+        credito = new Credito();
     }
 
     public void resultadoFecha() {

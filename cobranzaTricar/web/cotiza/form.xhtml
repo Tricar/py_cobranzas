@@ -40,11 +40,23 @@
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
                         <p:messages id="msg"/>
                     </p:autoComplete>
+                    <p:outputLabel value="Buscar vendedor:"/>
+                    <p:autoComplete value="#{creditoBean.credito.anexoByCodven}"
+                                    completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
+                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo}" forceSelection="true">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                        <p:ajax event="itemSelect" process="@form" />                        
+                    </p:autoComplete>
                     <p:outputLabel value="Tipo Vehículo:"/>
                     <p:selectOneMenu value="#{creditoBean.credito.vehi}" >                        
                         <f:selectItem itemLabel="MTX" itemValue="MTX" />
                         <f:selectItem itemLabel="ML" itemValue="ML" />
                         <f:selectItem itemLabel="MTF" itemValue="MTF" />                                
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Modelo:" />
+                    <p:selectOneMenu value="#{creditoBean.credito.modelo}" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
+                        <f:selectItems value="#{modeloBean.modelos}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
@@ -122,10 +134,7 @@
                         <h:outputText value="#{letras.fecven}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
-                    </p:column>
-                    <p:column headerText="Saldo">
-                        <h:outputText value="#{letras.saldo}"/>
-                    </p:column>                    
+                    </p:column>                                       
                 </p:dataTable>
             </h:form>
         </div>

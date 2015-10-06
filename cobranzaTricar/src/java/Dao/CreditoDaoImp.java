@@ -90,14 +90,15 @@ public class CreditoDaoImp implements CreditoDao{
     }
 
     @Override
-    public List<Credito> filtrarFechas(Date date1, Date date2) {
+    public List<Credito> filtrarFechas(Date date1, Date date2, String estado) {
         Session session = null;
         List<Credito> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE fechareg BETWEEN :start_date AND :end_date" );
+            Query query = session.createQuery("FROM Credito WHERE fechareg BETWEEN :start_date AND :end_date and estado=:estado" );
             query.setParameter("start_date", date1);
             query.setParameter("end_date", date2);
+            query.setParameter("estado",estado );
             lista = (List<Credito>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
@@ -194,13 +195,14 @@ public class CreditoDaoImp implements CreditoDao{
     }
 
     @Override
-    public Credito cargarxCodigo(String codigo) {        
+    public Credito cargarxCodigoEstado(String codigo, String estado) {        
         Session session = null;
         Credito credito = new Credito();        
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE liqventa=:w");
+            Query query = session.createQuery("FROM Credito WHERE liqventa=:w and estado=:v");
             query.setParameter("w", codigo);
+            query.setParameter("v", estado);
             credito = (Credito) query.uniqueResult();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
