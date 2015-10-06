@@ -23,9 +23,9 @@ public class marcaConverter implements Converter{
         if (value != null){
             marca = (String) value;
             switch (marca) {
-                case "T": marca = "Tricar";
+                case "T": marca = "TRICAR";
                     break;
-                case "V": marca = "Velorex";
+                case "V": marca = "VELOREX";
                     break;                                
             }
         }
