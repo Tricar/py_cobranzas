@@ -86,19 +86,19 @@
                                     itemLabel="#{v.serie}" itemValue="#{v}" forceSelection="true"
                                     required="true" requiredMessage="Elija un vehículo">
                         <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
+                        <p:ajax event="click" update="precio inicial" listener="#{creditoBean.precioModeloCredito()}"/>
                     </p:autoComplete>                    
-                    <p:outputLabel value="Precio:" for="precio"/>
-                    <p:inputText id="precio" class="money" value="#{creditoBean.credito.precio}" >
-                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
+                    <p:outputLabel value="Precio:"/>
+                    <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true">                        
                     </p:inputText>
-                    <p:outputLabel value="Inicial:" for="inicial"/>
-                    <p:inputText id="inicial" class="money" value="#{creditoBean.credito.inicial}" >
-                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
-                    </p:inputText>
+                    <p:outputLabel value="Inicial:" />
+                    <p:inputText id="inicial" value="#{creditoBean.inicia}" readonly="true"/>
                     <p:outputLabel value="Saldo:"/>                                    
                     <p:inputText id="res" value="#{creditoBean.res}" readonly="true"/>
                     <p:outputLabel value="Interés:" />
                     <p:selectOneMenu value="#{creditoBean.credito.interes}" >
+                        <f:selectItem itemLabel="3" itemValue='3'/>
+                        <f:selectItem itemLabel="4" itemValue='4'/>
                         <f:selectItem itemLabel="5" itemValue='5'/>
                         <f:selectItem itemLabel="6" itemValue='6'/>
                         <f:selectItem itemLabel="7" itemValue='7'/>
@@ -120,14 +120,14 @@
                         <f:selectItem itemLabel="NO" itemValue="false"/>
                     </p:selectOneRadio>
                 </p:panelGrid>
-                <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCredito()}" icon="b-ok"
+                <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCredito()}"  icon="b-ok"
                                  update=":formMostrar" onclick="$('#tablaletras').show();"/>                    
             </h:form>
         </f:view>
         <div id="tablaletras" class="campo">
             <h:form id="formMostrar">
                 <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
-                <p:dataTable var="letras" value="#{creditoBean.letrascredito}" 
+                <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
                              emptyMessage="No hay nada para mostrar">
                     <p:column headerText="Cod venta.">
                         <h:outputText value="#{letras.credito.liqventa}" />

@@ -44,20 +44,22 @@
                     <p:autoComplete value="#{creditoBean.credito.anexoByCodven}"
                                     completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
                                     itemLabel="#{anexo.nombres}" itemValue="#{anexo}" forceSelection="true">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />                        
+                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                        
                     </p:autoComplete>
                     <p:outputLabel value="Tipo Vehículo:"/>
                     <p:selectOneMenu value="#{creditoBean.credito.vehi}" >                        
-                        <f:selectItem itemLabel="MTX" itemValue="MTX" />
+                        <f:selectItem itemLabel="MTX" itemValue="MX" />
                         <f:selectItem itemLabel="ML" itemValue="ML" />
-                        <f:selectItem itemLabel="MTF" itemValue="MTF" />                                
+                        <f:selectItem itemLabel="MTF" itemValue="MF" />
+                        <p:ajax listener="#{creditoBean.precioModeloCotiza()}" process="@this" />
                     </p:selectOneMenu>
-                    <p:outputLabel value="Modelo:" />
-                    <p:selectOneMenu value="#{creditoBean.credito.modelo}" converter="omnifaces.SelectItemsConverter">
-                        <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                        <f:selectItems value="#{modeloBean.modelos}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
-                    </p:selectOneMenu>
+                    <p:outputLabel value="Modelo:" />                    
+                    <p:autoComplete value="#{creditoBean.credito.modelo}"
+                                    completeMethod="#{modeloBean.modeloNombre}" var="modelo"
+                                    itemLabel="#{modelo.modelo}" itemValue="#{modelo}" forceSelection="true">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{modeloBean.modelos}"/>
+                        <p:ajax event="click" update="precio inicial" listener="#{creditoBean.precioModeloCotiza()}"/>
+                    </p:autoComplete>
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
                         <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
@@ -79,14 +81,10 @@
                         <f:selectItem itemLabel="11" itemValue='11'/>
                         <f:selectItem itemLabel="12" itemValue='12'/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="Precio:" for="precio"/>
-                    <p:inputText id="precio" class="money" value="#{creditoBean.credito.precio}" >
-                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
-                    </p:inputText>
-                    <p:outputLabel value="Inicial:" for="inicial"/>
-                    <p:inputText id="inicial" class="money" value="#{creditoBean.credito.inicial}" >
-                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resultadoSaldo()}"/>
-                    </p:inputText>
+                    <p:outputLabel value="Precio:"/>
+                    <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true" />
+                    <p:outputLabel value="Inicial:" />
+                    <p:inputText id="inicial" value="#{creditoBean.inicia}" readonly="true"/>
                     <p:outputLabel value="Saldo:"/>                                    
                     <p:inputText id="res" value="#{creditoBean.res}" readonly="true"/>
                     <p:outputLabel value="Interés:" />

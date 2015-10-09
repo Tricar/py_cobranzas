@@ -39,6 +39,8 @@ public class distritoConverter implements Converter{
                     break;
                 case "TV": tienda = "TOURNAVISTA";
                     break;
+                case "IR": tienda = "IRAZOLA";
+                    break;
             }
         }
         return tienda;

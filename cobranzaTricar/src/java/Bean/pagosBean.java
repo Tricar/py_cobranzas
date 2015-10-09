@@ -84,24 +84,15 @@ public class pagosBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
 //        System.out.println("Este es el Id de letra :"+letra.getIdletras());
         pago.setLetras(letra);
-        if ((pago.getMonto().compareTo(letra.getSaldo())) == 0) {
-            letra.setSaldo(BigDecimal.ZERO);
+        if ((letra.getSaldo().compareTo(pago.getMonto())) == -1) {
+            letra.setSaldo(letra.getSaldo().subtract(pago.getMonto()));
             letrasdao.modificarLetra(letra);
             pagosdao.insertarPago(pago);
-            credito.setTotaldeuda(credito.getTotaldeuda().subtract(pago.getMonto()));
+            credito.setDeudactual(credito.getDeudactual().subtract(pago.getMonto()));
             creditodao.modificarVenta(credito);
         } else {
-            if ((pago.getMonto().compareTo(letra.getSaldo())) == -1) {
-                letra.setSaldo(letra.getSaldo().subtract(pago.getMonto()));
-                letrasdao.modificarLetra(letra);
-                pagosdao.insertarPago(pago);
-                credito.setTotaldeuda(credito.getTotaldeuda().subtract(pago.getMonto()));
-                creditodao.modificarVenta(credito);
-            } else {
-                System.out.println("No se puede cobrar");
-            }
+            System.out.println("No se puede cobrar");
         }
-
         pago = new Pagos();
     }
 

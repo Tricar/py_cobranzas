@@ -59,6 +59,9 @@
         <property name="totaldeuda" type="big_decimal">
             <column name="totaldeuda" precision="17" scale="2" />
         </property>
+        <property name="deudactual" type="big_decimal">
+            <column name="deudactual" precision="17" scale="2" />
+        </property>
         <property name="interes" type="big_decimal">
             <column name="interes" precision="17" scale="2" />
         </property>

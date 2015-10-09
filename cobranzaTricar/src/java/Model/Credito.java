@@ -42,6 +42,7 @@ public class Credito implements java.io.Serializable {
     private BigDecimal inicial;
     private BigDecimal saldo;
     private BigDecimal totaldeuda;
+    private BigDecimal deudactual;
     private BigDecimal interes;
     private Boolean cronograma;
     private Boolean contrato;
@@ -63,7 +64,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi) {
+    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal deudactual, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi) {
         this.idventa = idventa;
         this.anexoByIdaval = anexoByIdaval;
         this.anexoByCodven = anexoByCodven;
@@ -82,6 +83,7 @@ public class Credito implements java.io.Serializable {
         this.inicial = inicial;
         this.saldo = saldo;
         this.totaldeuda = totaldeuda;
+        this.deudactual = deudactual;
         this.interes = interes;
         this.cronograma = cronograma;
         this.contrato = contrato;
@@ -259,6 +261,15 @@ public class Credito implements java.io.Serializable {
 
     public void setTotaldeuda(BigDecimal totaldeuda) {
         this.totaldeuda = totaldeuda;
+    }
+    
+    @Column(name = "deudactual", precision = 17, scale = 2)
+    public BigDecimal getDeudactual() {
+        return this.deudactual;
+    }
+
+    public void setDeudactual(BigDecimal deudactual) {
+        this.deudactual = deudactual;
     }
 
     @Column(name = "interes", precision = 17, scale = 2)
