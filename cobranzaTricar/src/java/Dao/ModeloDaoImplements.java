@@ -1,7 +1,9 @@
 package Dao;
 
 import Model.Modelo;
+import Persistencia.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -65,6 +67,24 @@ public class ModeloDaoImplements implements ModeloDao{
     public boolean eliminar(Session session, Modelo model) throws Exception {
         session.delete(model);
         return true;
+    }
+
+    @Override
+    public List<Modelo> modeloNombre() {
+        Session session = null;
+        List<Modelo> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Modelo");            
+            lista = (List<Modelo>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
     }
     
 }

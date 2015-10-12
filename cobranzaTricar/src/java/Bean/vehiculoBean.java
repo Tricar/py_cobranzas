@@ -256,9 +256,9 @@ public class vehiculoBean implements Serializable {
     public List<Vehiculo> filtrarDisponible(String name) {
         this.query = new ArrayList<Vehiculo>();
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
-        List<Vehiculo> tipos = vehiculodao.filtarDisponible("D");
-        for (Vehiculo tipo : tipos) {
-            if (tipo.getSerie().toLowerCase().startsWith(name)) {
+        List<Vehiculo> tipos = vehiculodao.filtarDisponible("D");        
+        for (Vehiculo tipo : tipos) {            
+            if (tipo.getSerie().toUpperCase().startsWith(name)) {
                 query.add(tipo);
             }
         }

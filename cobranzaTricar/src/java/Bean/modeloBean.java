@@ -1,5 +1,6 @@
 package Bean;
 
+import Dao.ModeloDao;
 import Dao.ModeloDaoImplements;
 import Model.Modelo;
 import Persistencia.HibernateUtil;
@@ -30,6 +31,7 @@ public class modeloBean implements Serializable {
 
     private Modelo model;
     private List<Modelo> modelos;
+    private ArrayList<Modelo> query;
 
     public modeloBean() {
         this.model = new Modelo();
@@ -276,5 +278,17 @@ public class modeloBean implements Serializable {
 
     public void setModelos(List<Modelo> modelos) {
         this.modelos = modelos;
+    }
+    
+    public List<Modelo> modeloNombre(String name) {
+        this.query = new ArrayList<Modelo>();
+        ModeloDao modelodao = new ModeloDaoImplements();
+        List<Modelo> tipos = modelodao.modeloNombre();        
+        for (Modelo tipo : tipos) {            
+            if (tipo.getModelo().toLowerCase().startsWith(name)) {
+                query.add(tipo);
+            }
+        }
+        return query;
     }
 }

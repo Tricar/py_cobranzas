@@ -16,4 +16,5 @@ public interface ModeloDao {
     public Modelo verByModeloDifer(Session session,Integer idmodelo, String modelo) throws Exception;
     public boolean modificar(Session session, Modelo model) throws Exception;
     public boolean eliminar (Session session, Modelo model) throws Exception;
+    public List<Modelo> modeloNombre();
 }

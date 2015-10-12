@@ -25,7 +25,7 @@
         </property>
         <property name="interes" type="big_decimal">
             <column name="interes" precision="17" scale="2" />
-        </property>
+        </property>        
         <property name="saldo" type="big_decimal">
             <column name="saldo" precision="17" scale="2" />
         </property>
@@ -37,6 +37,9 @@
         </property>
         <property name="descripcion" type="string">
             <column name="descripcion" length="2" />
+        </property>
+        <property name="mora" type="big_decimal">
+            <column name="mora" precision="17" scale="2" />
         </property>
         <set name="pagoses" table="pagos" inverse="true" lazy="true" fetch="select">
             <key>

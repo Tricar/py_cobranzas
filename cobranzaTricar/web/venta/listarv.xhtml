@@ -13,29 +13,33 @@
                 <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{creditoBean.fecha1}"/>
                 <p:outputLabel value="Fecha Fin:"/>
                 <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{creditoBean.fecha2}"/>
-                <p:commandButton value="Cargar"  actionListener="#{creditoBean.filtrarFechas()}"
+                <p:commandButton value="Buscar"  actionListener="#{creditoBean.filtrarFechas()}"
                                  ajax="false"/>
             </p:panelGrid>
-            <p:panelGrid columns="2">
+            
+            <p:panelGrid columns="6">
                 <p:outputLabel value="Ingrese DNI o RUC:"/>
                 <p:inputMask mask="9?9999999999" maxlength="11" value="#{creditoBean.dni}"/>                       
                 <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarAnexoDNI()}"
+                                 ajax="false"/>
+                <p:outputLabel value="Ingrese Nombre:"/>
+                <p:inputText value="#{creditoBean.nombre}"/>
+                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarCreditoNombre()}"
                                  ajax="false"/>
             </p:panelGrid>
         </h:form>
         <h:form id="formMostrar">
             <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" 
-                         emptyMessage="No hay nada para mostrar" 
-                         paginator="true" rows="20" paginatorPosition="top" 
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
-                         {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-                         rowsPerPageTemplate="20">
+                         emptyMessage="No hay nada para mostrar" >
                 <p:column headerText="Cod.">
                     <h:outputText value="#{cred.liqventa}" />
                 </p:column>
                 <p:column headerText="Nombres">
                     <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
-                </p:column>                        
+                </p:column>
+                <p:column headerText="Num. Doc.">
+                    <h:outputText value="#{cred.anexoByIdanexo.numdocumento}" />
+                </p:column>
                 <p:column headerText="Tienda" filterBy="#{cred.tienda}" filterMatchMode="contains">
                     <h:outputText value="#{cred.tienda}">
                         <f:converter converterId="tiendaconverter"/>
@@ -71,7 +75,7 @@
                     <p:column headerText="Descripcion">
                         <h:outputText value="#{letras.descripcion}"/>
                     </p:column>
-                    <p:column headerText="Monto">
+                    <p:column headerText="Saldo Capital">
                         <h:outputText value="#{letras.montoletra}"/>
                     </p:column>
                     <p:column headerText="Interes">
@@ -90,8 +94,11 @@
                             <f:convertDateTime  pattern = "dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Saldo">
+                    <p:column headerText="Saldo Deudor">
                         <h:outputText value="#{letras.saldo}"/>
+                    </p:column>
+                    <p:column headerText="Mora">
+                        <h:outputText value="#{letras.mora}"/>
                     </p:column>
                     <p:column headerText="Estado">
                         <h:outputText value="#{letras.estado}">

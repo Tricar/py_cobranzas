@@ -1,8 +1,7 @@
-import Dao.AnexoDao;
-import Dao.AnexoDaoImplements;
-import Model.Anexo;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import utiles.inicial;
 
 public class Prueba {
 
@@ -11,11 +10,11 @@ public class Prueba {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("Hola Mundo");
-        AnexoDao anexodao = new AnexoDaoImplements();
-        Anexo anexo = new Anexo();
-        anexo = anexodao.cargarClientexDoc("00121429", "CN", "CJ");
-        System.out.println("Este es el anexo :"+anexo.getNombre());
-
+        inicial Inicial = new inicial();
+        BigDecimal calculo = new BigDecimal(BigInteger.ZERO);
+        
+        calculo = Inicial.inicialCredito("CA", "ML", BigDecimal.valueOf(2150.00));
+        
+        System.out.println("Inicial :"+calculo);
     }
 }

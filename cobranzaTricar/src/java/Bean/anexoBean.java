@@ -478,8 +478,6 @@ public class anexoBean implements Serializable {
     }
 
     public void filtrarClientEnter() {
-//        AnexoDao anex = new AnexoDaoImplements();
-//        filtradaEnter = anex.buscarClientexDoc(dni, "CN", "CJ");        
         CreditoDao creditodao = new CreditoDaoImp();
         creditos = creditodao.mostrarVentas();
     }

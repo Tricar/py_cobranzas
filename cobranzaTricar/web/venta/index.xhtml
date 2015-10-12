@@ -15,7 +15,7 @@
             <p:panelGrid columns="2">
                 <p:outputLabel value="Ingrese Codigo:"/>
                 <p:inputText value="#{creditoBean.codigo}"/>                       
-                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarxCodigo()}"
+                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarxCodigoCredito()}"
                                  ajax="false"/>
             </p:panelGrid>
         </h:form>
@@ -27,7 +27,10 @@
                 </p:column>
                 <p:column headerText="Nombres">
                     <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
-                </p:column>                        
+                </p:column>
+                <p:column headerText="Num. Doc.">
+                    <h:outputText value="#{cred.anexoByIdanexo.numdocumento}" />
+                </p:column>
                 <p:column headerText="Tienda">
                     <h:outputText value="#{cred.tienda}">
                         <f:converter converterId="tiendaconverter"/>
@@ -47,7 +50,7 @@
                     <h:outputText value="#{cred.totaldeuda}" />
                 </p:column>
                 <p:column headerText="Ver">                            
-                    <p:commandButton value="V" update=":formVer" icon="b-ver"
+                    <p:commandButton value="V" update=":formVer" icon="b-ver" 
                                      actionListener="#{creditoBean.cargarLetras(cred)}" onclick="$('#tablaletras').show();"/>
                 </p:column>
                 <p:column headerText=" ">
@@ -73,7 +76,7 @@
                     <p:column headerText="Descripcion">
                         <h:outputText value="#{letras.descripcion}"/>
                     </p:column>
-                    <p:column headerText="Monto">
+                    <p:column headerText="Saldo Capital">
                         <h:outputText value="#{letras.montoletra}"/>
                     </p:column>
                     <p:column headerText="Interes">
@@ -92,9 +95,9 @@
                             <f:convertDateTime pattern = "dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Saldo">
+                    <p:column headerText="Saldo Deudor">
                         <h:outputText value="#{letras.saldo}"/>
-                    </p:column>
+                    </p:column>                    
                     <p:column headerText="Estado">
                         <h:outputText value="#{letras.estado}">
                             <f:converter converterId="letrasconverter"/>

@@ -23,6 +23,9 @@
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" not-null="true" />
         </many-to-one>
+        <many-to-one name="modelo" class="Model.Vehiculo" fetch="select">
+            <column name="idmodelo" not-null="true" />
+        </many-to-one>
         <property name="liqventa" type="string">
             <column name="liqventa" length="10" not-null="true" />
         </property>
@@ -55,6 +58,9 @@
         </property>
         <property name="totaldeuda" type="big_decimal">
             <column name="totaldeuda" precision="17" scale="2" />
+        </property>
+        <property name="deudactual" type="big_decimal">
+            <column name="deudactual" precision="17" scale="2" />
         </property>
         <property name="interes" type="big_decimal">
             <column name="interes" precision="17" scale="2" />

@@ -18,6 +18,7 @@ import Model.Vehiculo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +26,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import utiles.inicial;
+import utiles.precio;
 
 @ManagedBean
 @SessionScoped
@@ -42,8 +45,11 @@ public class creditoBean implements Serializable {
     private Letras letra = new Letras();
     private String dni;
     private BigDecimal res;
+    private BigDecimal precio;
+    private BigDecimal inicia;
     private String codigo;
     private Date fechafin;
+    private String nombre;
 
     public creditoBean() {
     }
@@ -164,16 +170,60 @@ public class creditoBean implements Serializable {
         this.fechafin = fechafin;
     }
 
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
+
+    public BigDecimal getInicia() {
+        return inicia;
+    }
+
+    public void setInicia(BigDecimal inicia) {
+        this.inicia = inicia;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public void resultadoSaldo() {
         res = credito.getPrecio().subtract(credito.getInicial());
+    }
+
+    public void precioModeloCredito() {
+        precio Precio = new precio();
+        inicial Inicial = new inicial();
+        precio = (Precio.precioModelo(credito.getVehiculo().getModelo().getModelo()));
+        String distrito = credito.getAnexoByIdanexo().getDistrito();
+        String tipov = credito.getVehiculo().getTipovehiculo();
+        inicia = Inicial.inicialCredito(distrito, tipov, precio);
+    }
+
+    public void precioModeloCotiza() {
+        precio Precio = new precio();
+        inicial Inicial = new inicial();
+        precio = (Precio.precioModelo(credito.getModelo().getModelo()));
+        String distrito = credito.getAnexoByIdanexo().getDistrito();
+        String tipov = credito.getVehi();
+        inicia = Inicial.inicialCredito(distrito, tipov, precio);
     }
 
     public void insertarCredito() {
         CreditoDao creditodao = new CreditoDaoImp();
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
         Vehiculo vehiculo = new Vehiculo();
-        credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
-        if (credito.getSaldo().compareTo(BigDecimal.ZERO)==1) {
+        credito.setPrecio(precio);
+        credito.setInicial(inicia);
+        credito.setSaldo(precio.subtract(inicia));
+        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
             vehiculo = credito.getVehiculo();
             vehiculo.setEstado("N");
             vehiculodao.modificarVehiculo(vehiculo);
@@ -183,71 +233,66 @@ public class creditoBean implements Serializable {
             BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
             BigDecimal interes = new BigDecimal(0);
             credito.setEstado("AP");
+            BigDecimal cien = new BigDecimal(100);
             creditodao.insertarVenta(credito);
-            for (int i = 1; i <= (credito.getNletras()); i++) {
-                interes = interes.add(credito.getInteres());
-            }
+            interes = (credito.getInteres().multiply(nletras)).divide(cien);
+            System.out.println("interes :" + interes);
             Date fechaini = new Date();
             fechaini = credito.getFechareg();
             Date fechafin = new Date();
             fechafin = sumaDias(fechaini, 30);
-            BigDecimal cien = new BigDecimal(100);
-            BigDecimal mtointeres = (montoletras.multiply(interes)).divide(cien);
+            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.HALF_UP);
             letras.setFecreg(credito.getFechareg());
             for (int i = 1; i <= (credito.getNletras()); i++) {
                 letras.setCredito(credito);
                 letras.setMontoletra(montoletras);
                 letras.setInteres(mtointeres);
-                letras.setMonto(montoletras.add(mtointeres).setScale(2));
+                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.HALF_UP));
                 letras.setFecini(fechaini);
                 letras.setFecven(fechafin);
                 fechaini = fechafin;
                 fechafin = sumaDias(fechaini, 30);
-                letras.setSaldo(montoletras.add(mtointeres));
+                letras.setSaldo(letras.getMonto());
                 letras.setEstado("PN");
-                letras.setDescripcion("L" + i);
+                letras.setDescripcion("L" + i + "/L" + credito.getNletras());
                 credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
+                credito.setDeudactual(credito.getTotaldeuda());
                 letrasdao.insertarLetra(letras);
             }
             creditodao.modificarVenta(credito);
         }
-//        credito = new Credito();
     }
 
     public void insertarCotiza() {
         CreditoDao creditodao = new CreditoDaoImp();
         credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
-        System.out.println("No entro aun :"+credito.getPrecio()+" "+credito.getSaldo());
-        if (credito.getSaldo().compareTo(BigDecimal.ZERO)==1) {
-            System.out.println("Ya entré :"+credito.getPrecio()+" "+credito.getSaldo());
+        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
             Letras letras = new Letras();
             BigDecimal nletras = new BigDecimal(credito.getNletras());
             BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
             BigDecimal interes = new BigDecimal(0);
+            BigDecimal cien = new BigDecimal(100);
             credito.setEstado("NA");
             creditodao.insertarVenta(credito);
-            for (int i = 1; i <= (credito.getNletras()); i++) {
-                interes = interes.add(credito.getInteres());
-            }
+            interes = (credito.getInteres().multiply(nletras)).divide(cien);
             Date fechaini = new Date();
             fechaini = credito.getFechareg();
             Date fechafin = new Date();
             fechafin = sumaDias(fechaini, 30);
-            BigDecimal cien = new BigDecimal(100);
-            BigDecimal mtointeres = (montoletras.multiply(interes)).divide(cien,2);
+            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.HALF_UP);
             letras.setFecreg(credito.getFechareg());
             for (int i = 1; i <= (credito.getNletras()); i++) {
                 letras.setCredito(credito);
                 letras.setMontoletra(montoletras);
                 letras.setInteres(mtointeres);
-                letras.setMonto(montoletras.add(mtointeres).setScale(2));
+                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.HALF_UP));
                 letras.setFecini(fechaini);
                 letras.setFecven(fechafin);
                 fechaini = fechafin;
                 fechafin = sumaDias(fechaini, 30);
                 letras.setSaldo(montoletras.add(mtointeres));
                 letras.setEstado("NA");
-                letras.setDescripcion("L" + i);
+                letras.setDescripcion("L" + i + "/L" + credito.getNletras());
                 letrasdao.insertarLetra(letras);
             }
         }
@@ -262,16 +307,16 @@ public class creditoBean implements Serializable {
     public void eliminar() {
         CreditoDao creditodao = new CreditoDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
-        List<Letras> letrita = new ArrayList();
+//        List<Letras> letrita = new ArrayList();
         Vehiculo vehiculo = new Vehiculo();
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
-        letrita = letrasdao.mostrarLetrasXCred(credito);
-        BigDecimal totaldeuda = new BigDecimal(BigInteger.ZERO);
-        for (int i = 0; i < letrita.size(); i++) {
-            Letras get = letrita.get(i);
-            totaldeuda = totaldeuda.add(get.getMonto());
-        }
-        if (totaldeuda.compareTo(credito.getTotaldeuda()) == 0) {
+//        letrita = letrasdao.mostrarLetrasXCred(credito);
+//        BigDecimal totaldeuda = new BigDecimal(BigInteger.ZERO);
+//        for (int i = 0; i < letrita.size(); i++) {
+//            Letras get = letrita.get(i);
+//            totaldeuda = totaldeuda.add(get.getMonto());
+//        }
+        if (credito.getDeudactual().compareTo(credito.getTotaldeuda()) == 0) {
             vehiculo = credito.getVehiculo();
             vehiculo.setEstado("D");
             vehiculodao.modificarVehiculo(vehiculo);
@@ -282,9 +327,9 @@ public class creditoBean implements Serializable {
         credito = new Credito();
         creditos = new ArrayList();
     }
-    
+
     public void eliminarCotiza() {
-        CreditoDao creditodao = new CreditoDaoImp();        
+        CreditoDao creditodao = new CreditoDaoImp();
         creditodao.eliminarVenta(credito);
         credito = new Credito();
         creditos = new ArrayList();
@@ -299,7 +344,7 @@ public class creditoBean implements Serializable {
 
     public void filtrarFechas() {
         CreditoDao linkdao = new CreditoDaoImp();
-        filtradafecha = linkdao.filtrarFechas(fecha1, fecha2);
+        filtradafecha = linkdao.filtrarFechas(fecha1, fecha2, "AP");
     }
 
     public void cargarCredito(Anexo anexo) {
@@ -308,13 +353,16 @@ public class creditoBean implements Serializable {
         List<Letras> letritas = new ArrayList();
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
+        BigDecimal cinco = new BigDecimal(5);
+        BigDecimal cien = new BigDecimal(100);
+        cinco = cinco.divide(cien);
         credito = creditodao.cargarCreditoxAnexo(anexo);
         LetrasDao letras = new LetrasDaoImplements();
         letritas = letras.mostrarLetrasXCred(credito);
-        for (int i = 0; i < letritas.size(); i++) {            
+        for (int i = 0; i < letritas.size(); i++) {
             Letras get = letritas.get(i);
             if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                get.setEstado("CN");                
+                get.setEstado("CN");
             } else {
                 if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
                     if (get.getFecven().after(fecha)) {
@@ -324,10 +372,12 @@ public class creditoBean implements Serializable {
                     }
                 }
             }
+            if (get.getEstado().equals("VN")) {
+                get.setMora((get.getMonto().multiply(cinco)).setScale(1, RoundingMode.HALF_UP));
+            }
             letrasdao.modificarLetra(get);
         }
         letraslista = letras.mostrarLetrasXCred(credito);
-//      return credito;
     }
 
     public void cargarLetras(Credito cred) {
@@ -356,14 +406,13 @@ public class creditoBean implements Serializable {
             letrasdao.modificarLetra(get);
         }
         letraslista = letrasdao.mostrarLetrasXCred(cred);
-//      return credito;
     }
-    
+
     public void cargarLetrasCotiza(Credito cred) {
         letraslista = new ArrayList();
-        CreditoDao creditodao = new CreditoDaoImp();                
+        CreditoDao creditodao = new CreditoDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
-        letraslista = letrasdao.mostrarLetrasXCred(cred);        
+        letraslista = letrasdao.mostrarLetrasXCred(cred);
     }
 
     public void insertarPago() {
@@ -402,19 +451,78 @@ public class creditoBean implements Serializable {
         }
     }
 
-    public void cargarxCodigo() {
+    public void cargarCreditoNombre() {
+        filtradafecha = new ArrayList();
+        AnexoDao anexodao = new AnexoDaoImplements();
+        List<Anexo> anexos = new ArrayList();
+        CreditoDao creditodao = new CreditoDaoImp();
+        List<Credito> creditosn = creditodao.mostrarVentas();
+        try {
+            anexos = anexodao.buscarCliente(nombre, "CN", "CJ");
+            for (int i = 0; i < anexos.size(); i++) {
+                Anexo get = anexos.get(i);
+                System.out.println("Anexo :" + get.getNombre());
+                for (int j = 0; j < creditosn.size(); j++) {
+                    if (creditosn.get(j).getAnexoByIdanexo().equals(get)) {
+                        Credito get1 = creditosn.get(j);
+                        filtradafecha.add(get1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+        nombre = "";
+    }
+
+    public void cargarxCodigoCredito() {
         creditos = new ArrayList();
         CreditoDao creditodao = new CreditoDaoImp();
         Credito modelocredito = new Credito();
         try {
-            modelocredito = creditodao.cargarxCodigo(codigo);
+            modelocredito = creditodao.cargarxCodigoEstado(codigo, "AP");
             creditos.add(modelocredito);
             if (creditos.get(0) == null) {
                 creditos = null;
             }
         } catch (Exception e) {
         }
+        codigo = "";
+    }
 
+    public void cargarxCodigoCotiza() {
+        creditos = new ArrayList();
+        CreditoDao creditodao = new CreditoDaoImp();
+        Credito modelocredito = new Credito();
+        try {
+            modelocredito = creditodao.cargarxCodigoEstado(codigo, "NA");
+            creditos.add(modelocredito);
+            if (creditos.get(0) == null) {
+                creditos = null;
+            }
+        } catch (Exception e) {
+        }
+        codigo = "";
+    }
+
+    public void modificarCotiza() {
+        CreditoDao creditodao = new CreditoDaoImp();
+        LetrasDao letrasdao = new LetrasDaoImplements();
+        letrascredito = letrasdao.mostrarLetrasXCred(credito);
+        Letras letra = new Letras();
+        BigDecimal interes = new BigDecimal(0);
+        for (int i = 0; i < credito.getNletras(); i++) {
+            letra = (Letras) letrascredito.get(i);
+            letra.setFecini(credito.getFechareg());
+            letra.setFecven(sumaDias(letra.getFecini(), 30));
+            letra.setEstado("PN");
+            letrasdao.modificarLetra(letra);
+            letra.setFecini(letra.getFecven());
+            interes = interes.add(letra.getMonto());
+        }
+        credito.setTotaldeuda(interes);
+        credito.setEstado("AP");
+        creditodao.modificarVenta(credito);
+        credito = new Credito();
     }
 
     public void resultadoFecha() {
@@ -436,7 +544,7 @@ public class creditoBean implements Serializable {
         credito = new Credito();
         return "/cotiza/form.xhtml";
     }
-    
+
     public String indexcotiza() {
         creditos = new ArrayList();
         codigo = "";

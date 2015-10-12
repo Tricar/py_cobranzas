@@ -30,11 +30,12 @@ public class Letras implements java.io.Serializable {
     private Date fecini;
     private Date fecven;
     private BigDecimal monto;
-    private BigDecimal interes;
+    private BigDecimal interes;    
     private BigDecimal saldo;
     private Date fecreg;
     private String estado;
     private String descripcion;
+    private BigDecimal mora;
     private Set pagoses = new HashSet(0);
 
     public Letras() {
@@ -44,17 +45,18 @@ public class Letras implements java.io.Serializable {
         this.idletras = idletras;
     }
 
-    public Letras(Integer idletras, Credito credito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, String descripcion, Set pagoses) {
+    public Letras(Integer idletras, Credito credito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado,BigDecimal mora, String descripcion, Set pagoses) {
         this.idletras = idletras;
         this.credito = credito;
         this.montoletra = montoletra;
         this.fecini = fecini;
         this.fecven = fecven;
         this.monto = monto;
-        this.interes = interes;
+        this.interes = interes;        
         this.saldo = saldo;
         this.fecreg = fecreg;
         this.estado = estado;
+        this.mora = mora;
         this.descripcion = descripcion;
         this.pagoses = pagoses;
     }
@@ -80,7 +82,7 @@ public class Letras implements java.io.Serializable {
         this.credito = credito;
     }
 
-    @Column(name = "montoletra", precision = 17, scale = 5)
+    @Column(name = "montoletra", precision = 17, scale = 2)
     public BigDecimal getMontoletra() {
         return this.montoletra;
     }
@@ -109,7 +111,7 @@ public class Letras implements java.io.Serializable {
         this.fecven = fecven;
     }
 
-    @Column(name = "monto", precision = 17, scale = 5)
+    @Column(name = "monto", precision = 17, scale = 2)
     public BigDecimal getMonto() {
         return this.monto;
     }
@@ -118,7 +120,7 @@ public class Letras implements java.io.Serializable {
         this.monto = monto;
     }
 
-    @Column(name = "interes", precision = 17, scale = 5)
+    @Column(name = "interes", precision = 17, scale = 2)
     public BigDecimal getInteres() {
         return this.interes;
     }
@@ -126,8 +128,8 @@ public class Letras implements java.io.Serializable {
     public void setInteres(BigDecimal interes) {
         this.interes = interes;
     }
-
-    @Column(name = "saldo", precision = 17, scale = 5)
+    
+    @Column(name = "saldo", precision = 17, scale = 2)
     public BigDecimal getSaldo() {
         return this.saldo;
     }
@@ -162,6 +164,15 @@ public class Letras implements java.io.Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+    @Column(name = "mora", precision = 17, scale = 2)
+    public BigDecimal getMora() {
+        return this.mora;
+    }
+
+    public void setMora(BigDecimal mora) {
+        this.mora = mora;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "letras")
