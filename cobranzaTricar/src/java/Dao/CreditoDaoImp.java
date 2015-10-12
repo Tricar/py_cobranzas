@@ -213,5 +213,25 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return credito;
     }
+
+    @Override
+    public List<Credito> cargarCreditoxNombre(String nombre) {
+        Session session = null;
+        List<Credito> lista = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE " );
+            query.setParameter("nombre",nombre);
+            lista = (List<Credito>)query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
+    }
     
 }

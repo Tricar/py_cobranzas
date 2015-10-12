@@ -28,7 +28,10 @@
                 </p:column>
                 <p:column headerText="Nombres">
                     <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
-                </p:column>                        
+                </p:column>
+                <p:column headerText="Num. Doc.">
+                    <h:outputText value="#{cred.anexoByIdanexo.numdocumento}" />
+                </p:column>
                 <p:column headerText="Tienda">
                     <h:outputText value="#{cred.tienda}">
                         <f:converter converterId="tiendaconverter"/>

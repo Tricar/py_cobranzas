@@ -25,10 +25,7 @@
         </property>
         <property name="interes" type="big_decimal">
             <column name="interes" precision="17" scale="2" />
-        </property>
-        <property name="montototal" type="big_decimal">
-            <column name="montototal" precision="17" scale="2" />
-        </property>
+        </property>        
         <property name="saldo" type="big_decimal">
             <column name="saldo" precision="17" scale="2" />
         </property>

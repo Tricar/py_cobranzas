@@ -80,17 +80,17 @@ public class AnexoDaoImplements implements AnexoDao {
     }
     
     @Override
-    public List<Anexo> buscarCliente(String nombre, String tipo) {
+    public List<Anexo> buscarCliente(String nombre, String tipo, String tipo1) {
         Session session = null;
 //        Anexo anexo = null;
         List<Anexo> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Anexo WHERE tipoanexo=:t and nombre LIKE :n");
+            Query query = session.createQuery("FROM Anexo WHERE (tipoanexo=:t OR tipoanexo=:t1) and nombre LIKE :n");
             query.setParameter("t", tipo);
+            query.setParameter("t1", tipo1);
             query.setParameter("n", nombre+"%");
             lista = (List<Anexo>) query.list();
-//            anexo = (Anexo)query.uniqueResult();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -98,7 +98,6 @@ public class AnexoDaoImplements implements AnexoDao {
                 session.close();
             }
         }
-//        return anexo;
         return lista;
     }
 
@@ -277,8 +276,7 @@ public class AnexoDaoImplements implements AnexoDao {
             Query query = session.createQuery("FROM Anexo WHERE numdocumento=:n and (tipoanexo=:t or tipoanexo=:v)");
             query.setParameter("n", dni);
             query.setParameter("t", tipo);
-            query.setParameter("v", tipo1);            
-//            lista = (List<Anexo>) query.list();
+            query.setParameter("v", tipo1);
             anexo = (Anexo)query.uniqueResult();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -287,7 +285,6 @@ public class AnexoDaoImplements implements AnexoDao {
                 session.close();
             }
         }
-//        return anexo;
         return anexo;
     }
 }
