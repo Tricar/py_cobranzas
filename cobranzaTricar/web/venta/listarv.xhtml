@@ -56,7 +56,7 @@
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Deuda">
-                    <h:outputText value="#{cred.totaldeuda}" />
+                    <h:outputText value="#{cred.deudactual}" />
                 </p:column>
                 <p:column headerText="Mostrar">                            
                     <p:commandButton value="Ver" update=":formModificar" icon="b-ver"
@@ -124,8 +124,8 @@
                         </p:selectOneMenu>
                         <p:outputLabel value="Referencia:"/>
                         <p:inputText value="#{pagosBean.pago.operacion}"/>
-                        <p:outputLabel value="Monto:" />
-                        <p:inputText value="#{pagosBean.pago.monto}" class="money"/>
+                        <p:outputLabel value="Monto:" for="monto"/>
+                        <p:inputText id="monto" value="#{pagosBean.pago.monto}" class="money"/>
                         <p:outputLabel value="Descripción:"/>
                         <p:inputText value="#{pagosBean.pago.descripcion}"/>
                         <p:commandButton actionListener="#{pagosBean.insertar()}" value="Pagar" oncomplete="dlgpagar.hide()"

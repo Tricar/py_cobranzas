@@ -36,7 +36,7 @@
             <column name="estado" length="2" />
         </property>
         <property name="descripcion" type="string">
-            <column name="descripcion" length="2" />
+            <column name="descripcion" length="20" />
         </property>
         <property name="mora" type="big_decimal">
             <column name="mora" precision="17" scale="2" />

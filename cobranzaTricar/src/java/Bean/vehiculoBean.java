@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -258,7 +259,7 @@ public class vehiculoBean implements Serializable {
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
         List<Vehiculo> tipos = vehiculodao.filtarDisponible("D");        
         for (Vehiculo tipo : tipos) {            
-            if (tipo.getSerie().toUpperCase().startsWith(name)) {
+            if (tipo.getSerie().startsWith(name.toUpperCase())) {
                 query.add(tipo);
             }
         }

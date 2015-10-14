@@ -23,8 +23,9 @@ public interface AnexoDao {
     public List<Anexo> filtarTipoDos(String tipo, String tipo1);
     public List<Anexo> filtarAval(String tipo);
     public List<Anexo> buscarxNombre(String nombre);
-    public List<Anexo> buscarCliente(String nombre, String tipo, String tipo1);
+    public List<Anexo> buscarClienteNombre(String nombre, String tipo, String tipo1);
     public List<Anexo> buscarClientexDoc(String dni, String tipo, String tipo1);
     public Anexo cargarxCredito(Integer idanexo);
-    public Anexo cargarClientexDoc(String dni, String tipo, String tipo1);    
+    public Anexo cargarClientexDoc(String dni, String tipo, String tipo1);
+    public List<Anexo> buscarClienteDni(String dni, String tipo, String tipo1);
 }
