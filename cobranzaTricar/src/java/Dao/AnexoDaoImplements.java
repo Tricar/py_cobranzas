@@ -309,23 +309,4 @@ public class AnexoDaoImplements implements AnexoDao {
         }
         return anexo;
     }
-
-    @Override
-    public List<Anexo> Mostrar() {
-        Session session = null;
-        List<Anexo> lista = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Anexo");
-            lista = (List<Anexo>)query.list();
-        }catch (HibernateException e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
-                session.close();
-            }
-        }
-        return lista;
-    }
 }
