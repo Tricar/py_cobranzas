@@ -30,7 +30,7 @@
         </h:form>
         <h:form id="formMostrar">
             <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" 
-                         emptyMessage="No hay nada para mostrar" >
+                         emptyMessage="Ningún cliente coincide con su búsqueda" >
                 <p:column headerText="Cod.">
                     <h:outputText value="#{cred.liqventa}" />
                 </p:column>
@@ -40,12 +40,12 @@
                 <p:column headerText="Num. Doc.">
                     <h:outputText value="#{cred.anexoByIdanexo.numdocumento}" />
                 </p:column>
-                <p:column headerText="Tienda" filterBy="#{cred.tienda}" filterMatchMode="contains">
+                <p:column headerText="Tienda" >
                     <h:outputText value="#{cred.tienda}">
                         <f:converter converterId="tiendaconverter"/>
                     </h:outputText>
                 </p:column>
-                <p:column headerText="Empresa" filterBy="#{cred.empresa}" filterMatchMode="contains">
+                <p:column headerText="Empresa" >
                     <h:outputText value="#{cred.empresa}">
                         <f:converter converterId="empresaconverter"/>
                     </h:outputText>

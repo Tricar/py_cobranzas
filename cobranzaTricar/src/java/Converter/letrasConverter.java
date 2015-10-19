@@ -32,6 +32,9 @@ public class letrasConverter implements Converter {
                 case "CN":
                     estletras = "CANCELADO";
                     break;
+                case "RF":
+                    estletras = "REFINANCIADO";
+                    break;
             }
         }
         return estletras;

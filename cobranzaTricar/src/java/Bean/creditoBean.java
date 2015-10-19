@@ -359,7 +359,7 @@ public class creditoBean implements Serializable {
         for (int i = 0; i < antiguas.size(); i++) {
             Letras get = antiguas.get(i);
             get.setSaldo(BigDecimal.ZERO);
-            get.setEstado("CN");
+            get.setEstado("RF");
             get.setDescripcion("Ref. :"+crediton.getLiqventa());
             letrasdao.modificarLetra(get);
         }
@@ -499,18 +499,18 @@ public class creditoBean implements Serializable {
         for (int i = 0; i < letritas.size(); i++) {
             Letras get = letritas.get(i);
             if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                get.setEstado("CN");
+                get.setEstado("CN");                
             } else {
                 if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
                     if (get.getFecven().after(fecha)) {
-                        get.setEstado("PN");
+                        get.setEstado("PN");                        
                     } else {
-                        get.setEstado("VN");
+                        get.setEstado("VN");                        
                     }
                 }
             }
             if (get.getEstado().equals("VN")) {
-                get.setMora((get.getMonto().multiply(cinco)).setScale(1, RoundingMode.HALF_UP));
+                get.setMora(((get.getMonto().multiply(cinco)).setScale(2)).setScale(1, RoundingMode.HALF_UP));                
             }
             letrasdao.modificarLetra(get);
         }
@@ -524,6 +524,9 @@ public class creditoBean implements Serializable {
         List<Letras> letritas = new ArrayList();
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
+        BigDecimal cinco = new BigDecimal(5);
+        BigDecimal cien = new BigDecimal((BigInteger.TEN).multiply(BigInteger.TEN));
+        cinco = cinco.divide(cien);
 //        credito = creditodao.cargarCreditoxAnexo(anexo);
         LetrasDao letrasdao = new LetrasDaoImplements();
         letritas = letrasdao.mostrarLetrasXCred(cred);
@@ -539,6 +542,9 @@ public class creditoBean implements Serializable {
                         get.setEstado("VN");
                     }
                 }
+            }
+            if (get.getEstado().equals("VN")) {
+                get.setMora(((get.getMonto().multiply(cinco)).setScale(2)).setScale(1, RoundingMode.HALF_UP));                
             }
             letrasdao.modificarLetra(get);
         }
