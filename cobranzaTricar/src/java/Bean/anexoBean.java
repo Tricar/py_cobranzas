@@ -418,7 +418,7 @@ public class anexoBean implements Serializable {
         List<Anexo> tipos = anexoDao.filtarTipoDos("CN", "CJ");        
         for (Anexo tipo : tipos) {            
 //            var = tipo.getNombre()+" "+tipo.getApepat()+""+tipo.getApemat();
-            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+            if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);
             }
         }
@@ -430,7 +430,7 @@ public class anexoBean implements Serializable {
         AnexoDao anexoDao = new AnexoDaoImplements();
         List<Anexo> tipos = anexoDao.filtarTipo("VE");
         for (Anexo tipo : tipos) {
-            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+            if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);
             }
         }
@@ -442,7 +442,7 @@ public class anexoBean implements Serializable {
         AnexoDao anexoDao = new AnexoDaoImplements();
         List<Anexo> tipos = anexoDao.filtarTipo("GE");
         for (Anexo tipo : tipos) {
-            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+            if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);
             }
         }
@@ -454,7 +454,7 @@ public class anexoBean implements Serializable {
         AnexoDao anexoDao = new AnexoDaoImplements();
         List<Anexo> tipos = anexoDao.filtarAval("AD");
         for (Anexo tipo : tipos) {
-            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+            if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);
             }
         }
@@ -466,7 +466,7 @@ public class anexoBean implements Serializable {
         AnexoDao anexoDao = new AnexoDaoImplements();
         List<Anexo> tipos = anexoDao.filtarTipoTres("VE", "GE", "AD");
         for (Anexo tipo : tipos) {
-            if (tipo.getNombre().toLowerCase().startsWith(name)) {
+            if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);
             }
         }

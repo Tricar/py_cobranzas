@@ -80,7 +80,7 @@ public class AnexoDaoImplements implements AnexoDao {
     }
     
     @Override
-    public List<Anexo> buscarCliente(String nombre, String tipo, String tipo1) {
+    public List<Anexo> buscarClienteNombre(String nombre, String tipo, String tipo1) {
         Session session = null;
 //        Anexo anexo = null;
         List<Anexo> lista = null;
@@ -90,6 +90,28 @@ public class AnexoDaoImplements implements AnexoDao {
             query.setParameter("t", tipo);
             query.setParameter("t1", tipo1);
             query.setParameter("n", nombre+"%");
+            lista = (List<Anexo>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Anexo> buscarClienteDni(String dni, String tipo, String tipo1) {
+        Session session = null;
+//        Anexo anexo = null;
+        List<Anexo> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Anexo WHERE (tipoanexo=:t OR tipoanexo=:t1) and numdocumento LIKE :n");
+            query.setParameter("t", tipo);
+            query.setParameter("t1", tipo1);
+            query.setParameter("n", dni+"%");
             lista = (List<Anexo>) query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());

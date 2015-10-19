@@ -157,7 +157,7 @@ public class Letras implements java.io.Serializable {
         this.estado = estado;
     }
 
-    @Column(name = "descripcion", length = 2)
+    @Column(name = "descripcion", length = 20)
     public String getDescripcion() {
         return this.descripcion;
     }

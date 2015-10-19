@@ -58,7 +58,7 @@
                                     completeMethod="#{modeloBean.modeloNombre}" var="modelo"
                                     itemLabel="#{modelo.modelo}" itemValue="#{modelo}" forceSelection="true">
                         <o:converter converterId="omnifaces.ListConverter" list="#{modeloBean.modelos}"/>
-                        <p:ajax event="click" update="precio inicial" listener="#{creditoBean.precioModeloCotiza()}"/>
+                        <p:ajax event="click" update="precio inicial res" listener="#{creditoBean.precioModeloCotiza()}"/>
                     </p:autoComplete>
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
@@ -86,7 +86,7 @@
                     <p:outputLabel value="Inicial:" />
                     <p:inputText id="inicial" value="#{creditoBean.inicia}" readonly="true"/>
                     <p:outputLabel value="Saldo:"/>                                    
-                    <p:inputText id="res" value="#{creditoBean.res}" readonly="true"/>
+                    <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
                     <p:outputLabel value="Interés:" />
                     <p:selectOneMenu value="#{creditoBean.credito.interes}" >
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
