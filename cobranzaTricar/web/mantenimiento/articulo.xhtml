@@ -30,6 +30,9 @@
                                 <f:converter converterId="marcaconverter"/>
                             </h:outputText>
                         </p:column>
+                        <p:column headerText="TIPO">
+                            <h:outputText value="#{item.tipovehiculo}" />
+                        </p:column>
                          <p:column headerText="MODELO">
                             <h:outputText value="#{item.modelo.modelo}" />
                         </p:column>
@@ -39,7 +42,7 @@
                         <p:column headerText="AÑO">
                             <h:outputText value="#{item.anofabri}" />
                         </p:column>
-                        <p:column headerText="SERIE">
+                        <p:column headerText="SERIE" filterBy="#{item.serie}" filterMatchMode="contains">
                             <h:outputText value="#{item.serie}" />
                         </p:column>
                         <p:column headerText="MOTOR">
@@ -102,6 +105,13 @@
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Estado:" />
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.estado}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="DISPONIBLE" itemValue="D" />
+                                <f:selectItem itemLabel="NO DISPONIBLE" itemValue="N" />                     
+                            </p:selectOneMenu>
+                            <h:panelGroup></h:panelGroup>
                             <p:commandButton value="Registrar Articulo" icon="b-new" ajax="false" actionListener="#{vehiculoBean.registrar()}" />
                         </p:panelGrid>
                     </p:dialog>
@@ -151,6 +161,13 @@
                             <p:inputText id="txtMotor" label="Motor" value="#{vehiculoBean.vehiculo.motor}" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Estado:" />
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.estado}">
+                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="DISPONIBLE" itemValue="D" />
+                                <f:selectItem itemLabel="NO DISPONIBLE" itemValue="N" />                     
+                            </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
                             <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{vehiculoBean.modificar()}"/>
                         </h:panelGrid>

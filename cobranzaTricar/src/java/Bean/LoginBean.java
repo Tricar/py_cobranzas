@@ -95,6 +95,54 @@ public class LoginBean implements Serializable {
         context.addCallbackParam("loggetOut", true);
         context.addCallbackParam("ruta", ruta);
     }
+    
+    public String empleado() {
+        return "/sistema/empleado";
+    }
+    
+    public String usuarios() {
+        return "/sistema/usuario";
+    }
+    
+    public String perfil() {
+        return "/sistema/perfil";
+    }
+    
+    public String cliente() {
+        return "/mantenimiento/cliente";
+    }
+    
+    public String articulo() {
+        return "/mantenimiento/articulo";
+    }
+    
+    public String modelo() {
+        return "/mantenimiento/modarticulo";
+    }
+    
+    public String color() {
+        return "/mantenimiento/colorart";
+    }
+    
+    public String porforma() {
+        return "/cotiza/index";
+    }
+    
+    public String credito() {
+        return "/venta/index";
+    }
+    
+    public String pago() {
+        return "/venta/listarv";
+    }
+    
+    public String deudor() {
+        return "/reportes/vencido";
+    }
+    
+    public String moroso() {
+        return "/reportes/moroso";
+    }
 
     public String getTusuario() {
         return tusuario;

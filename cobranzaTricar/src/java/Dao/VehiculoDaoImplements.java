@@ -95,7 +95,13 @@ public class VehiculoDaoImplements implements VehiculoDao{
 
     @Override
     public Vehiculo verByIdvehiculo(Session session, Integer idvehiculo) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String hql = "FROM Vehiculo WHERE idvehiculo=:idvehiculo";
+        Query query = session.createQuery(hql);
+        query.setParameter("idvehiculo", idvehiculo);
+        
+        Vehiculo vehiculo = (Vehiculo) query.uniqueResult();
+        
+        return vehiculo;
     }
 
     @Override

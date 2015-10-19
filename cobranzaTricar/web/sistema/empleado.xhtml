@@ -24,9 +24,6 @@
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                     <p:dataTable var="item" value="#{anexoBean.verEmpleado()}" emptyMessage="No hay nada para mostrar" 
                                  paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">
-                        <p:column headerText="CODIGO">
-                            <h:outputText value="#{item.idanexo}" />
-                        </p:column>
                         <p:column headerText="NOMBRE Y APELLIDO" filterBy="#{item.nombres}" filterMatchMode="contains">
                             <h:outputText value="#{item.nombres} "/>
                         </p:column>

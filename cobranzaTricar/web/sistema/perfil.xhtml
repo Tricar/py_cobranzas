@@ -87,11 +87,11 @@
                         <br/>
                         <br/><h:outputText value="Venta:" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venLis}"/>
-                        <h:outputText value="Listar" />
+                        <h:outputText value="Pagos" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venReg}"/>
-                        <h:outputText value="Vender" />
+                        <h:outputText value="Credito" />
                         <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.venCon}"/>
-                        <p:outputLabel value="Consultar" />
+                        <p:outputLabel value="Proforma" />
                         <p:separator/>
                         <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>

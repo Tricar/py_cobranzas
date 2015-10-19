@@ -18,8 +18,6 @@
 
     <h:body>
 
-        <ui:include src="./sessionTimeOut.xhtml" />
-
         <div id="cabecera">
             <ui:insert name="top">
                 <h:graphicImage library="images" name="logo_tricar.jpg" alt="hound logo" style="float: left; margin: 0px; padding: 0px;"/>
@@ -29,28 +27,28 @@
                         <p:menuitem value="Inicio" icon="ui-icon-home" outcome="/views/index" />
 
                         <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-suitcase">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" outcome="/sistema/empleado" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" outcome="/sistema/usuario" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" outcome="/sistema/perfil" icon="ui-icon-clipboard" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
                         </p:submenu>
 
                         <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" outcome="/mantenimiento/cliente" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" outcome="/mantenimiento/articulo" icon="ui-icon-flag" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" outcome="/mantenimiento/modarticulo" icon="ui-icon-star" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" outcome="/mantenimiento/colorart" icon="ui-icon-pencil" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="ui-icon-person" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" action="#{loginbean.articulo()}" icon="ui-icon-flag" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" action="#{loginbean.modelo()}" icon="ui-icon-star" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" action="#{loginbean.color()}" icon="ui-icon-pencil" />
                         </p:submenu>
 
                         <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
-                            <p:menuitem value="Proforma" outcome="/cotiza/index" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" outcome="/venta/index" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" outcome="/venta/listarv" icon="ui-icon-grip-dotted-vertical" />                            
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{loginbean.porforma()}" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{loginbean.credito()}" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{loginbean.pago()}" icon="ui-icon-grip-dotted-vertical" />                            
 
                         </p:submenu>
 
                         <p:submenu label="Reporte" icon="ui-icon-print">
-                            <p:menuitem value="Ver" url="#" icon="ui-icon-bookmark" />
-                            <p:menuitem value="Asignar Menu" icon="ui-icon-eject" />
+                            <p:menuitem value="Deuda Vencida" action="#{loginbean.deudor()}" icon="ui-icon-bookmark" />
+                            <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />
                         </p:submenu>
 
                         <f:facet name="options">

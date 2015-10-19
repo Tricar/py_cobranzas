@@ -38,8 +38,7 @@ public class SessionUrlFilter implements Filter {
         String requestUrl = req.getRequestURL().toString();
 
         String[] UrlPermitidaSinSession = new String[]{
-            "faces/login.xhtml",
-            "faces/index-old.xhtml",
+            "/faces/login.xhtml",
         };
 
         boolean redirectionurl = true;
