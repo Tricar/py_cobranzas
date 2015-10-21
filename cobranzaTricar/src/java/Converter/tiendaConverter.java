@@ -32,6 +32,9 @@ public class tiendaConverter implements Converter {
                 case "YA":
                     tienda = "YARINA";
                     break;
+                case "T ":
+                    tienda = "TARAPOTO";
+                    break;
             }
         }
         return tienda;

@@ -40,9 +40,9 @@
                         </p:submenu>
 
                         <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
-                            <p:menuitem value="Proforma" outcome="/cotiza/index" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" outcome="/venta/index" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" outcome="/venta/listarv" icon="ui-icon-grip-dotted-vertical" />                            
+                            <p:menuitem value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />                            
 
                         </p:submenu>
 
