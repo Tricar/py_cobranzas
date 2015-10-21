@@ -8,7 +8,7 @@
                 template="./../views/template.xhtml">
     <ui:define name="content">
         <h2>Gestión de Créditos</h2>
-        <h:form>
+        <h:form>            
             <p:commandButton action="#{creditoBean.nuevo()}" value="Credito Simple" immediate="true" icon="b-add"/>
         </h:form>
         <h:form>
@@ -49,8 +49,14 @@
                         <f:converter converterId="tvehiculo"/>
                     </h:outputText>
                 </p:column>
-                <p:column headerText="Deuda">
+                <p:column headerText="Monto financiado">
+                    <h:outputText value="#{cred.saldo}" />
+                </p:column>
+                <p:column headerText="Deuda Total">
                     <h:outputText value="#{cred.totaldeuda}" />
+                </p:column>
+                <p:column headerText="Deuda Actual">
+                    <h:outputText value="#{cred.deudactual}" />
                 </p:column>
                 <p:column headerText="Ver">                            
                     <p:commandButton value="V" update=":formVer" icon="b-ver" 

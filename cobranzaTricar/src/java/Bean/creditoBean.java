@@ -267,13 +267,13 @@ public class creditoBean implements Serializable {
             fechaini = credito.getFechareg();
             Date fechafin = new Date();
             fechafin = sumaDias(fechaini, 30);
-            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.HALF_UP);
+            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
             letras.setFecreg(credito.getFechareg());
             for (int i = 1; i <= (credito.getNletras()); i++) {
                 letras.setCredito(credito);
                 letras.setMontoletra(montoletras);
                 letras.setInteres(mtointeres);
-                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.HALF_UP));
+                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
                 letras.setFecini(fechaini);
                 letras.setFecven(fechafin);
                 letras.setMora(BigDecimal.ZERO);
@@ -376,13 +376,13 @@ public class creditoBean implements Serializable {
         fechaini = crediton.getFechareg();
         Date fechafin = new Date();
         fechafin = sumaDias(fechaini, 30);
-        BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.HALF_UP);
+        BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
         nuevas.setFecreg(crediton.getFechareg());
         for (int i = 1; i <= (crediton.getNletras()); i++) {
             nuevas.setCredito(crediton);
             nuevas.setMontoletra(montoletras);
             nuevas.setInteres(mtointeres);
-            nuevas.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.HALF_UP));
+            nuevas.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
             nuevas.setFecini(fechaini);
             nuevas.setFecven(fechafin);
             nuevas.setMora(BigDecimal.ZERO);
@@ -416,13 +416,13 @@ public class creditoBean implements Serializable {
             fechaini = credito.getFechareg();
             Date fechafin = new Date();
             fechafin = sumaDias(fechaini, 30);
-            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.HALF_UP);
+            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
             letras.setFecreg(credito.getFechareg());
             for (int i = 1; i <= (credito.getNletras()); i++) {
                 letras.setCredito(credito);
                 letras.setMontoletra(montoletras);
                 letras.setInteres(mtointeres);
-                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.HALF_UP));
+                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
                 letras.setFecini(fechaini);
                 letras.setFecven(fechafin);
                 fechaini = fechafin;
@@ -510,7 +510,7 @@ public class creditoBean implements Serializable {
                 }
             }
             if (get.getEstado().equals("VN")) {
-                get.setMora(((get.getMonto().multiply(cinco)).setScale(2)).setScale(1, RoundingMode.HALF_UP));                
+                get.setMora(((get.getMonto().multiply(cinco)).setScale(2)).setScale(1, RoundingMode.UP));                
             }
             letrasdao.modificarLetra(get);
         }
@@ -525,7 +525,7 @@ public class creditoBean implements Serializable {
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
         BigDecimal cinco = new BigDecimal(5);
-        BigDecimal cien = new BigDecimal((BigInteger.TEN).multiply(BigInteger.TEN));
+        BigDecimal cien = new BigDecimal(100);
         cinco = cinco.divide(cien);
 //        credito = creditodao.cargarCreditoxAnexo(anexo);
         LetrasDao letrasdao = new LetrasDaoImplements();
@@ -543,8 +543,8 @@ public class creditoBean implements Serializable {
                     }
                 }
             }
-            if (get.getEstado().equals("VN")) {
-                get.setMora(((get.getMonto().multiply(cinco)).setScale(2)).setScale(1, RoundingMode.HALF_UP));                
+            if (get.getEstado().equals("VN")) {                                
+                get.setMora((get.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP));
             }
             letrasdao.modificarLetra(get);
         }
@@ -689,7 +689,12 @@ public class creditoBean implements Serializable {
         return "/venta/form.xhtml";
 
     }
-
+    
+    public String pagos(){
+        creditos = new ArrayList();
+        return "/venta/listarv.xhtml";
+    }
+    
     public String nuevoespecial() {
         credito = new Credito();
         precio = BigDecimal.ZERO;
