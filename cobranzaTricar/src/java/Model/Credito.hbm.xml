@@ -23,11 +23,11 @@
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" not-null="true" />
         </many-to-one>
-        <many-to-one name="modelo" class="Model.Vehiculo" fetch="select">
+        <many-to-one name="modelo" class="Model.Modelo" fetch="select">
             <column name="idmodelo" not-null="true" />
         </many-to-one>
         <property name="liqventa" type="string">
-            <column name="liqventa" length="10" not-null="true" />
+            <column name="liqventa" length="15" not-null="true" />
         </property>
         <property name="condicionpago" type="string">
             <column name="condicionpago" length="2" not-null="true" />
