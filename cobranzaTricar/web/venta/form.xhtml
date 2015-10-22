@@ -10,9 +10,11 @@
 
     <ui:define name="content">
         <h2>Nuevo Crédito</h2>
+        <h:form>
+            <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="b-back"/>
+        </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
-            <h:form id="formInsertarVenta" prependId="false ">
-
+            <h:form prependId="false ">
                 <p:panelGrid columns="8">
                     <p:outputLabel value="Fecha:" />
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy"/>
@@ -117,11 +119,13 @@
                     <p:outputLabel value="Cronograma:" />
                     <p:selectOneRadio value="#{creditoBean.credito.cronograma}" >
                         <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>
-                    </p:selectOneRadio>
+                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
+                    </p:selectOneRadio>                    
                 </p:panelGrid>
-                <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCredito()}"  icon="b-ok"
-                                 update=":formMostrar" onclick="$('#tablaletras').show();"/>                    
+                <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCredito()}" icon="b-ok"
+                                 update=":formMostrar" onclick="$('#tablaletras').show();"
+                                 disabled="#{(creditoBean.generar) == 'generado' }">
+                </p:commandButton>
             </h:form>
         </f:view>
         <div id="tablaletras" class="campo">
@@ -164,10 +168,7 @@
                     </p:column>                        
                 </p:dataTable>
             </h:form>
-        </div>
-        <h:form>
-            <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="b-back"/>
-        </h:form>
+        </div>        
     </ui:define>
 </ui:composition>
 

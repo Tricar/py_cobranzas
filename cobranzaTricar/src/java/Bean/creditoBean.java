@@ -53,6 +53,7 @@ public class creditoBean implements Serializable {
     private Date fechafin;
     private String nombre;
     private BigDecimal saldo;
+    private String generar = "no";
 
     public creditoBean() {
     }
@@ -213,6 +214,14 @@ public class creditoBean implements Serializable {
         this.crediton = crediton;
     }
 
+    public String getGenerar() {
+        return generar;
+    }
+
+    public void setGenerar(String generar) {
+        this.generar = generar;
+    }
+
     public void resultadoSaldo() {
         res = precio.subtract(credito.getInicial());
     }
@@ -252,8 +261,7 @@ public class creditoBean implements Serializable {
         credito.setSaldo(precio.subtract(inicia));
         if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
             vehiculo = credito.getVehiculo();
-            vehiculo.setEstado("N");
-            vehiculodao.modificarVehiculo(vehiculo);
+            vehiculo.setEstado("N");            
             credito.setTotaldeuda(BigDecimal.ZERO);
             Letras letras = new Letras();
             BigDecimal nletras = new BigDecimal(credito.getNletras());
@@ -262,6 +270,7 @@ public class creditoBean implements Serializable {
             credito.setEstado("AP");
             BigDecimal cien = new BigDecimal(100);
             creditodao.insertarVenta(credito);
+            vehiculodao.modificarVehiculo(vehiculo);
             interes = (credito.getInteres().multiply(nletras)).divide(cien);
             Date fechaini = new Date();
             fechaini = credito.getFechareg();
@@ -287,6 +296,7 @@ public class creditoBean implements Serializable {
                 letrasdao.insertarLetra(letras);
             }
             creditodao.modificarVenta(credito);
+//            generar = "generado";
         }
     }
 
@@ -331,7 +341,7 @@ public class creditoBean implements Serializable {
     }
 
     public void refinanciar() {
-        CreditoDao creditodao = new CreditoDaoImp();        
+        CreditoDao creditodao = new CreditoDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
         List<Letras> antiguas = new ArrayList();
         Letras nuevas = new Letras();
@@ -346,21 +356,21 @@ public class creditoBean implements Serializable {
         crediton.setEmpresa(credito.getEmpresa());
         crediton.setTienda(credito.getTienda());
         crediton.setInicial(BigDecimal.ZERO);
-        crediton.setPrecio(BigDecimal.ZERO);        
-        crediton.setVehiculo(credito.getVehiculo());        
+        crediton.setPrecio(BigDecimal.ZERO);
+        crediton.setVehiculo(credito.getVehiculo());
         crediton.setSaldo(credito.getDeudactual());
         crediton.setTotaldeuda(BigDecimal.ZERO);
         if (credito.getLiqventa().endsWith("A")) {
             crediton.setLiqventa(credito.getLiqventa() + "A");
         } else {
             crediton.setLiqventa(credito.getLiqventa() + "-A");
-        }        
+        }
         antiguas = letrasdao.mostrarLetrasXCred(credito);
         for (int i = 0; i < antiguas.size(); i++) {
             Letras get = antiguas.get(i);
             get.setSaldo(BigDecimal.ZERO);
             get.setEstado("RF");
-            get.setDescripcion("Ref. :"+crediton.getLiqventa());
+            get.setDescripcion("Ref. :" + crediton.getLiqventa());
             letrasdao.modificarLetra(get);
         }
         credito.setDeudactual(BigDecimal.ZERO);
@@ -393,7 +403,7 @@ public class creditoBean implements Serializable {
             nuevas.setDescripcion("L" + i + "/L" + crediton.getNletras());
             crediton.setTotaldeuda(crediton.getTotaldeuda().add(nuevas.getSaldo()));
             crediton.setDeudactual(crediton.getTotaldeuda());
-            letrasdao.insertarLetra(nuevas);            
+            letrasdao.insertarLetra(nuevas);
         }
         creditodao.modificarVenta(crediton);
     }
@@ -490,6 +500,8 @@ public class creditoBean implements Serializable {
         List<Letras> letritas = new ArrayList();
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
+        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
+        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
         BigDecimal cinco = new BigDecimal(5);
         BigDecimal cien = new BigDecimal((BigInteger.TEN).multiply(BigInteger.TEN));
         cinco = cinco.divide(cien);
@@ -499,18 +511,24 @@ public class creditoBean implements Serializable {
         for (int i = 0; i < letritas.size(); i++) {
             Letras get = letritas.get(i);
             if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                get.setEstado("CN");                
+                get.setEstado("CN");
             } else {
                 if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
                     if (get.getFecven().after(fecha)) {
-                        get.setEstado("PN");                        
+                        get.setEstado("PN");
                     } else {
-                        get.setEstado("VN");                        
+                        get.setEstado("VN");
                     }
                 }
             }
+            moraant = get.getMora();
+            moraact = ((get.getSaldo().multiply(cinco)).setScale(2)).setScale(1, RoundingMode.UP);
             if (get.getEstado().equals("VN")) {
-                get.setMora(((get.getMonto().multiply(cinco)).setScale(2)).setScale(1, RoundingMode.UP));                
+                if (moraact.compareTo(moraant) == -1) {
+                    get.setMora(moraant);
+                } else {
+                    get.setMora(moraact);
+                }
             }
             letrasdao.modificarLetra(get);
         }
@@ -524,6 +542,8 @@ public class creditoBean implements Serializable {
         List<Letras> letritas = new ArrayList();
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
+        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
+        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
         BigDecimal cinco = new BigDecimal(5);
         BigDecimal cien = new BigDecimal(100);
         cinco = cinco.divide(cien);
@@ -543,8 +563,14 @@ public class creditoBean implements Serializable {
                     }
                 }
             }
-            if (get.getEstado().equals("VN")) {                                
-                get.setMora((get.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP));
+            moraant = get.getMora();
+            moraact = (get.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP);
+            if (get.getEstado().equals("VN")) {
+                if (moraact.compareTo(moraant) == -1) {
+                    get.setMora(moraant);
+                } else {
+                    get.setMora(moraact);
+                }
             }
             letrasdao.modificarLetra(get);
         }
@@ -600,6 +626,7 @@ public class creditoBean implements Serializable {
             }
         } catch (Exception e) {
         }
+        dni = "";
     }
 
     public void cargarCreditoNombre() {
@@ -689,12 +716,12 @@ public class creditoBean implements Serializable {
         return "/venta/form.xhtml";
 
     }
-    
-    public String pagos(){
+
+    public String pagos() {
         creditos = new ArrayList();
         return "/venta/listarv.xhtml";
     }
-    
+
     public String nuevoespecial() {
         credito = new Credito();
         precio = BigDecimal.ZERO;

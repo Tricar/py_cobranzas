@@ -163,7 +163,7 @@ public class Credito implements java.io.Serializable {
         this.modelo = modelo;
     }
 
-    @Column(name = "liqventa", nullable = false, length = 15)
+    @Column(name = "liqventa", nullable = false, length = 15, unique = true)
     public String getLiqventa() {
         return this.liqventa;
     }
