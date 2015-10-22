@@ -27,7 +27,7 @@
             <column name="idmodelo" not-null="true" />
         </many-to-one>
         <property name="liqventa" type="string">
-            <column name="liqventa" length="15" not-null="true" />
+            <column name="liqventa" length="15" not-null="true" unique="true"/>
         </property>
         <property name="condicionpago" type="string">
             <column name="condicionpago" length="2" not-null="true" />
