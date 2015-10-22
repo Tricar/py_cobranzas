@@ -16,12 +16,10 @@
                 <p:panel header="Acceso al Sistema">
                     <h:panelGrid columns="2" cellpadding="5">  
                         <h:outputLabel for="username" value="Usuario:" />  
-                        <p:inputText value="#{loginbean.tusuario}"   
-                                     id="usuario" required="true" label="usuario" />  
+                        <p:inputText value="#{loginbean.tusuario}" autocomplete="off" id="usuario" required="true" label="usuario" />  
 
                         <h:outputLabel for="password" value="Clave:" />  
-                        <p:password value="#{loginbean.clave}"   
-                                    id="clave" required="true" label="clave" />
+                        <p:password value="#{loginbean.clave}" autocomplete="off" id="clave" required="true" label="clave" />
 
                         <div id="cargando" style="width: 50px; height: 50px" class="precarga"/>
                         <f:facet name="footer">  
