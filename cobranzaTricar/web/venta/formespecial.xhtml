@@ -10,6 +10,9 @@
 
     <ui:define name="content">
         <h2>Nuevo Crédito</h2>
+        <h:form>
+            <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="b-back"/>
+        </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form id="formInsertarVenta" prependId="false ">
 
@@ -33,22 +36,21 @@
                     <p:outputLabel value="Buscar cliente:" for="cliente"/>
                     <p:autoComplete id="cliente" value="#{creditoBean.credito.anexoByIdanexo}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
-                                    itemLabel="#{cliente.nombres}" itemValue="#{cliente}">
+                                    itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
+                                    required="true" requiredMessage="Ingrese Cliente">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                         <p:ajax event="itemSelect" process="@form" />
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
                         <p:messages id="msg"/>
                     </p:autoComplete>
-                    <p:outputLabel value="Buscar Aval:" />
-                    <p:autoComplete value="#{creditoBean.credito.anexoByIdaval}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"
+                    <p:outputLabel value="Buscar Aval:" for="aval"/>
+                    <p:autoComplete id="aval" value="#{creditoBean.credito.anexoByIdaval}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"
                                     completeMethod="#{anexoBean.filtrarAval}" var="aval"
-                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" forceSelection="true">
+                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" 
+                                    required="true" requiredMessage="Ingrese Aval">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg1"/>                                
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg1"/>
-                        <p:messages id="msg1"/>
+                        <p:ajax event="itemSelect" process="@form" />                        
                     </p:autoComplete>
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
@@ -59,14 +61,12 @@
                     <p:selectOneMenu value="#{creditoBean.credito.nletras}" >                        
                         <f:selectItem itemLabel="1" itemValue='1' />                        
                     </p:selectOneMenu>
-                    <p:outputLabel value="Buscar vendedor:"/>
-                    <p:autoComplete value="#{creditoBean.credito.anexoByCodven}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"
+                    <p:outputLabel value="Buscar vendedor:" for="vendedor"/>
+                    <p:autoComplete id="vendedor" value="#{creditoBean.credito.anexoByCodven}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"
                                     completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
-                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo}" forceSelection="true">
+                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo}" required="true" requiredMessage="Ingrese vendedor">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>                                
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
+                        <p:ajax event="itemSelect" process="@form" />                        
                     </p:autoComplete>                    
                     <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
                     <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"
@@ -106,49 +106,45 @@
                                  ajax="false" />                    
             </h:form>
         </f:view>
-        
-            <h:form id="formMostrar">
-                <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
-                <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
-                             emptyMessage="No hay nada para mostrar">
-                    <p:column headerText="Cod venta.">
-                        <h:outputText value="#{letras.credito.liqventa}" />
-                    </p:column>
-                    <p:column headerText="Descripcion">
-                        <h:outputText value="#{letras.descripcion}"/>
-                    </p:column>
-                    <p:column headerText="Monto">
-                        <h:outputText value="#{letras.montoletra}"/>
-                    </p:column>
-                    <p:column headerText="Interes">
-                        <h:outputText value="#{letras.interes}"/>
-                    </p:column>
-                    <p:column headerText="Total Letra">
-                        <h:outputText value="#{letras.monto}"/>
-                    </p:column>
-                    <p:column headerText="Fecha In.">
-                        <h:outputText value="#{letras.fecini}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Fecha Ven.">
-                        <h:outputText value="#{letras.fecven}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Saldo">
-                        <h:outputText value="#{letras.saldo}"/>
-                    </p:column>
-                    <p:column headerText="Estado">
-                        <h:outputText value="#{letras.estado}">
-                            <f:converter converterId="letrasconverter"/>
-                        </h:outputText>
-                    </p:column>                        
-                </p:dataTable>
-            </h:form>
-        
-        <h:form>
-            <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="b-back"/>
+
+        <h:form id="formMostrar">
+            <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
+            <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
+                         emptyMessage="No hay nada para mostrar">
+                <p:column headerText="Cod venta.">
+                    <h:outputText value="#{letras.credito.liqventa}" />
+                </p:column>
+                <p:column headerText="Descripcion">
+                    <h:outputText value="#{letras.descripcion}"/>
+                </p:column>
+                <p:column headerText="Monto">
+                    <h:outputText value="#{letras.montoletra}"/>
+                </p:column>
+                <p:column headerText="Interes">
+                    <h:outputText value="#{letras.interes}"/>
+                </p:column>
+                <p:column headerText="Total Letra">
+                    <h:outputText value="#{letras.monto}"/>
+                </p:column>
+                <p:column headerText="Fecha In.">
+                    <h:outputText value="#{letras.fecini}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Fecha Ven.">
+                    <h:outputText value="#{letras.fecven}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Saldo">
+                    <h:outputText value="#{letras.saldo}"/>
+                </p:column>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{letras.estado}">
+                        <f:converter converterId="letrasconverter"/>
+                    </h:outputText>
+                </p:column>                        
+            </p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>
