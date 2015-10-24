@@ -15,7 +15,6 @@ import Model.Credito;
 import Model.Letras;
 import Model.Pagos;
 import Model.Vehiculo;
-import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -29,17 +28,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import utiles.inicial;
 import utiles.precio;
 
 @ManagedBean
 @SessionScoped
 public class creditoBean implements Serializable {
-
-    private Session session;
-    private Transaction transaction;
 
     public Credito credito = new Credito();
     public Vehiculo vehiculo = new Vehiculo();
@@ -336,7 +330,7 @@ public class creditoBean implements Serializable {
         credito.setInteres(BigDecimal.ZERO);
 
         if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Ingrese Monto Inicial Mayor."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ingrese Monto Inicial Mayor."));
             return;
         }
 
@@ -525,6 +519,7 @@ public class creditoBean implements Serializable {
     public void filtrarFechas() {
         CreditoDao linkdao = new CreditoDaoImp();
         filtradafecha = linkdao.filtrarFechas(fecha1, fecha2, "AP");
+        letraslista = new ArrayList();
     }
 
     public void cargarCredito(Anexo anexo) {
@@ -642,6 +637,7 @@ public class creditoBean implements Serializable {
 
     public void cargarAnexoDNI() {
         filtradafecha = new ArrayList();
+        letraslista = new ArrayList();
         AnexoDao anexodao = new AnexoDaoImplements();
         List<Anexo> anexos = new ArrayList();
         CreditoDao creditodao = new CreditoDaoImp();
@@ -664,6 +660,7 @@ public class creditoBean implements Serializable {
 
     public void cargarCreditoNombre() {
         filtradafecha = new ArrayList();
+        letraslista = new ArrayList();
         AnexoDao anexodao = new AnexoDaoImplements();
         List<Anexo> anexos = new ArrayList();
         CreditoDao creditodao = new CreditoDaoImp();

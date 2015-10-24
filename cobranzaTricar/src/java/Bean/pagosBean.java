@@ -12,8 +12,10 @@ import Model.Pagos;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -90,12 +92,13 @@ public class pagosBean implements Serializable {
                 letrasdao.modificarLetra(letra);
                 pagosdao.insertarPago(pago);
                 credito.setDeudactual(credito.getDeudactual().subtract(pago.getMonto()));
-                creditodao.modificarVenta(credito);
+                creditodao.modificarVenta(credito);                
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El Pago fue satisfactorio."));
             } else {
-                System.out.println("No se puede cobrar");
+                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se puede cobrar por que el monto es mayor al cobro."));
             }
         } else {
-            System.out.println("No se puede cobrar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se puede cobrar por que el pago debe ser mayor a 0."));
         }
         pago = new Pagos();
     }
