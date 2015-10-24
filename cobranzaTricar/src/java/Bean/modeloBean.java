@@ -28,11 +28,19 @@ public class modeloBean implements Serializable {
     private List<SelectItem> SelectItemsmodelo;
     private Session session;
     private Transaction transaction;
-
+    List<Modelo> listafiltrada = new ArrayList();
     private Modelo model;
     private List<Modelo> modelos;
     private ArrayList<Modelo> query;
 
+    public List<Modelo> getListafiltrada() {
+        return listafiltrada;
+    }
+
+    public void setListafiltrada(List<Modelo> listafiltrada) {
+        this.listafiltrada = listafiltrada;
+    }
+      
     public modeloBean() {
         this.model = new Modelo();
     }
@@ -283,12 +291,20 @@ public class modeloBean implements Serializable {
     public List<Modelo> modeloNombre(String name) {
         this.query = new ArrayList<Modelo>();
         ModeloDao modelodao = new ModeloDaoImplements();
-        List<Modelo> tipos = modelodao.modeloNombre();        
+//        List<Modelo> tipos = modelodao.modeloNombre();
+        List<Modelo> tipos = listafiltrada;
         for (Modelo tipo : tipos) {            
             if (tipo.getModelo().toLowerCase().startsWith(name)) {
                 query.add(tipo);
             }
         }
         return query;
+    }
+    
+    public void modeloTipo(String tipo){
+        ModeloDao modelodao = new ModeloDaoImplements();        
+        listafiltrada = modelodao.modeloxTipo(tipo);
+        System.out.println("  "+tipo);
+//        System.out.println("a ver :"+listafiltrada.get(0));
     }
 }

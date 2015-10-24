@@ -26,6 +26,9 @@
                         <p:column headerText="DESCRIPCION">
                             <h:outputText value="#{item.modelo}"/>
                         </p:column>
+                        <p:column headerText="TIPO">
+                            <h:outputText value="#{item.tipo}"/>
+                        </p:column>
                         <p:column width="10%" style="text-align: center">
                             <p:commandButton actionListener="#{modeloBean.cargarModeloEditar(item.idmodelo)}" icon="ui-icon ui-icon-pencil"/>
                             <p:commandButton actionListener="#{modeloBean.cargarModeloEliminar(item.idmodelo)}" icon="ui-icon ui-icon-trash"/>
@@ -42,6 +45,13 @@
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:message for="txtDescripcion"/>
+                            <p:outputLabel value="Tipo Vehículo:"/>
+                            <p:selectOneMenu value="#{modeloBean.model.tipo}" >                        
+                                <f:selectItem itemLabel="MTX" itemValue="MX" />
+                                <f:selectItem itemLabel="ML" itemValue="ML" />
+                                <f:selectItem itemLabel="MTF" itemValue="MF" />
+                                <f:selectItem itemLabel="MTC" itemValue="MC" />                                
+                            </p:selectOneMenu>
                             <p:commandButton value="Registrar Modelo" icon="b-new" ajax="false" actionListener="#{modeloBean.registrar()}" />
                         </p:panelGrid>
                     </p:dialog>
@@ -63,7 +73,7 @@
                 </h:form>
 
                 <h:form id="frmEliminarModelo">
-                    <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarModelo" modal="true">
+                    <p:dialog header="Eliminar Modelo" widgetVar="dialogoEliminarModelo" modal="true">
                         <p:inputText type="hidden" value="#{modeloBean.model.idmodelo}"/>
                         <h:outputText value="¿Desea eliminar?" />
                         <p:commandButton value="Si" actionListener="#{modeloBean.eliminar()}" ajax="false" icon="b-ok" />

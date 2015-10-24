@@ -11,7 +11,7 @@ import org.hibernate.Session;
  *
  * @author master
  */
-public class ModeloDaoImplements implements ModeloDao{
+public class ModeloDaoImplements implements ModeloDao {
 
     @Override
     public boolean registrar(Session session, Modelo model) throws Exception {
@@ -51,9 +51,9 @@ public class ModeloDaoImplements implements ModeloDao{
         Query query = session.createQuery(hql);
         query.setParameter("idmodelo", idmodelo);
         query.setParameter("modelo", modelo);
-        
+
         Modelo model = (Modelo) query.uniqueResult();
-        
+
         return model;
     }
 
@@ -75,7 +75,7 @@ public class ModeloDaoImplements implements ModeloDao{
         List<Modelo> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Modelo");            
+            Query query = session.createQuery("FROM Modelo");
             lista = (List<Modelo>) query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -86,5 +86,25 @@ public class ModeloDaoImplements implements ModeloDao{
         }
         return lista;
     }
-    
+
+    @Override
+    public List<Modelo> modeloxTipo(String tipo) {
+        Session session = null;
+        List<Modelo> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Modelo WHERE tipo=:tipo");
+            query.setParameter("tipo", tipo);
+            lista = (List<Modelo>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+
+    }
+
 }
