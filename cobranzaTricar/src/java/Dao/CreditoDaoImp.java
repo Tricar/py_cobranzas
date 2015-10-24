@@ -233,5 +233,11 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return lista;
     }
+
+    @Override
+    public boolean registrar(Session session, Credito credito) throws Exception {
+        session.save(credito);
+        return true;
+    }
     
 }

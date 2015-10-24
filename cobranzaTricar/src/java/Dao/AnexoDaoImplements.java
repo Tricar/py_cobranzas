@@ -145,7 +145,7 @@ public class AnexoDaoImplements implements AnexoDao {
     @Override
     public boolean registrar(Session session, Anexo anexo) throws Exception {
         Date d = new Date();
-        anexo.setFechareg(d);
+        anexo.setFechareg(d);        
         session.save(anexo);
         return true;
     }

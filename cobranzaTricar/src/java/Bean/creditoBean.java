@@ -15,6 +15,7 @@ import Model.Credito;
 import Model.Letras;
 import Model.Pagos;
 import Model.Vehiculo;
+import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -24,9 +25,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import org.jboss.weld.exceptions.CreationException;
+import javax.faces.context.FacesContext;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import utiles.inicial;
 import utiles.precio;
 
@@ -34,8 +38,13 @@ import utiles.precio;
 @SessionScoped
 public class creditoBean implements Serializable {
 
+    private Session session;
+    private Transaction transaction;
+
     public Credito credito = new Credito();
+    public Vehiculo vehiculo = new Vehiculo();
     public Credito crediton = new Credito();
+    public Letras letrasa = new Letras();
     public List<Credito> creditos = new ArrayList();
     LetrasDao letrasdao = new LetrasDaoImplements();
     public List<Letras> letrascredito;
@@ -64,6 +73,22 @@ public class creditoBean implements Serializable {
 
     public void setCredito(Credito credito) {
         this.credito = credito;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public Letras getLetrasa() {
+        return letrasa;
+    }
+
+    public void setLetrasa(Letras letrasa) {
+        this.letrasa = letrasa;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
     public List<Credito> getVentas() {
@@ -260,10 +285,10 @@ public class creditoBean implements Serializable {
         credito.setInicial(inicia);
         credito.setSaldo(precio.subtract(inicia));
         if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
-            vehiculo = credito.getVehiculo();
-            vehiculo.setEstado("N");            
-            credito.setTotaldeuda(BigDecimal.ZERO);
             Letras letras = new Letras();
+            vehiculo = credito.getVehiculo();
+            vehiculo.setEstado("N");
+            credito.setTotaldeuda(BigDecimal.ZERO);
             BigDecimal nletras = new BigDecimal(credito.getNletras());
             BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
             BigDecimal interes = new BigDecimal(0);
@@ -309,7 +334,13 @@ public class creditoBean implements Serializable {
         credito.setTotaldeuda(credito.getSaldo());
         credito.setDeudactual(credito.getSaldo());
         credito.setInteres(BigDecimal.ZERO);
-        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
+
+        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Ingrese Monto Inicial Mayor."));
+            return;
+        }
+
+        else if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
             vehiculo = credito.getVehiculo();
             vehiculo.setEstado("N");
             vehiculodao.modificarVehiculo(vehiculo);
@@ -337,6 +368,8 @@ public class creditoBean implements Serializable {
             letras.setEstado("PN");
             letras.setDescripcion("L1/L1");
             letrasdao.insertarLetra(letras);
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
         }
     }
 

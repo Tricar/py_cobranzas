@@ -5,6 +5,7 @@ import Model.Credito;
 import Model.Letras;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Session;
 
 
 public interface CreditoDao {
@@ -19,4 +20,6 @@ public interface CreditoDao {
     public List<Credito> filtrarCreditoxAnexo(Anexo anexo);
     public Credito cargarxCodigoEstado (String codigo, String estado);
     public List<Credito> cargarCreditoxNombre(String nombre);
+    
+    public boolean registrar(Session session, Credito credito)throws Exception;
 }

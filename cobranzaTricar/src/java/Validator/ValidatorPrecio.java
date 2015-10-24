@@ -5,6 +5,7 @@
  */
 package Validator;
 
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.faces.application.FacesMessage;
@@ -30,12 +31,12 @@ public class ValidatorPrecio implements Validator{
         } else {
             label = htmlinputtext.getLabel();
         }
-        
+                
         Pattern pattern = Pattern.compile("([0-9].)*");
-        Matcher matcher = pattern.matcher((CharSequence) value);
+        Matcher matcher = pattern.matcher((CharSequence) value.toString());
         
         if (!matcher.matches()) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", label+": Ingrese valor Numérico"));
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", label+": Ingrese Valor Real"));
         }
     }
     

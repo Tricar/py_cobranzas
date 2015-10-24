@@ -112,5 +112,11 @@ public class LetrasDaoImplements implements LetrasDao{
         }
         return lista;
     }
+
+    @Override
+    public boolean registrar(Session session, Letras letras) throws Exception {
+        session.save(letras);
+        return true;
+    }
     
 }
