@@ -460,7 +460,7 @@ public class creditoBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
         credito.setPrecio(precio);
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código ya existe."));            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
         } else {
             if (inicia.compareTo(iniciapre) == -1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
@@ -493,7 +493,7 @@ public class creditoBean implements Serializable {
                     letras.setFecven(fechafin);
                     fechaini = fechafin;
                     fechafin = sumaDias(fechaini, 30);
-                    letras.setSaldo(montoletras.add(mtointeres));
+                    letras.setSaldo(letras.getMonto());
                     letras.setEstado("NA");
                     letras.setDescripcion("L" + i + "/L" + credito.getNletras());
                     letrasdao.insertarLetra(letras);
@@ -763,20 +763,28 @@ public class creditoBean implements Serializable {
         letrascredito = letrasdao.mostrarLetrasXCred(credito);
         Letras letra = new Letras();
         BigDecimal interes = new BigDecimal(0);
-        for (int i = 0; i < credito.getNletras(); i++) {
-            letra = (Letras) letrascredito.get(i);
-            letra.setFecini(credito.getFechareg());
-            letra.setFecven(sumaDias(letra.getFecini(), 30));
-            letra.setEstado("PN");
-            letrasdao.modificarLetra(letra);
-            letra.setFecini(letra.getFecven());
-            interes = interes.add(letra.getMonto());
+        if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
+        } else {
+            if (credito.getAnexoByIdanexo().equals(credito.getAnexoByIdaval())) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El aval no puede ser el mismo cliente."));                
+            } else {
+                for (int i = 0; i < credito.getNletras(); i++) {
+                    letra = (Letras) letrascredito.get(i);
+                    letra.setFecini(credito.getFechareg());
+                    letra.setFecven(sumaDias(letra.getFecini(), 30));
+                    letra.setEstado("PN");
+                    letrasdao.modificarLetra(letra);
+                    letra.setFecini(letra.getFecven());
+                    interes = interes.add(letra.getMonto());
+                }
+                credito.setTotaldeuda(interes);
+                credito.setDeudactual(credito.getTotaldeuda());
+                credito.setEstado("AP");
+                creditodao.modificarVenta(credito);
+                credito = new Credito();
+            }
         }
-        credito.setTotaldeuda(interes);
-        credito.setDeudactual(credito.getTotaldeuda());
-        credito.setEstado("AP");
-        creditodao.modificarVenta(credito);
-        credito = new Credito();
     }
 
     public void resultadoFecha() {

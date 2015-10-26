@@ -21,6 +21,7 @@
             </p:panelGrid>
         </h:form>
         <h:form id="formMostrar">
+            <p:growl sticky="false" showDetail="true" id="msgaprobar"/> 
             <p:dataTable var="cred" value="#{creditoBean.creditos}" 
                          emptyMessage="No hay nada para mostrar">
                 <p:column headerText="Cotización.">
@@ -76,46 +77,49 @@
             <p:dialog id="dlg3" header="Agregar Datos" showEffect="bounce" hideEffect="bounce" 
                       widgetVar="dlgaprobar" modal="true" resizable="true" minWidth="200">
                 <p:panelGrid columns="4">
-                    <p:outputLabel value="Fecha:" />
-                    <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy"/>
-                    <p:outputLabel value="Código:" />
-                    <p:inputText value="#{creditoBean.credito.liqventa}" required="true" requiredMessage="Ingrese un código de credito"/>
+                    <p:outputLabel value="Fecha:" for="txtfecha"/>
+                    <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha"/>
+                    <p:outputLabel value="Código:" for="txtcodigo"/>
+                    <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" required="true" requiredMessage="Ingrese un código de credito"/>
                     <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
                     <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
                                     completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
-                                    itemLabel="#{v.serie}" itemValue="#{v}" forceSelection="true"
+                                    itemLabel="#{v.serie}" itemValue="#{v}"
                                     required="true" requiredMessage="Elija un vehículo">
                         <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
                     </p:autoComplete>
-                    <p:outputLabel value="Buscar Aval:" />
-                    <p:autoComplete value="#{creditoBean.credito.anexoByIdaval}"
+                    <p:outputLabel value="Buscar Aval:" for="txtaval"/>
+                    <p:autoComplete id="txtaval" value="#{creditoBean.credito.anexoByIdaval}"
                                     completeMethod="#{anexoBean.filtrarAval}" var="aval"
-                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" forceSelection="true">
+                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" 
+                                    required="true" requiredMessage="Ingrese Aval">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                         <p:ajax event="itemSelect" process="@form" />
 
                     </p:autoComplete>
-                    <p:outputLabel value="Buscar vendedor:"/>
-                    <p:autoComplete value="#{creditoBean.credito.anexoByCodven}"
+                    <p:outputLabel value="Buscar vendedor:" for="vendedor"/>
+                    <p:autoComplete id="vendedor" value="#{creditoBean.credito.anexoByCodven}"
                                     completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
-                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo}" forceSelection="true">
+                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo}"
+                                    required="true" requiredMessage="Ingrese Vendedor">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                         <p:ajax event="itemSelect" process="@form" />
 
                     </p:autoComplete>
-                    <p:outputLabel value="Verificado:" />
-                    <p:autoComplete value="#{creditoBean.credito.anexoByVerificado}"
+                    <p:outputLabel value="Verificado:" for="verificado"/>
+                    <p:autoComplete id="verificado" value="#{creditoBean.credito.anexoByVerificado}"
                                     completeMethod="#{anexoBean.filtrarGestor}" var="veri"
-                                    itemLabel="#{veri.nombres}" itemValue="#{veri}" forceSelection="true">
+                                    itemLabel="#{veri.nombres}" itemValue="#{veri}"
+                                    required="true" requiredMessage="Ingrese nombre de verificador">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                     </p:autoComplete>
-                    <p:outputLabel value="Contrato:" />
-                    <p:selectOneRadio value="#{creditoBean.credito.contrato}" >
+                    <p:outputLabel value="Contrato:" for="rcontrato"/>
+                    <p:selectOneRadio id="rcontrato" value="#{creditoBean.credito.contrato}" required="true" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true" />
                         <f:selectItem itemLabel="NO" itemValue="false"/>
                     </p:selectOneRadio>
-                    <p:outputLabel value="Cronograma:" />
-                    <p:selectOneRadio value="#{creditoBean.credito.cronograma}" >
+                    <p:outputLabel value="Cronograma:" for="rcrono"/>
+                    <p:selectOneRadio id="rcrono" value="#{creditoBean.credito.cronograma}" required="true" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>
                     </p:selectOneRadio>
