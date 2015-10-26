@@ -459,58 +459,62 @@ public class creditoBean implements Serializable {
     public void insertarCotiza() {
         CreditoDao creditodao = new CreditoDaoImp();
         credito.setPrecio(precio);
-        if (inicia.compareTo(iniciapre) == -1) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
-            return;
+        if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código ya existe."));            
         } else {
-            credito.setInicial(inicia);
-        }
-        credito.setSaldo(precio.subtract(inicia));
-        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1 && (sw == 0)) {
-            Letras letras = new Letras();
-            BigDecimal nletras = new BigDecimal(credito.getNletras());
-            BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
-            BigDecimal interes = new BigDecimal(0);
-            BigDecimal cien = new BigDecimal(100);
-            credito.setEstado("NA");
-            creditodao.insertarVenta(credito);
-            interes = (credito.getInteres().multiply(nletras)).divide(cien);
-            Date fechaini = new Date();
-            fechaini = credito.getFechareg();
-            Date fechafin = new Date();
-            fechafin = sumaDias(fechaini, 30);
-            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
-            letras.setFecreg(credito.getFechareg());
-            for (int i = 1; i <= (credito.getNletras()); i++) {
-                letras.setCredito(credito);
-                letras.setMontoletra(montoletras);
-                letras.setInteres(mtointeres);
-                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
-                letras.setFecini(fechaini);
-                letras.setFecven(fechafin);
-                fechaini = fechafin;
+            if (inicia.compareTo(iniciapre) == -1) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
+                return;
+            } else {
+                credito.setInicial(inicia);
+            }
+            credito.setSaldo(precio.subtract(inicia));
+            if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1 && (sw == 0)) {
+                Letras letras = new Letras();
+                BigDecimal nletras = new BigDecimal(credito.getNletras());
+                BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
+                BigDecimal interes = new BigDecimal(0);
+                BigDecimal cien = new BigDecimal(100);
+                credito.setEstado("NA");
+                creditodao.insertarVenta(credito);
+                interes = (credito.getInteres().multiply(nletras)).divide(cien);
+                Date fechaini = new Date();
+                fechaini = credito.getFechareg();
+                Date fechafin = new Date();
                 fechafin = sumaDias(fechaini, 30);
-                letras.setSaldo(montoletras.add(mtointeres));
-                letras.setEstado("NA");
-                letras.setDescripcion("L" + i + "/L" + credito.getNletras());
-                letrasdao.insertarLetra(letras);
-            }
-            sw = 1;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La proforma se realizó correctamente."));
-        } else {
-            if (sw == 1) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esta proforma ya ha sido registrada"));
-                return;
-            }
-            if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esto es una venta al contado"));
-                return;
-            }
-            if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial supera monto de vehículo"));
-                return;
-            }
+                BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
+                letras.setFecreg(credito.getFechareg());
+                for (int i = 1; i <= (credito.getNletras()); i++) {
+                    letras.setCredito(credito);
+                    letras.setMontoletra(montoletras);
+                    letras.setInteres(mtointeres);
+                    letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
+                    letras.setFecini(fechaini);
+                    letras.setFecven(fechafin);
+                    fechaini = fechafin;
+                    fechafin = sumaDias(fechaini, 30);
+                    letras.setSaldo(montoletras.add(mtointeres));
+                    letras.setEstado("NA");
+                    letras.setDescripcion("L" + i + "/L" + credito.getNletras());
+                    letrasdao.insertarLetra(letras);
+                }
+                sw = 1;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La proforma se realizó correctamente."));
+            } else {
+                if (sw == 1) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esta proforma ya ha sido registrada"));
+                    return;
+                }
+                if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esto es una venta al contado"));
+                    return;
+                }
+                if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial supera monto de vehículo"));
+                    return;
+                }
 
+            }
         }
     }
 

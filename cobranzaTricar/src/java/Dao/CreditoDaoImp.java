@@ -214,15 +214,41 @@ public class CreditoDaoImp implements CreditoDao{
         return credito;
     }
 
+//    @Override
+//    public List<Credito> cargarCreditoxNombre(String nombre) {
+//        Session session = null;
+//        List<Credito> lista = null;
+//        try{
+//            session = HibernateUtil.getSessionFactory().openSession();
+//            Query query = session.createQuery("FROM Credito WHERE " );
+//            query.setParameter("nombre",nombre);
+//            lista = (List<Credito>)query.list();
+//        }catch (HibernateException e){
+//            System.out.println(e.getMessage());
+//        }
+//        finally{
+//            if (session != null){
+//                session.close();
+//            }
+//        }
+//        return lista;
+//    }
+
     @Override
-    public List<Credito> cargarCreditoxNombre(String nombre) {
+    public boolean registrar(Session session, Credito credito) throws Exception {
+        session.save(credito);
+        return true;
+    }
+
+    @Override
+    public Credito veryLiqventa(String liq) {
         Session session = null;
-        List<Credito> lista = null;
+        Credito tcredito = new Credito();
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE " );
-            query.setParameter("nombre",nombre);
-            lista = (List<Credito>)query.list();
+            Query query = session.createQuery("FROM Credito WHERE liqventa=:liq" );
+            query.setParameter("liq", liq);
+            tcredito = (Credito) query.uniqueResult();            
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }
@@ -231,13 +257,8 @@ public class CreditoDaoImp implements CreditoDao{
                 session.close();
             }
         }
-        return lista;
-    }
-
-    @Override
-    public boolean registrar(Session session, Credito credito) throws Exception {
-        session.save(credito);
-        return true;
+        return tcredito;        
+        
     }
     
 }
