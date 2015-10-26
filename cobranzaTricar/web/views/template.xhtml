@@ -8,16 +8,16 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
         <h:outputStylesheet library="css" name="style.css" />
         <h:outputScript library="js" name="maskmoney.js" />
-        <h:outputLink rel="shortcut icon" hreflang="../resources/images/favicon.ico"/>
+        <h:outputLink rel="shortcut icon" hreflang="./images/favicon.ico"/>
         <title>Cobranzas TRICAR SAC</title>         
     </h:head>
 
     <h:body>
-
+        <ui:include src="../views/sessionTimeOut.xhtml" />
         <div id="cabecera">
             <ui:insert name="top">
                 <h:graphicImage library="images" name="logo_tricar.jpg" alt="hound logo" style="float: left; margin: 0px; padding: 0px;"/>
