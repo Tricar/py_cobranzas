@@ -40,9 +40,9 @@
                         </p:submenu>
 
                         <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{loginbean.porforma()}" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{loginbean.credito()}" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{loginbean.pago()}" icon="ui-icon-grip-dotted-vertical" />                            
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />                            
 
                         </p:submenu>
 
@@ -83,6 +83,11 @@
             $(document).ready(function () {
                 $(".money").maskMoney();
             });
+        </script>
+        <script language="Javascript">
+            document.oncontextmenu = function () {
+                return false
+            }
         </script>
 
 

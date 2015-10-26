@@ -13,8 +13,9 @@
         <h:form>
             <p:commandButton action="#{creditoBean.indexcotiza()}" value="Regresar" immediate="true" icon="b-back"/>
         </h:form>
+        <hr  ></hr>
         <f:view afterPhase="#{anexoBean.phaseListener}">
-            <h:form id="formInsertarVenta" prependId="false ">
+            <h:form prependId="false ">
                 <p:panelGrid columns="8">
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese fecha"/>
@@ -50,22 +51,22 @@
                                     required="true" requiredMessage="Ingrese vendedor">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                        
                     </p:autoComplete>
-                    <p:outputLabel value="Tipo Vehículo:"/>
-                    <p:selectOneMenu value="#{creditoBean.credito.vehi}" >                        
+                    <p:outputLabel value="Tipo Vehículo:" for="tipo"/>
+                    <p:selectOneMenu id="tipo" value="#{creditoBean.credito.vehi}" required="true" requiredMessage="Seleccione Tipo de vehículo">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
                         <f:selectItem itemLabel="MTX" itemValue="MX" />
                         <f:selectItem itemLabel="ML" itemValue="ML" />
                         <f:selectItem itemLabel="MTF" itemValue="MF" />
                         <f:selectItem itemLabel="MTC" itemValue="MC" />
-                        <p:ajax update="modelo" listener="#{modeloBean.modeloTipo(creditoBean.credito.vehi)}" process="@this" />
+                        <p:ajax update="modeloc" listener="#{modeloBean.modeloTipo(creditoBean.credito.vehi)}" process="@this" />
                     </p:selectOneMenu>
-                    <p:outputLabel value="Modelo:" for="modelo"/>                    
-                    <p:autoComplete id="modelo" value="#{creditoBean.credito.modelo}"
-                                    completeMethod="#{modeloBean.modeloNombre}" var="modelo"
-                                    itemLabel="#{modelo.modelo}" itemValue="#{modelo}" 
-                                    required="true" requiredMessage="Ingrese modelo de vehículo">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{modeloBean.modelos}"/>
-                        <p:ajax event="click" update="precio inicial res" listener="#{creditoBean.precioModeloCotiza()}"/>
-                    </p:autoComplete>
+                    <p:outputLabel value="Modelo Combo:" for="modeloc"/>
+                    <p:selectOneMenu id="modeloc" value="#{creditoBean.credito.modelo}" converter="omnifaces.SelectItemsConverter"
+                                     required="true" requiredMessage="Seleccione Modelo">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                        <f:selectItems value="#{modeloBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
+                        <p:ajax update="precio lblinicial res" listener="#{creditoBean.precioModeloCotiza()}"/>
+                    </p:selectOneMenu>                    
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
                         <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
@@ -89,8 +90,10 @@
                     </p:selectOneMenu>
                     <p:outputLabel value="Precio:"/>
                     <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true" />
-                    <p:outputLabel value="Inicial:" />
-                    <p:inputText id="inicial" value="#{creditoBean.inicia}" readonly="true"/>
+                    <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" for="txtinicial"/>
+                    <p:inputText id="txtinicial" value="#{creditoBean.inicia}" required="true" requiredMessage="Ingrese incial" class="money">
+                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>                        
+                    </p:inputText>
                     <p:outputLabel value="Saldo:"/>                                    
                     <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
                     <p:outputLabel value="Interés:" for="interes"/>
@@ -108,7 +111,8 @@
                 <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCotiza()}" icon="b-ok"
                                  ajax="false"/>
             </h:form>
-        </f:view>        
+        </f:view>
+        <hr></hr>
         <h:form id="formMostrar">
             <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
             <p:dataTable var="letras" value="#{creditoBean.letrascredito}" 

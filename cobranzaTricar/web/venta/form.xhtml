@@ -9,7 +9,7 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <h2>Nuevo Crédito</h2>
+        <h2>Nuevo Crédito Simple</h2>
         <h:form>
             <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="b-back"/>
         </h:form>
@@ -86,7 +86,7 @@
                                     itemLabel="#{v.serie}" itemValue="#{v}" 
                                     required="true" requiredMessage="Elija un vehículo">
                         <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
-                        <p:ajax event="click" update="precio inicial res" listener="#{creditoBean.precioModeloCredito()}"/>
+                        <p:ajax event="mousemove" update="precio inicial res" listener="#{creditoBean.precioModeloCredito()}"/>
                     </p:autoComplete>                    
                     <p:outputLabel value="Precio:"/>
                     <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true">                        

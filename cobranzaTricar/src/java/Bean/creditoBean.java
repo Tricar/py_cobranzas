@@ -52,11 +52,13 @@ public class creditoBean implements Serializable {
     private BigDecimal res;
     private BigDecimal precio;
     private BigDecimal inicia;
+    private BigDecimal iniciapre;
     private String codigo;
     private Date fechafin;
     private String nombre;
     private BigDecimal saldo;
     private String generar = "no";
+    private int sw = 0;
 
     public creditoBean() {
     }
@@ -241,8 +243,28 @@ public class creditoBean implements Serializable {
         this.generar = generar;
     }
 
+    public BigDecimal getIniciapre() {
+        return iniciapre;
+    }
+
+    public void setIniciapre(BigDecimal iniciapre) {
+        this.iniciapre = iniciapre;
+    }
+
+    public int getSw() {
+        return sw;
+    }
+
+    public void setSw(int sw) {
+        this.sw = sw;
+    }
+
     public void resultadoSaldo() {
         res = precio.subtract(credito.getInicial());
+    }
+
+    public void resProformar() {
+        saldo = precio.subtract(inicia);
     }
 
     public void precioModeloCredito() {
@@ -265,10 +287,11 @@ public class creditoBean implements Serializable {
         precio Precio = new precio();
         inicial Inicial = new inicial();
         precio = (Precio.precioModelo(credito.getModelo().getModelo()));
-        System.out.println("precio :"+precio);
+        System.out.println("precio :" + precio);
         String distrito = credito.getAnexoByIdanexo().getDistrito();
         String tipov = credito.getVehi();
         inicia = Inicial.inicialCredito(distrito, tipov, precio);
+        iniciapre = inicia;
         saldo = precio.subtract(inicia);
     }
 
@@ -329,13 +352,10 @@ public class creditoBean implements Serializable {
         credito.setTotaldeuda(credito.getSaldo());
         credito.setDeudactual(credito.getSaldo());
         credito.setInteres(BigDecimal.ZERO);
-
         if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ingrese Monto Inicial Mayor."));
             return;
-        }
-
-        else if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
+        } else if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
             vehiculo = credito.getVehiculo();
             vehiculo.setEstado("N");
             vehiculodao.modificarVehiculo(vehiculo);
@@ -363,7 +383,7 @@ public class creditoBean implements Serializable {
             letras.setEstado("PN");
             letras.setDescripcion("L1/L1");
             letrasdao.insertarLetra(letras);
-            
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
         }
     }
@@ -439,9 +459,14 @@ public class creditoBean implements Serializable {
     public void insertarCotiza() {
         CreditoDao creditodao = new CreditoDaoImp();
         credito.setPrecio(precio);
-        credito.setInicial(inicia);
+        if (inicia.compareTo(iniciapre) == -1) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
+            return;
+        } else {
+            credito.setInicial(inicia);
+        }
         credito.setSaldo(precio.subtract(inicia));
-        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
+        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1 && (sw == 0)) {
             Letras letras = new Letras();
             BigDecimal nletras = new BigDecimal(credito.getNletras());
             BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
@@ -470,6 +495,22 @@ public class creditoBean implements Serializable {
                 letras.setDescripcion("L" + i + "/L" + credito.getNletras());
                 letrasdao.insertarLetra(letras);
             }
+            sw = 1;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La proforma se realizó correctamente."));
+        } else {
+            if (sw == 1) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esta proforma ya ha sido registrada"));
+                return;
+            }
+            if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esto es una venta al contado"));
+                return;
+            }
+            if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial supera monto de vehículo"));
+                return;
+            }
+
         }
     }
 
@@ -742,6 +783,7 @@ public class creditoBean implements Serializable {
         credito = new Credito();
         precio = BigDecimal.ZERO;
         inicia = BigDecimal.ZERO;
+        iniciapre = BigDecimal.ZERO;
         res = BigDecimal.ZERO;
         saldo = BigDecimal.ZERO;
         return "/venta/form.xhtml";
@@ -755,8 +797,10 @@ public class creditoBean implements Serializable {
 
     public String nuevoespecial() {
         credito = new Credito();
+        sw = 0;
         precio = BigDecimal.ZERO;
         inicia = BigDecimal.ZERO;
+        iniciapre = BigDecimal.ZERO;
         res = BigDecimal.ZERO;
         saldo = BigDecimal.ZERO;
         return "/venta/formespecial.xhtml";
@@ -771,8 +815,10 @@ public class creditoBean implements Serializable {
 
     public String nuevocotiza() {
         credito = new Credito();
+        sw = 0;
         precio = BigDecimal.ZERO;
         inicia = BigDecimal.ZERO;
+        iniciapre = BigDecimal.ZERO;
         res = BigDecimal.ZERO;
         saldo = BigDecimal.ZERO;
         return "/cotiza/form.xhtml";
