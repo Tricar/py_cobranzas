@@ -62,15 +62,8 @@
                 
                 <h:form id="formInsertar">
                     <p:dialog header="Nuevo Articulo" widgetVar="dlginsertar" modal="true">                        
-                        <p:panelGrid id="panelcreararticulo" columns="3">
-                            <p:outputLabel value="Tipo:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="MTX" itemValue="MX" />
-                                <f:selectItem itemLabel="ML" itemValue="ML" />
-                                <f:selectItem itemLabel="MTF" itemValue="MF" />                                
-                            </p:selectOneMenu>
-                            <h:panelGroup></h:panelGroup>
+                        <p:panelGrid id="panelcreararticulo" columns="3">                            
+                            
                             <p:outputLabel value="Marca:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.marca}">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
@@ -119,14 +112,7 @@
 
                 <h:form id="frmEditarArticulo">
                     <p:dialog header="Datos del Articulo" widgetVar="dialogoEditarArticulo" modal="true">
-                        <h:panelGrid id="panelEditarArticulo" columns="3">
-                            <p:outputLabel value="Tipo:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.tipovehiculo}">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="MTX" itemValue="MX" />
-                                <f:selectItem itemLabel="ML" itemValue="ML" />
-                                <f:selectItem itemLabel="MTF" itemValue="MF" />                                
-                            </p:selectOneMenu>
+                        <h:panelGrid id="panelEditarArticulo" columns="3">                            
                             <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Marca:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.marca}">

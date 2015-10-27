@@ -39,6 +39,7 @@
                                     itemLabel="#{cliente.nombres}" itemValue="#{cliente}"
                                     required="true" requiredMessage="Ingrese cliente">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                        <p:ajax event="mousemove" update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}"/>
                         <p:ajax event="itemSelect" process="@form" />
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
@@ -60,12 +61,12 @@
                         <f:selectItem itemLabel="MTC" itemValue="MC" />
                         <p:ajax update="modeloc" listener="#{modeloBean.modeloTipo(creditoBean.credito.vehi)}" process="@this" />
                     </p:selectOneMenu>
-                    <p:outputLabel value="Modelo Combo:" for="modeloc"/>
+                    <p:outputLabel value="Modelo:" for="modeloc"/>
                     <p:selectOneMenu id="modeloc" value="#{creditoBean.credito.modelo}" converter="omnifaces.SelectItemsConverter"
                                      required="true" requiredMessage="Seleccione Modelo">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                         <f:selectItems value="#{modeloBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
-                        <p:ajax update="precio lblinicial res" listener="#{creditoBean.precioModeloCotiza()}"/>
+                        <p:ajax update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
                     </p:selectOneMenu>                    
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        

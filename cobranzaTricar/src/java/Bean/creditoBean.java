@@ -51,14 +51,14 @@ public class creditoBean implements Serializable {
     private String dni;
     private BigDecimal res;
     private BigDecimal precio;
-    private BigDecimal inicia;
+    private BigDecimal inicia = new BigDecimal(BigInteger.ZERO);
     private BigDecimal iniciapre;
     private String codigo;
     private Date fechafin;
     private String nombre;
     private BigDecimal saldo;
-    private String generar = "no";
     private int sw = 0;
+    private String vehi;
 
     public creditoBean() {
     }
@@ -235,14 +235,6 @@ public class creditoBean implements Serializable {
         this.crediton = crediton;
     }
 
-    public String getGenerar() {
-        return generar;
-    }
-
-    public void setGenerar(String generar) {
-        this.generar = generar;
-    }
-
     public BigDecimal getIniciapre() {
         return iniciapre;
     }
@@ -259,6 +251,14 @@ public class creditoBean implements Serializable {
         this.sw = sw;
     }
 
+    public String getVehi() {
+        return vehi;
+    }
+
+    public void setVehi(String vehi) {
+        this.vehi = vehi;
+    }
+
     public void resultadoSaldo() {
         res = precio.subtract(credito.getInicial());
     }
@@ -273,7 +273,7 @@ public class creditoBean implements Serializable {
         precio = (Precio.precioModelo(credito.getVehiculo().getModelo().getModelo()));
         String distrito = credito.getAnexoByIdanexo().getDistrito();
         String tipov = credito.getVehiculo().getTipovehiculo();
-        inicia = Inicial.inicialCredito(distrito, tipov, precio);
+        iniciapre = Inicial.inicialCredito(distrito, tipov, precio);
         saldo = precio.subtract(inicia);
     }
 
@@ -281,17 +281,16 @@ public class creditoBean implements Serializable {
         precio Precio = new precio();
         inicial Inicial = new inicial();
         precio = (Precio.precioModelo(credito.getVehiculo().getModelo().getModelo()));
+
     }
 
     public void precioModeloCotiza() {
         precio Precio = new precio();
         inicial Inicial = new inicial();
         precio = (Precio.precioModelo(credito.getModelo().getModelo()));
-        System.out.println("precio :" + precio);
         String distrito = credito.getAnexoByIdanexo().getDistrito();
         String tipov = credito.getVehi();
-        inicia = Inicial.inicialCredito(distrito, tipov, precio);
-        iniciapre = inicia;
+        iniciapre = Inicial.inicialCredito(distrito, tipov, precio);
         saldo = precio.subtract(inicia);
     }
 
@@ -299,47 +298,75 @@ public class creditoBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
         Vehiculo vehiculo = new Vehiculo();
-        credito.setPrecio(precio);
-        credito.setInicial(inicia);
-        credito.setSaldo(precio.subtract(inicia));
-        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
-            Letras letras = new Letras();
-            vehiculo = credito.getVehiculo();
-            vehiculo.setEstado("N");
-            credito.setTotaldeuda(BigDecimal.ZERO);
-            BigDecimal nletras = new BigDecimal(credito.getNletras());
-            BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
-            BigDecimal interes = new BigDecimal(0);
-            credito.setEstado("AP");
-            BigDecimal cien = new BigDecimal(100);
-            creditodao.insertarVenta(credito);
-            vehiculodao.modificarVehiculo(vehiculo);
-            interes = (credito.getInteres().multiply(nletras)).divide(cien);
-            Date fechaini = new Date();
-            fechaini = credito.getFechareg();
-            Date fechafin = new Date();
-            fechafin = sumaDias(fechaini, 30);
-            BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
-            letras.setFecreg(credito.getFechareg());
-            for (int i = 1; i <= (credito.getNletras()); i++) {
-                letras.setCredito(credito);
-                letras.setMontoletra(montoletras);
-                letras.setInteres(mtointeres);
-                letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
-                letras.setFecini(fechaini);
-                letras.setFecven(fechafin);
-                letras.setMora(BigDecimal.ZERO);
-                fechaini = fechafin;
-                fechafin = sumaDias(fechaini, 30);
-                letras.setSaldo(letras.getMonto());
-                letras.setEstado("PN");
-                letras.setDescripcion("L" + i + "/L" + credito.getNletras());
-                credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
-                credito.setDeudactual(credito.getTotaldeuda());
-                letrasdao.insertarLetra(letras);
+        if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
+        } else {
+            if (inicia.compareTo(iniciapre) == -1 || inicia == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
+                return;
+            } else {
+                credito.setInicial(inicia);
             }
-            creditodao.modificarVenta(credito);
-//            generar = "generado";
+            if (credito.getAnexoByIdanexo().equals(credito.getAnexoByIdaval())) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El aval no puede ser el mismo cliente."));
+            } else {
+                credito.setPrecio(precio);
+                credito.setSaldo(precio.subtract(inicia));
+                if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1 && (sw == 0)) {
+                    Letras letras = new Letras();
+                    vehiculo = credito.getVehiculo();
+                    vehiculo.setEstado("N");
+                    credito.setTotaldeuda(BigDecimal.ZERO);
+                    BigDecimal nletras = new BigDecimal(credito.getNletras());
+                    BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
+                    BigDecimal interes = new BigDecimal(0);
+                    credito.setEstado("AP");
+                    BigDecimal cien = new BigDecimal(100);
+                    creditodao.insertarVenta(credito);
+                    vehiculodao.modificarVehiculo(vehiculo);
+                    interes = (credito.getInteres().multiply(nletras)).divide(cien);
+                    Date fechaini = new Date();
+                    fechaini = credito.getFechareg();
+                    Date fechafin = new Date();
+                    fechafin = sumaDias(fechaini, 30);
+                    BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
+                    letras.setFecreg(credito.getFechareg());
+                    for (int i = 1; i <= (credito.getNletras()); i++) {
+                        letras.setCredito(credito);
+                        letras.setMontoletra(montoletras);
+                        letras.setInteres(mtointeres);
+                        letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
+                        letras.setFecini(fechaini);
+                        letras.setFecven(fechafin);
+                        letras.setMora(BigDecimal.ZERO);
+                        fechaini = fechafin;
+                        fechafin = sumaDias(fechaini, 30);
+                        letras.setSaldo(letras.getMonto());
+                        letras.setEstado("PN");
+                        letras.setDescripcion("L" + i + "/L" + credito.getNletras());
+                        credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
+                        credito.setDeudactual(credito.getTotaldeuda());
+                        letrasdao.insertarLetra(letras);
+                    }
+                    creditodao.modificarVenta(credito);
+                    sw = 1;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El crédito se registró correctamente."));
+                } else {
+                    if (sw == 1) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Este crédito ya ha sido registrado"));
+                        return;
+                    }
+                    if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esto es una venta al contado"));
+                        return;
+                    }
+                    if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial supera monto de vehículo"));
+                    }
+
+                }
+            }
+
         }
     }
 
@@ -347,44 +374,68 @@ public class creditoBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
         Vehiculo vehiculo = new Vehiculo();
-        credito.setPrecio(precio);
-        credito.setSaldo(res);
-        credito.setTotaldeuda(credito.getSaldo());
-        credito.setDeudactual(credito.getSaldo());
-        credito.setInteres(BigDecimal.ZERO);
-        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ingrese Monto Inicial Mayor."));
-            return;
-        } else if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
-            vehiculo = credito.getVehiculo();
-            vehiculo.setEstado("N");
-            vehiculodao.modificarVehiculo(vehiculo);
-            credito.setTotaldeuda(credito.getSaldo());
-            Letras letras = new Letras();
-            BigDecimal nletras = new BigDecimal(BigInteger.ONE);
-            BigDecimal montoletras = credito.getSaldo();
-            BigDecimal interes = new BigDecimal(0);
-            credito.setEstado("AP");
-            creditodao.insertarVenta(credito);
-            Date fechaini = new Date();
-            fechaini = credito.getFechareg();
-            Date fechafin = new Date();
-            fechafin = sumaDias(fechaini, 45);
-            BigDecimal mtointeres = BigDecimal.ZERO;
-            letras.setFecreg(credito.getFechareg());
-            letras.setCredito(credito);
-            letras.setMontoletra(montoletras);
-            letras.setInteres(mtointeres);
-            letras.setMonto(credito.getSaldo());
-            letras.setFecini(fechaini);
-            letras.setFecven(fechafin);
-            letras.setMora(BigDecimal.ZERO);
-            letras.setSaldo(letras.getMonto());
-            letras.setEstado("PN");
-            letras.setDescripcion("L1/L1");
-            letrasdao.insertarLetra(letras);
+        if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
+        } else {
+            if (inicia.compareTo(iniciapre) == -1 || inicia == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
+                return;
+            } else {
+                credito.setInicial(inicia);
+            }
+            if (credito.getAnexoByIdanexo().equals(credito.getAnexoByIdaval())) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El aval no puede ser el mismo cliente."));
+            } else {
+                credito.setPrecio(precio);
+                credito.setSaldo(saldo);
+                credito.setTotaldeuda(credito.getSaldo());
+                credito.setDeudactual(credito.getSaldo());
+                credito.setInteres(BigDecimal.ZERO);
+                if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1 && (sw == 0)) {
+                    vehiculo = credito.getVehiculo();
+                    vehiculo.setEstado("N");
+                    vehiculodao.modificarVehiculo(vehiculo);
+                    credito.setTotaldeuda(credito.getSaldo());
+                    Letras letras = new Letras();
+                    BigDecimal nletras = new BigDecimal(BigInteger.ONE);
+                    BigDecimal montoletras = credito.getSaldo();
+                    BigDecimal interes = new BigDecimal(0);
+                    credito.setEstado("AP");
+                    creditodao.insertarVenta(credito);
+                    Date fechaini = new Date();
+                    fechaini = credito.getFechareg();
+                    Date fechafin = new Date();
+                    fechafin = sumaDias(fechaini, 45);
+                    BigDecimal mtointeres = BigDecimal.ZERO;
+                    letras.setFecreg(credito.getFechareg());
+                    letras.setCredito(credito);
+                    letras.setMontoletra(montoletras);
+                    letras.setInteres(mtointeres);
+                    letras.setMonto(credito.getSaldo());
+                    letras.setFecini(fechaini);
+                    letras.setFecven(fechafin);
+                    letras.setMora(BigDecimal.ZERO);
+                    letras.setSaldo(letras.getMonto());
+                    letras.setEstado("PN");
+                    letras.setDescripcion("L1/L1");
+                    letrasdao.insertarLetra(letras);
+                    sw = 1;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+                } else {
+                    if (sw == 1) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Este crédito ya ha sido registrado"));
+                        return;
+                    }
+                    if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esto es una venta al contado"));
+                        return;
+                    }
+                    if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial supera monto de vehículo"));
+                    }
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+                }
+            }
         }
     }
 
@@ -511,7 +562,6 @@ public class creditoBean implements Serializable {
                 }
                 if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial supera monto de vehículo"));
-                    return;
                 }
 
             }
@@ -767,7 +817,7 @@ public class creditoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
         } else {
             if (credito.getAnexoByIdanexo().equals(credito.getAnexoByIdaval())) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El aval no puede ser el mismo cliente."));                
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El aval no puede ser el mismo cliente."));
             } else {
                 for (int i = 0; i < credito.getNletras(); i++) {
                     letra = (Letras) letrascredito.get(i);
