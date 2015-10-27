@@ -717,6 +717,9 @@ public class creditoBean implements Serializable {
     public void insertarNotaDebito() {
         LetrasDao letrasdao = new LetrasDaoImplements();
         Date d = new Date();
+        if (letra.getMonto().compareTo(BigDecimal.ZERO)==0) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Monto debe ser mayor a cero."));
+        }
         CreditoDao creditodao = new CreditoDaoImp();
         letra.setCredito(credito);
         letra.setDescripcion("ND");
@@ -728,7 +731,8 @@ public class creditoBean implements Serializable {
         letra.setEstado("PN");
         credito.setTotaldeuda(credito.getTotaldeuda().add(letra.getMonto()));
         creditodao.modificarVenta(credito);
-        letrasdao.insertarLetra(letra);
+        letrasdao.insertarLetra(letra);        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Inserto Nota Debito correctamente."));
     }
 
     public void cargarAnexoDNI() {
@@ -779,6 +783,7 @@ public class creditoBean implements Serializable {
 
     public void cargarxCodigoCredito() {
         creditos = new ArrayList();
+        letraslista = new ArrayList();
         CreditoDao creditodao = new CreditoDaoImp();
         Credito modelocredito = new Credito();
         try {
@@ -853,7 +858,8 @@ public class creditoBean implements Serializable {
     }
 
     public String pagos() {
-        creditos = new ArrayList();
+        creditos = new ArrayList();        
+        letraslista = new ArrayList();
         return "/venta/listarv.xhtml";
     }
 
@@ -870,6 +876,7 @@ public class creditoBean implements Serializable {
 
     public String index() {
         creditos = new ArrayList();
+        letraslista = new ArrayList();
         filtradafecha = new ArrayList();
         codigo = "";
         return "/venta/index.xhtml";
