@@ -30,7 +30,7 @@ public class LoginBean implements Serializable {
 
     public LoginBean() {
         HttpSession miSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        miSession.setMaxInactiveInterval(200);
+        miSession.setMaxInactiveInterval(300);
     }
 
     public void login(ActionEvent actionEvent) {

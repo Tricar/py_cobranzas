@@ -30,7 +30,7 @@ public abstract class AbstractReportBean {
         PDF, HTML, EXCEL, RTF
     }
     private ExportOption exportOption;
-    private final String COMPILE_DIR = "/report/design/";
+    private final String COMPILE_DIR = "/jasper/";
     
     private String message;
  
