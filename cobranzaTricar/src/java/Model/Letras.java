@@ -37,6 +37,7 @@ public class Letras implements java.io.Serializable {
     private String descripcion;
     private BigDecimal mora;
     private Set pagoses = new HashSet(0);
+    private long diffdays;
 
     public Letras() {
     }
@@ -184,6 +185,15 @@ public class Letras implements java.io.Serializable {
         this.pagoses = pagoses;
     }
 
+    @Column(name = "diffdays")
+    public long getDiffdays() {
+        return this.diffdays;
+    }
+
+    public void setDiffdays(long diffdays) {
+        this.diffdays = diffdays;
+    }
+    
     @Override
     public boolean equals(Object other) {
         return (other != null && getClass() == other.getClass() && idletras != null)

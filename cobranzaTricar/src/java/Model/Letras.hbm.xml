@@ -41,6 +41,9 @@
         <property name="mora" type="big_decimal">
             <column name="mora" precision="17" scale="2" />
         </property>
+        <property name="diffdays" type="long">
+            <column name="diffdays" />
+        </property>
         <set name="pagoses" table="pagos" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idletras" />

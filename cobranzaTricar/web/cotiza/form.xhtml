@@ -11,7 +11,7 @@
     <ui:define name="content">
         <h2>Nueva Proforma</h2>
         <h:form>
-            <p:commandButton action="#{creditoBean.indexcotiza()}" value="Regresar" immediate="true" icon="b-back"/>
+            <p:commandButton action="#{creditoBean.indexcotiza()}" value="Regresar" immediate="true" icon="b-back"/>            
         </h:form>
         <hr  ></hr>
         <f:view afterPhase="#{anexoBean.phaseListener}">
@@ -91,7 +91,7 @@
                     </p:selectOneMenu>
                     <p:outputLabel value="Precio:"/>
                     <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true" />
-                    <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" for="txtinicial"/>
+                    <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" />
                     <p:inputText id="txtinicial" value="#{creditoBean.inicia}" required="true" requiredMessage="Ingrese incial" class="money">
                         <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>                        
                     </p:inputText>
@@ -111,6 +111,7 @@
                 </p:panelGrid>
                 <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCotiza()}" icon="b-ok"
                                  ajax="false"/>
+                
             </h:form>
         </f:view>
         <hr></hr>
@@ -142,8 +143,11 @@
                     <h:outputText value="#{letras.fecven}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputText>
-                </p:column>                                       
-            </p:dataTable>
+                </p:column>                
+            </p:dataTable>          
         </h:form>
+        <h:form>
+            <p:commandButton actionListener="#{reportesBean.exportarPDF(creditoBean.liqui)}" value="PDF" />
+        </h:form>        
     </ui:define>
 </ui:composition>

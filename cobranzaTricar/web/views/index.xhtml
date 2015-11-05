@@ -6,8 +6,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <body>        
-        
-        
+
+
 
         <ui:composition template="./template.xhtml">
 
@@ -23,6 +23,11 @@
                                 value="The story begins as Don Vito Corleone..." />
                         </h:panelGrid>
                     </p:panel>
+
+                    <h:form>
+                        <h:inputText id="codigo" value="#{reportesBean.codigo}"/>
+                        <h:commandButton value="Exportar Proforma" actionListener="#{reportesBean.exportarPDF(reportesBean.codigo)}"/>
+                    </h:form>
 
                     <p:panel id="toggleable" header="Toggleable" footer="Movie Details" style="margin-bottom:20px">
                         <h:panelGrid columns="2" cellpadding="10">
