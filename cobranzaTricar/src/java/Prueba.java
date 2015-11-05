@@ -1,7 +1,13 @@
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import utiles.inicial;
+import Dao.CreditoDao;
+import Dao.CreditoDaoImp;
+import Dao.LetrasDao;
+import Dao.LetrasDaoImplements;
+import Model.Credito;
+import Model.Letras;
+import java.util.ArrayList;
+import java.util.List;
+import utiles.dbManager;
 
 public class Prueba {
 
@@ -10,11 +16,22 @@ public class Prueba {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        inicial Inicial = new inicial();
-        BigDecimal calculo = new BigDecimal(BigInteger.ZERO);
-        
-        calculo = Inicial.inicialCredito("CA", "ML", BigDecimal.valueOf(2150.00));
-        
-        System.out.println("Inicial :"+calculo);
+//        Credito cred = new Credito();
+//        CreditoDao creddao = new CreditoDaoImp();
+//        cred = creddao.cargarxCodigoEstado("S1506030", "AP");
+//        System.out.println("Anexo : "+cred.getAnexoByIdanexo().getNombres() );
+//        List<Letras> letritas = new ArrayList();
+//        LetrasDao letrasdao = new LetrasDaoImplements();
+//        letritas= letrasdao.mostrarLetrasXCred(cred);
+//        long mili = letritas.get(0).getFecven().getTime();
+//        System.out.println("Fecha venc: "+letritas.get(0).getFecven());
+//        long mil2 = letritas.get(0).getFecini().getTime();
+//        System.out.println("Fecha inicio: "+letritas.get(0).getFecini());
+//        long diff = mili - mil2;
+//        long diffdays = diff / (24*60*60*1000);
+//        System.out.println("Dife : "+diffdays);
+        dbManager conn = new dbManager();
+        conn.getConnection();
+        System.out.println(conn.getConnection());
     }
 }

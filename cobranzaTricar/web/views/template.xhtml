@@ -25,7 +25,7 @@
                 <h:form id="frmMenu">
                     <p:menubar>
                         <p:menuitem value="Inicio" icon="ui-icon-home" outcome="/views/index" />
-
+                        
                         <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-suitcase">
                             <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="ui-icon-newwin" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
@@ -63,13 +63,9 @@
                 </h:form>
             </ui:insert>
         </div>
-
         <div id="content" class="center_content">
-
             <ui:insert name="content">Content</ui:insert>
-
         </div>
-
         <div id="bottom">
             <ui:insert name="bottom">INDUSTRIASTRICAR &copy; 2015</ui:insert>
         </div>
@@ -79,7 +75,6 @@
                     location.href = args.ruta;
                 }
             }
-
             $(document).ready(function () {
                 $(".money").maskMoney();
             });
@@ -89,8 +84,5 @@
                 return false
             }
         </script>
-
-
     </h:body>
-
 </html>

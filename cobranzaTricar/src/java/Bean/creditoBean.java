@@ -15,19 +15,33 @@ import Model.Credito;
 import Model.Letras;
 import Model.Pagos;
 import Model.Vehiculo;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.naming.NamingException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import utiles.dbManager;
 import utiles.inicial;
 import utiles.precio;
 
@@ -59,6 +73,7 @@ public class creditoBean implements Serializable {
     private BigDecimal saldo;
     private int sw = 0;
     private String vehi;
+    private String liqui;
 
     public creditoBean() {
     }
@@ -259,6 +274,14 @@ public class creditoBean implements Serializable {
         this.vehi = vehi;
     }
 
+    public String getLiqui() {
+        return liqui;
+    }
+
+    public void setLiqui(String liqui) {
+        this.liqui = liqui;
+    }
+    
     public void resultadoSaldo() {
         res = precio.subtract(credito.getInicial());
     }
@@ -273,7 +296,7 @@ public class creditoBean implements Serializable {
         precio = (Precio.precioModelo(credito.getVehiculo().getModelo().getModelo()));
         String distrito = credito.getAnexoByIdanexo().getDistrito();
         String tipov = credito.getVehiculo().getTipovehiculo();
-        iniciapre = Inicial.inicialCredito(distrito, tipov, precio);
+        iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getModelo().getModelo());
         saldo = precio.subtract(inicia);
     }
 
@@ -290,7 +313,7 @@ public class creditoBean implements Serializable {
         precio = (Precio.precioModelo(credito.getModelo().getModelo()));
         String distrito = credito.getAnexoByIdanexo().getDistrito();
         String tipov = credito.getVehi();
-        iniciapre = Inicial.inicialCredito(distrito, tipov, precio);
+        iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getModelo().getModelo());
         saldo = precio.subtract(inicia);
     }
 
@@ -405,7 +428,7 @@ public class creditoBean implements Serializable {
                     Date fechaini = new Date();
                     fechaini = credito.getFechareg();
                     Date fechafin = new Date();
-                    fechafin = sumaDias(fechaini, 45);
+                    fechafin = sumaDias(fechaini, 60);
                     BigDecimal mtointeres = BigDecimal.ZERO;
                     letras.setFecreg(credito.getFechareg());
                     letras.setCredito(credito);
@@ -551,6 +574,7 @@ public class creditoBean implements Serializable {
                 }
                 sw = 1;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La proforma se realizó correctamente."));
+                liqui = credito.getLiqventa();
             } else {
                 if (sw == 1) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esta proforma ya ha sido registrada"));
@@ -610,6 +634,14 @@ public class creditoBean implements Serializable {
         cal.setTime(fecha);
         cal.add(Calendar.DAY_OF_YEAR, dias);
         return cal.getTime();
+    }
+    
+    public long Diffdays(Date fechavenc){
+        long mili = fechavenc.getTime();
+        long mili2 = new Date().getTime();
+        long diff = mili2 - mili;
+        long diffdays = diff / (24*60*60*1000);
+        return diffdays;
     }
 
     public void filtrarFechas() {
@@ -677,13 +709,14 @@ public class creditoBean implements Serializable {
         for (int i = 0; i < letritas.size(); i++) {
             Letras get = letritas.get(i);
             if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                get.setEstado("CN");
+                get.setEstado("CN");                
             } else {
                 if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
                     if (get.getFecven().after(fecha)) {
-                        get.setEstado("PN");
+                        get.setEstado("PN");                        
                     } else {
                         get.setEstado("VN");
+                        get.setDiffdays(Diffdays(get.getFecven()));
                     }
                 }
             }
@@ -732,7 +765,7 @@ public class creditoBean implements Serializable {
         credito.setTotaldeuda(credito.getTotaldeuda().add(letra.getMonto()));
         creditodao.modificarVenta(credito);
         letrasdao.insertarLetra(letra);        
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Inserto Nota Debito correctamente."));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Inserto Nota Débito correctamente."));
     }
 
     public void cargarAnexoDNI() {
@@ -898,5 +931,24 @@ public class creditoBean implements Serializable {
         filtradafecha = new ArrayList();
         codigo = "";
         return "/cotiza/index.xhtml";
+    }
+    
+    public void exportarPDF(String codigo) throws JRException, NamingException, SQLException, IOException{
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con=conn.getConnection();
+        Map<String,Object> parametros = new HashMap<String, Object>();
+        parametros.put("codigo", codigo);
+        System.out.println("liq venta :"+codigo);
+        File jasper = new File (FacesContext.getCurrentInstance().getExternalContext().getRealPath("/report/proforma.jasper"));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros,con);        
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();        
+        response.addHeader("Content-disposition", "attachment; filename=Proforma"+codigo+".pdf");
+        ServletOutputStream stream = response.getOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);        
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        
     }
 }

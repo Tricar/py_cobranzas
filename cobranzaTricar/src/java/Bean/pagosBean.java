@@ -86,19 +86,19 @@ public class pagosBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
 //        System.out.println("Este es el Id de letra :"+letra.getIdletras());
         pago.setLetras(letra);
-        if (pago.getMonto().compareTo(BigDecimal.ZERO) != 0) {
-            if ((pago.getMonto().compareTo(letra.getSaldo())) == -1) {
+        if (pago.getMonto().compareTo(letra.getSaldo()) != 1) {
+//            if ((pago.getMonto().compareTo(letra.getSaldo())) !=1 ) {
                 letra.setSaldo(letra.getSaldo().subtract(pago.getMonto()));
                 letrasdao.modificarLetra(letra);
                 pagosdao.insertarPago(pago);
                 credito.setDeudactual(credito.getDeudactual().subtract(pago.getMonto()));
                 creditodao.modificarVenta(credito);                
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El Pago fue satisfactorio."));
-            } else {
-                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se puede cobrar por que el monto es mayor al cobro."));
-            }
+//            } else {
+//                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se puede cobrar; monto es mayor al importe."));
+//            }
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se puede cobrar por que el pago debe ser mayor a 0."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se puede cobrar; monto es mayor al importe."));
         }
         pago = new Pagos();
     }
