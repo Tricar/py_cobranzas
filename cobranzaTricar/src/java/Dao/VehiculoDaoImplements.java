@@ -86,10 +86,8 @@ public class VehiculoDaoImplements implements VehiculoDao{
     @Override
     public List<Vehiculo> verTodo(Session session) throws Exception {
         String hql = "FROM Vehiculo";
-        Query query = session.createQuery(hql);
-        
-        List<Vehiculo> lista = (List<Vehiculo>)query.list();
-        
+        Query query = session.createQuery(hql);        
+        List<Vehiculo> lista = (List<Vehiculo>)query.list();        
         return lista;
     }
 
@@ -97,10 +95,8 @@ public class VehiculoDaoImplements implements VehiculoDao{
     public Vehiculo verByIdvehiculo(Session session, Integer idvehiculo) throws Exception {
         String hql = "FROM Vehiculo WHERE idvehiculo=:idvehiculo";
         Query query = session.createQuery(hql);
-        query.setParameter("idvehiculo", idvehiculo);
-        
-        Vehiculo vehiculo = (Vehiculo) query.uniqueResult();
-        
+        query.setParameter("idvehiculo", idvehiculo);        
+        Vehiculo vehiculo = (Vehiculo) query.uniqueResult();        
         return vehiculo;
     }
 
@@ -108,10 +104,8 @@ public class VehiculoDaoImplements implements VehiculoDao{
     public Vehiculo verBySerie(Session session, String serie) throws Exception {
         String hql = "FROM Vehiculo WHERE serie=:serie";
         Query query = session.createQuery(hql);
-        query.setParameter("serie", serie);
-        
-        Vehiculo tserie = (Vehiculo) query.uniqueResult();
-        
+        query.setParameter("serie", serie);        
+        Vehiculo tserie = (Vehiculo) query.uniqueResult();        
         return tserie;
     }
 
@@ -120,10 +114,8 @@ public class VehiculoDaoImplements implements VehiculoDao{
         String hql = "FROM Vehiculo WHERE idvehiculo!=:idvehiculo and serie=:serie";
         Query query = session.createQuery(hql);
         query.setParameter("idvehiculo", idvehiculo);
-        query.setParameter("serie", serie);
-        
-        Vehiculo tserie = (Vehiculo) query.uniqueResult();
-        
+        query.setParameter("serie", serie);        
+        Vehiculo tserie = (Vehiculo) query.uniqueResult();        
         return tserie;
     }
 

@@ -110,8 +110,10 @@
                     </p:selectOneMenu>
                 </p:panelGrid>
                 <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCotiza()}" icon="b-ok"
-                                 ajax="false"/>
-                
+                                 ajax="false"/>                
+            </h:form>
+            <h:form>
+                <h:commandButton actionListener="#{reportesBean.exportarPDF(creditoBean.liqui)}" value="Imprimir Proforma" />
             </h:form>
         </f:view>
         <hr></hr>
@@ -145,9 +147,6 @@
                     </h:outputText>
                 </p:column>                
             </p:dataTable>          
-        </h:form>
-        <h:form>
-            <h:commandButton actionListener="#{reportesBean.exportarPDF(creditoBean.liqui)}" value="PDF" />
         </h:form>        
     </ui:define>
 </ui:composition>
