@@ -51,7 +51,7 @@ public class reportesBean implements Serializable{
         Map<String,Object> parametros = new HashMap<String, Object>();
         parametros.put("codigo", codigo);
         System.out.println("liq venta :"+codigo);
-        File jasper = new File (FacesContext.getCurrentInstance().getExternalContext().getRealPath("/report/proforma.jasper"));
+        File jasper = new File ("D:/reporte/proforma.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros,con);        
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();        
         response.addHeader("Content-disposition", "attachment; filename=Proforma"+codigo+".pdf");
