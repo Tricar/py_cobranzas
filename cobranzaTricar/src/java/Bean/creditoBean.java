@@ -72,8 +72,7 @@ public class creditoBean implements Serializable {
     private String nombre;
     private BigDecimal saldo;
     private int sw = 0;
-    private String vehi;
-    private String liqui;
+    private String vehi;    
 
     public creditoBean() {
     }
@@ -272,14 +271,6 @@ public class creditoBean implements Serializable {
 
     public void setVehi(String vehi) {
         this.vehi = vehi;
-    }
-
-    public String getLiqui() {
-        return liqui;
-    }
-
-    public void setLiqui(String liqui) {
-        this.liqui = liqui;
     }
     
     public void resultadoSaldo() {
@@ -573,8 +564,7 @@ public class creditoBean implements Serializable {
                     letrasdao.insertarLetra(letras);
                 }
                 sw = 1;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La proforma se realizó correctamente."));
-                liqui = credito.getLiqventa();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La proforma se realizó correctamente."));                
             } else {
                 if (sw == 1) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esta proforma ya ha sido registrada"));
