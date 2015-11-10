@@ -49,6 +49,7 @@ public class Credito implements java.io.Serializable {
     private String estado;
     private String vehi;
     private Set letrases = new HashSet(0);
+    private String adicional;
 
     public Credito() {
     }
@@ -64,7 +65,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal deudactual, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi) {
+    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal deudactual, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi, String adicional) {
         this.idventa = idventa;
         this.anexoByIdaval = anexoByIdaval;
         this.anexoByCodven = anexoByCodven;
@@ -90,6 +91,7 @@ public class Credito implements java.io.Serializable {
         this.estado = estado;
         this.vehi = vehi;
         this.letrases = letrases;
+        this.adicional = adicional;
     }
 
     @Id
@@ -315,6 +317,15 @@ public class Credito implements java.io.Serializable {
 
     public void setVehi(String vehi) {
         this.vehi = vehi;
+    }
+    
+    @Column(name = "adicinal", length = 150)
+    public String getAdicional() {
+        return this.adicional;
+    }
+
+    public void setAdicional(String adicional) {
+        this.adicional = adicional;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "credito")

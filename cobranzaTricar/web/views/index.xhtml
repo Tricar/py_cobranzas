@@ -24,11 +24,6 @@
                         </h:panelGrid>
                     </p:panel>
 
-                    <h:form>
-                        <h:inputText id="codigo" value="#{reportesBean.codigo}"/>
-                        <h:commandButton value="Exportar Proforma" actionListener="#{reportesBean.exportarPDF(reportesBean.codigo)}"/>
-                    </h:form>
-
                     <p:panel id="toggleable" header="Toggleable" footer="Movie Details" style="margin-bottom:20px">
                         <h:panelGrid columns="2" cellpadding="10">
                             <p:graphicImage name="images/foto/02.jpg" width="150px" height="100px"/>

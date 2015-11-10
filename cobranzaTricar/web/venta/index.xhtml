@@ -59,23 +59,19 @@
                 <p:column headerText="Deuda Actual">
                     <h:outputText value="#{cred.deudactual}" />
                 </p:column>
-                <p:column headerText="Ver">                            
-                    <p:commandButton value="V" update=":formVer" icon="b-ver" 
-                                     actionListener="#{creditoBean.cargarLetras(cred)}" onclick="$('#tablaletras').show();"/>
-                </p:column>
-                <p:column headerText="Refinanciar">                            
-                    <p:commandButton value="R" update=":formRef" oncomplete="dlgrefinanciar.show()">
+                <p:column headerText="OPERACIONES">                            
+                    <p:commandButton update=":formVer" icon="b-ver" title="Mostrar" actionListener="#{creditoBean.cargarLetras(cred)}"/>                         
+                    <p:commandButton value="R" update=":formRef" oncomplete="dlgrefinanciar.show()" title="Refinanciar">
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                     </p:commandButton>
-                </p:column>
-                <p:column headerText="Eliminar">
-                    <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
+                    <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar" title="Eliminar">
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                     </p:commandButton>
+                    <p:commandButton icon="b-Print" ajax="false" actionListener="#{liquidacionBean.exportarPDF(cred.liqventa)}" title="Imprimir" />
                 </p:column>
             </p:dataTable>
         </h:form>
-        
+
         <h:form id="formRef">
             <p:dialog id="dlg3" header="Refinanciar Credito" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgrefinanciar" modal="true" resizable="false" minWidth="200">
@@ -182,7 +178,7 @@
                     </h:outputText>
                     <p:outputLabel value="Monto:" for="txtmonto"/>
                     <p:inputText id="txtmonto" value="#{creditoBean.letra.monto}" class="money" required="true" requiredMessage="Ingrese Monto"/>
-                    
+
                     <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" 
                                      oncomplete="dlgnotadebito.hide()" ajax="false"/>
                 </p:panelGrid>

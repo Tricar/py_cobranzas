@@ -44,3 +44,7 @@ body{
 .ui-state-default .b-back{
     background-image: url(images/back.png);
 }
+
+.ui-state-default .b-Print {
+    background: url(images/printer.png);
+}
