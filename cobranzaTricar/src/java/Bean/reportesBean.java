@@ -47,7 +47,7 @@ public class reportesBean implements Serializable {
         this.codigo = codigo;
     }
 
-    public void exportarPDF(String codigo) throws JRException, NamingException, SQLException, IOException {
+    public void exportarProf(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
@@ -64,8 +64,31 @@ public class reportesBean implements Serializable {
             stream.close();
             FacesContext.getCurrentInstance().responseComplete();
         } else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Crear proforma primero."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Crear proforma primero."));
         }
+        con.close();
+    }
+    
+    public void exportarLiq(String codigo) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (StringUtils.isNotBlank(codigo)) {
+            parametros.put("liqventa", codigo);
+            File jasper = new File("D:/reporte/liquidacion.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=Liquidacion" + codigo + ".pdf");
+            ServletOutputStream stream = response.getOutputStream();
+            JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        } else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Genere el crédito primero"));
+        }
+        con.close();
     }
 
     public void exportarExcel(String codigo) throws JRException, NamingException, SQLException, IOException {
@@ -88,7 +111,7 @@ public class reportesBean implements Serializable {
         stream.flush();
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
-
+        con.close();
     }
 
 }

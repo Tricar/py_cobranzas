@@ -54,17 +54,18 @@ public class liquidacionBean implements Serializable{
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(liqventa)) {
             parametros.put("liqventa", liqventa);
+            System.out.println(liqventa);
             File jasper = new File("D:/reporte/liquidacion.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-            response.addHeader("Content-disposition", "attachment; filename=Proforma" + liqventa + ".pdf");
+            response.addHeader("Content-disposition", "attachment; filename=Liquidación"+liqventa+".pdf");
             ServletOutputStream stream = response.getOutputStream();
             JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
             stream.flush();
             stream.close();
             FacesContext.getCurrentInstance().responseComplete();
         } else{
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Crear proforma primero."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Generar Crédito."));
         }
     }
     

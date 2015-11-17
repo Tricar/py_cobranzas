@@ -107,6 +107,9 @@
                 <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCreditoEspecial()}"  icon="b-ok"
                                  ajax="false" />                    
             </h:form>
+            <h:form>
+                <h:commandButton actionListener="#{reportesBean.exportarLiq(creditoBean.credito.liqventa)}" value="Imp. Liq." />
+            </h:form>
         </f:view>
 
         <h:form id="formMostrar">
