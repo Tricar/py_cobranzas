@@ -740,6 +740,10 @@ public class creditoBean implements Serializable {
     public void insertarNotaDebito() {
         LetrasDao letrasdao = new LetrasDaoImplements();
         Date d = new Date();        
+        if (credito.getIdventa()==null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe ningún crédito seleccionado."));
+            return;
+        }
         if (letra.getMonto().compareTo(BigDecimal.ZERO)==0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Monto debe ser mayor a cero."));
         }
