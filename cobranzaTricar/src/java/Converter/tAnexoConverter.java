@@ -10,7 +10,7 @@ import javax.faces.convert.FacesConverter;
  * @author master
  */
 @FacesConverter("tanexoconverter")
-public class tAnexoConverter implements Converter{
+public class tAnexoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -19,21 +19,31 @@ public class tAnexoConverter implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        String tanexo ="";
-        if (value != null){
+        String tanexo = "";
+        if (value != null) {
             tanexo = (String) value;
             switch (tanexo) {
-                case "AD": tanexo = "ADMINISTRADOR";
+                case "AD":
+                    tanexo = "ADMINISTRADOR";
                     break;
-                case "CL": tanexo = "CLIENTE";
+                case "CL":
+                    tanexo = "CLIENTE";
                     break;
-                case "VE": tanexo = "VENDEDOR";
+                case "VE":
+                    tanexo = "VENDEDOR";
                     break;
-                case "GE": tanexo = "GESTOR";
+                case "GE":
+                    tanexo = "GESTOR";
+                    break;
+                case "JE":
+                    tanexo = "JEF. CREDITOS";
+                    break;
+                case "AS":
+                    tanexo = "ASISTENTE";
                     break;
             }
         }
         return tanexo;
     }
-    
+
 }

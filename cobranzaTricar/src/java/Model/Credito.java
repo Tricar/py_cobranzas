@@ -319,7 +319,7 @@ public class Credito implements java.io.Serializable {
         this.vehi = vehi;
     }
     
-    @Column(name = "adicinal", length = 150)
+    @Column(name = "adicional", length = 150)
     public String getAdicional() {
         return this.adicional;
     }
