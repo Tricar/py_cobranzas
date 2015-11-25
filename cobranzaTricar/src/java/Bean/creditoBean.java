@@ -286,8 +286,8 @@ public class creditoBean implements Serializable {
         inicial Inicial = new inicial();
         precio = (Precio.precioModelo(credito.getVehiculo().getModelo().getModelo()));
         String distrito = credito.getAnexoByIdanexo().getDistrito();
-        String tipov = credito.getVehiculo().getTipovehiculo();
-        iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getModelo().getModelo());
+        String tipov = credito.getVehiculo().getTipovehiculo();        
+        iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getVehiculo().getModelo().getModelo());
         saldo = precio.subtract(inicia);
     }
 
