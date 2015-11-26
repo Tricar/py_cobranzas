@@ -17,6 +17,9 @@
         <property name="sisEmp" type="java.lang.Boolean">
             <column name="sisEmp" />
         </property>
+        <property name="sisVende" type="java.lang.Boolean">
+            <column name="sisVende" />
+        </property>
         <property name="sisUsu" type="java.lang.Boolean">
             <column name="sisUsu" />
         </property>

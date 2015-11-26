@@ -111,6 +111,8 @@
                 <p:column headerText="Pagar">                                
                     <p:commandButton oncomplete="dlgpagar.show()" value="P" disabled="#{letras.saldo == '0.00'}"
                                      actionListener="#{pagosBean.cargarLetra(letras)}" />
+                    <p:commandButton value="ND" icon="b-add" oncomplete="dlgnotadebito.show()" disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND'}"
+                                     actionListener="#{creditoBean.cargarLetra(letras)}" />
                 </p:column>                    
             </p:dataTable>                        
         </h:form>            
@@ -137,6 +139,21 @@
                     <p:commandButton actionListener="#{pagosBean.insertar()}" value="Pagar" oncomplete="dlgpagar.hide()"
                                      ajax="false"/>
                 </p:panelGrid>                
+            </p:dialog>
+        </h:form>
+        <h:form id="formNotadebito">
+            <p:dialog id="dlg4" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgnotadebito" modal="true" resizable="true" minWidth="200">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Fecha:" for="txtfechai"/>
+                    <p:calendar id="txtfechai" navigator="true" showOn="button" value="#{creditoBean.letra.fecini}" 
+                                pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">                        
+                    </p:calendar>                    
+                    <p:outputLabel value="Monto:" for="txtmonto"/>
+                    <p:inputText id="txtmonto" value="#{creditoBean.letra.monto}" class="money" required="true" requiredMessage="Ingrese Monto"/>
+                    <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" 
+                                     oncomplete="dlgnotadebito.hide()" ajax="false"/>
+                </p:panelGrid>
             </p:dialog>
         </h:form>
     </ui:define>

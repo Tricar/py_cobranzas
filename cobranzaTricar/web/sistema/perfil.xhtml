@@ -45,6 +45,7 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sistema}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisEmp}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisVende}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisUsu}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisPer}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.mante}"/>
@@ -72,6 +73,8 @@
                         <p:outputLabel value="Empleados" />
                         <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisUsu}"/>
                         <p:outputLabel value="Usuarios" />
+                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisVende}"/>
+                        <p:outputLabel value="Vendedor" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
                         <p:outputLabel value="Perfiles" />
                         <br/>

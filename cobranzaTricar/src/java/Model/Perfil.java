@@ -23,6 +23,7 @@ public class Perfil implements java.io.Serializable {
     private Boolean sistema;
     private Boolean sisUsu;
     private Boolean sisEmp;
+    private Boolean sisVende;
     private Boolean sisPer;
     private Boolean mante;
     private Boolean manCli;
@@ -42,11 +43,12 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisEmp, Boolean sisVende, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.sistema = sistema;
         this.sisEmp = sisEmp;
+        this.sisEmp = sisVende;
         this.sisUsu = sisUsu;
         this.sisPer = sisPer;
         this.mante = mante;
@@ -106,6 +108,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setSisEmp(Boolean sisEmp) {
         this.sisEmp = sisEmp;
+    }
+    
+    @Column(name = "sisVende")
+    public Boolean getSisVende() {
+        return this.sisVende;
+    }
+
+    public void setSisVende(Boolean sisVende) {
+        this.sisVende = sisVende;
     }
 
     @Column(name = "sisPer")

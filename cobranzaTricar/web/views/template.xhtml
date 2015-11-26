@@ -32,6 +32,7 @@
                             <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="ui-icon-newwin" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="ui-icon-user" />
                         </p:submenu>
 
                         <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">

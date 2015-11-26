@@ -118,7 +118,6 @@
                 <p:commandButton value="No" onclick="dlg2.hide();" />
             </p:dialog>
         </h:form>
-
         <hr/>
         <h:form id="formVer">
             <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
@@ -159,31 +158,26 @@
                         <f:converter converterId="letrasconverter"/>
                     </h:outputText>
                 </p:column>
-            </p:dataTable>
-            <p:commandButton value="Nota de Débito" icon="b-add" oncomplete="dlgnotadebito.show()" />
+                <p:column headerText="N. Deb.">
+                    <p:commandButton value="ND" icon="b-add" oncomplete="dlgnotadebito.show()" disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND'}"
+                                     actionListener="#{creditoBean.cargarLetra(letras)}" />
+                </p:column>
+            </p:dataTable>            
         </h:form>
-
         <h:form id="formNotadebito">
             <p:dialog id="dlg4" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgnotadebito" modal="true" resizable="true" minWidth="200">
                 <p:panelGrid columns="2">
-                    <p:outputLabel value="Fecha Inicio:" for="txtfechai"/>
+                    <p:outputLabel value="Fecha:" for="txtfechai"/>
                     <p:calendar id="txtfechai" navigator="true" showOn="button" value="#{creditoBean.letra.fecini}" 
-                                pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">
-                        <p:ajax event="mousemove" update="txtfechav" listener="#{creditoBean.resultadoFecha()}"/>
-                    </p:calendar>
-                    <p:outputLabel value="Fecha Vencio:" for="txtfechav"/>
-                    <h:outputText id="txtfechav" value="#{creditoBean.fechafin}" >
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:outputText>
+                                pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">                        
+                    </p:calendar>                    
                     <p:outputLabel value="Monto:" for="txtmonto"/>
                     <p:inputText id="txtmonto" value="#{creditoBean.letra.monto}" class="money" required="true" requiredMessage="Ingrese Monto"/>
-
                     <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" 
                                      oncomplete="dlgnotadebito.hide()" ajax="false"/>
                 </p:panelGrid>
             </p:dialog>
         </h:form>
-
     </ui:define>
 </ui:composition>

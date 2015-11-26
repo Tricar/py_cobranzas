@@ -10,7 +10,6 @@ import Model.Credito;
 import Model.Letras;
 import Model.Pagos;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;

@@ -1,7 +1,10 @@
 package Bean;
 
+import Dao.ModeloDao;
+import Dao.ModeloDaoImplements;
 import Dao.VehiculoDao;
 import Dao.VehiculoDaoImplements;
+import Model.Credito;
 import Model.Vehiculo;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
@@ -27,7 +30,16 @@ public class vehiculoBean implements Serializable {
     public Vehiculo vehiculo;
     public List<Vehiculo> vehiculos;
     private List<Vehiculo> query;
-    
+    private String idmodelo;
+
+    public String getIdmodelo() {
+        return idmodelo;
+    }
+
+    public void setIdmodelo(String idmodelo) {
+        this.idmodelo = idmodelo;
+    }    
+
     public vehiculoBean() {
         this.vehiculo = new Vehiculo();
     }
@@ -259,10 +271,28 @@ public class vehiculoBean implements Serializable {
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
         List<Vehiculo> tipos = vehiculodao.filtarDisponible("D");        
         for (Vehiculo tipo : tipos) {            
-            if (tipo.getSerie().startsWith(name.toUpperCase())) {
+            if (tipo.getSerie().endsWith(name.toUpperCase())) {
                 query.add(tipo);
             }
         }
         return query;
+    }
+    
+    public List<Vehiculo> filtrarDisponibleCotiza(String name) {
+        this.query = new ArrayList<Vehiculo>();
+        VehiculoDao vehiculodao = new VehiculoDaoImplements();        
+        List<Vehiculo> tipos = vehiculodao.filtarDisponibleCotiza("D", idmodelo);        
+        for (Vehiculo tipo : tipos) {            
+            if (tipo.getSerie().endsWith(name.toUpperCase())) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
+    
+    public void cargarModeloCotiza(Credito cred){
+        ModeloDao modelodao = new ModeloDaoImplements();        
+        Integer modelo = cred.getModelo().getIdmodelo();
+        idmodelo = Integer.toString(modelo);
     }
 }
