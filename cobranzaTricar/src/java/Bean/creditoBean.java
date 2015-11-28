@@ -73,6 +73,7 @@ public class creditoBean implements Serializable {
     private BigDecimal saldo;
     private int sw = 0;
     private String vehi;
+    private String descND;
 
     public creditoBean() {
     }
@@ -271,6 +272,14 @@ public class creditoBean implements Serializable {
 
     public void setVehi(String vehi) {
         this.vehi = vehi;
+    }
+
+    public String getDescND() {
+        return descND;
+    }
+
+    public void setDescND(String descND) {
+        this.descND = descND;
     }
 
     public void resultadoSaldo() {
@@ -720,6 +729,7 @@ public class creditoBean implements Serializable {
                 }
             }
             letrasdao.modificarLetra(get);
+
         }
         letraslista = letrasdao.mostrarLetrasXCred(cred);
     }
@@ -739,7 +749,9 @@ public class creditoBean implements Serializable {
 
     public void insertarNotaDebito() {
         LetrasDao letrasdao = new LetrasDaoImplements();
-        Date d = new Date();        
+        PagosDao pagosdao = new PagosDaoImp();
+        pago = new Pagos();
+        Date d = new Date();
         if (letra.getMonto().compareTo(BigDecimal.ZERO) == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Monto debe ser mayor a cero."));
         }
@@ -747,14 +759,22 @@ public class creditoBean implements Serializable {
         letra.setCredito(credito);
         letra.setDescripcion("ND");
         letra.setFecreg(d);
-        letra.setFecven(fechafin);
+        letra.setFecven(letra.getFecreg()/*fechafin*/);
         letra.setMontoletra(BigDecimal.ZERO);
         letra.setInteres(BigDecimal.ZERO);
-        letra.setSaldo(letra.getMonto());
-        letra.setEstado("PN");
-        credito.setTotaldeuda(credito.getTotaldeuda().add(letra.getMonto()));
-        creditodao.modificarVenta(credito);
+        letra.setSaldo(BigDecimal.ZERO/*letra.getMonto()*/);
+        letra.setMora(BigDecimal.ZERO);
+        //letra.setEstado("PN");
+        //credito.setTotaldeuda(credito.getTotaldeuda().add(letra.getMonto()));
+        //creditodao.modificarVenta(credito);
         letrasdao.insertarLetra(letra);
+        pago.setLetras(letra);
+        pago.setFecreg(letra.getFecreg());
+        pago.setMonto(letra.getMonto());
+        pago.setDescripcion("MORA");
+        pago.setTipo("ND");
+        pago.setOperacion(descND);
+        pagosdao.insertarPago(pago);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Inserto Nota Débito correctamente."));
     }
 
@@ -941,7 +961,7 @@ public class creditoBean implements Serializable {
         FacesContext.getCurrentInstance().responseComplete();
 
     }
-    
+
     public Letras cargarLetra(Letras letras) {
         letra = letras;
 //        System.out.println("Este es el Id de letra en cargar:"+letra.getIdletras());
