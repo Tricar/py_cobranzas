@@ -71,25 +71,20 @@ public class PerfilBean implements Serializable {
     public void actualizarPerfil() {
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             PerfilDaoImpl linkDao = new PerfilDaoImpl();
             if (linkDao.verByPerfilDifer(this.session, this.perfil.getIdperfil(), this.perfil.getDescripcion()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Perfil ya existe en DB."));
                 perfil = new Perfil();
                 return;
             }
-
-            if (perfil.getSisPer() == true || perfil.getSisUsu() == true || perfil.getSisEmp() == true) {
+            if (perfil.getSisPer() == true || perfil.getSisUsu() == true || perfil.getSisVende()==true || perfil.getSisEmp()==true) {
                 perfil.setSistema(true);
-            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false  || perfil.getSisEmp() == false) {
+            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false && perfil.getSisVende()==false && perfil.getSisEmp()==false) {
                 perfil.setSistema(false);
             }
-
             if (perfil.getManArt() == true || perfil.getManCli() == true || perfil.getManCol() == true
                     || perfil.getManMod() == true) {
                 perfil.setMante(true);
@@ -97,13 +92,11 @@ public class PerfilBean implements Serializable {
                     && perfil.getManMod() == false) {
                 perfil.setMante(false);
             }
-
             if (perfil.getVenLis() == true || perfil.getVenReg() == true) {
                 perfil.setVenta(true);
             } else if (perfil.getVenLis() == false && perfil.getVenReg() == false) {
                 perfil.setVenta(false);
             }
-
             PerfilDaoImpl perfilDao = new PerfilDaoImpl();
             perfilDao.modificar(this.session, this.perfil);
 
@@ -217,21 +210,19 @@ public class PerfilBean implements Serializable {
 
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             PerfilDaoImpl linkDao = new PerfilDaoImpl();
             if (linkDao.verByDescripcion(this.session, this.perfil.getDescripcion()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Perfil ya esta registrado."));
                 perfil = new Perfil();
                 return;
             }
-
             perfil.setSistema(false);
             perfil.setSisPer(false);
+            perfil.setSisEmp(false);
+            perfil.setSisVende(false);
             perfil.setSisUsu(false);
             perfil.setMante(false);
             perfil.setManArt(false);
@@ -242,11 +233,8 @@ public class PerfilBean implements Serializable {
             perfil.setVenLis(false);
             perfil.setVenReg(false);
             linkDao.registrar(this.session, this.perfil);
-
             this.transaction.commit();
-
             this.perfil = new Perfil();
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
 
         } catch (Exception e) {
@@ -259,7 +247,6 @@ public class PerfilBean implements Serializable {
                 this.session.close();
             }
         }
-
     }
 
     public void eliminarPerfil() {

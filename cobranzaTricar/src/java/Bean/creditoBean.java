@@ -72,7 +72,8 @@ public class creditoBean implements Serializable {
     private String nombre;
     private BigDecimal saldo;
     private int sw = 0;
-    private String vehi;    
+    private String vehi;
+    private String descND;
 
     public creditoBean() {
     }
@@ -272,7 +273,15 @@ public class creditoBean implements Serializable {
     public void setVehi(String vehi) {
         this.vehi = vehi;
     }
-    
+
+    public String getDescND() {
+        return descND;
+    }
+
+    public void setDescND(String descND) {
+        this.descND = descND;
+    }
+
     public void resultadoSaldo() {
         res = precio.subtract(credito.getInicial());
     }
@@ -287,7 +296,7 @@ public class creditoBean implements Serializable {
         precio = (Precio.precioModelo(credito.getVehiculo().getModelo().getModelo()));
         String distrito = credito.getAnexoByIdanexo().getDistrito();
         String tipov = credito.getVehiculo().getTipovehiculo();
-        iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getModelo().getModelo());
+        iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getVehiculo().getModelo().getModelo());
         saldo = precio.subtract(inicia);
     }
 
@@ -564,7 +573,7 @@ public class creditoBean implements Serializable {
                     letrasdao.insertarLetra(letras);
                 }
                 sw = 1;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La proforma se realizó correctamente."));                
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La proforma se realizó correctamente."));
             } else {
                 if (sw == 1) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esta proforma ya ha sido registrada"));
@@ -625,12 +634,12 @@ public class creditoBean implements Serializable {
         cal.add(Calendar.DAY_OF_YEAR, dias);
         return cal.getTime();
     }
-    
-    public long Diffdays(Date fechavenc){
+
+    public long Diffdays(Date fechavenc) {
         long mili = fechavenc.getTime();
         long mili2 = new Date().getTime();
         long diff = mili2 - mili;
-        long diffdays = diff / (24*60*60*1000);
+        long diffdays = diff / (24 * 60 * 60 * 1000);
         return diffdays;
     }
 
@@ -699,11 +708,11 @@ public class creditoBean implements Serializable {
         for (int i = 0; i < letritas.size(); i++) {
             Letras get = letritas.get(i);
             if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                get.setEstado("CN");                
+                get.setEstado("CN");
             } else {
                 if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
                     if (get.getFecven().after(fecha)) {
-                        get.setEstado("PN");                        
+                        get.setEstado("PN");
                     } else {
                         get.setEstado("VN");
                         get.setDiffdays(Diffdays(get.getFecven()));
@@ -720,6 +729,7 @@ public class creditoBean implements Serializable {
                 }
             }
             letrasdao.modificarLetra(get);
+
         }
         letraslista = letrasdao.mostrarLetrasXCred(cred);
     }
@@ -739,22 +749,32 @@ public class creditoBean implements Serializable {
 
     public void insertarNotaDebito() {
         LetrasDao letrasdao = new LetrasDaoImplements();
-        Date d = new Date();        
-        if (letra.getMonto().compareTo(BigDecimal.ZERO)==0) {
+        PagosDao pagosdao = new PagosDaoImp();
+        pago = new Pagos();
+        Date d = new Date();
+        if (letra.getMonto().compareTo(BigDecimal.ZERO) == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Monto debe ser mayor a cero."));
         }
         CreditoDao creditodao = new CreditoDaoImp();
         letra.setCredito(credito);
         letra.setDescripcion("ND");
         letra.setFecreg(d);
-        letra.setFecven(fechafin);
+        letra.setFecven(letra.getFecreg()/*fechafin*/);
         letra.setMontoletra(BigDecimal.ZERO);
         letra.setInteres(BigDecimal.ZERO);
-        letra.setSaldo(letra.getMonto());
-        letra.setEstado("PN");
-        credito.setTotaldeuda(credito.getTotaldeuda().add(letra.getMonto()));
-        creditodao.modificarVenta(credito);
-        letrasdao.insertarLetra(letra);        
+        letra.setSaldo(BigDecimal.ZERO/*letra.getMonto()*/);
+        letra.setMora(BigDecimal.ZERO);
+        //letra.setEstado("PN");
+        //credito.setTotaldeuda(credito.getTotaldeuda().add(letra.getMonto()));
+        //creditodao.modificarVenta(credito);
+        letrasdao.insertarLetra(letra);
+        pago.setLetras(letra);
+        pago.setFecreg(letra.getFecreg());
+        pago.setMonto(letra.getMonto());
+        pago.setDescripcion("MORA");
+        pago.setTipo("ND");
+        pago.setOperacion(descND);
+        pagosdao.insertarPago(pago);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Inserto Nota Débito correctamente."));
     }
 
@@ -881,7 +901,7 @@ public class creditoBean implements Serializable {
     }
 
     public String pagos() {
-        creditos = new ArrayList();        
+        creditos = new ArrayList();
         letraslista = new ArrayList();
         return "/venta/listarv.xhtml";
     }
@@ -922,23 +942,31 @@ public class creditoBean implements Serializable {
         codigo = "";
         return "/cotiza/index.xhtml";
     }
-    
-    public void exportarPDF(String codigo) throws JRException, NamingException, SQLException, IOException{
+
+    public void exportarPDF(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
-        con=conn.getConnection();
-        Map<String,Object> parametros = new HashMap<String, Object>();
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("codigo", codigo);
-        System.out.println("liq venta :"+codigo);
-        File jasper = new File (FacesContext.getCurrentInstance().getExternalContext().getRealPath("/report/proforma.jasper"));
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros,con);        
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();        
-        response.addHeader("Content-disposition", "attachment; filename=Proforma"+codigo+".pdf");
+        System.out.println("liq venta :" + codigo);
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/report/proforma.jasper"));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Proforma" + codigo + ".pdf");
         ServletOutputStream stream = response.getOutputStream();
-        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);        
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
         stream.flush();
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
-        
+
+    }
+
+    public Letras cargarLetra(Letras letras) {
+        letra = letras;
+//        System.out.println("Este es el Id de letra en cargar:"+letra.getIdletras());
+        CreditoDao linkdao = new CreditoDaoImp();
+        credito = linkdao.cargarCreditoxLetra(letra);
+        return letra;
     }
 }

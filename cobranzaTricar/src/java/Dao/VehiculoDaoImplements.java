@@ -1,5 +1,6 @@
 package Dao;
 
+import Model.Modelo;
 import Model.Vehiculo;
 import Persistencia.HibernateUtil;
 import java.util.List;
@@ -129,5 +130,25 @@ public class VehiculoDaoImplements implements VehiculoDao{
     public boolean eliminar(Session session, Vehiculo vehiculo) throws Exception {
         session.delete(vehiculo);
         return true;
+    }
+    
+    @Override
+    public List<Vehiculo> filtarDisponibleCotiza(String tipo, String idmodelo) {
+        Session session = null;
+        List<Vehiculo> lista = null;        
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Vehiculo WHERE estado=:v and idmodelo=:u");
+            query.setParameter("v", tipo);
+            query.setParameter("u", idmodelo);
+            lista = (List<Vehiculo>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
     }
 }

@@ -107,4 +107,23 @@ public class ModeloDaoImplements implements ModeloDao {
 
     }
 
+    @Override
+    public String modeloDevId(String modelo) {
+        Session session = null;
+        String idmodelo = "";
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Modelo WHERE modelo=:modelo");
+            query.setParameter("modelo", modelo);
+            idmodelo = (String)query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return idmodelo;
+    }
+
 }

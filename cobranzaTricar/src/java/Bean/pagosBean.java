@@ -10,7 +10,7 @@ import Model.Credito;
 import Model.Letras;
 import Model.Pagos;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -62,21 +62,40 @@ public class pagosBean implements Serializable {
         this.credito = credito;
     }
 
+    public List<Pagos> getPagosxcredito() {
+        return pagosxcredito;
+    }
+
+    public void setPagosxcredito(List<Pagos> pagosxcredito) {
+        this.pagosxcredito = pagosxcredito;
+    }
+
+    public List<Pagos> getPagosxletra() {
+        return pagosxletra;
+    }
+
+    public void setPagosxletra(List<Pagos> pagosxletra) {
+        this.pagosxletra = pagosxletra;
+    }
+
     public List<Pagos> getPagos() {
         PagosDao linkdao = new PagosDaoImp();
         pagos = linkdao.mostrarPagos();
         return pagos;
     }
 
-    public List<Pagos> getPagosxCredito() {
+    public List<Pagos> PagosxCredito(Credito cred) {
         PagosDao linkdao = new PagosDaoImp();
-        pagos = linkdao.mostrarPagosxCredito(credito);
+        pagosxcredito = linkdao.mostrarPagosxCredito(cred);
+        if (pagosxcredito.size() == 0 ) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "No existen pagos de este cliente."));
+        }
         return pagosxcredito;
     }
 
-    public List<Pagos> getPagosxletra() {
+    public List<Pagos> Pagosxletra() {
         PagosDao linkdao = new PagosDaoImp();
-        pagos = linkdao.mostrarPagosxLetras(letra);
+        pagosxletra = linkdao.mostrarPagosxLetras(letra);
         return pagosxletra;
     }
 
@@ -109,5 +128,9 @@ public class pagosBean implements Serializable {
         CreditoDao linkdao = new CreditoDaoImp();
         credito = linkdao.cargarCreditoxLetra(letra);
         return letra;
+    }    
+   
+    public void limpiar(){
+        pagosxcredito = new ArrayList();
     }
 }

@@ -218,11 +218,17 @@ public class AnexoDaoImplements implements AnexoDao {
 
     @Override
     public List<Anexo> verEmpleado(Session session) throws Exception {
-        String hql = "FROM Anexo WHERE tipoanexo IN ('VE','AD','GE')";
-        Query query = session.createQuery(hql);
-        
-        List<Anexo> listaanexo = (List<Anexo>)query.list();
-        
+        String hql = "FROM Anexo WHERE tipoanexo IN ('VE','AD','GE', 'AS', 'JE')";
+        Query query = session.createQuery(hql);        
+        List<Anexo> listaanexo = (List<Anexo>)query.list();        
+        return listaanexo;
+    }
+    
+    @Override
+    public List<Anexo> verVendedor(Session session) throws Exception {
+        String hql = "FROM Anexo WHERE tipoanexo IN ('VE')";
+        Query query = session.createQuery(hql);        
+        List<Anexo> listaanexo = (List<Anexo>)query.list();        
         return listaanexo;
     }
 

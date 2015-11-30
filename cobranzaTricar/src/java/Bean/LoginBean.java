@@ -100,6 +100,10 @@ public class LoginBean implements Serializable {
         return "/sistema/empleado";
     }
     
+    public String vendedor() {
+        return "/sistema/vendedor";
+    }
+    
     public String usuarios() {
         return "/sistema/usuario";
     }

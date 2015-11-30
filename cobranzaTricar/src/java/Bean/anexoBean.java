@@ -125,28 +125,44 @@ public class anexoBean implements Serializable {
     }
 
     public List<Anexo> verEmpleado() {
-
         this.session = null;
         this.transaction = null;
-
         try {
             AnexoDaoImplements anexoDao = new AnexoDaoImplements();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-
             this.anexos = anexoDao.verEmpleado(this.session);
-
             this.transaction.commit();
-
             return anexos;
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public List<Anexo> verVendedores() {
 
+        this.session = null;
+        this.transaction = null;
+        try {
+            AnexoDaoImplements anexoDao = new AnexoDaoImplements();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.anexos = anexoDao.verVendedor(this.session);
+            this.transaction.commit();
+            return anexos;
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
             return null;
         } finally {
             if (this.session != null) {
@@ -441,6 +457,18 @@ public class anexoBean implements Serializable {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
         List<Anexo> tipos = anexoDao.filtarTipo("GE");
+        for (Anexo tipo : tipos) {
+            if (tipo.getNombre().startsWith(name.toUpperCase())) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
+    
+    public List<Anexo> filtrarJefe(String name) {
+        this.query = new ArrayList<Anexo>();
+        AnexoDao anexoDao = new AnexoDaoImplements();
+        List<Anexo> tipos = anexoDao.filtarTipoDos("JE", "AD");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);

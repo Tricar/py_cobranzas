@@ -58,7 +58,7 @@
                     </p:commandButton>
                 </p:column>
                 <p:column headerText="Aprobar">
-                    <p:commandButton value="A" oncomplete="dlgaprobar.show()" update="">
+                    <p:commandButton value="A" oncomplete="dlgaprobar.show()" update="" actionListener="#{vehiculoBean.cargarModeloCotiza(cred)}">
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                     </p:commandButton>
                 </p:column>
@@ -83,7 +83,7 @@
                     <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" required="true" requiredMessage="Ingrese un código de credito"/>
                     <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
                     <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
-                                    completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
+                                    completeMethod="#{vehiculoBean.filtrarDisponibleCotiza}" var="v"
                                     itemLabel="#{v.serie}" itemValue="#{v}"
                                     required="true" requiredMessage="Elija un vehículo">
                         <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>

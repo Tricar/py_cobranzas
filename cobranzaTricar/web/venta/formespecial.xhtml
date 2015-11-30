@@ -93,6 +93,13 @@
                                     required="true" requiredMessage="Ingrese Verificador">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                     </p:autoComplete>
+                    <p:outputLabel value="Aprobado:" for="aprobado"/>
+                    <p:autoComplete id="aprobado" value="#{creditoBean.credito.aprobadox}"
+                                    completeMethod="#{anexoBean.filtrarJefe}" var="aprob"
+                                    itemLabel="#{aprob.nombres}" itemValue="#{aprob}"
+                                    required="true" requiredMessage="Falta aprobación">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                    </p:autoComplete>
                     <p:outputLabel value="Contrato:" for="txtcontrato"/>
                     <p:selectOneRadio id="txtcontrato" value="#{creditoBean.credito.contrato}" required="true" requiredMessage="Seleccione una opción en *Contrato">
                         <f:selectItem itemLabel="SI" itemValue="true" />
@@ -103,6 +110,8 @@
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>
                     </p:selectOneRadio>
+                    <p:outputLabel value="Observaciones:"/>
+                    <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}"/>               
                 </p:panelGrid>
                 <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCreditoEspecial()}"  icon="b-ok"
                                  ajax="false" />                    

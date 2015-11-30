@@ -1,6 +1,7 @@
 
 package Dao;
 
+import Model.Modelo;
 import Model.Vehiculo;
 import java.util.List;
 import org.hibernate.Session;
@@ -17,4 +18,5 @@ public interface VehiculoDao {
     public Vehiculo verBySerieDifer(Session session,Integer idvehiculo, String serie) throws Exception;
     public boolean modificar(Session session, Vehiculo vehiculo) throws Exception;
     public boolean eliminar (Session session, Vehiculo vehiculo) throws Exception;
+    public List<Vehiculo> filtarDisponibleCotiza(String tipo, String modelo);
 }

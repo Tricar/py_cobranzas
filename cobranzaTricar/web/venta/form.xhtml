@@ -109,7 +109,15 @@
                     <p:outputLabel value="Verificado:" for="verificado"/>
                     <p:autoComplete id="verificado" value="#{creditoBean.credito.anexoByVerificado}"
                                     completeMethod="#{anexoBean.filtrarGestor}" var="veri"
-                                    itemLabel="#{veri.nombres}" itemValue="#{veri}" forceSelection="true">
+                                    itemLabel="#{veri.nombres}" itemValue="#{veri}"
+                                    required="true" requiredMessage="Elija un verificador">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                    </p:autoComplete>
+                    <p:outputLabel value="Aprobado:" for="aprobado"/>
+                    <p:autoComplete id="aprobado" value="#{creditoBean.credito.aprobadox}"
+                                    completeMethod="#{anexoBean.filtrarJefe}" var="aprob"
+                                    itemLabel="#{aprob.nombres}" itemValue="#{aprob}"
+                                    required="true" requiredMessage="Falta aprobación">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                     </p:autoComplete>
                     <p:outputLabel value="Contrato:" for="rcontrato"/>
@@ -121,7 +129,9 @@
                     <p:selectOneRadio id="rcrono" value="#{creditoBean.credito.cronograma}" required="true" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>                    
+                    </p:selectOneRadio>
+                    <p:outputLabel value="Observaciones:"/>
+                    <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}"/>               
                 </p:panelGrid>
                 <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCredito()}" icon="b-ok"
                                  ajax="false">

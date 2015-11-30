@@ -18,4 +18,5 @@ public interface ModeloDao {
     public boolean eliminar (Session session, Modelo model) throws Exception;
     public List<Modelo> modeloNombre();
     public List<Modelo> modeloxTipo(String tipo);
+    public String modeloDevId(String modelo);
 }
