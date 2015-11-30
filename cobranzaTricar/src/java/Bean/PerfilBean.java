@@ -84,9 +84,9 @@ public class PerfilBean implements Serializable {
                 return;
             }
 
-            if (perfil.getSisPer() == true || perfil.getSisUsu() == true) {
+            if (perfil.getSisPer() == true || perfil.getSisUsu() == true || perfil.getSisEmp() == true) {
                 perfil.setSistema(true);
-            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false) {
+            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false  || perfil.getSisEmp() == false) {
                 perfil.setSistema(false);
             }
 
