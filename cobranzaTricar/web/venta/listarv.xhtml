@@ -24,7 +24,7 @@
                 <p:outputLabel value="Ingrese Nombre:"/>
                 <p:inputText value="#{creditoBean.nombre}"/>
                 <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarCreditoNombre()}"
-                                 ajax="false"/>
+                                 ajax="false" action="#{pagosBean.limpiar()}"/>
             </p:panelGrid>            
         </h:form>
         <h:form id="formMostrar">
@@ -60,7 +60,10 @@
                 <p:column headerText="Mostrar">                            
                     <p:commandButton value="Ver" update=":formModificar" icon="b-ver"
                                      actionListener="#{creditoBean.cargarLetras(cred)}"/>
-                </p:column>                        
+                    <p:commandButton value="Historial" update=":formhistorial" icon="b-ver"
+                                     actionListener="#{pagosBean.PagosxCredito(cred)}"/>
+                </p:column>
+                
             </p:dataTable>
         </h:form>        
         <hr/>
@@ -115,7 +118,40 @@
                                      actionListener="#{creditoBean.cargarLetra(letras)}" />
                 </p:column>                    
             </p:dataTable>                        
-        </h:form>            
+        </h:form>
+        
+        <h:form id="formhistorial">
+            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+            <p:dataTable var="pagos" value="#{pagosBean.pagosxcredito}" 
+                         emptyMessage="No hay nada para mostrar">
+                <p:inputText type="hidden" value="#{pagos.idpagos}"/>
+                <p:column headerText="Cod venta.">
+                    <h:outputText value="#{pagos.letras.credito.liqventa}" />
+                </p:column>
+                <p:column headerText="Descripcion">
+                    <h:outputText value="#{pagos.descripcion}"/>
+                </p:column>
+                <p:column headerText="Monto">
+                    <h:outputText value="#{pagos.monto}"/>
+                </p:column>
+                <p:column headerText="Operación">
+                    <h:outputText value="#{pagos.operacion}"/>
+                </p:column>                
+                <p:column headerText="Fecha">
+                    <h:outputText value="#{pagos.fecreg}">
+                        <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Tipo">
+                    <h:outputText value="#{pagos.tipo}">
+                        <f:converter converterId="pagosconverter"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Operaciones">                                
+                                        
+                </p:column>                    
+            </p:dataTable>                        
+        </h:form>
 
         <h:form>
             <p:dialog id="dlg1" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
@@ -148,7 +184,9 @@
                     <p:outputLabel value="Fecha:" for="txtfechai"/>
                     <p:calendar id="txtfechai" navigator="true" showOn="button" value="#{creditoBean.letra.fecini}" 
                                 pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">                        
-                    </p:calendar>                    
+                    </p:calendar>
+                    <p:outputLabel value="Referencia:" for="txtref"/>
+                    <p:inputText id="txtref" value="#{creditoBean.descND}" required="true" requiredMessage="Ingrese Referencia"/>
                     <p:outputLabel value="Monto:" for="txtmonto"/>
                     <p:inputText id="txtmonto" value="#{creditoBean.letra.monto}" class="money" required="true" requiredMessage="Ingrese Monto"/>
                     <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" 
@@ -157,4 +195,4 @@
             </p:dialog>
         </h:form>
     </ui:define>
-</ui:composition>        
+</ui:composition>

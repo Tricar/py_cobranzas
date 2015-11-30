@@ -41,8 +41,8 @@ public class PagosDaoImp implements PagosDao{
         Integer idcred = credito.getIdventa();
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Pagos where letras.credito.idventa=:v");
-            query.setParameter("v", credito);
+            Query query = session.createQuery("from Pagos where letras.credito.idventa=:v order by fecreg desc");
+            query.setParameter("v", idcred);
             lista = (List<Pagos>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
