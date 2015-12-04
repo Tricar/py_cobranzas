@@ -38,9 +38,9 @@
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" not-null="true" />
         </property>
-        <property name="aprobadox" type="string">
-            <column name="aprobadox" length="10" />
-        </property>
+        <many-to-one name="aprobadox" class="Model.Anexo" fetch="select">
+            <column name="aprobadox" not-null="true" />
+        </many-to-one>
         <property name="tienda" type="string">
             <column name="tienda" length="2" />
         </property>

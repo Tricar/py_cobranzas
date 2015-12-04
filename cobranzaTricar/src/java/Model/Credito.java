@@ -35,7 +35,7 @@ public class Credito implements java.io.Serializable {
     private String condicionpago;
     private Integer nletras;
     private Date fechareg;
-    private String aprobadox;
+    private Anexo aprobadox;
     private String tienda;
     private String empresa;
     private BigDecimal precio;
@@ -65,7 +65,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal deudactual, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi, String adicional) {
+    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, Anexo aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal deudactual, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi, String adicional) {
         this.idventa = idventa;
         this.anexoByIdaval = anexoByIdaval;
         this.anexoByCodven = anexoByCodven;
@@ -201,13 +201,14 @@ public class Credito implements java.io.Serializable {
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
-
-    @Column(name = "aprobadox", length = 10)
-    public String getAprobadox() {
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "aprobadox", nullable = false)    
+    public Anexo getAprobadox() {
         return this.aprobadox;
     }
 
-    public void setAprobadox(String aprobadox) {
+    public void setAprobadox(Anexo aprobadox) {
         this.aprobadox = aprobadox;
     }
 
