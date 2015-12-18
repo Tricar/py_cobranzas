@@ -74,6 +74,8 @@ public class creditoBean implements Serializable {
     private int sw = 0;
     private String vehi;
     private String descND;
+    private boolean value;
+    private boolean value2;
 
     public creditoBean() {
     }
@@ -282,6 +284,22 @@ public class creditoBean implements Serializable {
         this.descND = descND;
     }
 
+    public boolean isValue() {
+        return value;
+    }
+
+    public void setValue(boolean value) {
+        this.value = value;
+    }
+
+    public boolean isValue2() {
+        return value2;
+    }
+
+    public void setValue2(boolean value2) {
+        this.value2 = value2;
+    }
+
     public void resultadoSaldo() {
         res = precio.subtract(credito.getInicial());
     }
@@ -345,8 +363,10 @@ public class creditoBean implements Serializable {
                     BigDecimal interes = new BigDecimal(0);
                     credito.setEstado("AP");
                     BigDecimal cien = new BigDecimal(100);
-                    creditodao.insertarVenta(credito);
-                    vehiculodao.modificarVehiculo(vehiculo);
+                    if(value2){
+                        credito.setAnexoByIdaval(credito.getAnexoByIdanexo());
+                    }
+                    creditodao.insertarVenta(credito);                    
                     interes = (credito.getInteres().multiply(nletras)).divide(cien);
                     Date fechaini = new Date();
                     fechaini = credito.getFechareg();
@@ -372,6 +392,7 @@ public class creditoBean implements Serializable {
                         letrasdao.insertarLetra(letras);
                     }
                     creditodao.modificarVenta(credito);
+                    vehiculodao.modificarVehiculo(vehiculo);
                     sw = 1;
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El crédito se registró correctamente."));
                 } else {
@@ -896,6 +917,7 @@ public class creditoBean implements Serializable {
         iniciapre = BigDecimal.ZERO;
         res = BigDecimal.ZERO;
         saldo = BigDecimal.ZERO;
+        value2 = true;
         return "/venta/form.xhtml";
 
     }
@@ -964,9 +986,18 @@ public class creditoBean implements Serializable {
 
     public Letras cargarLetra(Letras letras) {
         letra = letras;
-//        System.out.println("Este es el Id de letra en cargar:"+letra.getIdletras());
         CreditoDao linkdao = new CreditoDaoImp();
         credito = linkdao.cargarCreditoxLetra(letra);
         return letra;
+    }
+    
+    public void addMessage() {
+        String summary = value ? "SI" : "NO";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
+        if (value){
+            value2 = false;
+        }else{
+            value2 = true;
+        }
     }
 }

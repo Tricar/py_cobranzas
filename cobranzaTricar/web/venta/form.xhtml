@@ -15,6 +15,7 @@
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
+                <p:growl id="msg12" />
                 <p:panelGrid columns="8">
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha"/>
@@ -43,12 +44,16 @@
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg"/>
                         <p:messages id="msg"/>
-                    </p:autoComplete>
+                    </p:autoComplete>                    
+                    <h:outputText value="¿Aval? " />
+                    <p:selectBooleanCheckbox value="#{creditoBean.value}">
+                        <p:ajax update="msg12 aval" listener="#{creditoBean.addMessage}" />
+                    </p:selectBooleanCheckbox>                   
                     <p:outputLabel value="Buscar Aval:" for="aval"/>
                     <p:autoComplete id="aval" value="#{creditoBean.credito.anexoByIdaval}"
                                     completeMethod="#{anexoBean.filtrarAval}" var="aval"
                                     itemLabel="#{aval.nombres}" itemValue="#{aval}" 
-                                    required="true" requiredMessage="Ingrese aval">
+                                    required="true" requiredMessage="Ingrese aval" disabled="#{creditoBean.value2}">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                         <p:ajax event="itemSelect" process="@form" />                        
                     </p:autoComplete>
