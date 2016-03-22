@@ -42,9 +42,7 @@ public class ColorDaoImplements implements ColorDao{
         String hql = "FROM Color WHERE color=:color";
         Query query = session.createQuery(hql);
         query.setParameter("color", color);
-
         Color colo = (Color) query.uniqueResult();
-
         return colo;
     }
 
@@ -53,10 +51,8 @@ public class ColorDaoImplements implements ColorDao{
         String hql = "FROM Color WHERE idcolor!=:idcolor and color=:color";
         Query query = session.createQuery(hql);
         query.setParameter("idcolor", idcolor);
-        query.setParameter("color", color);
-        
+        query.setParameter("color", color);        
         Color colo = (Color) query.uniqueResult();
-
         return colo;
     }
 

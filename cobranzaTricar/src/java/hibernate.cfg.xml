@@ -19,5 +19,6 @@
     <mapping resource="Model/Credito.hbm.xml"/>
     <mapping resource="Model/Color.hbm.xml"/>
     <mapping resource="Model/Usuario.hbm.xml"/>
+    <mapping resource="Model/Tipocambio.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

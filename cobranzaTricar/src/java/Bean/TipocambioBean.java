@@ -1,7 +1,7 @@
 package Bean;
 
-import Dao.ColorDaoImplements;
-import Model.Color;
+import Dao.TipocambioDaoImp;
+import Model.Tipocambio;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.util.Date;
@@ -21,30 +21,30 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @SessionScoped
-public class colorBean implements Serializable{
+public class TipocambioBean implements Serializable{
     
-    private Color colo;
-    private List<Color> colores;
+    private Tipocambio tipoc;
+    private List<Tipocambio> tipocs;
     
     private Session session;
     private Transaction transaction;
     
-    private List<SelectItem> SelectItemsColor;
+    private List<SelectItem> SelectItemsTipocambio;
 
-    public colorBean() {
-        this.colo = new Color();
+    public TipocambioBean() {
+        this.tipoc = new Tipocambio();
     }
     
-    public List<Color> verTodo() {
+    public List<Tipocambio> verTodo() {
         this.session = null;
         this.transaction = null;
         try {
-            ColorDaoImplements daocolor = new ColorDaoImplements();
+            TipocambioDaoImp tipocdao = new TipocambioDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            this.colores = daocolor.verTodo(this.session);
+            this.tipocs = tipocdao.verTodo(this.session);
             this.transaction.commit();
-            return colores;
+            return tipocs;
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -64,14 +64,8 @@ public class colorBean implements Serializable{
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            ColorDaoImplements linkDao = new ColorDaoImplements();
-            if (linkDao.verByColorDifer(this.session, this.colo.getIdcolor(), this.colo.getColor()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya existe en DB."));
-                colo = new Color();
-                return;
-            }
-            ColorDaoImplements daocolor = new ColorDaoImplements();
-            daocolor.modificar(this.session, this.colo);
+            TipocambioDaoImp tipocdao = new TipocambioDaoImp();
+            tipocdao.modificar(this.session, this.tipoc);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
         } catch (Exception e) {
@@ -86,17 +80,16 @@ public class colorBean implements Serializable{
         }
     }
 
-    public void cargarColorEditar(Integer idcolor) {
+    public void cargarTipocambioEditar(Integer idcolor) {
         this.session = null;
         this.transaction = null;
         try {
-            ColorDaoImplements daocolor = new ColorDaoImplements();
+            TipocambioDaoImp tipocdao = new TipocambioDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-            this.colo = daocolor.verByCodigo(this.session, idcolor);
+            this.transaction = session.beginTransaction();            
             this.transaction.commit();
-            RequestContext.getCurrentInstance().update("frmEditarColor:panelEditarColor");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEditarColor').show()");
+            RequestContext.getCurrentInstance().update("frmEditarTipocambio:panelEditarTipocambio");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEditarTipocambio').show()");
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -109,17 +102,16 @@ public class colorBean implements Serializable{
         }
     }
 
-    public void cargarColorEliminar(Integer idcolor) {
+    public void cargarTipocambioEliminar(Integer idcolor) {
         this.session = null;
         this.transaction = null;
         try {
-            ColorDaoImplements daocolor = new ColorDaoImplements();
+            TipocambioDaoImp tipocdao = new TipocambioDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-            this.colo = daocolor.verByCodigo(this.session, idcolor);
+            this.transaction = session.beginTransaction();            
             this.transaction.commit();
-            RequestContext.getCurrentInstance().update("frmEliminarColor");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarColor').show()");
+            RequestContext.getCurrentInstance().update("frmEliminarTipocambio");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarTipocambio').show()");
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -138,17 +130,12 @@ public class colorBean implements Serializable{
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            ColorDaoImplements linkDao = new ColorDaoImplements();
-            if (linkDao.verByColor(this.session, this.colo.getColor()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya esta registrado."));
-                colo = new Color();
-                return;
-            }
+            TipocambioDaoImp linkDao = new TipocambioDaoImp();            
             Date d = new Date();
-            this.colo.setFecreg(d);
-            linkDao.registrar(this.session, this.colo);
+            this.tipoc.setFecreg(d);
+            linkDao.registrar(this.session, this.tipoc);
             this.transaction.commit();
-            this.colo = new Color();
+            this.tipoc = new Tipocambio();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -169,11 +156,11 @@ public class colorBean implements Serializable{
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            ColorDaoImplements daocolor = new ColorDaoImplements();
-            daocolor.eliminar(this.session, this.colo);
+            TipocambioDaoImp tipocdao = new TipocambioDaoImp();
+            tipocdao.eliminar(this.session, this.tipoc);
             this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Color Correctamente."));
-            this.colo = new Color();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Tipocambio Correctamente."));
+            this.tipoc = new Tipocambio();
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -186,23 +173,23 @@ public class colorBean implements Serializable{
         }
     }
     
-    public Color getColo() {
-        return colo;
+    public Tipocambio getTipoc() {
+        return tipoc;
     }
 
-    public void setColor(Color colo) {
-        this.colo = colo;
+    public void setTipocambio(Tipocambio tipoc) {
+        this.tipoc = tipoc;
     }
     
-    public List<Color> getColores() {
+    public List<Tipocambio> getTipocambios() {
         this.session = null;
         this.transaction = null;
         try {
-            ColorDaoImplements daocolor = new ColorDaoImplements();
+            TipocambioDaoImp tipocdao = new TipocambioDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            colores = daocolor.verTodo(session);            
-            return colores;
+            tipocs = tipocdao.verTodo(session);            
+            return tipocs;
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -216,11 +203,11 @@ public class colorBean implements Serializable{
         }
     }
 
-    public void setColores(List<Color> colores) {
-        this.colores = colores;
+    public void setTipocambioes(List<Tipocambio> tipocs) {
+        this.tipocs = tipocs;
     }
 
-    public void setSelectItemsColor(List<SelectItem> SelectItemsColor) {
-        this.SelectItemsColor = SelectItemsColor;
+    public void setSelectItemsTipocambio(List<SelectItem> SelectItemsTipocambio) {
+        this.SelectItemsTipocambio = SelectItemsTipocambio;
     }
 }

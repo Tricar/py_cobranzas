@@ -34,34 +34,27 @@
                             <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="ui-icon-user" />
                         </p:submenu>
-
                         <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
                             <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="ui-icon-person" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" action="#{loginbean.articulo()}" icon="ui-icon-flag" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" action="#{loginbean.modelo()}" icon="ui-icon-star" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" action="#{loginbean.color()}" icon="ui-icon-pencil" />
                         </p:submenu>
-
                         <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
                             <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-newwin" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />                            
-
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />
                         </p:submenu>
-
                         <p:submenu label="Reporte" icon="ui-icon-print">
                             <p:menuitem value="Deuda Vencida" action="#{loginbean.deudor()}" icon="ui-icon-bookmark" />
                             <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />
                         </p:submenu>
-
                         <f:facet name="options">
                             <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>
                             <p:commandButton icon="ui-icon-power" style="margin-left:50px" actionListener="#{loginbean.logout()}"
                                              title="Cerrar Session" oncomplete="handleLoginRequest(xhr, status, args)"/>
-
                             <p:commandButton icon="ui-icon-suitcase" title="Cambiar Clave"/>
                         </f:facet>
-
                     </p:menubar>
                 </h:form>
             </ui:insert>

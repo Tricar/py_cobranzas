@@ -3,6 +3,7 @@ import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Dao.LetrasDao;
 import Dao.LetrasDaoImplements;
+import Model.Anexo;
 import Model.Credito;
 import Model.Letras;
 import java.util.ArrayList;
@@ -33,5 +34,9 @@ public class Prueba {
         dbManager conn = new dbManager();
         conn.getConnection();
         System.out.println(conn.getConnection());
+        Credito objcredito = new Credito();
+        Letras objletras = new Letras();
+        Anexo objanexo = new Anexo();
+        
     }
 }

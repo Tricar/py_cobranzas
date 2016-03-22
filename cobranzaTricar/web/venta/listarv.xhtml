@@ -59,17 +59,17 @@
                 </p:column>
                 <p:column headerText="Mostrar">                            
                     <p:commandButton value="Ver" update=":formModificar" icon="b-ver"
-                                     actionListener="#{creditoBean.cargarLetras(cred)}"/>
-                    <p:commandButton value="Historial" update=":formhistorial" icon="b-ver"
+                                     actionListener="#{pagosBean.Letraslista(cred)}"/>
+                    <p:commandButton value="Historial" update=":formhistorial" oncomplete="dlghistorial.show()" icon="b-ver"
                                      actionListener="#{pagosBean.PagosxCredito(cred)}"/>
                 </p:column>
-                
+
             </p:dataTable>
         </h:form>        
         <hr/>
         <h:form id="formModificar">
             <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-            <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
+            <p:dataTable var="letras" value="#{pagosBean.letraslista}" 
                          emptyMessage="No hay nada para mostrar">
                 <p:inputText type="hidden" value="#{letras.idletras}"/>
                 <p:column headerText="Cod venta.">
@@ -111,51 +111,56 @@
                         <f:converter converterId="letrasconverter"/>
                     </h:outputText>
                 </p:column>
-                <p:column headerText="Pagar">                                
+                <p:column headerText="Pagar">
                     <p:commandButton oncomplete="dlgpagar.show()" value="P" disabled="#{letras.saldo == '0.00'}"
                                      actionListener="#{pagosBean.cargarLetra(letras)}" />
-                    <p:commandButton value="ND" icon="b-add" oncomplete="dlgnotadebito.show()" disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND'}"
+                    <p:commandButton value="ND" icon="b-add" oncomplete="dlgnotadebito.show()" disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND' or letras.saldo == '0.00'}"
                                      actionListener="#{creditoBean.cargarLetra(letras)}" />
                 </p:column>                    
             </p:dataTable>                        
         </h:form>
-        
         <h:form id="formhistorial">
-            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-            <p:dataTable var="pagos" value="#{pagosBean.pagosxcredito}" 
-                         emptyMessage="No hay nada para mostrar">
-                <p:inputText type="hidden" value="#{pagos.idpagos}"/>
-                <p:column headerText="Cod venta.">
-                    <h:outputText value="#{pagos.letras.credito.liqventa}" />
-                </p:column>
-                <p:column headerText="Descripcion">
-                    <h:outputText value="#{pagos.descripcion}"/>
-                </p:column>
-                <p:column headerText="Monto">
-                    <h:outputText value="#{pagos.monto}"/>
-                </p:column>
-                <p:column headerText="Operación">
-                    <h:outputText value="#{pagos.operacion}"/>
-                </p:column>                
-                <p:column headerText="Fecha">
-                    <h:outputText value="#{pagos.fecreg}">
-                        <f:convertDateTime pattern = "dd/MM/yyyy"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Tipo">
-                    <h:outputText value="#{pagos.tipo}">
-                        <f:converter converterId="pagosconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Operaciones">                                
-                                        
-                </p:column>                    
-            </p:dataTable>                        
+            <p:dialog id="dlg5" header="Historial de Pagos: #{pagosBean.credito.anexoByIdanexo.nombres}" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200">
+                <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                <p:dataTable var="pagos" value="#{pagosBean.pagosxcredito}" 
+                             emptyMessage="No hay nada para mostrar">
+                    <p:inputText type="hidden" value="#{pagos.idpagos}"/>
+                    <p:column headerText="Cod venta.">
+                        <h:outputText value="#{pagos.letras.credito.liqventa}" />
+                    </p:column>
+                    <p:column headerText="Descripcion">
+                        <h:outputText value="#{pagos.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{pagos.monto}"/>
+                    </p:column>
+                    <p:column headerText="Operación">
+                        <h:outputText value="#{pagos.operacion}"/>
+                    </p:column>                
+                    <p:column headerText="Fecha">
+                        <h:outputText value="#{pagos.fecreg}">
+                            <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{pagos.tipo}">
+                            <f:converter converterId="pagosconverter"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Operaciones">
+                        <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar" title="Eliminar">
+                            <f:setPropertyActionListener target="#{pagosBean.pago}" value="#{pagos}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
         </h:form>
-        <h:form>
+        <h:form id="formpagar">
             <p:dialog id="dlg1" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgpagar" modal="true" resizable="false" minWidth="200">
-                <p:panelGrid columns="4">
+                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                <p:panelGrid columns="4">                    
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{pagosBean.pago.fecreg}" required="true" requiredMessage="Ingrese la fecha"/>
                     <p:outputLabel value="Tipo:"/>
@@ -171,8 +176,7 @@
                     <p:inputText id="txtdescripcion" value="#{pagosBean.pago.descripcion}" required="true" requiredMessage="Ingrese referencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <h:panelGroup></h:panelGroup>
                     <h:panelGroup></h:panelGroup>
-                    <p:commandButton actionListener="#{pagosBean.insertar()}" value="Pagar" oncomplete="dlgpagar.hide()"
-                                     ajax="false"/>
+                    <p:commandButton actionListener="#{pagosBean.insertar(loginbean.usuario.idusuario)}" value="Pagar" />
                 </p:panelGrid>                
             </p:dialog>
         </h:form>
@@ -185,12 +189,21 @@
                                 pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">                        
                     </p:calendar>
                     <p:outputLabel value="Referencia:" for="txtref"/>
-                    <p:inputText id="txtref" value="#{creditoBean.descND}" required="true" requiredMessage="Ingrese Referencia"/>
+                    <p:inputText id="txtref" value="#{creditoBean.descND}" onkeyup="javascript:this.value = this.value.toUpperCase();" required="true" requiredMessage="Ingrese Referencia"/>
                     <p:outputLabel value="Monto:" for="txtmonto"/>
                     <p:inputText id="txtmonto" value="#{creditoBean.letra.monto}" class="money" required="true" requiredMessage="Ingrese Monto"/>
                     <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" 
                                      oncomplete="dlgnotadebito.hide()" ajax="false"/>
                 </p:panelGrid>
+            </p:dialog>
+        </h:form>
+        <h:form id="formEliminar">
+            <p:dialog id="dlg2" header="Eliminar Pago" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+                <h:outputText value="¿Desea eliminar?" />
+                <p:commandButton value="Si" actionListener="#{pagosBean.eliminar()}" 
+                                 oncomplete="dlgeliminar.hide();" />
+                <p:commandButton value="No" onclick="dlg2.hide();" />
             </p:dialog>
         </h:form>
     </ui:define>

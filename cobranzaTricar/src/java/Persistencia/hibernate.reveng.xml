@@ -12,4 +12,5 @@
   <table-filter match-name="letras"/>
   <table-filter match-name="color"/>
   <table-filter match-name="perfil"/>
+  <table-filter match-name="tipocambio"/>
 </hibernate-reverse-engineering>

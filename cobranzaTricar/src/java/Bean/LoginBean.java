@@ -22,17 +22,15 @@ public class LoginBean implements Serializable {
 
     private Session session;
     private Transaction transaction;
-
-    private Usuario usuario;
-
+    public Usuario usuario;
     private String tusuario;
-    private String clave;
+    private String clave;    
 
     public LoginBean() {
         HttpSession miSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         miSession.setMaxInactiveInterval(300);
     }
-
+    
     public void login(ActionEvent actionEvent) {
         this.session = null;
         this.transaction = null;
@@ -43,39 +41,31 @@ public class LoginBean implements Serializable {
 
         try {
             UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-
             usuario = usuarioDao.verByUsuario(this.session, this.tusuario);
-
             if (usuario != null) {
                 if (usuario.getClave().equals(Encrypt.sha512(this.clave))) {
                     loggedIn = true;
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.tusuario);
-                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.tusuario);
+                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.tusuario);                    
                     ruta = MyUtil.basepathlogin() + "views/index.xhtml";
                 }
             } else {
                 loggedIn = false;
                 msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Usuario y/o Clave es incorrecta");
             }
-
             this.transaction.commit();
-
             this.tusuario = null;
             this.clave = null;
-
             FacesContext.getCurrentInstance().addMessage(null, msg);
             context.addCallbackParam("loggedIn", loggedIn);
             context.addCallbackParam("ruta", ruta);
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-
         } finally {
             if (this.session != null) {
                 this.session.close();
@@ -88,10 +78,8 @@ public class LoginBean implements Serializable {
         String ruta = MyUtil.basepathlogin() + "login.xhtml";
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext facescontext = FacesContext.getCurrentInstance();
-
         HttpSession sesion = (HttpSession) facescontext.getExternalContext().getSession(false);
         sesion.invalidate();
-
         context.addCallbackParam("loggetOut", true);
         context.addCallbackParam("ruta", ruta);
     }

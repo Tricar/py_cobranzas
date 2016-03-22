@@ -121,19 +121,13 @@ public class PerfilBean implements Serializable {
         this.transaction = null;
 
         try {
-
             PerfilDaoImpl perfilDao = new PerfilDaoImpl();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             this.perfil = perfilDao.verByCodigo(this.session, codigoUsuario);
-
             this.transaction.commit();
-
             RequestContext.getCurrentInstance().update("frmEditarPerfil:panelEditarPerfil");
             RequestContext.getCurrentInstance().execute("PF('dialogoEditarPerfil').show()");
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -151,19 +145,13 @@ public class PerfilBean implements Serializable {
         this.transaction = null;
 
         try {
-
             PerfilDaoImpl perfilDao = new PerfilDaoImpl();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             this.perfil = perfilDao.verByCodigo(this.session, codigoUsuario);
-
             this.transaction.commit();
-
             RequestContext.getCurrentInstance().update("frmEliminarPerfil");
             RequestContext.getCurrentInstance().execute("PF('dialogoEliminarPerfil').show()");
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();

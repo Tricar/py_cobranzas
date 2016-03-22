@@ -13,21 +13,20 @@ import org.hibernate.Session;
  *
  * @author master
  */
-public class PagosDaoImp implements PagosDao{
-    
+public class PagosDaoImp implements PagosDao {
+
     @Override
     public List<Pagos> mostrarPagos() {
         Session session = null;
         List<Pagos> lista = null;
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Pagos");
-            lista = (List<Pagos>)query.list();
-        }catch (HibernateException e){
+            lista = (List<Pagos>) query.list();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -39,16 +38,15 @@ public class PagosDaoImp implements PagosDao{
         Session session = null;
         List<Pagos> lista = null;
         Integer idcred = credito.getIdventa();
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Pagos where letras.credito.idventa=:v order by fecreg desc");
             query.setParameter("v", idcred);
-            lista = (List<Pagos>)query.list();
-        }catch (HibernateException e){
+            lista = (List<Pagos>) query.list();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -60,16 +58,15 @@ public class PagosDaoImp implements PagosDao{
         Session session = null;
         List<Pagos> lista = null;
         Integer idletra = letra.getIdletras();
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Pagos WHERE idletras=:v");
-            query.setParameter("v",idletra);
-            lista = (List<Pagos>)query.list();
-        }catch (HibernateException e){
+            query.setParameter("v", idletra);
+            lista = (List<Pagos>) query.list();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -84,12 +81,11 @@ public class PagosDaoImp implements PagosDao{
             session.beginTransaction();
             session.save(pago);
             session.getTransaction().commit();
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -101,7 +97,20 @@ public class PagosDaoImp implements PagosDao{
     }
 
     @Override
-    public void eliminarPago(Pagos pagos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void eliminarPago(Pagos pago) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.delete(pago);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 }

@@ -50,6 +50,9 @@ public class Credito implements java.io.Serializable {
     private String vehi;
     private Set letrases = new HashSet(0);
     private String adicional;
+    private String guia;
+    private String comprobante;
+    private String comprobante2;
 
     public Credito() {
     }
@@ -65,7 +68,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, Anexo aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal deudactual, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi, String adicional) {
+    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, Anexo aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal deudactual, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi, String adicional, String guia, String comprobante, String comprobante2) {
         this.idventa = idventa;
         this.anexoByIdaval = anexoByIdaval;
         this.anexoByCodven = anexoByCodven;
@@ -92,6 +95,9 @@ public class Credito implements java.io.Serializable {
         this.vehi = vehi;
         this.letrases = letrases;
         this.adicional = adicional;
+        this.guia = guia;
+        this.comprobante = comprobante;
+        this.comprobante2 = comprobante2;
     }
 
     @Id
@@ -327,6 +333,33 @@ public class Credito implements java.io.Serializable {
 
     public void setAdicional(String adicional) {
         this.adicional = adicional;
+    }
+    
+    @Column(name = "guia", length = 50)
+    public String getGuia() {
+        return this.guia;
+    }
+
+    public void setGuia(String guia) {
+        this.guia = guia;
+    }
+    
+    @Column(name = "comprobante", length = 50)
+    public String getComprobante() {
+        return this.comprobante;
+    }
+
+    public void setComprobante(String comprobante) {
+        this.comprobante = comprobante;
+    }
+    
+    @Column(name = "comprobante2", length = 50)
+    public String getComprobante2() {
+        return this.comprobante2;
+    }
+
+    public void setComprobante2(String comprobante2) {
+        this.comprobante2 = comprobante2;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "credito")

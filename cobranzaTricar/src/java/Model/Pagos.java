@@ -28,6 +28,7 @@ public class Pagos implements java.io.Serializable {
     private Date fecreg;
     private String descripcion;
     private String tipo;
+    private Integer usuario;
 
     public Pagos() {
     }
@@ -36,7 +37,7 @@ public class Pagos implements java.io.Serializable {
         this.idpagos = idpagos;
     }
 
-    public Pagos(Integer idpagos, Letras letras, String operacion, BigDecimal monto, Date fecreg, String descripcion, String tipo) {
+    public Pagos(Integer idpagos, Letras letras, String operacion, BigDecimal monto, Date fecreg, String descripcion, String tipo, Integer usuario) {
         this.idpagos = idpagos;
         this.letras = letras;
         this.operacion = operacion;
@@ -44,6 +45,7 @@ public class Pagos implements java.io.Serializable {
         this.fecreg = fecreg;
         this.descripcion = descripcion;
         this.tipo=tipo;
+        this.usuario=usuario;
     }
 
     @Id
@@ -112,6 +114,16 @@ public class Pagos implements java.io.Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+    
+    @Column(name = "usuario")
+    public Integer getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(Integer usuario) {
+        this.usuario = usuario;
+    }
+
 
     @Override
     public boolean equals(Object other) {
