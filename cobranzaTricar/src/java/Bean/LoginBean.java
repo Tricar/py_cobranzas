@@ -38,7 +38,6 @@ public class LoginBean implements Serializable {
         FacesMessage msg = null;
         boolean loggedIn = false;
         String ruta = "";
-
         try {
             UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
@@ -83,6 +82,8 @@ public class LoginBean implements Serializable {
         context.addCallbackParam("loggetOut", true);
         context.addCallbackParam("ruta", ruta);
     }
+    
+    
     
     public String empleado() {
         return "/sistema/empleado";

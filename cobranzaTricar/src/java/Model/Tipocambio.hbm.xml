@@ -12,6 +12,9 @@
     </property>
     <property name="fecreg" type="timestamp">
       <column length="23" name="fecreg" not-null="true"/>
-    </property>    
+    </property>
+    <property name="modelo" type="java.lang.Integer">
+            <column name="modelo" />
+    </property>
   </class>
 </hibernate-mapping>

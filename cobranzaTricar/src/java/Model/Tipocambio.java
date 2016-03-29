@@ -20,15 +20,17 @@ public class Tipocambio implements java.io.Serializable {
 
     private Integer idtipocambio;
     private BigDecimal tipo;
-    private Date fecreg;    
+    private Date fecreg;
+    private Integer modelo;
 
     public Tipocambio() {
     }
 
-    public Tipocambio(Integer idtipocambio, BigDecimal tipo, Date fecreg) {
+    public Tipocambio(Integer idtipocambio, BigDecimal tipo, Date fecreg, Integer modelo) {
         this.idtipocambio = idtipocambio;
         this.tipo = tipo;
         this.fecreg = fecreg;
+        this.modelo = modelo;
     }    
 
     @Id
@@ -59,6 +61,15 @@ public class Tipocambio implements java.io.Serializable {
 
     public void setFecreg(Date fecreg) {
         this.fecreg = fecreg;
+    }
+    
+    @Column(name = "modelo")
+    public Integer getModelo() {
+        return this.modelo;
+    }
+
+    public void setModelo(Integer modelo) {
+        this.modelo = modelo;
     }
 
     @Override

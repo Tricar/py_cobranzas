@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:o="http://omnifaces.org/ui">
     <h:head>
         <h:outputStylesheet library="css" name="style.css" />
         <title>Gestion de Tipo de Cambio </title>
@@ -29,6 +30,11 @@
                         <p:column headerText="FECHA">
                             <h:outputText value="#{item.fecreg}"/>
                         </p:column>
+                        <p:column headerText="Anexo">                            
+                            <h:outputText value="#{item.modelo}">
+                                <f:converter converterId="avalconverter"/>
+                            </h:outputText>
+                        </p:column>
                         <p:column width="10%" style="text-align: center">
                             <p:commandButton actionListener="#{tipocambioBean.cargarTipocambioEditar(item.idtipocambio)}" icon="ui-icon ui-icon-pencil"/>
                             <p:commandButton actionListener="#{colorBean.cargarColorEliminar(item.idtipocambio)}" icon="ui-icon ui-icon-trash"/>
@@ -37,15 +43,20 @@
                 </h:form>
 
                 <h:form id="formInsertar">
-                    <p:dialog header="Nuevo Color" widgetVar="dlginsertar" modal="true">                        
-                        <p:panelGrid id="panelcrearcolor" columns="3">
-                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{colorBean.colo.color}" 
-                                         style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                    <p:dialog header="Nuevo Tipo" widgetVar="dlginsertar" modal="true">                        
+                        <p:panelGrid id="panelcrearcolor" columns="2">
+                            <p:outputLabel value="Tipo cambio:" />
+                            <p:inputText label="Tipo cambio" value="#{tipocambioBean.tipoc.tipo}" 
+                                         autocomplete="off" >
                                 <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:message for="txtDescripcion"/>
-                            <p:commandButton value="Registrar Color" icon="b-new" ajax="false" actionListener="#{colorBean.registrar()}" />
+                            </p:inputText>                            
+                            <p:outputLabel value="Buscar Aval:" />
+                            <p:autoComplete value="#{tipocambioBean.tipoc.modelo}"
+                                    completeMethod="#{anexoBean.filtrarAval}" var="aval"
+                                    itemLabel="#{aval.nombres}" itemValue="#{aval.idanexo}" multiple="true">                                
+                                <p:ajax event="itemSelect" process="@form" />                        
+                            </p:autoComplete>
+                            <p:commandButton value="Registrar Color" icon="b-new" ajax="false" actionListener="#{tipocambioBean.registrar()}" />
                         </p:panelGrid>
                     </p:dialog>
                 </h:form>

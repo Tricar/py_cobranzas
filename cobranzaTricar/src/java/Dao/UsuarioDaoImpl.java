@@ -30,10 +30,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
     public Usuario verByUsuario(Session session, String usuario) throws Exception {
         String hql = "FROM Usuario WHERE usuario=:usuario";
         Query query = session.createQuery(hql);
-        query.setParameter("usuario", usuario);
-        
-        Usuario tusuario = (Usuario) query.uniqueResult();
-        
+        query.setParameter("usuario", usuario);        
+        Usuario tusuario = (Usuario) query.uniqueResult();        
         return tusuario;
     }
 
@@ -42,10 +40,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
         String hql = "FROM Usuario WHERE idusuario!=:idusuario and usuario=:usuario";
         Query query = session.createQuery(hql);
         query.setParameter("idusuario", idusuario);
-        query.setParameter("usuario", usuario);
-        
-        Usuario tusuario = (Usuario) query.uniqueResult();
-        
+        query.setParameter("usuario", usuario);        
+        Usuario tusuario = (Usuario) query.uniqueResult();        
         return tusuario;
     }
 

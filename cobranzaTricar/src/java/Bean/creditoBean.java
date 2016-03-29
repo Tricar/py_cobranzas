@@ -81,243 +81,7 @@ public class creditoBean implements Serializable {
     private boolean valuei2;
 
     public creditoBean() {
-    }
-
-    public Credito getCredito() {
-        return credito;
-    }
-
-    public void setCredito(Credito credito) {
-        this.credito = credito;
-    }
-
-    public Vehiculo getVehiculo() {
-        return vehiculo;
-    }
-
-    public Letras getLetrasa() {
-        return letrasa;
-    }
-
-    public void setLetrasa(Letras letrasa) {
-        this.letrasa = letrasa;
-    }
-
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
-    }
-
-    public List<Credito> getVentas() {
-        CreditoDao linkdao = new CreditoDaoImp();
-        creditos = linkdao.mostrarVentas();
-        return creditos;
-    }
-
-    public List<Credito> getCreditos() {
-        return creditos;
-    }
-
-    public List<Letras> getLetrascredito() {
-        LetrasDao linkdao = new LetrasDaoImplements();
-        letrascredito = linkdao.mostrarLetrasXCred(credito);
-        return letrascredito;
-    }
-
-    public List<Credito> getFiltradafecha() {
-        return filtradafecha;
-    }
-
-    public void setVentas(List<Credito> creditos) {
-        this.creditos = creditos;
-    }
-
-    public LetrasDao getLetras() {
-        return letrasdao;
-    }
-
-    public void setLetras(LetrasDao letrasdao) {
-        this.letrasdao = letrasdao;
-    }
-
-    public Date getFecha1() {
-        return fecha1;
-    }
-
-    public void setFecha1(Date fecha1) {
-        this.fecha1 = fecha1;
-    }
-
-    public Date getFecha2() {
-        return fecha2;
-    }
-
-    public void setFecha2(Date fecha2) {
-        this.fecha2 = fecha2;
-    }
-
-    public List<Letras> getLetraslista() {
-        return letraslista;
-    }
-
-    public void setLetraslista(List<Letras> letraslista) {
-        this.letraslista = letraslista;
-    }
-
-    public Pagos getPago() {
-        return pago;
-    }
-
-    public void setPago(Pagos pago) {
-        this.pago = pago;
-    }
-
-    public Letras getLetra() {
-        return letra;
-    }
-
-    public void setLetra(Letras letra) {
-        this.letra = letra;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public BigDecimal getRes() {
-        return res;
-    }
-
-    public void setRes(BigDecimal res) {
-        this.res = res;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public void setCreditos(List<Credito> creditos) {
-        this.creditos = creditos;
-    }
-
-    public Date getFechafin() {
-        return fechafin;
-    }
-
-    public void setFechafin(Date fechafin) {
-        this.fechafin = fechafin;
-    }
-
-    public BigDecimal getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
-    }
-
-    public BigDecimal getInicia() {
-        return inicia;
-    }
-
-    public void setInicia(BigDecimal inicia) {
-        this.inicia = inicia;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public BigDecimal getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
-    }
-
-    public Credito getCrediton() {
-        return crediton;
-    }
-
-    public void setCrediton(Credito crediton) {
-        this.crediton = crediton;
-    }
-
-    public BigDecimal getIniciapre() {
-        return iniciapre;
-    }
-
-    public void setIniciapre(BigDecimal iniciapre) {
-        this.iniciapre = iniciapre;
-    }
-
-    public int getSw() {
-        return sw;
-    }
-
-    public void setSw(int sw) {
-        this.sw = sw;
-    }
-
-    public String getVehi() {
-        return vehi;
-    }
-
-    public void setVehi(String vehi) {
-        this.vehi = vehi;
-    }
-
-    public String getDescND() {
-        return descND;
-    }
-
-    public void setDescND(String descND) {
-        this.descND = descND;
-    }
-
-    public boolean isValue() {
-        return value;
-    }
-
-    public void setValue(boolean value) {
-        this.value = value;
-    }
-
-    public boolean isValue2() {
-        return value2;
-    }
-
-    public void setValue2(boolean value2) {
-        this.value2 = value2;
-    }
-
-    public boolean isValuei() {
-        return valuei;
-    }
-
-    public void setValuei(boolean valuei) {
-        this.valuei = valuei;
-    }
-
-    public boolean isValuei2() {
-        return valuei2;
-    }
-
-    public void setValuei2(boolean valuei2) {
-        this.valuei2 = valuei2;
-    }
+    }    
 
     public void resultadoSaldo() {
         res = precio.subtract(credito.getInicial());
@@ -1097,5 +861,241 @@ public class creditoBean implements Serializable {
         } else {
             valuei2 = true;
         }
+    }
+    
+    public Credito getCredito() {
+        return credito;
+    }
+
+    public void setCredito(Credito credito) {
+        this.credito = credito;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public Letras getLetrasa() {
+        return letrasa;
+    }
+
+    public void setLetrasa(Letras letrasa) {
+        this.letrasa = letrasa;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public List<Credito> getVentas() {
+        CreditoDao linkdao = new CreditoDaoImp();
+        creditos = linkdao.mostrarVentas();
+        return creditos;
+    }
+
+    public List<Credito> getCreditos() {
+        return creditos;
+    }
+
+    public List<Letras> getLetrascredito() {
+        LetrasDao linkdao = new LetrasDaoImplements();
+        letrascredito = linkdao.mostrarLetrasXCred(credito);
+        return letrascredito;
+    }
+
+    public List<Credito> getFiltradafecha() {
+        return filtradafecha;
+    }
+
+    public void setVentas(List<Credito> creditos) {
+        this.creditos = creditos;
+    }
+
+    public LetrasDao getLetras() {
+        return letrasdao;
+    }
+
+    public void setLetras(LetrasDao letrasdao) {
+        this.letrasdao = letrasdao;
+    }
+
+    public Date getFecha1() {
+        return fecha1;
+    }
+
+    public void setFecha1(Date fecha1) {
+        this.fecha1 = fecha1;
+    }
+
+    public Date getFecha2() {
+        return fecha2;
+    }
+
+    public void setFecha2(Date fecha2) {
+        this.fecha2 = fecha2;
+    }
+
+    public List<Letras> getLetraslista() {
+        return letraslista;
+    }
+
+    public void setLetraslista(List<Letras> letraslista) {
+        this.letraslista = letraslista;
+    }
+
+    public Pagos getPago() {
+        return pago;
+    }
+
+    public void setPago(Pagos pago) {
+        this.pago = pago;
+    }
+
+    public Letras getLetra() {
+        return letra;
+    }
+
+    public void setLetra(Letras letra) {
+        this.letra = letra;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public BigDecimal getRes() {
+        return res;
+    }
+
+    public void setRes(BigDecimal res) {
+        this.res = res;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setCreditos(List<Credito> creditos) {
+        this.creditos = creditos;
+    }
+
+    public Date getFechafin() {
+        return fechafin;
+    }
+
+    public void setFechafin(Date fechafin) {
+        this.fechafin = fechafin;
+    }
+
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
+
+    public BigDecimal getInicia() {
+        return inicia;
+    }
+
+    public void setInicia(BigDecimal inicia) {
+        this.inicia = inicia;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(BigDecimal saldo) {
+        this.saldo = saldo;
+    }
+
+    public Credito getCrediton() {
+        return crediton;
+    }
+
+    public void setCrediton(Credito crediton) {
+        this.crediton = crediton;
+    }
+
+    public BigDecimal getIniciapre() {
+        return iniciapre;
+    }
+
+    public void setIniciapre(BigDecimal iniciapre) {
+        this.iniciapre = iniciapre;
+    }
+
+    public int getSw() {
+        return sw;
+    }
+
+    public void setSw(int sw) {
+        this.sw = sw;
+    }
+
+    public String getVehi() {
+        return vehi;
+    }
+
+    public void setVehi(String vehi) {
+        this.vehi = vehi;
+    }
+
+    public String getDescND() {
+        return descND;
+    }
+
+    public void setDescND(String descND) {
+        this.descND = descND;
+    }
+
+    public boolean isValue() {
+        return value;
+    }
+
+    public void setValue(boolean value) {
+        this.value = value;
+    }
+
+    public boolean isValue2() {
+        return value2;
+    }
+
+    public void setValue2(boolean value2) {
+        this.value2 = value2;
+    }
+
+    public boolean isValuei() {
+        return valuei;
+    }
+
+    public void setValuei(boolean valuei) {
+        this.valuei = valuei;
+    }
+
+    public boolean isValuei2() {
+        return valuei2;
+    }
+
+    public void setValuei2(boolean valuei2) {
+        this.valuei2 = valuei2;
     }
 }
