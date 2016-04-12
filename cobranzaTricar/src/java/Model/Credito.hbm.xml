@@ -8,15 +8,15 @@
             <column name="idventa" />
             <generator class="identity" />
         </id>
-        <many-to-one name="anexoByIdaval" class="Model.Anexo" fetch="select">
+        <property name="anexoByIdaval" type="java.lang.Integer">
             <column name="idaval" />
-        </many-to-one>
-        <many-to-one name="anexoByCodven" class="Model.Anexo" fetch="select">
+        </property>
+        <property name="anexoByCodven" type="java.lang.Integer">
             <column name="codven" not-null="true" />
-        </many-to-one>
-        <many-to-one name="anexoByVerificado" class="Model.Anexo" fetch="select">
+        </property>
+        <property name="anexoByVerificado" type="java.lang.Integer">
             <column name="verificado" />
-        </many-to-one>
+        </property>
         <many-to-one name="anexoByIdanexo" class="Model.Anexo" fetch="select">
             <column name="idanexo" not-null="true" />
         </many-to-one>
@@ -38,9 +38,9 @@
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" not-null="true" />
         </property>
-        <many-to-one name="aprobadox" class="Model.Anexo" fetch="select">
+        <property name="aprobadox" type="java.lang.Integer">
             <column name="aprobadox" not-null="true" />
-        </many-to-one>
+        </property>
         <property name="tienda" type="string">
             <column name="tienda" length="2" />
         </property>

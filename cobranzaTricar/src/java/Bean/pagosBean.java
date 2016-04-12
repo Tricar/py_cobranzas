@@ -36,7 +36,7 @@ public class pagosBean implements Serializable {
     private Credito credito = new Credito();
     private BigDecimal montopago = new BigDecimal(BigInteger.ZERO);
     private String descripcion;
-    private creditoBean credbean = new creditoBean();
+    private final creditoBean credbean = new creditoBean();
     public List<Letras> letraslista = new ArrayList();
     public LoginBean loginbean = new LoginBean();
 

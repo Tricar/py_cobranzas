@@ -86,5 +86,16 @@
                 </h:form>
             </ui:define>
         </ui:composition>
+        
+        <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
+        <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
+            completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
+            itemLabel="#{v.serie}" itemValue="#{v}" 
+            required="true" requiredMessage="Elija un vehículo">
+            <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
+            <p:ajax event="mousemove" update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCredito()}"/>
+        </p:autoComplete>
+        
+        
     </h:body>
 </html>

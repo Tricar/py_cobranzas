@@ -1,14 +1,12 @@
 
-import Dao.CreditoDao;
-import Dao.CreditoDaoImp;
-import Dao.LetrasDao;
-import Dao.LetrasDaoImplements;
+import Dao.AnexoDao;
+import Dao.AnexoDaoImplements;
+import Dao.OcupacionDao;
+import Dao.OcupacionDaoImpl;
 import Model.Anexo;
-import Model.Credito;
-import Model.Letras;
+import Model.Ocupacion;
 import java.util.ArrayList;
 import java.util.List;
-import utiles.dbManager;
 
 public class Prueba {
 
@@ -16,27 +14,23 @@ public class Prueba {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-//        Credito cred = new Credito();
-//        CreditoDao creddao = new CreditoDaoImp();
-//        cred = creddao.cargarxCodigoEstado("S1506030", "AP");
-//        System.out.println("Anexo : "+cred.getAnexoByIdanexo().getNombres() );
-//        List<Letras> letritas = new ArrayList();
-//        LetrasDao letrasdao = new LetrasDaoImplements();
-//        letritas= letrasdao.mostrarLetrasXCred(cred);
-//        long mili = letritas.get(0).getFecven().getTime();
-//        System.out.println("Fecha venc: "+letritas.get(0).getFecven());
-//        long mil2 = letritas.get(0).getFecini().getTime();
-//        System.out.println("Fecha inicio: "+letritas.get(0).getFecini());
-//        long diff = mili - mil2;
-//        long diffdays = diff / (24*60*60*1000);
-//        System.out.println("Dife : "+diffdays);
-        dbManager conn = new dbManager();
-        conn.getConnection();
-        System.out.println(conn.getConnection());
-        Credito objcredito = new Credito();
-        Letras objletras = new Letras();
         Anexo objanexo = new Anexo();
-        
+        AnexoDao anedao = new AnexoDaoImplements();
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        List<Ocupacion> lista = new ArrayList();
+        objanexo = anedao.cargarClientexDoc("44182252", "CN", "AD");
+        System.out.println("Anexo cargado:"+objanexo.getNombres());
+        Ocupacion ocupacion = new Ocupacion();
+        ocupacion.setIdanexo(objanexo);
+        ocupacion.setIdocupacion(1);
+        ocupacion.setTipo("IN");
+        ocupacion.setClase("FR");
+        ocupacion.setDescripcion("cajero en banca");
+        ocudao.insertarOcupacion(ocupacion);
+        lista = ocudao.ocupacionesxIdanexo(objanexo);
+        for (int i = 0; i < lista.size(); i++) {
+                Ocupacion get = lista.get(i);
+                System.out.println("Lista: "+get.getDescripcion());
+            }
     }
 }

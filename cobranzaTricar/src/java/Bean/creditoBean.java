@@ -79,9 +79,18 @@ public class creditoBean implements Serializable {
     private boolean value2;
     private boolean valuei;
     private boolean valuei2;
+    private Anexo anexo;
 
     public creditoBean() {
-    }    
+    }
+    
+    public void resultadoId(){
+        if (credito.getAnexoByIdanexo() != (null)){
+            anexo = credito.getAnexoByIdanexo();
+        } else {
+            anexo = null;
+        }
+    }
 
     public void resultadoSaldo() {
         res = precio.subtract(credito.getInicial());
@@ -149,9 +158,7 @@ public class creditoBean implements Serializable {
                     BigDecimal interes = new BigDecimal(0);
                     credito.setEstado("AP");
                     BigDecimal cien = new BigDecimal(100);
-                    if (value2) {
-                        credito.setAnexoByIdaval(credito.getAnexoByIdanexo());
-                    }
+                    credito.setEmpresa("CA");
                     creditodao.insertarVenta(credito);
                     interes = (credito.getInteres().multiply(nletras)).divide(cien);
                     Date fechaini = new Date();
@@ -720,9 +727,6 @@ public class creditoBean implements Serializable {
                 RequestContext.getCurrentInstance().execute("PF('dlgaprobar').show()");
             } else {
                 try {
-                    if (value2) {
-                        credito.setAnexoByIdaval(credito.getAnexoByIdanexo());
-                    }
                     for (int i = 0; i < credito.getNletras(); i++) {
                         letra = (Letras) letrascredito.get(i);
                         letra.setFecini(credito.getFechareg());
@@ -1097,5 +1101,13 @@ public class creditoBean implements Serializable {
 
     public void setValuei2(boolean valuei2) {
         this.valuei2 = valuei2;
+    }
+
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
     }
 }

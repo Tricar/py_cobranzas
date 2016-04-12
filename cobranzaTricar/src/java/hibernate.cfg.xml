@@ -20,5 +20,6 @@
     <mapping resource="Model/Color.hbm.xml"/>
     <mapping resource="Model/Usuario.hbm.xml"/>
     <mapping resource="Model/Tipocambio.hbm.xml"/>
+    <mapping resource="Model/Ocupacion.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

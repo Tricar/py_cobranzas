@@ -341,4 +341,22 @@ public class AnexoDaoImplements implements AnexoDao {
         }
         return anexito;
     }
+
+    @Override
+    public void insertar(Anexo anexo) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(anexo);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }

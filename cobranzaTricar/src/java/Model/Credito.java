@@ -25,9 +25,9 @@ import javax.persistence.TemporalType;
 public class Credito implements java.io.Serializable {
 
     private Integer idventa;
-    private Anexo anexoByIdaval;
-    private Anexo anexoByCodven;
-    private Anexo anexoByVerificado;
+    private Integer anexoByIdaval;
+    private Integer anexoByCodven;
+    private Integer anexoByVerificado;
     private Anexo anexoByIdanexo;
     private Vehiculo vehiculo;
     private Modelo modelo;
@@ -35,7 +35,7 @@ public class Credito implements java.io.Serializable {
     private String condicionpago;
     private Integer nletras;
     private Date fechareg;
-    private Anexo aprobadox;
+    private Integer aprobadox;
     private String tienda;
     private String empresa;
     private BigDecimal precio;
@@ -57,7 +57,7 @@ public class Credito implements java.io.Serializable {
     public Credito() {
     }
 
-    public Credito(Integer idventa, Anexo anexoByCodven, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Date fechareg, BigDecimal precio) {
+    public Credito(Integer idventa, Integer anexoByCodven, Anexo anexoByIdanexo, Vehiculo vehiculo, String liqventa, String condicionpago, Date fechareg, BigDecimal precio) {
         this.idventa = idventa;
         this.anexoByCodven = anexoByCodven;
         this.anexoByIdanexo = anexoByIdanexo;
@@ -68,7 +68,7 @@ public class Credito implements java.io.Serializable {
         this.precio = precio;
     }
 
-    public Credito(Integer idventa, Anexo anexoByIdaval, Anexo anexoByCodven, Anexo anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, Anexo aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal deudactual, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi, String adicional, String guia, String comprobante, String comprobante2) {
+    public Credito(Integer idventa, Integer anexoByIdaval, Integer anexoByCodven, Integer anexoByVerificado, Anexo anexoByIdanexo, Vehiculo vehiculo, Modelo modelo, String liqventa, String condicionpago, Integer nletras, Date fechareg, Integer aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal totaldeuda, BigDecimal deudactual, BigDecimal interes, Boolean cronograma, Boolean contrato, Set letrases, String estado, String vehi, String adicional, String guia, String comprobante, String comprobante2) {
         this.idventa = idventa;
         this.anexoByIdaval = anexoByIdaval;
         this.anexoByCodven = anexoByCodven;
@@ -111,33 +111,30 @@ public class Credito implements java.io.Serializable {
         this.idventa = idventa;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idaval")
-    public Anexo getAnexoByIdaval() {
+    @Column(name = "idaval")
+    public Integer getAnexoByIdaval() {
         return this.anexoByIdaval;
     }
 
-    public void setAnexoByIdaval(Anexo anexoByIdaval) {
+    public void setAnexoByIdaval(Integer anexoByIdaval) {
         this.anexoByIdaval = anexoByIdaval;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "codven", nullable = false)
-    public Anexo getAnexoByCodven() {
+    @JoinColumn(name = "codven")
+    public Integer getAnexoByCodven() {
         return this.anexoByCodven;
     }
 
-    public void setAnexoByCodven(Anexo anexoByCodven) {
+    public void setAnexoByCodven(Integer anexoByCodven) {
         this.anexoByCodven = anexoByCodven;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "verificado")
-    public Anexo getAnexoByVerificado() {
+    public Integer getAnexoByVerificado() {
         return this.anexoByVerificado;
     }
 
-    public void setAnexoByVerificado(Anexo anexoByVerificado) {
+    public void setAnexoByVerificado(Integer anexoByVerificado) {
         this.anexoByVerificado = anexoByVerificado;
     }
 
@@ -208,13 +205,12 @@ public class Credito implements java.io.Serializable {
         this.fechareg = fechareg;
     }
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "aprobadox", nullable = false)    
-    public Anexo getAprobadox() {
+    @Column(name = "aprobadox")    
+    public Integer getAprobadox() {
         return this.aprobadox;
     }
 
-    public void setAprobadox(Anexo aprobadox) {
+    public void setAprobadox(Integer aprobadox) {
         this.aprobadox = aprobadox;
     }
 
