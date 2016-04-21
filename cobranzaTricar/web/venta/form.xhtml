@@ -21,12 +21,11 @@
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
                     <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito"/>
-                    <p:outputLabel value="Vendedor:" for="vendedor"/>
-                    <p:autoComplete id="vendedor" value="#{creditoBean.credito.anexoByCodven}"
-                                    completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
-                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo.idanexo}" 
-                                    required="true" requiredMessage="Ingrese vendedor">
-                        <p:ajax  event="itemSelect" process="@form" />                        
+                    <p:outputLabel value="Buscar Verificador:" />
+                    <p:autoComplete value="#{creditoBean.credito.codven}"
+                                    completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
+                                    itemLabel="#{vend.nombres}" itemValue="#{vend.idanexo}">                                
+                        <p:ajax event="itemSelect" process="@form" />                        
                     </p:autoComplete>
                     <p:outputLabel value="Tienda:" for="txttienda"/>
                     <p:selectOneMenu id="txttienda" value="#{creditoBean.credito.tienda}" required="true" requiredMessage="Seleccione la Tienda">
@@ -41,7 +40,7 @@
                                     required="true" requiredMessage="Ingrese cliente">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                         <p:ajax event="mousemove" update="precio lblinicial res txtinicial"  listener="#{creditoBean.precioModeloCredito()}"/>
-                        <p:ajax event="itemSelect" listener="#{ocupacionBean.cargarIngresos(creditoBean.credito.anexoByIdanexo)}"/>
+                        <p:ajax event="itemSelect" listener="#{ocupacionBean.cargarIngresos(creditoBean.credito.anexoByIdanexo)}" update="@form"/>
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                     </p:autoComplete>
@@ -144,11 +143,11 @@
                         <f:selectItem itemLabel="5" itemValue='5'/>
                         <f:selectItem itemLabel="0" itemValue='0'/>                                                                                                
                     </p:selectOneMenu>
-                    <p:outputLabel value="Verificado:" for="verificado"/>
-                    <p:autoComplete id="verificado" value="#{creditoBean.credito.anexoByVerificado}"
-                                    completeMethod="#{anexoBean.filtrarGestor}" var="veri"
-                                    itemLabel="#{veri.nombres}" itemValue="#{veri.idanexo}"
-                                    required="true" requiredMessage="Elija un verificador">                        
+                    <p:outputLabel value="Buscar Verificador:" />
+                    <p:autoComplete value="#{creditoBean.credito.verificado}"
+                                    completeMethod="#{anexoBean.filtrarGestor}" var="verif"
+                                    itemLabel="#{verif.nombres}" itemValue="#{verif.idanexo}">                                
+                        <p:ajax event="itemSelect" process="@form" />                        
                     </p:autoComplete>
                     <p:outputLabel value="Aprobado:" for="aprobado"/>
                     <p:autoComplete id="aprobado" value="#{creditoBean.credito.aprobadox}"

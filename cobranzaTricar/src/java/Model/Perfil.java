@@ -1,5 +1,5 @@
 package Model;
-// Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1
+// Generated 21/04/2016 10:03:10 AM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,9 +21,9 @@ public class Perfil implements java.io.Serializable {
     private Integer idperfil;
     private String descripcion;
     private Boolean sistema;
-    private Boolean sisUsu;
-    private Boolean sisEmp;
     private Boolean sisVende;
+    private Boolean sisEmp;
+    private Boolean sisUsu;
     private Boolean sisPer;
     private Boolean mante;
     private Boolean manCli;
@@ -43,12 +43,12 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisEmp, Boolean sisVende, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.sistema = sistema;
+        this.sisVende = sisVende;
         this.sisEmp = sisEmp;
-        this.sisEmp = sisVende;
         this.sisUsu = sisUsu;
         this.sisPer = sisPer;
         this.mante = mante;
@@ -92,15 +92,15 @@ public class Perfil implements java.io.Serializable {
         this.sistema = sistema;
     }
 
-    @Column(name = "sisUsu")
-    public Boolean getSisUsu() {
-        return this.sisUsu;
+    @Column(name = "sisVende")
+    public Boolean getSisVende() {
+        return this.sisVende;
     }
 
-    public void setSisUsu(Boolean sisUsu) {
-        this.sisUsu = sisUsu;
+    public void setSisVende(Boolean sisVende) {
+        this.sisVende = sisVende;
     }
-    
+
     @Column(name = "sisEmp")
     public Boolean getSisEmp() {
         return this.sisEmp;
@@ -109,14 +109,14 @@ public class Perfil implements java.io.Serializable {
     public void setSisEmp(Boolean sisEmp) {
         this.sisEmp = sisEmp;
     }
-    
-    @Column(name = "sisVende")
-    public Boolean getSisVende() {
-        return this.sisVende;
+
+    @Column(name = "sisUsu")
+    public Boolean getSisUsu() {
+        return this.sisUsu;
     }
 
-    public void setSisVende(Boolean sisVende) {
-        this.sisVende = sisVende;
+    public void setSisUsu(Boolean sisUsu) {
+        this.sisUsu = sisUsu;
     }
 
     @Column(name = "sisPer")
@@ -199,7 +199,7 @@ public class Perfil implements java.io.Serializable {
     public void setVenReg(Boolean venReg) {
         this.venReg = venReg;
     }
-    
+
     @Column(name = "venCon")
     public Boolean getVenCon() {
         return this.venCon;
@@ -231,4 +231,5 @@ public class Perfil implements java.io.Serializable {
                 ? (getClass().hashCode() + idperfil.hashCode())
                 : super.hashCode();
     }
+
 }

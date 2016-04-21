@@ -21,7 +21,7 @@ public class Prueba {
         objanexo = anedao.cargarClientexDoc("44182252", "CN", "AD");
         System.out.println("Anexo cargado:"+objanexo.getNombres());
         Ocupacion ocupacion = new Ocupacion();
-        ocupacion.setIdanexo(objanexo);
+        ocupacion.setAnexo(objanexo);
         ocupacion.setIdocupacion(1);
         ocupacion.setTipo("IN");
         ocupacion.setClase("FR");

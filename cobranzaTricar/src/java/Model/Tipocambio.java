@@ -1,5 +1,5 @@
 package Model;
-// Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1
+// Generated 21/04/2016 10:03:10 AM by Hibernate Tools 4.3.1
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -26,12 +26,16 @@ public class Tipocambio implements java.io.Serializable {
     public Tipocambio() {
     }
 
+    public Tipocambio(Integer idtipocambio) {
+        this.idtipocambio = idtipocambio;
+    }
+
     public Tipocambio(Integer idtipocambio, BigDecimal tipo, Date fecreg, Integer modelo) {
         this.idtipocambio = idtipocambio;
         this.tipo = tipo;
         this.fecreg = fecreg;
         this.modelo = modelo;
-    }    
+    }
 
     @Id
 
@@ -44,7 +48,7 @@ public class Tipocambio implements java.io.Serializable {
         this.idtipocambio = idtipocambio;
     }
 
-    @Column(name = "tipo", nullable = false, precision = 17, scale = 2)
+    @Column(name = "tipo", precision = 17)
     public BigDecimal getTipo() {
         return this.tipo;
     }
@@ -54,7 +58,7 @@ public class Tipocambio implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "fecreg", nullable = false, length = 23)
+    @Column(name = "fecreg", length = 23)
     public Date getFecreg() {
         return this.fecreg;
     }
@@ -62,7 +66,7 @@ public class Tipocambio implements java.io.Serializable {
     public void setFecreg(Date fecreg) {
         this.fecreg = fecreg;
     }
-    
+
     @Column(name = "modelo")
     public Integer getModelo() {
         return this.modelo;
@@ -85,4 +89,5 @@ public class Tipocambio implements java.io.Serializable {
                 ? (getClass().hashCode() + idtipocambio.hashCode())
                 : super.hashCode();
     }
+
 }

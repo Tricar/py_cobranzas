@@ -85,8 +85,8 @@ public class creditoBean implements Serializable {
     }
     
     public void resultadoId(){
-        if (credito.getAnexoByIdanexo() != (null)){
-            anexo = credito.getAnexoByIdanexo();
+        if (credito.getAnexo() != (null)){
+            anexo = credito.getAnexo();
         } else {
             anexo = null;
         }
@@ -104,7 +104,7 @@ public class creditoBean implements Serializable {
         precio Precio = new precio();
         inicial Inicial = new inicial();
         precio = (Precio.precioModelo(credito.getVehiculo().getModelo().getModelo()));
-        String distrito = credito.getAnexoByIdanexo().getDistrito();
+        String distrito = credito.getAnexo().getDistrito();
         String tipov = credito.getVehiculo().getTipovehiculo();
         iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getVehiculo().getModelo().getModelo());
         saldo = precio.subtract(inicia);
@@ -121,7 +121,7 @@ public class creditoBean implements Serializable {
         precio Precio = new precio();
         inicial Inicial = new inicial();
         precio = (Precio.precioModelo(credito.getModelo().getModelo()));
-        String distrito = credito.getAnexoByIdanexo().getDistrito();
+        String distrito = credito.getAnexo().getDistrito();
         String tipov = credito.getVehi();
         iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getModelo().getModelo());
         saldo = precio.subtract(inicia);
@@ -142,7 +142,7 @@ public class creditoBean implements Serializable {
             } else {
                 credito.setInicial(inicia);
             }
-            if (credito.getAnexoByIdanexo().equals(credito.getAnexoByIdaval())) {
+            if (credito.getAnexo().getIdanexo().equals(credito.getIdaval())) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El aval no puede ser el mismo cliente."));
                 return;
             } else {
@@ -220,7 +220,7 @@ public class creditoBean implements Serializable {
             } else {
                 credito.setInicial(inicia);
             }
-            if (credito.getAnexoByIdanexo().equals(credito.getAnexoByIdaval())) {
+            if (credito.getAnexo().getIdanexo().equals(credito.getIdaval())) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El aval no puede ser el mismo cliente."));
             } else {
                 credito.setPrecio(precio);
@@ -282,10 +282,10 @@ public class creditoBean implements Serializable {
         List<Letras> antiguas = new ArrayList();
         Letras nuevas = new Letras();
         crediton.setFechareg(credito.getFechareg());
-        crediton.setAnexoByIdaval(credito.getAnexoByIdaval());
-        crediton.setAnexoByIdanexo(credito.getAnexoByIdanexo());
-        crediton.setAnexoByCodven(credito.getAnexoByCodven());
-        crediton.setAnexoByVerificado(credito.getAnexoByVerificado());
+        crediton.setIdaval(credito.getIdaval());
+        crediton.setAnexo(credito.getAnexo());
+        crediton.setCodven(credito.getCodven());
+        crediton.setVerificado(credito.getVerificado());
         crediton.setCondicionpago(credito.getCondicionpago());
         crediton.setContrato(credito.getContrato());
         crediton.setCronograma(credito.getCronograma());
@@ -645,7 +645,7 @@ public class creditoBean implements Serializable {
             for (int i = 0; i < anexos.size(); i++) {
                 Anexo get = anexos.get(i);
                 for (int j = 0; j < creditosn.size(); j++) {
-                    if (creditosn.get(j).getAnexoByIdanexo().equals(get)) {
+                    if (creditosn.get(j).getAnexo().equals(get)) {
                         Credito get1 = creditosn.get(j);
                         filtradafecha.add(get1);
                     }
@@ -668,7 +668,7 @@ public class creditoBean implements Serializable {
             for (int i = 0; i < anexos.size(); i++) {
                 Anexo get = anexos.get(i);
                 for (int j = 0; j < creditosn.size(); j++) {
-                    if (creditosn.get(j).getAnexoByIdanexo().equals(get)) {
+                    if (creditosn.get(j).getAnexo().equals(get)) {
                         Credito get1 = creditosn.get(j);
                         filtradafecha.add(get1);
                     }
@@ -721,7 +721,7 @@ public class creditoBean implements Serializable {
             RequestContext.getCurrentInstance().update("formAprobar");
             RequestContext.getCurrentInstance().execute("PF('dlgaprobar').show()");
         } else {
-            if (credito.getAnexoByIdanexo().equals(credito.getAnexoByIdaval())) {
+            if (credito.getAnexo().getIdanexo().equals(credito.getIdaval())) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aval no puede ser el mismo cliente", ""));
                 RequestContext.getCurrentInstance().update("formAprobar");
                 RequestContext.getCurrentInstance().execute("PF('dlgaprobar').show()");

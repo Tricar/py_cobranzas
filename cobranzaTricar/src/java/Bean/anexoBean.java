@@ -402,9 +402,9 @@ public class anexoBean implements Serializable {
             if (dni.equals("")) {
                 filtradaCredito = new ArrayList();
             } else {
-                if (credito.getAnexoByIdanexo().getNumdocumento().startsWith(dni)) {
+                if (credito.getAnexo().getNumdocumento().startsWith(dni)) {
                     sw = 1;
-                    anexito = anexodao.cargarxCredito(credito.getAnexoByIdanexo().getIdanexo());
+                    anexito = anexodao.cargarxCredito(credito.getAnexo().getIdanexo());
                     filtradaCredito.add(anexito);
                 }
             }

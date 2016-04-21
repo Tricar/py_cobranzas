@@ -1,5 +1,5 @@
 package Model;
-// Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1
+// Generated 21/04/2016 10:03:10 AM by Hibernate Tools 4.3.1
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -44,8 +44,8 @@ public class Pagos implements java.io.Serializable {
         this.monto = monto;
         this.fecreg = fecreg;
         this.descripcion = descripcion;
-        this.tipo=tipo;
-        this.usuario=usuario;
+        this.tipo = tipo;
+        this.usuario = usuario;
     }
 
     @Id
@@ -78,7 +78,7 @@ public class Pagos implements java.io.Serializable {
         this.operacion = operacion;
     }
 
-    @Column(name = "monto", precision = 17, scale = 2)
+    @Column(name = "monto", precision = 17)
     public BigDecimal getMonto() {
         return this.monto;
     }
@@ -105,7 +105,7 @@ public class Pagos implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+
     @Column(name = "tipo", length = 2)
     public String getTipo() {
         return this.tipo;
@@ -114,7 +114,7 @@ public class Pagos implements java.io.Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
     @Column(name = "usuario")
     public Integer getUsuario() {
         return this.usuario;
@@ -123,7 +123,6 @@ public class Pagos implements java.io.Serializable {
     public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
-
 
     @Override
     public boolean equals(Object other) {

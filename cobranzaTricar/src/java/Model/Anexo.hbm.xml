@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Anexo" table="anexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idanexo" type="int">
@@ -33,7 +33,7 @@
             <column name="sector" length="50" />
         </property>
         <property name="referencia" type="string">
-            <column name="referencia" length="100" />
+            <column name="referencia" length="200" />
         </property>
         <property name="telefono" type="string">
             <column name="telefono" length="10" />
@@ -50,7 +50,7 @@
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" />
         </property>
-        <property name="sexo" type="string">
+        <property name="sexo" type="java.lang.Character">
             <column name="sexo" length="1" />
         </property>
         <property name="apepat" type="string">
@@ -63,7 +63,7 @@
             <column name="email" length="50" />
         </property>
         <property name="tipoanexo" type="string">
-            <column name="tipoanexo" length="2" not-null="true" />
+            <column name="tipoanexo" length="2" />
         </property>
         <property name="codven" type="string">
             <column name="codven" length="10" />
@@ -77,21 +77,21 @@
         <property name="dniconyu" type="string">
             <column name="dniconyu" length="8" />
         </property>
+        <set name="creditos" table="credito" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" not-null="true" />
+            </key>
+            <one-to-many class="Model.Credito" />
+        </set>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idanexo" />
             </key>
             <one-to-many class="Model.Usuario" />
         </set>
-        <set name="creditosForIdanexo" table="credito" inverse="true" lazy="true" fetch="select">
+        <set name="ocupacions" table="ocupacion" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idanexo" not-null="true" />
-            </key>
-            <one-to-many class="Model.Credito" />
-        </set>
-        <set name="ocupaciones" table="ocupacion" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="idanexo" />
             </key>
             <one-to-many class="Model.Ocupacion" />
         </set>

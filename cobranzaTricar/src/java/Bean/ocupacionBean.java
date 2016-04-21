@@ -42,7 +42,7 @@ public class ocupacionBean implements Serializable {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         try {
             OcupacionDao ocupdao = new OcupacionDaoImpl();
-            ocupacion.setIdanexo(anexo);
+            ocupacion.setAnexo(anexo);
             ocupdao.insertarOcupacion(ocupacion);
             ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
             RequestContext.getCurrentInstance().update("formOcupacion");

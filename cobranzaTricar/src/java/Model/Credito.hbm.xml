@@ -1,69 +1,60 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Credito" table="credito" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idventa" type="int">
             <column name="idventa" />
             <generator class="identity" />
         </id>
-        <property name="anexoByIdaval" type="java.lang.Integer">
-            <column name="idaval" />
-        </property>
-        <property name="anexoByCodven" type="java.lang.Integer">
-            <column name="codven" not-null="true" />
-        </property>
-        <property name="anexoByVerificado" type="java.lang.Integer">
-            <column name="verificado" />
-        </property>
-        <many-to-one name="anexoByIdanexo" class="Model.Anexo" fetch="select">
+        <many-to-one name="anexo" class="Model.Anexo" fetch="select">
             <column name="idanexo" not-null="true" />
         </many-to-one>
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
-            <column name="idvehiculo" not-null="true" />
+            <column name="idvehiculo" />
         </many-to-one>
-        <many-to-one name="modelo" class="Model.Modelo" fetch="select">
-            <column name="idmodelo" not-null="true" />
-        </many-to-one>
+        <property name="idaval" type="java.lang.Integer">
+            <column name="idaval" />
+        </property>
         <property name="liqventa" type="string">
-            <column name="liqventa" length="15" not-null="true" unique="true"/>
+            <column name="liqventa" length="15" unique="true" />
         </property>
         <property name="condicionpago" type="string">
             <column name="condicionpago" length="2" not-null="true" />
         </property>
-        <property name="nletras" type="java.lang.Integer">
-            <column name="nletras" />
+        <property name="nletras" type="int">
+            <column name="nletras" not-null="true" />
+        </property>
+        <property name="codven" type="java.lang.Integer">
+            <column name="codven" />
         </property>
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" not-null="true" />
         </property>
-        <property name="aprobadox" type="java.lang.Integer">
-            <column name="aprobadox" not-null="true" />
+        <property name="aprobadox" type="string">
+            <column name="aprobadox" length="10" />
         </property>
         <property name="tienda" type="string">
-            <column name="tienda" length="2" />
+            <column name="tienda" length="2" not-null="true" />
         </property>
         <property name="empresa" type="string">
             <column name="empresa" length="2" />
         </property>
         <property name="precio" type="big_decimal">
-            <column name="precio" precision="17" scale="2" not-null="true" />
+            <column name="precio" precision="17" not-null="true" />
         </property>
         <property name="inicial" type="big_decimal">
-            <column name="inicial" precision="17" scale="2" />
+            <column name="inicial" precision="17" not-null="true" />
         </property>
         <property name="saldo" type="big_decimal">
-            <column name="saldo" precision="17" scale="2" />
-        </property>
-        <property name="totaldeuda" type="big_decimal">
-            <column name="totaldeuda" precision="17" scale="2" />
-        </property>
-        <property name="deudactual" type="big_decimal">
-            <column name="deudactual" precision="17" scale="2" />
+            <column name="saldo" precision="17" />
         </property>
         <property name="interes" type="big_decimal">
-            <column name="interes" precision="17" scale="2" />
+            <column name="interes" precision="17" not-null="true" />
+        </property>
+        <property name="verificado" type="java.lang.Integer">
+            <column name="verificado" />
         </property>
         <property name="cronograma" type="java.lang.Boolean">
             <column name="cronograma" />
@@ -71,12 +62,21 @@
         <property name="contrato" type="java.lang.Boolean">
             <column name="contrato" />
         </property>
+        <property name="totaldeuda" type="big_decimal">
+            <column name="totaldeuda" precision="17" />
+        </property>
+        <property name="deudactual" type="big_decimal">
+            <column name="deudactual" precision="17" />
+        </property>
         <property name="estado" type="string">
-            <column name="estado" length="2" not-null="true" />
+            <column name="estado" length="2" />
         </property>
         <property name="vehi" type="string">
             <column name="vehi" length="3" />
         </property>
+        <many-to-one name="modelo" class="Model.Modelo" fetch="select">
+            <column name="idmodelo" not-null="true" />
+        </many-to-one>
         <property name="adicional" type="string">
             <column name="adicional" length="150" />
         </property>

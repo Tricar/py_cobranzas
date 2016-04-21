@@ -52,8 +52,8 @@
                             </p:inputText>                            
                             <p:outputLabel value="Buscar Aval:" />
                             <p:autoComplete value="#{tipocambioBean.tipoc.modelo}"
-                                    completeMethod="#{anexoBean.filtrarAval}" var="aval"
-                                    itemLabel="#{aval.nombres}" itemValue="#{aval.idanexo}" multiple="true">                                
+                                            completeMethod="#{anexoBean.filtrarVendedor}" var="aval"
+                                    itemLabel="#{aval.nombres}" itemValue="#{aval.idanexo}">                                
                                 <p:ajax event="itemSelect" process="@form" />                        
                             </p:autoComplete>
                             <p:commandButton value="Registrar Color" icon="b-new" ajax="false" actionListener="#{tipocambioBean.registrar()}" />
