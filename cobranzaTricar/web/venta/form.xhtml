@@ -21,11 +21,14 @@
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
                     <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito"/>
-                    <p:outputLabel value="Buscar Verificador:" />
+                    <p:outputLabel value="Buscar Vendedor:" />
                     <p:autoComplete value="#{creditoBean.credito.codven}"
                                     completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
-                                    itemLabel="#{vend.nombres}" itemValue="#{vend.idanexo}">                                
-                        <p:ajax event="itemSelect" process="@form" />                        
+                                    itemLabel="#{vend.nombres}" itemValue="#{vend}">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                        <p:ajax event="itemSelect" process="@form" />
+                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
+                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
                     </p:autoComplete>
                     <p:outputLabel value="Tienda:" for="txttienda"/>
                     <p:selectOneMenu id="txttienda" value="#{creditoBean.credito.tienda}" required="true" requiredMessage="Seleccione la Tienda">
@@ -34,20 +37,20 @@
                         <f:selectItem itemLabel="VX2" itemValue="V2" />                            
                     </p:selectOneMenu>
                     <p:outputLabel value="Buscar cliente:" for="cliente"/>
-                    <p:autoComplete id="cliente" value="#{creditoBean.credito.anexoByIdanexo}"
+                    <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
                                     itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
                                     required="true" requiredMessage="Ingrese cliente">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                         <p:ajax event="mousemove" update="precio lblinicial res txtinicial"  listener="#{creditoBean.precioModeloCredito()}"/>
-                        <p:ajax event="itemSelect" listener="#{ocupacionBean.cargarIngresos(creditoBean.credito.anexoByIdanexo)}" update="@form"/>
+                        <p:ajax event="itemSelect" listener="#{creditoBean.cargarIngreso(creditoBean.credito.anexo)}" update="@form"/>
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                     </p:autoComplete>
                 </p:panelGrid>
                 <p:accordionPanel>
                     <p:tab title="Ingresos">
-                        <p:dataTable var="ocups" value="#{ocupacionBean.ocupsxanexo}" id="tablaing"
+                        <p:dataTable var="ocups" value="#{creditoBean.ocupsxanexo}" 
                                      emptyMessage="No hay nada para mostrar">
                             <p:column headerText="Descripción">
                                 <h:outputText value="#{ocups.descripcion}" />
@@ -60,14 +63,14 @@
                             </p:column>
                             <p:column headerText="Operaciones">                        
                                 <p:commandButton oncomplete="dlginsertar.show()" icon="b-ver">
-                                    <f:setPropertyActionListener target="#{ocupacionBean.ocupacion}" value="#{ocups}" />
+                                    <f:setPropertyActionListener target="#{creditoBean.objocup}" value="#{ocups}" />
                                 </p:commandButton>
-                                <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar" title="Eliminar">
-                                    <f:setPropertyActionListener target="#{ocupacionBean.ocupacion}" value="#{ocups}" />
+                                <p:commandButton actionListener="#{creditoBean.cargarOcup(ocups.idocupacion)}" value="DEL">
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
-                        <p:commandButton value="Agregar ingresos" icon="b-add" oncomplete="dlginsertar.show()"/>                       
+                        <p:commandButton value="Agregar ingresos" icon="b-add" oncomplete="dlginsertar.show()" disabled="#{creditoBean.disableGuardar()}"
+                                         actionListener="#{creditoBean.limpiarIngreso()}"/>                       
                     </p:tab>
                 </p:accordionPanel>
                 <p:panelGrid columns="2">
@@ -76,10 +79,13 @@
                         <p:ajax update="msg12 aval" listener="#{creditoBean.addMessage}" />
                     </p:selectBooleanCheckbox>
                     <p:outputLabel value="Buscar Aval:" for="aval"/>
-                    <p:autoComplete id="aval" value="#{creditoBean.credito.anexoByIdaval}"
+                    <p:autoComplete id="aval" value="#{creditoBean.credito.idaval}"
                                     completeMethod="#{anexoBean.filtrarAval}" var="aval"
-                                    itemLabel="#{aval.nombres}" itemValue="#{aval.idanexo}" 
-                                    required="true" requiredMessage="Ingrese aval" disabled="#{creditoBean.value2}">                        
+                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" 
+                                    required="true" requiredMessage="Ingrese aval" disabled="#{creditoBean.value2}">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
+                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
                         <p:ajax event="itemSelect" process="@form" />                        
                     </p:autoComplete>
                     <p:outputLabel value="Modalidad:" />
@@ -146,15 +152,11 @@
                     <p:outputLabel value="Buscar Verificador:" />
                     <p:autoComplete value="#{creditoBean.credito.verificado}"
                                     completeMethod="#{anexoBean.filtrarGestor}" var="verif"
-                                    itemLabel="#{verif.nombres}" itemValue="#{verif.idanexo}">                                
-                        <p:ajax event="itemSelect" process="@form" />                        
-                    </p:autoComplete>
-                    <p:outputLabel value="Aprobado:" for="aprobado"/>
-                    <p:autoComplete id="aprobado" value="#{creditoBean.credito.aprobadox}"
-                                    completeMethod="#{anexoBean.filtrarJefe}" var="aprob"
-                                    itemLabel="#{aprob.nombres}" itemValue="#{aprob}"
-                                    required="true" requiredMessage="Falta aprobación">
+                                    itemLabel="#{verif.nombres}" itemValue="#{verif}">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                        <p:ajax event="itemSelect" process="@form" />
+                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
+                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
                     </p:autoComplete>
                     <p:outputLabel value="Contrato:" for="rcontrato"/>
                     <p:selectOneRadio id="rcontrato" value="#{creditoBean.credito.contrato}" required="true" requiredMessage="Seleccione una opción">
@@ -175,10 +177,13 @@
                     <p:outputLabel value="Observaciones:"/>
                     <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" required="true" requiredMessage="Ingrese Nota Débito"/>
                 </p:panelGrid>
-                <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCredito()}" icon="b-ok"
-                                 ajax="false">
+                <p:commandButton value="Grabar" actionListener="#{creditoBean.insertarCredito(loginbean.usuario.idusuario)}" icon="b-ok"
+                                 ajax="false" disabled="#{creditoBean.disableGuardar()}">
                 </p:commandButton>
-            </h:form>
+                <p:commandButton value="#{creditoBean.btnaprobar}" actionListener="#{creditoBean.aprobarcredito(loginbean.usuario.idusuario)}" icon="b-ok"
+                                 ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
+                </p:commandButton>
+            </h:form>            
             <h:form>
                 <h:commandButton actionListener="#{reportesBean.exportarLiq(creditoBean.credito.liqventa)}" value="Imp. Liquid." />
             </h:form>
@@ -227,68 +232,70 @@
             <p:dialog  id="dlg1" header="Ingresar datos" showEffect="explode" hideEffect="explode" widgetVar="dlginsertar" modal="true" >
                 <p:panelGrid columns="4">
                     <p:outputLabel value="Tipo:" for="cmbtipo"/>
-                    <p:selectOneMenu id="cmbtipo" value="#{ocupacionBean.ocupacion.tipo}" required="true" requiredMessage="Seleccione Tipo de Ingreso">
+                    <p:selectOneMenu id="cmbtipo" value="#{creditoBean.objocup.tipo}" required="true" requiredMessage="Seleccione Tipo de Ingreso">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
                         <f:selectItem itemLabel="Dependiente" itemValue="DP" />
                         <f:selectItem itemLabel="Independiente" itemValue="IN" />
+                        <p:ajax update="opcbol opcfacbol opcrrhh opccons opctprop opclic opcsunat" listener="#{creditoBean.actualizar()}" process="@this" />
                     </p:selectOneMenu>
                     <p:outputLabel value="Seleccione:" for="cmbclase"/>
-                    <p:selectOneMenu id="cmbclase" value="#{ocupacionBean.ocupacion.clase}" required="true" requiredMessage="Seleccione Tipo">
+                    <p:selectOneMenu id="cmbclase" value="#{creditoBean.objocup.clase}" required="true" requiredMessage="Seleccione Tipo">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
                         <f:selectItem itemLabel="Formal" itemValue="FR" />
                         <f:selectItem itemLabel="Informal" itemValue="IF" />
+                        <p:ajax update="opcbol opcfacbol opcrrhh opccons opctprop opclic opcsunat" listener="#{creditoBean.actualizar()}" process="@this" />
                     </p:selectOneMenu>
                     <p:outputLabel value="Descripción:" for="txtdesc"/>
-                    <p:inputText id="txtdesc" value="#{ocupacionBean.ocupacion.descripcion}" onkeyup="javascript:this.value = this.value.toUpperCase();" required="true" requiredMessage="Ingrese Descripción"/>
+                    <p:inputText id="txtdesc" value="#{creditoBean.objocup.descripcion}" onkeyup="javascript:this.value = this.value.toUpperCase();" required="true" requiredMessage="Ingrese Descripción"/>
                     <p:outputLabel value="Empresa:" for="txtem"/>
-                    <p:inputText id="txtem" value="#{ocupacionBean.ocupacion.empresa}" onkeyup="javascript:this.value = this.value.toUpperCase();" required="true" requiredMessage="Ingrese Descripción"/>
+                    <p:inputText id="txtem" value="#{creditoBean.objocup.empresa}" onkeyup="javascript:this.value = this.value.toUpperCase();" required="true" requiredMessage="Ingrese Descripción"/>
                     <p:outputLabel value="Monto ingresos:" for="txtmonto"/>
-                    <p:inputText id="txtmonto" value="#{ocupacionBean.ocupacion.montoin}" class="money" required="true" requiredMessage="Ingrese Monto"/>
+                    <p:inputText id="txtmonto" value="#{creditoBean.objocup.montoin}" class="money" required="true" requiredMessage="Ingrese Monto"/>
+                    <p:outputLabel value="Constancia posesión:" for="opccons"/>
+                    <p:selectOneRadio id="opccons" value="#{creditoBean.objocup.constancia}" disabled="#{creditoBean.opccons}" requiredMessage="Seleccione una opción">
+                        <f:selectItem itemLabel="SI" itemValue="true"/>
+                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
+                    </p:selectOneRadio>
                     <p:outputLabel value="Boletas de pago:" for="opcbol"/>
-                    <p:selectOneRadio id="opcbol" value="#{ocupacionBean.ocupacion.boletas}" required="true" requiredMessage="Seleccione una opción">
+                    <p:selectOneRadio id="opcbol" value="#{creditoBean.objocup.boletas}" disabled="#{creditoBean.opcbol}" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
                     </p:selectOneRadio>
                     <p:outputLabel value="Fact/Bol:" for="opcfacbol"/>
-                    <p:selectOneRadio id="opcfacbol" value="#{ocupacionBean.ocupacion.facbol}" required="true" requiredMessage="Seleccione una opción">
+                    <p:selectOneRadio id="opcfacbol" value="#{creditoBean.objocup.facbol}" disabled="#{creditoBean.opcfacbol}" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
                     </p:selectOneRadio>
                     <p:outputLabel value="RRHH:" for="opcrrhh"/>
-                    <p:selectOneRadio id="opcrrhh" value="#{ocupacionBean.ocupacion.rrhh}" required="true" requiredMessage="Seleccione una opción">
+                    <p:selectOneRadio id="opcrrhh" value="#{creditoBean.objocup.rrhh}" disabled="#{creditoBean.opcrrhh}" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Constancia posesión:" for="opccons"/>
-                    <p:selectOneRadio id="opccons" value="#{ocupacionBean.ocupacion.constancia}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
+                    </p:selectOneRadio>                    
                     <p:outputLabel value="Tarjeta propiedad:" for="opctprop"/>
-                    <p:selectOneRadio id="opctprop" value="#{ocupacionBean.ocupacion.tpropiedad}" required="true" requiredMessage="Seleccione una opción">
+                    <p:selectOneRadio id="opctprop" value="#{creditoBean.objocup.tpropiedad}" disabled="#{creditoBean.opctprop}" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
                     </p:selectOneRadio>
                     <p:outputLabel value="Licencia:" for="opclic"/>
-                    <p:selectOneRadio id="opclic" value="#{ocupacionBean.ocupacion.licencia}" required="true" requiredMessage="Seleccione una opción">
+                    <p:selectOneRadio id="opclic" value="#{creditoBean.objocup.licencia}" disabled="#{creditoBean.opclic}" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
                     </p:selectOneRadio>
                     <p:outputLabel value="Pagos sunat:" for="opcsunat"/>
-                    <p:selectOneRadio id="opcsunat" value="#{ocupacionBean.ocupacion.pagosunat}" required="true" requiredMessage="Seleccione una opción">
+                    <p:selectOneRadio id="opcsunat" value="#{creditoBean.objocup.pagosunat}" disabled="#{creditoBean.opcsunat}" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
                     </p:selectOneRadio>                    
-                    <p:commandButton actionListener="#{ocupacionBean.insertar(creditoBean.credito.anexoByIdanexo)}"
+                    <p:commandButton actionListener="#{creditoBean.insertarOcupacion(creditoBean.credito.anexo, creditoBean.objocup)}"
                                      value="Guardar" ajax="false"/>
                 </p:panelGrid>
             </p:dialog>
         </h:form>
         <h:form id="formEliminar">
-            <p:dialog id="dlg2" header="Eliminar Ingreso de Cliente" showEffect="explode" hideEffect="explode" 
+            <p:dialog header="Eliminar Ingreso de Cliente" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
                 <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{ocupacionBean.eliminar(creditoBean.credito.anexoByIdanexo)}" 
+                <p:commandButton value="Si" actionListener="#{creditoBean.eliminarIngreso(creditoBean.credito.anexo)}" 
                                  ajax="false" oncomplete="dlgeliminar.hide();" />
                 <p:commandButton value="No" onclick="dlg2.hide();" />
             </p:dialog>

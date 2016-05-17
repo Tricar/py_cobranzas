@@ -28,20 +28,21 @@ public class Credito implements java.io.Serializable {
     private Integer idventa;
     private Anexo anexo;
     private Vehiculo vehiculo;
-    private Integer idaval;
+    private Anexo idaval;
     private String liqventa;
     private String condicionpago;
     private int nletras;
-    private Integer codven;
+    private Anexo codven;
     private Date fechareg;
-    private String aprobadox;
+    private Integer aprobado;
+    private Integer elaborado;
     private String tienda;
     private String empresa;
     private BigDecimal precio;
     private BigDecimal inicial;
     private BigDecimal saldo;
     private BigDecimal interes;
-    private Integer verificado;
+    private Anexo verificado;
     private Boolean cronograma;
     private Boolean contrato;
     private BigDecimal totaldeuda;
@@ -70,7 +71,7 @@ public class Credito implements java.io.Serializable {
         this.interes = interes;
     }
 
-    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Integer idaval, String liqventa, String condicionpago, int nletras, Integer codven, Date fechareg, String aprobadox, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Integer verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, Set letrases) {
+    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, Set letrases) {
         this.idventa = idventa;
         this.anexo = anexo;
         this.vehiculo = vehiculo;
@@ -80,7 +81,8 @@ public class Credito implements java.io.Serializable {
         this.nletras = nletras;
         this.codven = codven;
         this.fechareg = fechareg;
-        this.aprobadox = aprobadox;
+        this.aprobado = aprobado;
+        this.elaborado = elaborado;
         this.tienda = tienda;
         this.empresa = empresa;
         this.precio = precio;
@@ -132,13 +134,14 @@ public class Credito implements java.io.Serializable {
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
-
-    @Column(name = "idaval")
-    public Integer getIdaval() {
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idaval", nullable = false)
+    public Anexo getIdaval() {
         return this.idaval;
     }
 
-    public void setIdaval(Integer idaval) {
+    public void setIdaval(Anexo idaval) {
         this.idaval = idaval;
     }
 
@@ -168,13 +171,14 @@ public class Credito implements java.io.Serializable {
     public void setNletras(int nletras) {
         this.nletras = nletras;
     }
-
-    @Column(name = "codven")
-    public Integer getCodven() {
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "codven", nullable = false)
+    public Anexo getCodven() {
         return this.codven;
     }
 
-    public void setCodven(Integer codven) {
+    public void setCodven(Anexo codven) {
         this.codven = codven;
     }
 
@@ -187,14 +191,23 @@ public class Credito implements java.io.Serializable {
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
-
-    @Column(name = "aprobadox", length = 10)
-    public String getAprobadox() {
-        return this.aprobadox;
+    
+    @Column(name = "aprobado")
+    public Integer getAprobado() {
+        return this.aprobado;
     }
 
-    public void setAprobadox(String aprobadox) {
-        this.aprobadox = aprobadox;
+    public void setAprobado(Integer aprobado) {
+        this.aprobado = aprobado;
+    }
+    
+    @Column(name = "elaborado")
+    public Integer getElaborado() {
+        return elaborado;
+    }
+
+    public void setElaborado(Integer elaborado) {
+        this.elaborado = elaborado;
     }
 
     @Column(name = "tienda", nullable = false, length = 2)
@@ -251,12 +264,13 @@ public class Credito implements java.io.Serializable {
         this.interes = interes;
     }
 
-    @Column(name = "verificado")
-    public Integer getVerificado() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "verificado", nullable = false)
+    public Anexo getVerificado() {
         return this.verificado;
     }
 
-    public void setVerificado(Integer verificado) {
+    public void setVerificado(Anexo verificado) {
         this.verificado = verificado;
     }
 

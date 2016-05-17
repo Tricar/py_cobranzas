@@ -275,8 +275,6 @@ public class modeloBean implements Serializable {
     
     public void modeloTipo(String tipo){
         ModeloDao modelodao = new ModeloDaoImplements();        
-        listafiltrada = modelodao.modeloxTipo(tipo);
-        System.out.println("  "+tipo);
-//        System.out.println("a ver :"+listafiltrada.get(0));
+        listafiltrada = modelodao.modeloxTipo(tipo);        
     }
 }

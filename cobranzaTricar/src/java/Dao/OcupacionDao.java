@@ -16,7 +16,8 @@ import java.util.List;
 public interface OcupacionDao {
     public void insertarOcupacion(Ocupacion ocupacion);
     public void modificarOcupacion (Ocupacion ocupacion);
-    public void eliminarOcupacion (Ocupacion anexo);
+    public void eliminarOcupacion (Ocupacion ocupacion);
     public List<Ocupacion> mostrarOcupaciones();
     public List<Ocupacion> ocupacionesxIdanexo(Anexo anexo);
+    public Ocupacion verifyIdocup(Integer idocupacion);
 }

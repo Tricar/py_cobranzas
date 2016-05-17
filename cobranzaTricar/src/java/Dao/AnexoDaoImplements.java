@@ -164,8 +164,8 @@ public class AnexoDaoImplements implements AnexoDao {
     public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception {
         String hql = "FROM Anexo WHERE idanexo=:idanexo";
         Query query = session.createQuery(hql);
-        query.setParameter("idanexo", idanexo);        
-        Anexo anexo = (Anexo) query.uniqueResult();        
+        query.setParameter("idanexo", idanexo);
+        Anexo anexo = (Anexo) query.uniqueResult();
         return anexo;
     }
     

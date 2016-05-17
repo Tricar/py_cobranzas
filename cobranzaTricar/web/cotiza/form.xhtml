@@ -34,7 +34,7 @@
                         <f:selectItem itemLabel="VX2" itemValue="V2" />                            
                     </p:selectOneMenu>
                     <p:outputLabel value="Buscar cliente:" for="cliente"/>
-                    <p:autoComplete id="cliente" value="#{creditoBean.credito.anexoByIdanexo}"
+                    <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
                                     itemLabel="#{cliente.nombres}" itemValue="#{cliente}"
                                     required="true" requiredMessage="Ingrese cliente">
@@ -46,9 +46,9 @@
                         <p:messages id="msg"/>
                     </p:autoComplete>
                     <p:outputLabel value="Buscar vendedor:" for="vendedor"/>
-                    <p:autoComplete id="vendedor" value="#{creditoBean.credito.anexoByCodven}"
+                    <p:autoComplete id="vendedor" value="#{creditoBean.credito.codven}"
                                     completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
-                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo}"
+                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo.idanexo}"
                                     required="true" requiredMessage="Ingrese vendedor">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                        
                     </p:autoComplete>

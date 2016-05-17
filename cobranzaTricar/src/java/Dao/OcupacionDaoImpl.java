@@ -12,7 +12,7 @@ import org.hibernate.Session;
  *
  * @author Dajoh
  */
-public class OcupacionDaoImpl implements OcupacionDao{
+public class OcupacionDaoImpl implements OcupacionDao {
 
     @Override
     public void insertarOcupacion(Ocupacion ocupacion) {
@@ -105,5 +105,26 @@ public class OcupacionDaoImpl implements OcupacionDao{
         }
         return lista;
     }
-    
+
+    @Override
+    public Ocupacion verifyIdocup(Integer idocupacion) {
+        Session session = null;
+        Ocupacion ocupacion = new Ocupacion();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "FROM Ocupacion WHERE id=:idocupacion";
+            Query query = session.createQuery(hql);
+            query.setParameter("idocupacion", idocupacion);
+            ocupacion = (Ocupacion) query.uniqueResult();
+            
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }        
+        return ocupacion;
+    }
+
 }

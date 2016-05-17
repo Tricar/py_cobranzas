@@ -14,9 +14,9 @@
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" />
         </many-to-one>
-        <property name="idaval" type="java.lang.Integer">
-            <column name="idaval" />
-        </property>
+        <many-to-one name="idaval" class="Model.Anexo" fetch="select">
+            <column name="idaval" not-null="true" />
+        </many-to-one>
         <property name="liqventa" type="string">
             <column name="liqventa" length="15" unique="true" />
         </property>
@@ -26,14 +26,17 @@
         <property name="nletras" type="int">
             <column name="nletras" not-null="true" />
         </property>
-        <property name="codven" type="java.lang.Integer">
-            <column name="codven" />
-        </property>
+        <many-to-one name="codven" class="Model.Anexo" fetch="select">
+            <column name="codven" not-null="true" />
+        </many-to-one>
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" not-null="true" />
         </property>
-        <property name="aprobadox" type="string">
-            <column name="aprobadox" length="10" />
+        <property name="aprobado" type="java.lang.Integer">
+            <column name="aprobado" />
+        </property>
+        <property name="elaborado" type="java.lang.Integer">
+            <column name="elaborado" />
         </property>
         <property name="tienda" type="string">
             <column name="tienda" length="2" not-null="true" />
@@ -53,9 +56,9 @@
         <property name="interes" type="big_decimal">
             <column name="interes" precision="17" not-null="true" />
         </property>
-        <property name="verificado" type="java.lang.Integer">
-            <column name="verificado" />
-        </property>
+        <many-to-one name="verificado" class="Model.Anexo" fetch="select">
+            <column name="verificado" not-null="true" />
+        </many-to-one>
         <property name="cronograma" type="java.lang.Boolean">
             <column name="cronograma" />
         </property>

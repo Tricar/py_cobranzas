@@ -34,10 +34,10 @@
                     <h:outputText value="#{cred.liqventa}" />
                 </p:column>
                 <p:column headerText="Nombres">
-                    <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
+                    <h:outputText value="#{cred.anexo.nombres}" />
                 </p:column>
                 <p:column headerText="Num. Doc.">
-                    <h:outputText value="#{cred.anexoByIdanexo.numdocumento}" />
+                    <h:outputText value="#{cred.anexo.numdocumento}" />
                 </p:column>
                 <p:column headerText="Tienda" >
                     <h:outputText value="#{cred.tienda}">
@@ -120,7 +120,7 @@
             </p:dataTable>                        
         </h:form>
         <h:form id="formhistorial">
-            <p:dialog id="dlg5" header="Historial de Pagos: #{pagosBean.credito.anexoByIdanexo.nombres}" showEffect="explode" hideEffect="explode" 
+            <p:dialog id="dlg5" header="Historial de Pagos: #{pagosBean.credito.anexo.nombres}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200">
                 <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                 <p:dataTable var="pagos" value="#{pagosBean.pagosxcredito}" 
