@@ -987,14 +987,7 @@ public class creditoBean implements Serializable {
             opcsunat = true;
         }
     }
-
-    public void cargarOcup(Integer idocupacion) {
-        objocup = ocupbean.veryId(idocupacion);
-        System.out.println("ocupa: "+objocup.getDescripcion());
-        RequestContext.getCurrentInstance().update("formEliminar");
-        RequestContext.getCurrentInstance().execute("PF('dlgeliminar').show()");
-    }
-
+    
     public void limpiarIngreso() {
 
     }

@@ -111,6 +111,7 @@ public class OcupacionDaoImpl implements OcupacionDao {
         Session session = null;
         Ocupacion ocupacion = new Ocupacion();
         try {
+            System.out.println("Dao : "+idocupacion);
             session = HibernateUtil.getSessionFactory().openSession();
             String hql = "FROM Ocupacion WHERE id=:idocupacion";
             Query query = session.createQuery(hql);

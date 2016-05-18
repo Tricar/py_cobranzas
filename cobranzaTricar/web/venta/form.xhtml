@@ -61,16 +61,7 @@
                             <p:column headerText="Monto">
                                 <h:outputText value="#{ocups.montoin}" />
                             </p:column>
-                            <p:column headerText="Operaciones">                        
-                                <p:commandButton oncomplete="dlginsertar.show()" icon="b-ver">
-                                    <f:setPropertyActionListener target="#{creditoBean.objocup}" value="#{ocups}" />
-                                </p:commandButton>
-                                <p:commandButton actionListener="#{creditoBean.cargarOcup(ocups.idocupacion)}" value="DEL">
-                                </p:commandButton>
-                            </p:column>
-                        </p:dataTable>
-                        <p:commandButton value="Agregar ingresos" icon="b-add" oncomplete="dlginsertar.show()" disabled="#{creditoBean.disableGuardar()}"
-                                         actionListener="#{creditoBean.limpiarIngreso()}"/>                       
+                        </p:dataTable>                      
                     </p:tab>
                 </p:accordionPanel>
                 <p:panelGrid columns="2">
@@ -227,7 +218,6 @@
                 </p:column>                        
             </p:dataTable>
         </h:form>
-
         <h:form id="formOcupacion">
             <p:dialog  id="dlg1" header="Ingresar datos" showEffect="explode" hideEffect="explode" widgetVar="dlginsertar" modal="true" >
                 <p:panelGrid columns="4">
@@ -289,15 +279,6 @@
                     <p:commandButton actionListener="#{creditoBean.insertarOcupacion(creditoBean.credito.anexo, creditoBean.objocup)}"
                                      value="Guardar" ajax="false"/>
                 </p:panelGrid>
-            </p:dialog>
-        </h:form>
-        <h:form id="formEliminar">
-            <p:dialog header="Eliminar Ingreso de Cliente" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
-                <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{creditoBean.eliminarIngreso(creditoBean.credito.anexo)}" 
-                                 ajax="false" oncomplete="dlgeliminar.hide();" />
-                <p:commandButton value="No" onclick="dlg2.hide();" />
             </p:dialog>
         </h:form>
     </ui:define>

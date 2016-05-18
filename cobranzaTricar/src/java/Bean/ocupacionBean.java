@@ -115,6 +115,7 @@ public class ocupacionBean implements Serializable {
     
     public Ocupacion veryId(Integer idocupacion){
         OcupacionDao ocudao = new OcupacionDaoImpl();
+        System.out.println("Ver: estoy acá "+idocupacion);
         ocupacion = ocudao.verifyIdocup(idocupacion);
         return ocupacion;
     }
