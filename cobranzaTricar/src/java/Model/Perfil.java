@@ -34,6 +34,7 @@ public class Perfil implements java.io.Serializable {
     private Boolean venLis;
     private Boolean venReg;
     private Boolean venCon;
+    private Boolean manIng;
     private Set usuarios = new HashSet(0);
 
     public Perfil() {
@@ -43,7 +44,7 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Boolean manIng, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.sistema = sistema;
@@ -60,6 +61,7 @@ public class Perfil implements java.io.Serializable {
         this.venLis = venLis;
         this.venReg = venReg;
         this.venCon = venCon;
+        this.manIng = manIng;
         this.usuarios = usuarios;
     }
 
@@ -207,6 +209,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setVenCon(Boolean venCon) {
         this.venCon = venCon;
+    }
+    
+    @Column(name = "manIng")
+    public Boolean getManIng() {
+        return this.manIng;
+    }
+
+    public void setManIng(Boolean manIng) {
+        this.manIng = manIng;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "perfil")

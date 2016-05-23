@@ -53,6 +53,9 @@
         <property name="venCon" type="java.lang.Boolean">
             <column name="venCon" />
         </property>
+        <property name="manIng" type="java.lang.Boolean">
+            <column name="manIng" />
+        </property>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idperfil" />

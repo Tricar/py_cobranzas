@@ -57,7 +57,7 @@
                     <h:outputText value="#{cred.deudactual}" />
                 </p:column>
                 <p:column headerText="OPERACIONES">
-                    <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}">
+                    <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" actionListener="#{modeloBean.modeloTipo(cred)}">
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                     </p:commandButton>
                     <p:commandButton update=":formVer" icon="b-ver" title="Mostrar" actionListener="#{creditoBean.cargarLetras(cred)}"/>                         
@@ -71,7 +71,6 @@
                 </p:column>
             </p:dataTable>
         </h:form>
-
         <h:form id="formRef">
             <p:dialog id="dlg3" header="Refinanciar Credito" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgrefinanciar" modal="true" resizable="false" minWidth="200">
@@ -107,7 +106,6 @@
                 </p:panelGrid>
             </p:dialog>
         </h:form>
-
         <h:form id="formEliminar">
             <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">

@@ -47,5 +47,11 @@
         <property name="pagosunat" type="java.lang.Boolean">
             <column name="pagosunat" />
         </property>
+        <property name="func" type="java.lang.Boolean">
+            <column name="func" />
+        </property>
+        <property name="casa" type="string">
+            <column name="casa" length="2" />
+        </property>
     </class>
 </hibernate-mapping>

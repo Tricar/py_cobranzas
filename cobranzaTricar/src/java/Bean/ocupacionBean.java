@@ -31,6 +31,10 @@ public class ocupacionBean implements Serializable {
     private boolean opctprop = true;
     private boolean opclic = true;
     private boolean opcsunat = true;
+    private boolean opclicf = true;
+    private String casa;
+    private String btnGuardar;
+    private Anexo anexo;
 
     /**
      * Creates a new instance of ocupacionBean
@@ -39,7 +43,9 @@ public class ocupacionBean implements Serializable {
     }
 
     public void limpiarlista() {
+        anexo = new Anexo();
         ocupsxanexo = new ArrayList();
+        
     }
 
     public List cargarIngresos(Anexo anexo) {
@@ -47,16 +53,89 @@ public class ocupacionBean implements Serializable {
         return ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
     }
 
+    public void cargarIngSolo(Anexo anexo) {
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
+    }
+
     public List insertar(Anexo anexo, Ocupacion ocup) {
-        OcupacionDao ocudao = new OcupacionDaoImpl();        
+        OcupacionDao ocudao = new OcupacionDaoImpl();
         ocup.setAnexo(anexo);
         ocudao.insertarOcupacion(ocup);
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         return ocupsxanexo;
     }
 
+    public void insertarSolo(Anexo anexo) {
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        try {
+            if (btnGuardar.equals("Guardar")) {
+                ocupacion.setAnexo(anexo);
+                ocudao.insertarOcupacion(ocupacion);
+            }
+            RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");
+            ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
+            RequestContext.getCurrentInstance().update("formTabla");
+        } catch (Exception e) {
+            RequestContext.getCurrentInstance().update("formOcupacion");
+            RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
+        }
+    }
+
+    public void insert() {
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        try {
+            ocupacion.setAnexo(anexo);
+            ocudao.insertarOcupacion(ocupacion);
+            //RequestContext.getCurrentInstance().update("formOcupacion");
+            RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");
+        } catch (Exception e) {
+            RequestContext.getCurrentInstance().update("formOcupacion");
+            RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
+        }
+
+    }
+
+    public void limpiarIngreso() {
+        opcbol = true;
+        opccons = true;
+        opcfacbol = true;
+        opclic = true;
+        opclicf = true;
+        opcrrhh = true;
+        opcsunat = true;
+        opctprop = true;
+        ocupacion = new Ocupacion();
+        btnGuardar = "Guardar";
+        RequestContext.getCurrentInstance().update("formOcupacion");
+        RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
+    }
+
+    public void limpIngreso(Anexo anexito) {
+        anexo = anexito;
+        opcbol = true;
+        opccons = true;
+        opcfacbol = true;
+        opclic = true;
+        opclicf = true;
+        opcrrhh = true;
+        opcsunat = true;
+        opctprop = true;
+        ocupacion = new Ocupacion();
+        btnGuardar = "Guardar";
+        RequestContext.getCurrentInstance().update("formOcupacion");
+        RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
+    }
+
+    public void historial(Anexo anexo) {
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
+        RequestContext.getCurrentInstance().update("formhistorial");
+        RequestContext.getCurrentInstance().execute("PF('dlghistorial').show()");
+    }
+
     public void actualizar() {
-        if (ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) {
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) && ocupacion.getCasa().equals("SI")) {
             opcbol = false;
             opccons = false;
             opcfacbol = true;
@@ -64,8 +143,19 @@ public class ocupacionBean implements Serializable {
             opcrrhh = true;
             opcsunat = true;
             opctprop = true;
+            opclicf = true;
         }
-        if (ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF")) {
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) && ocupacion.getCasa().equals("NO")) {
+            opcbol = false;
+            opccons = true;
+            opcfacbol = true;
+            opclic = true;
+            opcrrhh = true;
+            opcsunat = true;
+            opctprop = true;
+            opclicf = true;
+        }
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF")) && ocupacion.getCasa().equals("SI")) {
             opcbol = true;
             opccons = false;
             opcfacbol = true;
@@ -73,8 +163,19 @@ public class ocupacionBean implements Serializable {
             opcrrhh = false;
             opcsunat = true;
             opctprop = true;
+            opclicf = true;
         }
-        if (ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("FR")) {
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF")) && ocupacion.getCasa().equals("NO")) {
+            opcbol = true;
+            opccons = true;
+            opcfacbol = true;
+            opclic = true;
+            opcrrhh = false;
+            opcsunat = true;
+            opctprop = true;
+            opclicf = true;
+        }
+        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("FR")) && ocupacion.getCasa().equals("SI")) {
             opcsunat = false;
             opcbol = true;
             opccons = false;
@@ -82,42 +183,85 @@ public class ocupacionBean implements Serializable {
             opclic = true;
             opcrrhh = true;
             opctprop = true;
+            opclicf = false;
         }
-        if (ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("IF")) {
-            opctprop = false;
-            opclic = false;
+        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("FR")) && ocupacion.getCasa().equals("NO")) {
+            opcsunat = false;
+            opcbol = true;
+            opccons = true;
+            opcfacbol = true;
+            opclic = true;
+            opcrrhh = true;
+            opctprop = true;
+            opclicf = false;
+        }
+        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("IF")) && ocupacion.getCasa().equals("SI")) {
+            opctprop = true;
+            opclic = true;
             opcfacbol = false;
             opcbol = true;
             opccons = false;
             opcrrhh = true;
             opcsunat = true;
+            opclicf = true;
         }
-    }
-
-    public void modificar() {
-
+        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("IF")) && ocupacion.getCasa().equals("NO")) {
+            opctprop = true;
+            opclic = true;
+            opcfacbol = false;
+            opcbol = true;
+            opccons = true;
+            opcrrhh = true;
+            opcsunat = true;
+            opclicf = true;
+        }
+        if ((ocupacion.getTipo().equals("TR") && (ocupacion.getClase().equals("FR") || ocupacion.getClase().equals("IF"))) && ocupacion.getCasa().equals("SI")) {
+            opctprop = false;
+            opclic = false;
+            opcfacbol = true;
+            opcbol = true;
+            opccons = false;
+            opcrrhh = true;
+            opcsunat = true;
+            opclicf = true;
+        }
+        if ((ocupacion.getTipo().equals("TR") && (ocupacion.getClase().equals("FR") || ocupacion.getClase().equals("IF"))) && ocupacion.getCasa().equals("NO")) {
+            opctprop = false;
+            opclic = false;
+            opcfacbol = true;
+            opcbol = true;
+            opccons = true;
+            opcrrhh = true;
+            opcsunat = true;
+            opclicf = true;
+        }
     }
 
     public List eliminar(Anexo anexo, Ocupacion ocup) {
         ocupacion = ocup;
         OcupacionDao ocudao = new OcupacionDaoImpl();
-        System.out.println("Ocupacion: "+ocupacion.getDescripcion());
         ocudao.eliminarOcupacion(ocupacion);
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         return ocupsxanexo;
     }
-    
-    public void eliminarsolo(Anexo anexo){
+
+    public void eliminarSolo(Anexo anexo) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocudao.eliminarOcupacion(ocupacion);
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
     }
-    
-    public Ocupacion veryId(Integer idocupacion){
+
+    public void veryId(Integer idocupacion) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
-        System.out.println("Ver: estoy acá "+idocupacion);
         ocupacion = ocudao.verifyIdocup(idocupacion);
-        return ocupacion;
+        btnGuardar = "Salir";
+        RequestContext.getCurrentInstance().update("formOcupacion");
+        RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
+    }
+
+    public String nuevo() {
+        ocupacion = new Ocupacion();
+        return "/mantenimiento/formIng.xhtml";
     }
 
     public Ocupacion getOcupacion() {
@@ -200,6 +344,38 @@ public class ocupacionBean implements Serializable {
 
     public void setOpcsunat(boolean opcsunat) {
         this.opcsunat = opcsunat;
+    }
+
+    public String getCasa() {
+        return casa;
+    }
+
+    public void setCasa(String casa) {
+        this.casa = casa;
+    }
+
+    public boolean isOpclicf() {
+        return opclicf;
+    }
+
+    public void setOpclicf(boolean opclicf) {
+        this.opclicf = opclicf;
+    }
+
+    public String getBtnGuardar() {
+        return btnGuardar;
+    }
+
+    public void setBtnGuardar(String btnGuardar) {
+        this.btnGuardar = btnGuardar;
+    }
+
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
     }
 
 }

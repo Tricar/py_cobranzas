@@ -120,7 +120,7 @@
             </p:dataTable>                        
         </h:form>
         <h:form id="formhistorial">
-            <p:dialog id="dlg5" header="Historial de Pagos: #{pagosBean.credito.anexo.nombres}" showEffect="explode" hideEffect="explode" 
+            <p:dialog header="Historial de Pagos: #{pagosBean.credito.anexo.nombres}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200">
                 <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                 <p:dataTable var="pagos" value="#{pagosBean.pagosxcredito}" 

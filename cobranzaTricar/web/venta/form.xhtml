@@ -91,13 +91,13 @@
                         <f:selectItem itemLabel="ML" itemValue="ML" />
                         <f:selectItem itemLabel="MTF" itemValue="MF" />
                         <f:selectItem itemLabel="MTC" itemValue="MC" />
-                        <p:ajax update="modeloc" listener="#{modeloBean.modeloTipo(creditoBean.credito.vehi)}" process="@this" />
+                        <p:ajax update="modeloc" listener="#{creditoBean.modeloTipo(creditoBean.credito.vehi)}" process="@this" />
                     </p:selectOneMenu>
                     <p:outputLabel value="Modelo:" for="modeloc"/>
                     <p:selectOneMenu id="modeloc" value="#{creditoBean.credito.modelo}" converter="omnifaces.SelectItemsConverter"
                                      required="true" requiredMessage="Seleccione Modelo">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                        <f:selectItems value="#{modeloBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
+                        <f:selectItems value="#{creditoBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                         <p:ajax update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
                     </p:selectOneMenu> 
                     <p:outputLabel value="Nro. Letras:" for="nletras"/>
@@ -140,33 +140,6 @@
                         <f:selectItem itemLabel="5" itemValue='5'/>
                         <f:selectItem itemLabel="0" itemValue='0'/>                                                                                                
                     </p:selectOneMenu>
-                    <p:outputLabel value="Buscar Verificador:" />
-                    <p:autoComplete value="#{creditoBean.credito.verificado}"
-                                    completeMethod="#{anexoBean.filtrarGestor}" var="verif"
-                                    itemLabel="#{verif.nombres}" itemValue="#{verif}">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
-                    </p:autoComplete>
-                    <p:outputLabel value="Contrato:" for="rcontrato"/>
-                    <p:selectOneRadio id="rcontrato" value="#{creditoBean.credito.contrato}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true" />
-                        <f:selectItem itemLabel="NO" itemValue="false"/>
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Cronograma:" for="rcrono"/>
-                    <p:selectOneRadio id="rcrono" value="#{creditoBean.credito.cronograma}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Guía Rem:"/>
-                    <p:inputText id="guia" value="#{creditoBean.credito.guia}"/>
-                    <p:outputLabel value="Comprobante:"/>
-                    <p:inputText id="comp" value="#{creditoBean.credito.comprobante}" required="true" requiredMessage="Ingrese Guía"/>
-                    <p:outputLabel value="Nota Débito:"/>
-                    <p:inputText id="comp2" value="#{creditoBean.credito.comprobante2}" required="true" requiredMessage="Ingrese Comprobante pago"/>
-                    <p:outputLabel value="Observaciones:"/>
-                    <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" required="true" requiredMessage="Ingrese Nota Débito"/>
                 </p:panelGrid>
                 <p:commandButton value="Grabar" actionListener="#{creditoBean.insertarCredito(loginbean.usuario.idusuario)}" icon="b-ok"
                                  ajax="false" disabled="#{creditoBean.disableGuardar()}">

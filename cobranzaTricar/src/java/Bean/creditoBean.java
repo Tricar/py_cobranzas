@@ -13,6 +13,7 @@ import Dao.VehiculoDaoImplements;
 import Model.Anexo;
 import Model.Credito;
 import Model.Letras;
+import Model.Modelo;
 import Model.Ocupacion;
 import Model.Pagos;
 import Model.Usuario;
@@ -94,6 +95,8 @@ public class creditoBean implements Serializable {
     private boolean opcrrhh = true;
     private boolean opcsunat = true;
     private boolean opctprop = true;
+    private modeloBean modbean = new modeloBean();
+    private List<Modelo> listafiltrada;
 
     public creditoBean() {
     }
@@ -796,6 +799,7 @@ public class creditoBean implements Serializable {
         AnexoDao andao = new AnexoDaoImplements();
         Anexo anexo = usuario.getAnexo();
         sw = 1;
+        System.out.println("Modelo: "+credito.getModelo().getModelo());
         inicia = credito.getInicial();
         precio = credito.getPrecio();
         saldo = precio.subtract(inicia);
@@ -988,8 +992,9 @@ public class creditoBean implements Serializable {
         }
     }
     
-    public void limpiarIngreso() {
-
+    public void modeloTipo(String tipo) {
+        System.out.println("Tipo: "+tipo);
+        listafiltrada = modbean.modeloTipo(tipo);
     }
 
     public Credito getCredito() {
@@ -1330,5 +1335,21 @@ public class creditoBean implements Serializable {
 
     public void setOpctprop(boolean opctprop) {
         this.opctprop = opctprop;
+    }
+
+    public modeloBean getModbean() {
+        return modbean;
+    }
+
+    public void setModbean(modeloBean modbean) {
+        this.modbean = modbean;
+    }
+
+    public List<Modelo> getListafiltrada() {
+        return listafiltrada;
+    }
+
+    public void setListafiltrada(List<Modelo> listafiltrada) {
+        this.listafiltrada = listafiltrada;
     }
 }
