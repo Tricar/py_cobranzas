@@ -32,8 +32,7 @@ public class Ocupacion implements java.io.Serializable {
     private Boolean tpropiedad;
     private Boolean licencia;
     private Boolean pagosunat;
-    private Boolean func;
-    private String casa;
+    private Boolean func;    
 
     public Ocupacion() {
     }
@@ -43,7 +42,7 @@ public class Ocupacion implements java.io.Serializable {
         this.anexo = anexo;
     }
 
-    public Ocupacion(Integer idocupacion, Anexo anexo, String tipo, String clase, String descripcion, String empresa, BigDecimal montoin, Boolean boletas, Boolean rrhh, Boolean facbol, Boolean constancia, Boolean tpropiedad, Boolean licencia, Boolean pagosunat, Boolean func, String casa) {
+    public Ocupacion(Integer idocupacion, Anexo anexo, String tipo, String clase, String descripcion, String empresa, BigDecimal montoin, Boolean boletas, Boolean rrhh, Boolean facbol, Boolean constancia, Boolean tpropiedad, Boolean licencia, Boolean pagosunat, Boolean func) {
         this.idocupacion = idocupacion;
         this.anexo = anexo;
         this.tipo = tipo;
@@ -58,8 +57,7 @@ public class Ocupacion implements java.io.Serializable {
         this.tpropiedad = tpropiedad;
         this.licencia = licencia;
         this.pagosunat = pagosunat;
-        this.func = func;
-        this.casa = casa;
+        this.func = func;        
     }
 
     @Id
@@ -198,15 +196,6 @@ public class Ocupacion implements java.io.Serializable {
 
     public void setFunc(Boolean func) {
         this.func = func;
-    }
-    
-    @Column(name = "casa", length = 2)
-    public String getCasa() {
-        return this.casa;
-    }
-
-    public void setCasa(String casa) {
-        this.casa = casa;
     }
 
     @Override

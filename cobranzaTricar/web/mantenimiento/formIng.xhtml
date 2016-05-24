@@ -50,14 +50,7 @@
         <h:form id="formOcupacion">
             <p:dialog  header="Ingresar datos" showEffect="explode" hideEffect="explode" widgetVar="dlginsertar" modal="true" >
                 <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                <p:panelGrid columns="4">
-                    <p:outputLabel value="¿Casa Propia?" for="cmbcasa"/>
-                    <p:selectOneMenu id="cmbcasa" value="#{ocupacionBean.ocupacion.casa}" required="true" requiredMessage="Seleccione Tipo de Ingreso">
-                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
-                        <f:selectItem itemLabel="SI" itemValue="SI" />
-                        <f:selectItem itemLabel="NO" itemValue="NO" />
-                        <p:ajax update="opcbol opcfacbol opcrrhh opccons opctprop opclic opcsunat opclicf" listener="#{ocupacionBean.actualizar()}" process="@this" />
-                    </p:selectOneMenu>
+                <p:panelGrid columns="4">                    
                     <p:outputLabel value="Tipo:" for="cmbtipo"/>
                     <p:selectOneMenu id="cmbtipo" value="#{ocupacionBean.ocupacion.tipo}" required="true" requiredMessage="Seleccione Tipo de Ingreso">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />

@@ -57,7 +57,7 @@
                     <h:outputText value="#{cred.deudactual}" />
                 </p:column>
                 <p:column headerText="OPERACIONES">
-                    <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" actionListener="#{modeloBean.modeloTipo(cred)}">
+                    <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" >
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                     </p:commandButton>
                     <p:commandButton update=":formVer" icon="b-ver" title="Mostrar" actionListener="#{creditoBean.cargarLetras(cred)}"/>                         

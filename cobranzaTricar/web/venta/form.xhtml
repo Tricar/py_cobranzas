@@ -42,7 +42,7 @@
                                     itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
                                     required="true" requiredMessage="Ingrese cliente">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="mousemove" update="precio lblinicial res txtinicial"  listener="#{creditoBean.precioModeloCredito()}"/>
+                        <p:ajax event="mousemove" update="aval dir dist precio lblinicial res txtinicial"  listener="#{creditoBean.precioModeloCredito()}"/>
                         <p:ajax event="itemSelect" listener="#{creditoBean.cargarIngreso(creditoBean.credito.anexo)}" update="@form"/>
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
@@ -65,10 +65,10 @@
                     </p:tab>
                 </p:accordionPanel>
                 <p:panelGrid columns="2">
-                    <h:outputText value="¿Aval? " />
-                    <p:selectBooleanCheckbox value="#{creditoBean.value}">
-                        <p:ajax update="msg12 aval" listener="#{creditoBean.addMessage}" />
-                    </p:selectBooleanCheckbox>
+                    <p:outputLabel value="Dirección:" for="dir"/>
+                    <p:inputText id="dir" readonly="true" value="#{creditoBean.credito.anexo.direccion}"/>
+                    <p:outputLabel value="Distrito:" for="dist"/>
+                    <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito}" converter="distritoconverter"/>                    
                     <p:outputLabel value="Buscar Aval:" for="aval"/>
                     <p:autoComplete id="aval" value="#{creditoBean.credito.idaval}"
                                     completeMethod="#{anexoBean.filtrarAval}" var="aval"

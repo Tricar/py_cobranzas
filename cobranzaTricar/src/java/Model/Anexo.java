@@ -45,6 +45,7 @@ public class Anexo implements java.io.Serializable {
     private String estcivil;
     private String conyuge;
     private String dniconyu;
+    private String cpropia;
     private Set creditos = new HashSet(0);
     private Set usuarios = new HashSet(0);
     private Set ocupacions = new HashSet(0);
@@ -57,7 +58,7 @@ public class Anexo implements java.io.Serializable {
         this.idanexo = idanexo;
     }
 
-    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, Set creditos, Set usuarios, Set ocupacions) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions) {
         this.idanexo = idanexo;
         this.nombre = nombre;
         this.tipodocumento = tipodocumento;
@@ -82,6 +83,7 @@ public class Anexo implements java.io.Serializable {
         this.estcivil = estcivil;
         this.conyuge = conyuge;
         this.dniconyu = dniconyu;
+        this.cpropia = cpropia;
         this.creditos = creditos;
         this.usuarios = usuarios;
         this.ocupacions = ocupacions;
@@ -305,6 +307,15 @@ public class Anexo implements java.io.Serializable {
 
     public void setDniconyu(String dniconyu) {
         this.dniconyu = dniconyu;
+    }
+    
+    @Column(name = "cpropia", length = 3)
+    public String getCpropia() {
+        return this.cpropia;
+    }
+
+    public void setCpropia(String cpropia) {
+        this.cpropia = cpropia;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "anexo")

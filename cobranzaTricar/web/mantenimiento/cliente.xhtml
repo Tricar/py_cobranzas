@@ -53,6 +53,7 @@
 
                 <h:form id="formInsertar">
                     <p:dialog header="NUEVO CLIENTE" widgetVar="dlginsertar" modal="true">
+                        <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
                         <h:panelGrid columns="4">
                             <p:outputLabel value="TIPO:" />
                             <p:selectOneMenu id="tipodoc" value="#{anexoBean.anexo.tipodocumento}" required="true" requiredMessage="Debe Seleccionar Tipo Documento">
@@ -104,6 +105,13 @@
                             <p:inputMask disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtDniCon" mask="9?9999999" value="#{anexoBean.anexo.dniconyu}" maxlength="8">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputMask>
+                            <p:outputLabel value="CASA PROPIA:" for="cmbcasa" />
+                            <p:selectOneMenu id="cmbcasa" value="#{anexoBean.anexo.cpropia}" required="true" requiredMessage="Debe Seleccionar una opción">
+                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="SI" itemValue="SI" />
+                                <f:selectItem itemLabel="NO" itemValue="NO" />
+                                <p:ajax listener="#{anexoBean.msjaval()}" process="@this" />
+                            </p:selectOneMenu>
                             <p:outputLabel value="DIRECCION:" for="txtDireccion" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" id="txtDireccion" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
@@ -169,6 +177,7 @@
 
                 <h:form id="frmEditarAnexo">
                     <p:dialog header="DATOS DEL CLIENTE" widgetVar="dialogoEditarAnexo" modal="true">
+                        <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
                         <p:panelGrid id="panelEditarAnexo" columns="4">
                             <p:inputText type="hidden" value="#{anexoBean.anexo.idanexo}"/>
                             <p:inputText type="hidden" value="#{anexoBean.anexo.fechareg}"/>
@@ -222,6 +231,13 @@
                             <p:inputMask disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtDniCon" mask="9?9999999" value="#{anexoBean.anexo.dniconyu}" maxlength="8">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputMask>
+                            <p:outputLabel value="CASA PROPIA:" for="cmbcasa" />
+                            <p:selectOneMenu id="cmbcasa" value="#{anexoBean.anexo.cpropia}" required="true" requiredMessage="Debe Seleccionar una opción">
+                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
+                                <f:selectItem itemLabel="SI" itemValue="SI" />
+                                <f:selectItem itemLabel="NO" itemValue="NO" />
+                                <p:ajax listener="#{anexoBean.msjaval()}" process="@this" />
+                            </p:selectOneMenu>
                             <p:outputLabel value="DIRECCION:" for="txtDireccion" />
                             <p:inputText value="#{anexoBean.anexo.direccion}" id="txtDireccion" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
@@ -297,13 +313,6 @@
                     <p:dialog  header="Ingresar datos" showEffect="explode" hideEffect="explode" widgetVar="dlginsertar" modal="true" >
                         <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
                         <p:panelGrid columns="4">                            
-                            <p:outputLabel value="¿Casa Propia?" for="cmbcasa"/>
-                            <p:selectOneMenu id="cmbcasa" value="#{ocupacionBean.ocupacion.casa}" required="true" requiredMessage="Seleccione Tipo de Ingreso">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
-                                <f:selectItem itemLabel="SI" itemValue="SI" />
-                                <f:selectItem itemLabel="NO" itemValue="NO" />
-                                <p:ajax update="opcbol opcfacbol opcrrhh opccons opctprop opclic opcsunat opclicf" listener="#{ocupacionBean.actualizar()}" process="@this" />
-                            </p:selectOneMenu>
                             <p:outputLabel value="Tipo:" for="cmbtipo"/>
                             <p:selectOneMenu id="cmbtipo" value="#{ocupacionBean.ocupacion.tipo}" required="true" requiredMessage="Seleccione Tipo de Ingreso">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />

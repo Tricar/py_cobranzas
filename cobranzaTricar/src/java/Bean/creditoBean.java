@@ -798,8 +798,9 @@ public class creditoBean implements Serializable {
     public String cargar(Usuario usuario) {
         AnexoDao andao = new AnexoDaoImplements();
         Anexo anexo = usuario.getAnexo();
+        modeloTipo(credito.getVehi());
         sw = 1;
-        System.out.println("Modelo: "+credito.getModelo().getModelo());
+        System.out.println("Modelo: " + credito.getModelo().getModelo());
         inicia = credito.getInicial();
         precio = credito.getPrecio();
         saldo = precio.subtract(inicia);
@@ -863,7 +864,16 @@ public class creditoBean implements Serializable {
 
     public void aprobarcredito(Integer idusuario) {
         CreditoDao credao = new CreditoDaoImp();
-        credito.setEstado("AP");
+        if (btnaprobar.equals("Aprobar")) {
+            credito.setEstado("AP");
+            btnaprobar = "Desaprobar";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se aprobó el crédito."));
+        } else {
+            credito.setEstado("EM");
+            btnaprobar = "Aprobar";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se desaprobó el crédito."));
+        }
+
         credito.setAprobado(idusuario);
         credao.modificarVenta(credito);
     }
@@ -932,6 +942,12 @@ public class creditoBean implements Serializable {
 
     public void cargarIngreso(Anexo anexo) {
         ocupsxanexo = ocupbean.cargarIngresos(anexo);
+        if (anexo.getCpropia().equals("SI")){
+            value2 = true;
+        } else {
+            value2 = false;
+        }
+        
     }
 
     public void insertarOcupacion(Anexo anexo, Ocupacion ocup) {
@@ -991,9 +1007,9 @@ public class creditoBean implements Serializable {
             opcsunat = true;
         }
     }
-    
+
     public void modeloTipo(String tipo) {
-        System.out.println("Tipo: "+tipo);
+        System.out.println("Tipo: " + tipo);
         listafiltrada = modbean.modeloTipo(tipo);
     }
 

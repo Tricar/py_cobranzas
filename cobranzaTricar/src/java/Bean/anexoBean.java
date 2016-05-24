@@ -447,7 +447,6 @@ public class anexoBean implements Serializable {
     }
 
     public List<SelectItem> getSelectItemsAnexo() {
-
         this.session = null;
         this.transaction = null;
         try {
@@ -473,6 +472,15 @@ public class anexoBean implements Serializable {
             }
         }
 
+    }
+    
+    public void msjaval(){
+        if(anexo.getCpropia().equals("NO")){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente debe presentar aval o garante" ));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente NO necesitará aval o garante" ));
+        }
+        
     }
     
     public void handleKeyEvent() {

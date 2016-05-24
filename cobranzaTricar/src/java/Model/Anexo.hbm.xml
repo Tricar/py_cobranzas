@@ -77,6 +77,9 @@
         <property name="dniconyu" type="string">
             <column name="dniconyu" length="8" />
         </property>
+        <property name="cpropia" type="string">
+            <column name="cpropia" length="2" />
+        </property>
         <set name="creditos" table="credito" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idanexo" not-null="true" />

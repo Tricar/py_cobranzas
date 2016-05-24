@@ -135,7 +135,7 @@ public class ocupacionBean implements Serializable {
     }
 
     public void actualizar() {
-        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) && ocupacion.getCasa().equals("SI")) {
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) && anexo.getCpropia().equals("SI")) {
             opcbol = false;
             opccons = false;
             opcfacbol = true;
@@ -145,7 +145,7 @@ public class ocupacionBean implements Serializable {
             opctprop = true;
             opclicf = true;
         }
-        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) && ocupacion.getCasa().equals("NO")) {
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR"))&& anexo.getCpropia().equals("NO")) {
             opcbol = false;
             opccons = true;
             opcfacbol = true;
@@ -155,7 +155,7 @@ public class ocupacionBean implements Serializable {
             opctprop = true;
             opclicf = true;
         }
-        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF")) && ocupacion.getCasa().equals("SI")) {
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF")) && anexo.getCpropia().equals("SI")) {
             opcbol = true;
             opccons = false;
             opcfacbol = true;
@@ -165,7 +165,7 @@ public class ocupacionBean implements Serializable {
             opctprop = true;
             opclicf = true;
         }
-        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF")) && ocupacion.getCasa().equals("NO")) {
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF"))&& anexo.getCpropia().equals("NO")) {
             opcbol = true;
             opccons = true;
             opcfacbol = true;
@@ -175,7 +175,7 @@ public class ocupacionBean implements Serializable {
             opctprop = true;
             opclicf = true;
         }
-        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("FR")) && ocupacion.getCasa().equals("SI")) {
+        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("FR")) && anexo.getCpropia().equals("SI")) {
             opcsunat = false;
             opcbol = true;
             opccons = false;
@@ -185,7 +185,7 @@ public class ocupacionBean implements Serializable {
             opctprop = true;
             opclicf = false;
         }
-        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("FR")) && ocupacion.getCasa().equals("NO")) {
+        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("FR")) && anexo.getCpropia().equals("NO")) {
             opcsunat = false;
             opcbol = true;
             opccons = true;
@@ -195,7 +195,7 @@ public class ocupacionBean implements Serializable {
             opctprop = true;
             opclicf = false;
         }
-        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("IF")) && ocupacion.getCasa().equals("SI")) {
+        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("IF")) && anexo.getCpropia().equals("SI")){
             opctprop = true;
             opclic = true;
             opcfacbol = false;
@@ -205,7 +205,7 @@ public class ocupacionBean implements Serializable {
             opcsunat = true;
             opclicf = true;
         }
-        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("IF")) && ocupacion.getCasa().equals("NO")) {
+        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("IF")) && anexo.getCpropia().equals("NO")) {
             opctprop = true;
             opclic = true;
             opcfacbol = false;
@@ -215,19 +215,19 @@ public class ocupacionBean implements Serializable {
             opcsunat = true;
             opclicf = true;
         }
-        if ((ocupacion.getTipo().equals("TR") && (ocupacion.getClase().equals("FR") || ocupacion.getClase().equals("IF"))) && ocupacion.getCasa().equals("SI")) {
-            opctprop = false;
-            opclic = false;
-            opcfacbol = true;
-            opcbol = true;
-            opccons = false;
+        if ((ocupacion.getTipo().equals("TR") && (ocupacion.getClase().equals("FR") || ocupacion.getClase().equals("IF"))) && anexo.getCpropia().equals("SI")) {
+            opctprop = false; //t propiedad
+            opclic = false; //lic cond
+            opcfacbol = true; 
+            opcbol = true; 
+            opccons = false; //autoavaluo
             opcrrhh = true;
             opcsunat = true;
             opclicf = true;
         }
-        if ((ocupacion.getTipo().equals("TR") && (ocupacion.getClase().equals("FR") || ocupacion.getClase().equals("IF"))) && ocupacion.getCasa().equals("NO")) {
-            opctprop = false;
-            opclic = false;
+        if ((ocupacion.getTipo().equals("TR") && (ocupacion.getClase().equals("FR") || ocupacion.getClase().equals("IF"))) && anexo.getCpropia().equals("NO")) {
+            opctprop = false; //t propiedad
+            opclic = false; //lic cond
             opcfacbol = true;
             opcbol = true;
             opccons = true;
