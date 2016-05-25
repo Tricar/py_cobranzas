@@ -32,7 +32,8 @@ public class Ocupacion implements java.io.Serializable {
     private Boolean tpropiedad;
     private Boolean licencia;
     private Boolean pagosunat;
-    private Boolean func;    
+    private Boolean func;
+    private Integer idventa;
 
     public Ocupacion() {
     }
@@ -42,7 +43,7 @@ public class Ocupacion implements java.io.Serializable {
         this.anexo = anexo;
     }
 
-    public Ocupacion(Integer idocupacion, Anexo anexo, String tipo, String clase, String descripcion, String empresa, BigDecimal montoin, Boolean boletas, Boolean rrhh, Boolean facbol, Boolean constancia, Boolean tpropiedad, Boolean licencia, Boolean pagosunat, Boolean func) {
+    public Ocupacion(Integer idocupacion, Anexo anexo, String tipo, String clase, String descripcion, String empresa, BigDecimal montoin, Boolean boletas, Boolean rrhh, Boolean facbol, Boolean constancia, Boolean tpropiedad, Boolean licencia, Boolean pagosunat, Boolean func, Integer idventa) {
         this.idocupacion = idocupacion;
         this.anexo = anexo;
         this.tipo = tipo;
@@ -57,7 +58,8 @@ public class Ocupacion implements java.io.Serializable {
         this.tpropiedad = tpropiedad;
         this.licencia = licencia;
         this.pagosunat = pagosunat;
-        this.func = func;        
+        this.func = func;
+        this.idventa = idventa;
     }
 
     @Id
@@ -80,7 +82,7 @@ public class Ocupacion implements java.io.Serializable {
     public void setAnexo(Anexo anexo) {
         this.anexo = anexo;
     }
-
+    
     @Column(name = "tipo", length = 2)
     public String getTipo() {
         return this.tipo;
@@ -196,6 +198,15 @@ public class Ocupacion implements java.io.Serializable {
 
     public void setFunc(Boolean func) {
         this.func = func;
+    }
+    
+    @Column(name = "idventa")
+    public Integer getIdventa() {
+        return this.idventa;
+    }
+
+    public void setIdventa(Integer idventa) {
+        this.idventa = idventa;
     }
 
     @Override

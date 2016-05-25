@@ -6,6 +6,7 @@
 package Dao;
 
 import Model.Anexo;
+import Model.Credito;
 import Model.Ocupacion;
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface OcupacionDao {
     public List<Ocupacion> mostrarOcupaciones();
     public List<Ocupacion> ocupacionesxIdanexo(Anexo anexo);
     public Ocupacion verifyIdocup(Integer idocupacion);
+    public List<Ocupacion> ocupacionesxIdventa(Credito credito);
 }

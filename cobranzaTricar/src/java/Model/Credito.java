@@ -373,7 +373,7 @@ public class Credito implements java.io.Serializable {
     public void setComprobante2(String comprobante2) {
         this.comprobante2 = comprobante2;
     }
-
+    
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "credito")
     public Set getLetrases() {
         return this.letrases;

@@ -3,6 +3,7 @@ package Bean;
 import Dao.OcupacionDao;
 import Dao.OcupacionDaoImpl;
 import Model.Anexo;
+import Model.Credito;
 import Model.Ocupacion;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,6 +53,11 @@ public class ocupacionBean implements Serializable {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         return ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
     }
+    
+    public List cargarxCredito (Credito credito){
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        return ocupsxanexo = ocudao.ocupacionesxIdventa(credito);
+    }
 
     public void cargarIngSolo(Anexo anexo) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
@@ -71,6 +77,7 @@ public class ocupacionBean implements Serializable {
         try {
             if (btnGuardar.equals("Guardar")) {
                 ocupacion.setAnexo(anexo);
+                ocupacion.setIdventa(null);
                 ocudao.insertarOcupacion(ocupacion);
             }
             RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");
@@ -80,6 +87,16 @@ public class ocupacionBean implements Serializable {
             RequestContext.getCurrentInstance().update("formOcupacion");
             RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
         }
+    }
+    
+    public void insertarCredito(Integer idventa, Ocupacion ocup){
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        ocupacion = ocup;
+        System.out.println("obj ocupacion bean: "+ocupacion.getDescripcion());
+        System.out.println("ID: "+idventa);
+        ocupacion.setIdventa(idventa);
+        ocupacion.setIdocupacion(null);
+        ocudao.insertarOcupacion(ocupacion);
     }
 
     public void insert() {

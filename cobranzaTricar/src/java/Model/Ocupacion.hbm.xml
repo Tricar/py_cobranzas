@@ -47,6 +47,9 @@
         <property name="pagosunat" type="java.lang.Boolean">
             <column name="pagosunat" />
         </property>
+        <property name="idventa" type="java.lang.Integer">
+            <column name="idventa" />
+        </property>
         <property name="func" type="java.lang.Boolean">
             <column name="func" />
         </property>
