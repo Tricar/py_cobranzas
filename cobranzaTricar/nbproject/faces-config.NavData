@@ -32,15 +32,15 @@
         <Node id="sistema/empleado.xhtml" x="357" y="100" zoom="false"/>
         <Node id="venta/form.xhtml" x="356" y="226" zoom="false"/>
         <Node id="login.xhtml" x="709" y="39" zoom="false"/>
-        <Node id="mantenimiento/cliente.xhtml" x="39" y="37" zoom="false"/>
         <Node id="views/template.xhtml" x="709" y="166" zoom="false"/>
+        <Node id="mantenimiento/cliente.xhtml" x="39" y="37" zoom="false"/>
         <Node id="venta/listarv.xhtml" x="710" y="229" zoom="false"/>
         <Node id="sistema/perfil.xhtml" x="37" y="167" zoom="false"/>
         <Node id="venta/consultac.xhtml" x="710" y="102" zoom="false"/>
         <Node id="cotiza/form.xhtml" x="446" y="259" zoom="false"/>
         <Node id="cotiza/consultar.xhtml" x="150" y="150" zoom="true"/>
-        <Node id="mantenimiento/articulo.xhtml" x="355" y="295" zoom="false"/>
         <Node id="mantenimiento/colorart.xhtml" x="39" y="359" zoom="false"/>
+        <Node id="mantenimiento/articulo.xhtml" x="355" y="295" zoom="false"/>
     </Scope>
     <Scope Scope="All Faces Configurations">
         <Node id="views/index.xhtml" x="150" y="600" zoom="true"/>

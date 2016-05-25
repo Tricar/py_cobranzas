@@ -162,14 +162,22 @@ public class AnexoDaoImplements implements AnexoDao {
 
     @Override
     public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception {
+        System.out.println("Aca dao editar anexo: ");
         String hql = "FROM Anexo WHERE idanexo=:idanexo";
         Query query = session.createQuery(hql);
         query.setParameter("idanexo", idanexo);
-        
         Anexo anexo = (Anexo) query.uniqueResult();
-        
         return anexo;
     }
+    
+    /**
+     *
+     * @param idanexo
+     * @return
+     * @throws Exception
+     */
+    
+   
 
     @Override
     public Anexo verByDocumento(Session session, String dni) throws Exception {
@@ -314,5 +322,42 @@ public class AnexoDaoImplements implements AnexoDao {
             }
         }
         return anexo;
+    }
+
+    @Override
+    public Anexo devolverNombre(Integer idanexo) {
+        Session session = null;
+        Anexo anexito = new Anexo();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Anexo WHERE idanexo=:w");
+            query.setParameter("w", idanexo);
+            anexito = (Anexo) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return anexito;
+    }
+
+    @Override
+    public void insertar(Anexo anexo) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(anexo);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 }

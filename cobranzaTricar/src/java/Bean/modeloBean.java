@@ -2,6 +2,7 @@ package Bean;
 
 import Dao.ModeloDao;
 import Dao.ModeloDaoImplements;
+import Model.Credito;
 import Model.Modelo;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
@@ -28,7 +29,7 @@ public class modeloBean implements Serializable {
     private List<SelectItem> SelectItemsmodelo;
     private Session session;
     private Transaction transaction;
-    List<Modelo> listafiltrada = new ArrayList();
+    List<Modelo> listafiltrada;
     private Modelo model;
     private List<Modelo> modelos;
     private ArrayList<Modelo> query;
@@ -46,28 +47,20 @@ public class modeloBean implements Serializable {
     }
 
     public List<Modelo> verTodo() {
-
         this.session = null;
         this.transaction = null;
-
         try {
             ModeloDaoImplements daomodelo = new ModeloDaoImplements();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-
             this.modelos = daomodelo.verTodo(this.session);
-
             this.transaction.commit();
-
             return modelos;
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-
             return null;
         } finally {
             if (this.session != null) {
@@ -79,26 +72,19 @@ public class modeloBean implements Serializable {
     public void modificar() {
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             ModeloDaoImplements linkDao = new ModeloDaoImplements();
             if (linkDao.verByModeloDifer(this.session, this.model.getIdmodelo(), this.model.getModelo()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Modelo ya existe en DB."));
                 model = new Modelo();
                 return;
             }
-
             ModeloDaoImplements daomodelo = new ModeloDaoImplements();
             daomodelo.modificar(this.session, this.model);
-
             this.transaction.commit();
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -114,21 +100,14 @@ public class modeloBean implements Serializable {
     public void cargarModeloEditar(Integer codigoUsuario) {
         this.session = null;
         this.transaction = null;
-
         try {
-
             ModeloDaoImplements daomodelo = new ModeloDaoImplements();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             this.model = daomodelo.verByCodigo(this.session, codigoUsuario);
-
             this.transaction.commit();
-
             RequestContext.getCurrentInstance().update("frmEditarModelo:panelEditarModelo");
             RequestContext.getCurrentInstance().execute("PF('dialogoEditarModelo').show()");
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -144,18 +123,12 @@ public class modeloBean implements Serializable {
     public void cargarModeloEliminar(Integer codigoUsuario) {
         this.session = null;
         this.transaction = null;
-
         try {
-
             ModeloDaoImplements daomodelo = new ModeloDaoImplements();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             this.model = daomodelo.verByCodigo(this.session, codigoUsuario);
-
             this.transaction.commit();
-
             RequestContext.getCurrentInstance().update("frmEliminarModelo");
             RequestContext.getCurrentInstance().execute("PF('dialogoEliminarModelo').show()");
 
@@ -175,29 +148,21 @@ public class modeloBean implements Serializable {
 
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             ModeloDaoImplements linkDao = new ModeloDaoImplements();
             if (linkDao.verByModelo(this.session, this.model.getModelo()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Modelo ya esta registrado."));
                 model = new Modelo();
                 return;
             }
-
             Date d = new Date();
             this.model.setFecreg(d);
             linkDao.registrar(this.session, this.model);
-
             this.transaction.commit();
-
             this.model = new Modelo();
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -214,21 +179,14 @@ public class modeloBean implements Serializable {
     public void eliminar() {
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             ModeloDaoImplements daomodelo = new ModeloDaoImplements();
             daomodelo.eliminar(this.session, this.model);
-
             this.transaction.commit();
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Modelo Correctamente."));
-
             this.model = new Modelo();
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -262,20 +220,15 @@ public class modeloBean implements Serializable {
         this.transaction = null;
         try {
             ModeloDaoImplements daomodelo = new ModeloDaoImplements();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-
-            modelos = daomodelo.verTodo(session);
-            
+            modelos = daomodelo.verTodo(session);            
             return modelos;
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-
             return null;
         } finally {
             if (this.session != null) {
@@ -301,10 +254,15 @@ public class modeloBean implements Serializable {
         return query;
     }
     
-    public void modeloTipo(String tipo){
-        ModeloDao modelodao = new ModeloDaoImplements();        
+    public List modeloTipo(String tipo){
+        ModeloDao modelodao = new ModeloDaoImplements();
+        System.out.println("tipo bean modelo: "+tipo);
         listafiltrada = modelodao.modeloxTipo(tipo);
-        System.out.println("  "+tipo);
-//        System.out.println("a ver :"+listafiltrada.get(0));
+        return listafiltrada;
+    }
+    
+    public void modelTipo(Credito credito){
+        ModeloDao modao = new ModeloDaoImplements();
+        listafiltrada = modao.modeloxTipo(credito.getVehi());
     }
 }

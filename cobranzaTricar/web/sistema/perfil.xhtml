@@ -51,6 +51,7 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.mante}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manArt}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manCli}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manIng}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manMod}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manCol}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venta}"/>
@@ -82,7 +83,9 @@
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>
                         <h:outputText value="Clientes" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manArt}"/>
-                        <h:outputText value="Articulos" />
+                        <h:outputText value="Artículos" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manIng}"/>
+                        <h:outputText value="Ingresos" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manMod}"/>
                         <h:outputText value="Modelos" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCol}"/>

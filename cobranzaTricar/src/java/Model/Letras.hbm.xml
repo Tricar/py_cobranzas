@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Letras" table="letras" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idletras" type="int">
@@ -12,7 +12,7 @@
             <column name="idventa" />
         </many-to-one>
         <property name="montoletra" type="big_decimal">
-            <column name="montoletra" precision="17" scale="2" />
+            <column name="montoletra" precision="17" />
         </property>
         <property name="fecini" type="timestamp">
             <column name="fecini" length="23" />
@@ -21,13 +21,13 @@
             <column name="fecven" length="23" />
         </property>
         <property name="monto" type="big_decimal">
-            <column name="monto" precision="17" scale="2" />
+            <column name="monto" precision="17" />
         </property>
         <property name="interes" type="big_decimal">
-            <column name="interes" precision="17" scale="2" />
-        </property>        
+            <column name="interes" precision="17" />
+        </property>
         <property name="saldo" type="big_decimal">
-            <column name="saldo" precision="17" scale="2" />
+            <column name="saldo" precision="17" />
         </property>
         <property name="fecreg" type="timestamp">
             <column name="fecreg" length="23" />
@@ -39,9 +39,9 @@
             <column name="descripcion" length="20" />
         </property>
         <property name="mora" type="big_decimal">
-            <column name="mora" precision="17" scale="2" />
+            <column name="mora" precision="17" />
         </property>
-        <property name="diffdays" type="long">
+        <property name="diffdays" type="java.lang.Long">
             <column name="diffdays" />
         </property>
         <set name="pagoses" table="pagos" inverse="true" lazy="true" fetch="select">

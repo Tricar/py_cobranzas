@@ -1,8 +1,7 @@
 package Dao;
 
-import Model.Credito;
-import Model.Letras;
-import Model.Pagos;
+import Model.Anexo;
+import Model.Ocupacion;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -11,75 +10,17 @@ import org.hibernate.Session;
 
 /**
  *
- * @author master
+ * @author Dajoh
  */
-public class PagosDaoImp implements PagosDao {
+public class OcupacionDaoImpl implements OcupacionDao {
 
     @Override
-    public List<Pagos> mostrarPagos() {
-        Session session = null;
-        List<Pagos> lista = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Pagos");
-            lista = (List<Pagos>) query.list();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return lista;
-    }
-
-    @Override
-    public List<Pagos> mostrarPagosxCredito(Credito credito) {
-        Session session = null;
-        List<Pagos> lista = null;
-        Integer idcred = credito.getIdventa();
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Pagos where letras.credito.idventa=:v order by fecreg desc");
-            query.setParameter("v", idcred);
-            lista = (List<Pagos>) query.list();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return lista;
-    }
-
-    @Override
-    public List<Pagos> mostrarPagosxLetras(Letras letra) {
-        Session session = null;
-        List<Pagos> lista = null;
-        Integer idletra = letra.getIdletras();
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Pagos WHERE idletras=:v");
-            query.setParameter("v", idletra);
-            lista = (List<Pagos>) query.list();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return lista;
-    }
-
-    @Override
-    public void insertarPago(Pagos pago) {
+    public void insertarOcupacion(Ocupacion ocupacion) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(pago);
+            session.save(ocupacion);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -92,12 +33,12 @@ public class PagosDaoImp implements PagosDao {
     }
 
     @Override
-    public void modificarPago(Pagos pagos) {
+    public void modificarOcupacion(Ocupacion ocupacion) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(pagos);
+            session.update(ocupacion);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -110,12 +51,12 @@ public class PagosDaoImp implements PagosDao {
     }
 
     @Override
-    public void eliminarPago(Pagos pago) {
+    public void eliminarOcupacion(Ocupacion ocupacion) {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(pago);
+            session.delete(ocupacion);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -126,4 +67,65 @@ public class PagosDaoImp implements PagosDao {
             }
         }
     }
+
+    @Override
+    public List<Ocupacion> mostrarOcupaciones() {
+        Session session = null;
+        List<Ocupacion> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Ocupacion");
+            lista = (List<Ocupacion>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Ocupacion> ocupacionesxIdanexo(Anexo anexo) {
+        Session session = null;
+        List<Ocupacion> lista = null;
+        //Integer idanexo = anexo.getIdanexo();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Ocupacion WHERE idanexo=:v");
+            query.setParameter("v", anexo);
+            lista = (List<Ocupacion>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public Ocupacion verifyIdocup(Integer idocupacion) {
+        Session session = null;
+        Ocupacion ocupacion = new Ocupacion();
+        try {
+            System.out.println("Dao : "+idocupacion);
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "FROM Ocupacion WHERE id=:idocupacion";
+            Query query = session.createQuery(hql);
+            query.setParameter("idocupacion", idocupacion);
+            ocupacion = (Ocupacion) query.uniqueResult();
+            
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }        
+        return ocupacion;
+    }
+
 }

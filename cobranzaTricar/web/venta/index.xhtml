@@ -9,7 +9,7 @@
     <ui:define name="content">
         <h2>Gestión de Créditos</h2>
         <h:form>            
-            <p:commandButton action="#{creditoBean.nuevo()}" value="Nuevo Crédito" immediate="true" icon="b-add"/>
+            <p:commandButton action="#{creditoBean.nuevo()}" value="Nuevo Crédito" immediate="true" icon="b-add" update="#{ocupacionBean.limpiarlista()}"/>
         </h:form>
         <h:form>            
             <p:panelGrid columns="2">
@@ -27,10 +27,10 @@
                     <h:outputText value="#{cred.liqventa}" />
                 </p:column>
                 <p:column headerText="Nombres">
-                    <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
+                    <h:outputText value="#{cred.anexo.nombres}" />
                 </p:column>
                 <p:column headerText="Num. Doc.">
-                    <h:outputText value="#{cred.anexoByIdanexo.numdocumento}" />
+                    <h:outputText value="#{cred.anexo.numdocumento}" />
                 </p:column>
                 <p:column headerText="Tienda">
                     <h:outputText value="#{cred.tienda}">
@@ -56,7 +56,10 @@
                 <p:column headerText="Deuda Actual">
                     <h:outputText value="#{cred.deudactual}" />
                 </p:column>
-                <p:column headerText="OPERACIONES">                            
+                <p:column headerText="OPERACIONES">
+                    <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" >
+                        <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                    </p:commandButton>
                     <p:commandButton update=":formVer" icon="b-ver" title="Mostrar" actionListener="#{creditoBean.cargarLetras(cred)}"/>                         
                     <p:commandButton value="R" update=":formRef" oncomplete="dlgrefinanciar.show()" title="Refinanciar">
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
@@ -68,7 +71,6 @@
                 </p:column>
             </p:dataTable>
         </h:form>
-
         <h:form id="formRef">
             <p:dialog id="dlg3" header="Refinanciar Credito" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgrefinanciar" modal="true" resizable="false" minWidth="200">
@@ -104,7 +106,6 @@
                 </p:panelGrid>
             </p:dialog>
         </h:form>
-
         <h:form id="formEliminar">
             <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">

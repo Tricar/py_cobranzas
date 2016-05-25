@@ -36,7 +36,7 @@ public class pagosBean implements Serializable {
     private Credito credito = new Credito();
     private BigDecimal montopago = new BigDecimal(BigInteger.ZERO);
     private String descripcion;
-    private creditoBean credbean = new creditoBean();
+    private final creditoBean credbean = new creditoBean();
     public List<Letras> letraslista = new ArrayList();
     public LoginBean loginbean = new LoginBean();
 
@@ -44,81 +44,6 @@ public class pagosBean implements Serializable {
      * Creates a new instance of pagosBean
      */
     public pagosBean() {
-    }
-
-    public Pagos getPago() {
-        return pago;
-    }
-
-    public void setPago(Pagos pago) {
-        this.pago = pago;
-    }
-
-    public Letras getLetra() {
-        return letra;
-    }
-
-    public void setLetra(Letras letra) {
-        this.letra = letra;
-    }
-
-    public Credito getCredito() {
-        return credito;
-    }
-
-    public void setCredito(Credito credito) {
-        this.credito = credito;
-    }
-
-    public List<Pagos> getPagosxcredito() {
-        return pagosxcredito;
-    }
-
-    public void setPagosxcredito(List<Pagos> pagosxcredito) {
-        this.pagosxcredito = pagosxcredito;
-    }
-
-    public List<Pagos> getPagosxletra() {
-        return pagosxletra;
-    }
-
-    public void setPagosxletra(List<Pagos> pagosxletra) {
-        this.pagosxletra = pagosxletra;
-    }
-
-    public BigDecimal getMontopago() {
-        return montopago;
-    }
-
-    public void setMontopago(BigDecimal montopago) {
-        this.montopago = montopago;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public List<Pagos> getPagos() {
-        PagosDao linkdao = new PagosDaoImp();
-        pagos = linkdao.mostrarPagos();
-        return pagos;
-    }
-
-    public List<Letras> Letraslista(Credito credito) {
-        letraslista = credbean.cargarLetrasArray(credito);
-        return letraslista;
-    }
-
-    public List<Letras> getLetraslista() {
-        return letraslista;
-    }
-
-    public void setLetraslista(List<Letras> letraslista) {
-        this.letraslista = letraslista;
     }
 
     public List<Pagos> PagosxCredito(Credito cred) {
@@ -208,5 +133,79 @@ public class pagosBean implements Serializable {
         } catch (Exception e) {
         }
     }
+    
+    public Pagos getPago() {
+        return pago;
+    }
 
+    public void setPago(Pagos pago) {
+        this.pago = pago;
+    }
+
+    public Letras getLetra() {
+        return letra;
+    }
+
+    public void setLetra(Letras letra) {
+        this.letra = letra;
+    }
+
+    public Credito getCredito() {
+        return credito;
+    }
+
+    public void setCredito(Credito credito) {
+        this.credito = credito;
+    }
+
+    public List<Pagos> getPagosxcredito() {
+        return pagosxcredito;
+    }
+
+    public void setPagosxcredito(List<Pagos> pagosxcredito) {
+        this.pagosxcredito = pagosxcredito;
+    }
+
+    public List<Pagos> getPagosxletra() {
+        return pagosxletra;
+    }
+
+    public void setPagosxletra(List<Pagos> pagosxletra) {
+        this.pagosxletra = pagosxletra;
+    }
+
+    public BigDecimal getMontopago() {
+        return montopago;
+    }
+
+    public void setMontopago(BigDecimal montopago) {
+        this.montopago = montopago;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<Pagos> getPagos() {
+        PagosDao linkdao = new PagosDaoImp();
+        pagos = linkdao.mostrarPagos();
+        return pagos;
+    }
+
+    public List<Letras> Letraslista(Credito credito) {
+        letraslista = credbean.cargarLetrasArray(credito);
+        return letraslista;
+    }
+
+    public List<Letras> getLetraslista() {
+        return letraslista;
+    }
+
+    public void setLetraslista(List<Letras> letraslista) {
+        this.letraslista = letraslista;
+    }
 }

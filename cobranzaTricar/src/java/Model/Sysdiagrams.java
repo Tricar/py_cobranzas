@@ -1,5 +1,5 @@
 package Model;
-// Generated 11/09/2015 02:53:24 PM by Hibernate Tools 4.3.1
+// Generated 21/04/2016 10:03:10 AM by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;

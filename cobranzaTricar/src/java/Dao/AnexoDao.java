@@ -10,6 +10,7 @@ import org.hibernate.Session;
 public interface AnexoDao {
     
     public boolean registrar(Session session, Anexo anexo)throws Exception;
+    public void insertar(Anexo anexo);
     public List<Anexo> verTodo(Session session) throws Exception;
     public List<Anexo> verCliente(Session session) throws Exception;
     public List<Anexo> verEmpleado(Session session) throws Exception;
@@ -29,4 +30,5 @@ public interface AnexoDao {
     public Anexo cargarxCredito(Integer idanexo);
     public Anexo cargarClientexDoc(String dni, String tipo, String tipo1);
     public List<Anexo> buscarClienteDni(String dni, String tipo, String tipo1);
+    public Anexo devolverNombre(Integer idanexo);
 }

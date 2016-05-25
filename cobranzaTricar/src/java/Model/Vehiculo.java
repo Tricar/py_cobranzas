@@ -1,5 +1,5 @@
 package Model;
-// Generated 03/09/2015 12:09:40 PM by Hibernate Tools 4.3.1
+// Generated 21/04/2016 10:03:10 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -90,7 +90,7 @@ public class Vehiculo implements java.io.Serializable {
         this.modelo = modelo;
     }
 
-    @Column(name = "marca", length = 1)
+    @Column(name = "marca", length = 2)
     public String getMarca() {
         return this.marca;
     }
@@ -144,8 +144,8 @@ public class Vehiculo implements java.io.Serializable {
     public void setTipovehiculo(String tipovehiculo) {
         this.tipovehiculo = tipovehiculo;
     }
-    
-    @Column(name = "estado", length = 1)
+
+    @Column(name = "estado", length = 2)
     public String getEstado() {
         return this.estado;
     }

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Ocupacion" table="ocupacion" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idocupacion" type="int">
+            <column name="idocupacion" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="anexo" class="Model.Anexo" fetch="select">
+            <column name="idanexo" not-null="true" />
+        </many-to-one>
+        <property name="tipo" type="string">
+            <column name="tipo" length="2" />
+        </property>
+        <property name="clase" type="string">
+            <column name="clase" length="2" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="50" />
+        </property>
+        <property name="empresa" type="string">
+            <column name="empresa" length="50" />
+        </property>
+        <property name="montoin" type="big_decimal">
+            <column name="montoin" precision="17" />
+        </property>
+        <property name="boletas" type="java.lang.Boolean">
+            <column name="boletas" />
+        </property>
+        <property name="rrhh" type="java.lang.Boolean">
+            <column name="rrhh" />
+        </property>
+        <property name="facbol" type="java.lang.Boolean">
+            <column name="facbol" />
+        </property>
+        <property name="constancia" type="java.lang.Boolean">
+            <column name="constancia" />
+        </property>
+        <property name="tpropiedad" type="java.lang.Boolean">
+            <column name="tpropiedad" />
+        </property>
+        <property name="licencia" type="java.lang.Boolean">
+            <column name="licencia" />
+        </property>
+        <property name="pagosunat" type="java.lang.Boolean">
+            <column name="pagosunat" />
+        </property>
+        <property name="func" type="java.lang.Boolean">
+            <column name="func" />
+        </property>
+    </class>
+</hibernate-mapping>
