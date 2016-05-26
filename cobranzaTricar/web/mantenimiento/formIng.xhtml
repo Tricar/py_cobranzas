@@ -43,7 +43,7 @@
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
-                    <p:commandButton value="Agregar ingresos" icon="b-add" action="#{ocupacionBean.limpiarIngreso()}"/>                    
+                    <p:commandButton value="Agregar ingresos" icon="b-add" action="#{ocupacionBean.limpiarIngreso()}" />
                 </h:form>
             </h:form>
         </f:view>
@@ -121,9 +121,8 @@
             <p:dialog header="Eliminar Ingreso de Cliente" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
                 <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{ocupacionBean.eliminarSolo(creditoBean.credito.anexo)}" 
-                                 ajax="false" oncomplete="dlgeliminar.hide();" />
-                <p:commandButton value="No" onclick="dlg2.hide();" />
+                <p:commandButton value="Si" actionListener="#{ocupacionBean.eliminarSolo(creditoBean.credito.anexo)}" />
+                <p:commandButton value="No" onclick="dlgeliminar.hide();" />
             </p:dialog>
         </h:form>
     </ui:define>

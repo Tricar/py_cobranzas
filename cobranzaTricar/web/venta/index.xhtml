@@ -43,19 +43,19 @@
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Vehículo">
-                    <h:outputText value="#{cred.vehiculo.tipovehiculo}">
+                    <h:outputText value="#{cred.vehi}">
                         <f:converter converterId="tvehiculo"/>
                     </h:outputText>
+                </p:column>
+                <p:column headerText="Modelo">
+                    <h:outputText value="#{cred.modelo.modelo}"/>
                 </p:column>
                 <p:column headerText="Monto financiado">
                     <h:outputText value="#{cred.saldo}" />
                 </p:column>
-                <p:column headerText="Deuda Total">
-                    <h:outputText value="#{cred.totaldeuda}" />
-                </p:column>
-                <p:column headerText="Deuda Actual">
-                    <h:outputText value="#{cred.deudactual}" />
-                </p:column>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{cred.estado}" converter="estcredconvert"/>
+                </p:column>                
                 <p:column headerText="OPERACIONES">
                     <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" >
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />

@@ -80,9 +80,9 @@ public class ocupacionBean implements Serializable {
                 ocupacion.setIdventa(null);
                 ocudao.insertarOcupacion(ocupacion);
             }
-            RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");
             ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
             RequestContext.getCurrentInstance().update("formTabla");
+            RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");            
         } catch (Exception e) {
             RequestContext.getCurrentInstance().update("formOcupacion");
             RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
@@ -264,8 +264,10 @@ public class ocupacionBean implements Serializable {
 
     public void eliminarSolo(Anexo anexo) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
-        ocudao.eliminarOcupacion(ocupacion);
+        ocudao.eliminarOcupacion(ocupacion);        
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
+        RequestContext.getCurrentInstance().update("formTabla");
+        RequestContext.getCurrentInstance().execute("PF('dlgeliminar').show()");;
     }
 
     public void veryId(Integer idocupacion) {
@@ -277,6 +279,7 @@ public class ocupacionBean implements Serializable {
     }
 
     public String nuevo() {
+        anexo = new Anexo();
         ocupacion = new Ocupacion();
         return "/mantenimiento/formIng.xhtml";
     }

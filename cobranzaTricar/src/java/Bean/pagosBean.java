@@ -49,9 +49,9 @@ public class pagosBean implements Serializable {
     public List<Pagos> PagosxCredito(Credito cred) {
         PagosDao linkdao = new PagosDaoImp();
         pagosxcredito = linkdao.mostrarPagosxCredito(cred);
-        if (pagosxcredito.size() == 0) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "No existen pagos de este cliente."));
-        }
+        if (pagosxcredito.isEmpty()==true){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "No existen pagos de este cliente."));            
+        }        
         credito = cred;
         return pagosxcredito;
     }
@@ -107,14 +107,19 @@ public class pagosBean implements Serializable {
         pagosxcredito = new ArrayList();
     }
 
-    public void eliminar() {
+    public List eliminar(Credito cred, Pagos pag) {
+        pago = pag;
+        credito = cred;
+        System.out.println("delete en pagosbean: "+credito.getAnexo().getNombres());
         PagosDao pagodao = new PagosDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
         CreditoDao creditodao = new CreditoDaoImp();
         Letras letrapago = new Letras();
         Credito creditopago = new Credito();
+        System.out.println("aca hay un pago: "+pago.getDescripcion());
         try {
             if (pago.getTipo().equals("LE") || pago.getTipo().equals("NC")) {
+                System.out.println("aca hay un pago: "+pago.getDescripcion());
                 pagodao.eliminarPago(pago);
                 letrapago = pago.getLetras();
                 letrapago.setSaldo(letrapago.getSaldo().add(pago.getMonto()));
@@ -132,6 +137,7 @@ public class pagosBean implements Serializable {
             RequestContext.getCurrentInstance().update("formModificar");
         } catch (Exception e) {
         }
+        return pagosxcredito;
     }
     
     public Pagos getPago() {

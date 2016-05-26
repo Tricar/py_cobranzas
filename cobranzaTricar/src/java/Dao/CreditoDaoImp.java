@@ -213,6 +213,27 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return credito;
     }
+    
+    @Override
+    public Credito cargarxCodigoEstadoDos(String codigo, String estado, String estado1) {
+        Session session = null;
+        Credito credito = new Credito();        
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE liqventa=:w and (estado=:v or estado=:u)");
+            query.setParameter("w", codigo);
+            query.setParameter("v", estado);
+            query.setParameter("u", estado1);
+            credito = (Credito) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return credito;
+    }
 
 //    @Override
 //    public List<Credito> cargarCreditoxNombre(String nombre) {
@@ -260,5 +281,7 @@ public class CreditoDaoImp implements CreditoDao{
         return tcredito;        
         
     }
+
+    
     
 }
