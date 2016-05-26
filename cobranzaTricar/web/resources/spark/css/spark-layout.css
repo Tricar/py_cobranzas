@@ -7,72 +7,72 @@
 /* FONT-FACE*/
 @font-face {
     font-family: 'ralewaybold';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.eot.xhtml?ln=spark-layout");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.eot.xhtml?ln=spark-layout#iefix") format('embedded-opentype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.woff2.xhtml?ln=spark-layout") format('woff2'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.woff.xhtml?ln=spark-layout") format('woff'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.ttf.xhtml?ln=spark-layout") format('truetype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.svg.xhtml?ln=spark-layout#ralewaybold") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Bold-webfont.eot?ln=spark-layout");
+    src: url("../../resources/spark/fonts/Raleway-Bold-webfont.eot?ln=spark-layout#iefix") format('embedded-opentype'),
+         url("../../resources/spark/fonts/Raleway-Bold-webfont.woff2?ln=spark-layout") format('woff2'),
+         url("../../resources/spark/fonts/Raleway-Bold-webfont.woff?ln=spark-layout") format('woff'),
+         url("../../resources/spark/fonts/Raleway-Bold-webfont.ttf?ln=spark-layout") format('truetype'),
+         url("../../resources/spark/fonts/Raleway-Bold-webfont.svg?ln=spark-layout#ralewaybold") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewaysemibold';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.eot.xhtml?ln=spark-layout");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.eot.xhtml?ln=spark-layout#iefix") format('embedded-opentype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.woff2.xhtml?ln=spark-layout") format('woff2'),
-         url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.woff.xhtml?ln=spark-layout") format('woff'),
-         url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.ttf.xhtml?ln=spark-layout") format('truetype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.svg.xhtml?ln=spark-layout#ralewaysemibold") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-SemiBold-webfont.eot?ln=spark-layout");
+    src: url("../../resources/spark/fonts/Raleway-SemiBold-webfont.eot?ln=spark-layout#iefix") format('embedded-opentype'),
+         url("../../resources/spark/fonts/Raleway-SemiBold-webfont.woff2?ln=spark-layout") format('woff2'),
+         url("../../resources/spark/fonts/Raleway-SemiBold-webfont.woff?ln=spark-layout") format('woff'),
+         url("../../resources/spark/fonts/Raleway-SemiBold-webfont.ttf?ln=spark-layout") format('truetype'),
+         url("../../resources/spark/fonts/Raleway-SemiBold-webfont.svg?ln=spark-layout#ralewaysemibold") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewaylight';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.eot.xhtml?ln=spark-layout");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.eot.xhtml?ln=spark-layout#iefix") format('embedded-opentype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.woff2.xhtml?ln=spark-layout") format('woff2'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.woff.xhtml?ln=spark-layout") format('woff'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.ttf.xhtml?ln=spark-layout") format('truetype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.svg.xhtml?ln=spark-layout#ralewaylight") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Light-webfont.eot?ln=spark-layout");
+    src: url("../../resources/spark/fonts/Raleway-Light-webfont.eot?ln=spark-layout#iefix") format('embedded-opentype'),
+         url("../../resources/spark/fonts/Raleway-Light-webfont.woff2?ln=spark-layout") format('woff2'),
+         url("../../resources/spark/fonts/Raleway-Light-webfont.woff?ln=spark-layout") format('woff'),
+         url("../../resources/spark/fonts/Raleway-Light-webfont.ttf?ln=spark-layout") format('truetype'),
+         url("../../resources/spark/fonts/Raleway-Light-webfont.svg?ln=spark-layout#ralewaylight") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewaymedium';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.eot.xhtml?ln=spark-layout");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.eot.xhtml?ln=spark-layout#iefix") format('embedded-opentype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.woff2.xhtml?ln=spark-layout") format('woff2'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.woff.xhtml?ln=spark-layout") format('woff'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.ttf.xhtml?ln=spark-layout") format('truetype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.svg.xhtml?ln=spark-layout#ralewaymedium") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Medium-webfont.eot?ln=spark-layout");
+    src: url("../../resources/spark/fonts/Raleway-Medium-webfont.eot?ln=spark-layout#iefix") format('embedded-opentype'),
+         url("../../resources/spark/fonts/Raleway-Medium-webfont.woff2?ln=spark-layout") format('woff2'),
+         url("../../resources/spark/fonts/Raleway-Medium-webfont.woff?ln=spark-layout") format('woff'),
+         url("../../resources/spark/fonts/Raleway-Medium-webfont.ttf?ln=spark-layout") format('truetype'),
+         url("../../resources/spark/fonts/Raleway-Medium-webfont.svg?ln=spark-layout#ralewaymedium") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewayregular';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.eot.xhtml?ln=spark-layout");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.eot.xhtml?ln=spark-layout#iefix") format('embedded-opentype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.woff2.xhtml?ln=spark-layout") format('woff2'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.woff.xhtml?ln=spark-layout") format('woff'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.ttf.xhtml?ln=spark-layout") format('truetype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.svg.xhtml?ln=spark-layout#ralewayregular") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Regular-webfont.eot?ln=spark-layout");
+    src: url("../../resources/spark/fonts/Raleway-Regular-webfont.eot?ln=spark-layout#iefix") format('embedded-opentype'),
+         url("../../resources/spark/fonts/Raleway-Regular-webfont.woff2?ln=spark-layout") format('woff2'),
+         url("../../resources/spark/fonts/Raleway-Regular-webfont.woff?ln=spark-layout") format('woff'),
+         url("../../resources/spark/fonts/Raleway-Regular-webfont.ttf?ln=spark-layout") format('truetype'),
+         url("../../resources/spark/fonts/Raleway-Regular-webfont.svg?ln=spark-layout#ralewayregular") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewayregular';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.eot.xhtml?ln=spark-layout");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.eot.xhtml?ln=spark-layout#iefix") format('embedded-opentype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.woff2.xhtml?ln=spark-layout") format('woff2'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.woff.xhtml?ln=spark-layout") format('woff'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.ttf.xhtml?ln=spark-layout") format('truetype'),
-         url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.svg.xhtml?ln=spark-layout#ralewayregular") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Regular-webfont.eot?ln=spark-layout");
+    src: url("../../resources/spark/fonts/Raleway-Regular-webfont.eot?ln=spark-layout#iefix") format('embedded-opentype'),
+         url("../../resources/spark/fonts/Raleway-Regular-webfont.woff2?ln=spark-layout") format('woff2'),
+         url("../../resources/spark/Raleway-Regular-webfont.woff?ln=spark-layout") format('woff'),
+         url("../../resources/spark/fonts/Raleway-Regular-webfont.ttf?ln=spark-layout") format('truetype'),
+         url("../../resources/spark/fonts/Raleway-Regular-webfont.svg?ln=spark-layout#ralewayregular") format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -86,7 +86,7 @@
 
 
 /*BODY*/
-body{margin:0px; background-image:url("/spark/javax.faces.resource/images/background.png.xhtml?ln=spark-layout"); background-repeat:repeat; background-position:center; background-color:#C3CCD5; 
+body{margin:0px; background-image:url("../../resources/spark/img/background.png"); background-repeat:repeat; background-position:center; background-color:#C3CCD5; 
      background-attachment:fixed; font-family: 'ralewaymedium';}
 
 /* menu mask*/
