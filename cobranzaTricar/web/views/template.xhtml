@@ -8,65 +8,108 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet library="css" name="default.css"/>
-        <h:outputStylesheet library="css" name="cssLayout.css"/>
-        <h:outputStylesheet library="css" name="style.css" />
-        <h:outputStylesheet library="css" name="menu.css" />
+        <h:outputStylesheet library="spark" name="css/charts.css"/>
+        <h:outputStylesheet library="spark" name="css/spark-layout.css"/>
+        <h:outputStylesheet library="spark" name="css/core-layout.css"/>
+        <h:outputStylesheet library="spark" name="css/theme.css"/>
+        <h:outputStylesheet library="spark" name="css/animate.css"/>
+        <h:outputStylesheet library="spark" name="css/font-awesome.css"/>   
         <h:outputScript library="js" name="maskmoney.js" />
-        <h:outputScript library="js" name="bootstrap.min.js" />
+        <h:outputScript library="spark" name="js/layout.js" />
+        <h:outputScript library="spark" name="js/primefaces.js" />
+        <h:outputScript library="spark" name="js/charts.js" />
         <!--<h:outputLink rel="shortcut icon" hreflang="./images/favicon.ico"/>-->
         <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/favicont.png" />
-        <title>Cobranzas TRICAR SAC</title>         
+        <title>Cobranzas TRICAR SAC</title>
+        <script type="text/javascript">
+            function skinChart() {
+                this.cfg.shadow = false;
+                this.cfg.seriesColors = ['#71CC8D', '#33AFDE', '#F7941E'];
+                this.cfg.grid = {
+                    background: '#EDF3F6',
+                    borderColor: '#D9E3E8',
+                    gridLineColor: '#D9E3E8',
+                    shadow: false
+                };
+                this.cfg.axesDefaults = {
+                    rendererOptions: {
+                        textColor: '#778D9B'
+                    }
+                };
+                this.cfg.seriesDefaults = {
+                    shadow: false,
+                    markerOptions: {
+                        shadow: false
+                    }
+                }
+            }
+
+            function skinPie() {
+                this.cfg.seriesColors = ['#dae8ef', '#27aae1', '#33ccff', '#9fadb5'];
+                this.cfg.grid = {
+                    background: '#ffffff',
+                    borderColor: '#eaeaea',
+                    gridLineColor: '#e5ebf0',
+                    shadow: false,
+                    borderWidth: 0
+                };
+                this.cfg.seriesDefaults.shadow = false;
+            }
+        </script>
     </h:head>
 
     <h:body>
         <ui:include src="../views/sessionTimeOut.xhtml" />
-        <div id="cabecera">
-            <ui:insert name="top">
-                <h:graphicImage library="images" name="logo_tricar.jpg" alt="hound logo" style="float: left; margin: 0px; padding: 0px;"/>
-                <h1>Sistema Cobranzas</h1>
-                <h:form id="frmMenu">
-                    <p:menubar>
-                        <p:menuitem value="Inicio" icon="ui-icon-home" outcome="/views/index" />
+        <ui:insert name="top">
+            <div id="layout-topbar" class="ShadowGray">
+                <div id="layout-topbar-indent">
+                    <h:graphicImage id="logo" library="spark" name="img/logotricar.png" alt="hound logo" style="float: left; margin: 0px; padding: 0px;"/>
+                    <a href="#" id="mobile-menu-button" class="BordRad3 white ShowOnMobile"><i class="fa fa-bars"></i> Menu</a>
+                </div>    
+            </div>
+            <h:form id="layout-menu" >
+                <p:menubar class="BordRad3 Unselectable">
+                    <p:menuitem class="Animated05 CursPointer" value="Inicio" icon="fa fa-home" outcome="/views/index"/>
+                    <p:submenu class="Animated05 CursPointer" rendered="#{loginbean.usuario.perfil.sistema}" label="Sistema" icon="fa fa-tag">
+                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="fa fa-laptop" />
+                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="fa fa-person" />
+                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="fa fa-clipboard" />
+                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="fa fa-user" />
+                    </p:submenu>
+                    <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="ui-icon-person" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manIng}" value="Ingresos" action="#{loginbean.ingreso()}" icon="ui-icon-person" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" action="#{loginbean.articulo()}" icon="ui-icon-flag" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" action="#{loginbean.modelo()}" icon="ui-icon-star" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" action="#{loginbean.color()}" icon="ui-icon-pencil" />
+                    </p:submenu>
+                    <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-newwin" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />
+                    </p:submenu>
+                    <p:submenu label="Reporte" icon="ui-icon-print">
+                        <p:menuitem value="Deuda Vencida" action="#{loginbean.deudor()}" icon="ui-icon-bookmark" />
+                        <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />
+                    </p:submenu>
+                    <f:facet name="options">
+                        <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>
+                        <p:commandButton icon="fa fa-sign-out" style="margin-left:50px" actionListener="#{loginbean.logout()}"
+                                         title="Cerrar Session" oncomplete="handleLoginRequest(xhr, status, args)"/>
+                        <p:commandButton icon="fa fa-gear fa-spin" title="Cambiar Clave"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+        </ui:insert>  
 
-                        <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-suitcase">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="ui-icon-user" />
-                        </p:submenu>
-                        <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manIng}" value="Ingresos" action="#{loginbean.ingreso()}" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" action="#{loginbean.articulo()}" icon="ui-icon-flag" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" action="#{loginbean.modelo()}" icon="ui-icon-star" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" action="#{loginbean.color()}" icon="ui-icon-pencil" />
-                        </p:submenu>
-                        <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />
-                        </p:submenu>
-                        <p:submenu label="Reporte" icon="ui-icon-print">
-                            <p:menuitem value="Deuda Vencida" action="#{loginbean.deudor()}" icon="ui-icon-bookmark" />
-                            <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />
-                        </p:submenu>
-                        <f:facet name="options">
-                            <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>
-                            <p:commandButton icon="ui-icon-power" style="margin-left:50px" actionListener="#{loginbean.logout()}"
-                                             title="Cerrar Session" oncomplete="handleLoginRequest(xhr, status, args)"/>
-                            <p:commandButton icon="ui-icon-suitcase" title="Cambiar Clave"/>
-                        </f:facet>
-                    </p:menubar>
-                </h:form>
-            </ui:insert>
-        </div>
-        <div id="content" class="center_content">
+        <div id="layout-portlets-cover">
             <ui:insert name="content">Content</ui:insert>
         </div>
-        <div id="bottom">
+
+        <div class="layout-portlets-box">
             <ui:insert name="bottom">INDUSTRIASTRICAR &copy; 2015</ui:insert>
         </div>
+
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
                 if (args.loggetOut) {

@@ -8,72 +8,72 @@
 
 @font-face {
     font-family: 'ralewaybold';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.eot.xhtml?ln=primefaces-spark");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.eot.xhtml?ln=primefaces-spark#iefix") format('embedded-opentype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.woff2.xhtml?ln=primefaces-spark") format('woff2'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.woff.xhtml?ln=primefaces-spark") format('woff'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.ttf.xhtml?ln=primefaces-spark") format('truetype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Bold-webfont.svg.xhtml?ln=primefaces-spark#ralewaybold") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Bold-webfont.eot?ln=primefaces-spark");
+    src: url("../../resources/spark/fonts/Raleway-Bold-webfont.eot?ln=primefaces-spark#iefix") format('embedded-opentype'),
+        url("../../resources/spark/fonts/Raleway-Bold-webfont.woff2?ln=primefaces-spark") format('woff2'),
+        url("../../resources/spark/fonts/Raleway-Bold-webfont.woff?ln=primefaces-spark") format('woff'),
+        url("../../resources/spark/fonts/Raleway-Bold-webfont.ttf?ln=primefaces-spark") format('truetype'),
+        url("../../resources/spark/fonts/Raleway-Bold-webfont.svg?ln=primefaces-spark#ralewaybold") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewaysemibold';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.eot.xhtml?ln=primefaces-spark");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.eot.xhtml?ln=primefaces-spark#iefix") format('embedded-opentype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.woff2.xhtml?ln=primefaces-spark") format('woff2'),
-        url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.woff.xhtml?ln=primefaces-spark") format('woff'),
-        url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.ttf.xhtml?ln=primefaces-spark") format('truetype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-SemiBold-webfont.svg.xhtml?ln=primefaces-spark#ralewaysemibold") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-SemiBold-webfont.eot?ln=primefaces-spark");
+    src: url("../../resources/spark/fonts/Raleway-SemiBold-webfont.eot?ln=primefaces-spark#iefix") format('embedded-opentype'),
+        url("../../resources/spark/fonts/Raleway-SemiBold-webfont.woff2?ln=primefaces-spark") format('woff2'),
+        url("../../resources/spark/fonts/Raleway-SemiBold-webfont.woff?ln=primefaces-spark") format('woff'),
+        url("../../resources/spark/fonts/Raleway-SemiBold-webfont.ttf?ln=primefaces-spark") format('truetype'),
+        url("../../resources/spark/fonts/Raleway-SemiBold-webfont.svg?ln=primefaces-spark#ralewaysemibold") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewaylight';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.eot.xhtml?ln=primefaces-spark");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.eot.xhtml?ln=primefaces-spark#iefix") format('embedded-opentype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.woff2.xhtml?ln=primefaces-spark") format('woff2'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.woff.xhtml?ln=primefaces-spark") format('woff'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.ttf.xhtml?ln=primefaces-spark") format('truetype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Light-webfont.svg.xhtml?ln=primefaces-spark#ralewaylight") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Light-webfont.eot?ln=primefaces-spark");
+    src: url("../../resources/spark/fonts/Raleway-Light-webfont.eot?ln=primefaces-spark#iefix") format('embedded-opentype'),
+        url("../../resources/spark/fonts/Raleway-Light-webfont.woff2?ln=primefaces-spark") format('woff2'),
+        url("../../resources/spark/fonts/Raleway-Light-webfont.woff?ln=primefaces-spark") format('woff'),
+        url("../../resources/spark/fonts/Raleway-Light-webfont.ttf?ln=primefaces-spark") format('truetype'),
+        url("../../resources/spark/fonts/Raleway-Light-webfont.svg?ln=primefaces-spark#ralewaylight") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewaymedium';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.eot.xhtml?ln=primefaces-spark");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.eot.xhtml?ln=primefaces-spark#iefix") format('embedded-opentype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.woff2.xhtml?ln=primefaces-spark") format('woff2'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.woff.xhtml?ln=primefaces-spark") format('woff'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.ttf.xhtml?ln=primefaces-spark") format('truetype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Medium-webfont.svg.xhtml?ln=primefaces-spark#ralewaymedium") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Medium-webfont.eot?ln=primefaces-spark");
+    src: url("../../resources/spark/fonts/Raleway-Medium-webfont.eot?ln=primefaces-spark#iefix") format('embedded-opentype'),
+        url("../../resources/spark/fonts/Raleway-Medium-webfont.woff2?ln=primefaces-spark") format('woff2'),
+        url("../../resources/spark/fonts/Raleway-Medium-webfont.woff?ln=primefaces-spark") format('woff'),
+        url("../../resources/spark/fonts/Raleway-Medium-webfont.ttf?ln=primefaces-spark") format('truetype'),
+        url("../../resources/spark/fonts/Raleway-Medium-webfont.svg?ln=primefaces-spark#ralewaymedium") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewayregular';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.eot.xhtml?ln=primefaces-spark");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.eot.xhtml?ln=primefaces-spark#iefix") format('embedded-opentype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.woff2.xhtml?ln=primefaces-spark") format('woff2'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.woff.xhtml?ln=primefaces-spark") format('woff'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.ttf.xhtml?ln=primefaces-spark") format('truetype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.svg.xhtml?ln=primefaces-spark#ralewayregular") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Regular-webfont.eot?ln=primefaces-spark");
+    src: url("../../resources/spark/fonts/Raleway-Regular-webfont.eot?ln=primefaces-spark#iefix") format('embedded-opentype'),
+        url("../../resources/spark/fonts/Raleway-Regular-webfont.woff2?ln=primefaces-spark") format('woff2'),
+        url("../../resources/spark/fonts/Raleway-Regular-webfont.woff?ln=primefaces-spark") format('woff'),
+        url("../../resources/spark/fonts/Raleway-Regular-webfont.ttf?ln=primefaces-spark") format('truetype'),
+        url("../../resources/spark/fonts/Raleway-Regular-webfont.svg?ln=primefaces-spark#ralewayregular") format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ralewayregular';
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.eot.xhtml?ln=primefaces-spark");
-    src: url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.eot.xhtml?ln=primefaces-spark#iefix") format('embedded-opentype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.woff2.xhtml?ln=primefaces-spark") format('woff2'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.woff.xhtml?ln=primefaces-spark") format('woff'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.ttf.xhtml?ln=primefaces-spark") format('truetype'),
-        url("/spark/javax.faces.resource/fonts/Raleway-Regular-webfont.svg.xhtml?ln=primefaces-spark#ralewayregular") format('svg');
+    src: url("../../resources/spark/fonts/Raleway-Regular-webfont.eot?ln=primefaces-spark");
+    src: url("../../resources/spark/fonts/Raleway-Regular-webfont.eot?ln=primefaces-spark#iefix") format('embedded-opentype'),
+        url("../../resources/spark/fonts/Raleway-Regular-webfont.woff2?ln=primefaces-spark") format('woff2'),
+        url("../../resources/spark/fonts/Raleway-Regular-webfont.woff?ln=primefaces-spark") format('woff'),
+        url("../../resources/spark/fonts/Raleway-Regular-webfont.ttf?ln=primefaces-spark") format('truetype'),
+        url("../../resources/spark/fonts/Raleway-Regular-webfont.svg?ln=primefaces-spark#ralewayregular") format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -247,7 +247,7 @@ label.ui-state-error{color:#F03369 !important;}
 }
 .ui-icon,
 .ui-widget-content .ui-icon {
-    background-image: url("/spark/javax.faces.resource/images/ui-icons_72b42d_256x240.png.xhtml?ln=primefaces-spark");
+    background-image: url("../../resources/spark/img/ui-icons_72b42d_256x240.png");
 }
 .ui-widget-header .ui-icon {
     /*background-image: url("images/ui-icons_ffffff_256x240.png");*/
@@ -257,22 +257,22 @@ label.ui-state-error{color:#F03369 !important;}
 }
 .ui-state-hover .ui-icon,
 .ui-state-focus .ui-icon {
-    background-image: url("/spark/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-spark");
+    background-image: url("../../resources/spark/img/ui-icons_ffffff_256x240.png");
 }
 .ui-state-active .ui-icon {
-    background-image: url("/spark/javax.faces.resource/images/ui-icons_ffffff_256x240.png.xhtml?ln=primefaces-spark");
+    background-image: url("../../resources/spark/img/ui-icons_ffffff_256x240.png");
 }
 .ui-state-highlight .ui-icon {
-    background-image: url("/spark/javax.faces.resource/images/ui-icons_4eb305_256x240.png.xhtml?ln=primefaces-spark");
+    background-image: url("../../resources/spark/img/ui-icons_4eb305_256x240.png");
 }
 .ui-state-error .ui-icon,
 .ui-state-error-text .ui-icon {
-    background-image: url("/spark/javax.faces.resource/images/ui-icons_cd0a0a_256x240.png.xhtml?ln=primefaces-spark");
+    background-image: url("../../resources/spark/img/ui-icons_cd0a0a_256x240.png");
 }
 
 /* positioning */
-.ui-icon-default { background-image:url("/spark/javax.faces.resource/images/default.svg.xhtml?ln=primefaces-spark") !important; background-position:center; background-size:100%;}
-.ui-icon-blank { background-image:url("/spark/javax.faces.resource/images/blank.svg.xhtml?ln=primefaces-spark") !important; background-position:center; background-size:100%;}
+.ui-icon-default { background-image:url("../../resources/spark/img/default.svg") !important; background-position:center; background-size:100%;}
+.ui-icon-blank { background-image:url("../../resources/spark/img/blank.svg") !important; background-position:center; background-size:100%;}
 .ui-icon-blank { background-position: 16px 16px; }
 .ui-icon-carat-1-n { background-position: 0 0; }
 .ui-icon-carat-1-ne { background-position: -16px 0; }
@@ -350,7 +350,7 @@ label.ui-state-error{color:#F03369 !important;}
 .ui-icon-folder-open { background-position: -16px -96px; }
 .ui-icon-document { background-position: -32px -96px; }
 .ui-icon-document-b { background-position: -48px -96px; }
-.ui-icon-note { background-image:url("/spark/javax.faces.resource/images/note.svg.xhtml?ln=primefaces-spark"); background-position:center; background-size:100%;}
+.ui-icon-note { background-image:url("../../resources/spark/img/note.svg"); background-position:center; background-size:100%;}
 .ui-icon-mail-closed { background-position: -80px -96px; }
 .ui-icon-mail-open { background-position: -96px -96px; }
 .ui-icon-suitcase { background-position: -112px -96px; }
@@ -512,8 +512,8 @@ label{font-weight:normal !important;}
 .ui-breadcrumb ul li .ui-menuitem-link{font-size:14px; color: #9EADB5;}
 .ui-breadcrumb ul li .ui-menuitem-link:hover{color:#00AEEF;}
 .ui-breadcrumb ul li{z-index:990 !important; margin-right:10px !important;}
-.ui-breadcrumb .ui-icon-home{background-image:url("/spark/javax.faces.resource/images/breadcrumb-home.svg.xhtml?ln=primefaces-spark") !important; background-position:center 5px !important; background-size:100% !important; height:30px;}
-.ui-breadcrumb-chevron{height:20px !important; background-image:url("/spark/javax.faces.resource/images/breadcrumb-arrow.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:60% !important;}
+.ui-breadcrumb .ui-icon-home{background-image:url("../../resources/spark/img/breadcrumb-home.svg") !important; background-position:center 5px !important; background-size:100% !important; height:30px;}
+.ui-breadcrumb-chevron{height:20px !important; background-image:url("../../resources/spark/img/breadcrumb-arrow.svg") !important; background-position:center !important; background-size:60% !important;}
 
 /*Style For DataTable ------------------------------------------------------------------------------------- */
 
@@ -522,9 +522,9 @@ label{font-weight:normal !important;}
 .ui-datatable .ui-datatable-sticky:hover{border:0px !important;}
 /*.ui-datatable-scrollable{border:0px; background-color:transparent;}
 .ui-datatable-scrollable:hover{border:0px !important; background-color:transparent;}*/
-.ui-datatable .ui-icon-arrowthick-1-s{background-image:url("/spark/javax.faces.resource/images/right-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; 
+.ui-datatable .ui-icon-arrowthick-1-s{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); background-position:center !important; 
                                       background-size:110%; background-repeat:no-repeat;}
-.ui-datatable .ui-icon-arrowthick-1-s{background-image:url("/spark/javax.faces.resource/images/right-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; 
+.ui-datatable .ui-icon-arrowthick-1-s{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); background-position:center !important; 
                                       background-size:110%; background-repeat:no-repeat;}
 .ui-datatable .ui-datatable-odd{background-color:#EEF2F7;}
 .ui-datatable .ui-datatable-even{background-color:#FBFCFD;}
@@ -561,10 +561,10 @@ label{font-weight:normal !important;}
                                                                                                       border-radius:5px !important; -webkit-border-radius:5px !important; -moz-border-radius:5px !important; color:#F1F6F9; -webkit-transition: all 0.2s ease;
                                                                                                       -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
 .ui-datatable .ui-paginator .ui-paginator-rpp-options{outline:none;}
-.ui-datatable .ui-paginator .ui-paginator-first .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-double-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
-.ui-datatable .ui-paginator .ui-paginator-last .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-double-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
-.ui-datatable .ui-paginator .ui-paginator-prev .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
-.ui-datatable .ui-paginator .ui-paginator-next .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datatable .ui-paginator .ui-paginator-first .ui-icon{background-image:url("../../resources/spark/img/left-double-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datatable .ui-paginator .ui-paginator-last .ui-icon{background-image:url("../../resources/spark/img/right-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datatable .ui-paginator .ui-paginator-prev .ui-icon{background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datatable .ui-paginator .ui-paginator-next .ui-icon{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
 .ui-datatable .ui-paginator .ui-state-active,
 .ui-datatable .ui-paginator .ui-paginator-pages .ui-state-active{color:#F1F6F9; background-repeat:no-repeat; border:solid 1px #5fcf80; background-color:#5fcf80;}
 .ui-datatable .ui-paginator .ui-state-hover,
@@ -601,34 +601,34 @@ label{font-weight:normal !important;}
                                 -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
 /*.ui-datatable table tbody tr td.ui-state-error{border: solid 1px #D9E3E8 !important;}
 .ui-datatable table tbody tr td.ui-state-error .ui-inputfield{border-color:#F03369;} */
-.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-s{background-image:url("/spark/javax.faces.resource/images/downarrow-gray.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-s{background-image:url("../../resources/spark/img/downarrow-gray.svg"); 
                                                                            background-position:center !important; background-size:110%;}
-.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-e{background-image:url("/spark/javax.faces.resource/images/rightarrow-gray.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-e{background-image:url("../../resources/spark/img/rightarrow-gray.svg"); 
                                                                            background-position:center !important; background-size:110%;}
 .ui-datatable  table tbody tr td .ui-cell-editor-output{}
-.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-pencil{background-image:url("/spark/javax.faces.resource/images/pen-gray.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-pencil{background-image:url("../../resources/spark/img/pen-gray.svg"); 
                                                                 background-position:center !important; background-size:120%;}
-.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-check{background-image:url("/spark/javax.faces.resource/images/check-gray.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-check{background-image:url("../../resources/spark/img/check-gray.svg"); 
                                                                background-position:center !important; background-size:120%;}
-.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete-gray.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-close{background-image:url("../../resources/spark/img/delete-gray.svg"); 
                                                                background-position:center !important; background-size:120%;}
 .ui-datatable  table tbody .ui-state-hover > td{background-color:#E0E6ED; color:#71CC8D;}
 .ui-datatable  table tbody .ui-state-highlight > td{background-color:#F7941E; color: #F1F6F9;}
 .ui-datatable  table tbody .ui-state-highlight.ui-row-editing > td{background-color:#DDE4ED; color: #F1F6F9;}
-.ui-datatable  table tbody tr td .ui-icon-arrow-4{background-image:url("/spark/javax.faces.resource/images/movearrow-gray.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable  table tbody tr td .ui-icon-arrow-4{background-image:url("../../resources/spark/img/movearrow-gray.svg"); 
                                                   background-position:center !important; background-size:100%;}
 
 .ui-datatable  table thead tr .ui-state-default .ui-icon-carat-2-n-s,
-.ui-datatable .ui-datatable-sticky table thead tr .ui-state-default .ui-icon-carat-2-n-s{background-image:url("/spark/javax.faces.resource/images/updown-gray-arrow.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable .ui-datatable-sticky table thead tr .ui-state-default .ui-icon-carat-2-n-s{background-image:url("../../resources/spark/img/updown-gray-arrow.svg"); 
                                                                                          background-position:center !important; background-size:110%; background-repeat:no-repeat; margin-left: 5px;}
 .ui-datatable  table thead tr .ui-state-hover .ui-icon-carat-2-n-s,
-.ui-datatable .ui-datatable-sticky table thead tr .ui-state-hover .ui-icon-carat-2-n-s{background-image:url("/spark/javax.faces.resource/images/updown-arrow.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable .ui-datatable-sticky table thead tr .ui-state-hover .ui-icon-carat-2-n-s{background-image:url("../../resources/spark/img/updown-arrow.svg"); 
                                                                                        background-position:center !important; background-size:110%; background-repeat:no-repeat; margin-left: 5px;}
 .ui-datatable  table thead tr .ui-state-active .ui-icon-triangle-1-n,
-.ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-n{background-image:url("/spark/javax.faces.resource/images/uparrow.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-n{background-image:url("../../resources/spark/img/uparrow.svg"); 
                                                                                          background-position:center !important; background-size:110%; background-repeat:no-repeat; margin-left: 5px;}
 .ui-datatable  table thead tr .ui-state-active .ui-icon-triangle-1-s,
-.ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-s{background-image:url("../../resources/spark/img/downarrow.svg"); 
                                                                                          background-position:center !important; background-size:110%; background-repeat:no-repeat; margin-left: 5px;}
 
 .ui-datatable-footer{background-color:#F6FAFC; color:#B9CDD5; font-family:'ralewayregular';}
@@ -650,9 +650,9 @@ label{font-weight:normal !important;}
 .ui-draggable-dragging .ui-icon-carat-2-n-s{background-image:none;}
 .ui-draggable-dragging .ui-icon-carat-1-n{background-image:none;}
 .ui-draggable-dragging .ui-icon-carat-1-s{background-image:none;}
-.ui-datatable > .ui-icon-arrowthick-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow-blue.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable > .ui-icon-arrowthick-1-s{background-image:url("../../resources/spark/img/downarrow-blue.svg"); 
                                         background-position:center !important; background-size:100%; background-repeat:no-repeat; margin-left: 5px;}
-.ui-datatable > .ui-icon-arrowthick-1-n{background-image:url("/spark/javax.faces.resource/images/uparrow-blue.svg.xhtml?ln=primefaces-spark"); 
+.ui-datatable > .ui-icon-arrowthick-1-n{background-image:url("../../resources/spark/img/uparrow-blue.svg"); 
                                         background-position:center !important; background-size:100%; background-repeat:no-repeat; margin-left: 5px;}
 
 .ui-sortable-helper{}
@@ -679,10 +679,10 @@ label{font-weight:normal !important;}
                                                                                                     border-radius:5px !important; -webkit-border-radius:5px !important; -moz-border-radius:5px !important; color:#F1F6F9; -webkit-transition: all 0.2s ease;
                                                                                                     -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
 .ui-datagrid .ui-paginator .ui-paginator-rpp-options{outline:none;}
-.ui-datagrid .ui-paginator .ui-paginator-first .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-double-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
-.ui-datagrid .ui-paginator .ui-paginator-last .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-double-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
-.ui-datagrid .ui-paginator .ui-paginator-prev .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
-.ui-datagrid .ui-paginator .ui-paginator-next .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datagrid .ui-paginator .ui-paginator-first .ui-icon{background-image:url("../../resources/spark/img/left-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datagrid .ui-paginator .ui-paginator-last .ui-icon{background-image:url("../../resources/spark/img/right-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datagrid .ui-paginator .ui-paginator-prev .ui-icon{background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datagrid .ui-paginator .ui-paginator-next .ui-icon{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
 .ui-datagrid .ui-paginator .ui-state-active,
 .ui-datagrid .ui-paginator .ui-paginator-pages .ui-state-active{color:#F1F6F9; background-repeat:no-repeat; border: solid 1px #5FCF80; background-color: #5FCF80; font-size: 16px;}
 .ui-datagrid .ui-paginator .ui-state-hover,
@@ -720,10 +720,10 @@ label{font-weight:normal !important;}
                                                                                                     border-radius:5px !important; -webkit-border-radius:5px !important; -moz-border-radius:5px !important; color:#F1F6F9; -webkit-transition: all 0.2s ease;
                                                                                                     -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; font-family: 'ralewaymedium'; font-size:16px;}
 .ui-datalist .ui-paginator .ui-paginator-rpp-options{outline:none;}
-.ui-datalist .ui-paginator .ui-paginator-first .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-double-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
-.ui-datalist .ui-paginator .ui-paginator-last .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-double-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
-.ui-datalist .ui-paginator .ui-paginator-prev .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
-.ui-datalist .ui-paginator .ui-paginator-next .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datalist .ui-paginator .ui-paginator-first .ui-icon{background-image:url("../../resources/spark/img/left-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datalist .ui-paginator .ui-paginator-last .ui-icon{background-image:url("../../resources/spark/img/right-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datalist .ui-paginator .ui-paginator-prev .ui-icon{background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datalist .ui-paginator .ui-paginator-next .ui-icon{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
 .ui-datalist .ui-paginator .ui-state-active,
 .ui-datalist .ui-paginator .ui-paginator-pages .ui-state-active{color:#F1F6F9; background-repeat:no-repeat; border: solid 1px #5FCF80; background-color: #5FCF80;}
 .ui-datalist .ui-paginator .ui-state-hover,
@@ -741,7 +741,7 @@ label{font-weight:normal !important;}
 .ui-picklist{display:table !important; font-size: 14px; color: #778D9B; font-family:'ralewayregular';}
 .ui-picklist:hover .ui-picklist-list, .ui-picklist:hover .ui-picklist-caption{}
 .ui-picklist .ui-picklist-filter{width:100% !important; padding:8px 6px 8px 30px !important; box-sizing: border-box;}
-.ui-picklist .ui-picklist-filter-container .ui-icon{background-image:url("/spark/javax.faces.resource/images/search-icon.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist .ui-picklist-filter-container .ui-icon{background-image:url("../../resources/spark/img/search-icon.svg"); background-position: center !important; background-repeat: no-repeat;
                                                     background-size: 100%; width: 28px; height: 28px; left: 3px; top: 3px !important;}
 .ui-picklist .ui-picklist-buttons{display: table-cell; float: none; vertical-align:middle;}
 .ui-picklist .ui-picklist-caption{border:solid 1px #C6D6DF; background-color: #F3F5F7; color: #A1AFB6; padding: 4px 0px !important; margin: 4px 0px 0px 0px; font-size:15px;
@@ -758,50 +758,50 @@ label{font-weight:normal !important;}
 .ui-picklist .ui-picklist-list .ui-state-highlight table tbody tr td{color: #5fcf80 !important; font-family:'ralewaymedium';}
 
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-move-up .ui-icon,
-.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-up .ui-icon{background-image:url("/spark/javax.faces.resource/images/uparrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-up .ui-icon{background-image:url("../../resources/spark/img/uparrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                background-size: 75%; left:33% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-move-top .ui-icon,
-.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-top .ui-icon{background-image:url("/spark/javax.faces.resource/images/toparrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-top .ui-icon{background-image:url("../../resources/spark/img/toparrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                 background-size: 70%; left:35% !important; margin-left: -8px; top:39% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-move-down .ui-icon,
-.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-down .ui-icon{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-down .ui-icon{background-image:url("../../resources/spark/img/downarrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                  background-size: 75%; left:33% !important; margin-left: -8px; top:37% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-move-bottom .ui-icon,
-.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-bottom .ui-icon{background-image:url("/spark/javax.faces.resource/images/bottomarrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-bottom .ui-icon{background-image:url("../../resources/spark/img/bottomarrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                    background-size: 70%; left:35% !important; margin-left: -8px; top:33% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-add .ui-icon,
-.ui-picklist td .ui-picklist-button-add .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist td .ui-picklist-button-add .ui-icon{background-image:url("../../resources/spark/img/right-arrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                  background-size: 75%; left:33% !important; margin-left: -8px; top:36% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-add-all .ui-icon,
-.ui-picklist td .ui-picklist-button-add-all .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-end-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist td .ui-picklist-button-add-all .ui-icon{background-image:url("../../resources/spark/img/right-end-arrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                      background-size: 70%; left:35% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-remove .ui-icon,
-.ui-picklist td .ui-picklist-button-remove .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist td .ui-picklist-button-remove .ui-icon{background-image:url("../../resources/spark/img/left-arrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                     background-size: 75%; left:32% !important; margin-left: -8px; top:35% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-remove-all .ui-icon,
-.ui-picklist td .ui-picklist-button-remove-all .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-end-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist td .ui-picklist-button-remove-all .ui-icon{background-image:url("../../resources/spark/img/left-end-arrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                         background-size: 70%; left:35% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
 
 .ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-move-up .ui-icon,
-.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-up .ui-icon{background-image:url("/spark/javax.faces.resource/images/uparrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-up .ui-icon{background-image:url("../../resources/spark/img/uparrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                background-size: 70%; left:35% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-move-top .ui-icon,
-.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-top .ui-icon{background-image:url("/spark/javax.faces.resource/images/toparrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-top .ui-icon{background-image:url("../../resources/spark/img/toparrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                 background-size: 70%; left:35% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-move-down .ui-icon,
-.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-down .ui-icon{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-down .ui-icon{background-image:url("../../resources/spark/img/downarrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                  background-size: 75%; left:32% !important; margin-left: -8px; top:37% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-move-bottom .ui-icon,
-.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-bottom .ui-icon{background-image:url("/spark/javax.faces.resource/images/bottomarrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-bottom .ui-icon{background-image:url("../../resources/spark/img/bottomarrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                    background-size: 70%; left:34% !important; margin-left: -8px; top:33% !important; margin-top: -8px; width: 26px; height: 26px;}
 
-.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-add .ui-icon{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-add .ui-icon{background-image:url("../../resources/spark/img/downarrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                  background-size: 75%; left:32% !important; margin-left: -8px; top:35% !important; margin-top: -8px; width: 26px; height: 26px;}
-.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-add-all .ui-icon{background-image:url("/spark/javax.faces.resource/images/bottomarrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-add-all .ui-icon{background-image:url("../../resources/spark/img/bottomarrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                      background-size: 70%; left:35% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
-.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-remove .ui-icon{background-image:url("/spark/javax.faces.resource/images/uparrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-remove .ui-icon{background-image:url("../../resources/spark/img/uparrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                     background-size: 70%; left:34% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
-.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-remove-all .ui-icon{background-image:url("/spark/javax.faces.resource/images/toparrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-remove-all .ui-icon{background-image:url("../../resources/spark/img/toparrow.svg"); background-position: center !important; background-repeat: no-repeat;
                                                                                         background-size: 70%; left:34% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
 
 
@@ -812,12 +812,12 @@ label{font-weight:normal !important;}
 .ui-orderlist:hover, .ui-orderlist:focus{}
 .ui-orderlist .ui-orderlist-list{margin-top:10px !important;}
 .ui-orderlist .ui-orderlist-caption{border: solid 1px #C6D6DF !important; background-color: #F3F5F7; color: #A7B4BB; border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px; box-sizing:border-box;}
-.ui-orderlist .ui-orderlist-list .ui-orderlist-item{padding: 3px 5px !important; font-size: 15px; background-image:url("/spark/javax.faces.resource/images/move-gray.svg.xhtml?ln=primefaces-spark"); background-position: center right !important; 
+.ui-orderlist .ui-orderlist-list .ui-orderlist-item{padding: 3px 5px !important; font-size: 15px; background-image:url("../../resources/spark/img/move-gray.svg"); background-position: center right !important; 
                                                     background-repeat: no-repeat; background-size: 20px; border-radius:3px;}
 .ui-orderlist .ui-orderlist-list .ui-state-hover{background-color:#EDF3F6; color:#5FCF80;}
 .ui-orderlist .ui-orderlist-list .ui-state-highlight{background-color:#D7E2E8; color:#5FCF80; font-family:'ralewaymedium';}
 
-.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-up .ui-icon{background-image:url("/spark/javax.faces.resource/images/uparrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
+.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-up .ui-icon{background-image:url("/spark/img/uparrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
                                                                            background-size: 70%; left:33% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-top .ui-icon{background-image:url("/spark/javax.faces.resource/images/toparrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; background-repeat: no-repeat;
                                                                             background-size: 70%; left:35% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}

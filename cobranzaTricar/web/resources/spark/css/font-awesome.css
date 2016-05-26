@@ -6,12 +6,12 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("/spark/javax.faces.resource/fonts/fontawesome-webfont.eot.xhtml?ln=spark-layout&v=4.3.0");
-  src: url("/spark/javax.faces.resource/fonts/fontawesome-webfont.eot.xhtml?ln=spark-layout&v=4.3.0#iefix") format('embedded-opentype'), 
-  url("/spark/javax.faces.resource/fonts/fontawesome-webfont.woff2.xhtml?ln=spark-layout&v=4.3.0") format('woff2'), 
-  url("/spark/javax.faces.resource/fonts/fontawesome-webfont.woff.xhtml?ln=spark-layout&v=4.3.0") format('woff'), 
-  url("/spark/javax.faces.resource/fonts/fontawesome-webfont.ttf.xhtml?ln=spark-layout&v=4.3.0") format('truetype'), 
-  url("/spark/javax.faces.resource/fonts/fontawesome-webfont.svg.xhtml?ln=spark-layout&v=4.3.0#fontawesomeregular") format('svg');
+  src: url("../../resources/spark/fonts/fontawesome-webfont.eot?ln=v=4.3.0");
+  src: url("../../resources/spark/fonts/fontawesome-webfont.eot?ln=v=4.3.0#iefix") format('embedded-opentype'), 
+  url("../../resources/spark/fonts/fontawesome-webfont.woff2?ln=v=4.3.0") format('woff2'), 
+  url("../../resources/spark/fonts/fontawesome-webfont.woff?ln=v=4.3.0") format('woff'), 
+  url("../../resources/spark/fonts/fontawesome-webfont.ttf?ln=v=4.3.0") format('truetype'), 
+  url("../../resources/spark/fonts/fontawesome-webfont.svg?ln=v=4.3.0#fontawesomeregular") format('svg');
   font-weight: normal;
   font-style: normal;
 }
