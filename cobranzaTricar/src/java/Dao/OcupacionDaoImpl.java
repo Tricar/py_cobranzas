@@ -1,6 +1,7 @@
 package Dao;
 
 import Model.Anexo;
+import Model.Credito;
 import Model.Ocupacion;
 import Persistencia.HibernateUtil;
 import java.util.List;
@@ -111,21 +112,42 @@ public class OcupacionDaoImpl implements OcupacionDao {
         Session session = null;
         Ocupacion ocupacion = new Ocupacion();
         try {
-            System.out.println("Dao : "+idocupacion);
+            System.out.println("Dao : " + idocupacion);
             session = HibernateUtil.getSessionFactory().openSession();
             String hql = "FROM Ocupacion WHERE id=:idocupacion";
             Query query = session.createQuery(hql);
             query.setParameter("idocupacion", idocupacion);
             ocupacion = (Ocupacion) query.uniqueResult();
-            
+
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         } finally {
             if (session != null) {
                 session.close();
             }
-        }        
+        }
         return ocupacion;
+    }
+
+    @Override
+    public List<Ocupacion> ocupacionesxIdventa(Credito credito) {
+        Session session = null;
+        Integer idventa = credito.getIdventa();
+        List<Ocupacion> lista = null;
+        //Integer idanexo = anexo.getIdanexo();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Ocupacion WHERE idventa=:v");
+            query.setParameter("v", idventa);
+            lista = (List<Ocupacion>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
     }
 
 }
