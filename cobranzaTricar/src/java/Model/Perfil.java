@@ -20,6 +20,7 @@ public class Perfil implements java.io.Serializable {
 
     private Integer idperfil;
     private String descripcion;
+    private String abrev;
     private Boolean sistema;
     private Boolean sisVende;
     private Boolean sisEmp;
@@ -44,9 +45,10 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Boolean manIng, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Boolean manIng, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
+        this.abrev = abrev;
         this.sistema = sistema;
         this.sisVende = sisVende;
         this.sisEmp = sisEmp;
@@ -83,6 +85,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+    @Column(name = "abrev", length = 2)
+    public String getAbrev() {
+        return this.abrev;
+    }
+
+    public void setAbrev(String abrev) {
+        this.abrev = abrev;
     }
 
     @Column(name = "sistema")

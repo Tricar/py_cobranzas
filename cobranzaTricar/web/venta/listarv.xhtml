@@ -23,8 +23,8 @@
                                  ajax="false"/>
                 <p:outputLabel value="Ingrese Nombre:"/>
                 <p:inputText value="#{creditoBean.nombre}"/>
-                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarCreditoNombre()}"
-                                 ajax="false" action="#{pagosBean.limpiar()}"/>
+                <p:commandButton value="Buscar" action="#{creditoBean.cargarCreditoNombre()}"
+                                 actionListener="#{pagosBean.limpiar()}"/>
             </p:panelGrid>            
         </h:form>
         <h:form id="formMostrar">
@@ -59,18 +59,16 @@
                 </p:column>
                 <p:column headerText="Mostrar">                            
                     <p:commandButton value="Ver" update=":formModificar" icon="b-ver"
-                                     actionListener="#{pagosBean.Letraslista(cred)}"/>
-                    <p:commandButton value="Historial" update=":formhistorial" oncomplete="dlghistorial.show()" icon="b-ver"
-                                     actionListener="#{pagosBean.PagosxCredito(cred)}"/>
+                                     actionListener="#{creditoBean.cargarLetrasArray(cred)}"/>
+                    <p:commandButton value="Historial" icon="b-ver" actionListener="#{creditoBean.Pagosxcredito(cred)}"/>
                 </p:column>
-
             </p:dataTable>
         </h:form>        
         <hr/>
         <h:form id="formModificar">
-            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-            <p:dataTable var="letras" value="#{pagosBean.letraslista}" 
-                         emptyMessage="No hay nada para mostrar">
+            <p:growl id="mensajeGeneral" showDetail="true" sticky="false" />
+            <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
+                         emptyMessage="No hay nada para mostrar" > 
                 <p:inputText type="hidden" value="#{letras.idletras}"/>
                 <p:column headerText="Cod venta.">
                     <h:outputText value="#{letras.credito.liqventa}" />
@@ -123,8 +121,8 @@
             <p:dialog header="Historial de Pagos: #{pagosBean.credito.anexo.nombres}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200">
                 <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                <p:dataTable var="pagos" value="#{pagosBean.pagosxcredito}" 
-                             emptyMessage="No hay nada para mostrar">
+                <p:dataTable var="pagos" value="#{creditoBean.pagosxcredito}" 
+                             emptyMessage="No hay nada para mostrar" scrollable="true" scrollHeight="200">
                     <p:inputText type="hidden" value="#{pagos.idpagos}"/>
                     <p:column headerText="Cod venta.">
                         <h:outputText value="#{pagos.letras.credito.liqventa}" />
@@ -149,9 +147,7 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Operaciones">
-                        <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar" title="Eliminar">
-                            <f:setPropertyActionListener target="#{pagosBean.pago}" value="#{pagos}" />
-                        </p:commandButton>
+                        <p:commandButton icon="b-delete" action="#{creditoBean.cargarPagos(pagos)}" title="Eliminar"/>                                                    
                     </p:column>
                 </p:dataTable>
             </p:dialog>
@@ -201,9 +197,50 @@
             <p:dialog id="dlg2" header="Eliminar Pago" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
                 <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{pagosBean.eliminar()}" 
+                <p:commandButton value="Si" actionListener="#{creditoBean.eliminarpagos()}" 
                                  oncomplete="dlgeliminar.hide();" />
                 <p:commandButton value="No" onclick="dlg2.hide();" />
+            </p:dialog>
+        </h:form>
+        <h:form id="formCliente">
+            <p:dialog  header="Seleccionar cliente" showEffect="explode" hideEffect="explode" widgetVar="dlgcargar" modal="true" >
+                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" 
+                             emptyMessage="Ningún cliente coincide con su búsqueda" >
+                    <p:column headerText="Cod.">
+                        <h:outputText value="#{cred.liqventa}" />
+                    </p:column>
+                    <p:column headerText="Nombres">
+                        <h:outputText value="#{cred.anexo.nombres}" />
+                    </p:column>
+                    <p:column headerText="Num. Doc.">
+                        <h:outputText value="#{cred.anexo.numdocumento}" />
+                    </p:column>
+                    <p:column headerText="Tienda" >
+                        <h:outputText value="#{cred.tienda}">
+                            <f:converter converterId="tiendaconverter"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Empresa" >
+                        <h:outputText value="#{cred.empresa}">
+                            <f:converter converterId="empresaconverter"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Vehículo">
+                        <h:outputText value="#{cred.vehiculo.tipovehiculo}">
+                            <f:converter converterId="tvehiculo"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Deuda">
+                        <h:outputText value="#{cred.deudactual}" />
+                    </p:column>
+                    <p:column>
+                        <p:commandButton actionListener="#{creditoBean.pasarCliente(cred)}" oncomplete="dlgcargar.hide()"
+                                         value="Seleccionar" ajax="false">
+                            <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
             </p:dialog>
         </h:form>
     </ui:define>

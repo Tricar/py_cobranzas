@@ -38,6 +38,9 @@
         <property name="elaborado" type="java.lang.Integer">
             <column name="elaborado" />
         </property>
+        <property name="modificado" type="java.lang.Integer">
+            <column name="modificado" />
+        </property>
         <property name="tienda" type="string">
             <column name="tienda" length="2" not-null="true" />
         </property>

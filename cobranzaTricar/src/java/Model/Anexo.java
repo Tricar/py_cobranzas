@@ -85,7 +85,7 @@ public class Anexo implements java.io.Serializable {
         this.dniconyu = dniconyu;
         this.cpropia = cpropia;
         this.creditos = creditos;
-        this.usuarios = usuarios;
+        this.usuarios = usuarios;        
         this.ocupacions = ocupacions;
     }
 

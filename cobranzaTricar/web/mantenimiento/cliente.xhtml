@@ -51,129 +51,14 @@
                     </p:dataTable>
                 </h:form>
 
-                <h:form id="formInsertar">
-                    <p:dialog header="NUEVO CLIENTE" widgetVar="dlginsertar" modal="true">
-                        <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                        <h:panelGrid columns="4">
-                            <p:outputLabel value="TIPO:" />
-                            <p:selectOneMenu id="tipodoc" value="#{anexoBean.anexo.tipodocumento}" required="true" requiredMessage="Debe Seleccionar Tipo Documento">
-                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="DNI" itemValue="DNI" />
-                                <f:selectItem itemLabel="RUC" itemValue="RUC" />
-                                <f:ajax render="txtRazon txtNombre txtApellido1 txtApellido2 txtEdad txtNacimiento txtSexo" />
-                            </p:selectOneMenu>
-                            <p:outputLabel value="DOCUMENTO:" for="txtDocumento"/>
-                            <p:inputMask mask="9?9999999999" id="txtDocumento" value="#{anexoBean.anexo.numdocumento}" maxlength="11">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputMask>
-                            <p:outputLabel value="RAZON SOCIAL" for="txtRazon"/>
-                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'RUC'}" id="txtRazon" value="#{anexoBean.razonsocial}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorLetra"/>
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>                                
-                            <p:outputLabel  value="NOMBRE:" for="txtNombre"/>
-                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtNombre" value="#{anexoBean.anexo.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorLetra"/>
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="APELLIDO 1:" for="txtApellido1"/>
-                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtApellido1" value="#{anexoBean.anexo.apepat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorLetra"/>
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="APELLIDO 2:" for="txtApellido2"/>
-                            <p:inputText disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtApellido2" value="#{anexoBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorLetra"/>
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="ESTADO CIVIL:" />
-                            <p:selectOneMenu id="estado" value="#{anexoBean.anexo.estcivil}" required="true" requiredMessage="Debe Seleccionar estado civil">
-                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO" />
-                                <f:selectItem itemLabel="CONVIVIENTE" itemValue="CO" />
-                                <f:selectItem itemLabel="CASADO(A)" itemValue="CA" />
-                                <f:selectItem itemLabel="DIVORCIADO(A)" itemValue="DI" />
-                                <f:selectItem itemLabel="VIUDO(A)" itemValue="VI" />
-                                <f:ajax render="txtConyuge txtDniCon" />
-                            </p:selectOneMenu>
-                            <p:outputLabel value="CONYUGE:" for="txtConyuge"/>
-                            <p:inputText disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtConyuge" value="#{anexoBean.anexo.conyuge}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorLetra"/>
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="DNI:" for="txtDniCon"/>
-                            <p:inputMask disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtDniCon" mask="9?9999999" value="#{anexoBean.anexo.dniconyu}" maxlength="8">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputMask>
-                            <p:outputLabel value="CASA PROPIA:" for="cmbcasa" />
-                            <p:selectOneMenu id="cmbcasa" value="#{anexoBean.anexo.cpropia}" required="true" requiredMessage="Debe Seleccionar una opción">
-                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="SI" itemValue="SI" />
-                                <f:selectItem itemLabel="NO" itemValue="NO" />
-                                <p:ajax listener="#{anexoBean.msjaval()}" process="@this" />
-                            </p:selectOneMenu>
-                            <p:outputLabel value="DIRECCION:" for="txtDireccion" />
-                            <p:inputText value="#{anexoBean.anexo.direccion}" id="txtDireccion" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorVacio"/>
-                                <f:validator validatorId="validatorLetraNumSig"/>
-                            </p:inputText>
-                            <p:outputLabel value="AAHH:" for="txtAAHH"/>
-                            <p:inputText value="#{anexoBean.anexo.aahh}" id="txtAAHH" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorLetraNumSig"/>
-                            </p:inputText>                            
-                            <p:outputLabel value="CPM:" for="txtCpm"/>
-                            <p:inputText value="#{anexoBean.anexo.cpm}" id="txtCpm" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorLetraNumSig"/>
-                            </p:inputText>
-                            <p:outputLabel value="DISTRITO:" for="txtDistrito"/>
-                            <p:selectOneMenu id="txtDistrito" value="#{anexoBean.anexo.distrito}" required="true" requiredMessage="Debe Seleccionar distrito">
-                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="CALLERIA" itemValue="CA" />
-                                <f:selectItem itemLabel="YARINACOCHA" itemValue="YA" />
-                                <f:selectItem itemLabel="MANANTAY" itemValue="MA" />
-                                <f:selectItem itemLabel="CAMPO VERDE" itemValue="CV" />
-                                <f:selectItem itemLabel="NUEVA REQUENA" itemValue="NR" />
-                                <f:selectItem itemLabel="NESHUYA" itemValue="NE" />
-                                <f:selectItem itemLabel="CURIMANA" itemValue="CU" />
-                                <f:selectItem itemLabel="TOURNAVISTA" itemValue="TV" />
-                                <f:selectItem itemLabel="IRAZOLA" itemValue="IR" />
-                                <f:selectItem itemLabel="MASISEA" itemValue="MS" />
-                                <f:selectItem itemLabel="SARAYACU" itemValue="SA" />
-                            </p:selectOneMenu>                            
-                            <p:outputLabel value="ZONA:" for="txtSector"/>
-                            <p:inputText value="#{anexoBean.anexo.sector}" id="txtSector" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorLetraNumSig"/>
-                            </p:inputText>
-                            <p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
-                            <p:inputText value="#{anexoBean.anexo.referencia}" id="txtReferencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorVacio"/>
-                                <f:validator validatorId="validatorLetraNumSig"/>
-                            </p:inputText>
-                            <p:outputLabel value="TELEFONO:" />
-                            <p:inputMask mask="9?99999999" value="#{anexoBean.anexo.telefono}" maxlength="9"/>
-                            <p:outputLabel value="CELULAR:" for="txtCel"/>
-                            <p:inputText value="#{anexoBean.anexo.celular}" id="txtCel" maxlength="10" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorNumeroCel"/>
-                            </p:inputText>
-                            <p:outputLabel value="EDAD:" />
-                            <p:inputMask disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" mask="9?9" id="txtEdad" value="#{anexoBean.anexo.edad}" maxlength="2" />
-                            <p:outputLabel value="NACIMIENTO" />
-                            <p:calendar disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtNacimiento" showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
-                            <p:outputLabel value="SEXO:" />
-                            <p:selectOneMenu disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtSexo" value="#{anexoBean.anexo.sexo}" required="true" requiredMessage="Debe Seleccionar Sexo!">
-                                <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="MASCULINO" itemValue="M" />
-                                <f:selectItem itemLabel="FEMENINO" itemValue="F" />
-                            </p:selectOneMenu>
-                            <p:outputLabel value="EMAIL:" for="txtEmail"/>
-                            <p:inputText value="#{anexoBean.anexo.email}" id="txtEmail" autocomplete="off">
-                                <f:validator validatorId="validatorEmail"/>
-                            </p:inputText>
-                        </h:panelGrid>
-                        <p:separator/>
-                        <p:commandButton value="Registrar Cliente" icon="b-new" ajax="false" actionListener="#{anexoBean.insertarcliente()}" />
-                    </p:dialog>
-                </h:form>
+        <h:form id="frmEliminarAnexo">
+            <p:dialog header="Eliminar Anexo" widgetVar="dialogoEliminarAnexo" modal="true">
+                <p:inputText type="hidden" value="#{anexoBean.anexo.idanexo}"/>
+                <h:outputText value="¿Desea eliminar?" />
+                <p:commandButton value="Si" actionListener="#{anexoBean.eliminar()}" ajax="false" icon="b-ok" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
+            </p:dialog>
+        </h:form>
 
                 <h:form id="frmEditarAnexo">
                     <p:dialog header="DATOS DEL CLIENTE" widgetVar="dialogoEditarAnexo" modal="true">
@@ -300,14 +185,29 @@
                     </p:dialog>
                 </h:form>
 
-                <h:form id="frmEliminarAnexo">
-                    <p:dialog header="Eliminar Anexo" widgetVar="dialogoEliminarAnexo" modal="true">
-                        <p:inputText type="hidden" value="#{anexoBean.anexo.idanexo}"/>
-                        <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{anexoBean.eliminar()}" ajax="false" icon="b-ok" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
-                    </p:dialog>
-                </h:form>
+        <h:form id="formhistorial">
+            <p:dialog header="Lista de Ingresos: " showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200">
+                <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                <p:dataTable var="ocups" value="#{ocupacionBean.ocupsxanexo}" 
+                             emptyMessage="No hay nada para mostrar">
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{ocups.descripcion}" />
+                    </p:column>
+                    <p:column headerText="Empresa">
+                        <h:outputText value="#{ocups.empresa}" />
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{ocups.montoin}" />
+                    </p:column>
+                    <p:column headerText="Operaciones">                        
+                        <p:commandButton oncomplete="dlgdelete.show()" icon="b-delete">
+                            <f:setPropertyActionListener target="#{ocupacionBean.ocupacion}" value="#{ocups}" />                                    
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </p:dialog>
+        </h:form>
 
                 <h:form id="formOcupacion">
                     <p:dialog  header="Ingresar datos" showEffect="explode" hideEffect="explode" widgetVar="dlginsertar" modal="true" >
