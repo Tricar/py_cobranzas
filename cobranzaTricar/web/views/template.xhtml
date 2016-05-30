@@ -12,13 +12,13 @@
         <h:outputStylesheet library="spark" name="css/spark-layout.css"/>
         <h:outputStylesheet library="spark" name="css/core-layout.css"/>
         <h:outputStylesheet library="spark" name="css/theme.css"/>
+        <h:outputStylesheet library="spark" name="css/primefaces.css"/>
         <h:outputStylesheet library="spark" name="css/animate.css"/>
         <h:outputStylesheet library="spark" name="css/font-awesome.css"/>   
         <h:outputScript library="js" name="maskmoney.js" />
         <h:outputScript library="spark" name="js/layout.js" />
         <h:outputScript library="spark" name="js/primefaces.js" />
         <h:outputScript library="spark" name="js/charts.js" />
-        <!--<h:outputLink rel="shortcut icon" hreflang="./images/favicon.ico"/>-->
         <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/favicont.png" />
         <title>Cobranzas TRICAR SAC</title>
         <script type="text/javascript">
@@ -63,18 +63,20 @@
         <ui:insert name="top">
             <div id="layout-topbar" class="ShadowGray">
                 <div id="layout-topbar-indent">
-                    <h:graphicImage id="logo" library="spark" name="img/logotricar.png" alt="hound logo" style="float: left; margin: 0px; padding: 0px;"/>
+                    <a href="index.xhtml">
+                        <h:graphicImage id="logo" library="spark" name="img/logotricar.png" alt="hound logo" />
+                    </a>
                     <a href="#" id="mobile-menu-button" class="BordRad3 white ShowOnMobile"><i class="fa fa-bars"></i> Menu</a>
                 </div>    
             </div>
-            <h:form id="layout-menu" >
-                <p:menubar class="BordRad3 Unselectable">
-                    <p:menuitem class="Animated05 CursPointer" value="Inicio" icon="ui-icon-home" outcome="/views/index"/>
-                    <p:submenu class="Animated05 CursPointer" rendered="#{loginbean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-tag">
-                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="fa fa-laptop" />
-                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="fa fa-person" />
-                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="fa fa-clipboard" />
-                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="fa fa-user" />
+            <h:form id="layout-menu" class="BordRad3 Unselectable">
+                <p:menubar>
+                    <p:menuitem value="Inicio" icon="ui-icon-home" outcome="/views/index"/>
+                    <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Administracion" icon="ui-icon-tag">
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="ui-icon-" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="ui-icon-user" />
                     </p:submenu>
                     <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
                         <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="ui-icon-person" />
@@ -83,7 +85,7 @@
                         <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" action="#{loginbean.modelo()}" icon="ui-icon-star" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" action="#{loginbean.color()}" icon="ui-icon-pencil" />
                     </p:submenu>
-                    <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
+                    <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito - Pago" icon="ui-icon-cart">
                         <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-newwin" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />
@@ -119,11 +121,6 @@
             $(document).ready(function () {
                 $(".money").maskMoney();
             });
-        </script>
-        <script language="Javascript">
-            document.oncontextmenu = function () {
-                return false
-            }
         </script>
     </h:body>
 </f:view>

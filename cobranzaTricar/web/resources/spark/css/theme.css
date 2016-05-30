@@ -1410,7 +1410,7 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-tabmenu .ui-tabmenu-nav .ui-state-active a .ui-icon{background-position: center !important; background-repeat: no-repeat; background-size: 90%; top: 1px;}
 
 
-/*Style For UI Messages ------------------------------------------------------------------------------------- */
+/*Style For UI Messages ------------------------------------------------ */
 .ui-messages-error,
 .ui-message-error{color: #F03369 !important; background-color: #FBFCFD !important; border-color: #F4BACB !important; font-size: 16px; font-weight: normal; padding:6px !important;}
 .ui-messages-info,
@@ -1439,7 +1439,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-dialog-message.ui-messages-fatal-icon{margin:-6px 0px 0px 0px !important;}
 
 
-/*Style For UI Panel ------------------------------------------------------------------------------------- */
+/*Style For UI Panel ----------------------------------------------------- */
 
 .ui-panel{border: 1px solid #C6D6DF; padding:2px !important; background-color:#FBFCFD; border-radius:3px;}
 .ui-panel .ui-panel-titlebar{padding: 8px 10px 8px 10px !important; font-size:16px; color:#F1F6F9; z-index:100; font-family:'ralewaymedium';
@@ -1463,7 +1463,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
                            border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color:#C7D5DB;}
 
 
-/*Style For SelectOneMenu And SelectCheckBoxMenu ------------------------------------------------------------------------------------- */
+/*Style For SelectOneMenu And SelectCheckBoxMenu -------------------------------------------------- */
 
 .ui-selectonemenu.ui-state-focus .ui-selectonemenu-label{background-color:#f9fbfc !important;}
 .ui-selectonemenu .ui-selectonemenu-label{width: 98% !important;}
@@ -1501,7 +1501,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-selectonemenu-panel tr.ui-state-highlight td{color:#27AAE1; background-color:#fff;}
 
 
-/*Style For SelectCheckBoxMenu ------------------------------------------------------------------------------------- */
+/*Style For SelectCheckBoxMenu ----------------------------------------------------- */
 
 .ui-selectcheckboxmenu{font-size:16px !important; font-family: 'ralewaymedium' !important; padding:0px 15px 0px 0px !important; border:solid 1px #C6D6DF !important; -webkit-transition: all 0.2s ease;
                        -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; color: #778D9B;}

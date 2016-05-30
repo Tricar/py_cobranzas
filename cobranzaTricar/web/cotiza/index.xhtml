@@ -8,156 +8,166 @@
                 template="./../views/template.xhtml"
                 xmlns:o="http://omnifaces.org/ui">
     <ui:define name="content">
-        <h2>Gestión de Proformas</h2>
-        <h:form>
-            <p:commandButton action="#{creditoBean.nuevocotiza()}" value="Nuevo" immediate="true" icon="b-add"/>
-        </h:form>
-        <h:form>            
-            <p:panelGrid columns="2">
-                <p:outputLabel value="Ingrese código de Cotización:"/>
-                <p:inputText value="#{creditoBean.codigo}"/>                       
-                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarxCodigoCotiza()}"
-                                 ajax="false"/>
-            </p:panelGrid>
-        </h:form>
-        <h:form id="formMostrar">
-            <p:growl sticky="false" showDetail="true" id="msgaprobar"/> 
-            <p:dataTable var="cred" value="#{creditoBean.creditos}" 
-                         emptyMessage="No hay nada para mostrar">
-                <p:column headerText="Cotización.">
-                    <h:outputText value="#{cred.liqventa}" />
-                </p:column>
-                <p:column headerText="Nombres">
-                    <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
-                </p:column>
-                <p:column headerText="Num. Doc.">
-                    <h:outputText value="#{cred.anexoByIdanexo.numdocumento}" />
-                </p:column>
-                <p:column headerText="Tienda">
-                    <h:outputText value="#{cred.tienda}">
-                        <f:converter converterId="tiendaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Empresa">
-                    <h:outputText value="#{cred.empresa}">
-                        <f:converter converterId="empresaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Vehículo">
-                    <h:outputText value="#{cred.vehi}">
-                        <f:converter converterId="tvehiculo"/>
-                    </h:outputText>
-                </p:column>                
-                <p:column headerText="Ver">                            
-                    <p:commandButton value="V" update=":formVer" icon="b-ver"
-                                     actionListener="#{creditoBean.cargarLetrasCotiza(cred)}" onclick="$('#tablaletras').show();"/>
-                </p:column>
-                <p:column headerText=" ">
-                    <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
-                        <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
-                    </p:commandButton>
-                </p:column>
-                <p:column headerText="Aprobar">
-                    <p:commandButton value="A" oncomplete="dlgaprobar.show()" update="#{creditoBean.aprobar()}" actionListener="#{vehiculoBean.cargarModeloCotiza(cred)}">
-                        <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
-                    </p:commandButton>
-                </p:column>
-            </p:dataTable>
-        </h:form>
-        <h:form id="formEliminar">
-            <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">            
-                <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{creditoBean.eliminarCotiza()}" 
-                                 ajax="false" oncomplete="dlgeliminar.hide();" />
-                <p:commandButton value="No" onclick="dlg2.hide();" />
-            </p:dialog>
-        </h:form>
-        <h:form id="formAprobar">
-            <p:dialog id="dlg3" header="Agregar Datos" showEffect="bounce" hideEffect="bounce" 
-                      widgetVar="dlgaprobar" modal="true" resizable="true" minWidth="200">
-                <p:messages id="msg12" />
-                <p:panelGrid columns="4">                    
-                    <p:outputLabel value="Fecha:" for="txtfecha"/>
-                    <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha"/>
-                    <p:outputLabel value="Código:" for="txtcodigo"/>
-                    <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" required="true" requiredMessage="Ingrese un código de credito"/>
-                    <h:outputText value="¿Aval? " />
-                    <p:selectBooleanCheckbox value="#{creditoBean.value}">
-                        <p:ajax update="msg12 txtaval" listener="#{creditoBean.addMessage}" />
-                    </p:selectBooleanCheckbox>
-                    <p:outputLabel value="Buscar Aval:" for="txtaval"/>
-                    <p:autoComplete id="txtaval" value="#{creditoBean.credito.idaval}"
-                                    completeMethod="#{anexoBean.filtrarAval}" var="aval"
-                                    itemLabel="#{aval.nombres}" itemValue="#{aval.idanexo}" 
-                                    required="true" requiredMessage="Ingrese Aval" disabled="#{creditoBean.value2}">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />
-                    </p:autoComplete>
-                    <p:outputLabel value="Serie vehículo:" for="vehi"/>
-                    <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
-                                    completeMethod="#{vehiculoBean.filtrarDisponibleCotiza}" var="v"
-                                    itemLabel="#{v.serie}" itemValue="#{v}"
-                                    required="true" requiredMessage="Elija un vehículo">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
-                    </p:autoComplete>                    
-                    <p:outputLabel value="Buscar vendedor:" for="vendedor"/>
-                    <p:autoComplete id="vendedor" value="#{creditoBean.credito.codven}"
-                                    completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
-                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo.idanexo}"
-                                    required="true" requiredMessage="Ingrese Vendedor">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />
-                    </p:autoComplete>
-                    <p:outputLabel value="Verificado:" for="verificado"/>
-                    <p:autoComplete id="verificado" value="#{creditoBean.credito.verificado}"
-                                    completeMethod="#{anexoBean.filtrarGestor}" var="veri"
-                                    itemLabel="#{veri.nombres}" itemValue="#{veri.idanexo}"
-                                    required="true" requiredMessage="Ingrese nombre de verificador">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                    </p:autoComplete>
-                    <p:outputLabel value="Contrato:" for="rcontrato"/>
-                    <p:selectOneRadio id="rcontrato" value="#{creditoBean.credito.contrato}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true" />
-                        <f:selectItem itemLabel="NO" itemValue="false"/>
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Cronograma:" for="rcrono"/>
-                    <p:selectOneRadio id="rcrono" value="#{creditoBean.credito.cronograma}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>
-                    </p:selectOneRadio>
-                    <p:commandButton value="Aprobar Cotización" icon="b-ok" actionListener="#{creditoBean.aprobarCotiza()}"/>
-                </p:panelGrid>
-            </p:dialog>
-        </h:form>
-        <div id="tablaletras" class="campo">
-            <h:form id="formVer">
-                <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
-                             emptyMessage="No hay nada para mostrar">                                        
-                    <p:column headerText="Descripcion">
-                        <h:outputText value="#{letras.descripcion}"/>
+        <div class="layout-portlets-box ui-fluid">
+            <h2>Gestión de Proformas</h2>            
+            <div class="Container90 Responsive50">
+                <div class="ContainerIndent">
+                    <h:form>            
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Ingrese código de Cotización:"/>
+                            <p:inputText value="#{creditoBean.codigo}"/>                       
+                            <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarxCodigoCotiza()}"
+                                             ajax="false"/>
+                        </p:panelGrid>
+                    </h:form>
+                </div>
+            </div>
+            <div class="Container10 Responsive50">
+                <div class="ContainerIndent">
+                    <h:form>
+                        <p:commandButton action="#{creditoBean.nuevocotiza()}" value="Nuevo" immediate="true" icon="ui-icon-plus"/>
+                    </h:form>
+                </div>
+            </div>
+            <h:form id="formMostrar">
+                <p:growl sticky="false" showDetail="true" id="msgaprobar"/> 
+                <p:dataTable var="cred" value="#{creditoBean.creditos}" 
+                             emptyMessage="No hay nada para mostrar">
+                    <p:column headerText="Cotización.">
+                        <h:outputText value="#{cred.liqventa}" />
                     </p:column>
-                    <p:column headerText="Monto">
-                        <h:outputText value="#{letras.montoletra}"/>
+                    <p:column headerText="Nombres">
+                        <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
                     </p:column>
-                    <p:column headerText="Interes">
-                        <h:outputText value="#{letras.interes}"/>
+                    <p:column headerText="Num. Doc.">
+                        <h:outputText value="#{cred.anexoByIdanexo.numdocumento}" />
                     </p:column>
-                    <p:column headerText="Total Letra">
-                        <h:outputText value="#{letras.monto}"/>
-                    </p:column>
-                    <p:column headerText="Fecha In.">
-                        <h:outputText value="#{letras.fecini}">
-                            <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                    <p:column headerText="Tienda">
+                        <h:outputText value="#{cred.tienda}">
+                            <f:converter converterId="tiendaconverter"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Fecha Ven.">
-                        <h:outputText value="#{letras.fecven}">
-                            <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                    <p:column headerText="Empresa">
+                        <h:outputText value="#{cred.empresa}">
+                            <f:converter converterId="empresaconverter"/>
                         </h:outputText>
-                    </p:column>                                       
-                </p:dataTable>                
+                    </p:column>
+                    <p:column headerText="Vehículo">
+                        <h:outputText value="#{cred.vehi}">
+                            <f:converter converterId="tvehiculo"/>
+                        </h:outputText>
+                    </p:column>                
+                    <p:column headerText="Ver">                            
+                        <p:commandButton value="V" update=":formVer" icon="b-ver"
+                                         actionListener="#{creditoBean.cargarLetrasCotiza(cred)}" onclick="$('#tablaletras').show();"/>
+                    </p:column>
+                    <p:column headerText=" ">
+                        <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar">
+                            <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Aprobar">
+                        <p:commandButton value="A" oncomplete="dlgaprobar.show()" update="#{creditoBean.aprobar()}" actionListener="#{vehiculoBean.cargarModeloCotiza(cred)}">
+                            <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
             </h:form>
+            <h:form id="formEliminar">
+                <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">            
+                    <h:outputText value="¿Desea eliminar?" />
+                    <p:commandButton value="Si" actionListener="#{creditoBean.eliminarCotiza()}" 
+                                     ajax="false" oncomplete="dlgeliminar.hide();" />
+                    <p:commandButton value="No" onclick="dlg2.hide();" />
+                </p:dialog>
+            </h:form>
+            <h:form id="formAprobar">
+                <p:dialog id="dlg3" header="Agregar Datos" showEffect="bounce" hideEffect="bounce" 
+                          widgetVar="dlgaprobar" modal="true" resizable="true" minWidth="200">
+                    <p:messages id="msg12" />
+                    <p:panelGrid columns="4">                    
+                        <p:outputLabel value="Fecha:" for="txtfecha"/>
+                        <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha"/>
+                        <p:outputLabel value="Código:" for="txtcodigo"/>
+                        <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" required="true" requiredMessage="Ingrese un código de credito"/>
+                        <h:outputText value="¿Aval? " />
+                        <p:selectBooleanCheckbox value="#{creditoBean.value}">
+                            <p:ajax update="msg12 txtaval" listener="#{creditoBean.addMessage}" />
+                        </p:selectBooleanCheckbox>
+                        <p:outputLabel value="Buscar Aval:" for="txtaval"/>
+                        <p:autoComplete id="txtaval" value="#{creditoBean.credito.idaval}"
+                                        completeMethod="#{anexoBean.filtrarAval}" var="aval"
+                                        itemLabel="#{aval.nombres}" itemValue="#{aval.idanexo}" 
+                                        required="true" requiredMessage="Ingrese Aval" disabled="#{creditoBean.value2}">
+                            <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                            <p:ajax event="itemSelect" process="@form" />
+                        </p:autoComplete>
+                        <p:outputLabel value="Serie vehículo:" for="vehi"/>
+                        <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
+                                        completeMethod="#{vehiculoBean.filtrarDisponibleCotiza}" var="v"
+                                        itemLabel="#{v.serie}" itemValue="#{v}"
+                                        required="true" requiredMessage="Elija un vehículo">
+                            <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
+                        </p:autoComplete>                    
+                        <p:outputLabel value="Buscar vendedor:" for="vendedor"/>
+                        <p:autoComplete id="vendedor" value="#{creditoBean.credito.codven}"
+                                        completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
+                                        itemLabel="#{anexo.nombres}" itemValue="#{anexo.idanexo}"
+                                        required="true" requiredMessage="Ingrese Vendedor">
+                            <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                            <p:ajax event="itemSelect" process="@form" />
+                        </p:autoComplete>
+                        <p:outputLabel value="Verificado:" for="verificado"/>
+                        <p:autoComplete id="verificado" value="#{creditoBean.credito.verificado}"
+                                        completeMethod="#{anexoBean.filtrarGestor}" var="veri"
+                                        itemLabel="#{veri.nombres}" itemValue="#{veri.idanexo}"
+                                        required="true" requiredMessage="Ingrese nombre de verificador">
+                            <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                        </p:autoComplete>
+                        <p:outputLabel value="Contrato:" for="rcontrato"/>
+                        <p:selectOneRadio id="rcontrato" value="#{creditoBean.credito.contrato}" required="true" requiredMessage="Seleccione una opción">
+                            <f:selectItem itemLabel="SI" itemValue="true" />
+                            <f:selectItem itemLabel="NO" itemValue="false"/>
+                        </p:selectOneRadio>
+                        <p:outputLabel value="Cronograma:" for="rcrono"/>
+                        <p:selectOneRadio id="rcrono" value="#{creditoBean.credito.cronograma}" required="true" requiredMessage="Seleccione una opción">
+                            <f:selectItem itemLabel="SI" itemValue="true"/>
+                            <f:selectItem itemLabel="NO" itemValue="false"/>
+                        </p:selectOneRadio>
+                        <p:commandButton value="Aprobar Cotización" icon="b-ok" actionListener="#{creditoBean.aprobarCotiza()}"/>
+                    </p:panelGrid>
+                </p:dialog>
+            </h:form>
+            <div id="tablaletras" class="campo">
+                <h:form id="formVer">
+                    <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
+                                 emptyMessage="No hay nada para mostrar">                                        
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{letras.descripcion}"/>
+                        </p:column>
+                        <p:column headerText="Monto">
+                            <h:outputText value="#{letras.montoletra}"/>
+                        </p:column>
+                        <p:column headerText="Interes">
+                            <h:outputText value="#{letras.interes}"/>
+                        </p:column>
+                        <p:column headerText="Total Letra">
+                            <h:outputText value="#{letras.monto}"/>
+                        </p:column>
+                        <p:column headerText="Fecha In.">
+                            <h:outputText value="#{letras.fecini}">
+                                <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Fecha Ven.">
+                            <h:outputText value="#{letras.fecven}">
+                                <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>                                       
+                    </p:dataTable>                
+                </h:form>
+            </div>
         </div>
     </ui:define>
 </ui:composition>
