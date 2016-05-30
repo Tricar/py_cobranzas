@@ -36,6 +36,7 @@ public class Credito implements java.io.Serializable {
     private Date fechareg;
     private Integer aprobado;
     private Integer elaborado;
+    private Integer modificado;
     private String tienda;
     private String empresa;
     private BigDecimal precio;
@@ -208,6 +209,15 @@ public class Credito implements java.io.Serializable {
 
     public void setElaborado(Integer elaborado) {
         this.elaborado = elaborado;
+    }
+    
+    @Column(name = "modificado")
+    public Integer getModificado() {
+        return modificado;
+    }
+
+    public void setModificado(Integer modificado) {
+        this.modificado = modificado;
     }
 
     @Column(name = "tienda", nullable = false, length = 2)

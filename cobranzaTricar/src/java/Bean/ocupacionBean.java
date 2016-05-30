@@ -8,10 +8,8 @@ import Model.Ocupacion;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -95,7 +93,7 @@ public class ocupacionBean implements Serializable {
         System.out.println("obj ocupacion bean: "+ocupacion.getDescripcion());
         System.out.println("ID: "+idventa);
         ocupacion.setIdventa(idventa);
-        ocupacion.setIdocupacion(null);
+        ocupacion.setAnexo(null);
         ocudao.insertarOcupacion(ocupacion);
     }
 
@@ -260,6 +258,12 @@ public class ocupacionBean implements Serializable {
         ocudao.eliminarOcupacion(ocupacion);
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         return ocupsxanexo;
+    }
+    
+    public void eliminar(Ocupacion ocup) {
+        ocupacion = ocup;
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        ocudao.eliminarOcupacion(ocupacion);
     }
 
     public void eliminarSolo(Anexo anexo) {

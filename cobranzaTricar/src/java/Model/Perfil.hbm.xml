@@ -11,6 +11,9 @@
         <property name="descripcion" type="string">
             <column name="descripcion" length="20" />
         </property>
+        <property name="abrev" type="string">
+            <column name="abrev" length="2" />
+        </property>
         <property name="sistema" type="java.lang.Boolean">
             <column name="sistema" />
         </property>
