@@ -132,68 +132,15 @@
                         </p:dialog>
                     </h:form>
 
-                <h:form id="frmAsignarMenu">
-                    <p:dialog header="Datos del usuario" widgetVar="dialogoAsignarMenu" modal="true">
-                        <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
-                        <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
-                        <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
-                        <br/>
-                        <br/><h:outputText value="Sistema:" />
-                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisEmp}"/>
-                        <p:outputLabel value="Empleados" />
-                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisUsu}"/>
-                        <p:outputLabel value="Usuarios" />
-                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisVende}"/>
-                        <p:outputLabel value="Vendedor" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
-                        <p:outputLabel value="Perfiles" />
-                        <br/>
-                        <br/><h:outputText value="Mantenimiento:" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>
-                        <h:outputText value="Clientes" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manArt}"/>
-                        <h:outputText value="Artículos" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manIng}"/>
-                        <h:outputText value="Ingresos" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manMod}"/>
-                        <h:outputText value="Modelos" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCol}"/>
-                        <h:outputText value="Colores" />
-                        <br/>
-                        <br/><h:outputText value="Venta:" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venLis}"/>
-                        <h:outputText value="Pagos" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venReg}"/>
-                        <h:outputText value="Credito" />
-                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.venCon}"/>
-                        <p:outputLabel value="Proforma" />
-                        <p:separator/>
-                        <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
-                    </p:dialog>
-                </h:form>
-
-                <h:form id="formInsertar">
-                    <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
-                        <p:panelGrid id="panelcrearperfil" columns="3">
-                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" 
-                                         style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:message for="txtDescripcion"/>
-                            <p:commandButton value="Registrar Perfil" icon="b-new" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
-                        </p:panelGrid>
-                    </p:dialog>
-                </h:form>
-
                 <h:form id="frmEliminarPerfil">
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarPerfil" modal="true">
                         <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" icon="b-ok" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
+                            <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" icon="ui-icon-check" />
+                            <p:commandButton value="No" onclick="dlg2.hide();" icon="ui-icon-" />
                     </p:dialog>
                 </h:form>
+                </div>
 
             </ui:define>
         </ui:composition>
