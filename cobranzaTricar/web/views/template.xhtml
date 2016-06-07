@@ -46,6 +46,9 @@
                             <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
                             <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />
                         </p:submenu>
+                        <p:submenu rendered="#{loginbean.usuario.perfil.manDes}" label="Despachos" icon="ui-icon-cart">
+                            <p:menuitem rendered="#{loginbean.usuario.perfil.manDes}" value="Despacho" action="#{creditoBean.indexdespacho()}" icon="ui-icon-newwin" />                            
+                        </p:submenu>
                         <p:submenu label="Reporte" icon="ui-icon-print">
                             <p:menuitem value="Deuda Vencida" action="#{loginbean.deudor()}" icon="ui-icon-bookmark" />
                             <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />
@@ -80,6 +83,6 @@
             document.oncontextmenu = function () {
                 return false
             }
-        </script>
+        </script>        
     </h:body>
 </html>

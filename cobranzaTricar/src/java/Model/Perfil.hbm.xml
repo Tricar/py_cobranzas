@@ -59,6 +59,12 @@
         <property name="manIng" type="java.lang.Boolean">
             <column name="manIng" />
         </property>
+        <property name="manDes" type="java.lang.Boolean">
+            <column name="manDes" />
+        </property>
+        <property name="despacho" type="java.lang.Boolean">
+            <column name="despacho" />
+        </property>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idperfil" />

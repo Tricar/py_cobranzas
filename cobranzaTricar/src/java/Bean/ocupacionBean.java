@@ -271,7 +271,8 @@ public class ocupacionBean implements Serializable {
         ocudao.eliminarOcupacion(ocupacion);        
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         RequestContext.getCurrentInstance().update("formTabla");
-        RequestContext.getCurrentInstance().execute("PF('dlgeliminar').show()");;
+        RequestContext.getCurrentInstance().execute("formTabla");
+        RequestContext.getCurrentInstance().execute("PF('dlgeliminar').hide()");;
     }
 
     public void veryId(Integer idocupacion) {

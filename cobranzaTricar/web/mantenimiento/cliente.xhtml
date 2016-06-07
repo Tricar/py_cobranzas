@@ -8,7 +8,7 @@
                 template="./../views/template.xhtml">
     <ui:define name="content">                
         <h:form>
-            <p:commandButton value="Nuevo" icon="b-add" oncomplete="dlginsert.show()"/>
+            <p:commandButton value="Nuevo" icon="b-add" action="#{anexoBean.nuevoanexo()}"/>
         </h:form>
         <br/>
         <h2>Lista de Clientes</h2>
@@ -150,10 +150,12 @@
                     <p:inputText value="#{anexoBean.anexo.celular}" id="txtCel" maxlength="10" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                         <f:validator validatorId="validatorNumeroCel"/>
                     </p:inputText>
-                    <p:outputLabel value="EDAD:" />
-                    <p:inputMask disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" mask="9?9" id="txtEdad" value="#{anexoBean.anexo.edad}" maxlength="2" />
                     <p:outputLabel value="NACIMIENTO" />
-                    <p:calendar disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtNacimiento" showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
+                    <p:inputMask mask="99-99-9999" value="#{anexoBean.fecnac}" >
+                        <p:ajax event="keypress" listener="#{anexoBean.calcularEdad(anexoBean.fecnac)}" update="txtEdad"/>
+                    </p:inputMask>
+                    <p:outputLabel value="EDAD:" />
+                    <p:inputMask readonly="true" mask="9?9" id="txtEdad" value="#{anexoBean.año}" maxlength="2" />                                      
                     <p:outputLabel value="SEXO:" />
                     <p:selectOneMenu disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" id="txtSexo" value="#{anexoBean.anexo.sexo}" required="true" requiredMessage="Debe Seleccionar Sexo!">
                         <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
@@ -276,10 +278,12 @@
                     <p:inputText value="#{anexoBean.anexo.celular}" id="txtCel" maxlength="10" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                         <f:validator validatorId="validatorNumeroCel"/>
                     </p:inputText>
-                    <p:outputLabel value="EDAD:" />
-                    <p:inputMask mask="9?9" id="edad" value="#{anexoBean.anexo.edad}" maxlength="2" />
                     <p:outputLabel value="NACIMIENTO" />
-                    <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
+                    <p:inputMask mask="99-99-9999" value="#{anexoBean.fecnac}" >
+                        <p:ajax event="keypress" listener="#{anexoBean.calcularEdad(anexoBean.fecnac)}" update="txtEdad"/>
+                    </p:inputMask>
+                    <p:outputLabel value="EDAD:" />
+                    <p:inputMask readonly="true" mask="9?9" id="txtEdad" value="#{anexoBean.año}" maxlength="2" />                    
                     <p:outputLabel value="SEXO:" />
                     <p:selectOneMenu disabled="#{anexoBean.anexo.tipodocumento != 'DNI'}" value="#{anexoBean.anexo.sexo}" required="true" requiredMessage="Debe Seleccionar Sexo!">
                         <f:selectItem itemLabel="MASCULINO" itemValue="M" />

@@ -43,6 +43,7 @@
                             <p:message for="txtDescripcion"/>
                             <h:panelGroup></h:panelGroup>                            
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sistema}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisEmp}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisVende}"/>
@@ -53,6 +54,7 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manCli}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manIng}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manMod}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manDes}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manCol}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venta}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venLis}"/>
@@ -67,6 +69,7 @@
                     <p:dialog header="Datos del usuario" widgetVar="dialogoAsignarMenu" modal="true">
                         <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                         <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
+                        <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
                         <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
                         <br/>
                         <br/><h:outputText value="Sistema:" />
@@ -98,6 +101,10 @@
                         <h:outputText value="Credito" />
                         <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.venCon}"/>
                         <p:outputLabel value="Proforma" />
+                        <br/>
+                        <br/><h:outputText value="Despacho:" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manDes}"/>
+                        <h:outputText value="Despacho" />                        
                         <p:separator/>
                         <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>

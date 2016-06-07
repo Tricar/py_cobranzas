@@ -161,8 +161,7 @@ public class AnexoDaoImplements implements AnexoDao {
     }
 
     @Override
-    public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception {
-        System.out.println("Aca dao editar anexo: ");
+    public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception {        
         String hql = "FROM Anexo WHERE idanexo=:idanexo";
         Query query = session.createQuery(hql);
         query.setParameter("idanexo", idanexo);
