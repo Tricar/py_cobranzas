@@ -149,7 +149,6 @@
 .ui-state-focus a:hover,
 .ui-state-focus a:link,
 .ui-state-focus a:visited {
-    color: #ffffff;
     text-decoration: none;
 }
 .ui-state-active,
@@ -160,7 +159,6 @@
 .ui-state-active a,
 .ui-state-active a:link,
 .ui-state-active a:visited {
-    color: #ffffff;
     text-decoration: none;
 }
 
