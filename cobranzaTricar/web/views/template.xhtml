@@ -110,46 +110,34 @@
             <div class="layout-portlets-box">
                 <div class="Container100" style="" id="footerlinks">
 
-                        <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Sistema" icon="ui-icon-suitcase">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="ui-icon-user" />
-                        </p:submenu>
-                        <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manIng}" value="Ingresos" action="#{loginbean.ingreso()}" icon="ui-icon-person" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" action="#{loginbean.articulo()}" icon="ui-icon-flag" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" action="#{loginbean.modelo()}" icon="ui-icon-star" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" action="#{loginbean.color()}" icon="ui-icon-pencil" />
-                        </p:submenu>
-                        <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito" icon="ui-icon-cart">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />
-                        </p:submenu>
-                        <p:submenu rendered="#{loginbean.usuario.perfil.manDes}" label="Despachos" icon="ui-icon-cart">
-                            <p:menuitem rendered="#{loginbean.usuario.perfil.manDes}" value="Despacho" action="#{creditoBean.indexdespacho()}" icon="ui-icon-newwin" />                            
-                        </p:submenu>
-                        <p:submenu label="Reporte" icon="ui-icon-print">
-                            <p:menuitem value="Deuda Vencida" action="#{loginbean.deudor()}" icon="ui-icon-bookmark" />
-                            <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />
-                        </p:submenu>
-                        <f:facet name="options">
-                            <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>
-                            <p:commandButton icon="ui-icon-power" style="margin-left:50px" actionListener="#{loginbean.logout()}"
-                                             title="Cerrar Session" oncomplete="handleLoginRequest(xhr, status, args)"/>
-                            <p:commandButton icon="ui-icon-suitcase" title="Cambiar Clave"/>
-                        </f:facet>
-                    </p:menubar>
-                </h:form>
-            </ui:insert>
-        </div>
-        <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
-        </div>
-        <div id="bottom">
-            <ui:insert name="bottom">INDUSTRIASTRICAR &copy; 2015</ui:insert>
+                    <ui:insert name="bottom">
+                        <a class="DispInlBlock FontSourceSansLight blue Fs12 Fleft ">INDUSTRIASTRICAR &copy; 2015 - 2016</a>
+                    </ui:insert>
+
+                    <div class="EmptyBox10 ShowOnMobile"></div>
+                    <span class="DispInlBlock FontSourceSansLight gray Fs12 Fright  TexAlRight FloatNoneOnMobile"> 
+                        PrimeFaces Spark  |  Derechos reservados.
+                    </span>
+                </div>
+
+                <div class="EmptyBox10"></div>
+
+                <div class="Container50 Responsive100">
+                    <h:graphicImage style="height:20px;" class="" library="images" name="logo_tricar.jpg"/>
+                    <div class="EmptyBox10"></div>
+                    <span class="DispBlock Wid100 FontSourceSansLight gray Fs12 ">
+                        +1 888 123 4567 <br /> info@sparkspark.com
+                    </span>
+                </div>
+                <div class="Container50 Responsive100">
+                    <div class="DispInlBlock Fright">
+                        <a href="#layout-footer" class="blue Fs30"><i class="fa fa-facebook-square"></i></a>
+                        <a href="#layout-footer" class="blue Fs30"><i class="fa fa-twitter-square"></i></a>
+                        <a href="#layout-footer" class="blue Fs30"><i class="fa fa-linkedin-square"></i></a>
+                        <a href="#layout-footer" class="blue Fs30"><i class="fa fa-google-plus-square"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
@@ -165,6 +153,6 @@
             document.oncontextmenu = function () {
                 return false
             }
-        </script>        
+        </script>
     </h:body>
 </html>
