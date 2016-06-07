@@ -119,7 +119,7 @@
         </h:form>
         <h:form id="formhistorial">
             <p:dialog header="Historial de Pagos: #{pagosBean.credito.anexo.nombres}" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200">
+                      widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200" >
                 <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                 <p:dataTable var="pagos" value="#{creditoBean.pagosxcredito}" 
                              emptyMessage="No hay nada para mostrar" scrollable="true" scrollHeight="200">

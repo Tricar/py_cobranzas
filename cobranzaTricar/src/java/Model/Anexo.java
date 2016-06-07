@@ -47,7 +47,7 @@ public class Anexo implements java.io.Serializable {
     private String dniconyu;
     private String cpropia;
     private Set creditos = new HashSet(0);
-    private Set usuarios = new HashSet(0);
+    private Set usuarios = new HashSet(0);    
     private Set ocupacions = new HashSet(0);
     private String nombres;
 

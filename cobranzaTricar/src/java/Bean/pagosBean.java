@@ -214,5 +214,4 @@ public class pagosBean implements Serializable {
     public void setLetraslista(List<Letras> letraslista) {
         this.letraslista = letraslista;
     }
-
 }

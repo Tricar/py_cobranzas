@@ -84,6 +84,7 @@ public class creditoBean implements Serializable {
     private boolean valuei2;
     private Anexo anexo;
     private String btnaprobar;
+    private String btnguardar;
     private boolean aprobar;
     private List<Ocupacion> ocupsxanexo = new ArrayList();
     private ocupacionBean ocupbean = new ocupacionBean();
@@ -97,6 +98,7 @@ public class creditoBean implements Serializable {
     private boolean opctprop = true;
     private modeloBean modbean = new modeloBean();
     private List<Modelo> listafiltrada;
+    private List<Pagos> pagosxcredito;
 
     public creditoBean() {
     }
@@ -146,41 +148,44 @@ public class creditoBean implements Serializable {
 
     public void insertarCredito(Integer idusuario) {
         CreditoDao creditodao = new CreditoDaoImp();
-        VehiculoDao vehiculodao = new VehiculoDaoImplements();
-        Vehiculo vehiculo = new Vehiculo();
-        if (btnaprobar.equals("Aprobar")) {
-            if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
-            } else {
-                if (!valuei) {
-                    if (inicia.compareTo(iniciapre) == -1 || inicia == null) {
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
-                        return;
-                    } else {
-                        credito.setInicial(inicia);
-                    }
+//        VehiculoDao vehiculodao = new VehiculoDaoImplements();
+//        Vehiculo vehiculo = new Vehiculo();
+//        if (btnaprobar.equals("Aprobar")) {
+        if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
+        } else {
+            if (!valuei) {
+                if (inicia.compareTo(iniciapre) == -1 || inicia == null) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
+                    return;
                 } else {
                     credito.setInicial(inicia);
                 }
-                if (credito.getAnexo().getIdanexo().equals(credito.getIdaval())) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El aval no puede ser el mismo cliente."));
-                    return;
+            } else {
+                credito.setInicial(inicia);
+            }
+            if (credito.getAnexo().getIdanexo().equals(credito.getIdaval())) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El aval no puede ser el mismo cliente."));
+            } else {
+                if (ocupsxanexo.isEmpty() == true) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El cliente debe tener al menos un ingreso económico"));
                 } else {
                     credito.setPrecio(precio);
                     credito.setSaldo(precio.subtract(inicia));
                     if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1 && (sw == 0)) {
-                        Letras letras = new Letras();
+                        try {
+                            Letras letras = new Letras();
 //                    vehiculo = credito.getVehiculo();
 //                    vehiculo.setEstado("N");
-                        credito.setTotaldeuda(BigDecimal.ZERO);
-                        BigDecimal nletras = new BigDecimal(credito.getNletras());
-                        BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
-                        BigDecimal interes = new BigDecimal(0);
-                        credito.setEstado("EM");
-                        BigDecimal cien = new BigDecimal(100);
-                        credito.setEmpresa("CA");
-                        credito.setElaborado(idusuario);
-                        creditodao.insertarVenta(credito);
+                            credito.setTotaldeuda(BigDecimal.ZERO);
+                            BigDecimal nletras = new BigDecimal(credito.getNletras());
+                            BigDecimal montoletras = credito.getSaldo().divide(nletras, 2);
+//                        BigDecimal interes = new BigDecimal(0);
+                            credito.setEstado("EM");
+                            BigDecimal cien = new BigDecimal(100);
+                            credito.setEmpresa("CA");
+                            credito.setElaborado(idusuario);
+                            creditodao.insertarVenta(credito);
 //                    interes = (credito.getInteres().multiply(nletras)).divide(cien);
 //                    Date fechaini = new Date();
 //                    fechaini = credito.getFechareg();
@@ -206,9 +211,17 @@ public class creditoBean implements Serializable {
 //                        letrasdao.insertarLetra(letras);
 //                    }
 //                    creditodao.modificarVenta(credito);
-//                    vehiculodao.modificarVehiculo(vehiculo);
-                        sw = 1;
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El crédito se registró correctamente."));
+//                    vehiculodao.modificarVehiculo(vehiculo);                    
+                            sw = 1;
+                            for (int i = 0; i < ocupsxanexo.size(); i++) {
+                                Ocupacion get = ocupsxanexo.get(i);
+                                System.out.println("obj ocupacion" + get.getDescripcion());
+                                ocupbean.insertarCredito(credito.getIdventa(), get);
+                            }
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El crédito se registró correctamente."));
+                        } catch (Exception e) {
+
+                        }
                     } else {
                         if (sw == 1) {
                             btnaprobar = "Desaprobar";
@@ -226,6 +239,25 @@ public class creditoBean implements Serializable {
                 }
             }
         }
+//        }
+    }
+
+    public void modificarCredito() {
+        CreditoDao credao = new CreditoDaoImp();
+        if (btnguardar.equals("Modificar")) {
+            if (inicia.compareTo(iniciapre) == -1 || inicia == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
+                return;
+            } else {
+                credito.setInicial(inicia);
+            }
+            try {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Inicial debe ser Mayor."));
+                credao.modificarVenta(credito);
+            } catch (Exception e) {
+            }
+        }
+
     }
 
     public void insertarCreditoEspecial() {
@@ -291,7 +323,6 @@ public class creditoBean implements Serializable {
                     if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial supera monto de vehículo"));
                     }
-
                 }
             }
         }
@@ -299,7 +330,6 @@ public class creditoBean implements Serializable {
 
     public void refinanciar() {
         CreditoDao creditodao = new CreditoDaoImp();
-        LetrasDao letrasdao = new LetrasDaoImplements();
         List<Letras> antiguas = new ArrayList();
         Letras nuevas = new Letras();
         crediton.setFechareg(credito.getFechareg());
@@ -426,12 +456,6 @@ public class creditoBean implements Serializable {
         }
     }
 
-    public void modificar() {
-        CreditoDao linkDao = new CreditoDaoImp();
-        linkDao.modificarVenta(credito);
-        credito = new Credito();
-    }
-
     public void eliminar() {
         CreditoDao creditodao = new CreditoDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
@@ -449,6 +473,11 @@ public class creditoBean implements Serializable {
 //            vehiculo.setEstado("D");
 //            vehiculodao.modificarVehiculo(vehiculo);
             creditodao.eliminarVenta(credito);
+            ocupsxanexo = ocupbean.cargarxCredito(credito);
+            for (int i = 0; i < ocupsxanexo.size(); i++) {
+                Ocupacion get = ocupsxanexo.get(i);
+                ocupbean.eliminar(get);
+            }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Este crédito ya ha sido procesado. No se puede eliminar."));
             return;
@@ -692,13 +721,22 @@ public class creditoBean implements Serializable {
                 for (int j = 0; j < creditosn.size(); j++) {
                     if (creditosn.get(j).getAnexo().equals(get)) {
                         Credito get1 = creditosn.get(j);
-                        filtradafecha.add(get1);
+                        credito = get1;
+                        filtradafecha.add(credito);
                     }
                 }
             }
+            RequestContext.getCurrentInstance().update("formCliente");
+            RequestContext.getCurrentInstance().execute("PF('dlgcargar').show()");
         } catch (Exception e) {
         }
+
         nombre = "";
+    }
+
+    public void pasarCliente(Credito cred) {
+        filtradafecha = new ArrayList();
+        filtradafecha.add(cred);
     }
 
     public void cargarxCodigoCredito() {
@@ -707,7 +745,7 @@ public class creditoBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
         Credito modelocredito = new Credito();
         try {
-            modelocredito = creditodao.cargarxCodigoEstado(codigo, "EM");
+            modelocredito = creditodao.cargarxCodigoEstadoDos(codigo, "EM", "AP");
             creditos.add(modelocredito);
             if (creditos.get(0) == null) {
                 creditos = null;
@@ -791,32 +829,78 @@ public class creditoBean implements Serializable {
         valuei = false;
         valuei2 = true;
         btnaprobar = "Aprobar";
+        btnguardar = "Guardar";
         ocupsxanexo = new ArrayList();
         return "/venta/form.xhtml";
     }
 
     public String cargar(Usuario usuario) {
-        AnexoDao andao = new AnexoDaoImplements();
-        Anexo anexo = usuario.getAnexo();
         modeloTipo(credito.getVehi());
-        sw = 1;
-        System.out.println("Modelo: " + credito.getModelo().getModelo());
+        sw = 1;        
+        inicial Inicial = new inicial();
         inicia = credito.getInicial();
         precio = credito.getPrecio();
         saldo = precio.subtract(inicia);
-        if (anexo.getTipoanexo().equals("AD") || anexo.getTipoanexo().equals("JE")) {
-            btnaprobar = "Aprobar";
+        anexo = credito.getAnexo();
+        
+        iniciapre = Inicial.inicialCredito(anexo.getDistrito(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
+        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("JE")) {
+            if (credito.getEstado().equals("EM")) {
+                btnaprobar = "Aprobar";
+                return "/venta/formaprobar.xhtml";
+            } else {
+                btnaprobar = "Desaprobar";
+                System.out.println("Interes cargado: " + credito.getInteres());
+            }
+            return "/venta/formaprobar.xhtml";
         } else {
-
+            btnguardar = "Modificar";
+            return "/venta/formmodificar.xhtml";
         }
-        ocupsxanexo = ocupbean.cargarIngresos(credito.getAnexo());
-        return "/venta/form.xhtml";
     }
 
     public String pagos() {
         creditos = new ArrayList();
         letraslista = new ArrayList();
+        filtradafecha = new ArrayList();
         return "/venta/listarv.xhtml";
+    }
+    
+    public List compararListas(){
+        List<Ocupacion> ocupsxcredito = new ArrayList();
+        ocupsxcredito = ocupbean.cargarxCredito(credito);
+        ocupsxanexo = ocupbean.cargarIngresos(anexo);
+        if (ocupsxcredito.size() >= ocupsxanexo.size()) {
+            ocupsxanexo = ocupsxcredito;
+        } else {
+            for (int i = 0; i < ocupsxanexo.size(); i++) {
+                Ocupacion get = ocupsxanexo.get(i);
+                for (int j = 0; j < ocupsxcredito.size(); j++) {
+                    Ocupacion getj = ocupsxcredito.get(j);
+                    int count = 0;
+                    if (get.equals(getj)){
+                        count = 1;
+                    }
+                    if (count == 0){
+                        ocupsxcredito.add(get);
+                    }
+                }
+            }
+        }
+        return ocupsxcredito;
+    }
+
+    public void eliminarpagos() {
+        System.out.println("eliminar en credbean" + credito.getAnexo().getNombres());
+        pagosBean pagbean = new pagosBean();
+        System.out.println("probar el pago: " + pago.getDescripcion());
+        pagosxcredito = pagbean.eliminar(credito, pago);
+    }
+
+    public void cargarPagos(Pagos pagos) {
+        pago = pagos;
+        RequestContext.getCurrentInstance().update("formEliminar");
+        RequestContext.getCurrentInstance().execute("PF('dlgeliminar').show()");
     }
 
     public String nuevoespecial() {
@@ -867,10 +951,13 @@ public class creditoBean implements Serializable {
         if (btnaprobar.equals("Aprobar")) {
             credito.setEstado("AP");
             btnaprobar = "Desaprobar";
+            credito.setModificado(idusuario);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se aprobó el crédito."));
         } else {
             credito.setEstado("EM");
+            credito.setInteres(null);
             btnaprobar = "Aprobar";
+            credito.setModificado(idusuario);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se desaprobó el crédito."));
         }
 
@@ -942,12 +1029,12 @@ public class creditoBean implements Serializable {
 
     public void cargarIngreso(Anexo anexo) {
         ocupsxanexo = ocupbean.cargarIngresos(anexo);
-        if (anexo.getCpropia().equals("SI")){
+        if (anexo.getCpropia().equals("SI")) {
             value2 = true;
         } else {
             value2 = false;
         }
-        
+
     }
 
     public void insertarOcupacion(Anexo anexo, Ocupacion ocup) {
@@ -1367,5 +1454,33 @@ public class creditoBean implements Serializable {
 
     public void setListafiltrada(List<Modelo> listafiltrada) {
         this.listafiltrada = listafiltrada;
+    }
+
+    public void Pagosxcredito(Credito cred) {
+        pagosBean pagbean = new pagosBean();
+        List<Pagos> lista = new ArrayList();
+        lista = pagbean.PagosxCredito(cred);
+        if (lista.isEmpty() == false) {
+            pagosxcredito = lista;
+            RequestContext.getCurrentInstance().update("formhistorial");
+            RequestContext.getCurrentInstance().execute("PF('dlghistorial').show()");
+        }
+
+    }
+
+    public List<Pagos> getPagosxcredito() {
+        return pagosxcredito;
+    }
+
+    public void setPagosxcredito(List<Pagos> pagosxcredito) {
+        this.pagosxcredito = pagosxcredito;
+    }
+
+    public String getBtnguardar() {
+        return btnguardar;
+    }
+
+    public void setBtnguardar(String btnguardar) {
+        this.btnguardar = btnguardar;
     }
 }

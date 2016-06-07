@@ -82,41 +82,27 @@
 /* Component containers
 ----------------------------------*/
 .ui-widget {
-    /*-moz-transition: all 0.2s ease;
-    -ms-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    transition: all 0.2s ease;*/
     font-family: 'ralewayregular';
 }
 .ui-widget .ui-widget {
-    /* font-size: 1em; */
-    /*-moz-transition: all 0.2s ease;
-    -ms-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    transition: all 0.2s ease;*/
     font-family: 'ralewayregular';
 }
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-    /* font-size: 1em; */
     -moz-transition: all 0.2s ease;
     -ms-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
 .ui-widget-content {
-    /*border: 1px solid #72b42d;*/
-    /*background: #285c00 url("images/ui-bg_inset-soft_10_285c00_1x100.png") 50% bottom repeat-x;*/
-    /*color: #ffffff;*/
+    
 }
 .ui-widget-content a {
     color: #ffffff;
 }
 .ui-widget-header {
-    /*border: 1px solid #3f7506;*/
-    /*background: #3a8104 url("images/ui-bg_highlight-soft_33_3a8104_1x100.png") 50% 50% repeat-x;*/
     color: #ffffff;
     font-weight: bold;
 }
@@ -124,16 +110,16 @@
     color: #ffffff;
 }
 
-.ui-widget .ui-state-focus,
-.ui-widget.ui-state-focus{-webkit-box-shadow: 0 0 7px 0 rgba(95, 207, 128, 0.7); box-shadow: 0 0 7px 0 rgba(95, 207, 128, 0.7);}
+.ui-widget .ui-state-focus, .ui-widget.ui-state-focus{
+    -webkit-box-shadow: 0 0 7px 0 rgba(95, 207, 128, 0.7); 
+    box-shadow: 0 0 7px 0 rgba(95, 207, 128, 0.7);
+}
 
-/* Interaction states
-----------------------------------*/
+/* Interaction states ----------------------------------*/
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
-    /* border:0px;
-    color:#ffffff; */
+    
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -178,12 +164,10 @@
     text-decoration: none;
 }
 
-/* Interaction Cues
-----------------------------------*/
+/* Interaction Cues ----------------------------------*/
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-    /* background-color:#FBFCFD !important; */
-    /*color: #363636;*/
+    
 }
 .ui-state-highlight a,
 .ui-widget-content .ui-state-highlight a,
@@ -198,7 +182,12 @@ input[type="password"].ui-state-error,
     border: 1px solid #F03369 !important;
     color: #F03369;
 }
-.ui-widget-content label.ui-state-error{border:0px !important; border:none; box-shadow:none; -webkit-box-shadow:none;}
+.ui-widget-content label.ui-state-error{
+    border:0px !important; 
+    border:none; 
+    box-shadow:none; 
+    -webkit-box-shadow:none;
+}
 
 .ui-state-focus{}
 

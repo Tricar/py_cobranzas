@@ -20,6 +20,6 @@ public interface OcupacionDao {
     public void eliminarOcupacion (Ocupacion ocupacion);
     public List<Ocupacion> mostrarOcupaciones();
     public List<Ocupacion> ocupacionesxIdanexo(Anexo anexo);
-    public List<Ocupacion> ocupacionesxIdventa(Credito credito);
     public Ocupacion verifyIdocup(Integer idocupacion);
+    public List<Ocupacion> ocupacionesxIdventa(Credito credito);
 }

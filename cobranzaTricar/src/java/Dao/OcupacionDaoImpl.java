@@ -112,20 +112,20 @@ public class OcupacionDaoImpl implements OcupacionDao {
         Session session = null;
         Ocupacion ocupacion = new Ocupacion();
         try {
-            System.out.println("Dao : " + idocupacion);
+            System.out.println("Dao : "+idocupacion);
             session = HibernateUtil.getSessionFactory().openSession();
             String hql = "FROM Ocupacion WHERE id=:idocupacion";
             Query query = session.createQuery(hql);
             query.setParameter("idocupacion", idocupacion);
             ocupacion = (Ocupacion) query.uniqueResult();
-
+            
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         } finally {
             if (session != null) {
                 session.close();
             }
-        }
+        }        
         return ocupacion;
     }
 

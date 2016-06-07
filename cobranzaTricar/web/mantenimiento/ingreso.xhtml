@@ -9,15 +9,9 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <div class="layout-portlets-box ui-fluid">
-            <h2>Gestión de ingresos económicos de clientes</h2>
-            <h:form>
-                <div class="Container33 Responsive50">
-                    <div class="ContainerIndent">
-                        <p:commandButton action="#{ocupacionBean.nuevo()}" value="Nuevo Ingreso" icon="ui-icon-plus" update="#{ocupacionBean.limpiarlista()}"/>
-                    </div>
-                </div>
-            </h:form>
-        </div>
+        <h2>Gestión de ingresos económicos de clientes</h2>
+        <h:form>            
+            <p:commandButton action="#{ocupacionBean.nuevo()}" value="Nuevo Ingreso" immediate="true" icon="b-add" update="#{ocupacionBean.limpiarlista()}"/>
+        </h:form>
     </ui:define>
 </ui:composition>

@@ -91,7 +91,7 @@
                 <column name="idanexo" />
             </key>
             <one-to-many class="Model.Usuario" />
-        </set>
+        </set>        
         <set name="ocupacions" table="ocupacion" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idanexo" not-null="true" />
