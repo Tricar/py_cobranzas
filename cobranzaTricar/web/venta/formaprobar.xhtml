@@ -62,6 +62,9 @@
                             <p:column headerText="Monto">
                                 <h:outputText value="#{ocups.montoin}" />
                             </p:column>
+                            <p:column headerText="Ver">
+                                <p:commandButton icon="b-ver" action="#{creditoBean.cargarObjOcup(ocups)}"/>
+                            </p:column>
                         </p:dataTable>
                     </p:tab>                    
                 </p:accordionPanel>
@@ -136,6 +139,16 @@
                     </p:inputText>
                     <p:outputLabel value="Saldo:"/>                                    
                     <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
+                    <p:outputLabel value="Verificado por:" for="veri"/>
+                    <p:autoComplete id="veri" value="#{creditoBean.credito.verificado}"
+                                    completeMethod="#{anexoBean.filtrarGestor}" var="aval"
+                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" 
+                                    required="true" requiredMessage="Ingrese Verificador" disabled="#{creditoBean.disableaval}">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
+                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
+                        <p:ajax event="itemSelect" process="@form" />                        
+                    </p:autoComplete>
                     <p:outputLabel value="Interés:" for="interes"/>
                     <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" 
                                      requiredMessage="Ingrese el interés aplicado">
@@ -144,7 +157,7 @@
                         <f:selectItem itemLabel="6" itemValue='6.00'/>
                         <f:selectItem itemLabel="5" itemValue='5.00'/>
                         <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
-                    </p:selectOneMenu>
+                    </p:selectOneMenu>                   
                 </p:panelGrid>
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.aprobarcredito(loginbean.usuario.idusuario)}" icon="b-ok"
                                  ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
@@ -153,8 +166,6 @@
             <h:form>
                 <h:commandButton actionListener="#{reportesBean.exportarLiq(creditoBean.credito.liqventa)}" value="Imp. Liquid." />
             </h:form>
-        </f:view>        
-        <ui:remove>
             <h:form id="formMostrar">
                 <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
                 <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
@@ -184,86 +195,41 @@
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Saldo">
-                        <h:outputText value="#{letras.saldo}"/>
-                    </p:column>
-                    <p:column headerText="Estado">
-                        <h:outputText value="#{letras.estado}">
-                            <f:converter converterId="letrasconverter"/>
-                        </h:outputText>
-                    </p:column>                        
+                    <ui:remove>
+                        <p:column headerText="Saldo">
+                            <h:outputText value="#{letras.saldo}"/>
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{letras.estado}">
+                                <f:converter converterId="letrasconverter"/>
+                            </h:outputText>
+                        </p:column>
+                    </ui:remove>
                 </p:dataTable>
             </h:form>
-        </ui:remove>
-        <h:form id="formOcupacion">
-            <p:dialog  header="Ingresar datos" showEffect="explode" hideEffect="explode" widgetVar="dlginsertar" modal="true" >
-                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                <p:panelGrid columns="4">                            
-                    <p:outputLabel value="Tipo:" for="cmbtipo"/>
-                    <p:selectOneMenu id="cmbtipo" value="#{ocupacionBean.ocupacion.tipo}" required="true" requiredMessage="Seleccione Tipo de Ingreso">
-                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
-                        <f:selectItem itemLabel="Dependiente" itemValue="DP" />
-                        <f:selectItem itemLabel="Independiente" itemValue="IN" />
-                        <f:selectItem itemLabel="Transportista" itemValue="TR" />
-                        <p:ajax update="opcbol opcfacbol opcrrhh opccons opctprop opclic opcsunat opclicf" listener="#{ocupacionBean.actualizar()}" process="@this" />
-                    </p:selectOneMenu>
-                    <p:outputLabel value="Seleccione:" for="cmbclase"/>
-                    <p:selectOneMenu id="cmbclase" value="#{ocupacionBean.ocupacion.clase}" required="true" requiredMessage="Seleccione Tipo">
-                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
-                        <f:selectItem itemLabel="Formal" itemValue="FR" />
-                        <f:selectItem itemLabel="Informal" itemValue="IF" />                        
-                        <p:ajax update="opcbol opcfacbol opcrrhh opccons opctprop opclic opcsunat opclicf" listener="#{ocupacionBean.actualizar()}" process="@this" />
-                    </p:selectOneMenu>
-                    <p:outputLabel value="Descripción:" for="txtdesc"/>
-                    <p:inputText id="txtdesc" value="#{ocupacionBean.ocupacion.descripcion}" onkeyup="javascript:this.value = this.value.toUpperCase();" required="true" requiredMessage="Ingrese Descripción"/>
-                    <p:outputLabel value="Empresa:" for="txtem"/>
-                    <p:inputText id="txtem" value="#{ocupacionBean.ocupacion.empresa}" onkeyup="javascript:this.value = this.value.toUpperCase();" required="true" requiredMessage="Ingrese Descripción"/>
-                    <p:outputLabel value="Monto ingresos:" for="txtmonto"/>
-                    <p:inputText id="txtmonto" value="#{ocupacionBean.ocupacion.montoin}" class="money" required="true" requiredMessage="Ingrese Monto"/>
-                    <p:outputLabel value="Autoavalúo:" for="opccons"/>
-                    <p:selectOneRadio id="opccons" value="#{ocupacionBean.ocupacion.constancia}" disabled="#{ocupacionBean.opccons}" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Boletas de pago:" for="opcbol"/>
-                    <p:selectOneRadio id="opcbol" value="#{ocupacionBean.ocupacion.boletas}" disabled="#{ocupacionBean.opcbol}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Fact/Bol:" for="opcfacbol"/>
-                    <p:selectOneRadio id="opcfacbol" value="#{ocupacionBean.ocupacion.facbol}" disabled="#{ocupacionBean.opcfacbol}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
-                    <p:outputLabel value="RRHH:" for="opcrrhh"/>
-                    <p:selectOneRadio id="opcrrhh" value="#{ocupacionBean.ocupacion.rrhh}" disabled="#{ocupacionBean.opcrrhh}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>                    
-                    <p:outputLabel value="Tarjeta propiedad:" for="opctprop"/>
-                    <p:selectOneRadio id="opctprop" value="#{ocupacionBean.ocupacion.tpropiedad}" disabled="#{ocupacionBean.opctprop}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Licencia Cond:" for="opclic"/>
-                    <p:selectOneRadio id="opclic" value="#{ocupacionBean.ocupacion.licencia}" disabled="#{ocupacionBean.opclic}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Licencia Func:" for="opclicf"/>
-                    <p:selectOneRadio id="opclicf" value="#{ocupacionBean.ocupacion.func}" disabled="#{ocupacionBean.opclicf}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Pagos sunat:" for="opcsunat"/>
-                    <p:selectOneRadio id="opcsunat" value="#{ocupacionBean.ocupacion.pagosunat}" disabled="#{ocupacionBean.opcsunat}" required="true" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>                    
-                    <p:commandButton actionListener="#{ocupacionBean.insert()}"
-                                     value="#{ocupacionBean.btnGuardar}" />
-                </p:panelGrid>
-            </p:dialog>
-        </h:form>      
+            <h:form id="formOcup">
+                <p:dialog header="Detalle" showEffect="explode" hideEffect="explode" 
+                          widgetVar="dlgverocup" modal="true" resizable="false" minWidth="200">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Tipo: "/>
+                        <h:outputText value="#{creditoBean.objocup.tipo}" converter="tipoconverter"/>
+                        <p:outputLabel value="Categoría: "/>
+                        <h:outputText value="#{creditoBean.objocup.clase}" converter="claseconverter"/>
+                        <p:outputLabel value="Empresa: "/>
+                        <h:outputText value="#{creditoBean.objocup.empresa}"/>
+                        <p:outputLabel value="Puesto: "/>
+                        <h:outputText value="#{creditoBean.objocup.descripcion}"/>
+                        <p:outputLabel value="Monto percibido: "/>
+                        <h:outputText value="#{creditoBean.objocup.montoin}"/>
+                    </p:panelGrid>
+                    <p:dataTable var="det" value="#{creditoBean.listaocups}" 
+                                 emptyMessage="No hay nada para mostrar">
+                        <p:column headerText="Lista de Requisitos adjuntados">
+                            <h:outputText value="#{det}" />
+                        </p:column>                        
+                    </p:dataTable>
+                </p:dialog>
+            </h:form>
+        </f:view>              
     </ui:define>
 </ui:composition>

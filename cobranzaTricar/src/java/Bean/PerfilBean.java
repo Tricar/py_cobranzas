@@ -86,10 +86,10 @@ public class PerfilBean implements Serializable {
                 perfil.setSistema(false);
             }
             if (perfil.getManArt() == true || perfil.getManCli() == true || perfil.getManCol() == true
-                    || perfil.getManMod() == true) {
+                    || perfil.getManMod() == true || perfil.getManIng()== true) {
                 perfil.setMante(true);
             } else if (perfil.getManArt() == false && perfil.getManCli() == false && perfil.getManCol() == false
-                    && perfil.getManMod() == false) {
+                    && perfil.getManMod() == false && perfil.getManIng()== false) {
                 perfil.setMante(false);
             }
             if (perfil.getVenLis() == true || perfil.getVenReg() == true) {
@@ -97,13 +97,16 @@ public class PerfilBean implements Serializable {
             } else if (perfil.getVenLis() == false && perfil.getVenReg() == false) {
                 perfil.setVenta(false);
             }
+            
+            if (perfil.getManDes()== true) {
+                perfil.setDespacho(true);
+            } else if (perfil.getManDes()== false) {
+                perfil.setDespacho(false);
+            }
             PerfilDaoImpl perfilDao = new PerfilDaoImpl();
             perfilDao.modificar(this.session, this.perfil);
-
             this.transaction.commit();
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -195,7 +198,6 @@ public class PerfilBean implements Serializable {
     }
 
     public void insertarPerfil() {
-
         this.session = null;
         this.transaction = null;
         try {

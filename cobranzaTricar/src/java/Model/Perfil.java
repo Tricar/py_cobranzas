@@ -35,7 +35,9 @@ public class Perfil implements java.io.Serializable {
     private Boolean venLis;
     private Boolean venReg;
     private Boolean venCon;
+    private Boolean despacho;
     private Boolean manIng;
+    private Boolean manDes;
     private Set usuarios = new HashSet(0);
 
     public Perfil() {
@@ -45,7 +47,7 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Boolean manIng, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Boolean manIng, Boolean manDes, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.abrev = abrev;
@@ -64,6 +66,7 @@ public class Perfil implements java.io.Serializable {
         this.venReg = venReg;
         this.venCon = venCon;
         this.manIng = manIng;
+        this.manDes = manDes;
         this.usuarios = usuarios;
     }
 
@@ -229,6 +232,24 @@ public class Perfil implements java.io.Serializable {
 
     public void setManIng(Boolean manIng) {
         this.manIng = manIng;
+    }
+    
+     @Column(name = "despacho")
+    public Boolean getDespacho() {
+        return this.despacho;
+    }
+
+    public void setDespacho(Boolean despacho) {
+        this.despacho = despacho;
+    }
+    
+    @Column(name = "manDes")
+    public Boolean getManDes() {
+        return this.manDes;
+    }
+
+    public void setManDes(Boolean manDes) {
+        this.manDes = manDes;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "perfil")

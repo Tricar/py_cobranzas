@@ -8,9 +8,14 @@ import Model.Anexo;
 import Model.Credito;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -41,12 +46,13 @@ public class anexoBean implements Serializable {
     private List<Credito> creditos = new ArrayList();
     private String razonsocial;
     private String var;
+    private int año;
+    private String fecnac;
 
     public anexoBean() {
     }
 
     public List<Anexo> verCliente() {
-
         this.session = null;
         this.transaction = null;
         try {
@@ -66,6 +72,37 @@ public class anexoBean implements Serializable {
             if (this.session != null) {
                 this.session.close();
             }
+        }
+    }
+
+    public void nuevoanexo() {
+        anexo = new Anexo();
+        RequestContext.getCurrentInstance().update("formInsertar");
+        RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
+    }
+
+    public void calcularEdad(String fecha) throws ParseException {
+        Date fechaNac = null;
+//        DateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
+//        Date date;
+//        date = (Date) formatter.parse(fecha.toString());
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(date);
+//        String formatedDate = cal.get(Calendar.DATE) + "-"
+//                + (cal.get(Calendar.MONTH) + 1)
+//                + "-" + cal.get(Calendar.YEAR);
+        fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecha);
+        Calendar fechaNacimiento = Calendar.getInstance();
+        //Se crea un objeto con la fecha actual
+        Calendar fechaActual = Calendar.getInstance();
+        fechaNacimiento.setTime(fechaNac);
+        //Se restan la fecha actual y la fecha de nacimiento
+        año = fechaActual.get(Calendar.YEAR) - fechaNacimiento.get(Calendar.YEAR);
+        int mes = fechaActual.get(Calendar.MONTH) - fechaNacimiento.get(Calendar.MONTH);
+        int dia = fechaActual.get(Calendar.DATE) - fechaNacimiento.get(Calendar.DATE);
+        //Se ajusta el año dependiendo el mes y el día
+        if (mes < 0 || (mes == 0 && dia < 0)) {
+            año--;
         }
     }
 
@@ -93,7 +130,6 @@ public class anexoBean implements Serializable {
     }
 
     public List<Anexo> verVendedores() {
-
         this.session = null;
         this.transaction = null;
         try {
@@ -167,10 +203,6 @@ public class anexoBean implements Serializable {
                 this.anexo.setApemat("");
                 this.anexo.setApepat("");
             }
-            if (!this.anexo.getEstcivil().equals("CO") || !this.anexo.getEstcivil().equals("CA")) {
-                this.anexo.setConyuge("");
-                this.anexo.setDniconyu("");
-            }
             if (this.anexo.getTipodocumento().equals("DNI")) {
                 this.anexo.setTipoanexo("CN");
             } else {
@@ -179,6 +211,10 @@ public class anexoBean implements Serializable {
             Date d = new Date();
             this.anexo.setFechareg(d);
             this.anexo.setCodven("");
+            Date fechaNac = null;
+            fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
+            this.anexo.setFechanac(fechaNac);
+            this.anexo.setEdad(año);
             daotanexo.registrar(this.session, this.anexo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
@@ -212,10 +248,6 @@ public class anexoBean implements Serializable {
                 this.anexo.setApemat("");
                 this.anexo.setApepat("");
             }
-            if (!this.anexo.getEstcivil().equals("CO") && !this.anexo.getEstcivil().equals("CA")) {
-                this.anexo.setConyuge("");
-                this.anexo.setDniconyu("");
-            }
             if (this.anexo.getTipoanexo() == null) {
                 if (this.anexo.getTipodocumento().equals("DNI")) {
                     this.anexo.setTipoanexo("CN");
@@ -223,6 +255,10 @@ public class anexoBean implements Serializable {
                     this.anexo.setTipoanexo("CJ");
                 }
             }
+            Date fechaNac = null;
+            fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
+            this.anexo.setFechanac(fechaNac);
+            this.anexo.setEdad(año);
             daotanexo.modificar(this.session, this.anexo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
@@ -263,17 +299,15 @@ public class anexoBean implements Serializable {
         }
     }
 
-    public void cargarAnexoEditar(int idanexo) {
+    public void cargarAnexoEditar(int idanexo) throws ParseException {
         this.session = null;
         this.transaction = null;
         try {
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            this.anexo = daotanexo.verByIdanexo(this.session, idanexo);
+            anexo = daotanexo.verByIdanexo(this.session, idanexo);
             this.transaction.commit();
-            RequestContext.getCurrentInstance().update("frmEditarAnexo:panelEditarAnexo");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEditarAnexo').show()");
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -283,7 +317,13 @@ public class anexoBean implements Serializable {
             if (this.session != null) {
                 this.session.close();
             }
-        }
+        }        
+        DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        String convertido = fecha.format(anexo.getFechanac());               
+        fecnac = convertido;        
+        año = anexo.getEdad();
+        RequestContext.getCurrentInstance().update("frmEditarAnexo:panelEditarAnexo");
+        RequestContext.getCurrentInstance().execute("PF('dialogoEditarAnexo').show()");
     }
 
     public void cargarAnexoEliminar(int idanexo) {
@@ -473,16 +513,16 @@ public class anexoBean implements Serializable {
         }
 
     }
-    
-    public void msjaval(){
-        if(anexo.getCpropia().equals("NO")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente debe presentar aval o garante" ));
+
+    public void msjaval() {
+        if (anexo.getCpropia().equals("NO")) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente debe presentar aval o garante"));
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente NO necesitará aval o garante" ));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente NO necesitará aval o garante"));
         }
-        
+
     }
-    
+
     public void handleKeyEvent() {
         text = text.toUpperCase();
     }
@@ -560,5 +600,21 @@ public class anexoBean implements Serializable {
 
     public String getRazonsocial() {
         return razonsocial;
+    }
+
+    public int getAño() {
+        return año;
+    }
+
+    public void setAño(int año) {
+        this.año = año;
+    }
+
+    public String getFecnac() {
+        return fecnac;
+    }
+
+    public void setFecnac(String fecnac) {
+        this.fecnac = fecnac;
     }
 }
