@@ -72,11 +72,11 @@
             <h:form id="layout-menu" class="BordRad3 Unselectable">
                 <p:menubar >
                     <p:menuitem value="Inicio" icon="ui-icon-home" outcome="/views/index" />
-                    <p:submenu class="Animated03 submenu" rendered="#{loginbean.usuario.perfil.sistema}" label="Configuracion" icon="ui-icon-suitcase">
-                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="ui-icon-newwin" />
-                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
-                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
-                        <p:menuitem class="Animated05" rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="ui-icon-copy" />
+                    <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Configuracion" icon="ui-icon-suitcase">
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="ui-icon-newwin" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="ui-icon-copy" />
                     </p:submenu>
                     <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
                         <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="ui-icon-person" />
