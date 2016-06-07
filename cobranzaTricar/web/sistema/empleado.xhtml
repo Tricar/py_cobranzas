@@ -102,10 +102,12 @@
                             <p:inputText value="#{anexoBean.anexo.celular}" maxlength="10">
                                 <f:validator validatorId="validatorNumeroCel"/>
                             </p:inputText>
-                            <p:outputLabel value="EDAD:" />
-                            <p:inputMask mask="9?9" id="edad" value="#{anexoBean.anexo.edad}" maxlength="2" />
                             <p:outputLabel value="NACIMIENTO" />
-                            <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
+                            <p:inputMask mask="99-99-9999" value="#{anexoBean.fecnac}" >
+                                <p:ajax event="keypress" listener="#{anexoBean.calcularEdad(anexoBean.fecnac)}" update="txtEdad"/>
+                            </p:inputMask>
+                            <p:outputLabel value="EDAD:" />
+                            <p:inputMask readonly="true" mask="9?9" id="txtEdad" value="#{anexoBean.año}" maxlength="2" />                                      
                             <p:outputLabel value="SEXO:" />
                             <p:selectOneMenu value="#{anexoBean.anexo.sexo}" required="true" requiredMessage="Debe Seleccionar Sexo!">
                                 <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
@@ -180,10 +182,12 @@
                             <p:inputText value="#{anexoBean.anexo.celular}" maxlength="10">
                                 <f:validator validatorId="validatorNumeroCel"/>
                             </p:inputText>
-                            <p:outputLabel value="EDAD:" />
-                            <p:inputMask mask="9?9" id="edad" value="#{anexoBean.anexo.edad}" maxlength="2" />
                             <p:outputLabel value="NACIMIENTO" />
-                            <p:calendar showOn="button" value="#{anexoBean.anexo.fechanac}" navigator="true"/>
+                            <p:inputMask mask="99-99-9999" value="#{anexoBean.fecnac}" >
+                                <p:ajax event="keypress" listener="#{anexoBean.calcularEdad(anexoBean.fecnac)}" update="txtEdad"/>
+                            </p:inputMask>
+                            <p:outputLabel value="EDAD:" />
+                            <p:inputMask readonly="true" mask="9?9" id="txtEdad" value="#{anexoBean.año}" maxlength="2" />                                      
                             <p:outputLabel value="SEXO:" />
                             <p:selectOneMenu value="#{anexoBean.anexo.sexo}" required="true" requiredMessage="Debe Seleccionar Sexo!">
                                 <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
