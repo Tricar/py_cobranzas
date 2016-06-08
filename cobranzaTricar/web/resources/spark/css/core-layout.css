@@ -66,33 +66,23 @@ input[type="text"], input[type="password"], textarea{ -webkit-appearance: none; 
 .Fright{ float:right;}
 .Fnone{ float:none !important;}
 
-/* Overflows */
-.OvHidden{ overflow:hidden;}
-.OvScroll{ overflow:scroll;}
-.OvAuto{ overflow:auto;}
-.OvVisible{ overflow:visible;}
-.OvXScroll{ overflow-x:scroll;}
-.OvYScroll{ overflow-y:scroll;}
-.OvXHidden{ overflow-x:hidden;}
-.OvYHidden{ overflow-y:hidden;}
-
 /* Empty Boxes */
-.EmptyBox5{ display:block; width:100%; height:5px; overflow:hidden;}
-.EmptyBox10{ display:block; width:100%; height:10px; overflow:hidden;}
-.EmptyBox20{ display:block; width:100%; height:20px; overflow:hidden;}
-.EmptyBox30{ display:block; width:100%; height:30px; overflow:hidden;}
-.EmptyBox40{ display:block; width:100%; height:40px; overflow:hidden;}
-.EmptyBox50{ display:block; width:100%; height:50px; overflow:hidden;}
-.EmptyBox60{ display:block; width:100%; height:60px; overflow:hidden;}
-.EmptyBox70{ display:block; width:100%; height:70px; overflow:hidden;}
-.EmptyBox80{ display:block; width:100%; height:80px; overflow:hidden;}
-.EmptyBox90{ display:block; width:100%; height:90px; overflow:hidden;}
-.EmptyBox100{ display:block; width:100%; height:100px; overflow:hidden;}
-.EmptyBox110{ display:block; width:100%; height:100px; overflow:hidden;}
-.EmptyBox120{ display:block; width:100%; height:100px; overflow:hidden;}
-.EmptyBox130{ display:block; width:100%; height:100px; overflow:hidden;}
-.EmptyBox140{ display:block; width:100%; height:100px; overflow:hidden;}
-.EmptyBox150{ display: block; width: 100%; height:150px; overflow:hidden;}
+.EmptyBox5{ display:block; width:100%; height:5px; }
+.EmptyBox10{ display:block; width:100%; height:10px; }
+.EmptyBox20{ display:block; width:100%; height:20px; }
+.EmptyBox30{ display:block; width:100%; height:30px; }
+.EmptyBox40{ display:block; width:100%; height:40px; }
+.EmptyBox50{ display:block; width:100%; height:50px; }
+.EmptyBox60{ display:block; width:100%; height:60px; }
+.EmptyBox70{ display:block; width:100%; height:70px; }
+.EmptyBox80{ display:block; width:100%; height:80px; }
+.EmptyBox90{ display:block; width:100%; height:90px; }
+.EmptyBox100{ display:block; width:100%; height:100px; }
+.EmptyBox110{ display:block; width:100%; height:100px; }
+.EmptyBox120{ display:block; width:100%; height:100px; }
+.EmptyBox130{ display:block; width:100%; height:100px; }
+.EmptyBox140{ display:block; width:100%; height:100px; }
+.EmptyBox150{ display: block; width: 100%; height:150px; }
 
 /* Opacity */
 .Opac100{ opacity:1; -webkit-opacity:1; -moz-opacity:1;}
