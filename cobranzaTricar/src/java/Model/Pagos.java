@@ -23,7 +23,10 @@ public class Pagos implements java.io.Serializable {
 
     private Integer idpagos;
     private Letras letras;
-    private String operacion;
+    private Tipodoc tipodoc;
+    private Caja caja;
+    private String operacion;    
+    private String calificacion;
     private BigDecimal monto;
     private Date fecreg;
     private String descripcion;
@@ -37,10 +40,13 @@ public class Pagos implements java.io.Serializable {
         this.idpagos = idpagos;
     }
 
-    public Pagos(Integer idpagos, Letras letras, String operacion, BigDecimal monto, Date fecreg, String descripcion, String tipo, Integer usuario) {
+    public Pagos(Integer idpagos, Letras letras, String operacion, Tipodoc tipodoc, Caja caja, String clasificacion, BigDecimal monto, Date fecreg, String descripcion, String tipo, Integer usuario) {
         this.idpagos = idpagos;
         this.letras = letras;
         this.operacion = operacion;
+        this.tipodoc = tipodoc;
+        this.caja = caja;
+        this.calificacion = clasificacion;
         this.monto = monto;
         this.fecreg = fecreg;
         this.descripcion = descripcion;
@@ -69,13 +75,42 @@ public class Pagos implements java.io.Serializable {
         this.letras = letras;
     }
 
-    @Column(name = "operacion", length = 20)
+    @Column(name = "operacion", length = 10)
     public String getOperacion() {
         return this.operacion;
     }
 
     public void setOperacion(String operacion) {
         this.operacion = operacion;
+    }
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idtipodoc")
+    public Tipodoc getTipodoc() {
+        return this.tipodoc;
+    }
+
+    public void setTipodoc(Tipodoc tipodoc) {
+        this.tipodoc = tipodoc;
+    }
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idcaja")
+    public Caja getCaja() {
+        return this.caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
+    }
+    
+    @Column(name = "clasificacion", length = 15)
+    public String getCalificacion() {
+        return this.calificacion;
+    }
+
+    public void setCalificacion(String calificacion) {
+        this.calificacion = calificacion;
     }
 
     @Column(name = "monto", precision = 17)

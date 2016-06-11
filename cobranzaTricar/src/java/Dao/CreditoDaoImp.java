@@ -278,8 +278,26 @@ public class CreditoDaoImp implements CreditoDao{
                 session.close();
             }
         }
-        return tcredito;        
-        
+        return tcredito;
+    }
+
+    @Override
+    public List<Credito> cargarxEstado(String estado) {
+        Session session = null;
+        List<Credito> lista = null;              
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE estado=:v");            
+            query.setParameter("v", estado);
+            lista = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
     }
 
     

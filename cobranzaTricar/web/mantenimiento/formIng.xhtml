@@ -11,7 +11,7 @@
     <ui:define name="content">
         <h2>Formulario de Ingresos económicos de clientes</h2>
         <f:view afterPhase="#{anexoBean.phaseListener}">
-            <h:form prependId="false ">
+            <h:form id="formTabla" prependId="false ">
                 <p:growl id="msg12" />
                 <p:panelGrid columns="2">
                     <p:autoComplete id="cliente" value="#{ocupacionBean.anexo}"
@@ -23,28 +23,25 @@
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                     </p:autoComplete>
-                </p:panelGrid>
-                <h:form id="formTabla">
-                    <p:dataTable var="ocups" value="#{ocupacionBean.ocupsxanexo}" 
-                                 emptyMessage="No hay nada para mostrar">
-                        <p:column headerText="Descripción">
-                            <h:outputText value="#{ocups.descripcion}" />
-                        </p:column>
-                        <p:column headerText="Empresa">
-                            <h:outputText value="#{ocups.empresa}" />
-                        </p:column>
-                        <p:column headerText="Monto">
-                            <h:outputText value="#{ocups.montoin}" />
-                        </p:column>
-                        <p:column headerText="Operaciones">                        
-                            <p:commandButton action="#{ocupacionBean.veryId(ocups.idocupacion)}" icon="b-ver" />
-                            <p:commandButton oncomplete="dlgeliminar.show()" icon="b-delete">
-                                <f:setPropertyActionListener target="#{ocupacionBean.ocupacion}" value="#{ocups}" />                                    
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
-                    <p:commandButton value="Agregar ingresos" icon="b-add" action="#{ocupacionBean.limpiarIngreso()}" />
-                </h:form>
+                </p:panelGrid>                
+                <p:dataTable id="tablalistarocups" var="ocups" value="#{ocupacionBean.ocupsxanexo}" 
+                             emptyMessage="No hay nada para mostrar">
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{ocups.descripcion}" />
+                    </p:column>
+                    <p:column headerText="Empresa">
+                        <h:outputText value="#{ocups.empresa}" />
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{ocups.montoin}" />
+                    </p:column>
+                    <p:column headerText="Operaciones">                        
+                        <p:commandButton action="#{ocupacionBean.veryIdModify(ocups.idocupacion)}" icon="b-ver" />
+                        <p:commandButton action="#{ocupacionBean.veryIdDelete(ocups.idocupacion)}" icon="b-delete">                                                                    
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton value="Agregar ingresos" icon="b-add" action="#{ocupacionBean.limpiarIngreso()}" />                
             </h:form>
         </f:view>
         <h:form id="formOcupacion">
@@ -112,17 +109,16 @@
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
                     </p:selectOneRadio>                    
-                    <p:commandButton actionListener="#{ocupacionBean.insertarSolo(ocupacionBean.anexo)}"
-                                     value="#{ocupacionBean.btnGuardar}" />
+                    <p:commandButton value="#{ocupacionBean.btnGuardar}" update=":formTabla:tablalistarocups"
+                                     actionListener="#{ocupacionBean.insertarSolo(ocupacionBean.anexo)}"/>
                 </p:panelGrid>
             </p:dialog>
         </h:form>
         <h:form id="formEliminar">
-            <p:dialog header="Eliminar Ingreso de Cliente" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <p:dialog header="Eliminar #{ocupacionBean.ocupacion.descripcion}" widgetVar="dlgEliminar" modal="true">                
                 <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{ocupacionBean.eliminarSolo(creditoBean.credito.anexo)}" />
-                <p:commandButton value="No" onclick="dlgeliminar.hide();" />
+                <p:commandButton value="Si" actionListener="#{ocupacionBean.delete()}" ajax="false" icon="b-ok" />
+                <p:commandButton value="No" onclick="dlgEliminar.hide();" icon="b-cancel" />
             </p:dialog>
         </h:form>
     </ui:define>

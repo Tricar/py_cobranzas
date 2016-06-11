@@ -721,6 +721,7 @@ public class creditoBean implements Serializable {
     }
 
     public void cargarPendientes() {
+        creditos = new ArrayList();
         CreditoDao credao = new CreditoDaoImp();
         Credito modelocredito = new Credito();
         try {
@@ -732,6 +733,14 @@ public class creditoBean implements Serializable {
         } catch (Exception e) {
         }
         codigo = "";
+    }
+
+    public void cargarPendSinCodi() {
+        CreditoDao credao = new CreditoDaoImp();        
+        try {
+            creditos = credao.cargarxEstado("AP");                        
+        } catch (Exception e) {
+        }
     }
 
     public void cargarxCodigoCotiza() {
@@ -840,33 +849,45 @@ public class creditoBean implements Serializable {
     }
 
     public String cargardespacho(Usuario usuario) {
-        modeloTipo(credito.getVehi());
-        sw = 1;
-        inicia = credito.getInicial();
-        precio = credito.getPrecio();
-        saldo = precio.subtract(inicia);
-        anexo = credito.getAnexo();
-        ocupsxanexo = ocupbean.cargarxCredito(credito);
-        if (usuario.getPerfil().getAbrev().equals("AS")) {
-            if (credito.getEstado().equals("AP")) {
-                btnaprobar = "Despachar";
-                return "/despacho/formdespacho.xhtml";
+        try {
+            modeloTipo(credito.getVehi());
+            sw = 1;
+            inicia = credito.getInicial();
+            precio = credito.getPrecio();
+            saldo = precio.subtract(inicia);
+            anexo = credito.getAnexo();
+            ocupsxanexo = ocupbean.cargarxCredito(credito);
+            if (usuario.getPerfil().getAbrev().equals("AS")) {
+                if (credito.getEstado().equals("AP")) {
+                    btnaprobar = "Despachar";
+                    return "/despacho/formdespacho.xhtml";
+                } else {
+                    btnaprobar = "Desaprobar";
+                }
+                return "/venta/formaprobar.xhtml";
             } else {
-                btnaprobar = "Desaprobar";
+                btnguardar = "Modificar";
+                return "/venta/formmodificar.xhtml";
             }
-            return "/venta/formaprobar.xhtml";
-        } else {
-            btnguardar = "Modificar";
-            return "/venta/formmodificar.xhtml";
+        } catch (Exception e) {
         }
+        return null;
     }
 
     public void despachar(Usuario usuario) {
+        CreditoDao credao = new CreditoDaoImp();
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
         Vehiculo vehiculo = new Vehiculo();
-        vehiculo = credito.getVehiculo();
-        vehiculo.setEstado("N");
-        vehiculodao.modificarVehiculo(vehiculo);
+        try {
+            vehiculo = credito.getVehiculo();
+            vehiculo.setEstado("N");
+            vehiculodao.modificarVehiculo(vehiculo);
+            credito.setEstado("DP");
+            credito.setDespachado(usuario.getIdusuario());
+            credao.modificarVenta(credito);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se despachó la unidad"));
+        } catch (Exception e) {
+        }
     }
 
     public String pagos() {
@@ -1115,13 +1136,13 @@ public class creditoBean implements Serializable {
     }
 
     public void cargarObjOcup(Ocupacion ocup) {
-        objocup = ocup;
+        objocup = ocup;        
         listaocups = new ArrayList();
         if (objocup.getBoletas() != null && objocup.getBoletas() == true) {
             listaocups.add("Copia de boletas de pago");
         }
         if (objocup.getConstancia() != null && objocup.getConstancia() == true) {
-            listaocups.add("Copia de Autavalúo");
+            listaocups.add("Copia de Autoavalúo");
         }
         if (objocup.getFacbol() != null && objocup.getFacbol() == true) {
             listaocups.add("Copia de boletas y/o facturas de compras");
@@ -1165,8 +1186,7 @@ public class creditoBean implements Serializable {
         ocupsxanexo = ocupbean.eliminar(anexo, objocup);
     }
 
-    public void modeloTipo(String tipo) {
-        System.out.println("Tipo: " + tipo);
+    public void modeloTipo(String tipo) {        
         listafiltrada = modbean.modeloTipo(tipo);
     }
 
@@ -1473,6 +1493,7 @@ public class creditoBean implements Serializable {
     public void Pagosxcredito(Credito cred) {
         pagosBean pagbean = new pagosBean();
         List<Pagos> lista = new ArrayList();
+        System.out.println("credito "+cred.getLiqventa());
         lista = pagbean.PagosxCredito(cred);
         if (lista.isEmpty() == false) {
             pagosxcredito = lista;

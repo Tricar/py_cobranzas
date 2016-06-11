@@ -47,6 +47,7 @@ public class Prueba {
         DateFormat hora = new SimpleDateFormat("HH:mm:ss");
         convertido = hora.format(date);
         System.out.println(convertido);
-    }
+        } 
+    
 
 }

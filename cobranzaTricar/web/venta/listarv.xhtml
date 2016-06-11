@@ -8,13 +8,15 @@
                 template="./../views/template.xhtml">
     <ui:define name="content">
         <h:form>            
-            <p:panelGrid columns="2">
-                <p:outputLabel value="Fecha Inicio:"/>
-                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{creditoBean.fecha1}"/>
-                <p:outputLabel value="Fecha Fin:"/>
-                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{creditoBean.fecha2}"/>
-                <p:commandButton value="Buscar"  actionListener="#{creditoBean.filtrarFechas()}" ajax="false"/>
-            </p:panelGrid>
+            <ui:remove>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Fecha Inicio:"/>
+                    <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{creditoBean.fecha1}"/>
+                    <p:outputLabel value="Fecha Fin:"/>
+                    <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{creditoBean.fecha2}"/>
+                    <p:commandButton value="Buscar"  actionListener="#{creditoBean.filtrarFechas()}" ajax="false"/>
+                </p:panelGrid>
+            </ui:remove>
 
             <p:panelGrid columns="6">
                 <p:outputLabel value="Ingrese DNI o RUC:"/>
@@ -67,7 +69,7 @@
         <hr/>
         <h:form id="formModificar">
             <p:growl id="mensajeGeneral" showDetail="true" sticky="false" />
-            <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
+            <p:dataTable id="tablaletras" var="letras" value="#{creditoBean.letraslista}" 
                          emptyMessage="No hay nada para mostrar" > 
                 <p:inputText type="hidden" value="#{letras.idletras}"/>
                 <p:column headerText="Cod venta.">
@@ -110,7 +112,7 @@
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Pagar">
-                    <p:commandButton oncomplete="dlgpagar.show()" value="P" disabled="#{letras.saldo == '0.00'}"
+                    <p:commandButton value="P" disabled="#{letras.saldo == '0.00'}"
                                      actionListener="#{pagosBean.cargarLetra(letras)}" />
                     <p:commandButton value="ND" icon="b-add" oncomplete="dlgnotadebito.show()" disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND' or letras.saldo == '0.00'}"
                                      actionListener="#{creditoBean.cargarLetra(letras)}" />
@@ -153,23 +155,41 @@
             </p:dialog>
         </h:form>
         <h:form id="formpagar">
-            <p:dialog id="dlg1" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
+            <p:dialog id="dlg1" header="Pagar letra #{pagosBean.numletra}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgpagar" modal="true" resizable="false" minWidth="200">
                 <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
                 <p:panelGrid columns="4">                    
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
-                    <p:calendar id="txtfecha" navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{pagosBean.pago.fecreg}" required="true" requiredMessage="Ingrese la fecha"/>
-                    <p:outputLabel value="Tipo:"/>
-                    <p:selectOneMenu value="#{pagosBean.pago.tipo}">
+                    <p:calendar id="txtfecha" navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{pagosBean.pago.fecreg}" required="true" requiredMessage="Ingrese la fecha"/>                    
+                    <p:outputLabel value="Tipo Doc:" for="tipo"/>
+                    <p:selectOneMenu id="tipo" value="#{pagosBean.pago.tipo}" required="true" requiredMessage="Seleccione Tipo">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
                         <f:selectItem itemLabel="Letra" itemValue="LE" />
                         <f:selectItem itemLabel="Nota de Credito" itemValue="NC" />
+                        <p:ajax update="tipodoc" listener="#{pagosBean.listaTipoDoc(pagosBean.pago.tipo)}" process="@this" />
+                        <p:ajax update="dest" listener="#{pagosBean.disableDest(pagosBean.pago.tipo)}" process="@this" />
                     </p:selectOneMenu>
-                    <p:outputLabel value="Referencia:" for="txtreferencia"/>
-                    <p:inputText id="txtreferencia" value="#{pagosBean.pago.operacion}" required="true" requiredMessage="Ingrese referencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <p:outputLabel value="Comprobante:" for="tipodoc"/>
+                    <p:selectOneMenu id="tipodoc" value="#{pagosBean.pago.tipodoc}" converter="omnifaces.SelectItemsConverter"
+                                     required="true" requiredMessage="Seleccione Tipo Documento">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>                        
+                        <f:selectItems value="#{pagosBean.listafiltrada}" var="tipodoc" itemLabel="#{tipodoc.abrev}" itemValue="#{tipodoc}"/>                                                
+                        <p:ajax update="comp txtope" listener="#{pagosBean.disableNumOper(pagosBean.pago.tipodoc.abrev)}" process="@this" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Destino:" for="dest"/>
+                    <p:selectOneMenu id="dest" value="#{pagosBean.pago.caja}" converter="omnifaces.SelectItemsConverter"
+                                     disabled="#{pagosBean.disablecaja}" required="true" requiredMessage="Seleccione Caja de destino">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                        <f:selectItems value="#{pagosBean.listaFiltCaja}" var="caja" itemLabel="#{caja.descripcion}" itemValue="#{caja}"/>                        
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Comprobante: " for="comp"/>
+                    <p:inputMask mask="999-99999" id="comp" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disablecomp}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <p:outputLabel value="Num oper: " for="txtope"/>
+                    <p:inputText id="txtope" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disableoper}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <p:outputLabel value="Monto:" for="monto"/>
-                    <p:inputText id="monto" value="#{pagosBean.pago.monto}" required="true" requiredMessage="Ingrese el monto" class="money"/>
+                    <p:inputText id="monto" value="#{pagosBean.montopago}" required="true" requiredMessage="Ingrese el monto" class="money"/>
                     <p:outputLabel value="Descripción:" for="txtdescripcion"/>
-                    <p:inputText id="txtdescripcion" value="#{pagosBean.pago.descripcion}" required="true" requiredMessage="Ingrese referencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <p:inputText id="txtdescripcion" value="#{pagosBean.pago.descripcion}" required="true" requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <h:panelGroup></h:panelGroup>
                     <h:panelGroup></h:panelGroup>
                     <p:commandButton actionListener="#{pagosBean.insertar(loginbean.usuario.idusuario)}" value="Pagar" />

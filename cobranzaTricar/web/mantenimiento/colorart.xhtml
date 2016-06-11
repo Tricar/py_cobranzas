@@ -1,76 +1,71 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <h:outputStylesheet library="css" name="style.css" />
-        <title>Gestion de Color </title>
-    </h:head>
-    <h:body>
-        <ui:composition template="./../views/template.xhtml">
-            <ui:define name="content">
-                <h:form id="frmNuevo">
-                    <p:commandButton value="Nuevo Color" update=":formInsertar:panelcrearcolor" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
-                </h:form>
-                <br/>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../views/template.xhtml">
 
-                <h2>Lista de Color</h2>
-                <hr/>
-                <h:form id="frmlistarperfil">
-                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                    <p:dataTable id="tablalistarcolor" var="item" value="#{colorBean.verTodo()}" emptyMessage="No hay nada para mostrar"
-                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
-                        <p:column headerText="DESCRIPCION">
-                            <h:outputText value="#{item.color}"/>
-                        </p:column>
-                        <p:column width="10%" style="text-align: center">
-                            <p:commandButton actionListener="#{colorBean.cargarColorEditar(item.idcolor)}" icon="ui-icon ui-icon-pencil"/>
-                            <p:commandButton actionListener="#{colorBean.cargarColorEliminar(item.idcolor)}" icon="ui-icon ui-icon-trash"/>
-                        </p:column>
-                    </p:dataTable>
-                </h:form>
+    <ui:define name="content">
+        <h2>Gestion de Color </h2>
+        <h:form id="frmNuevo">
+            <p:commandButton value="Nuevo Color" update=":formInsertar:panelcrearcolor" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
+        </h:form>
+        <br/>
 
-                <h:form id="formInsertar">
-                    <p:dialog header="Nuevo Color" widgetVar="dlginsertar" modal="true">                        
-                        <p:panelGrid id="panelcrearcolor" columns="3">
-                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{colorBean.colo.color}" 
-                                         style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:message for="txtDescripcion"/>
-                            <p:commandButton value="Registrar Color" icon="b-new" ajax="false" actionListener="#{colorBean.registrar()}" />
-                        </p:panelGrid>
-                    </p:dialog>
-                </h:form>
+        <h2>Lista de Color</h2>
+        <hr/>
+        <h:form id="frmlistarperfil">
+            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+            <p:dataTable id="tablalistarcolor" var="item" value="#{colorBean.verTodo()}" emptyMessage="No hay nada para mostrar"
+                         paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
+                <p:column headerText="DESCRIPCION">
+                    <h:outputText value="#{item.color}"/>
+                </p:column>
+                <p:column width="10%" style="text-align: center">
+                    <p:commandButton actionListener="#{colorBean.cargarColorEditar(item.idcolor)}" icon="ui-icon ui-icon-pencil"/>
+                    <p:commandButton actionListener="#{colorBean.cargarColorEliminar(item.idcolor)}" icon="ui-icon ui-icon-trash"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
 
-                <h:form id="frmEditarColor">
-                    <p:dialog header="Datos Color" widgetVar="dialogoEditarColor" modal="true">
-                        <h:panelGrid id="panelEditarColor" columns="3">                        
-                            <h:panelGroup></h:panelGroup>
-                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{colorBean.colo.color}" style="text-transform: uppercase" 
-                                         autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <h:panelGroup></h:panelGroup>  
-                            <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{colorBean.modificar()}"/>
-                        </h:panelGrid>
-                    </p:dialog>
-                </h:form>
+        <h:form id="formInsertar">
+            <p:dialog header="Nuevo Color" widgetVar="dlginsertar" modal="true">                        
+                <p:panelGrid id="panelcrearcolor" columns="3">
+                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{colorBean.colo.color}" 
+                                 style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:message for="txtDescripcion"/>
+                    <p:commandButton value="Registrar Color" icon="b-new" ajax="false" actionListener="#{colorBean.registrar()}" />
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
 
-                <h:form id="frmEliminarColor">
-                    <p:dialog header="Datos Color" widgetVar="dialogoEliminarColor" modal="true">
-                        <p:inputText type="hidden" value="#{colorBean.colo.idcolor}"/>
-                        <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{colorBean.eliminar()}" ajax="false" icon="b-ok" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
-                    </p:dialog>
-                </h:form>
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
+        <h:form id="frmEditarColor">
+            <p:dialog header="Datos Color" widgetVar="dialogoEditarColor" modal="true">
+                <h:panelGrid id="panelEditarColor" columns="3">                        
+                    <h:panelGroup></h:panelGroup>
+                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{colorBean.colo.color}" style="text-transform: uppercase" 
+                                 autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <h:panelGroup></h:panelGroup>  
+                    <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{colorBean.modificar()}"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="frmEliminarColor">
+            <p:dialog header="Datos Color" widgetVar="dialogoEliminarColor" modal="true">
+                <p:inputText type="hidden" value="#{colorBean.colo.idcolor}"/>
+                <h:outputText value="¿Desea eliminar?" />
+                <p:commandButton value="Si" actionListener="#{colorBean.eliminar()}" ajax="false" icon="b-ok" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

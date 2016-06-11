@@ -95,6 +95,9 @@
         <property name="comprobante2" type="string">
             <column name="comprobante2" length="50" />
         </property>
+        <property name="despachado" type="java.lang.Integer">
+            <column name="despachado" />
+        </property>
         <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idventa" />

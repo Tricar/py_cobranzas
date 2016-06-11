@@ -98,5 +98,11 @@
             </key>
             <one-to-many class="Model.Ocupacion" />
         </set>
+        <set name="cajas" table="caja" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" not-null="true" />
+            </key>
+            <one-to-many class="Model.Caja" />
+        </set>
     </class>
 </hibernate-mapping>

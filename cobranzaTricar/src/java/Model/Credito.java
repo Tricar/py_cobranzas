@@ -37,6 +37,7 @@ public class Credito implements java.io.Serializable {
     private Integer aprobado;
     private Integer elaborado;
     private Integer modificado;
+    private Integer despachado;
     private String tienda;
     private String empresa;
     private BigDecimal precio;
@@ -72,7 +73,7 @@ public class Credito implements java.io.Serializable {
         this.interes = interes;
     }
 
-    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, Set letrases) {
+    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, Set letrases) {
         this.idventa = idventa;
         this.anexo = anexo;
         this.vehiculo = vehiculo;
@@ -84,6 +85,7 @@ public class Credito implements java.io.Serializable {
         this.fechareg = fechareg;
         this.aprobado = aprobado;
         this.elaborado = elaborado;
+        this.despachado = despachado;
         this.tienda = tienda;
         this.empresa = empresa;
         this.precio = precio;
@@ -209,6 +211,15 @@ public class Credito implements java.io.Serializable {
 
     public void setElaborado(Integer elaborado) {
         this.elaborado = elaborado;
+    }
+    
+    @Column(name = "despachado")
+    public Integer getDespachado() {
+        return despachado;
+    }
+
+    public void setDespachado(Integer despachado) {
+        this.despachado = despachado;
     }
     
     @Column(name = "modificado")

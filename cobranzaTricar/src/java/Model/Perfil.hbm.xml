@@ -62,6 +62,9 @@
         <property name="manDes" type="java.lang.Boolean">
             <column name="manDes" />
         </property>
+        <property name="manCaja" type="java.lang.Boolean">
+            <column name="manCaja" />
+        </property>
         <property name="despacho" type="java.lang.Boolean">
             <column name="despacho" />
         </property>

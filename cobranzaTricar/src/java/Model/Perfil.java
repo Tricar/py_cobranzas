@@ -38,6 +38,7 @@ public class Perfil implements java.io.Serializable {
     private Boolean despacho;
     private Boolean manIng;
     private Boolean manDes;
+    private Boolean manCaja;
     private Set usuarios = new HashSet(0);
 
     public Perfil() {
@@ -47,7 +48,7 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Boolean manIng, Boolean manDes, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Boolean manIng, Boolean manDes, Boolean manCaja, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.abrev = abrev;
@@ -67,6 +68,7 @@ public class Perfil implements java.io.Serializable {
         this.venCon = venCon;
         this.manIng = manIng;
         this.manDes = manDes;
+        this.manCaja = manCaja;
         this.usuarios = usuarios;
     }
 
@@ -250,6 +252,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setManDes(Boolean manDes) {
         this.manDes = manDes;
+    }
+    
+    @Column(name = "manCaja")
+    public Boolean getManCaja() {
+        return this.manCaja;
+    }
+
+    public void setManCaja(Boolean manCaja) {
+        this.manCaja = manCaja;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "perfil")

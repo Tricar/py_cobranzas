@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Tipodoc" table="tipodoc" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idtipodoc" type="int">
+            <column name="idtipodoc" />
+            <generator class="identity" />
+        </id>
+        <property name="tipodoc" type="string">
+            <column name="tipodoc" length="2" />
+        </property>
+        <property name="abrev" type="string">
+            <column name="abrev" length="2" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

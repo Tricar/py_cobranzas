@@ -24,11 +24,21 @@ public class LoginBean implements Serializable {
     private Transaction transaction;
     public Usuario usuario;
     private String tusuario;
-    private String clave;    
+    private String clave;
 
     public LoginBean() {
         HttpSession miSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         miSession.setMaxInactiveInterval(300);
+    }
+
+    public void sesionExpired() {
+        String ruta = MyUtil.basepathlogin() + "login.xhtml";   
+        RequestContext context = RequestContext.getCurrentInstance();        
+        FacesContext facescontext = FacesContext.getCurrentInstance();
+        HttpSession sesion = (HttpSession) facescontext.getExternalContext().getSession(false);
+        sesion.invalidate();
+        context.addCallbackParam("loggetOut", true);
+        context.addCallbackParam("ruta", ruta);
     }
     
     public void login(ActionEvent actionEvent) {
@@ -47,7 +57,7 @@ public class LoginBean implements Serializable {
                 if (usuario.getClave().equals(Encrypt.sha512(this.clave))) {
                     loggedIn = true;
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.tusuario);
-                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.tusuario);                    
+                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.tusuario);
                     ruta = MyUtil.basepathlogin() + "views/index.xhtml";
                 }
             } else {
@@ -60,7 +70,7 @@ public class LoginBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
             context.addCallbackParam("loggedIn", loggedIn);
             context.addCallbackParam("ruta", ruta);
-        } catch (Exception e) {
+        } catch (Exception e) {            
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
@@ -82,63 +92,65 @@ public class LoginBean implements Serializable {
         context.addCallbackParam("loggetOut", true);
         context.addCallbackParam("ruta", ruta);
     }
-    
-    
-    
+
     public String empleado() {
         return "/sistema/empleado";
     }
-    
+
     public String vendedor() {
         return "/sistema/vendedor";
     }
-    
+
     public String usuarios() {
         return "/sistema/usuario";
     }
-    
+
     public String perfil() {
         return "/sistema/perfil";
     }
-    
+
     public String cliente() {
         return "/mantenimiento/cliente";
     }
-    
+
     public String articulo() {
         return "/mantenimiento/articulo";
     }
-    
+
     public String modelo() {
         return "/mantenimiento/modarticulo";
     }
-    
+
     public String color() {
         return "/mantenimiento/colorart";
     }
-    
+
     public String porforma() {
         return "/cotiza/index";
     }
-    
+
     public String credito() {
         return "/venta/index";
     }
-    
+
     public String pago() {
         return "/venta/listarv";
     }
-    
+
     public String deudor() {
         return "/reportes/vencido";
     }
-    
+
     public String moroso() {
         return "/reportes/moroso";
     }
-    
-    public String ingreso(){
+
+    public String ingreso() {
         return "/mantenimiento/ingreso";
+    }
+    
+    public String caja(){
+        return "/sistema/caja";
     }
 
     public String getTusuario() {

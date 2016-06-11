@@ -150,4 +150,23 @@ public class OcupacionDaoImpl implements OcupacionDao {
         return lista;
     }
 
+    @Override
+    public void delete(Ocupacion ocup) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.delete(ocup);
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        }
+        finally {
+            if(session != null){
+                session.close();
+            }
+        }
+    }
+
 }

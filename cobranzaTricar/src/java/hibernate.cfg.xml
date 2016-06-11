@@ -21,5 +21,8 @@
     <mapping resource="Model/Perfil.hbm.xml"/>
     <mapping resource="Model/Anexo.hbm.xml"/>
     <mapping resource="Model/Tipocambio.hbm.xml"/>
+    <mapping resource="Model/Tipodoc.hbm.xml"/>
+    <mapping resource="Model/Caja.hbm.xml"/>
+    <mapping resource="Model/Movcaja.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

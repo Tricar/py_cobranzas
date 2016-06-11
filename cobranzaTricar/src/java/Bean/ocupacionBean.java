@@ -44,15 +44,15 @@ public class ocupacionBean implements Serializable {
     public void limpiarlista() {
         anexo = new Anexo();
         ocupsxanexo = new ArrayList();
-        
+
     }
 
     public List cargarIngresos(Anexo anexo) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         return ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
     }
-    
-    public List cargarxCredito (Credito credito){
+
+    public List cargarxCredito(Credito credito) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         return ocupsxanexo = ocudao.ocupacionesxIdventa(credito);
     }
@@ -73,25 +73,25 @@ public class ocupacionBean implements Serializable {
     public void insertarSolo(Anexo anexo) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         try {
-            if (btnGuardar.equals("Guardar")) {
+            if (btnGuardar.equals("Registrar")) {
                 ocupacion.setAnexo(anexo);
                 ocupacion.setIdventa(null);
                 ocudao.insertarOcupacion(ocupacion);
             }
             ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
             RequestContext.getCurrentInstance().update("formTabla");
-            RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");            
+            RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");
         } catch (Exception e) {
             RequestContext.getCurrentInstance().update("formOcupacion");
             RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
         }
     }
-    
-    public void insertarCredito(Integer idventa, Ocupacion ocup){
+
+    public void insertarCredito(Integer idventa, Ocupacion ocup) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocupacion = ocup;
-        System.out.println("obj ocupacion bean: "+ocupacion.getDescripcion());
-        System.out.println("ID: "+idventa);
+        System.out.println("obj ocupacion bean: " + ocupacion.getDescripcion());
+        System.out.println("ID: " + idventa);
         ocupacion.setIdventa(idventa);
         ocupacion.setAnexo(null);
         ocudao.insertarOcupacion(ocupacion);
@@ -121,7 +121,7 @@ public class ocupacionBean implements Serializable {
         opcsunat = true;
         opctprop = true;
         ocupacion = new Ocupacion();
-        btnGuardar = "Guardar";
+        btnGuardar = "Registrar";
         RequestContext.getCurrentInstance().update("formOcupacion");
         RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
     }
@@ -137,7 +137,7 @@ public class ocupacionBean implements Serializable {
         opcsunat = true;
         opctprop = true;
         ocupacion = new Ocupacion();
-        btnGuardar = "Guardar";
+        btnGuardar = "Registrar";
         RequestContext.getCurrentInstance().update("formOcupacion");
         RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
     }
@@ -160,7 +160,7 @@ public class ocupacionBean implements Serializable {
             opctprop = true;
             opclicf = true;
         }
-        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR"))&& anexo.getCpropia().equals("NO")) {
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) && anexo.getCpropia().equals("NO")) {
             opcbol = false;
             opccons = true;
             opcfacbol = true;
@@ -180,7 +180,7 @@ public class ocupacionBean implements Serializable {
             opctprop = true;
             opclicf = true;
         }
-        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF"))&& anexo.getCpropia().equals("NO")) {
+        if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF")) && anexo.getCpropia().equals("NO")) {
             opcbol = true;
             opccons = true;
             opcfacbol = true;
@@ -210,7 +210,7 @@ public class ocupacionBean implements Serializable {
             opctprop = true;
             opclicf = false;
         }
-        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("IF")) && anexo.getCpropia().equals("SI")){
+        if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("IF")) && anexo.getCpropia().equals("SI")) {
             opctprop = true;
             opclic = true;
             opcfacbol = false;
@@ -233,8 +233,8 @@ public class ocupacionBean implements Serializable {
         if ((ocupacion.getTipo().equals("TR") && (ocupacion.getClase().equals("FR") || ocupacion.getClase().equals("IF"))) && anexo.getCpropia().equals("SI")) {
             opctprop = false; //t propiedad
             opclic = false; //lic cond
-            opcfacbol = true; 
-            opcbol = true; 
+            opcfacbol = true;
+            opcbol = true;
             opccons = false; //autoavaluo
             opcrrhh = true;
             opcsunat = true;
@@ -259,23 +259,29 @@ public class ocupacionBean implements Serializable {
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         return ocupsxanexo;
     }
-    
+
     public void eliminar(Ocupacion ocup) {
         ocupacion = ocup;
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocudao.eliminarOcupacion(ocupacion);
     }
 
+    public void delete() {
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        ocudao.delete(ocupacion);
+        RequestContext.getCurrentInstance().update(":formTabla:tablalistarocups");
+    }
+
     public void eliminarSolo(Anexo anexo) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
-        ocudao.eliminarOcupacion(ocupacion);        
+        ocudao.eliminarOcupacion(ocupacion);
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         RequestContext.getCurrentInstance().update("formTabla");
         RequestContext.getCurrentInstance().execute("formTabla");
         RequestContext.getCurrentInstance().execute("PF('dlgeliminar').hide()");;
     }
 
-    public void veryId(Integer idocupacion) {
+    public void veryIdModify(Integer idocupacion) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocupacion = ocudao.verifyIdocup(idocupacion);
         btnGuardar = "Salir";
@@ -283,9 +289,16 @@ public class ocupacionBean implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
     }
 
+    public void veryIdDelete(Integer idocupacion) {
+        OcupacionDao ocudao = new OcupacionDaoImpl();
+        ocupacion = ocudao.verifyIdocup(idocupacion);
+        RequestContext.getCurrentInstance().update("formEliminar");
+        RequestContext.getCurrentInstance().execute("PF('dlgEliminar').show()");
+    }
+
     public String nuevo() {
         anexo = new Anexo();
-        ocupacion = new Ocupacion();
+        ocupacion = new Ocupacion();        
         return "/mantenimiento/formIng.xhtml";
     }
 

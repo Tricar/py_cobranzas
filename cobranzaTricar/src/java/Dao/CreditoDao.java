@@ -19,6 +19,7 @@ public interface CreditoDao {
     public List<Credito> filtrarDni (String dni);
     public List<Credito> filtrarCreditoxAnexo(Anexo anexo);
     public Credito cargarxCodigoEstado (String codigo, String estado);
+    public List<Credito> cargarxEstado (String estado);
     public Credito cargarxCodigoEstadoDos (String codigo, String estado, String estado1);
 //    public List<Credito> cargarCreditoxNombre(String nombre);
     public Credito veryLiqventa (String liq);

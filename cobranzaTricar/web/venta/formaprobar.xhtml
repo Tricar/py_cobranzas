@@ -48,27 +48,6 @@
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                     </p:autoComplete>
-                </p:panelGrid>
-                <p:accordionPanel>
-                    <p:tab title="Ingresos">
-                        <p:dataTable var="ocups" value="#{creditoBean.ocupsxanexo}" 
-                                     emptyMessage="No hay nada para mostrar">
-                            <p:column headerText="Descripción">
-                                <h:outputText value="#{ocups.descripcion}" />
-                            </p:column>
-                            <p:column headerText="Empresa">
-                                <h:outputText value="#{ocups.empresa}" />
-                            </p:column>
-                            <p:column headerText="Monto">
-                                <h:outputText value="#{ocups.montoin}" />
-                            </p:column>
-                            <p:column headerText="Ver">
-                                <p:commandButton icon="b-ver" action="#{creditoBean.cargarObjOcup(ocups)}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </p:tab>                    
-                </p:accordionPanel>
-                <p:panelGrid columns="2">
                     <p:outputLabel value="Dirección:" for="dir"/>
                     <p:inputText id="dir" readonly="true" value="#{creditoBean.credito.anexo.direccion}"/>
                     <p:outputLabel value="Distrito:" for="dist"/>
@@ -162,51 +141,68 @@
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.aprobarcredito(loginbean.usuario.idusuario)}" icon="b-ok"
                                  ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
                 </p:commandButton>
-            </h:form>            
-            <h:form>
-                <h:commandButton actionListener="#{reportesBean.exportarLiq(creditoBean.credito.liqventa)}" value="Imp. Liquid." />
             </h:form>
-            <h:form id="formMostrar">
-                <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
-                <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
+            <h:form>
+                <h2>Ingresos económicos del cliente y adjuntos </h2>
+                <p:dataTable var="ocups" value="#{creditoBean.ocupsxanexo}" 
                              emptyMessage="No hay nada para mostrar">
-                    <p:column headerText="Cod venta.">
-                        <h:outputText value="#{letras.credito.liqventa}" />
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{ocups.descripcion}" />
                     </p:column>
-                    <p:column headerText="Descripcion">
-                        <h:outputText value="#{letras.descripcion}"/>
+                    <p:column headerText="Empresa">
+                        <h:outputText value="#{ocups.empresa}" />
                     </p:column>
                     <p:column headerText="Monto">
-                        <h:outputText value="#{letras.montoletra}"/>
+                        <h:outputText value="#{ocups.montoin}" />
                     </p:column>
-                    <p:column headerText="Interes">
-                        <h:outputText value="#{letras.interes}"/>
+                    <p:column headerText="">
+                        <p:commandButton value="Ver" actionListener="#{creditoBean.cargarObjOcup(ocups)}"/>
                     </p:column>
-                    <p:column headerText="Total Letra">
-                        <h:outputText value="#{letras.monto}"/>
-                    </p:column>
-                    <p:column headerText="Fecha In.">
-                        <h:outputText value="#{letras.fecini}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Fecha Ven.">
-                        <h:outputText value="#{letras.fecven}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <ui:remove>
-                        <p:column headerText="Saldo">
-                            <h:outputText value="#{letras.saldo}"/>
+                </p:dataTable>   
+            </h:form>
+            <ui:remove>
+                <h:form id="formMostrar">
+                    <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
+                    <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
+                                 emptyMessage="No hay nada para mostrar">
+                        <p:column headerText="Cod venta.">
+                            <h:outputText value="#{letras.credito.liqventa}" />
                         </p:column>
-                        <p:column headerText="Estado">
-                            <h:outputText value="#{letras.estado}">
-                                <f:converter converterId="letrasconverter"/>
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{letras.descripcion}"/>
+                        </p:column>
+                        <p:column headerText="Monto">
+                            <h:outputText value="#{letras.montoletra}"/>
+                        </p:column>
+                        <p:column headerText="Interes">
+                            <h:outputText value="#{letras.interes}"/>
+                        </p:column>
+                        <p:column headerText="Total Letra">
+                            <h:outputText value="#{letras.monto}"/>
+                        </p:column>
+                        <p:column headerText="Fecha In.">
+                            <h:outputText value="#{letras.fecini}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputText>
                         </p:column>
-                    </ui:remove>
-                </p:dataTable>
-            </h:form>
+                        <p:column headerText="Fecha Ven.">
+                            <h:outputText value="#{letras.fecven}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <ui:remove>
+                            <p:column headerText="Saldo">
+                                <h:outputText value="#{letras.saldo}"/>
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{letras.estado}">
+                                    <f:converter converterId="letrasconverter"/>
+                                </h:outputText>
+                            </p:column>
+                        </ui:remove>
+                    </p:dataTable>
+                </h:form>
+            </ui:remove>
             <h:form id="formOcup">
                 <p:dialog header="Detalle" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgverocup" modal="true" resizable="false" minWidth="200">

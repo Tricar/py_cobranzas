@@ -49,6 +49,7 @@ public class Anexo implements java.io.Serializable {
     private Set creditos = new HashSet(0);
     private Set usuarios = new HashSet(0);    
     private Set ocupacions = new HashSet(0);
+    private Set cajas = new HashSet(0);
     private String nombres;
 
     public Anexo() {
@@ -58,7 +59,7 @@ public class Anexo implements java.io.Serializable {
         this.idanexo = idanexo;
     }
 
-    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas) {
         this.idanexo = idanexo;
         this.nombre = nombre;
         this.tipodocumento = tipodocumento;
@@ -87,6 +88,7 @@ public class Anexo implements java.io.Serializable {
         this.creditos = creditos;
         this.usuarios = usuarios;        
         this.ocupacions = ocupacions;
+        this.cajas = cajas;
     }
 
     @Id
@@ -344,9 +346,22 @@ public class Anexo implements java.io.Serializable {
     public void setOcupacions(Set ocupacions) {
         this.ocupacions = ocupacions;
     }
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "anexo")
+    public Set getCajas() {
+        return this.cajas;
+    }
+
+    public void setCajas(Set cajas) {
+        this.cajas = cajas;
+    }
 
     public String getNombres() {
         return nombres = nombre + " " + apepat + " " + apemat;
+    }
+    
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
     @Override
@@ -364,3 +379,4 @@ public class Anexo implements java.io.Serializable {
     }
 
 }
+

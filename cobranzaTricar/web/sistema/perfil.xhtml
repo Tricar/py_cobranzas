@@ -59,7 +59,8 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venta}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venLis}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venReg}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.venCon}"/>    
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.venCon}"/>   
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manCaja}"/>
                             <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
@@ -81,6 +82,8 @@
                         <p:outputLabel value="Vendedor" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
                         <p:outputLabel value="Perfiles" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCaja}"/>
+                        <p:outputLabel value="Caja" />
                         <br/>
                         <br/><h:outputText value="Mantenimiento:" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>

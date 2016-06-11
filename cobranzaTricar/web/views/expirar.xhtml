@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>        
+        <p:idleMonitor timeout="300000">
+            <p:ajax event="idle" listener="#{loginbean.sesionExpired()}" oncomplete="sessionTimeOutDialog.show()"/>            
+        </p:idleMonitor>        
+        <h:form>
+            <p:dialog header="Sesión caducada" widgetVar="sessionTimeOutDialog" 
+                      modal="true" closable="false" width="400" visible="false">
+                <h:outputText value="Tiempo de sesión expirado, por favor vuelva a recargar la página" />
+                <p:separator/>                
+                <p:commandButton id="confirmBackToLogin" value="OK"
+                                 onclick="window.location = '#{facesContext.externalContext.requestContextPath}/faces/login.xhtml'"/>
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>
+

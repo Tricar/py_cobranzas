@@ -21,7 +21,7 @@
         <h:outputScript library="spark" name="js/moment.js" />
         <h:outputScript library="spark" name="js/primefaces.js" />
         <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/favicont.png" />
-        <title>Cobranzas TRICAR SAC</title>
+        <title>Cobranzas Casco Red SAC</title>
         <script type="text/javascript">
             function skinChart() {
                 this.cfg.shadow = false;
@@ -58,10 +58,9 @@
             }
         </script>
     </h:head>
-
     <h:body>
         <div id="menu-mask"></div>
-        <ui:include src="../views/sessionTimeOut.xhtml" />
+        <ui:include src="../views/expirar.xhtml" />
         <ui:insert name="top">
             <div id="layout-topbar" class="ShadowGray">
                 <div id="layout-topbar-indent">
@@ -77,6 +76,7 @@
                         <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="ui-icon-copy" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCaja}" value="Caja" action="#{loginbean.caja()}" icon="ui-icon-copy" />
                     </p:submenu>
                     <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
                         <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="ui-icon-person" />
@@ -134,7 +134,7 @@
                 </div>
                 <div class="Container50 Responsive100">
                     <div class="DispInlBlock Fright">
-                        <a href="#layout-footer" class="blue Fs30"><i class="fa fa-facebook-square"></i></a>
+                        <a href="https://facebook.com/vxperu" class="blue Fs30" target="blank" title="Síguenos en Facebook"><i class="fa fa-facebook-square"></i></a>
                         <a href="#layout-footer" class="blue Fs30"><i class="fa fa-twitter-square"></i></a>
                         <a href="#layout-footer" class="blue Fs30"><i class="fa fa-linkedin-square"></i></a>
                         <a href="#layout-footer" class="blue Fs30"><i class="fa fa-google-plus-square"></i></a>

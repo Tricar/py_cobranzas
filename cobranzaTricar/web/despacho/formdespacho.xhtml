@@ -87,6 +87,12 @@
                         <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
                         <p:ajax event="mousemove" listener="#{creditoBean.precioModeloCredito()}"/>
                     </p:autoComplete>
+                    <p:outputLabel value="Boleta/Factura" for="comp"/>
+                    <p:inputMask id="comp" mask="999-99999" value="#{creditoBean.credito.comprobante}" required="true" requiredMessage="Ingrese comprobante de pago"/>
+                    <p:outputLabel value="Guía Rem" for="guia"/>
+                    <p:inputMask id="guia" mask="999-99999" value="#{creditoBean.credito.guia}" required="true" requiredMessage="Ingrese Guía de remisión"/>
+                    <p:outputLabel value="Observaciones" for="obs"/>
+                    <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" required="true" requiredMessage="Ingrese observaciones" />
                 </p:panelGrid>
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.despachar(loginbean.usuario)}" icon="b-ok"
                                  ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">

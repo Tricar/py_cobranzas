@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Caja" table="caja" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idcaja" type="int">
+            <column name="idcaja" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="50" />
+        </property>
+        <many-to-one name="encargado" class="Model.Anexo" fetch="select">
+            <column name="encargado" not-null="true" />
+        </many-to-one>
+        <property name="total" type="big_decimal">
+            <column name="total" precision="17" />
+        </property>
+        <property name="tienda" type="string">
+            <column name="tienda" length="2" />
+        </property>
+        <set name="movcajas" table="movcaja" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idcaja" />
+            </key>
+            <one-to-many class="Model.Movcaja" />
+        </set>
+    </class>
+</hibernate-mapping>
