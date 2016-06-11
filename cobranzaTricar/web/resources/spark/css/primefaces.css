@@ -2,7 +2,7 @@
 Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/license** http://docs.jquery.com/UI/Theming/API*/
 /* Layout helpers----------------------------------*/
 .ui-helper-hidden{display:none;}
-.ui-helper-hidden-accessible{border:0;clip:rect(0 0 0 0);height:0px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:0px;}
+.ui-helper-hidden-accessible{border:0;clip:rect(0 0 0 0);height:0px;margin:-1px;padding:0;position:absolute;width:0px;}
 .ui-helper-reset{margin:0;padding:0;border:0;outline:0;line-height:1.3;text-decoration:none;font-size:100%;list-style:none;}
 .ui-helper-clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 .ui-helper-clearfix{display:inline-block;}
@@ -13,7 +13,7 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
 /* Interaction Cues----------------------------------*/
 .ui-state-disabled{cursor:default !important;}
 /* Icons----------------------------------*//* states and images */
-.ui-icon{display:block;text-indent:-99999px;overflow:hidden;background-repeat:no-repeat;}
+.ui-icon{display:block;text-indent:-99999px;background-repeat:no-repeat;}
 /* Misc visuals----------------------------------*/
 /* Overlays */
 .ui-widget-overlay{position:absolute;top:0;left:0;width:100%;height:100%;}
@@ -68,7 +68,6 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
     cursor:pointer;
     padding:.2em .6em .3em .6em;
     width:auto;
-    overflow:visible;
 }
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current{float:left;}
 /* with multiple calendars */
@@ -116,10 +115,15 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
     /*must have*/
 }
 /* css for timepicker */
-.ui-timepicker-div .ui-widget-header{margin-bottom:8px;}.ui-timepicker-div dl{text-align:left;}
-.ui-timepicker-div dl dt{height:25px;margin-bottom:-25px;}.ui-timepicker-div dl dd{margin:0 10px 10px 65px;}
-.ui-timepicker-div td{font-size:90%;}.ui-tpicker-grid-label{background:none;border:none;margin:0;padding:0;}
-.ui-timepicker-rtl{direction:rtl;}.ui-timepicker-rtl dl{text-align:right;}.ui-timepicker-rtl dl dd{margin:0 65px 10px 10px;}
+.ui-timepicker-div .ui-widget-header{margin-bottom:8px;}
+.ui-timepicker-div dl{text-align:left;}
+.ui-timepicker-div dl dt{height:25px;margin-bottom:-25px;}
+.ui-timepicker-div dl dd{margin:0 10px 10px 65px;}
+.ui-timepicker-div td{font-size:90%;}
+.ui-tpicker-grid-label{background:none;border:none;margin:0;padding:0;}
+.ui-timepicker-rtl{direction:rtl;}
+.ui-timepicker-rtl dl{text-align:right;}
+.ui-timepicker-rtl dl dd{margin:0 65px 10px 10px;}
 /* PrimeFaces Extensions */
 .ui-datepicker-trigger.ui-button-icon-only .ui-button-text{padding:0.3em;}
 .ui-accordion .ui-accordion-header{cursor:pointer;position:relative;margin-top:1px;min-height:0;padding:.5em .5em .5em 2.2em;}
@@ -131,10 +135,10 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
     position:relative;
     top:1px;
     margin-bottom:2px;
-    overflow:auto;
     zoom:1;
 }
-.ui-accordion .ui-accordion-header.ui-state-disabled, .ui-accordion .ui-accordion-header.ui-state-disabled a{cursor:default;}
+.ui-accordion .ui-accordion-header.ui-state-disabled, 
+.ui-accordion .ui-accordion-header.ui-state-disabled a{cursor:default;}
 /** RTL **/
 .ui-accordion.ui-accordion-rtl{direction:rtl;}
 .ui-accordion.ui-accordion-rtl .ui-accordion-header .ui-icon{right:0.5m;left:auto;}
@@ -151,17 +155,19 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
     display:inline-block;
 }
 .ui-autocomplete .ui-autocomplete-dropdown{position:absolute;height:100%;width:2.4em;}
-.ui-autocomplete-query{font-weight:bold;}.ui-autocomplete-panel{position:absolute;overflow:auto;}
-.ui-autocomplete-panel .ui-autocomplete-item{cursor:pointer;}.ui-autocomplete-panel .ui-autocomplete-list{padding:0.4em;border:0 none;}
+.ui-autocomplete-query{font-weight:bold;}
+.ui-autocomplete-panel{position:absolute;overflow:auto;}
+.ui-autocomplete-panel .ui-autocomplete-item{cursor:pointer;}
+.ui-autocomplete-panel .ui-autocomplete-list{padding:0.4em;border:0 none;}
 .ui-autocomplete-panel .ui-autocomplete-list-item{border:0px none;font-weight:normal;margin:1px 0;padding:3px 5px;text-align:left;}
 .ui-autocomplete-panel .ui-autocomplete-table{border-collapse:collapse;width:100%;}
 .ui-autocomplete-panel .ui-autocomplete-table th,
 .ui-autocomplete-panel .ui-autocomplete-table td{border-width:1px;border-style:solid;border-color:inherit;padding:4px 10px 4px 10px;}
 .ui-autocomplete .ui-button-icon-only .ui-button-text{padding:0.29em;}
 /* Multiple Selection */
-.ui-autocomplete-multiple-container{clear:left;cursor:text;list-style-type:none;margin:0;min-height:1px;overflow:hidden;width:400px;}
+.ui-autocomplete-multiple-container{clear:left;cursor:text;list-style-type:none;margin:0;min-height:1px;width:400px;}
 .ui-autocomplete-multiple-container.ui-inputfield{padding:0;}
-.ui-autocomplete-token{cursor:default;float:left;overflow:hidden;padding:1px 3px;white-space:nowrap;position:relative;margin:2px;}
+.ui-autocomplete-token{cursor:default;float:left;padding:1px 3px;white-space:nowrap;position:relative;margin:2px;}
 .ui-autocomplete-token-label{display:block;padding:0em 2.1em 0em 0.5em;}
 .ui-autocomplete-token-icon{margin-top:-9px;position:absolute;right:0.2em;top:50%;cursor:pointer;}
 .ui-autocomplete-input-token{float:left;list-style-type:none;margin:1px;padding:0;}
@@ -175,10 +181,10 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
 .ui-carousel{position:relative;padding:1px;}
 .ui-carousel .ui-carousel-viewport .ui-carousel-items{list-style:none outside none;margin:0;padding:0;position:relative;width:32000px;left:0;}
 .ui-carousel .ui-carousel-viewport .ui-carousel-items .ui-carousel-item{margin:1px;padding:0;float:left;}
-.ui-carousel .ui-carousel-viewport{overflow:hidden;position:relative;border:0;}
-.ui-carousel .ui-carousel-footer{margin:1px 1px 0px 1px;padding-top:9px;padding-bottom:6px;padding-right:10px;padding-left:10px;overflow:hidden;}
-.ui-carousel .ui-carousel-header{margin:0 1px;overflow:hidden;padding-top:7px;padding-bottom:8px;padding-right:10px;padding-left:10px;}
-.ui-carousel .ui-carousel-header .ui-carousel-header-title{display:inline-block;width:30%;padding-top:2px;overflow:hidden;}
+.ui-carousel .ui-carousel-viewport{position:relative;border:0;}
+.ui-carousel .ui-carousel-footer{margin:1px 1px 0px 1px;padding-top:9px;padding-bottom:6px;padding-right:10px;padding-left:10px;}
+.ui-carousel .ui-carousel-header{margin:0 1px;padding-top:7px;padding-bottom:8px;padding-right:10px;padding-left:10px;}
+.ui-carousel .ui-carousel-header .ui-carousel-header-title{display:inline-block;width:30%;padding-top:2px;}
 .ui-carousel .ui-carousel-dropdown,.ui-carousel .ui-carousel-mobiledropdown{float:right;margin:0px 10px;background-image:none;}
 .ui-carousel .ui-carousel-dropdown option,.ui-carousel .ui-carousel-mobiledropdown option{
     background-image:none;
@@ -189,10 +195,11 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
 }
 .ui-carousel .ui-carousel-button{float:right;margin:2px;}
 .ui-carousel .ui-carousel-page-link{float:left;margin:0 2px;}
-.ui-carousel .ui-carousel-page-link, .ui-carousel .ui-carousel-button{cursor:pointer;}
+.ui-carousel .ui-carousel-page-link, 
+.ui-carousel .ui-carousel-button{cursor:pointer;}
 .ui-carousel .ui-carousel-page-links{margin:0px 9px;margin-top:1px;display:inline-table;float:right;}
 .ui-carousel .ui-carousel-mobiledropdown{display:none;}
-.ui-columntoggler{padding:0;position:absolute;overflow:auto;display:none;}
+.ui-columntoggler{padding:0;position:absolute;display:none;}
 .ui-columntoggler .ui-columntoggler-items{border:0 none;padding:0.4em;margin:0;}
 .ui-columntoggler .ui-columntoggler-item{
     border:0px none;
@@ -212,11 +219,14 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
     -webkit-box-shadow:0px 5px 10px rgba(0,0,0,0.8);
     box-shadow:0px 5px 10px rgba(0,0,0,0.8);
 }
-.ui-overlay-visible{visibility:visible;}ui-overlay-visible *{visibility:visible !important;}.ui-overlay-hidden{visibility:hidden;}
+.ui-overlay-visible{visibility:visible;}
+ui-overlay-visible *{visibility:visible !important;}
+.ui-overlay-hidden{visibility:hidden;}
 .ui-overlay-hidden *{visibility:hidden !important;;}
 /* IE7 Fixes */
 .ui-overlay-visible table{*border-collapse:collapse !important;}
-.ui-overlay-hidden table{*border-collapse:separate !important;}.ui-datepicker .ui-datepicker-current.ui-priority-secondary{opacity:1;}
+.ui-overlay-hidden table{*border-collapse:separate !important;}
+.ui-datepicker .ui-datepicker-current.ui-priority-secondary{opacity:1;}
 .ui-icon-blank{background-position:16px 16px;}
 /* Column Priorities */
 @media only all{
@@ -252,7 +262,7 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
 .ui-datascroller .ui-datascroller-list{list-style-type:none;margin:0;padding:0;}.ui-datascroller .ui-datascroller-item{border:0 none;}
 .ui-datascroller .ui-datascroller-loader{text-align:center;padding:4px 10px;}
 .ui-datascroller .ui-datascroller-loading{
-    background:url("/spark/javax.faces.resource/datascroller/images/loading.gif.xhtml?ln=primefaces&v=5.3") center center no-repeat;
+    background:url("../../resources/spark/img/loading.gif") center center no-repeat;
     width:220px;
     height:19px;
     padding:0;
@@ -266,7 +276,6 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
 .ui-datatable thead th, .ui-datatable tfoot td{text-align:center;}
 .ui-datatable thead th,.ui-datatable tbody td,.ui-datatable tfoot td,.ui-datatable tfoot th{
     padding:4px 10px;
-    overflow:hidden;
     border-width:1px;
     border-style:solid;
 }
@@ -278,7 +287,7 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
 /* Scrollable */
 .ui-datatable-scrollable table,.ui-datatable-sticky table{table-layout:fixed;}
 .ui-datatable-scrollable-body{overflow:auto;}
-.ui-datatable-scrollable-header,.ui-datatable-scrollable-footer{overflow:hidden;border:0px none;}
+.ui-datatable-scrollable-header,.ui-datatable-scrollable-footer{border:0px none;}
 .ui-datatable-scrollable .ui-datatable-scrollable-header,.ui-datatable-scrollable .ui-datatable-scrollable-footer{position:relative;} 
 .ui-datatable-scrollable .ui-datatable-scrollable-header td{font-weight:normal;}
 .ui-datatable-scrollable-body::-webkit-scrollbar{-webkit-appearance:none;width:15px;background-color:transparent;}
@@ -309,7 +318,7 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
     height:20px;
     padding:0px;
     cursor:col-resize;
-    background-image:url("../../resources/spark/img/dot_clear.gif?ln=primefaces&v=5.3");
+    background-image:url("../../resources/spark/img/dot_clear.gif");
     border:1px solid transparent;
 }
 .ui-datatable .ui-filter-column .ui-column-resizer{height:45px;}
@@ -326,7 +335,8 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
 /* Frozen Columns */
 .ui-datatable table.ui-datatable-fs{width:auto;}
 .ui-datatable .ui-datatable-frozenlayout-left,.ui-datatable .ui-datatable-frozenlayout-right{padding:0;border:0 none;vertical-align:top;}
-.ui-datatable .ui-datatable-frozen-container{margin-right:-1px;}.ui-datatable-frozen-container .ui-datatable-scrollable-body{overflow:hidden;}
+.ui-datatable .ui-datatable-frozen-container{margin-right:-1px;}
+.ui-datatable-frozen-container .ui-datatable-scrollable-body{ }
 .ui-datatable .ui-datatable-frozen-container .ui-row-toggler{margin-top:-2px;margin-bottom:-2px;}
 .ui-datatable .ui-datatable-frozen-container .ui-row-editor{margin-top:-2px;margin-bottom:-2px;}
 .ui-datatable-frozenlayout-right .ui-datatable-empty-message td{visibility:hidden;}
@@ -349,11 +359,11 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
     .ui-datatable-reflow .ui-datatable-data tr.ui-widget-content{border-left:0px none;border-right:0px none;}
     .ui-datatable-reflow .ui-datatable-data td .ui-column-title{padding:.4em;min-width:30%;display:inline-block;margin:-.4em 1em -.4em -.4em;}
 }
-.ui-dialog{position:fixed;padding:0;overflow:hidden;display:none;}.ui-dialog.ui-dialog-absolute{position:absolute;}
+.ui-dialog{position:fixed;padding:0;display:none;}.ui-dialog.ui-dialog-absolute{position:absolute;}
 .ui-dialog.ui-overlay-hidden{display:block;}.ui-dialog .ui-dialog-titlebar{padding:.4em .4em .4em 1em;position:relative;border:0px;}
 .ui-dialog .ui-dialog-title{float:left;margin:.3em 16px .1em 0;} 
 .ui-dialog .ui-dialog-content{position:relative;border:0;padding:.5em 1em;background:none;overflow:auto;zoom:1;}
-.ui-dialog .ui-dialog-content.ui-df-content{overflow:hidden;padding:0;}
+.ui-dialog .ui-dialog-content.ui-df-content{padding:0;}
 .ui-dialog .ui-dialog-footer{padding:.4em 1em;border-width:1px 0 0 0;text-align:left;}
 .ui-dialog .ui-dialog-buttonpane{text-align:left;background-image:none;margin:.5em 0 0 0;padding:.3em 1em .5em .4em;}
 .ui-dialog .ui-dialog-buttonpane button{margin:.5em .4em .5em 0;cursor:pointer;}
@@ -383,11 +393,12 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
 .ui-fieldset .ui-fieldset-toggler{padding-right:.1em;margin-top:-0.1em;float:left;}
 .ui-inputfield{margin:0;outline:medium none;padding:4px;font-weight:normal;}
 .ui-widget-header .ui-inputfield,.ui-widget-content .ui-inputfield{font-weight:normal;}
-.ui-inputtextarea-resizable{overflow:hidden;resize:none;}
+.ui-inputtextarea-resizable{resize:none;}
 .ui-selectonelistbox, .ui-selectmanymenu,.ui-multiselectlistbox-listcontainer{padding:2px;width:150px;}
 .ui-selectonelistbox .ui-selectlistbox-listcontainer, .ui-selectmanymenu .ui-selectlistbox-listcontainer,
-.ui-multiselectlistbox-listcontainer{overflow:auto;}.ui-selectonelistbox.ui-state-disabled .ui-selectlistbox-listcontainer, 
-.ui-selectmanymenu.ui-state-disabled .ui-selectlistbox-listcontainer{overflow:hidden;}
+.ui-multiselectlistbox-listcontainer{overflow:auto;}
+.ui-selectonelistbox.ui-state-disabled .ui-selectlistbox-listcontainer, 
+.ui-selectmanymenu.ui-state-disabled .ui-selectlistbox-listcontainer{ }
 .ui-selectonelistbox .ui-selectlistbox-list,.ui-selectmanymenu .ui-selectlistbox-list,
 .ui-multiselectlistbox .ui-multiselectlistbox-list{list-style-type:none;margin:0;padding:0;}
 .ui-selectonelistbox .ui-selectlistbox-item,.ui-selectmanymenu .ui-selectlistbox-item,.ui-multiselectlistbox 
@@ -429,7 +440,8 @@ Dual licensed under the MIT or GPL Version 2 licenses.* http://jquery.org/licens
 }
 .ui-selectonemenu .ui-selectonemenu-trigger  .ui-icon{margin-top:3px;}
 .ui-selectonemenu .ui-selectonemenu-label{
-    display:block;border:none;white-space:nowrap;overflow:hidden;font-weight:normal;width:100%;text-align:left;
+    display:block;border:none;white-space:nowrap;
+    font-weight:normal;width:100%;text-align:left;
 }
 .ui-selectonemenu.ui-state-disabled .ui-selectonemenu-trigger,.ui-selectonemenu.ui-state-disabled .ui-selectonemenu-label{cursor:default;}
 .ui-selectonemenu label.ui-selectonemenu-label{cursor:pointer;}.ui-selectonemenu input.ui-selectonemenu-label{cursor:default;}
@@ -492,12 +504,11 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;/* reset extra padding in 
 .ui-selectcheckboxmenu-panel{
     padding:0.2em;
     position:absolute;
-    overflow:hidden;
     -moz-box-shadow:0px 5px 10px rgba(0,0,0,0.8);
     -webkit-box-shadow:0px 5px 10px rgba(0,0,0,0.8);
     box-shadow:0px 5px 10px rgba(0,0,0,0.8);
 }
-.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-items-wrapper{overflow:auto;position:relative;padding:0.2em 0;}
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-items-wrapper{position:relative;padding:0.2em 0;}
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-list{border:0 none;}
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-list-item{
     border:0px none;
@@ -515,7 +526,8 @@ button.ui-button::-moz-focus-inner{border:0;padding:0;/* reset extra padding in 
 .ui-selectcheckboxmenu-header .ui-chkbox{float:left;cursor:pointer;}
 .ui-selectcheckboxmenu-header .ui-selectcheckboxmenu-filter-container{float:left;position:relative;margin-left:5px;}
 .ui-selectcheckboxmenu-header .ui-selectcheckboxmenu-filter-container .ui-icon{position:absolute;right:5px;top:2px;}
-.ui-selectcheckboxmenu-header .ui-inputfield{padding:1px 20px 1px 2px;}.ui-selectcheckboxmenu-header span.ui-icon{float:left;}
+.ui-selectcheckboxmenu-header .ui-inputfield{padding:1px 20px 1px 2px;}
+.ui-selectcheckboxmenu-header span.ui-icon{float:left;}
 .ui-selectcheckboxmenu-header a.ui-selectcheckboxmenu-all,
 .ui-selectcheckboxmenu-header a.ui-selectcheckboxmenu-none{float:left;margin-right:10px;display:block;}
 .ui-selectcheckboxmenu-header .ui-selectcheckboxmenu-close{float:right;padding:1px;margin-right:0.2em;display:block;}
@@ -528,15 +540,20 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-password-panel{padding:4px 10px;width:150px;margin-top:2px;}
 .ui-password-panel .ui-password-meter{
     height:10px;
-    background:transparent url("../../resources/spark/img/password-meter.png?ln=primefaces&v=5.3") no-repeat left top;
+    background:transparent url("../../resources/spark/img/password-meter.png") no-repeat left top;
     padding:0;margin:0;
 }
 .ui-password-info{margin-top:4px;}
-.ui-password-panel-overlay{position:absolute;}/* OutputLabel */.ui-outputlabel.ui-state-error{border:0 none;}
-.ui-outputlabel .ui-outputlabel-rfi{margin-left:0.4em;}/* SelectOneButton */.ui-selectonebutton{display:inline-block;padding:1px;}
-.ui-selectonebutton.ui-state-error{padding:0px;}.ui-selectonebutton .ui-button.ui-state-focus{outline:none;}
+.ui-password-panel-overlay{position:absolute;}
+/* OutputLabel */
+ui-outputlabel-rfi{margin-left:0.4em;}
+/* SelectOneButton */
+.ui-selectonebutton{display:inline-block;padding:1px;}
+.ui-selectonebutton.ui-state-error{padding:0px;}
+.ui-selectonebutton .ui-button.ui-state-focus{outline:none;}
 /* SelectManyButton */
-.ui-selectmanybutton{display:inline-block;padding:1px;}.ui-selectmanybutton.ui-state-error{padding:0px;}
+.ui-selectmanybutton{display:inline-block;padding:1px;}
+.ui-selectmanybutton.ui-state-error{padding:0px;}
 .ui-selectmanybutton .ui-button.ui-state-focus{outline:none;}
 /** Fluid **/
 .ui-fluid .ui-inputfield{box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;}
@@ -552,8 +569,10 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-fluid .ui-calendar, 
 .ui-fluid .ui-calendar input{width:100%;}
 /** Spinner **/
-.ui-fluid .ui-spinner{width:100%;}.ui-fluid .ui-spinner .ui-spinner-input{padding-right:36px;width:100%;}
-.ui-fluid .ui-spinner .ui-spinner-button{width:auto;}.ui-fluid .ui-spinner .ui-spinner-button .ui-icon{left:6px;}
+.ui-fluid .ui-spinner{width:100%;}
+.ui-fluid .ui-spinner .ui-spinner-input{padding-right:36px;width:100%;}
+.ui-fluid .ui-spinner .ui-spinner-button{width:auto;}
+.ui-fluid .ui-spinner .ui-spinner-button .ui-icon{left:6px;}
 /** AutoComplete **/
 .ui-fluid .ui-autocomplete,.ui-fluid .ui-autocomplete-input{width:100%;}
 .ui-fluid .ui-autocomplete .ui-autocomplete-dropdown.ui-button{width:2.4em;}
@@ -570,9 +589,12 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 /** Button **/
 .ui-fluid .ui-button{width:100%;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;}
 /** ButtonSet **/
-.ui-fluid .ui-buttonset{width:100%;}.ui-fluid .ui-buttonset.ui-buttonset-1 .ui-button{width:100%;}
-.ui-fluid .ui-buttonset.ui-buttonset-2 .ui-button{width:50%;}.ui-fluid .ui-buttonset.ui-buttonset-3 .ui-button{width:33%;}
-.ui-fluid .ui-buttonset.ui-buttonset-4 .ui-button{width:25%;}.ui-fluid .ui-buttonset.ui-buttonset-5 .ui-button{width:20%;}
+.ui-fluid .ui-buttonset{width:100%;}
+.ui-fluid .ui-buttonset.ui-buttonset-1 .ui-button{width:100%;}
+.ui-fluid .ui-buttonset.ui-buttonset-2 .ui-button{width:50%;}
+.ui-fluid .ui-buttonset.ui-buttonset-3 .ui-button{width:33%;}
+.ui-fluid .ui-buttonset.ui-buttonset-4 .ui-button{width:25%;}
+.ui-fluid .ui-buttonset.ui-buttonset-5 .ui-button{width:20%;}
 .ui-fluid .ui-buttonset.ui-buttonset-6 .ui-button{width:16%;}
 @media (max-width:640px){
     .ui-fluid .ui-buttonset.ui-buttonset-1 .ui-button,.ui-fluid .ui-buttonset.ui-buttonset-2 .ui-button,
@@ -588,10 +610,13 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 /** Listbox **/
 .ui-fluid .ui-selectonelistbox,.ui-fluid .ui-selectmanymenu{width:100%;}
 /* ie6 */
-* html .ui-growl{position:absolute;}* html .ui-growl-item{padding-bottom:0;}
-* html .ui-growl-icon-close{top:7px;right:7px;}.ui-growl{position:fixed;top:20px;right:20px;width:301px;}
+* html .ui-growl{position:absolute;}
+* html .ui-growl-item{padding-bottom:0;}
+* html .ui-growl-icon-close{top:7px;right:7px;}
+.ui-growl{position:fixed;top:20px;right:20px;width:301px;}
 .ui-growl-item-container{position:relative;margin:0 0 10px 0;opacity:0.85;filter:alpha(opacity=85);}
-.ui-growl-item{display:block;padding:10px 15px;}.ui-growl-item p{padding:0;margin:0;}
+.ui-growl-item{display:block;padding:10px 15px;}
+.ui-growl-item p{padding:0;margin:0;}
 .ui-growl-icon-close{position:absolute;top:5px;right:3px;cursor:pointer;}
 .ui-growl-title{font-weight:bold;padding:0 0 7px 0;display:block;}
 .ui-growl-image{
@@ -601,20 +626,37 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
     margin:0;
     padding:0;
     display:block;
-    background:url("../../resources/spark/img/messages.png?ln=primefaces&v=5.3") no-repeat;
+    background:url("../../resources/spark/img/messages.png") no-repeat;
 }
-.ui-growl-image-info{background-position:0 -264px;}.ui-growl-image-warn{background-position:0 -396px;}
-.ui-growl-image-error{background-position:0 0;}.ui-growl-image-fatal{background-position:0 -132px;}
-.ui-growl-message{padding:0 0 5px 0;width:220px;float:right;}.ui-growl-message p{font-weight:normal;}
+.ui-growl-image-info{background-position:0 -264px;}
+.ui-growl-image-warn{background-position:0 -396px;}
+.ui-growl-image-error{background-position:0 0;}
+.ui-growl-image-fatal{background-position:0 -132px;}
+.ui-growl-message{padding:0 0 5px 0;width:220px;float:right;}
+.ui-growl-message p{font-weight:normal;}
 /* Grid CSS */
-.ui-grid{clear:both;padding:0px;margin:0px;}.ui-grid:before,.ui-grid:after{content:"";display:table;}.ui-grid:after{clear:both;}
+.ui-grid{clear:both;padding:0px;margin:0px;}
+.ui-grid:before,
+.ui-grid:after{content:"";display:table;}
+.ui-grid:after{clear:both;}
 .ui-grid .ui-grid-row{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;clear:both;}
 .ui-grid-row:after{clear:both;content:"";display:table;}
-.ui-grid-col-1,.ui-grid-col-2,.ui-grid-col-3,.ui-grid-col-4,.ui-grid-col-5,.ui-grid-col-6,
-.ui-grid-col-7,.ui-grid-col-8,.ui-grid-col-9,.ui-grid-col-10,.ui-grid-col-11,.ui-grid-col-12{float:left;box-sizing:border-box;}
-.ui-grid-col-1{width:8.33333%;}.ui-grid-col-2{width:16.66666%;}.ui-grid-col-3{width:25%;}.ui-grid-col-4{width:33.33333%;}
-.ui-grid-col-5{width:41.66666%;}.ui-grid-col-6{width:50%;}.ui-grid-col-7{width:58.33333%;}.ui-grid-col-8{width:66.66666%;}
-.ui-grid-col-9{width:75%;}.ui-grid-col-10{width:83.33333%;}.ui-grid-col-11{width:91.66666%;}.ui-grid-col-12{width:100%;}
+.ui-grid-col-1,.ui-grid-col-2,.ui-grid-col-3,
+.ui-grid-col-4,.ui-grid-col-5,.ui-grid-col-6,
+.ui-grid-col-7,.ui-grid-col-8,.ui-grid-col-9,
+.ui-grid-col-10,.ui-grid-col-11,.ui-grid-col-12{float:left;box-sizing:border-box;}
+.ui-grid-col-1{width:8.33333%;}
+.ui-grid-col-2{width:16.66666%;}
+.ui-grid-col-3{width:25%;}
+.ui-grid-col-4{width:33.33333%;}
+.ui-grid-col-5{width:41.66666%;}
+.ui-grid-col-6{width:50%;}
+.ui-grid-col-7{width:58.33333%;}
+.ui-grid-col-8{width:66.66666%;}
+.ui-grid-col-9{width:75%;}
+.ui-grid-col-10{width:83.33333%;}
+.ui-grid-col-11{width:91.66666%;}
+.ui-grid-col-12{width:100%;}
 @media (min-width:480px){.ui-grid-fixed{width:480px;}}
 @media (min-width:768px){.ui-grid-fixed{width:768px;}}
 @media (min-width:960px){.ui-grid-fixed{width:960px;}}
@@ -627,20 +669,28 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
     .ui-grid-responsive .ui-grid-col-7,.ui-grid-responsive .ui-grid-col-8,.ui-grid-responsive .ui-grid-col-9,
     .ui-grid-responsive .ui-grid-col-10,.ui-grid-responsive .ui-grid-col-11,.ui-grid-responsive .ui-grid-col-12{width:100%;float:none;}
 }
-.ui-inplace .ui-inplace-display{cursor:pointer;border:0px none !important;}.ui-inplace .ui-inplace-disabled{cursor:default;}
-.ui-inplace .ui-inplace-content{}.ui-inplace .ui-inplace-editor{margin-left:0.1em;}
+.ui-inplace .ui-inplace-display{cursor:pointer;border:0px none !important;}
+.ui-inplace .ui-inplace-disabled{cursor:default;}
+.ui-inplace .ui-inplace-content{}
+.ui-inplace .ui-inplace-editor{margin-left:0.1em;}
 .ui-inplace .ui-inplace-editor .ui-button-icon-only .ui-button-text{padding:0}
-.ui-lightbox{position:fixed;}.ui-lightbox-content-wrapper{position:relative;}
+.ui-lightbox{position:fixed;}
+.ui-lightbox-content-wrapper{position:relative;}
 .ui-lightbox-content{position:relative;margin:0;padding:0;background-color:#000000;}
-.ui-lightbox-nav-right, .ui-lightbox-nav-left{position:absolute;top:50%;cursor:pointer;}.ui-lightbox-nav-left{left:0;}
+.ui-lightbox-nav-right, .ui-lightbox-nav-left{position:absolute;top:50%;cursor:pointer;}
+.ui-lightbox-nav-left{left:0;}
 .ui-lightbox-nav-right{right:0;}
 .ui-lightbox-loading{
-    background:url("/spark/javax.faces.resource/lightbox/images/loading.gif.xhtml?ln=primefaces&v=5.3") #000000 center center no-repeat;
+    background:url("../../resources/spark/img/loading.gif") #000000 center center no-repeat;
 }
-.ui-lightbox-caption{padding:0.2em 0.4em;display:none;}.ui-lightbox-caption-text{margin:0.3em 0 0.1em 0;float:left;}
-.ui-lightbox-close{float:right;margin:0;padding:1px;}.ui-lightbox-close.ui-state-hover{padding:0;}
-.ui-menu{width:12.5em;padding:0.3em;position:relative;outline:0 none;}.ui-menu.ui-menu-dynamic{position:absolute;display:none;z-index:100000;}
-.ui-menu-list{position:static;}.ui-menu .ui-menu-list .ui-menuitem{border:none;}
+.ui-lightbox-caption{padding:0.2em 0.4em;display:none;}
+.ui-lightbox-caption-text{margin:0.3em 0 0.1em 0;float:left;}
+.ui-lightbox-close{float:right;margin:0;padding:1px;}
+.ui-lightbox-close.ui-state-hover{padding:0;}
+.ui-menu{width:12.5em;padding:0.3em;position:relative;outline:0 none;}
+.ui-menu.ui-menu-dynamic{position:absolute;display:none;z-index:100000;}
+.ui-menu-list{position:static;}
+.ui-menu .ui-menu-list .ui-menuitem{border:none;}
 .ui-menu .ui-menu-list .ui-widget-header{clear:both;float:left;width:98%;margin:1px 0;}
 .ui-menu .ui-menuitem{width:100%;float:left;clear:both;margin:1px 0;padding:0;}
 .ui-menu .ui-menuitem-parent{width:100%;float:left;clear:both;margin:1px 0;padding:0;}
@@ -648,9 +698,13 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
     display:block;width:92%;outline:none;text-decoration:none;font-weight:400;
     border:solid 1px transparent;float:left;line-height:16px;padding:0.3em;cursor:pointer;
 }
-.ui-menu .ui-menuitem-link .ui-menuitem-icon{display:inline-block;float:left;}.ui-menu .ui-menuitem-text{float:left;}
-.ui-menu .ui-widget-header h1,.ui-menu .ui-widget-header h2,.ui-menu .ui-widget-header h3,
-.ui-menu .ui-widget-header h4,.ui-menu .ui-widget-header h5,
+.ui-menu .ui-menuitem-link .ui-menuitem-icon{display:inline-block;float:left;}
+.ui-menu .ui-menuitem-text{float:left;}
+.ui-menu .ui-widget-header h1,
+.ui-menu .ui-widget-header h2,
+.ui-menu .ui-widget-header h3,
+.ui-menu .ui-widget-header h4,
+.ui-menu .ui-widget-header h5,
 .ui-menu .ui-widget-header h6{float:left;display:block;font-size:1em;margin:0 auto;padding:0.3em 3%;}
 .ui-menu .ui-menu-parent .ui-menu-child{
     display:none;
@@ -764,13 +818,14 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-megamenu-vertical{width:12.5em;}.ui-megamenu-vertical .ui-menu-parent{clear:both;width:100%;}
 .ui-megamenu-vertical .ui-submenu-link.ui-menuitem-link{width:92%;}
 /** Breadcrumb **/
-.ui-breadcrumb{margin:0;padding:0;overflow:hidden;padding:5px 5px 7px 5px;}
+.ui-breadcrumb{margin:0;padding:0;padding:5px 5px 7px 5px;}
 .ui-breadcrumb ul{margin:0;padding:0;display:block;}
-.ui-breadcrumb ul li{display:block;float:left;position:relative;overflow:hidden;}.ui-breadcrumb ul li span{display:block;overflow:hidden;}
-.ui-breadcrumb ul li .ui-menuitem-link{display:block;position:relative;overflow:hidden;float:left;*cursor:pointer;margin-top:3px;}
-.ui-breadcrumb ul li a.ui-icon-home{padding:0;margin-top:1px;overflow:hidden;}.ui-breadcrumb-chevron{float:left;margin-top:2px;}
+.ui-breadcrumb ul li{display:block;float:left;position:relative;}
+.ui-breadcrumb ul li span{display:block;}
+.ui-breadcrumb ul li .ui-menuitem-link{display:block;position:relative;float:left;*cursor:pointer;margin-top:3px;}
+.ui-breadcrumb ul li a.ui-icon-home{padding:0;margin-top:1px;}.ui-breadcrumb-chevron{float:left;margin-top:2px;}
 .ui-breadcrumb .ui-breadcrumb-options{float:right;}/** SlideMenu **/.ui-slidemenu .ui-slidemenu-wrapper{position:relative;}
-.ui-slidemenu .ui-slidemenu-content{overflow-x:hidden;overflow-y:auto;position:relative;}.ui-slidemenu .ui-menu-list{position:absolute;top:0;}
+.ui-slidemenu .ui-slidemenu-content{overflow-y:auto;position:relative;}.ui-slidemenu .ui-menu-list{position:absolute;top:0;}
 .ui-slidemenu .ui-menu-parent{position:static;}
 .ui-slidemenu .ui-menu-child{box-shadow:none;border:0 none;background:none repeat scroll 0 0 transparent;}
 .ui-slidemenu-backward{position:absolute;bottom:0;width:95%;margin-bottom:0.4em;padding:0.2em;cursor:pointer;display:none;}
@@ -813,7 +868,7 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-messages-info-icon, .ui-messages-warn-icon, .ui-messages-error-icon, .ui-messages-fatal-icon,.ui-message-info-icon, 
 .ui-message-warn-icon, .ui-message-error-icon, 
 .ui-message-fatal-icon{
-    background:url("/spark/javax.faces.resource/messages/messages.png.xhtml?ln=primefaces&v=5.3") no-repeat;
+    background:url("../../resources/spark/img/messages.png") no-repeat;
     display:block;float:left;margin:0;padding:0;position:relative;
 }
 .ui-messages-info-icon, .ui-messages-warn-icon, .ui-messages-error-icon, .ui-messages-fatal-icon{height:24px;width:24px;margin-top:-4px;}
@@ -843,7 +898,7 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-orderlist .ui-orderlist-caption{text-align:center;padding:4px 0px;border-bottom:0px none;}
 .ui-orderlist table{width:100%;border-collapse:collapse;}
 .ui-orderlist.ui-state-disabled .ui-orderlist-item,.ui-orderlist.ui-state-disabled .ui-button{cursor:default;}
-.ui-orderlist.ui-state-disabled .ui-orderlist-list{overflow:hidden;}
+.ui-orderlist.ui-state-disabled .ui-orderlist-list{ }
 /* Responsive */
 .ui-orderlist.ui-grid-responsive{display:block;width:100%;}.ui-orderlist.ui-grid-responsive .ui-orderlist-controls{margin-right:10px;}
 .ui-orderlist.ui-grid-responsive .ui-orderlist-list,.ui-orderlist.ui-grid-responsive .ui-orderlist-caption{width:100%;}  
@@ -853,7 +908,7 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
     .ui-orderlist.ui-grid-responsive .ui-orderlist-controls .ui-button{display:inline;width:20%;}
 }
 .ui-outputpanel-loading{
-    background:url("/spark/javax.faces.resource/outputpanel/images/loading.gif.xhtml?ln=primefaces&v=5.3") center center no-repeat;
+    background:url("../../resources/spark/img/loading.gif") center center no-repeat;
     width:32px;height:32px;
 }
 .ui-overlaypanel{padding:0;margin:0;position:absolute;}.ui-overlaypanel-content{padding:0.5em 1em;}
@@ -949,9 +1004,9 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-progressbar{height:1.2em;text-align:left;position:relative;}
 .ui-progressbar .ui-progressbar-value{margin:-1px;height:100%;width:0%;position:absolute;display:none;}
 .ui-progressbar .ui-progressbar-label{text-align:center;height:100%;width:100%;position:absolute;display:none;font-weight:bold;}
-.ui-rating-star,.ui-rating-cancel{float:left;display:block;overflow:hidden;text-indent:-999em;cursor:pointer;}
+.ui-rating-star,.ui-rating-cancel{float:left;display:block;text-indent:-999em;cursor:pointer;}
 .ui-rating-star a,.ui-rating-cancel a{
-    width:16px;height:15px;display:block;background:url("/spark/javax.faces.resource/rating/rating.png.xhtml?ln=primefaces&v=5.3") no-repeat 0 0;
+    width:16px;height:15px;display:block;background:url("../../resources/spark/img/rating.png") no-repeat 0 0;
 }
 .ui-rating-star a{background-position:0 -32px;}.ui-rating-star-on a{background-position:0 -48px;}
 .ui-rating-star-hover a{background-position:0 -64px;}.ui-rating-cancel-hover a{background-position:0 -16px;}
@@ -959,7 +1014,7 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-spinner{display:inline-block;overflow:visible;padding:0;position:relative;vertical-align:middle;}
 .ui-spinner-input{vertical-align:middle;text-align:right;padding-right:20px;}
 .ui-spinner-button{
-    cursor:default;display:block;font-size:0.5em;height:50%;margin:0;overflow:hidden;
+    cursor:default;display:block;font-size:0.5em;height:50%;margin:0;
     padding:0;position:absolute;right:0;text-align:center;vertical-align:middle;width:16px;z-index:100;
 }
 .ui-spinner .ui-icon{left:0;margin-top:-8px;position:absolute;top:50%;}
@@ -991,7 +1046,7 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 /** RTL **/
 .ui-tabs-rtl{direction:rtl;}.ui-tabs-rtl .ui-tabs-nav li, .ui-tabs-rtl .ui-tabs-nav li a{float:right;}
 /** Scroll **/
-.ui-tabs-scrollable .ui-tabs-nav{width:5000px;}.ui-tabs .ui-tabs-navscroller{overflow:hidden;}
+.ui-tabs-scrollable .ui-tabs-nav{width:5000px;}.ui-tabs .ui-tabs-navscroller{}
 .ui-tabs-scrollable .ui-tabs-nav li{margin:0 .2em -1px 0;}
 .ui-tabs .ui-tabs-navscroller-btn{position:absolute;height:28px;z-index:100;cursor:pointer;display:none;}
 .ui-tabs .ui-tabs-navscroller-btn-left{left:0.2em;}.ui-tabs .ui-tabs-navscroller-btn-right{right:0.2em;}
@@ -1029,7 +1084,7 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-tree-horizontal .ui-treenode-parent .ui-treenode-content{padding:0.4em 1em 0.4em 0.2em;}
 .ui-tree-horizontal .ui-treenode-leaf .ui-treenode-content{padding:0.4em 1em;}
 .ui-tree.ui-tree-horizontal .ui-treenode{
-    background:url("/spark/javax.faces.resource/tree/images/line.gif.xhtml?ln=primefaces&v=5.3") repeat-x scroll center center transparent;
+    background:url("../../resources/spark/img/line.gif") repeat-x scroll center center transparent;
     padding:5px 40px;
 }
 .ui-tree.ui-tree-horizontal .ui-treenode.ui-treenode-leaf,
@@ -1037,7 +1092,7 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-tree.ui-tree-horizontal .ui-treenode-children{padding:0;margin:0;}.ui-tree.ui-tree-horizontal .ui-treenode-connector{width:1px;}
 .ui-tree.ui-tree-horizontal .ui-treenode-connector-table{height:100%;width:1px;}
 .ui-tree.ui-tree-horizontal .ui-treenode-connector-line{
-    background:url("/spark/javax.faces.resource/tree/images/line.gif.xhtml?ln=primefaces&v=5.3") repeat-y scroll 0 0 transparent;width:1px;
+    background:url("../../resources/spark/img/line.gif") repeat-y scroll 0 0 transparent;width:1px;
 }
 .ui-tree.ui-tree-horizontal table{height:0px;}.ui-tree.ui-tree-horizontal .ui-chkbox{vertical-align:bottom;margin-right:3px;}
 /** RTL **/
@@ -1056,11 +1111,11 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
 .ui-treetable .ui-treetable-header{border-bottom:0px none;}.ui-treetable .ui-treetable-footer{border-top:0px none;}
 .ui-treetable th, .ui-treetable tfoot td{text-align:center;}
 .ui-treetable thead th,.ui-treetable tbody td,.ui-treetable tfoot td{
-    padding:4px 10px;overflow:hidden;white-space:nowrap;border-width:1px;border-style:solid;
+    padding:4px 10px;white-space:nowrap;border-width:1px;border-style:solid;
 }
 .ui-treetable tbody td{border-color:inherit;}.ui-treetable .ui-treetable-toggler{float:left;margin-top:-2px;cursor:pointer;}
 .ui-treetable .ui-treetable-data tr.ui-state-highlight,.ui-treetable .ui-treetable-data tr.ui-state-hover{cursor:pointer;}
-.ui-treetable-scrollable-body{overflow:auto;}.ui-treetable-scrollable-header,.ui-treetable-scrollable-footer{overflow:hidden;border:0 none;}
+.ui-treetable-scrollable-body{overflow:auto;}.ui-treetable-scrollable-header,.ui-treetable-scrollable-footer{border:0 none;}
 .ui-treetable.ui-treetable-scrollable table{table-layout:fixed;}
 .ui-treetable-scrollable .ui-treetable-scrollable-header,.ui-treetable-scrollable .ui-treetable-scrollable-footer{position:relative;} 
 .ui-treetable .ui-treetable-data tr.ui-state-hover{border-color:inherit;font-weight:inherit;}
@@ -1072,7 +1127,7 @@ div.ui-button, .ui-splitbutton{display:inline-block;zoom:1;}
     height:20px;
     padding:0px;
     cursor:col-resize;
-    background-image:url("../../resources/spark/img/dot_clear.gif?ln=primefaces&v=5.3");
+    background-image:url("../../resources/spark/img/dot_clear.gif");
     margin:-4px -10px -4px 0px;
     float:right;
 }

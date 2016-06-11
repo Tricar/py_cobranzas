@@ -109,7 +109,7 @@
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manDes}"/>
                         <h:outputText value="Despacho" />                        
                         <p:separator/>
-                        <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                        <p:commandButton value="Guardar cambios" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>
                 </h:form>
 
@@ -122,7 +122,7 @@
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:message for="txtDescripcion"/>
-                            <p:commandButton value="Registrar Perfil" icon="b-new" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
+                            <p:commandButton value="Registrar Perfil" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
                         </p:panelGrid>
                     </p:dialog>
                 </h:form>
@@ -131,8 +131,9 @@
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarPerfil" modal="true">
                         <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" icon="b-ok" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
+                        <p:separator/>
+                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" icon="ui-icon-check" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="ui-icon-close" />
                     </p:dialog>
                 </h:form>
 
