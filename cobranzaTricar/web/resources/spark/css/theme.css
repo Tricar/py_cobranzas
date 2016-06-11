@@ -82,47 +82,63 @@
 /* Component containers
 ----------------------------------*/
 .ui-widget {
+    /*-moz-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;*/
     font-family: 'ralewayregular';
 }
 .ui-widget .ui-widget {
+    /* font-size: 1em; */
+    /*-moz-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;*/
     font-family: 'ralewayregular';
 }
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
+    /* font-size: 1em; */
     -moz-transition: all 0.2s ease;
     -ms-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
 .ui-widget-content {
-
+    /*border: 1px solid #72b42d;*/
+    /*background: #285c00 url("images/ui-bg_inset-soft_10_285c00_1x100.png") 50% bottom repeat-x;*/
+    /*color: #ffffff;*/
 }
 .ui-widget-content a {
-
+    color: #ffffff;
 }
 .ui-widget-header {
+    /*border: 1px solid #3f7506;*/
+    /*background: #3a8104 url("images/ui-bg_highlight-soft_33_3a8104_1x100.png") 50% 50% repeat-x;*/
+    color: #ffffff;
     font-weight: bold;
 }
 .ui-widget-header a {
-
+    color: #ffffff;
 }
 
-.ui-widget .ui-state-focus, .ui-widget.ui-state-focus{
-    -webkit-box-shadow: 0 0 7px 0 rgba(95, 207, 128, 0.7); 
-    box-shadow: 0 0 7px 0 rgba(95, 207, 128, 0.7);
-}
+.ui-widget .ui-state-focus,
+.ui-widget.ui-state-focus{-webkit-box-shadow: 0 0 7px 0 rgba(95, 207, 128, 0.7); box-shadow: 0 0 7px 0 rgba(95, 207, 128, 0.7);}
 
-/* Interaction states ----------------------------------*/
+/* Interaction states
+----------------------------------*/
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
-
+    /* border:0px;
+    color:#ffffff; */
 }
 .ui-state-default a,
 .ui-state-default a:link,
 .ui-state-default a:visited {
+    color: #ffffff;
     text-decoration: none;
 }
 
@@ -147,6 +163,7 @@
 .ui-state-focus a:hover,
 .ui-state-focus a:link,
 .ui-state-focus a:visited {
+    color: #ffffff;
     text-decoration: none;
 }
 .ui-state-active,
@@ -157,13 +174,16 @@
 .ui-state-active a,
 .ui-state-active a:link,
 .ui-state-active a:visited {
+    color: #ffffff;
     text-decoration: none;
 }
 
-/* Interaction Cues ----------------------------------*/
+/* Interaction Cues
+----------------------------------*/
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-
+    /* background-color:#FBFCFD !important; */
+    /*color: #363636;*/
 }
 .ui-state-highlight a,
 .ui-widget-content .ui-state-highlight a,
@@ -178,12 +198,7 @@ input[type="password"].ui-state-error,
     border: 1px solid #F03369 !important;
     color: #F03369;
 }
-.ui-widget-content label.ui-state-error{
-    border:0px !important; 
-    border:none; 
-    box-shadow:none; 
-    -webkit-box-shadow:none;
-}
+.ui-widget-content label.ui-state-error{border:0px !important; border:none; box-shadow:none; -webkit-box-shadow:none;}
 
 .ui-state-focus{}
 
@@ -235,7 +250,7 @@ label.ui-state-error{color:#F03369 !important;}
     background-image: url("../../resources/spark/img/ui-icons_72b42d_256x240.png");
 }
 .ui-widget-header .ui-icon {
-    /*background-image: url("images/ui-icons_ffffff_256x240.png");*/
+    
 }
 .ui-state-default .ui-icon {
 
@@ -256,16 +271,8 @@ label.ui-state-error{color:#F03369 !important;}
 }
 
 /* positioning */
-.ui-icon-default { 
-    background-image:url("../../resources/spark/img/default.svg") !important; 
-    background-position:center; 
-    background-size:100%;
-}
-.ui-icon-blank { 
-    background-image:url("../../resources/spark/img/blank.svg") !important; 
-    background-position:center; 
-    background-size:100%;
-}
+.ui-icon-default { background-image:url("../../resources/spark/img/default.svg") !important; background-position:center; background-size:100%;}
+.ui-icon-blank { background-image:url("../../resources/spark/img/blank.svg") !important; background-position:center; background-size:100%;}
 .ui-icon-blank { background-position: 16px 16px; }
 .ui-icon-carat-1-n { background-position: 0 0; }
 .ui-icon-carat-1-ne { background-position: -16px 0; }
@@ -343,11 +350,7 @@ label.ui-state-error{color:#F03369 !important;}
 .ui-icon-folder-open { background-position: -16px -96px; }
 .ui-icon-document { background-position: -32px -96px; }
 .ui-icon-document-b { background-position: -48px -96px; }
-.ui-icon-note { 
-    background-image:url("../../resources/spark/img/note.svg"); 
-    background-position:center; 
-    background-size:100%;
-}
+.ui-icon-note { background-image:url("../../resources/spark/img/note.svg"); background-position:center; background-size:100%;}
 .ui-icon-mail-closed { background-position: -80px -96px; }
 .ui-icon-mail-open { background-position: -96px -96px; }
 .ui-icon-suitcase { background-position: -112px -96px; }
@@ -495,711 +498,242 @@ label.ui-state-error{color:#F03369 !important;}
 label{font-weight:normal !important;}
 
 
-/*===================================================================================================================*/
-/*===================================================================================================================*/
-/*================================ STYLES FOR SPARK GREEN THEME =====================================================*/
-/*===================================================================================================================*/
-/*===================================================================================================================*/
+/*==============================================================================================================================================================*/
+/*==============================================================================================================================================================*/
+/*=========================================================== STYLES FOR SPARK GREEN THEME ===================================================================*/
+/*==============================================================================================================================================================*/
+/*==============================================================================================================================================================*/
 
-.ui-shadow,#ui-datepicker-div{
-    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3) !important; 
-    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3) !important; 
-    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3) !important;
-}
+.ui-shadow,#ui-datepicker-div{-webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3) !important; -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3) !important; box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3) !important;}
 
 /*Style For Breadcrumb ------------------------------------------------------------------------------------- */
-.ui-breadcrumb{
-    background-image:initial !important; 
-    padding:10px 16px 6px 16px !important; 
-    border-radius:0px !important;
-}
+.ui-breadcrumb{background-image:initial !important; padding:10px 16px 6px 16px !important; border-radius:0px !important;}
 .ui-breadcrumb:hover, .ui-breadcrumb:focus{}
-.ui-breadcrumb ul li .ui-menuitem-link{
-    font-size:14px; 
-    color: #9EADB5;
-}
+.ui-breadcrumb ul li .ui-menuitem-link{font-size:14px; color: #9EADB5;}
 .ui-breadcrumb ul li .ui-menuitem-link:hover{color:#00AEEF;}
-.ui-breadcrumb ul li{
-    z-index:990 !important; 
-    margin-right:10px !important;
-}
-.ui-breadcrumb .ui-icon-home{
-    background-image:url("../../resources/spark/img/breadcrumb-home.svg") !important; 
-    background-position:center 5px !important; 
-    background-size:100% !important; 
-    height:30px;
-}
-.ui-breadcrumb-chevron{
-    height:20px !important; 
-    background-image:url("../../resources/spark/img/breadcrumb-arrow.svg") !important; 
-    background-position:center !important; 
-    background-size:60% !important;
-}
+.ui-breadcrumb ul li{z-index:990 !important; margin-right:10px !important;}
+.ui-breadcrumb .ui-icon-home{background-image:url("../../resources/spark/img/breadcrumb-home.svg") !important; background-position:center 5px !important; background-size:100% !important; height:30px;}
+.ui-breadcrumb-chevron{height:20px !important; background-image:url("../../resources/spark/img/breadcrumb-arrow.svg") !important; background-position:center !important; background-size:60% !important;}
 
 /*Style For DataTable ------------------------------------------------------------------------------------- */
 
-.ui-datatable{
-    border:solid 1px; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    color: #778D9B;
-    font-family:'ralewaymedium';
-}
-
-.ui-datatable .ui-datatable-sticky{
-    border:0px; 
-    padding: 0px;
-}
-
-.ui-datatable .ui-datatable-sticky:hover{
-    border:0px !important;
-}
-
-.ui-datatable .ui-icon-arrowthick-1-s{
-    background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); 
-    background-position:center !important;                                       
-    background-size:110%; 
-    background-repeat:no-repeat;
-}
-
-.ui-datatable .ui-icon-arrowthick-1-s{
-    background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); 
-    background-position:center !important;                                       
-    background-size:110%; 
-    background-repeat:no-repeat;
-}
-
-.ui-datatable .ui-datatable-odd{
-
-}
-.ui-datatable .ui-datatable-even{
-
-}
+.ui-datatable{border:solid 1px #C6D6DF; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; background-color:#F3F6F9; color: #778D9B; font-family:'ralewaymedium';}
+.ui-datatable .ui-datatable-sticky{border:0px; padding: 0px;}
+.ui-datatable .ui-datatable-sticky:hover{border:0px !important;}
+/*.ui-datatable-scrollable{border:0px; background-color:transparent;}
+.ui-datatable-scrollable:hover{border:0px !important; background-color:transparent;}*/
+.ui-datatable .ui-icon-arrowthick-1-s{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); background-position:center !important; 
+                                      background-size:110%; background-repeat:no-repeat;}
+.ui-datatable .ui-icon-arrowthick-1-s{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); background-position:center !important; 
+                                      background-size:110%; background-repeat:no-repeat;}
+.ui-datatable .ui-datatable-odd{background-color:#EEF2F7;}
+.ui-datatable .ui-datatable-even{background-color:#FBFCFD;}
 .ui-datatable:hover, .ui-datagrid:focus{}
 .ui-datatable .ui-datagrid-header,
 .ui-datatable .ui-datatable-header,
 .ui-datatable .ui-datatable-subtable-header,
-.ui-datatable .ui-datatable-summaryrow{
-    background-color:#71CC8D; 
-    margin:2px 2px 0px 2px; 
-    border-radius: 2px !important; 
-    -webkit-border-radius: 2px !important; 
-    -moz-border-radius: 2px !important;                                        
-    font-size: 16px; 
-    padding:8px 5px !important;
-}
+.ui-datatable .ui-datatable-summaryrow{color:#F1F6F9; background-color:#71CC8D; margin:2px 2px 0px 2px; border-radius: 2px !important; -webkit-border-radius: 2px !important; -moz-border-radius: 2px !important; 
+                                       font-size: 16px; padding:8px 5px !important;}
+.ui-datatable .ui-datatable-summaryrow td{color:#EEF2F7;}
 
-.ui-datatable .ui-datatable-summaryrow td{
+.ui-datatable .ui-datatable-header .ui-button{margin-top:-3px !important;}
+.ui-datatable .ui-datatable-header .ui-button .ui-button-text{  border: solid 1px #FBFCFD;}
 
-}
-
-.ui-datatable .ui-datatable-header .ui-button{
-    margin-top:-3px !important;
-}
-
-.ui-datatable .ui-datatable-header .ui-button .ui-button-text{
-    border: solid 1px;
-}
 
 .ui-datatable .ui-datatable-scrollable-header,
-.ui-datatable .ui-datatable-scrollable-footer{
-    color: #778D9B; 
-    outline: none; 
-    -webkit-transition: all 0.2s ease; 
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease;                                              
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease;
-}
-
-.ui-datatable .ui-datatable-scrollable-header{
-    border: 0px solid;
-}
-
-.ui-datatable .ui-datatable-scrollable-footer{
-    border: 0px solid #000000;
-}
-
+.ui-datatable .ui-datatable-scrollable-footer{color: #778D9B; background-color:#D9E3E8; outline: none; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease;
+                                              -o-transition: all 0.2s ease; transition: all 0.2s ease;}
+.ui-datatable .ui-datatable-scrollable-header{/*border-radius: 5px 5px 0px 0px; -moz-border-radius: 5px 5px 0px 0px; -webkit-border-radius: 5px 5px 0px 0px;*/ border: 0px solid #000000;}
+.ui-datatable .ui-datatable-scrollable-footer{/*border-radius: 0px 0px 5px 5px; -moz-border-radius: 0px 0px 5px 5px; -webkit-border-radius: 0px 0px 5px 5px;*/ border: 0px solid #000000;}
 .ui-datatable-frozenlayout-left .ui-datatable-scrollable-header,
-.ui-datatable-frozenlayout-left .ui-datatable-scrollable-footer{
-    border-radius: 0px !important; 
-    -webkit-border-radius: 0px !important; 
-    -moz-border-radius: 0px !important;
-}
-
+.ui-datatable-frozenlayout-left .ui-datatable-scrollable-footer{border-radius: 0px !important; -webkit-border-radius: 0px !important; -moz-border-radius: 0px !important;}
 .ui-datatable-frozenlayout-right .ui-datatable-scrollable-header,
-.ui-datatable-frozenlayout-right .ui-datatable-scrollable-footer{
-    border-radius: 0px !important; 
-    -webkit-border-radius: 0px !important; 
-    -moz-border-radius: 0px !important;
-}
+.ui-datatable-frozenlayout-right .ui-datatable-scrollable-footer{border-radius: 0px !important; -webkit-border-radius: 0px !important; -moz-border-radius: 0px !important;}
+.ui-datatable .ui-datagrid-content{font-size:14px;}
 
-.ui-datatable .ui-datagrid-content{
-    font-size:14px;
-}
-
-.ui-datatable .ui-paginator{
-    margin: 0px;
-}
-
-.ui-datatable .ui-paginator-top{
-    border-bottom: solid 1px !important; 
-}
-
-.ui-datatable .ui-paginator-bottom{
-    border-top: solid 1px !important;
-}
-
-.ui-datatable .ui-paginator .ui-paginator-current{
-    font-size:14px; 
-    padding:15px; 
-    color: #9fadb5; 
-    font-family:'ralewayregular';
-}
-
-.ui-datatable .ui-paginator .ui-paginator-first, 
-.ui-datatable .ui-paginator .ui-paginator-prev,
-.ui-datatable .ui-paginator .ui-paginator-pages .ui-paginator-page, 
-.ui-datatable .ui-paginator .ui-paginator-next,
-.ui-datatable .ui-paginator .ui-paginator-last, 
-.ui-datatable .ui-paginator .ui-paginator-rpp-options{
-    font-size:16px; 
-    padding:4px 6px; 
-    border: solid 1px #778D9B;
-    background-color:#778D9B; 
-    font-weight: bold;                                                                                                      
-    border-radius:5px !important; 
-    -webkit-border-radius:5px !important; 
-    -moz-border-radius:5px !important; 
-    -webkit-transition: all 0.2s ease;                                                                                                      
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease; 
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease;
-}
-
-.ui-datatable .ui-paginator .ui-paginator-rpp-options{ }
-
-.ui-datatable .ui-paginator .ui-paginator-first .ui-icon{
-    background-image:url("../../resources/spark/img/left-double-arrow-for-data.svg"); 
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat;
-}
-
-.ui-datatable .ui-paginator .ui-paginator-last .ui-icon{
-    background-image:url("../../resources/spark/img/right-double-arrow-for-data.svg"); 
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat;
-}
-
-.ui-datatable .ui-paginator .ui-paginator-prev .ui-icon{
-    background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); 
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat;
-}
-
-.ui-datatable .ui-paginator .ui-paginator-next .ui-icon{
-    background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); 
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat;
-}
-
+.ui-datatable .ui-paginator{margin: 0px;}
+.ui-datatable .ui-paginator-top{border-bottom: solid 1px #E8EDF2 !important; background-color: #F6FAFC;}
+.ui-datatable .ui-paginator-bottom{border-top: solid 1px #E8EDF2 !important; background-color: #F6FAFC;}
+.ui-datatable .ui-paginator .ui-paginator-current{font-size:14px; padding:15px; color: #9fadb5; font-family:'ralewayregular';}
+.ui-datatable .ui-paginator .ui-paginator-first, .ui-datatable .ui-paginator .ui-paginator-prev,
+.ui-datatable .ui-paginator .ui-paginator-pages .ui-paginator-page, .ui-datatable .ui-paginator .ui-paginator-next,
+.ui-datatable .ui-paginator .ui-paginator-last, .ui-datatable .ui-paginator .ui-paginator-rpp-options{font-size:16px; padding:4px 6px; border: solid 1px #778D9B; background-color:#778D9B; font-weight: bold;
+                                                                                                      border-radius:5px !important; -webkit-border-radius:5px !important; -moz-border-radius:5px !important; color:#F1F6F9; -webkit-transition: all 0.2s ease;
+                                                                                                      -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
+.ui-datatable .ui-paginator .ui-paginator-rpp-options{outline:none;}
+.ui-datatable .ui-paginator .ui-paginator-first .ui-icon{background-image:url("../../resources/spark/img/left-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datatable .ui-paginator .ui-paginator-last .ui-icon{background-image:url("../../resources/spark/img/right-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datatable .ui-paginator .ui-paginator-prev .ui-icon{background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datatable .ui-paginator .ui-paginator-next .ui-icon{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
 .ui-datatable .ui-paginator .ui-state-active,
-.ui-datatable .ui-paginator .ui-paginator-pages .ui-state-active{
-    background-repeat:no-repeat; 
-    border:solid 1px #5fcf80; 
-    background-color:#5fcf80;
-}
-
+.ui-datatable .ui-paginator .ui-paginator-pages .ui-state-active{color:#F1F6F9; background-repeat:no-repeat; border:solid 1px #5fcf80; background-color:#5fcf80;}
 .ui-datatable .ui-paginator .ui-state-hover,
-.ui-datatable .ui-paginator .ui-paginator-pages .ui-state-hover{
-    background-repeat:no-repeat; 
-    border:solid 1px #A7B8C3; 
-    background-color:#A7B8C3;
-}
+.ui-datatable .ui-paginator .ui-paginator-pages .ui-state-hover{color:#F1F6F9; background-repeat:no-repeat; border:solid 1px #A7B8C3; background-color:#A7B8C3;}
 
-.ui-datatable .ui-paginator .ui-paginator-rpp-options{
-    outline:none; 
-    font-family:'ralewayregular'; 
-    font-size: 16px;
-}
+.ui-datatable .ui-paginator .ui-paginator-rpp-options{outline:none; color:#F1F6F9; font-family:'ralewayregular'; font-size: 16px;}
 
 .ui-datatable {padding:4px;}
-.ui-datatable  table tbody td{
-    font-family:'ralewayregular'; 
-    padding:6px 10px !important;
-}
-
+.ui-datatable  table tbody td{font-family:'ralewayregular'; padding:6px 10px !important;}
 .ui-datatable-fs .ui-datatable-frozenlayout-right,
-.ui-datatable-fs .ui-datatable-frozenlayout-left{
-    font-family:'ralewayregular'; 
-    padding:0px !important;
-}
-
-.ui-datatable-fs .ui-datatable-frozenlayout-right .ui-datatable-scrollable-container 
-.ui-datatable-scrollable-header .ui-datatable-scrollable-header-box table thead tr th,
-.ui-datatable-fs .ui-datatable-frozenlayout-right .ui-datatable-scrollable-container 
-.ui-datatable-scrollable-footer .ui-datatable-scrollable-footer-box table tfoot tr td{
-
-}
-
-.ui-datatable  table{
-    border-collapse: collapse; 
-    font-size: 14px;
-}
-
+.ui-datatable-fs .ui-datatable-frozenlayout-left{font-family:'ralewayregular'; padding:0px !important;}
+.ui-datatable-fs .ui-datatable-frozenlayout-right .ui-datatable-scrollable-container .ui-datatable-scrollable-header .ui-datatable-scrollable-header-box table thead tr th,
+.ui-datatable-fs .ui-datatable-frozenlayout-right .ui-datatable-scrollable-container .ui-datatable-scrollable-footer .ui-datatable-scrollable-footer-box table tfoot tr td{border-left-color:#C1D5DF !important;}
+.ui-datatable  table{border-collapse: collapse; font-size: 14px;}
 .ui-datatable  table thead tr th,
 .ui-datatable  table tfoot tr td,
-.ui-datatable table thead tr th{
-    color:#778D9B; 
-    border: solid 1px #C3CCD5; 
-    outline:none; padding:10px; 
-    font-family:'ralewaymedium'; 
-    font-size:14px;
-}
+.ui-datatable table thead tr th{color:#778D9B; background-color:#D9E3E8; border: solid 1px #C3CCD5; outline:none; padding:10px; font-family:'ralewaymedium'; font-size:14px;}
 
 .ui-datatable  table thead tr th .ui-state-hover{}
 
 .ui-datatable  table thead tr th.ui-state-hover,
-.ui-datatable .ui-datatable-sticky table thead tr th.ui-state-hover{
-    background-color:#000000 !important; 
-}
+.ui-datatable .ui-datatable-sticky table thead tr th.ui-state-hover{background-color:#778D9B !important; color: #fff;}
 
 .ui-datatable  table thead tr th.ui-state-active,
-.ui-datatable .ui-datatable-sticky table thead tr th.ui-state-active{
-    background-color:#000000 !important;
-    box-shadow:none !important;
-}
+.ui-datatable .ui-datatable-sticky table thead tr th.ui-state-active{background-color:#627684 !important; color: #fff; box-shadow:none !important;}
 
-.ui-datatable  table thead tr .ui-chkbox-box.ui-state-hover,
-.ui-datatable  table thead tr .ui-chkbox-box.ui-state-active{
-    background-color:transparent; 
-}
-
+.ui-datatable  table thead tr .ui-chkbox-box.ui-state-hover,.ui-datatable  table thead tr .ui-chkbox-box.ui-state-active{background-color:transparent; color: #fff;}
 .ui-datatable  table thead tr th .ui-column-customfilter .ui-spinner-button.ui-state-active,
-.ui-datatable  table thead tr th .ui-column-customfilter .ui-spinner-button.ui-state-hover{
-    background-color: transparent;
-}
+.ui-datatable  table thead tr th .ui-column-customfilter .ui-spinner-button.ui-state-hover{background-color: transparent;}
 .ui-datatable  table thead tr th .ui-column-customfilter .ui-spinner-button.ui-state-active .ui-icon-triangle-1-n,
-.ui-datatable  table thead tr th .ui-column-customfilter .ui-spinner-button.ui-state-active .ui-icon-triangle-1-s{
-    background-position: center !important;                           
-    background-size: 80% !important; 
-    margin-left: 12px !important; 
-    margin-top: -8px !important;
-}
-
-.ui-datatable table tbody tr td{
-    color:#778D9B; 
-    border: solid 1px #D9E3E8; 
-    font-size: 14px; 
-    font-family: 'ralewayregular';                                
-    -webkit-transition: all 0.2s ease; 
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease; 
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease;
-}
-
-.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-s{
-    background-image:url("../../resources/spark/img/downarrow-gray.svg");                          
-    background-position:center !important; 
-    background-size:110%;
-}
-
-.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-e{
-    background-image:url("../../resources/spark/img/rightarrow-gray.svg");                
-    background-position:center !important; 
-    background-size:110%;
-}
-
+.ui-datatable  table thead tr th .ui-column-customfilter .ui-spinner-button.ui-state-active .ui-icon-triangle-1-s{background-position: center !important; 
+                                                                                                                  background-size: 80% !important; margin-left: 12px !important; margin-top: -8px !important;}
+.ui-datatable table tbody tr td{color:#778D9B; border: solid 1px #D9E3E8; font-size: 14px; font-family: 'ralewayregular';
+                                -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
+/*.ui-datatable table tbody tr td.ui-state-error{border: solid 1px #D9E3E8 !important;}
+.ui-datatable table tbody tr td.ui-state-error .ui-inputfield{border-color:#F03369;} */
+.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-s{background-image:url("../../resources/spark/img/downarrow-gray.svg"); 
+                                                                           background-position:center !important; background-size:110%;}
+.ui-datatable  table tbody tr td .ui-row-toggler.ui-icon-circle-triangle-e{background-image:url("../../resources/spark/img/rightarrow-gray.svg"); 
+                                                                           background-position:center !important; background-size:110%;}
 .ui-datatable  table tbody tr td .ui-cell-editor-output{}
-.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-pencil{
-    background-image:url("../../resources/spark/img/pen-gray.svg");                                   
-    background-position:center !important; 
-    background-size:120%;
-}
-
-.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-check{
-    background-image:url("../../resources/spark/img/check-gray.svg");
-    background-position:center !important; 
-    background-size:120%;
-}
-
-.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-close{
-    background-image:url("../../resources/spark/img/delete-gray.svg");
-    background-position:center !important; 
-    background-size:120%;
-}
-
-.ui-datatable  table tbody .ui-state-hover > td{
-    background-color:#e; 
-    color:#71CC8D;
-}
-
-.ui-datatable  table tbody .ui-state-highlight > td{
-
-}
-.ui-datatable  table tbody .ui-state-highlight.ui-row-editing > td{
-
-}
-.ui-datatable  table tbody tr td .ui-icon-arrow-4{
-    background-image:url("../../resources/spark/img/movearrow-gray.svg");
-    background-position:center !important; 
-    background-size:100%;
-}
+.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-pencil{background-image:url("../../resources/spark/img/pen-gray.svg"); 
+                                                                background-position:center !important; background-size:120%;}
+.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-check{background-image:url("../../resources/spark/img/check-gray.svg"); 
+                                                               background-position:center !important; background-size:120%;}
+.ui-datatable  table tbody tr td .ui-row-editor .ui-icon-close{background-image:url("../../resources/spark/img/delete-gray.svg"); 
+                                                               background-position:center !important; background-size:120%;}
+.ui-datatable  table tbody .ui-state-hover > td{background-color:#E0E6ED; color:#71CC8D;}
+.ui-datatable  table tbody .ui-state-highlight > td{background-color:#F7941E; color: #F1F6F9;}
+.ui-datatable  table tbody .ui-state-highlight.ui-row-editing > td{background-color:#DDE4ED; color: #F1F6F9;}
+.ui-datatable  table tbody tr td .ui-icon-arrow-4{background-image:url("../../resources/spark/img/movearrow-gray.svg"); 
+                                                  background-position:center !important; background-size:100%;}
 
 .ui-datatable  table thead tr .ui-state-default .ui-icon-carat-2-n-s,
-.ui-datatable .ui-datatable-sticky table thead tr .ui-state-default .ui-icon-carat-2-n-s{
-    background-image:url("../../resources/spark/img/updown-gray-arrow.svg"); 
-    background-position:center !important; 
-    background-size:110%; 
-    background-repeat:no-repeat; 
-    margin-left: 5px;
-}
+.ui-datatable .ui-datatable-sticky table thead tr .ui-state-default .ui-icon-carat-2-n-s{background-image:url("../../resources/spark/img/updown-gray-arrow.svg"); 
+                                                                                         background-position:center !important; background-size:110%; background-repeat:no-repeat; margin-left: 5px;}
 .ui-datatable  table thead tr .ui-state-hover .ui-icon-carat-2-n-s,
-.ui-datatable .ui-datatable-sticky table thead tr .ui-state-hover .ui-icon-carat-2-n-s{
-    background-image:url("../../resources/spark/img/updown-arrow.svg"); 
-    background-position:center !important; 
-    background-size:110%; 
-    background-repeat:no-repeat; 
-    margin-left: 5px;
-}
-
+.ui-datatable .ui-datatable-sticky table thead tr .ui-state-hover .ui-icon-carat-2-n-s{background-image:url("../../resources/spark/img/updown-arrow.svg"); 
+                                                                                       background-position:center !important; background-size:110%; background-repeat:no-repeat; margin-left: 5px;}
 .ui-datatable  table thead tr .ui-state-active .ui-icon-triangle-1-n,
-.ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-n{
-    background-image:url("../../resources/spark/img/uparrow.svg"); 
-    background-position:center !important; 
-    background-size:110%; 
-    background-repeat:no-repeat; 
-    margin-left: 5px;
-}
-
+.ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-n{background-image:url("../../resources/spark/img/uparrow.svg"); 
+                                                                                         background-position:center !important; background-size:110%; background-repeat:no-repeat; margin-left: 5px;}
 .ui-datatable  table thead tr .ui-state-active .ui-icon-triangle-1-s,
-.ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-s{
-    background-image:url("../../resources/spark/img/downarrow.svg"); 
-    background-position:center !important; 
-    background-size:110%; 
-    background-repeat:no-repeat; 
-    margin-left: 5px;
-}
+.ui-datatable .ui-datatable-sticky table thead tr .ui-state-active .ui-icon-triangle-1-s{background-image:url("../../resources/spark/img/downarrow.svg"); 
+                                                                                         background-position:center !important; background-size:110%; background-repeat:no-repeat; margin-left: 5px;}
 
-.ui-datatable-footer{
-    background-color:#F6FAFC; 
-    color:#B9CDD5; 
-    font-family:'ralewayregular';
-}
+.ui-datatable-footer{background-color:#F6FAFC; color:#B9CDD5; font-family:'ralewayregular';}
 
 @media (max-width: 35em){
     .ui-datatable-reflow .ui-datatable-data td {border:0px !important;}
 }
 
-.ui-columntoggler{
-    border: solid 1px #D1D3D4; 
-    color: #778D9B;
-}
+.ui-columntoggler{border: solid 1px #D1D3D4; background-color: #FBFCFD; color: #778D9B;}
 .ui-columntoggler .ui-columntoggler-item .ui-chkbox{top:35% !important;}
 
 .ui-datatable-scrollable{}
-.ui-datatable-scrollable-header-box table thead tr th, 
-.ui-datatable-scrollable-footer-box table tfoot tr td{
-    border-width: 1px; 
-    border-right: solid 1px #C1D5DF; 
-    border-left:solid 1px transparent; 
-    border-bottom:0px; 
-    border-top: 0px; 
-    font-size: 14px; 
-}
+.ui-datatable-scrollable-header-box table thead tr th, .ui-datatable-scrollable-footer-box table tfoot tr td{border-width: 1px; border-right: solid 1px #C1D5DF; border-left:solid 1px transparent; 
+                                                                                                             border-bottom:0px; border-top: 0px; font-size: 14px; background-color: #D9E3E8;}
+.ui-datatable-scrollable-theadclone th.ui-state-default {border-bottom-width: 0 !important; border-top-width: 0 !important; padding-bottom: 0 !important; padding-top: 0 !important;
+                                                         outline: 0 none !important;}
 
-.ui-datatable-scrollable-theadclone th.ui-state-default {
-    border-bottom-width: 0 !important; 
-    border-top-width: 0 !important; 
-    padding-bottom: 0 !important; 
-    padding-top: 0 !important;
-    outline: 0 none !important;
-}
-
-.ui-draggable-dragging{
-    color:#27AAE1; 
-    border: solid 1px #ccc;
-}
-
+.ui-draggable-dragging{color:#27AAE1; border: solid 1px #ccc;}
 .ui-draggable-dragging .ui-icon-carat-2-n-s{background-image:none;}
 .ui-draggable-dragging .ui-icon-carat-1-n{background-image:none;}
 .ui-draggable-dragging .ui-icon-carat-1-s{background-image:none;}
-.ui-datatable > .ui-icon-arrowthick-1-s{
-    background-image:url("../../resources/spark/img/downarrow-blue.svg"); 
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat; 
-    margin-left: 5px;
-}
-
-.ui-datatable > .ui-icon-arrowthick-1-n{
-    background-image:url("../../resources/spark/img/uparrow-blue.svg");
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat; 
-    margin-left: 5px;
-}
+.ui-datatable > .ui-icon-arrowthick-1-s{background-image:url("../../resources/spark/img/downarrow-blue.svg"); 
+                                        background-position:center !important; background-size:100%; background-repeat:no-repeat; margin-left: 5px;}
+.ui-datatable > .ui-icon-arrowthick-1-n{background-image:url("../../resources/spark/img/uparrow-blue.svg"); 
+                                        background-position:center !important; background-size:100%; background-repeat:no-repeat; margin-left: 5px;}
 
 .ui-sortable-helper{}
 
 .ui-datatable .ui-column-resizer-helper{background-color:#33AFDE;}
 
 .ui-datatable-resizable th.ui-state-hover.ui-sortable-column,
-.ui-datatable-resizable th{ 
-    -webkit-transition:none; 
-    -moz-transition:none; 
-    -ms-transition:none; 
-    -o-transition:none; 
-    transition:none;
-}
-
+.ui-datatable-resizable th{ -webkit-transition:none; -moz-transition:none; -ms-transition:none; -o-transition:none; transition:none;}
 /*Style For Data Grid ------------------------------------------------------------------------------------- */
 
-.ui-datagrid{
-    border:solid 1px #C6D6DF; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    color: #778D9B; 
-    font-family:'ralewaymedium';
-}
-
+.ui-datagrid{border:solid 1px #C6D6DF; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; background-color:#F3F6F9; color: #778D9B; font-family:'ralewaymedium';}
 .ui-datagrid:hover, .ui-datagrid:focus{}
-.ui-datagrid .ui-datagrid-header{
-    margin:2px 2px 0px 2px; 
-    border-radius: 2px !important; 
-    -webkit-border-radius: 2px !important; 
-    -moz-border-radius: 2px !important; 
-    font-size: 16px;
-    background-color:#71CC8D; 
-    padding: 8px 5px !important;
-}
-
+.ui-datagrid .ui-datagrid-header{color:#F1F6F9; margin:2px 2px 0px 2px; border-radius: 2px !important; -webkit-border-radius: 2px !important; -moz-border-radius: 2px !important; font-size: 16px;
+                                 background-color:#71CC8D; padding: 8px 5px !important;}
 .ui-datagrid .ui-datagrid-content{font-size:14px;}
 
 .ui-datagrid .ui-paginator{margin: 0px; }
-.ui-datagrid .ui-paginator-top{
-    margin-bottom: 5px; 
-    border-bottom: solid 1px !important;
-}
-
-.ui-datagrid .ui-paginator-bottom{
-    border-top: solid 1px !important; 
-    margin-top: 3px; 
-}
-
-.ui-datagrid .ui-paginator .ui-paginator-current{
-    font-size:14px; 
-    padding:15px; 
-}
-
-.ui-datagrid .ui-paginator .ui-paginator-first, 
-.ui-datagrid .ui-paginator .ui-paginator-prev,
-.ui-datagrid .ui-paginator .ui-paginator-pages .ui-paginator-page, 
-.ui-datagrid .ui-paginator .ui-paginator-next,
-.ui-datagrid .ui-paginator .ui-paginator-last, 
-.ui-datagrid .ui-paginator .ui-paginator-rpp-options{
-    font-size:16px; 
-    padding:4px 6px; 
-    border: solid 1px #778D9B; 
-    background-color:#778D9B; 
-    font-weight: bold;
-    border-radius:5px !important; 
-    -webkit-border-radius:5px !important; 
-    -moz-border-radius:5px !important; 
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease; 
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease;
-}
-
+.ui-datagrid .ui-paginator-top{margin-bottom: 5px; border-bottom: solid 1px #E8EDF2 !important; background-color: #F6FAFC;}
+.ui-datagrid .ui-paginator-bottom{border-top: solid 1px #E8EDF2 !important; margin-top: 3px; background-color: #F6FAFC;}
+.ui-datagrid .ui-paginator .ui-paginator-current{font-size:14px; padding:15px; color: #9fadb5;}
+.ui-datagrid .ui-paginator .ui-paginator-first, .ui-datagrid .ui-paginator .ui-paginator-prev,
+.ui-datagrid .ui-paginator .ui-paginator-pages .ui-paginator-page, .ui-datagrid .ui-paginator .ui-paginator-next,
+.ui-datagrid .ui-paginator .ui-paginator-last, .ui-datagrid .ui-paginator .ui-paginator-rpp-options{font-size:16px; padding:4px 6px; border: solid 1px #778D9B; background-color:#778D9B; font-weight: bold;
+                                                                                                    border-radius:5px !important; -webkit-border-radius:5px !important; -moz-border-radius:5px !important; color:#F1F6F9; -webkit-transition: all 0.2s ease;
+                                                                                                    -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
 .ui-datagrid .ui-paginator .ui-paginator-rpp-options{outline:none;}
-.ui-datagrid .ui-paginator .ui-paginator-first .ui-icon{
-    background-image:url("../../resources/spark/img/left-double-arrow-for-data.svg"); 
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat;
-}
-.ui-datagrid .ui-paginator .ui-paginator-last .ui-icon{
-    background-image:url("../../resources/spark/img/right-double-arrow-for-data.svg"); 
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat;
-}
-.ui-datagrid .ui-paginator .ui-paginator-prev .ui-icon{
-    background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); 
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat;
-}
-.ui-datagrid .ui-paginator .ui-paginator-next .ui-icon{
-    background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); 
-    background-position:center !important; 
-    background-size:100%; 
-    background-repeat:no-repeat;
-}
+.ui-datagrid .ui-paginator .ui-paginator-first .ui-icon{background-image:url("../../resources/spark/img/left-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datagrid .ui-paginator .ui-paginator-last .ui-icon{background-image:url("../../resources/spark/img/right-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datagrid .ui-paginator .ui-paginator-prev .ui-icon{background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datagrid .ui-paginator .ui-paginator-next .ui-icon{background-image:url("../../resources/spark/img/images/right-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
 .ui-datagrid .ui-paginator .ui-state-active,
-.ui-datagrid .ui-paginator .ui-paginator-pages .ui-state-active{
-    background-repeat:no-repeat; 
-    border: solid 1px #5FCF80; 
-    background-color: #5FCF80; 
-    font-size: 16px;
-}
+.ui-datagrid .ui-paginator .ui-paginator-pages .ui-state-active{color:#F1F6F9; background-repeat:no-repeat; border: solid 1px #5FCF80; background-color: #5FCF80; font-size: 16px;}
 .ui-datagrid .ui-paginator .ui-state-hover,
-.ui-datagrid .ui-paginator .ui-paginator-pages .ui-state-hover{
-    background-repeat:no-repeat; 
-    border: solid 1px #A7B8C3;  
-    font-size: 16px;
-}
+.ui-datagrid .ui-paginator .ui-paginator-pages .ui-state-hover{color:#F1F6F9; background-repeat:no-repeat; border: solid 1px #A7B8C3; background-color: #A7B8C3; font-size: 16px;}
 .ui-paginator-page.ui-state-focus,
 .ui-paginator-next.ui-state-focus,
 .ui-paginator-prev.ui-state-focus,
 .ui-paginator-last.ui-state-focus,
 .ui-paginator-first.ui-state-focus,
-.ui-paginator-rpp-options.ui-state-focus{
-    border:solid 1px #5FCF80 !important; 
-    background-color:#5FCF80 !important;
-}
-.ui-datagrid .ui-paginator .ui-paginator-rpp-options{
-    outline:none; 
-    font-family:'ralewayregular'; 
-    font-size: 16px;
-}
+.ui-paginator-rpp-options.ui-state-focus{border:solid 1px #5FCF80 !important; background-color:#5FCF80 !important;}
+.ui-datagrid .ui-paginator .ui-paginator-rpp-options{outline:none; color: #F1F6F9; font-family:'ralewayregular'; font-size: 16px;}
 
-.ui-datagrid-footer{
-    height: auto !important; 
-    background-color: #F9FAFC; 
-    margin: 0px; 
-    padding: 10px 10px !important; 
-    border-top: solid 1px #E8EDF2 !important; 
-    font-size: 14px; 
-    color: #C7D1D7; 
-    border-top-left-radius: 0px !important; 
-    border-top-right-radius: 0px !important; 
-    -webkit-border-top-left-radius: 0px !important; 
-    -webkit-border-top-right-radius: 0px !important;
-    -moz-border-top-left-radius: 0px !important; 
-    -moz-border-top-right-radius: 0px !important;
-}
+.ui-datagrid-footer{height: auto !important; background-color: #F9FAFC; margin: 0px; padding: 10px 10px !important; border-top: solid 1px #E8EDF2 !important; font-size: 14px; color: #C7D1D7; 
+                    border-top-left-radius: 0px !important; border-top-right-radius: 0px !important; -webkit-border-top-left-radius: 0px !important; -webkit-border-top-right-radius: 0px !important;
+                    -moz-border-top-left-radius: 0px !important; -moz-border-top-right-radius: 0px !important;}
 
 
 /*Style For Data List ------------------------------------------------------------------------------------- */
 
-.ui-datalist{
-    border:solid 1px #C6D6DF; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    background-color:#FBFCFD; 
-    color:#778D9B; 
-    font-family:'ralewayregular';
-}
-
+.ui-datalist{border:solid 1px #C6D6DF; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; background-color:#FBFCFD; color:#778D9B; font-family:'ralewayregular';}
 .ui-datalist:hover, .ui-datalist:focus{}
-.ui-datalist .ui-datalist-header{
-    color: #ffffff; 
-    margin:2px 2px 0px 2px; 
-    background-color:#71CC8D; 
-    border-radius: 2px !important; 
-    -webkit-border-radius: 2px !important; 
-    -moz-border-radius: 2px !important;                                 
-    font-size:16px; 
-    font-family:'ralewaymedium'; 
-    padding:8px 5px !important;
-}
-
-.ui-datalist .ui-datalist-content .ui-datalist-data{
-    margin: 0px; 
-    padding-top: 15px; 
-    padding-bottom:15px; 
-    padding-right:15px; 
-    font-family:'ralewayregular'; 
-    font-size:15px; 
-    color:#778D9B;
-}
+.ui-datalist .ui-datalist-header{color: #ffffff; margin:2px 2px 0px 2px; background-color:#71CC8D; border-radius: 2px !important; -webkit-border-radius: 2px !important; -moz-border-radius: 2px !important;
+                                 font-size:16px; font-family:'ralewaymedium'; padding:8px 5px !important;}
+.ui-datalist .ui-datalist-content .ui-datalist-data{margin: 0px; padding-top: 15px; padding-bottom:15px; padding-right:15px; font-family:'ralewayregular'; font-size:15px; color:#778D9B;}
 
 .ui-datalist-item{list-style:inherit !important;}
 
-.ui-datalist .ui-paginator{
-    margin: 0px; 
-    padding: 5px 0px;
-}
-.ui-datalist .ui-paginator-top{
-    border-bottom: solid 1px #E8EDF2 !important; 
-    margin-bottom: 3px;
-}
-.ui-datalist .ui-paginator-bottom{border-top: solid 1px #E8EDF2 !important; margin-top: 3px;}
+.ui-datalist .ui-paginator{background-color: #F3F5F7; margin: 0px; padding: 5px 0px;}
+.ui-datalist .ui-paginator-top{border-bottom: solid 1px #E8EDF2 !important; background-color: #F6FAFC; margin-bottom: 3px;}
+.ui-datalist .ui-paginator-bottom{border-top: solid 1px #E8EDF2 !important; background-color: #F6FAFC; margin-top: 3px;}
 .ui-datalist .ui-paginator .ui-paginator-current{font-size:14px; padding:15px; color: #9fadb5;}
 .ui-datalist .ui-paginator .ui-paginator-first, .ui-datalist .ui-paginator .ui-paginator-prev,
 .ui-datalist .ui-paginator .ui-paginator-pages .ui-paginator-page, .ui-datalist .ui-paginator .ui-paginator-next,
-.ui-datalist .ui-paginator .ui-paginator-last, .ui-datalist .ui-paginator .ui-paginator-rpp-options{
-    font-size:14px; 
-    padding:4px 6px; 
-    border: solid 1px #778D9B; 
-    background-color: #778D9B; 
-    font-weight: bold;
-    border-radius:5px !important; 
-    -webkit-border-radius:5px !important; 
-    -moz-border-radius:5px !important; 
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease; 
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease; 
-    font-family: 'ralewaymedium'; 
-    font-size:16px;
-}
+.ui-datalist .ui-paginator .ui-paginator-last, .ui-datalist .ui-paginator .ui-paginator-rpp-options{font-size:14px; padding:4px 6px; border: solid 1px #778D9B; background-color: #778D9B; font-weight: bold;
+                                                                                                    border-radius:5px !important; -webkit-border-radius:5px !important; -moz-border-radius:5px !important; color:#F1F6F9; -webkit-transition: all 0.2s ease;
+                                                                                                    -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; font-family: 'ralewaymedium'; font-size:16px;}
 .ui-datalist .ui-paginator .ui-paginator-rpp-options{outline:none;}
-.ui-datalist .ui-paginator .ui-paginator-first .ui-icon{
-    background-image:url("../../resources/spark/img/left-double-arrow-for-data.svg"); 
-    background-position:center !important; background-size:100%; background-repeat:no-repeat;
-}
-.ui-datalist .ui-paginator .ui-paginator-last .ui-icon{
-    background-image:url("../../resources/spark/img/right-double-arrow-for-data.svg"); 
-    background-position:center !important; background-size:100%; background-repeat:no-repeat;
-}
-.ui-datalist .ui-paginator .ui-paginator-prev .ui-icon{
-    background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); 
-    background-position:center !important; background-size:100%; background-repeat:no-repeat;
-}
-.ui-datalist .ui-paginator .ui-paginator-next .ui-icon{
-    background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); 
-    background-position:center !important; background-size:100%; background-repeat:no-repeat;
-}
+.ui-datalist .ui-paginator .ui-paginator-first .ui-icon{background-image:url("../../resources/spark/img/left-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datalist .ui-paginator .ui-paginator-last .ui-icon{background-image:url("../../resources/spark/img/right-double-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datalist .ui-paginator .ui-paginator-prev .ui-icon{background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
+.ui-datalist .ui-paginator .ui-paginator-next .ui-icon{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); background-position:center !important; background-size:100%; background-repeat:no-repeat;}
 .ui-datalist .ui-paginator .ui-state-active,
-.ui-datalist .ui-paginator .ui-paginator-pages .ui-state-active{
-    background-repeat:no-repeat; border: solid 1px #5FCF80; background-color: #5FCF80;
-}
+.ui-datalist .ui-paginator .ui-paginator-pages .ui-state-active{color:#F1F6F9; background-repeat:no-repeat; border: solid 1px #5FCF80; background-color: #5FCF80;}
 .ui-datalist .ui-paginator .ui-state-hover,
-.ui-datalist .ui-paginator .ui-paginator-pages .ui-state-hover{
-    background-repeat:no-repeat; border: solid 1px #A7B8C3; background-color: #A7B8C3;
-}
+.ui-datalist .ui-paginator .ui-paginator-pages .ui-state-hover{color:#F1F6F9; background-repeat:no-repeat; border: solid 1px #A7B8C3; background-color: #A7B8C3;}
 
-.ui-datalist .ui-paginator .ui-paginator-rpp-options{
-    outline:none; font-family: 'ralewayregular';
-}
+.ui-datalist .ui-paginator .ui-paginator-rpp-options{outline:none; color:#B9CDD5; font-family: 'ralewayregular';}
 
-.ui-datalist-footer{
-    height: auto !important; 
-    background-color: #F9FAFC; 
-    margin: 0px; padding: 10px 10px !important; 
-    border-top: solid 1px #E8EDF2 !important; 
-    font-size: 14px; color: #C7D1D7; 
-    border-top-left-radius: 0px !important; 
-    border-top-right-radius: 0px !important; 
-    -webkit-border-top-left-radius: 0px !important; 
-    -webkit-border-top-right-radius: 0px !important;
-    -moz-border-top-left-radius: 0px !important; 
-    -moz-border-top-right-radius: 0px !important;
-}
+.ui-datalist-footer{height: auto !important; background-color: #F9FAFC; margin: 0px; padding: 10px 10px !important; border-top: solid 1px #E8EDF2 !important; font-size: 14px; color: #C7D1D7; 
+                    border-top-left-radius: 0px !important; border-top-right-radius: 0px !important; -webkit-border-top-left-radius: 0px !important; -webkit-border-top-right-radius: 0px !important;
+                    -moz-border-top-left-radius: 0px !important; -moz-border-top-right-radius: 0px !important;}
 
 
 /*Style For PickList ------------------------------------------------------------------------------------- */
@@ -1224,255 +758,78 @@ label{font-weight:normal !important;}
 .ui-picklist .ui-picklist-list .ui-state-highlight table tbody tr td{color: #5fcf80 !important; font-family:'ralewaymedium';}
 
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-move-up .ui-icon,
-.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-up .ui-icon{
-    background-image:url("../../resources/spark/img/uparrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                                                               
-    background-size: 75%; 
-    left:33% !important; 
-    margin-left: -8px; 
-    top:32% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-up .ui-icon{background-image:url("../../resources/spark/img/uparrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                               background-size: 75%; left:33% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-move-top .ui-icon,
-.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-top .ui-icon{
-    background-image:url("../../resources/spark/img/toparrow.svg"); 
-    background-position: center !important; background-repeat: no-repeat;                         
-    background-size: 70%; 
-    left:35% !important; 
-    margin-left: -8px; 
-    top:39% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-top .ui-icon{background-image:url("../../resources/spark/img/toparrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                background-size: 70%; left:35% !important; margin-left: -8px; top:39% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-move-down .ui-icon,
-.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-down .ui-icon{
-    background-image:url("../../resources/spark/img/downarrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                                                                 
-    background-size: 75%; 
-    left:33% !important; 
-    margin-left: -8px; 
-    top:37% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-down .ui-icon{background-image:url("../../resources/spark/img/downarrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                 background-size: 75%; left:33% !important; margin-left: -8px; top:37% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-move-bottom .ui-icon,
-.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-bottom .ui-icon{
-    background-image:url("../../resources/spark/img/bottomarrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                                                                   
-    background-size: 70%; 
-    left:35% !important; 
-    margin-left: -8px; 
-    top:33% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist .ui-picklist-source-controls .ui-picklist-button-move-bottom .ui-icon{background-image:url("../../resources/spark/img/bottomarrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                   background-size: 70%; left:35% !important; margin-left: -8px; top:33% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-add .ui-icon,
-.ui-picklist td .ui-picklist-button-add .ui-icon{
-    background-image:url("../../resources/spark/img/right-arrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                                 
-    background-size: 75%; 
-    left:33% !important; 
-    margin-left: -8px; 
-    top:36% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist td .ui-picklist-button-add .ui-icon{background-image:url("../../resources/spark/img/right-arrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                 background-size: 75%; left:33% !important; margin-left: -8px; top:36% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-add-all .ui-icon,
-.ui-picklist td .ui-picklist-button-add-all .ui-icon{
-    background-image:url("../../resources/spark/img/right-end-arrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                                     
-    background-size: 70%; 
-    left:35% !important; 
-    margin-left: -8px; 
-    top:34% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist td .ui-picklist-button-add-all .ui-icon{background-image:url("../../resources/spark/img/right-end-arrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                     background-size: 70%; left:35% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-remove .ui-icon,
-.ui-picklist td .ui-picklist-button-remove .ui-icon{
-    background-image:url("../../resources/spark/img/left-arrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                                    
-    background-size: 75%; 
-    left:32% !important; 
-    margin-left: -8px; 
-    top:35% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist td .ui-picklist-button-remove .ui-icon{background-image:url("../../resources/spark/img/left-arrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                    background-size: 75%; left:32% !important; margin-left: -8px; top:35% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist .ui-picklist-buttons-cell .ui-picklist-button-remove-all .ui-icon,
-.ui-picklist td .ui-picklist-button-remove-all .ui-icon{
-    background-image:url("../../resources/spark/img/left-end-arrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                                        
-    background-size: 70%; 
-    left:35% !important; 
-    margin-left: -8px; 
-    top:34% !important;
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist td .ui-picklist-button-remove-all .ui-icon{background-image:url("../../resources/spark/img/left-end-arrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                        background-size: 70%; left:35% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
 
 .ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-move-up .ui-icon,
-.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-up .ui-icon{
-    background-image:url("../../resources/spark/img/uparrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                   
-    background-size: 70%; 
-    left:35% !important; 
-    margin-left: -8px; 
-    top:32% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-up .ui-icon{background-image:url("../../resources/spark/img/uparrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                               background-size: 70%; left:35% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-move-top .ui-icon,
-.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-top .ui-icon{
-    background-image:url("../../resources/spark/img/toparrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;
-    background-size: 70%; 
-    left:35% !important; 
-    margin-left: -8px; 
-    top:32% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-top .ui-icon{background-image:url("../../resources/spark/img/toparrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                background-size: 70%; left:35% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-move-down .ui-icon,
-.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-down .ui-icon{
-    background-image:url("../../resources/spark/img/downarrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                                                                 
-    background-size: 75%; 
-    left:32% !important; 
-    margin-left: -8px; 
-    top:37% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-down .ui-icon{background-image:url("../../resources/spark/img/downarrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                 background-size: 75%; left:32% !important; margin-left: -8px; top:37% !important; margin-top: -8px; width: 26px; height: 26px;}
 .ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-move-bottom .ui-icon,
-.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-bottom .ui-icon{
-    background-image:url("../../resources/spark/img/bottomarrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat;                                                                                   
-    background-size: 70%; 
-    left:34% !important; 
-    margin-left: -8px; 
-    top:33% !important; 
-    margin-top: -8px; 
-    width: 26px; 
-    height: 26px;
-}
+.ui-picklist .ui-picklist-target-controls .ui-picklist-button-move-bottom .ui-icon{background-image:url("../../resources/spark/img/bottomarrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                   background-size: 70%; left:34% !important; margin-left: -8px; top:33% !important; margin-top: -8px; width: 26px; height: 26px;}
 
-.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-add .ui-icon{
-    background-image:url("../../resources/spark/img/downarrow.svg"); 
-    background-position: center !important; background-repeat: no-repeat;
-    background-size: 75%; left:32% !important; margin-left: -8px; 
-    top:35% !important; margin-top: -8px; width: 26px; height: 26px;
-}
-.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-add-all .ui-icon{
-    background-image:url("../../resources/spark/img/bottomarrow.svg"); 
-    background-position: center !important; background-repeat: no-repeat;
-    background-size: 70%; left:35% !important; margin-left: -8px; 
-    top:34% !important; margin-top: -8px; width: 26px; height: 26px;
-}
-.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-remove .ui-icon{
-    background-image:url("../../resources/spark/img/uparrow.svg"); 
-    background-position: center !important; background-repeat: no-repeat;
-    background-size: 70%; left:34% !important; margin-left: -8px; 
-    top:34% !important; margin-top: -8px; width: 26px; height: 26px;
-}
-.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-remove-all .ui-icon{
-    background-image:url("../../resources/spark/img/toparrow.svg"); 
-    background-position: center !important; background-repeat: no-repeat;
-    background-size: 70%; left:34% !important; margin-left: -8px; 
-    top:34% !important; margin-top: -8px; width: 26px; height: 26px;
-}
+.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-add .ui-icon{background-image:url("../../resources/spark/img/downarrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                 background-size: 75%; left:32% !important; margin-left: -8px; top:35% !important; margin-top: -8px; width: 26px; height: 26px;}
+.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-add-all .ui-icon{background-image:url("../../resources/spark/img/bottomarrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                     background-size: 70%; left:35% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
+.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-remove .ui-icon{background-image:url("../../resources/spark/img/uparrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                    background-size: 70%; left:34% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
+.ui-picklist-vertical .ui-picklist-buttons-cell .ui-picklist-button-remove-all .ui-icon{background-image:url("../../resources/spark/img/toparrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                                        background-size: 70%; left:34% !important; margin-left: -8px; top:34% !important; margin-top: -8px; width: 26px; height: 26px;}
 
 
 /*Style For UI OrderList ------------------------------------------------------------------------------------- */
 
-.ui-orderlist{
-    border:solid 1px #C6D6DF; 
-    border-radius:3px !important; 
-    -webkit-border-radius:3px !important; 
-    -moz-border-radius:3px !important; 
-    color: #778D9B;              
-    font-family:'ralewayregular';
-}
+.ui-orderlist{border:solid 1px #C6D6DF; border-radius:3px !important; -webkit-border-radius:3px !important; -moz-border-radius:3px !important; background-color: #FBFCFD; color: #778D9B;
+              font-family:'ralewayregular';}
 .ui-orderlist:hover, .ui-orderlist:focus{}
 .ui-orderlist .ui-orderlist-list{margin-top:10px !important;}
-.ui-orderlist .ui-orderlist-caption{
-    border: solid 1px #C6D6DF !important; 
-    color: #A7B4BB; 
-    border-radius: 2px; 
-    -webkit-border-radius: 2px; 
-    -moz-border-radius: 2px; 
-    box-sizing:border-box;
-}
-.ui-orderlist .ui-orderlist-list .ui-orderlist-item{
-    padding: 3px 5px !important; 
-    font-size: 15px; 
-    background-image:url("../../resources/spark/img/move-gray.svg"); 
-    background-position: center right !important;                                                     
-    background-repeat: no-repeat; 
-    background-size: 20px; 
-    border-radius:3px;
-}
+.ui-orderlist .ui-orderlist-caption{border: solid 1px #C6D6DF !important; background-color: #F3F5F7; color: #A7B4BB; border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px; box-sizing:border-box;}
+.ui-orderlist .ui-orderlist-list .ui-orderlist-item{padding: 3px 5px !important; font-size: 15px; background-image:url("../../resources/spark/img/move-gray.svg"); background-position: center right !important; 
+                                                    background-repeat: no-repeat; background-size: 20px; border-radius:3px;}
 .ui-orderlist .ui-orderlist-list .ui-state-hover{background-color:#EDF3F6; color:#5FCF80;}
 .ui-orderlist .ui-orderlist-list .ui-state-highlight{background-color:#D7E2E8; color:#5FCF80; font-family:'ralewaymedium';}
 
-.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-up .ui-icon{
-    background-image:url("../../resources/spark/img/uparrow.svg"); 
-    background-position: center !important; background-repeat: no-repeat;
-    background-size: 70%; left:33% !important; margin-left: -8px; 
-    top:32% !important; margin-top: -8px; width: 26px; height: 26px;
-}
-.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-top .ui-icon{
-    background-image:url("../../resources/spark/img/toparrow.svg"); 
-    background-position: center !important; background-repeat: no-repeat;
-    background-size: 70%; left:35% !important; margin-left: -8px; 
-    top:32% !important; margin-top: -8px; width: 26px; height: 26px;
-}
-.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-down .ui-icon{
-    background-image:url("../../resources/spark/img/downarrow.svg"); 
-    background-position: center !important; background-repeat: no-repeat;
-    background-size: 70%; left:34% !important; margin-left: -8px; 
-    top:37% !important; margin-top: -8px; width: 26px; height: 26px;
-}
-.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-bottom .ui-icon{
-    background-image:url("../../resources/spark/img/bottomarrow.svg"); 
-    background-position: center !important; background-repeat: no-repeat;
-    background-size: 70%; left:34% !important; margin-left: -8px; 
-    top:33% !important; margin-top: -8px; width: 26px; height: 26px;
-}
+.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-up .ui-icon{background-image:url("../../resources/spark/img/uparrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                           background-size: 70%; left:33% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}
+.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-top .ui-icon{background-image:url("../../resources/spark/img/toparrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                            background-size: 70%; left:35% !important; margin-left: -8px; top:32% !important; margin-top: -8px; width: 26px; height: 26px;}
+.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-down .ui-icon{background-image:url("../../resources/spark/img/downarrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                             background-size: 70%; left:34% !important; margin-left: -8px; top:37% !important; margin-top: -8px; width: 26px; height: 26px;}
+.ui-orderlist .ui-orderlist-controls .ui-orderlist-button-move-bottom .ui-icon{background-image:url("../../resources/spark/img/bottomarrow.svg"); background-position: center !important; background-repeat: no-repeat;
+                                                                               background-size: 70%; left:34% !important; margin-left: -8px; top:33% !important; margin-top: -8px; width: 26px; height: 26px;}
 
 
 /*Style For UI Carousel --------------------------------------------------------------------------------------*/
 
-.ui-carousel{
-    border:solid 1px #C6D6DF; 
-    padding: 2px 1px !important; 
-    color:#778D9B; 
-    border-radius:3px; 
-    font-family:'ralewayregular';
-}
+.ui-carousel{border:solid 1px #C6D6DF; padding: 2px 1px !important; background-color: #FBFCFD; color:#778D9B; border-radius:3px; font-family:'ralewayregular';}
 .ui-carousel:hover, .ui-carousel:focus{}
 .ui-carousel .ui-carousel-header{background-color:#71CC8D; height:auto !important; padding: 2px 10px !important; border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
                                  font-family:'ralewaymedium';}
@@ -1503,96 +860,35 @@ label{font-weight:normal !important;}
 
 /*Style For Schedule (V - 5.1)--------------------------------------------------------------------------------------*/
 
-.fc{
-    border:solid 1px #d1d3d4; 
-    border-radius: 5px; 
-    -webkit-border-radius: 5px; 
-    -moz-border-radius: 5px; 
-    -webkit-transition: all 0.2s ease; 
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease; 
-    background-color: #FBFCFD; 
-    color: #778D9B;
-}
+.fc{border:solid 1px #d1d3d4; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease; transition: all 0.2s ease; background-color: #FBFCFD; color: #778D9B;}
 .fc:hover, .fc:focus{}
-.fc-header{
-    border-bottom: solid 1px #E8EDF2; 
-    background-color: #F3F5F7;
-    border-top-left-radius:4px !important; 
-    border-top-right-radius:4px !important;
-    -webkit-border-top-left-radius:4px !important; 
-    -webkit-border-top-right-radius:4px !important;
-    -moz-border-top-left-radius:4px !important; 
-    -moz-border-top-right-radius:4px !important;
-}
+.fc-header{border-bottom: solid 1px #E8EDF2; background-color: #F3F5F7;
+           border-top-left-radius:4px !important; border-top-right-radius:4px !important;
+           -webkit-border-top-left-radius:4px !important; -webkit-border-top-right-radius:4px !important;
+           -moz-border-top-left-radius:4px !important; -moz-border-top-right-radius:4px !important;}
 .fc-header-left{width:30%;}
 .fc-header-right{width:30%;}
 .fc-header tbody tr td{vertical-align:middle; padding: 1.5%;}
-.fc-header tbody tr td .fc-button{
-    margin:0px 1px !important; 
-    font-size: 13px;  
-    height:auto !important; 
-    color:#FFFFFF; 
-    padding-top:3px; 
-    padding-bottom:3px;
-    border-radius: 3px; 
-    -webkit-border-radius: 3px; 
-    -moz-border-radius: 3px; 
-    font-weight: bold;   
-    border: solid 0px #5ad07d; 
-    background-color: #5ad07d;
-}
-.fc-header tbody tr td .ui-state-hover, .fc-header tbody tr td .ui-state-active{
-    color:#ffffff; 
-    background-repeat: no-repeat; 
-    border: solid 0px #4bbc6c; 
-    background-color:#4bbc6c;
-}
+.fc-header tbody tr td .fc-button{margin:0px 1px !important; font-size: 13px;  height:auto !important; color:#FFFFFF; padding-top:3px; padding-bottom:3px;
+                                  border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-weight: bold;   border: solid 0px #5ad07d; background-color: #5ad07d;}
+.fc-header tbody tr td .ui-state-hover, .fc-header tbody tr td .ui-state-active{color:#ffffff; background-repeat: no-repeat; border: solid 0px #4bbc6c; background-color:#4bbc6c;}
 .fc-header tbody tr td .fc-button .fc-icon-wrap .ui-icon{margin:4px;}
-.fc-header tbody tr td .fc-button-next .fc-icon-wrap .ui-icon{
-    background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg") !important; 
-    background-position: center !important;
-    background-repeat: no-repeat; 
-    background-size: 100%;
-}
-.fc-header tbody tr td .fc-button-prev .fc-icon-wrap .ui-icon{
-    background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg") !important; 
-    background-position: center !important;
-    background-repeat: no-repeat; 
-    background-size: 100%;
-}
+.fc-header tbody tr td .fc-button-next .fc-icon-wrap .ui-icon{background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg") !important; background-position: center !important;
+                                                              background-repeat: no-repeat; background-size: 100%;}
+.fc-header tbody tr td .fc-button-prev .fc-icon-wrap .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-one-arrow-for-data.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important;
+                                                              background-repeat: no-repeat; background-size: 100%;}
 .fc-header tbody tr td span h2{font-size:18px; margin:0px; color:#798E9C;font-family: 'ralewaymedium';}
 .fc-content{padding: 10px;}
-.fc-content .fc-event{background-color:#000000; border: solid 1px #000000;}
+.fc-content .fc-event{background-color:#d2505a; border: solid 1px #d2505a;}
 .fc-content .fc-event .fc-event-inner{margin:3px;}
 .fc-content .fc-view-month table{border-collapse:inherit; border-spacing:2px;}
-.fc-content table thead tr th{ 
-    background-color: #eff3f5; 
-    color:#798E9C; 
-    border-collapse:separate; 
-    padding: 5px; 
-    border-radius:3px !important; 
-    -webkit-border-radius:3px !important;
-    -moz-border-radius:3px !important;
-}
-.fc-content table thead tr .fc-sun, .fc-content table thead tr .fc-sat{ }
-.fc-content table tbody tr td{
-    border:solid 1px #e5ebf0; 
-    color:#798E9C; 
-    border-collapse:separate; 
-    padding: 5px; 
-    border-radius:3px !important; 
-    -webkit-border-radius:3px !important;
-    -moz-border-radius:3px !important; 
-    -webkit-transition: all 0.2s ease; 
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease; 
-    border-top-width: 1px !important;
-}
+.fc-content table thead tr th{ background-color: #eff3f5; color:#798E9C; border-collapse:separate; padding: 5px; border-radius:3px !important; -webkit-border-radius:3px !important;
+                               -moz-border-radius:3px !important;}
+.fc-content table thead tr .fc-sun, .fc-content table thead tr .fc-sat{background-color:#d9e4e8;}
+.fc-content table tbody tr td{border:solid 1px #e5ebf0; color:#798E9C; border-collapse:separate; padding: 5px; border-radius:3px !important; -webkit-border-radius:3px !important;
+                              -moz-border-radius:3px !important; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease;
+                              -o-transition: all 0.2s ease; transition: all 0.2s ease; border-top-width: 1px !important;}
 .fc-content .fc-view-month table tbody tr td:hover{border-color:#5AD07D; color:#798E9C;}
 .fc-content .ui-state-highlight{border-color:#5AD07D; color:#798E9C;}
 
@@ -1602,54 +898,18 @@ label{font-weight:normal !important;}
 
 /*Style For Schedule (V. 5.1.12) --------------------------------------------------------------------------------------*/
 
-.fc{
-    border:solid 1px #C6D6DF; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    -webkit-transition: all 0.2s ease; 
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease; 
-    background-color: #FBFCFD; 
-    color: #778D9B; 
-    font-family:'ralewayregular';
-}
+.fc{border:solid 1px #C6D6DF; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease; transition: all 0.2s ease; background-color: #FBFCFD; color: #778D9B; font-family:'ralewayregular';}
 .fc:hover, .fc:focus{}
-.fc-toolbar{
-    border-bottom: solid 1px #E8EDF2; 
-    background-color: #F3F5F7; 
-    padding: 1.5%; 
-    margin: 0px !important;
-    border-top-left-radius:4px !important; 
-    border-top-right-radius:4px !important;
-    -webkit-border-top-left-radius:4px !important; 
-    -webkit-border-top-right-radius:4px !important;
-    -moz-border-top-left-radius:4px !important; 
-    -moz-border-top-right-radius:4px !important;
-}
-.fc-toolbar button{
-    border:solid 1px #5FCF80; 
-    background-color:#5FCF80; 
-    border-radius: 3px; 
-    -webkit-border-radius: 3px; 
-    -moz-border-radius: 3px; 
-    font-size:13px !important; 
-    font-family:'ralewaymedium';
-}
-.fc-toolbar .fc-prev-button .ui-icon{
-    background-image:url("../../resources/spark/img/left-one-arrow-for-data.svg"); 
-    background-position: center !important;
-    background-repeat: no-repeat; 
-    background-size: 100%;
-}
-.fc-toolbar .fc-next-button .ui-icon{
-    background-image:url("../../resources/spark/img/right-one-arrow-for-data.svg"); 
-    background-position: center !important;
-    background-repeat: no-repeat; 
-    background-size: 100%;
-}
+.fc-toolbar{border-bottom: solid 1px #E8EDF2; background-color: #F3F5F7; padding: 1.5%; margin: 0px !important;
+            border-top-left-radius:4px !important; border-top-right-radius:4px !important;
+            -webkit-border-top-left-radius:4px !important; -webkit-border-top-right-radius:4px !important;
+            -moz-border-top-left-radius:4px !important; -moz-border-top-right-radius:4px !important;}
+.fc-toolbar button{border:solid 1px #5FCF80; background-color:#5FCF80; color:#F1F6F9; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; font-size:13px !important; font-family:'ralewaymedium';}
+.fc-toolbar .fc-prev-button .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position: center !important;
+                                     background-repeat: no-repeat; background-size: 100%;}
+.fc-toolbar .fc-next-button .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-one-arrow-for-data.svg.xhtml?ln=primefaces-spark"); background-position: center !important;
+                                     background-repeat: no-repeat; background-size: 100%;}
 .fc-toolbar .fc-button-group button{ margin:0px 1px 1px 0px;}
 .fc-toolbar .ui-state-active, .fc-toolbar .ui-state-hover{background-color:#50BB6F; border-color:#50BB6F;}
 
@@ -1683,347 +943,133 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .fc-more-cell .fc-more{color: #27aae1; text-decoration: underline;}
 .fc-popover{border:solid 1px #D1D3D4; background-color: #FBFCFD; border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px;}
 .fc-popover .fc-header {padding:5px 7px !important; color: #778D9B;}
-.fc-popover .fc-header .fc-close{background-image:url("../../resources/spark/img/delete-gray.svg"); background-position: center !important; 
+.fc-popover .fc-header .fc-close{background-image:url("/spark/javax.faces.resource/images/delete-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                  background-repeat: no-repeat; background-size: 100%;}
 
 
 /*Style For Tree --------------------------------------------------------------------------------------*/
 
-.ui-tree{
-    border:solid 1px #C6D6DF; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    color: #778D9B; 
-    -webkit-transition: all 0.2s ease; 
-    -moz-transition: all 0.2s ease;
-    -ms-transition: all 0.2s ease; 
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease; 
-    background-color: #FBFCFD; 
-    padding-top: 3px; 
-    font-family:'ralewayregular';
-}
+.ui-tree{border:solid 1px #C6D6DF; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; color: #778D9B; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease;
+         -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; background-color: #FBFCFD; padding-top: 3px; font-family:'ralewayregular';}
 .ui-tree:hover{}
 .ui-tree .ui-treenode{padding:2px !important;}
 .ui-tree .ui-treenode .ui-treenode-label.ui-state-hover{color:#F7941E;}
 .ui-tree .ui-tree-droppoint.ui-state-hover{background-color:#F7941E;}
 .ui-tree .ui-treenode .ui-state-highlight{color:#5fcf80;}
-.ui-tree .ui-treenode .ui-treenode-leaf-icon{
-    /*background-image:url("/spark/javax.faces.resource/images/treenode-gray.svg.xhtml?ln=primefaces-spark");*/ 
-    background-position: center !important; 
-    background-repeat: no-repeat; background-size: 90%;
-}
-.ui-tree .ui-treenode .ui-icon-grip-dotted-vertical{
-    background-image:url("../../resources/spark/img/treenode-dots-gray.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat; 
-    background-size: 100%;
-}
+.ui-tree .ui-treenode .ui-treenode-leaf-icon{/*background-image:url("/spark/javax.faces.resource/images/treenode-gray.svg.xhtml?ln=primefaces-spark");*/ background-position: center !important; 
+    background-repeat: no-repeat; background-size: 90%;}
+.ui-tree .ui-treenode .ui-icon-grip-dotted-vertical{background-image:url("/spark/javax.faces.resource/images/treenode-dots-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                                    background-repeat: no-repeat; background-size: 100%;}
 .ui-tree .ui-treenode-content{line-height:16px;}
 .ui-tree .ui-treenode-content .ui-chkbox-box{margin-top:0px;}
 .ui-tree .ui-treenode .ui-treenode-label{ margin: 0px; padding: 2px 6px; font-size: 16px; border-radius:3px;}
-.ui-tree .ui-treenode-content .ui-chkbox-box .ui-icon-minus{
-    background-image:url("../../resources/spark/img/minus-sign-gray.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat; 
-    background-size: 100%;
-}
+.ui-tree .ui-treenode-content .ui-chkbox-box .ui-icon-minus{background-image:url("/spark/javax.faces.resource/images/minus-sign-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                                            background-repeat: no-repeat; background-size: 100%;}
 
 .ui-tree .ui-icon{ margin-right:3px;} 
-.ui-tree .ui-icon-triangle-1-e{
-    background-image:url("../../resources/spark/img/rightarrow-gray.svg"); 
-    background-position: center !important;                                
-    background-repeat: no-repeat; 
-    background-size: 120%;
-}
-.ui-tree .ui-icon-triangle-1-s{
-    background-image:url("../../resources/spark/img/downarrow-gray.svg"); 
-    background-position: center !important;                                
-    background-repeat: no-repeat; 
-    background-size: 130%;
-}
-.ui-tree .ui-icon-triangle-1-w{
-    background-image:url("../../resources/spark/img/leftarrow-gray.svg"); 
-    background-position: center !important;                                
-    background-repeat: no-repeat; 
-    background-size: 120%;
-}
-.ui-tree .ui-icon-folder-collapsed{
-    background-image:url("../../resources/spark/img/folder-close-gray.svg"); 
-    background-position: center !important;                                    
-    background-repeat: no-repeat; 
-    background-size: 140%;
-}
-.ui-tree .ui-icon-folder-open{
-    background-image:url("../../resources/spark/img/folder-open-gray.svg"); 
-    background-position: center !important;                               
-    background-repeat: no-repeat; 
-    background-size: 160%;
-}
-.ui-tree .ui-icon-document{
-    background-image:url("../../resources/spark/img/document-gray.svg"); 
-    background-position: center !important;                            
-    background-repeat: no-repeat; 
-    background-size: 160%;
-}
-.ui-tree .ui-icon-note{
-    background-image:url("../../resources/spark/img/note-gray.svg"); 
-    background-position: center !important;                        
-    background-repeat: no-repeat; 
-    background-size: 150%;
-}
-.ui-tree .ui-icon-image{
-    background-image:url("../../resources/spark/img/image-gray.svg"); 
-    background-position: center !important;                         
-    background-repeat: no-repeat; 
-    background-size: 150%;
-}
-.ui-tree .ui-icon-video{
-    background-image:url("../../resources/spark/img/video-gray.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat; 
-    background-size: 160%;
-}
-.ui-tree .ui-icon-music{
-    background-image:url("../../resources/spark/img/music-gray.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat; 
-    background-size: 160%;
-}
+.ui-tree .ui-icon-triangle-1-e{background-image:url("/spark/javax.faces.resource/images/rightarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                               background-repeat: no-repeat; background-size: 120%;}
+.ui-tree .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                               background-repeat: no-repeat; background-size: 130%;}
+.ui-tree .ui-icon-triangle-1-w{background-image:url("/spark/javax.faces.resource/images/leftarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                               background-repeat: no-repeat; background-size: 120%;}
+.ui-tree .ui-icon-folder-collapsed{background-image:url("/spark/javax.faces.resource/images/folder-close-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                   background-repeat: no-repeat; background-size: 140%;}
+.ui-tree .ui-icon-folder-open{background-image:url("/spark/javax.faces.resource/images/folder-open-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                              background-repeat: no-repeat; background-size: 160%;}
+.ui-tree .ui-icon-document{background-image:url("/spark/javax.faces.resource/images/document-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                           background-repeat: no-repeat; background-size: 160%;}
+.ui-tree .ui-icon-note{background-image:url("/spark/javax.faces.resource/images/note-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                       background-repeat: no-repeat; background-size: 150%;}
+.ui-tree .ui-icon-image{background-image:url("/spark/javax.faces.resource/images/image-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                        background-repeat: no-repeat; background-size: 150%;}
+.ui-tree .ui-icon-video{background-image:url("/spark/javax.faces.resource/images/video-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                        background-repeat: no-repeat; background-size: 160%;}
+.ui-tree .ui-icon-music{background-image:url("/spark/javax.faces.resource/images/music-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                        background-repeat: no-repeat; background-size: 160%;}
 
 
 /*Style For TreeTable --------------------------------------------------------------------------------------*/
 
-.ui-treetable{
-    border:solid 1px #C6D6DF; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    color: #778D9B !important; 
-    background-color: #FBFCFD; 
-    padding: 2px; 
-    font-family:'ralewayregular';
-}
+.ui-treetable{border:solid 1px #C6D6DF; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; color: #778D9B !important; background-color: #FBFCFD; padding: 2px; font-family:'ralewayregular';}
 .ui-treetable:hover{}
-.ui-treetable table tbody tr td .ui-chkbox-box{
-    margin-top:-1px; 
-    width:12px !important; 
-    height:12px !important;
-}
-.ui-treetable table tbody tr td .ui-chkbox-box .ui-icon{
-    width:12px; 
-    height: 12px;
-}
+.ui-treetable table tbody tr td .ui-chkbox-box{margin-top:-1px; width:12px !important; height:12px !important;}
+.ui-treetable table tbody tr td .ui-chkbox-box .ui-icon{width:12px; height: 12px;}
 
-.ui-treetable .ui-treetable-header{
-    background-color:#71CC8D; 
-    border-top-left-radius: 2px !important; 
-    border-top-right-radius: 2px !important; 
-    font-size:16px;                                   
-    -webkit-border-top-left-radius: 2px !important; 
-    -webkit-border-top-right-radius: 2px !important; 
-    -moz-border-top-left-radius: 2px !important;                                   
-    -moz-border-top-right-radius: 2px !important; 
-    margin: -2px -2px 2px -2px; 
-    color:#F1F6F9 !important; 
-    padding:10px !important; 
-    font-family:'ralewaymedium';
-}
-
+.ui-treetable .ui-treetable-header{background-color:#71CC8D; border-top-left-radius: 2px !important; border-top-right-radius: 2px !important; font-size:16px;
+                                   -webkit-border-top-left-radius: 2px !important; -webkit-border-top-right-radius: 2px !important; -moz-border-top-left-radius: 2px !important;
+                                   -moz-border-top-right-radius: 2px !important; margin: -2px -2px 2px -2px; color:#F1F6F9 !important; padding:10px !important; font-family:'ralewaymedium';}
 .ui-treetable table{margin: 0px 0px; font-size: 14px; line-height: 14px;}
 .ui-treetable table thead tr th{color: #778D9B; background-color: #dae8ef; border: solid 1px #C1D5DF; outline: none; padding: 5px;}
 .ui-treetable table thead tr th.ui-state-active, .ui-treetable table thead tr th.ui-state-hover{background-color:#778D9B; color: #fff;}
 
-.ui-treetable table tbody tr td{
-    color: #778D9B; 
-    border: solid 1px #E5EBF0; 
-    -webkit-transition: all 0.2s ease; 
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease;                                 
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease; 
-    padding: 8px; 
-    font-size:15px;
-}
-.ui-treetable table tbody .ui-state-hover td{
-    color:#000000 !important; 
-    background-color:#eff3f5;
-}
-.ui-treetable table tbody .ui-state-highlight td{
-    color:#5FCF80 !important; 
-    background-color:#E9F5ED; 
-    font-family:'ralewaymedium';
-}
+.ui-treetable table tbody tr td{color: #778D9B; border: solid 1px #E5EBF0; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; 
+                                -o-transition: all 0.2s ease; transition: all 0.2s ease; padding: 8px; font-size:15px;}
+.ui-treetable table tbody .ui-state-hover td{color:#F7941E !important; background-color:#eff3f5;}
+.ui-treetable table tbody .ui-state-highlight td{color:#5FCF80 !important; background-color:#E9F5ED; font-family:'ralewaymedium';}
 
 .ui-treetable .ui-icon{ margin-right:7px;}
-.ui-treetable .ui-icon-triangle-1-e{
-    background-image:url("../../resources/spark/img/rightarrow-gray.svg"); 
-    background-position: center !important;                                     
-    background-repeat: no-repeat; 
-    background-size: 100%;
-}
-.ui-treetable .ui-icon-triangle-1-s{
-    background-image:url("../../resources/spark/img/downarrow-gray.svg"); 
-    background-position: center !important;                                     
-    background-repeat: no-repeat; 
-    background-size: 110%;
-}
-.ui-treetable .ui-icon-triangle-1-s{
-    background-image:url("../../resources/spark/img/downarrow-gray.svg"); 
-    background-position: center !important;                                     
-    background-repeat: no-repeat; 
-    background-size: 110%;
-}
-.ui-treetable .ui-chkbox-box .ui-icon-minus{
-    background-image:url("../../resources/spark/img/minus-sign-gray.svg"); 
-    background-position: center !important;                                             
-    background-repeat: no-repeat; 
-    background-size: 110%;
-}
+.ui-treetable .ui-icon-triangle-1-e{background-image:url("/spark/javax.faces.resource/images/rightarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                    background-repeat: no-repeat; background-size: 100%;}
+.ui-treetable .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                    background-repeat: no-repeat; background-size: 110%;}
+.ui-treetable .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                    background-repeat: no-repeat; background-size: 110%;}
+.ui-treetable .ui-chkbox-box .ui-icon-minus{background-image:url("/spark/javax.faces.resource/images/minus-sign-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                            background-repeat: no-repeat; background-size: 110%;}
 
-.ui-treetable table thead tr th .ui-icon-triangle-1-n{
-    background-image:url("../../resources/spark/img/uparrow.svg") !important; 
-    background-position: center !important;                                                       
-    background-repeat: no-repeat; 
-    background-size: 110%;
-}
-
-.ui-treetable table thead tr th .ui-icon-triangle-1-s{
-    background-image:url("../../resources/spark/img/downarrow.svg") !important; 
-    background-position: center !important;                                                       
-    background-repeat: no-repeat; 
-    background-size: 110%;
-}
-.ui-treetable table thead tr th .ui-icon-carat-2-n-s{
-    background-image:url("../../resources/spark/img/updown-gray-arrow.svg"); 
-    background-position: center !important;                                                      
-    background-repeat: no-repeat; 
-    background-size: 110%;
-}
-.ui-treetable table thead tr th.ui-state-hover .ui-icon-carat-2-n-s{
-    background-image:url("../../resources/spark/img/updown-arrow.svg"); 
-    background-position: center !important;                                                                     
-    background-repeat: no-repeat; 
-    background-size: 110%;
-}
+.ui-treetable table thead tr th .ui-icon-triangle-1-n{background-image:url("/spark/javax.faces.resource/images/uparrow.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important; 
+                                                      background-repeat: no-repeat; background-size: 110%;}
+.ui-treetable table thead tr th .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important; 
+                                                      background-repeat: no-repeat; background-size: 110%;}
+.ui-treetable table thead tr th .ui-icon-carat-2-n-s{background-image:url("/spark/javax.faces.resource/images/updown-gray-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                                     background-repeat: no-repeat; background-size: 110%;}
+.ui-treetable table thead tr th.ui-state-hover .ui-icon-carat-2-n-s{background-image:url("/spark/javax.faces.resource/images/updown-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                                                    background-repeat: no-repeat; background-size: 110%;}
 
 .ui-treetable-scrollable{border:0px;}
 .ui-treetable-scrollable:hover{border:none;}
 
 .ui-treetable-resizable th.ui-state-hover.ui-sortable-column,
-.ui-treetable-resizable th{ 
-    -webkit-transition:none; 
-    -moz-transition:none; 
-    -ms-transition:none; 
-    -o-transition:none; 
-    transition:none;
-}
+.ui-treetable-resizable th{ -webkit-transition:none; -moz-transition:none; -ms-transition:none; -o-transition:none; transition:none;}
 
-.ui-treetable .ui-column-resizer-helper {
-    background-color: #33AFDE; 
-}
+.ui-treetable .ui-column-resizer-helper {background-color: #33AFDE; }
 
 .ui-tree-horizontal{}
-.ui-tree-horizontal .ui-treenode{
-    padding:5px 40px !important;
-}
-.ui-tree-horizontal .ui-treenode .ui-state-hover{
-    color:#F7941E; 
-    border: solid 1px #F7941E !important;
-}
-.ui-tree-horizontal .ui-treenode .ui-state-highlight{
-    color:#5FCF80; 
-    border: solid 1px #5FCF80 !important;
-}
-.ui-tree-horizontal .ui-treenode-collapsed, .ui-tree-horizontal .ui-treenode-leaf{
-    padding:5px 0px 5px 40px !important;
-}
-.ui-tree-horizontal .ui-treenode .ui-treenode-content{
-    border: solid 1px #778D9B; 
-    background-color: #FBFCFD;
-}
+.ui-tree-horizontal .ui-treenode{padding:5px 40px !important;}
+.ui-tree-horizontal .ui-treenode .ui-state-hover{color:#F7941E; border: solid 1px #F7941E !important;}
+.ui-tree-horizontal .ui-treenode .ui-state-highlight{color:#5FCF80; border: solid 1px #5FCF80 !important;}
+.ui-tree-horizontal .ui-treenode-collapsed, .ui-tree-horizontal .ui-treenode-leaf{padding:5px 0px 5px 40px !important;}
+.ui-tree-horizontal .ui-treenode .ui-treenode-content{border: solid 1px #778D9B; background-color: #FBFCFD;}
 
-.ui-tree-horizontal .ui-icon-plus{
-    background-image:url("../../resources/spark/img/plus-sign-gray.svg"); 
-    background-position: center !important;                                   
-    background-repeat: no-repeat; 
-    background-size: 100%;
-}
-.ui-tree-horizontal .ui-icon-minus{
-    background-image:url("../../resources/spark/img/minus-sign-gray.svg"); 
-    background-position: center !important;                                    
-    background-repeat: no-repeat; 
-    background-size: 110%;
-}
+.ui-tree-horizontal .ui-icon-plus{background-image:url("/spark/javax.faces.resource/images/plus-sign-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                  background-repeat: no-repeat; background-size: 100%;}
+.ui-tree-horizontal .ui-icon-minus{background-image:url("/spark/javax.faces.resource/images/minus-sign-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                   background-repeat: no-repeat; background-size: 110%;}
 
-.ui-treetable-footer{
-    height: auto !important; 
-    background-color: #F9FAFC; 
-    margin: 4px -2px 0px -2px; 
-    padding: 10px 10px !important; 
-    border-top: solid 1px #E8EDF2 !important; 
-    font-size: 14px; 
-    color:#A7B7C1;                      
-    border-top-left-radius: 0px !important; 
-    border-top-right-radius: 0px !important; 
-    -webkit-border-top-left-radius: 0px !important; 
-    -webkit-border-top-right-radius: 0px !important;                     
-    -moz-border-top-left-radius: 0px !important; 
-    -moz-border-top-right-radius: 0px !important;
-}
+.ui-treetable-footer{height: auto !important; background-color: #F9FAFC; margin: 4px -2px 0px -2px; padding: 10px 10px !important; border-top: solid 1px #E8EDF2 !important; font-size: 14px; color:#A7B7C1; 
+                     border-top-left-radius: 0px !important; border-top-right-radius: 0px !important; -webkit-border-top-left-radius: 0px !important; -webkit-border-top-right-radius: 0px !important;
+                     -moz-border-top-left-radius: 0px !important; -moz-border-top-right-radius: 0px !important;}
 
 
 /*Style For UI Accordion --------------------------------------------------------------------------------------*/
 
-.ui-accordion{
-    border:solid 1px #C6D6DF !important; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    background-color: #FBFCFD; 
-    padding:2px 2px 1px 2px !important; 
-    width: auto !important;              
-    font-family:'ralewayregular';
-}
+.ui-accordion{border:solid 1px #C6D6DF !important; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; background-color: #FBFCFD; padding:2px 2px 1px 2px !important; width: auto !important;
+              font-family:'ralewayregular';}
 .ui-accordion:hover{}
-.ui-accordion-header{
-    border-radius:2px; 
-    -webkit-border-radius:2px; 
-    -moz-border-radius:2px; 
-    font-size: 15px !important; 
-    background-color:#71CC8D;                     
-    padding: 7px 5px 5px 30px !important; 
-    margin-bottom:1px !important;
-}
+.ui-accordion-header{border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px; font-size: 15px !important; color:#F1F6F9; background-color:#71CC8D;
+                     padding: 7px 5px 5px 30px !important; margin-bottom:1px !important;}
 .ui-accordion .ui-state-hover, .ui-accordion .ui-state-active{background-color:#49b669; color:#99E4B0;}
-.ui-accordion-header .ui-icon-triangle-1-s{
-    background-image:url("/../../resources/spark/img/downarrow.svg"); 
-    background-position: center !important;                                            
-    background-repeat: no-repeat; 
-    background-size: 110%;
-}
-.ui-accordion-header .ui-icon-triangle-1-e{
-    background-image:url("../../resources/spark/img/right-arrow.svg"); 
-    background-position: center !important;                                            
-    background-repeat: no-repeat; 
-    background-size: 100%;
-}
-.ui-accordion .ui-accordion-content.ui-widget-content{
-    padding:5px; 
-    font-size:15px !important; 
-    color:#ccc;
-}
+.ui-accordion-header .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                           background-repeat: no-repeat; background-size: 110%;}
+.ui-accordion-header .ui-icon-triangle-1-e{background-image:url("/spark/javax.faces.resource/images/right-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                           background-repeat: no-repeat; background-size: 100%;}
+.ui-accordion .ui-accordion-content.ui-widget-content{padding:5px; font-size:15px !important; color:#ccc;}
 
 
 /*Style For UI PanelGrid --------------------------------------------------------------------------------------*/
 
-.ui-panelgrid{
-    border:solid 1px #C6D6DF; 
-    background-color: #FBFCFD; 
-    font-size: 15px; 
-    font-family:'ralewayregular';
-}
+.ui-panelgrid{border:solid 1px #C6D6DF; background-color: #FBFCFD; font-size: 15px; font-family:'ralewayregular';}
 .ui-panelgrid-content{color: #778D9B;}
 .ui-panelgrid thead tr td, .ui-panelgrid tfoot tr td{color:#33AFDE; background-color: #eff3f5; border: solid 1px #C6D6DF !important;}
 .ui-panelgrid tbody tr td{border: solid 1px #C6D6DF !important;}
@@ -2039,120 +1085,48 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 
 /*Style For UI ScrollPanel --------------------------------------------------------------------------------------*/
 
-.ui-scrollpanel{
-    border:solid 1px #C6D6DF; 
-    padding: 5px !important; 
-    color:#778D9B; 
-    background-color: #FBFCFD; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    font-size:15px;
-}
+.ui-scrollpanel{border:solid 1px #C6D6DF; padding: 5px !important; color:#778D9B; background-color: #FBFCFD; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; font-size:15px;}
 .ui-scrollpanel:hover{}
 .ui-scrollpanel .ui-scrollpanel-vbar{width:10px; border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px;}
 .ui-scrollpanel .ui-scrollpanel-hbar{border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px;}
 .ui-scrollpanel .ui-scrollpanel-vbar .ui-scrollpanel-track .ui-scrollpanel-drag,
-.ui-scrollpanel .ui-scrollpanel-hbar .ui-scrollpanel-track .ui-scrollpanel-drag{
-    background-color:#72828B; 
-    border-radius:2px; 
-    -webkit-border-radius:2px; 
-    -moz-border-radius:2px;
-}
+.ui-scrollpanel .ui-scrollpanel-hbar .ui-scrollpanel-track .ui-scrollpanel-drag{background-color:#72828B; border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px;}
 
 
 /*Style For UI ToolBar --------------------------------------------------------------------------------------*/
 
-.ui-toolbar{
-    border: solid 1px #D9E3E8; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    padding:2px !important;
-}
+.ui-toolbar{border: solid 1px #D9E3E8; background-color: #FBFCFD; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; padding:2px !important;}
 .ui-toolbar:hover{}
 
 /*Style For UI NotificationBar --------------------------------------------------------------------------------------*/
 
-.ui-notificationbar{
-    z-index:99999999999999; 
-    background-color: #A02121; 
-    color: #ffffff; 
-    height: 50px !important;
-}
+.ui-notificationbar{z-index:99999999999999; background-color: #A02121; color: #ffffff; height: 50px !important;}
 
 
 /*Style For Ribbon And TabView --------------------------------------------------------------------------------------*/
 
-.ui-tabs-top{
-    border:solid 1px #C6D6DF; 
-    background-color: #FBFCFD; 
-    border-radius:3px; 
-    -webkit-border-radius:3px; 
-    -moz-border-radius:3px; 
-    padding: 0px !important;
-}
+.ui-tabs-top{border:solid 1px #C6D6DF; background-color: #FBFCFD; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; padding: 0px !important;}
 .ui-tabs-top:hover{}
-.ui-tabs-top .ui-tabs-nav{
-    border-bottom-right-radius: 0px; 
-    border-bottom-left-radius: 0px; 
-    border-top-right-radius: 2px; 
-    border-top-left-radius: 2px; 
-    background-color:#778D9B;
-}
+.ui-tabs-top .ui-tabs-nav{border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; border-top-right-radius: 2px; border-top-left-radius: 2px; background-color:#778D9B;}
 .ui-tabs-top .ui-tabs-navscroller{border-top-right-radius: 2px; border-top-left-radius: 2px;}
 .ui-tabs-top .ui-tabs-navscroller .ui-tabs-nav{border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px; line-height: 1.2;}
 .ui-tabs-top .ui-tabs-navscroller .ui-tabs-navscroller-btn{height: 36px; padding: 0px 4px; background-color:#5FCF80;}
-.ui-tabs-top .ui-tabs-navscroller .ui-tabs-navscroller-btn-left{
-    border-bottom-right-radius: 0px; 
-    border-top-right-radius: 0px; 
-    border-top-left-radius: 2px; 
-    left:0px;
-}
-.ui-tabs-top .ui-tabs-navscroller .ui-tabs-navscroller-btn-left .ui-icon{
-    background-image:url("../../resources/spark/img/left-arrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat; 
-    background-size: 110%; 
-    margin-top: 9px;
-}
-.ui-tabs-top .ui-tabs-navscroller .ui-tabs-navscroller-btn-right{
-    border-bottom-left-radius: 0px; 
-    border-top-left-radius: 0px; 
-    border-top-right-radius: 2px; 
-    right: 0px;
-}
-.ui-tabs-top .ui-tabs-navscroller .ui-tabs-navscroller-btn-right .ui-icon{
-    background-image:url("../../resources/spark/img/right-arrow.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat; 
-    background-size: 110%; 
-    margin-top: 9px;
-}
+.ui-tabs-top .ui-tabs-navscroller .ui-tabs-navscroller-btn-left{border-bottom-right-radius: 0px; border-top-right-radius: 0px; border-top-left-radius: 2px; left:0px;}
+.ui-tabs-top .ui-tabs-navscroller .ui-tabs-navscroller-btn-left .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                                                         background-repeat: no-repeat; background-size: 110%; margin-top: 9px;}
+.ui-tabs-top .ui-tabs-navscroller .ui-tabs-navscroller-btn-right{border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-top-right-radius: 2px; right: 0px;}
+.ui-tabs-top .ui-tabs-navscroller .ui-tabs-navscroller-btn-right .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                                                          background-repeat: no-repeat; background-size: 110%; margin-top: 9px;}
 
 .ui-tabs-top .ui-tabs-navscroller .ui-state-disabled{opacity:1; filter: alpha(opacity=100);}
 .ui-tabs-top .ui-tabs-navscroller .ui-state-disabled .ui-icon{opacity:0.4; filter: alpha(opacity=40);}
 
-.ui-tabs-top .ui-tabs-nav li{
-    border:solid 1px transparent !important; 
-    top:1px !important; 
-    font-size: 14px;   
-    margin: 0 .2em 1px 0 !important;
-}
-.ui-tabs-top .ui-tabs-nav li .ui-icon-close{
-    background-image:url("../../resources/spark/img/delete.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat; 
-    background-size: 100%; 
-    margin-top: 8px !important;
-}
+.ui-tabs-top .ui-tabs-nav li{border:solid 1px transparent !important; top:1px !important; font-size: 14px;   margin: 0 .2em 1px 0 !important;}
+.ui-tabs-top .ui-tabs-nav li .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                            background-repeat: no-repeat; background-size: 100%; margin-top: 8px !important;}
 .ui-tabs-top .ui-tabs-nav li.ui-state-hover .ui-icon-close,
-.ui-tabs-top .ui-tabs-nav li.ui-state-active .ui-icon-close{
-    background-image:url("../../resources/spark/img/delete-green.svg"); 
-    background-position: center !important; 
-    background-repeat: no-repeat; 
-    background-size: 100%; margin-top: 8px !important;
-}
+.ui-tabs-top .ui-tabs-nav li.ui-state-active .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete-green.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
+                                                            background-repeat: no-repeat; background-size: 100%; margin-top: 8px !important;}
 .ui-tabs-top .ui-tabs-nav li a{color:#FBFCFD !important; font-size: 15px;}
 .ui-tabs-top .ui-tabs-nav li.ui-state-hover{background-color:#E3EDF3 !important; border: solid 1px #E3EDF3 !important; border-radius:2px;}
 .ui-tabs-top .ui-tabs-nav li.ui-tabs-selected,
@@ -2171,14 +1145,8 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-ribbon .ui-selectonemenu{border-radius:3px !important; -webkit-border-radius:3px !important; -moz-border-radius:3px !important;}
 .ui-ribbon .ui-button .ui-button-text, .ui-ribbon .ui-selectonemenu-label{font-size:12px !important;}
 .ui-ribbon .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon{margin-top:9px !important;}
-.ui-ribbon-bigbutton .ui-icon, .ui-ribbon-group .ui-icon{
-    height: 16px !important; 
-    width: 16px !important; 
-    margin: -6px 0px 0px 0px !important; 
-    left:15% !important;
-    font-size: 13px !important; 
-    color:#fff;
-}
+.ui-ribbon-bigbutton .ui-icon, .ui-ribbon-group .ui-icon{height: 16px !important; width: 16px !important; margin: -6px 0px 0px 0px !important; left:15% !important;
+                                                         font-size: 13px !important; color:#fff;}
 .ui-colorpicker .ui-c span{border:solid 1px #fff !important; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px;}
 
 
@@ -2214,20 +1182,20 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-tabs-bottom .ui-tabs-navscroller .ui-tabs-nav{border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px; line-height: 1.2;}
 .ui-tabs-bottom .ui-tabs-navscroller .ui-tabs-navscroller-btn{height: 36px; padding: 0px 4px; background-color:#5FCF80;}
 .ui-tabs-bottom .ui-tabs-navscroller .ui-tabs-navscroller-btn-left{border-bottom-right-radius: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px !important; border-bottom-left-radius: 2px; left:0px;}
-.ui-tabs-bottom .ui-tabs-navscroller .ui-tabs-navscroller-btn-left .ui-icon{background-image:url("../../resources/spark/img/left-arrow.svg"); background-position: center !important; 
+.ui-tabs-bottom .ui-tabs-navscroller .ui-tabs-navscroller-btn-left .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                             background-repeat: no-repeat; background-size: 110%; margin-top: 10px;}
 .ui-tabs-bottom .ui-tabs-navscroller .ui-tabs-navscroller-btn-right{border-bottom-left-radius: 0px; border-top-left-radius: 0px; border-top-right-radius: 0px !important; border-bottom-right-radius: 2px; right: 0px;}
-.ui-tabs-bottom .ui-tabs-navscroller .ui-tabs-navscroller-btn-right .ui-icon{background-image:url("../../resources/spark/img/right-arrow.svg"); background-position: center !important; 
+.ui-tabs-bottom .ui-tabs-navscroller .ui-tabs-navscroller-btn-right .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                              background-repeat: no-repeat; background-size: 110%; margin-top: 10px;}
 
 .ui-tabs-bottom .ui-tabs-navscroller .ui-state-disabled{opacity:1; filter: alpha(opacity=100);}
 .ui-tabs-bottom .ui-tabs-navscroller .ui-state-disabled .ui-icon{opacity:0.4; filter: alpha(opacity=40);}
 
 .ui-tabs-bottom .ui-tabs-nav li{border:solid 1px transparent !important; top:1px !important; font-size: 14px;  margin: -1px .2em 2px 0 !important;}
-.ui-tabs-bottom .ui-tabs-nav li .ui-icon-close{background-image:url("../../resources/spark/img/delete.svg"); background-position: center !important; 
+.ui-tabs-bottom .ui-tabs-nav li .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                background-repeat: no-repeat; background-size: 100%; margin-top: 8px !important;}
 .ui-tabs-bottom .ui-tabs-nav li.ui-state-hover .ui-icon-close,
-.ui-tabs-bottom .ui-tabs-nav li.ui-state-active .ui-icon-close{background-image:url("../../resources/spark/img/delete-green.svg"); background-position: center !important; 
+.ui-tabs-bottom .ui-tabs-nav li.ui-state-active .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete-green.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                background-repeat: no-repeat; background-size: 100%; margin-top: 8px !important;}
 .ui-tabs-bottom .ui-tabs-nav li a{color:#FBFCFD !important; font-size: 15px;}
 .ui-tabs-bottom .ui-tabs-nav li.ui-state-hover{background-color:#E3EDF3 !important; border: solid 1px #E3EDF3 !important; border-bottom-left-radius:2px; border-bottom-right-radius:2px;}
@@ -2252,28 +1220,28 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-dialog{background-color: #FBFCFD; color: #778D9B; border-radius:3px;}
 .ui-dialog .ui-dialog-titlebar{padding:5px 15px !important; border-bottom: solid 1px #E8EDF2 !important; background-color: #F3F5F7; color: #778D9B; font-size: 16px;}
 .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon{padding:0px; margin-top: 6px;}
-.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-closethick{background-image:url("../../resources/spark/img/delete-gray.svg"); background-position: center !important; 
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-closethick{background-image:url("/spark/javax.faces.resource/images/delete-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                             background-repeat: no-repeat; background-size: 100%;}
-.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-minus{background-image:url("../../resources/spark/img/minus-sign-gray.svg"); background-position: center !important; 
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-minus{background-image:url("/spark/javax.faces.resource/images/minus-sign-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                        background-repeat: no-repeat; background-size: 100%;}
-.ui-dialog-docking-zone .ui-icon-plus{background-image:url("../../resources/spark/img/plus-sign-gray.svg"); background-position: center !important; 
+.ui-dialog-docking-zone .ui-icon-plus{background-image:url("/spark/javax.faces.resource/images/plus-sign-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                       background-repeat: no-repeat; background-size: 90%;}
-.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-extlink{background-image:url("../../resources/spark/img/external-gray.svg"); background-position: center !important; 
+.ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon .ui-icon-extlink{background-image:url("/spark/javax.faces.resource/images/external-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                          background-repeat: no-repeat; background-size: 100%;}
-.ui-dialog .ui-dialog-titlebar .ui-icon-newwin{background-image:url("../../resources/spark/img/external-gray-revert.svg"); background-position: center !important; 
+.ui-dialog .ui-dialog-titlebar .ui-icon-newwin{background-image:url("/spark/javax.faces.resource/images/external-gray-revert.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                background-repeat: no-repeat; background-size: 100%;}
 .ui-confirm-dialog .ui-dialog-content .ui-confirm-dialog-message{color:#D76666;}
 .ui-dialog .ui-dialog-content{padding:20px !important; color:#778D9B; font-size: 16px;}
-.ui-dialog .ui-dialog-content .ui-icon-alert{background-image:url("../../resources/spark/img/warn-red.svg"); background-position: center !important; 
+.ui-dialog .ui-dialog-content .ui-icon-alert{background-image:url("/spark/javax.faces.resource/images/warn-red.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                              background-repeat: no-repeat; background-size: 140%; margin: 4px 10px 0px 0px;}
 .ui-dialog .ui-dialog-content .ui-confirm-dialog-message{margin:0px;}
 .ui-dialog .ui-dialog-footer{padding: 10px 20px !important; border-top: solid 1px #E8EDF2 !important; background-color: #F3F5F7; margin:0px !important; text-align: right !important;}
-.ui-dialog .ui-resizable-se{background-image:url("../../resources/spark/img/handle-gray.svg"); background-position: center !important; 
+.ui-dialog .ui-resizable-se{background-image:url("/spark/javax.faces.resource/images/handle-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                             background-repeat: no-repeat; background-size: 100%;}
 
 .ui-overlaypanel{color: #778D9B;}
 .ui-overlaypanel .ui-overlaypanel-close{background-color: #778D9B;}
-.ui-overlaypanel .ui-overlaypanel-close .ui-icon-closethick{background-image:url("../../resources/spark/img/delete.svg"); background-position: center !important; 
+.ui-overlaypanel .ui-overlaypanel-close .ui-icon-closethick{background-image:url("/spark/javax.faces.resource/images/delete.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                             background-repeat: no-repeat; background-size: 90%; width: 20px; height: 20px;}
 .ui-overlaypanel .ui-overlaypanel-content{background-color: #FBFCFD; padding: 20px !important; border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px;}
 
@@ -2281,17 +1249,17 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-lightbox .ui-lightbox-content-wrapper{ }
 .ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left{left:5px;}
 .ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right{right:5px;}
-.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left .ui-icon{background-image:url("../../resources/spark/img/left-arrow.svg"); background-position: center !important; 
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                          background-repeat: no-repeat; background-size: 130%; width: 40px; height: 40px; opacity: 0.6; filter: alpha(opacity=60);}
 .ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-left .ui-icon:hover{opacity: 1; filter: alpha(opacity=100);}
-.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right .ui-icon{background-image:url("../../resources/spark/img/right-arrow.svg"); background-position: center !important; 
+.ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                           background-repeat: no-repeat; background-size: 130%; width: 40px; height: 40px; opacity: 0.6; filter: alpha(opacity=60);}
 .ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-nav-right .ui-icon:hover{opacity: 1; filter: alpha(opacity=100);}
 .ui-lightbox .ui-lightbox-content-wrapper .ui-lightbox-content{}
 .ui-lightbox .ui-lightbox-caption{padding: 5px 20px 10px 20px !important; border-top: solid 1px #E8EDF2 !important; background-color: #F3F5F7; margin:10px -10px -10px -10px !important; color: #778D9B;
                                   border-bottom-right-radius: 5px; border-bottom-left-radius: 5px;}
 .ui-lightbox .ui-lightbox-caption .ui-lightbox-close{ padding: 0px; margin-top: 8px;}
-.ui-lightbox .ui-lightbox-caption .ui-lightbox-close .ui-icon{background-image:url("../../resources/spark/img/delete-gray.svg"); background-position: center !important; 
+.ui-lightbox .ui-lightbox-caption .ui-lightbox-close .ui-icon{background-image:url("/spark/javax.faces.resource/images/delete-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                               background-repeat: no-repeat; background-size: 100%;}
 
 .ui-dialog-docking-zone{z-index: 999999999999999;}
@@ -2306,9 +1274,9 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-fieldset-legend{color:#F1F6F9; font-size: 15px; line-height: 15px; font-family:'ralewaymedium'; background-color:#71CC8D; border-radius:3px;
                     -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
 .ui-fieldset-legend.ui-state-hover{background-color:#49B669;}
-.ui-fieldset-legend .ui-icon-plusthick{background-image:url("../../resources/spark/img/plus-sign.svg"); background-position: center !important; 
+.ui-fieldset-legend .ui-icon-plusthick{background-image:url("/spark/javax.faces.resource/images/plus-sign.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                        background-repeat: no-repeat; background-size: 90%; margin-right: 5px;}
-.ui-fieldset-legend .ui-icon-minusthick{background-image:url("../../resources/spark/img/minus-sign.svg"); background-position: center !important; 
+.ui-fieldset-legend .ui-icon-minusthick{background-image:url("/spark/javax.faces.resource/images/minus-sign.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                         background-repeat: no-repeat; background-size: 90%; margin-right: 5px;}
 
 .ui-fieldset-content{font-size: 15px; color:#778D9B;}
@@ -2341,23 +1309,9 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 
 .ui-button{outline: none; margin:0px 1px 1px 0px;}
 .ui-button-text-only .ui-button-text{padding: 8px 20px 8px 20px !important;}
-.ui-button-text{
-    padding: 8px 20px 8px 40px !important; 
-    font-size: 14px; 
-    font-family: 'ralewaysemibold'; 
-    color:#F1F6F9; 
-    text-shadow:none; 
-    border:solid 2px transparent;
-    border-radius:2px !important; 
-    -webkit-border-radius:2px !important; 
-    -moz-border-radius:2px !important; 
-    background-color:#5fcf80;
-    -webkit-transition: all 0.2s ease; 
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease; 
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease;
-}
+.ui-button-text{padding: 8px 20px 8px 40px !important; font-size: 14px; font-family: 'ralewaysemibold'; color:#F1F6F9; text-shadow:none; border:solid 2px transparent;
+                border-radius:2px !important; -webkit-border-radius:2px !important; -moz-border-radius:2px !important; background-color:#5fcf80;
+                -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
 .ui-button.ui-state-active .ui-button-text, .ui-buttonset .ui-state-active .ui-button-text{background-color:#3AB35D;}
 .ui-button.ui-state-hover .ui-button-text, .ui-buttonset .ui-state-hover .ui-button-text{background-color:#3ac162;}
 .ui-button-icon-left{z-index:120; margin-left:8px;}
@@ -2375,17 +1329,8 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 
 .ui-splitbutton{background-color: #fff;}
 .ui-splitbutton:hover, .ui-splitbutton:focus{}
-.ui-splitbutton .ui-splitbutton-menubutton .ui-icon{
-    background-image:url("../../resources/spark/img/menu-dots.svg") !important; 
-    background-size: 100%; 
-    background-position: center;
-}
-.ui-splitbutton .ui-button{
-    border-radius:5px; 
-    -webkit-border-radius:5px; 
-    -moz-border-radius:5px; 
-    margin-right: 0px !important
-}
+.ui-splitbutton .ui-splitbutton-menubutton .ui-icon{background-image:url("/spark/javax.faces.resource/images/menu-dots.svg.xhtml?ln=primefaces-spark") !important; background-size: 100%; background-position: center;}
+.ui-splitbutton .ui-button{border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px; margin-right: 0px !important}
 .ui-splitbutton .ui-splitbutton-menubutton{margin-left: -1px !important;}
 
 
@@ -2415,9 +1360,9 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-menu.ui-menu-toggleable{border-collapse:separate !important;}
 .ui-menu .ui-menu-list .ui-widget-header{font-size:14px; color: #A1AFB7; background-color: #e5ebf0; width:100% !important; border-radius: 2px;}
 .ui-menu .ui-menu-list .ui-widget-header:hover{color:#27AAE1;}
-.ui-menu .ui-menu-list .ui-widget-header .ui-icon-triangle-1-s{background-image:url("../../resources/spark/img/downarrow-gray.svg"); background-position: center !important; 
+.ui-menu .ui-menu-list .ui-widget-header .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                background-repeat: no-repeat; background-size: 100%;}
-.ui-menu .ui-menu-list .ui-widget-header .ui-icon-triangle-1-e{background-image:url("../../resources/spark/img/rightarrow-gray.svg"); background-position: center !important; 
+.ui-menu .ui-menu-list .ui-widget-header .ui-icon-triangle-1-e{background-image:url("/spark/javax.faces.resource/images/rightarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                background-repeat: no-repeat; background-size: 100%;}
 
 .ui-menu .ui-menu-list .ui-menuitem{font-size:14px; display: table;}
@@ -2425,16 +1370,16 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-menu .ui-menu-list .ui-menuitem .ui-state-hover, .ui-menu .ui-menu-list .ui-state-hover{background-color:#E8EEF2; color:#27AAE1; border-radius:2px;}
 .ui-menu .ui-state-hover .ui-menuitem-link{color:#27aae1 !important;}
 .ui-menu .ui-menuitem .ui-menuitem-link{color:#9EADB5; width:100% !important; box-sizing: border-box; font-family:'ralewaymedium';}
-.ui-menu .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-e{background-image:url("../../resources/spark/img/rightarrow-gray.svg"); background-position: center !important; 
+.ui-menu .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-e{background-image:url("/spark/javax.faces.resource/images/rightarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                               background-repeat: no-repeat; background-size: 100%;}
-.ui-menu .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-s{background-image:url("../../resources/spark/img/downarrow-gray.svg"); background-position: center !important; 
+.ui-menu .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                               background-repeat: no-repeat; background-size: 100%;}
 .ui-menu .ui-menuitem .ui-menuitem-link .ui-icon{margin-right:5px;}
 .ui-menu .ui-menuitem .ui-menu-list{background-color: #FBFCFD;}
 .ui-slidemenu .ui-menuitem .ui-menu-child{box-shadow:none !important;}
 .ui-menu .ui-slidemenu-wrapper .ui-slidemenu-backward{background-color:#eff3f5; left: 2px; color:#778D9B; padding: 3px 3px 4px 3px; font-size: 14px;}
 .ui-menu .ui-slidemenu-wrapper .ui-slidemenu-backward:hover{color:#27AAE1;}
-.ui-menu .ui-slidemenu-wrapper .ui-slidemenu-backward .ui-icon-triangle-1-w{background-image:url("../../resources/spark/img/leftarrow-gray.svg"); margin: 2px 5px 0px 0px;
+.ui-menu .ui-slidemenu-wrapper .ui-slidemenu-backward .ui-icon-triangle-1-w{background-image:url("/spark/javax.faces.resource/images/leftarrow-gray.svg.xhtml?ln=primefaces-spark"); margin: 2px 5px 0px 0px;
                                                                             background-position: center !important; background-repeat: no-repeat; background-size: 85%;}
 
 .ui-panelmenu{border:solid 1px #C6D6DF; background-color: #FBFCFD; color: #778D9B; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; padding: 2px;}
@@ -2443,18 +1388,18 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
                                                        font-size: 14px; font-weight: normal; margin-bottom: 1px !important; background-color:#5FCF80;}
 .ui-panelmenu .ui-panelmenu-panel h3.ui-state-hover{background-color:#3ac162;} 
 .ui-panelmenu .ui-panelmenu-panel h3.ui-state-active{background-color:#4DB76C;}
-.ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-icon-triangle-1-e{background-image:url("../../resources/spark/img/right-arrow.svg"); background-position: center !important; 
+.ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-icon-triangle-1-e{background-image:url("/spark/javax.faces.resource/images/right-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                              background-repeat: no-repeat; background-size: 105%;}
-.ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-icon-triangle-1-s{background-image:url("../../resources/spark/img/downarrow.svg"); background-position: center !important; 
+.ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                              background-repeat: no-repeat; background-size: 110%;}
 .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-header a{padding: 5px 5px 6px 30px;}
 
 .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-content .ui-menuitem:hover{background-color:#f1f4f7;}
 .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-content .ui-menuitem .ui-state-hover{color:#27AAE1;}
 .ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-content .ui-menuitem a{color: #9EADB5; font-size: 14px; font-family: 'ralewaymedium';}
-.ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-content .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-e{background-image:url("../../resources/spark/img/rightarrow-gray.svg"); background-position: center !important; 
+.ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-content .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-e{background-image:url("/spark/javax.faces.resource/images/rightarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                                                              background-repeat: no-repeat; background-size: 90%;}
-.ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-content .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-s{background-image:url("../../resources/spark/img/downarrow-gray.svg"); background-position: center !important; 
+.ui-panelmenu .ui-panelmenu-panel .ui-panelmenu-content .ui-menuitem .ui-menuitem-link .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow-gray.svg.xhtml?ln=primefaces-spark"); background-position: center !important; 
                                                                                                              background-repeat: no-repeat; background-size: 90%;}
 
 .ui-tabmenu{border:solid 1px #C6D6DF; background-color: #FBFCFD; color: #778D9B; border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; padding:2px 2px 0px 2px;}
@@ -2465,7 +1410,7 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-tabmenu .ui-tabmenu-nav .ui-state-active a .ui-icon{background-position: center !important; background-repeat: no-repeat; background-size: 90%; top: 1px;}
 
 
-/*Style For UI Messages ------------------------------------------------ */
+/*Style For UI Messages ------------------------------------------------------------------------------------- */
 .ui-messages-error,
 .ui-message-error{color: #F03369 !important; background-color: #FBFCFD !important; border-color: #F4BACB !important; font-size: 16px; font-weight: normal; padding:6px !important;}
 .ui-messages-info,
@@ -2473,7 +1418,7 @@ hr.ui-widget-header{background-color: #E5EBF0; border-width:0px;}
 .ui-messages-info .ui-icon-close,
 .ui-messages-warn .ui-icon-close,
 .ui-messages-error .ui-icon-close,
-.ui-messages-fatal .ui-icon-close{background-image:url("../../resources/spark/img/delete-gray.svg") !important; background-size: 110%; background-position: center;}
+.ui-messages-fatal .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete-gray.svg.xhtml?ln=primefaces-spark") !important; background-size: 110%; background-position: center;}
 .ui-messages-warn,
 ui-message-warn{color: #F9BF08 !important; background-color: #FBFCFD !important; border-color: #F7E3A4 !important; font-size: 16px; font-weight: normal; padding:6px !important;}
 .ui-messages-fatal,
@@ -2481,11 +1426,11 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-messages-info-icon,
 .ui-messages-warn-icon, .ui-messages-error-icon,.ui-message-error-icon, .ui-messages-fatal-icon{margin:-1px !important; background-repeat:no-repeat  !important;
                                                                                                 background:none; background-position:center  !important; background-size:70%  !important;}
-.ui-message-error-icon{background-image:url("../../resources/spark/img/warn-pink.svg") !important;  background-position: top !important; background-size: 120% !important;}
-.ui-messages-error-icon{background-image:url("../../resources/spark/img/warn-pink.svg") !important; background-position: top !important; background-size: 90% !important;}
-.ui-messages-info-icon{background-image:url("../../resources/spark/img/warn-blue.svg") !important; background-position: top !important; background-size: 90% !important;}
-.ui-messages-warn-icon{background-image:url("../../resources/spark/img/warn-hardal.svg") !important; background-position: top !important; background-size: 90% !important;}
-.ui-messages-fatal-icon{background-image:url("../../resources/spark/img/warn-red.svg") !important; background-position: top !important; background-size: 90% !important;}
+.ui-message-error-icon{background-image:url("/spark/javax.faces.resource/images/warn-pink.svg.xhtml?ln=primefaces-spark") !important;  background-position: top !important; background-size: 120% !important;}
+.ui-messages-error-icon{background-image:url("/spark/javax.faces.resource/images/warn-pink.svg.xhtml?ln=primefaces-spark") !important; background-position: top !important; background-size: 90% !important;}
+.ui-messages-info-icon{background-image:url("/spark/javax.faces.resource/images/warn-blue.svg.xhtml?ln=primefaces-spark") !important; background-position: top !important; background-size: 90% !important;}
+.ui-messages-warn-icon{background-image:url("/spark/javax.faces.resource/images/warn-hardal.svg.xhtml?ln=primefaces-spark") !important; background-position: top !important; background-size: 90% !important;}
+.ui-messages-fatal-icon{background-image:url("/spark/javax.faces.resource/images/warn-red.svg.xhtml?ln=primefaces-spark") !important; background-position: top !important; background-size: 90% !important;}
 
 
 .ui-dialog-message.ui-messages-info-icon,
@@ -2494,7 +1439,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-dialog-message.ui-messages-fatal-icon{margin:-6px 0px 0px 0px !important;}
 
 
-/*Style For UI Panel ----------------------------------------------------- */
+/*Style For UI Panel ------------------------------------------------------------------------------------- */
 
 .ui-panel{border: 1px solid #C6D6DF; padding:2px !important; background-color:#FBFCFD; border-radius:3px;}
 .ui-panel .ui-panel-titlebar{padding: 8px 10px 8px 10px !important; font-size:16px; color:#F1F6F9; z-index:100; font-family:'ralewaymedium';
@@ -2505,20 +1450,20 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon,
 .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon:hover,
 .ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon:focus{margin-top:0px;}
-.ui-panel .ui-panel-titlebar .ui-icon-closethick{background-image:url("../../resources/spark/img/delete.svg") !important; background-position: center !important;
+.ui-panel .ui-panel-titlebar .ui-icon-closethick{background-image:url("/spark/javax.faces.resource/images/delete.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important;
                                                  background-size: 110% !important;}
-.ui-panel .ui-panel-titlebar .ui-icon-minusthick{background-image:url("../../resources/spark/img/minus-sign.svg") !important; background-position: center !important;
+.ui-panel .ui-panel-titlebar .ui-icon-minusthick{background-image:url("/spark/javax.faces.resource/images/minus-sign.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important;
                                                  background-size: 110% !important;}
-.ui-panel .ui-panel-titlebar .ui-icon-plusthick{background-image:url("../../resources/spark/img/plus-sign.svg") !important; background-position: center !important;
+.ui-panel .ui-panel-titlebar .ui-icon-plusthick{background-image:url("/spark/javax.faces.resource/images/plus-sign.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important;
                                                 background-size: 110% !important;}
-.ui-panel .ui-panel-titlebar .ui-icon-gear{background-image:url("../../resources/spark/img/gear.svg") !important; background-position: center !important;
+.ui-panel .ui-panel-titlebar .ui-icon-gear{background-image:url("/spark/javax.faces.resource/images/gear.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important;
                                            background-size: 110% !important;}
 .ui-panel .ui-panel-content.ui-widget-content{padding:5px; font-size: 15px; color: #778D9B; font-family: 'ralewayregular';}
 .ui-panel .ui-panel-footer{border-top: solid 1px #E8EDF2 !important; background-color:#F6FAFC; margin: 0px -2px -2px -2px !important; font-size: 14px;
                            border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color:#C7D5DB;}
 
 
-/*Style For SelectOneMenu And SelectCheckBoxMenu -------------------------------------------------- */
+/*Style For SelectOneMenu And SelectCheckBoxMenu ------------------------------------------------------------------------------------- */
 
 .ui-selectonemenu.ui-state-focus .ui-selectonemenu-label{background-color:#f9fbfc !important;}
 .ui-selectonemenu .ui-selectonemenu-label{width: 98% !important;}
@@ -2541,12 +1486,12 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-selectonemenu-panel .ui-state-highlight, .ui-selectcheckboxmenu-panel .ui-state-highlight{color:#71CC8D !important; background-color: #fff;}
 .ui-selectonemenu-panel .ui-state-hover, .ui-selectcheckboxmenu-panel .ui-state-hover{ background-color:#ffffff !important; -webkit-transition: all 0.2s ease;
                                                                                        -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
-.ui-selectonemenu-trigger .ui-icon-triangle-1-s, .ui-selectcheckboxmenu-trigger .ui-icon-triangle-1-s{ background-image:url("../../resources/spark/img/downarrow.svg") !important; margin-top:10px !important;
+.ui-selectonemenu-trigger .ui-icon-triangle-1-s, .ui-selectcheckboxmenu-trigger .ui-icon-triangle-1-s{ background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark") !important; margin-top:10px !important;
                                                                                                        background-size: 100%; background-position: center;}
 
 .ui-selectonemenu-panel{background-color: #F1F4F7;}
 .ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-icon-search{width: 30px; height: 30px; background-size: 100%; background-position: center; background-repeat: no-repeat;
-                                                                           background-image: url("../../resources/spark/img/search-icon.svg"); 
+                                                                           background-image: url("/spark/javax.faces.resource/images/search-icon.svg.xhtml?ln=primefaces-spark"); 
                                                                            left: 5px !important; top:8px !important;}
 .ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-inputfield{padding-left:30px !important; width:75%;}
 .ui-selectonemenu-panel .ui-selectonemenu-table td{border: solid 1px #E5EAF0 !important; border-radius: 0px !important; -webkit-border-radius: 0px !important; font-size: 14px; 
@@ -2556,7 +1501,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-selectonemenu-panel tr.ui-state-highlight td{color:#27AAE1; background-color:#fff;}
 
 
-/*Style For SelectCheckBoxMenu ----------------------------------------------------- */
+/*Style For SelectCheckBoxMenu ------------------------------------------------------------------------------------- */
 
 .ui-selectcheckboxmenu{font-size:16px !important; font-family: 'ralewaymedium' !important; padding:0px 15px 0px 0px !important; border:solid 1px #C6D6DF !important; -webkit-transition: all 0.2s ease;
                        -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; color: #778D9B;}
@@ -2570,11 +1515,11 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-filter-container{width:80%;}
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-filter-container .ui-inputfield{width:75%; padding-left: 30px !important;}
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-filter-container .ui-icon-search{width:30px; height:30px; background-size: 100%; background-position: center; background-repeat: no-repeat;
-                                                                                     background-image:url("../../resources/spark/img/search-icon.svg"); left:0px;}
+                                                                                     background-image:url("/spark/javax.faces.resource/images/search-icon.svg.xhtml?ln=primefaces-spark"); left:0px;}
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox{ margin-top: 5px !important;}
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-checked{ background-color: #F1F4F7;}
 .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-close{padding:0px !important; margin-right: -2px !important; margin-top: -7px;}
-.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-close .ui-icon-circle-close{background-image:url("../../resources/spark/img/delete-gray.svg") !important;
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-close .ui-icon-circle-close{background-image:url("/spark/javax.faces.resource/images/delete-gray.svg.xhtml?ln=primefaces-spark") !important;
                                                                                 background-size:90%; background-position: center;}
 
 
@@ -2585,15 +1530,15 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-growl-item{padding: 20px 20px !important; background-color: #FBFCFD; border: solid 1px #3B3D3F; border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px;}
 .ui-growl-message{width:200px !important; font-size:13px !important; line-height: 15px !important;}
 .ui-growl-image{width: 21px !important; height: 23px !important;}
-.ui-growl-image-error{background-image:url("../../resources/spark/img/warn-pink.svg") !important; background-position:center !important; 
+.ui-growl-image-error{background-image:url("/spark/javax.faces.resource/images/warn-pink.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; 
                       background-size: 140% !important; margin-top:5px;}
-.ui-growl-image-warn{background-image:url("../../resources/spark/img/warn-hardal.svg") !important; background-position:center !important; 
+.ui-growl-image-warn{background-image:url("/spark/javax.faces.resource/images/warn-hardal.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; 
                      background-size: 140% !important; margin-top:5px;}
-.ui-growl-image-info{background-image:url("../../resources/spark/img/warn-blue.svg") !important; background-position:center !important; 
+.ui-growl-image-info{background-image:url("/spark/javax.faces.resource/images/warn-blue.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; 
                      background-size: 140% !important; margin-top:5px;}
-.ui-growl-image-fatal{background-image:url("../../resources/spark/img/warn-red.svg") !important; background-position:center !important; 
+.ui-growl-image-fatal{background-image:url("/spark/javax.faces.resource/images/warn-red.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; 
                       background-size: 140% !important; margin-top:5px;}
-.ui-growl-icon-close{width:10px !important; height:10px !important; background-image:url("../../resources/spark/img/delete-pink.svg") !important; 
+.ui-growl-icon-close{width:10px !important; height:10px !important; background-image:url("/spark/javax.faces.resource/images/delete-pink.svg.xhtml?ln=primefaces-spark") !important; 
                      background-position:center !important; background-size:130% !important;}
 
 .ui-growl-image-info + .ui-growl-message { color: #63BCE2 !important; }
@@ -2608,24 +1553,24 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-log:hover, .ui-log:focus{}
 .ui-log-header{padding:10px !important; font-size: 16px !important; color:#ffffff; position:relative; z-index:100;
                border-radius:2px !important; -webkit-border-radius:2px !important; -moz-border-radius:2px !important; background-color:#71CC8D;}
-.ui-log-header .ui-log-clear .ui-icon{background-image:url("../../resources/spark/img/clear.svg") !important; background-position:center !important; background-size:140%;}
+.ui-log-header .ui-log-clear .ui-icon{background-image:url("/spark/javax.faces.resource/images/clear.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%;}
 
-.ui-log-header .ui-log-all .ui-icon{background-image:url("../../resources/spark/img/all-doc.svg") !important; background-position:center !important; background-size:140%;}
+.ui-log-header .ui-log-all .ui-icon{background-image:url("/spark/javax.faces.resource/images/all-doc.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%;}
 
-.ui-log-header .ui-log-info .ui-icon{background-image:url("../../resources/spark/img/info.svg") !important; background-position:center !important; background-size:140%;}
-.ui-log-item-info .ui-icon{background-image:url("../../resources/spark/img/info-gray.svg") !important; background-position:center !important; background-size:140%;
+.ui-log-header .ui-log-info .ui-icon{background-image:url("/spark/javax.faces.resource/images/info.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%;}
+.ui-log-item-info .ui-icon{background-image:url("/spark/javax.faces.resource/images/info-gray.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%;
                            width:20px; height: 20px;}
 
-.ui-log-header .ui-log-warn .ui-icon{background-image:url("../../resources/spark/img/warn.svg") !important; background-position:center !important; background-size:140%;}
-.ui-log-item-warn .ui-icon{background-image:url("../../resources/spark/img/warn-gray.svg") !important; background-position:center !important; background-size:140%;
+.ui-log-header .ui-log-warn .ui-icon{background-image:url("/spark/javax.faces.resource/images/warn.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%;}
+.ui-log-item-warn .ui-icon{background-image:url("/spark/javax.faces.resource/images/warn-gray.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%;
                            width:20px; height: 20px;}
 
-.ui-log-header .ui-log-debug .ui-icon{background-image:url("../../resources/spark/img/debug.svg") !important; background-position:center !important; background-size:140%;}
-.ui-log-item-debug .ui-icon{background-image:url("../../resources/spark/img/debug-gray.svg") !important; background-position:center !important; background-size:140%; 
+.ui-log-header .ui-log-debug .ui-icon{background-image:url("/spark/javax.faces.resource/images/debug.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%;}
+.ui-log-item-debug .ui-icon{background-image:url("/spark/javax.faces.resource/images/debug-gray.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%; 
                             width:20px; height: 20px;}
 
-.ui-log-header .ui-log-error .ui-icon{background-image:url("../../resources/spark/img/error.svg") !important; background-position:center !important; background-size:140%;}
-.ui-log-item-error .ui-icon{background-image:url("../../resources/spark/img/error-gray.svg") !important; background-position:center !important; background-size:140%;
+.ui-log-header .ui-log-error .ui-icon{background-image:url("/spark/javax.faces.resource/images/error.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%;}
+.ui-log-item-error .ui-icon{background-image:url("/spark/javax.faces.resource/images/error-gray.svg.xhtml?ln=primefaces-spark") !important; background-position:center !important; background-size:140%;
                             width:20px; height: 20px;}
 
 .ui-log-button{top:initial !important; left:initial !important; position:relative !important; display:inline-block !important; padding:0px !important; margin-right:5px;}
@@ -2641,7 +1586,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-chkbox .ui-state-focus{outline:dotted 1px #5fcf80; outline-offset:2px;}
 .ui-chkbox-box .ui-icon-blank{background-image:none !important; background-size: 100%; background-position: center;
                               -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
-.ui-chkbox-box .ui-icon-check{border-radius: 0px; background-image:url("../../resources/spark/img/check.svg") !important; background-size: 100%; 
+.ui-chkbox-box .ui-icon-check{border-radius: 0px; background-image:url("/spark/javax.faces.resource/images/check.svg.xhtml?ln=primefaces-spark") !important; background-size: 100%; 
                               background-position: center; background-color: #71CC8D;
                               -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
 .ui-chkbox .ui-chkbox-label{margin:1px 15px 0px 5px !important; font-size: 16px; color: #778D9B;}
@@ -2658,7 +1603,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
                                      -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;
                                      background-image:none !important;}
 .ui-radiobutton .ui-state-active .ui-icon-bullet, 
-.ui-radiobutton .ui-state-focus .ui-icon-bullet {background-image:url("../../resources/spark/img/radio-on.svg") !important; background-size: 100%; background-position: center; margin: 0px;
+.ui-radiobutton .ui-state-focus .ui-icon-bullet {background-image:url("/spark/javax.faces.resource/images/radio-on.svg.xhtml?ln=primefaces-spark") !important; background-size: 100%; background-position: center; margin: 0px;
                                                  background-color:#71CC8D; border-radius:50%; -webkit-border-radius:50%; -moz-border-radius:50%;
                                                  -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
 
@@ -2681,7 +1626,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 
 .ui-password-panel{font-size: 14px; color: #778D9B; border-top: solid 5px #5FCF80; border-bottom: solid 5px #5FCF80; padding: 10px !important; background-color:#FBFCFD !important; font-family: 'ralewaymedium';
                    border-radius: 3px;}
-.ui-password-panel .ui-password-meter{background-image:url("../../resources/spark/img/password-meter.svg") !important; background-size: 100% !important;}
+.ui-password-panel .ui-password-meter{background-image:url("/spark/javax.faces.resource/images/password-meter.svg.xhtml?ln=primefaces-spark") !important; background-size: 100% !important;}
 
 
 /*Style For Input Switch --------------------------------------------------------------------------------------*/ 
@@ -2694,7 +1639,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-inputswitch .ui-inputswitch-off span{color: #C6D6DF;}
 .ui-inputswitch-off, .ui-inputswitch-on{padding-top:0px !important; font-weight: normal !important;}
 .ui-inputswitch-handle{height:18px !important; border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px; margin-top: 1px; margin-left: 1px; border: solid 3px #5FCF80 !important;
-                       background-color:#5FCF80;background-image:url("../../resources/spark/img/slider-handle-dots.svg") !important; opacity:1; background-position: center !important; background-size:70% !important;}
+                       background-color:#5FCF80;background-image:url("/spark/javax.faces.resource/images/slider-handle-dots.svg.xhtml?ln=primefaces-spark") !important; opacity:1; background-position: center !important; background-size:70% !important;}
 
 
 /*Style For SelectOneListBox --------------------------------------------------------------------------------------*/ 
@@ -2709,7 +1654,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-selectonelistbox .ui-selectlistbox-item.ui-state-highlight td{color:#5fcf80 !important;}
 
 .ui-selectonelistbox .ui-selectlistbox-filter-container .ui-icon-search{width: 30px; height: 30px; background-size: 100%; background-position: center; background-repeat: no-repeat;
-                                                                        background-image: url("../../resources/spark/img/search-icon.svg"); left: 0px; top: 2px;}
+                                                                        background-image: url("/spark/javax.faces.resource/images/search-icon.svg.xhtml?ln=primefaces-spark"); left: 0px; top: 2px;}
 .ui-selectonelistbox .ui-selectlistbox-filter-container .ui-inputfield{padding-left:30px !important; width: 70%;}
 
 
@@ -2718,7 +1663,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-selectmanymenu{background-color: #FBFCFD; color: #778D9B; padding:5px !important; font-family:'ralewaymedium';}
 .ui-selectmanymenu:hover{}
 .ui-selectmanymenu .ui-selectlistbox-filter-container .ui-icon-search{width:30px; height:30px; background-size: 100%; background-position: center; background-repeat: no-repeat;
-                                                                      background-image:url("../../resources/spark/img/search-icon.svg"); left:0px; top:2px;}
+                                                                      background-image:url("/spark/javax.faces.resource/images/search-icon.svg.xhtml?ln=primefaces-spark"); left:0px; top:2px;}
 .ui-selectmanymenu .ui-selectlistbox-filter-container .ui-inputfield{width:70%; padding-left: 30px !important;}
 .ui-selectmanymenu .ui-selectlistbox-item{padding: 4px 5px 6px 5px;}
 .ui-selectmanymenu .ui-selectlistbox-item.ui-state-hover td{color:#5FCF80;}
@@ -2734,7 +1679,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-slider-vertical{margin: 11px 5px;}
 .ui-slider-range{background-color:#A3B4BE;}
 .ui-slider-handle{width:20px !important; height: 20px !important; cursor:move !important; border:solid 1px #5FCF80 !important; background-color:#5FCF80; border-radius:3px; border-collapse:separate !important;
-                  background-image:url("../../resources/spark/img/slider-handle-dots.svg") !important; opacity:1; background-position: center !important; background-size:100% !important;
+                  background-image:url("/spark/javax.faces.resource/images/slider-handle-dots.svg.xhtml?ln=primefaces-spark") !important; opacity:1; background-position: center !important; background-size:100% !important;
                   -webkit-box-shadow: 0px 1px 0px 0px rgba(70,145,91,0.8); -moz-box-shadow: 0px 1px 0px 0px rgba(70,145,91,0.8); box-shadow: 0px 1px 0px 0px rgba(70,145,91,0.8);}
 .ui-slider-vertical .ui-slider-handle{left:-5px !important;}
 .ui-slider-horizontal .ui-slider-handle{top:-5px !important;}
@@ -2742,11 +1687,11 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 
 /*Style For SelectManyMenu --------------------------------------------------------------------------------------*/
 
-.ui-rating-cancel a{background-image:url("../../resources/spark/img/dislike-on.svg") !important; opacity:1; background-position: center !important; background-size:100% !important;
+.ui-rating-cancel a{background-image:url("/spark/javax.faces.resource/images/dislike-on.svg.xhtml?ln=primefaces-spark") !important; opacity:1; background-position: center !important; background-size:100% !important;
                     margin-right: 3px; width:16px !important; height: 16px !important; color: #778D9B;}
-.ui-rating-cancel-hover a{background-image:url("../../resources/spark/img/dislike-on.svg") !important; opacity:0.5; background-position: center !important; background-size:100% !important;}
-.ui-rating-star a{background-image:url("../../resources/spark/img/star.svg") !important; background-position: center !important; background-size:100% !important; margin:0px 1px;}
-.ui-rating-star-on a{background-image:url("../../resources/spark/img/star-on.svg") !important; background-position: center !important; background-size:100% !important;}
+.ui-rating-cancel-hover a{background-image:url("/spark/javax.faces.resource/images/dislike-on.svg.xhtml?ln=primefaces-spark") !important; opacity:0.5; background-position: center !important; background-size:100% !important;}
+.ui-rating-star a{background-image:url("/spark/javax.faces.resource/images/star.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important; background-size:100% !important; margin:0px 1px;}
+.ui-rating-star-on a{background-image:url("/spark/javax.faces.resource/images/star-on.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important; background-size:100% !important;}
 
 
 /*Style For Spinner --------------------------------------------------------------------------------------*/
@@ -2757,9 +1702,9 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-spinner .ui-spinner-button{width:auto; height:17px; margin:2px 3px 2px 0px; border-radius: 2px !important; cursor:pointer;}
 .ui-spinner .ui-spinner-down .ui-button-text{margin-top:2px;}
 .ui-spinner .ui-spinner-button .ui-button-text{height:3px; text-align: center; padding: 3px 20px 4px 20px !important;}
-.ui-spinner .ui-spinner-up .ui-button-text .ui-icon{background-image:url("../../resources/spark/img/plus-sign.svg") !important; background-position: center !important;
+.ui-spinner .ui-spinner-up .ui-button-text .ui-icon{background-image:url("/spark/javax.faces.resource/images/plus-sign.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important;
                                                     background-size:80% !important; margin-left:14px; margin-top:-8px;}
-.ui-spinner .ui-spinner-down .ui-button-text .ui-icon{background-image:url("../../resources/spark/img/minus-sign.svg") !important; background-position: center !important;
+.ui-spinner .ui-spinner-down .ui-button-text .ui-icon{background-image:url("/spark/javax.faces.resource/images/minus-sign.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important;
                                                       background-size:80% !important; margin-left:14px;}
 
 
@@ -2772,9 +1717,9 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-datepicker-header .ui-datepicker-next{right:3px !important; top:3px !important; cursor:pointer; background-color:#BA434E; border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;}
 .ui-datepicker-header .ui-datepicker-prev-hover{background-color:#A83540; left:3px; top:3px;}
 .ui-datepicker-header .ui-datepicker-next-hover{background-color:#A83540; right:3px; top:3px;}
-.ui-datepicker-header .ui-datepicker-prev .ui-icon{background-image:url("../../resources/spark/img/left-arrow.svg"); background-position: center !important;
+.ui-datepicker-header .ui-datepicker-prev .ui-icon{background-image:url("/spark/javax.faces.resource/images/left-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important;
                                                    background-size:100% !important; top:50%; left:48%;}
-.ui-datepicker-header .ui-datepicker-next .ui-icon{background-image:url("../../resources/spark/img/right-arrow.svg"); background-position: center !important;
+.ui-datepicker-header .ui-datepicker-next .ui-icon{background-image:url("/spark/javax.faces.resource/images/right-arrow.svg.xhtml?ln=primefaces-spark"); background-position: center !important;
                                                    background-size:100% !important; top:50%; left:51%;}
 
 .ui-datepicker-calendar{margin:2px 0px 0px 0px !important; border-collapse:inherit !important;}
@@ -2793,7 +1738,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-datepicker-calendar tbody tr .ui-datepicker-current-day a{color:#F6FAFC !important;}
 
 .ui-datepicker-trigger{width:auto !important; margin-left: 3px;}
-.ui-datepicker-trigger .ui-icon{background-image:url("../../resources/spark/img/calendar.svg"); background-position: center !important;
+.ui-datepicker-trigger .ui-icon{background-image:url("/spark/javax.faces.resource/images/calendar.svg.xhtml?ln=primefaces-spark"); background-position: center !important;
                                 background-size:140% !important;}
 
 .ui-datepicker-group .ui-datepicker-calendar{width:100% !important;}
@@ -2819,19 +1764,9 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 
 /*Style For UI Editor --------------------------------------------------------------------------------------*/
 
-.ui-editor{
-    border: solid 1px #D1D3D4; 
-    border-radius: 5px !important; 
-    -webkit-border-radius: 5px !important; 
-    -moz-border-radius: 5px  !important;
-    -webkit-transition: all 0.2s ease; 
-    -moz-transition: all 0.2s ease; 
-    -ms-transition: all 0.2s ease; 
-    -o-transition: all 0.2s ease; 
-    transition: all 0.2s ease; 
-    padding:5px;
-    font-family: 'titillium_webregular';
-}
+.ui-editor{border: solid 1px #D1D3D4; border-radius: 5px !important; -webkit-border-radius: 5px !important; -moz-border-radius: 5px  !important;
+           -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -ms-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease; padding:5px;
+           font-family: 'titillium_webregular';}
 .ui-editor:hover, .ui-editor:focus{border:solid 1px #27AAE1;}
 .ui-editor-toolbar{ background-image: none !important; background-color: #D5DFE4 !important; border: solid 1px #ADBAC0;
                     border-radius: 3px !important; -webkit-border-radius: 3px !important; -moz-border-radius: 3px  !important;}
@@ -2847,9 +1782,9 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-galleria-filmstrip-wrapper{border-top: solid 1px #E8EDF2 !important; background-color: #F3F5F7;}
 .ui-galleria-nav-prev, .ui-galleria-nav-next{padding: 2px; bottom: 14px !important;}
 .ui-galleria-nav-prev:hover, .ui-galleria-nav-next:hover{}
-.ui-galleria-nav-prev{left:2px !important; background-image:url("../../resources/spark/img/leftarrow-gray.svg") !important; background-position: center !important;
+.ui-galleria-nav-prev{left:2px !important; background-image:url("/spark/javax.faces.resource/images/leftarrow-gray.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important;
                       background-size:100% !important;}
-.ui-galleria-nav-next{right:2px !important; background-image:url("../../resources/spark/img/rightarrow-gray.svg") !important; background-position: center !important;
+.ui-galleria-nav-next{right:2px !important; background-image:url("/spark/javax.faces.resource/images/rightarrow-gray.svg.xhtml?ln=primefaces-spark") !important; background-position: center !important;
                       background-size:120% !important;}
 .ui-galleria-caption{background-color:rgba(113,204,141,0.5) !important;}
 
@@ -2883,7 +1818,7 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 .ui-autocomplete-panel .ui-autocomplete-table th, .ui-autocomplete-panel .ui-autocomplete-table td{ border-color: #E5EAF0 !important;}
 
 .ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token{background-color: #F1F4F7; padding: 5px;}
-.ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token .ui-icon-close{background-image:url("../../resources/spark/img/delete-gray.svg") !important;
+.ui-autocomplete-multiple .ui-autocomplete-multiple-container .ui-autocomplete-token .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete-gray.svg.xhtml?ln=primefaces-spark") !important;
                                                                                                     background-position: center !important; background-size:100% !important;}
 .ui-autocomplete-input-token input[type="text"]{color: #9EADB5; font-size: 14px; font-family: 'titillium_webregular' !important;}
 
@@ -2911,11 +1846,8 @@ ui-message-fatal{color: #F55151 !important; background-color: #FBFCFD !important
 
 /* Style For UI MenuButton --------------------------------------------------------------------------------------*/
 
-.ui-menubutton .ui-icon-triangle-1-s{
-    background-image:url("../../resources/spark/img/downarrow.svg") !important;                                     
-    background-position: center !important; 
-    background-size:120% !important;
-}
+.ui-menubutton .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark") !important;
+                                     background-position: center !important; background-size:120% !important;}
 
 /* Style For Toolbar Seperator --------------------------------------------------------------------------------------*/
 
@@ -2956,24 +1888,15 @@ div.jqplot-table-legend-swatch
 .ui-fileupload-choose input[type="file"],
 .ui-fileupload-simple input[type="file"]{z-index:999;}
 .ui-fileupload-choose .ui-icon-plusthick,
-.ui-fileupload-simple .ui-icon-plusthick{
-    background-image:url("../../resources/spark/img/plus-sign.svg") !important;                                         
-    background-position: center !important; 
-    background-size:100% !important;
-}
-.ui-fileupload-upload .ui-icon-arrowreturnthick-1-n{
-    background-image:url("../../resources/spark/img/upload.svg") !important;                                                    
-    background-position: center !important; 
-    background-size:100% !important;
-}
-.ui-fileupload-cancel .ui-icon-cancel{
-    background-image:url("../../resources/spark/img/delete.svg") !important;                                      
-    background-position: center !important; 
-    background-size:100% !important;
-}
-.ui-fileupload-content .ui-fileupload-cancel .ui-icon-close{background-image:url("../../resources/spark/img/delete.svg") !important;
+.ui-fileupload-simple .ui-icon-plusthick{background-image:url("/spark/javax.faces.resource/images/plus-sign.svg.xhtml?ln=primefaces-spark") !important;
+                                         background-position: center !important; background-size:100% !important;}
+.ui-fileupload-upload .ui-icon-arrowreturnthick-1-n{background-image:url("/spark/javax.faces.resource/images/upload.svg.xhtml?ln=primefaces-spark") !important;
+                                                    background-position: center !important; background-size:100% !important;}
+.ui-fileupload-cancel .ui-icon-cancel{background-image:url("/spark/javax.faces.resource/images/delete.svg.xhtml?ln=primefaces-spark") !important;
+                                      background-position: center !important; background-size:100% !important;}
+.ui-fileupload-content .ui-fileupload-cancel .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete.svg.xhtml?ln=primefaces-spark") !important;
                                                             background-position: center !important; background-size:100% !important;}
-.ui-fileupload-content .ui-messages-error .ui-icon-close{background-image:url("../../resources/spark/img/delete-pink.svg") !important;
+.ui-fileupload-content .ui-messages-error .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete-pink.svg.xhtml?ln=primefaces-spark") !important;
                                                          background-position: center !important; background-size:100% !important;}
 .ui-fileupload-simple .ui-fileupload-filename{color: #D0525D;}
 
@@ -2997,16 +1920,10 @@ div.jqplot-table-legend-swatch
 
 /*Style For UI Inplace --------------------------------------------------------------------------------------*/
 
-.ui-inplace .ui-inplace-editor .ui-button .ui-icon-check{
-    background-image:url("../../resources/spark/img/check-white.svg") !important;                                                         
-    background-position: center !important; 
-    background-size:110% !important;
-}
-.ui-inplace .ui-inplace-editor .ui-button .ui-icon-close{
-    background-image:url("../../resources/spark/img/delete.svg") !important;                                                         
-    background-position: center !important; 
-    background-size:110% !important;
-}
+.ui-inplace .ui-inplace-editor .ui-button .ui-icon-check{background-image:url("/spark/javax.faces.resource/images/check-white.svg.xhtml?ln=primefaces-spark") !important;
+                                                         background-position: center !important; background-size:110% !important;}
+.ui-inplace .ui-inplace-editor .ui-button .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete.svg.xhtml?ln=primefaces-spark") !important;
+                                                         background-position: center !important; background-size:110% !important;}
 .ui-inplace .ui-inplace-display.ui-state-highlight{background-color: #F3F5F7; padding: 3px; border: solid 1px #D1D3D4 !important; border-radius: 3px;}
 
 
@@ -3028,17 +1945,17 @@ div.jqplot-table-legend-swatch
 .ui-layout-unit .ui-layout-unit-header{color: #fff; padding: 8px 6px 10px 10px !important; font-size: 14px; font-family:'ralewayregular'; background-color:#71CC8D; border-radius:2px;}
 .ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-title{font-family:'ralewaymedium';}
 
-.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-close{background-image:url("../../resources/spark/img/delete.svg") !important;
+.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-close{background-image:url("/spark/javax.faces.resource/images/delete.svg.xhtml?ln=primefaces-spark") !important;
                                                                                   background-position: center !important; background-size:110% !important; margin-top: 3px;}
-.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-triangle-1-n{background-image:url("../../resources/spark/img/uparrow.svg") !important;
+.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-triangle-1-n{background-image:url("/spark/javax.faces.resource/images/uparrow.svg.xhtml?ln=primefaces-spark") !important;
                                                                                          background-position: center !important; background-size:120% !important; margin-top: 3px;}
-.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-triangle-1-w{background-image:url("../../resources/spark/img/left-arrow.svg") !important;
+.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-triangle-1-w{background-image:url("/spark/javax.faces.resource/images/left-arrow.svg.xhtml?ln=primefaces-spark") !important;
                                                                                          background-position: center !important; background-size:100% !important; margin-top: 3px;}
-.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-triangle-1-e{background-image:url("../../resources/spark/img/right-arrow.svg") !important;
+.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-triangle-1-e{background-image:url("/spark/javax.faces.resource/images/right-arrow.svg.xhtml?ln=primefaces-spark") !important;
                                                                                          background-position: center !important; background-size:100% !important; margin-top: 3px;}
-.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-triangle-1-s{background-image:url("../../resources/spark/img/downarrow.svg") !important;
+.ui-layout-unit .ui-layout-unit-header .ui-layout-unit-header-icon .ui-icon-triangle-1-s{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark") !important;
                                                                                          background-position: center !important; background-size:120% !important; margin-top: 3px;}
-.ui-layout-resizer .ui-layout-toggler .ui-icon-arrow-4-diag{background-image:url("../../resources/spark/img/expand-gray.svg") !important;
+.ui-layout-resizer .ui-layout-toggler .ui-icon-arrow-4-diag{background-image:url("/spark/javax.faces.resource/images/expand-gray.svg.xhtml?ln=primefaces-spark") !important;
                                                             background-position: center !important; background-size:110% !important;}
 
 /*Style For UI Wizard --------------------------------------------------------------------------------------*/
@@ -3047,9 +1964,9 @@ div.jqplot-table-legend-swatch
 .ui-wizard .ui-wizard-step-titles li{padding: 6px 20px !important; font-size: 14px; color: #ffffff; font-family:'ralewaysemibold';
                                      border-radius: 3px !important; -webkit-border-radius: 3px !important; -moz-border-radius: 3px !important; background-color:#5FCF80;}
 .ui-wizard .ui-wizard-step-titles li.ui-state-highlight{background-color:#3ac162;}
-.ui-wizard .ui-wizard-nav-back .ui-icon-arrowthick-1-w{background-image:url("../../resources/spark/img/left-arrow.svg") !important;
+.ui-wizard .ui-wizard-nav-back .ui-icon-arrowthick-1-w{background-image:url("/spark/javax.faces.resource/images/left-arrow.svg.xhtml?ln=primefaces-spark") !important;
                                                        background-position: center !important; background-size:110% !important;}
-.ui-wizard .ui-wizard-nav-next .ui-icon-arrowthick-1-e{background-image:url("../../resources/spark/img/right-arrow.svg") !important;
+.ui-wizard .ui-wizard-nav-next .ui-icon-arrowthick-1-e{background-image:url("/spark/javax.faces.resource/images/right-arrow.svg.xhtml?ln=primefaces-spark") !important;
                                                        background-position: center !important; background-size:110% !important;}
 
 /*Style For UI State Focus --------------------------------------------------------------------------------------*/
@@ -3060,14 +1977,11 @@ div.jqplot-table-legend-swatch
     -webkit-box-shadow: inset 0px 0px 10px 0px rgba(255,255,255,0.8) !important;
     -moz-box-shadow: inset 0px 0px 10px 0px rgba(255,255,255,0.8) !important;
     box-shadow: inset 0px 0px 10px 0px rgba(255,255,255,0.8) !important;
-    background-color:#3ac162;
-}
+    background-color:#3ac162;}
 
-.ui-button.ui-state-focus{
-    -webkit-box-shadow:none !important;
+.ui-button.ui-state-focus{-webkit-box-shadow:none !important;
     -moz-box-shadow:none !important;
-    box-shadow:none !important;
-}
+    box-shadow:none !important;}
 
 .ui-selectonemenu.ui-state-focus,
 .ui-selectcheckboxmenu.ui-state-focus{border:solid 1px #5FCF80 !important;}
@@ -3198,10 +2112,10 @@ div.jqplot-table-legend-swatch
 .ui-picklist.ui-picklist-responsive .ui-picklist-buttons-cell .ui-button .ui-icon{position:static; margin:3px 0px -30px 0px; width:100%; background-size:18px;}
 .ui-picklist.ui-picklist-responsive .ui-picklist-list{min-width:0;}
 @media (max-width:640px){
-    .ui-picklist.ui-picklist-responsive .ui-picklist-buttons .ui-icon-arrow-1-e{background-image:url("../../resources/spark/img/downarrow.svg"); }
-    .ui-picklist.ui-picklist-responsive .ui-picklist-buttons .ui-icon-arrow-1-w{background-image:url("../../resources/spark/img/uparrow.svg"); }
-    .ui-picklist.ui-picklist-responsive .ui-picklist-buttons .ui-icon-arrowstop-1-e{background-image:url("../../resources/spark/img/bottomarrow.svg"); }
-    .ui-picklist.ui-picklist-responsive .ui-picklist-buttons .ui-icon-arrowstop-1-w{background-image:url("../../resources/spark/img/toparrow.svg"); }
+    .ui-picklist.ui-picklist-responsive .ui-picklist-buttons .ui-icon-arrow-1-e{background-image:url("/spark/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-spark"); }
+    .ui-picklist.ui-picklist-responsive .ui-picklist-buttons .ui-icon-arrow-1-w{background-image:url("/spark/javax.faces.resource/images/uparrow.svg.xhtml?ln=primefaces-spark"); }
+    .ui-picklist.ui-picklist-responsive .ui-picklist-buttons .ui-icon-arrowstop-1-e{background-image:url("/spark/javax.faces.resource/images/bottomarrow.svg.xhtml?ln=primefaces-spark"); }
+    .ui-picklist.ui-picklist-responsive .ui-picklist-buttons .ui-icon-arrowstop-1-w{background-image:url("/spark/javax.faces.resource/images/toparrow.svg.xhtml?ln=primefaces-spark"); }
     .ui-picklist.ui-picklist-responsive .ui-picklist-buttons button{max-width:50px;}
 }
 

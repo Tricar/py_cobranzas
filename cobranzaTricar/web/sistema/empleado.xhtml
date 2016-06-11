@@ -18,8 +18,8 @@
                 <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                     <div class="ui-datatable-header ui-widget-header ui-corner-top">
                         Lista de Empleados
-                    </div><div id="form:singleDT_paginator_top" class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">                   
-
+                    </div>
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                         <h:form id="formMostrar">
                             <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                             <p:dataTable var="item" value="#{anexoBean.verEmpleado()}" emptyMessage="No hay nada para mostrar" 
@@ -44,13 +44,12 @@
                                         <f:converter converterId="tanexoconverter"/>
                                     </h:outputText>
                                 </p:column>
-                                <p:column width="10%">
+                                <p:column>
                                     <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="ui-icon-pencil"/>
                                     <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="ui-icon-trash"/>
                                 </p:column>
                             </p:dataTable>
                         </h:form>
-
                     </div>
                 </div>
 
