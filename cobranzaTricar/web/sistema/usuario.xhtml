@@ -6,7 +6,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <h:outputStylesheet library="css" name="style.css" />
         <title>Gestion de Usuarios </title>
     </h:head>
     <h:body>
@@ -14,48 +13,51 @@
 
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="b-add"/>
+                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
                 </h:form>
 
-                <br/>
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                        Lista de Usuario
+                    </div>
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                        <h:form id="formMostrar">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <p:dataTable var="item" value="#{usuarioBean.verTodo()}" 
+                                         emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
+                                         paginatorPosition="top" rowsPerPageTemplate="10">
+                                <p:column headerText="Usuario">
+                                    <h:outputText value="#{item.usuario}" />
+                                </p:column>
+                                <p:column headerText="Nombre y Apellido">
+                                    <h:outputText value="#{item.anexo.nombres}" />
+                                </p:column>                        
+                                <p:column headerText="DNI">
+                                    <h:outputText value="#{item.anexo.numdocumento}" />
+                                </p:column>
+                                <p:column headerText="Direccion">
+                                    <h:outputText value="#{item.anexo.direccion}" />
+                                </p:column>                                               
+                                <p:column headerText="FECHA REG">
+                                    <h:outputText value="#{item.fechareg}">
+                                        <f:convertDateTime/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Perfil">
+                                    <h:outputText value="#{item.perfil.descripcion}" />
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEditar(item.idusuario)}" icon="ui-icon ui-icon-pencil"/>
+                                    <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEliminar(item.idusuario)}" icon="ui-icon ui-icon-trash"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
 
-                <h2>Lista de Usuario</h2>
-                <hr/>
-                <h:form id="formMostrar">
-                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                    <p:dataTable var="item" value="#{usuarioBean.verTodo()}" 
-                                 emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
-                                 paginatorPosition="top" rowsPerPageTemplate="10">
-                        <p:column headerText="Usuario">
-                            <h:outputText value="#{item.usuario}" />
-                        </p:column>
-                        <p:column headerText="Nombre y Apellido">
-                            <h:outputText value="#{item.anexo.nombres}" />
-                        </p:column>                        
-                        <p:column headerText="DNI">
-                            <h:outputText value="#{item.anexo.numdocumento}" />
-                        </p:column>
-                        <p:column headerText="Direccion">
-                            <h:outputText value="#{item.anexo.direccion}" />
-                        </p:column>                                               
-                        <p:column headerText="FECHA REG">
-                            <h:outputText value="#{item.fechareg}">
-                                <f:convertDateTime/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Perfil">
-                            <h:outputText value="#{item.perfil.descripcion}" />
-                        </p:column>
-                        <p:column width="10%" style="text-align: center">
-                            <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEditar(item.idusuario)}" icon="ui-icon ui-icon-pencil"/>
-                            <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEliminar(item.idusuario)}" icon="ui-icon ui-icon-trash"/>
-                        </p:column>
-                    </p:dataTable>
-                </h:form>
-                
                 <h:form id="formInsertar">
                     <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
-                        <p:panelGrid id="panelcrearperfil" columns="3">
+                        <h:panelGrid id="panelcrearperfil" columns="3">
                             <p:outputLabel value="Usuario:" for="txtUsuario"/>
                             <p:inputText id="txtUsuario" label="Usuario" value="#{usuarioBean.tusuario.usuario}" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
@@ -67,7 +69,7 @@
                             </p:inputText>
                             <p:message for="txtClave"/>
                             <p:outputLabel value="Anexo:"/>
-                            <p:selectOneMenu value="#{usuarioBean.tusuario.anexo}" converter="omnifaces.SelectItemsConverter">
+                            <p:selectOneMenu value="#{usuarioBean.tusuario.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                 <f:selectItems value="#{anexoBean.anexos}" var="anexo" itemLabel="#{anexo.nombre}" itemValue="#{anexo}"/>
                             </p:selectOneMenu>
@@ -79,7 +81,7 @@
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
                             <p:commandButton value="Registrar Usuario" icon="b-new" ajax="false" actionListener="#{usuarioBean.registrar()}" />
-                        </p:panelGrid>
+                        </h:panelGrid>
                     </p:dialog>
                 </h:form>
 
@@ -113,7 +115,7 @@
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
-                
+
                 <h:form id="frmEliminarUsuario">
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarUsuario" modal="true">
                         <p:inputText type="hidden" value="#{usuarioBean.tusuario.idusuario}"/>

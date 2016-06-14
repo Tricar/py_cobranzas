@@ -12,36 +12,38 @@
                 <h:form id="frmNuevo">
                     <p:commandButton value="Nuevo Perfil" update=":formInsertar:panelcrearperfil" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
                 </h:form>
-                <br/>
 
-                <h2>Lista de Perfiles</h2>
-                <hr/>
-                <h:form id="frmlistarperfil">
-                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                    <p:dataTable id="tablalistarperfil" var="item" value="#{perfilBean.verTodo()}" emptyMessage="No hay nada para mostrar"
-                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
-                        <p:column headerText="DESCRIPCION">
-                            <h:outputText value="#{item.descripcion}"/>
-                        </p:column>
-                        <p:column width="10%" style="text-align: center">
-                            <p:commandButton actionListener="#{perfilBean.cargarPerfilEditar(item.idperfil)}" icon="ui-icon ui-icon-pencil"/>
-                            <p:commandButton actionListener="#{perfilBean.cargarPerfilEliminar(item.idperfil)}" icon="ui-icon ui-icon-trash"/>
-                            <p:commandButton actionListener="#{perfilBean.cargarMenuAsignar(item.idperfil)}" icon="ui-icon ui-icon-wrench"/>
-                        </p:column>
-                    </p:dataTable>
-                </h:form>
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                        Lista de Perfiles
+                    </div>
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                        <h:form id="frmlistarperfil">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <p:dataTable id="tablalistarperfil" var="item" value="#{perfilBean.verTodo()}" emptyMessage="No hay nada para mostrar"
+                                         paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
+                                <p:column headerText="DESCRIPCION">
+                                    <h:outputText value="#{item.descripcion}"/>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton actionListener="#{perfilBean.cargarPerfilEditar(item.idperfil)}" icon="ui-icon ui-icon-pencil"/>
+                                    <p:commandButton actionListener="#{perfilBean.cargarPerfilEliminar(item.idperfil)}" icon="ui-icon ui-icon-trash"/>
+                                    <p:commandButton actionListener="#{perfilBean.cargarMenuAsignar(item.idperfil)}" icon="ui-icon ui-icon-wrench"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
 
                 <h:form id="frmEditarPerfil">
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEditarPerfil" modal="true">
-                        <h:panelGrid id="panelEditarPerfil" columns="3">                        
-                            <h:panelGroup></h:panelGroup>
+                        <h:panelGrid id="panelEditarPerfil" columns="2">     
                             <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                             <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" 
                                          autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
-                            <p:message for="txtDescripcion"/>
-                            <h:panelGroup></h:panelGroup>                            
+                            <p:message for="txtDescripcion"/>                        
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sistema}"/>
@@ -61,7 +63,7 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venReg}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venCon}"/>   
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manCaja}"/>
-                            <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                            <p:commandButton value="Guardar cambios" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
