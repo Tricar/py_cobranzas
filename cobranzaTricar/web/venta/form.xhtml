@@ -16,7 +16,7 @@
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
                 <p:growl id="msg12" />
-                <p:panelGrid columns="2">
+                <h:panelGrid columns="2">
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
@@ -47,7 +47,7 @@
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                     </p:autoComplete>
-                </p:panelGrid>
+                </h:panelGrid>
                 <p:accordionPanel>
                     <p:tab title="Ingresos">
                         <p:dataTable var="ocups" value="#{creditoBean.ocupsxanexo}" 
@@ -64,7 +64,7 @@
                         </p:dataTable>                        
                     </p:tab>                    
                 </p:accordionPanel>
-                <p:panelGrid columns="2">
+                <h:panelGrid columns="2">
                     <p:outputLabel value="Dirección:" for="dir"/>
                     <p:inputText id="dir" readonly="true" value="#{creditoBean.credito.anexo.direccion}"/>
                     <p:outputLabel value="Distrito:" for="dist"/>
@@ -133,7 +133,17 @@
                     </p:inputText>
                     <p:outputLabel value="Saldo:"/>                                    
                     <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
-                </p:panelGrid>
+                    <p:outputLabel value="Interés:" for="interes"/>
+                    <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" 
+                                     requiredMessage="Ingrese el interés aplicado">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="7" itemValue='7.00'/> 
+                        <f:selectItem itemLabel="6" itemValue='6.00'/>
+                        <f:selectItem itemLabel="5" itemValue='5.00'/>
+                        <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
+                    </p:selectOneMenu> 
+                </h:panelGrid>
+
                 <p:commandButton value="#{creditoBean.btnguardar}" actionListener="#{creditoBean.insertarCredito(loginbean.usuario.idusuario)}" icon="b-ok"
                                  ajax="false" disabled="#{creditoBean.disableGuardar()}">
                 </p:commandButton>
@@ -183,7 +193,7 @@
         <h:form id="formOcupacion">
             <p:dialog  header="Ingresar datos" showEffect="explode" hideEffect="explode" widgetVar="dlginsertar" modal="true" >
                 <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                <p:panelGrid columns="4">                            
+                <h:panelGrid columns="4">                            
                     <p:outputLabel value="Tipo:" for="cmbtipo"/>
                     <p:selectOneMenu id="cmbtipo" value="#{ocupacionBean.ocupacion.tipo}" required="true" requiredMessage="Seleccione Tipo de Ingreso">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
@@ -247,7 +257,7 @@
                     </p:selectOneRadio>                    
                     <p:commandButton actionListener="#{ocupacionBean.insert()}"
                                      value="#{ocupacionBean.btnGuardar}" />
-                </p:panelGrid>
+                </h:panelGrid>
             </p:dialog>
         </h:form>      
     </ui:define>

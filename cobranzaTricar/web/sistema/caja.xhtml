@@ -13,34 +13,38 @@
         <h:form >
             <p:commandButton value="Nueva Caja" actionListener="#{cajaBean.nueva()}" icon="ui-icon-plus"/>
         </h:form>
-        <br/>
 
-        <h2>Lista de Color</h2>
-        <hr/>
-        <h:form id="frmlistarperfil">
-            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-            <p:dataTable id="tablalistarcolor" var="caja" value="#{cajaBean.cajas}" emptyMessage="No hay nada para mostrar"
-                         paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
-                <p:column headerText="DESCRIPCION">
-                    <h:outputText value="#{caja.descripcion}"/>
-                </p:column>
-                <p:column headerText="ENCARGADO">
-                    <h:outputText value="#{caja.encargado.nombres}"/>
-                </p:column>
-                <p:column headerText="TIENDA">
-                    <h:outputText value="#{caja.tienda}"/>
-                </p:column>
-                <p:column width="10%" style="text-align: center">
-                    <p:commandButton actionListener="#{cajaBean.cargarPorIdModify(caja.idcaja)}" icon="ui-icon ui-icon-pencil"/>
-                    <p:commandButton actionListener="#{cajaBean.cargarPorIdDelete(caja.idcaja)}" icon="ui-icon ui-icon-trash"/>
-                </p:column>
-            </p:dataTable>
-        </h:form>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                Lista de Cajas
+            </div>
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="frmlistarperfil">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable id="tablalistarcolor" var="caja" value="#{cajaBean.cajas}" emptyMessage="No hay nada para mostrar"
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
+                        <p:column headerText="DESCRIPCION">
+                            <h:outputText value="#{caja.descripcion}"/>
+                        </p:column>
+                        <p:column headerText="ENCARGADO">
+                            <h:outputText value="#{caja.encargado.nombres}"/>
+                        </p:column>
+                        <p:column headerText="TIENDA">
+                            <h:outputText value="#{caja.tienda}"/>
+                        </p:column>
+                        <p:column width="10%" style="text-align: center">
+                            <p:commandButton actionListener="#{cajaBean.cargarPorIdModify(caja.idcaja)}" icon="ui-icon ui-icon-pencil"/>
+                            <p:commandButton actionListener="#{cajaBean.cargarPorIdDelete(caja.idcaja)}" icon="ui-icon ui-icon-trash"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
 
         <h:form id="formInsertar">
             <p:dialog header="Nuevo Color" widgetVar="dlginsertar" modal="true">
                 <p:messages id="mesagges" autoUpdate="true" closable="true"/>
-                <p:panelGrid columns="4">
+                <h:panelGrid columns="4">
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                     <p:inputText id="txtDescripcion" label="Descripcion" value="#{cajaBean.caja.descripcion}" required="true" requiredMessage="Ingrese descripción"
                                  style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">                         
@@ -61,7 +65,7 @@
                         <f:selectItem itemLabel="VX2" itemValue="V2" />                            
                     </p:selectOneMenu>
                     <p:commandButton value="#{cajaBean.btnguardar}" icon="b-new" update=":frmlistarperfil:tablalistarcolor" actionListener="#{cajaBean.insertar()}" />
-                </p:panelGrid>
+                </h:panelGrid>
             </p:dialog>
         </h:form>
 

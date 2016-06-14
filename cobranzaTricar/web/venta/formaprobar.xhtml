@@ -105,19 +105,18 @@
                     <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true"> 
                     </p:inputText>                    
                     <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" for="txtinicial"/>
-                    <p:inputText id="txtinicial" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei}" readonly="true">
-                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>
-                    </p:inputText>
-                    <h:outputText value="¿Inicial distinta? " />
-                    <p:selectBooleanCheckbox value="#{creditoBean.valuei}" >
-                        <p:ajax update="msg12 txtinicial txtinicial2" listener="#{creditoBean.addMessageini}" />
-                    </p:selectBooleanCheckbox>
-                    <p:outputLabel id="lblinicial2" value="Ingrese inicial:" for="txtinicial2"/>
-                    <p:inputText id="txtinicial2" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei2}" readonly="true">
-                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>
+                    <p:inputText id="txtinicial" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei}" readonly="true">                        
                     </p:inputText>
                     <p:outputLabel value="Saldo:"/>                                    
-                    <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
+                    <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>                    
+                    <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
+                    <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
+                                    completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
+                                    itemLabel="#{v.serie}" itemValue="#{v}" 
+                                    required="true" requiredMessage="Elija un vehículo">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
+                        <p:ajax event="mousemove" listener="#{creditoBean.precioModeloCredito()}"/>
+                    </p:autoComplete>
                     <p:outputLabel value="Verificado por:" for="veri"/>
                     <p:autoComplete id="veri" value="#{creditoBean.credito.verificado}"
                                     completeMethod="#{anexoBean.filtrarGestor}" var="aval"
@@ -127,16 +126,7 @@
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
                         <p:ajax event="itemSelect" process="@form" />                        
-                    </p:autoComplete>
-                    <p:outputLabel value="Interés:" for="interes"/>
-                    <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" 
-                                     requiredMessage="Ingrese el interés aplicado">
-                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                        <f:selectItem itemLabel="7" itemValue='7.00'/> 
-                        <f:selectItem itemLabel="6" itemValue='6.00'/>
-                        <f:selectItem itemLabel="5" itemValue='5.00'/>
-                        <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
-                    </p:selectOneMenu>                   
+                    </p:autoComplete>                                      
                 </p:panelGrid>
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.aprobarcredito(loginbean.usuario.idusuario)}" icon="b-ok"
                                  ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
@@ -159,8 +149,7 @@
                         <p:commandButton value="Ver" actionListener="#{creditoBean.cargarObjOcup(ocups)}"/>
                     </p:column>
                 </p:dataTable>   
-            </h:form>
-            <ui:remove>
+            </h:form>            
                 <h:form id="formMostrar">
                     <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
                     <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
@@ -201,8 +190,7 @@
                             </p:column>
                         </ui:remove>
                     </p:dataTable>
-                </h:form>
-            </ui:remove>
+                </h:form>            
             <h:form id="formOcup">
                 <p:dialog header="Detalle" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgverocup" modal="true" resizable="false" minWidth="200">

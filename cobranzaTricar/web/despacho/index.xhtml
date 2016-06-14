@@ -12,12 +12,12 @@
             <p:commandButton actionListener="#{creditoBean.cargarPendSinCodi()}" value="Pendientes" ajax="false" icon="b-add"/>
         </h:form>
         <h:form>            
-            <p:panelGrid columns="2">
+            <h:panelGrid columns="2">
                 <p:outputLabel value="Ingrese Código:"/>
                 <p:inputText value="#{creditoBean.codigo}"/>                       
                 <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarPendientes()}"
                                  ajax="false"/>
-            </p:panelGrid>
+            </h:panelGrid>
         </h:form>
         <h:form id="formMostrar">
             <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>

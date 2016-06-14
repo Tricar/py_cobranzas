@@ -20,8 +20,7 @@ public class tipodocBean implements Serializable{
     }
     
     public List listaTipoDoc(String tipo){
-        TipodocDao tipodao = new TipodocDaoImp();
-        System.out.println("tipo bean modelo: "+tipo);
+        TipodocDao tipodao = new TipodocDaoImp();        
         listafiltrada = tipodao.mostrarxTipo(tipo);
         return listafiltrada;
     }

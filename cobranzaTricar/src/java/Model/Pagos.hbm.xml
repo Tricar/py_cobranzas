@@ -18,7 +18,7 @@
             <column name="idcaja" />
         </many-to-one>
         <property name="operacion" type="string">
-            <column name="operacion" length="20" />
+            <column name="operacion" length="50" />
         </property>        
         <property name="calificacion" type="string">
             <column name="calificacion" length="15" />

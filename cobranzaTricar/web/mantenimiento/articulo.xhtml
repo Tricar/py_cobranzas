@@ -16,54 +16,56 @@
                 <h:form>
                     <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="b-add"/>
                 </h:form>
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                        Lista de Cajas
+                    </div>
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                        <h:form id="formMostrar">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <p:dataTable var="item" value="#{vehiculoBean.vehiculos}" emptyMessage="No hay nada para mostrar" 
+                                         paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">
+                                <p:column headerText="MARCA">
+                                    <h:outputText value="#{item.marca}">
+                                        <f:converter converterId="marcaconverter"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="TIPO">
+                                    <h:outputText value="#{item.tipovehiculo}" />
+                                </p:column>
+                                <p:column headerText="MODELO">
+                                    <h:outputText value="#{item.modelo.modelo}" />
+                                </p:column>
+                                <p:column headerText="COLOR">
+                                    <h:outputText value="#{item.color.color}" />
+                                </p:column>
+                                <p:column headerText="AÑO">
+                                    <h:outputText value="#{item.anofabri}" />
+                                </p:column>
+                                <p:column headerText="SERIE" filterBy="#{item.serie}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.serie}" />
+                                </p:column>
+                                <p:column headerText="MOTOR">
+                                    <h:outputText value="#{item.motor}" />
+                                </p:column>
+                                <p:column headerText="ESTADO">
+                                    <h:outputText value="#{item.estado}">
+                                        <f:converter converterId="estadoconverter"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column width="10%" style="text-align: center">
+                                    <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEditar(item.idvehiculo)}" icon="ui-icon ui-icon-pencil"/>
+                                    <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEliminar(item.idvehiculo)}" icon="ui-icon ui-icon-trash"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
 
-                <br/>
-
-                <h2>Lista de Articulos</h2>
-                <hr/>
-                <h:form id="formMostrar">
-                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                    <p:dataTable var="item" value="#{vehiculoBean.vehiculos}" emptyMessage="No hay nada para mostrar" 
-                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">
-                        <p:column headerText="MARCA">
-                            <h:outputText value="#{item.marca}">
-                                <f:converter converterId="marcaconverter"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="TIPO">
-                            <h:outputText value="#{item.tipovehiculo}" />
-                        </p:column>
-                         <p:column headerText="MODELO">
-                            <h:outputText value="#{item.modelo.modelo}" />
-                        </p:column>
-                        <p:column headerText="COLOR">
-                            <h:outputText value="#{item.color.color}" />
-                        </p:column>
-                        <p:column headerText="AÑO">
-                            <h:outputText value="#{item.anofabri}" />
-                        </p:column>
-                        <p:column headerText="SERIE" filterBy="#{item.serie}" filterMatchMode="contains">
-                            <h:outputText value="#{item.serie}" />
-                        </p:column>
-                        <p:column headerText="MOTOR">
-                            <h:outputText value="#{item.motor}" />
-                        </p:column>
-                        <p:column headerText="ESTADO">
-                            <h:outputText value="#{item.estado}">
-                                <f:converter converterId="estadoconverter"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column width="10%" style="text-align: center">
-                            <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEditar(item.idvehiculo)}" icon="ui-icon ui-icon-pencil"/>
-                            <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEliminar(item.idvehiculo)}" icon="ui-icon ui-icon-trash"/>
-                        </p:column>
-                    </p:dataTable>
-                </h:form>
-                
                 <h:form id="formInsertar">
                     <p:dialog header="Nuevo Articulo" widgetVar="dlginsertar" modal="true">                        
                         <p:panelGrid id="panelcreararticulo" columns="3">                            
-                            
+
                             <p:outputLabel value="Marca:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.marca}">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
@@ -159,7 +161,7 @@
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
-                
+
                 <h:form id="frmEliminarArticulo">
                     <p:dialog header="Datos del Articulo" widgetVar="dialogoEliminarArticulo" modal="true">
                         <p:inputText type="hidden" value="#{vehiculoBean.vehiculo.idvehiculo}"/>

@@ -13,7 +13,7 @@
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form id="formTabla" prependId="false ">
                 <p:growl id="msg12" />
-                <p:panelGrid columns="2">
+                <h:panelGrid columns="2">
                     <p:autoComplete id="cliente" value="#{ocupacionBean.anexo}"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
                                     itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
@@ -23,7 +23,7 @@
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                     </p:autoComplete>
-                </p:panelGrid>                
+                </h:panelGrid>                
                 <p:dataTable id="tablalistarocups" var="ocups" value="#{ocupacionBean.ocupsxanexo}" 
                              emptyMessage="No hay nada para mostrar">
                     <p:column headerText="Descripción">
@@ -47,7 +47,7 @@
         <h:form id="formOcupacion">
             <p:dialog  header="Ingresar datos" showEffect="explode" hideEffect="explode" widgetVar="dlginsertar" modal="true" >
                 <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                <p:panelGrid columns="4">                    
+                <h:panelGrid columns="4">                    
                     <p:outputLabel value="Tipo:" for="cmbtipo"/>
                     <p:selectOneMenu id="cmbtipo" value="#{ocupacionBean.ocupacion.tipo}" required="true" requiredMessage="Seleccione Tipo de Ingreso">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
@@ -111,7 +111,7 @@
                     </p:selectOneRadio>                    
                     <p:commandButton value="#{ocupacionBean.btnGuardar}" update=":formTabla:tablalistarocups"
                                      actionListener="#{ocupacionBean.insertarSolo(ocupacionBean.anexo)}"/>
-                </p:panelGrid>
+                </h:panelGrid>
             </p:dialog>
         </h:form>
         <h:form id="formEliminar">

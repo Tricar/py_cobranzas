@@ -36,14 +36,6 @@ public class letrasBean implements Serializable {
     public letrasBean() {
     }
 
-    public Letras getLetra() {
-        return letra;
-    }
-
-    public void setLetra(Letras letra) {
-        this.letra = letra;
-    }
-
     public List<Letras> getLetras() {
         LetrasDao linkdao = new LetrasDaoImplements();
         letras = linkdao.mostrarLetras();
@@ -54,6 +46,52 @@ public class letrasBean implements Serializable {
         LetrasDao linkdao = new LetrasDaoImplements();
         letrasventa = linkdao.mostrarLetrasXCred(credito);
         return letrasventa;
+    }
+    
+    public List<Letras> mostrarSoloLetrasxCred(Credito cred){
+        credito = cred;
+        LetrasDao letdao = new LetrasDaoImplements();
+        letras = letdao.mostrarSoloLetrasxCred(credito, "ND");
+        return letras;
+    }
+
+    public void insertar(Credito credito) {
+        LetrasDao linkDao = new LetrasDaoImplements();
+        linkDao.insertarLetra(letra);
+        letra = new Letras();
+    }
+
+    public void modificar() {
+        LetrasDao linkDao = new LetrasDaoImplements();
+        letra.setMontoletra(res);
+        letra.setFecven(fechafin);
+        linkDao.modificarLetra(letra);
+        letra = new Letras();
+    }
+
+    public void eliminar() {
+        LetrasDao linkDao = new LetrasDaoImplements();
+        CreditoDao creditodao = new CreditoDaoImp();
+        credito = creditodao.cargarCreditoxLetra(letra);
+        credito.setTotaldeuda(credito.getTotaldeuda().subtract(letra.getMonto()));
+        creditodao.modificarVenta(credito);
+        linkDao.eliminarLetra(letra);
+        letra = new Letras();
+    }
+
+    public void resultadoSaldo() {
+        res = letra.getMonto().add(letra.getInteres());
+    }
+
+    public Date sumaDias(Date fecha, int dias) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        cal.add(Calendar.DAY_OF_YEAR, dias);
+        return cal.getTime();
+    }
+
+    public void resultadoFecha() {
+        fechafin = sumaDias(letra.getFecini(), 30);
     }
 
     public void setLetras(List<Letras> letras) {
@@ -84,42 +122,11 @@ public class letrasBean implements Serializable {
         this.fechafin = fechafin;
     }
 
-    public void insertar(Credito credito) {
-        LetrasDao linkDao = new LetrasDaoImplements();
-        linkDao.insertarLetra(letra);
-        letra = new Letras();
+    public Letras getLetra() {
+        return letra;
     }
 
-    public void modificar() {
-        LetrasDao linkDao = new LetrasDaoImplements();
-        letra.setMontoletra(res);
-        letra.setFecven(fechafin);
-        linkDao.modificarLetra(letra);
-        letra = new Letras();
-    }
-
-    public void eliminar() {
-        LetrasDao linkDao = new LetrasDaoImplements();
-        CreditoDao creditodao = new CreditoDaoImp();
-        credito = creditodao.cargarCreditoxLetra(letra);
-        credito.setTotaldeuda(credito.getTotaldeuda().subtract(letra.getMonto()));
-        creditodao.modificarVenta(credito);
-        linkDao.eliminarLetra(letra);
-        letra = new Letras();
-    }
-    
-    public void resultadoSaldo(){
-        res = letra.getMonto().add(letra.getInteres());
-    }
-    
-    public Date sumaDias(Date fecha, int dias) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(fecha);
-        cal.add(Calendar.DAY_OF_YEAR, dias);
-        return cal.getTime();
-    }
-    
-    public void resultadoFecha(){
-        fechafin = sumaDias(letra.getFecini(), 30);
+    public void setLetra(Letras letra) {
+        this.letra = letra;
     }
 }

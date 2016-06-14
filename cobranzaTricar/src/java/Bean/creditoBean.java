@@ -565,6 +565,7 @@ public class creditoBean implements Serializable {
     }
 
     public List<Letras> cargarLetrasArray(Credito cred) {
+        letrasBean letbean = new letrasBean();
         letraslista = new ArrayList();
         CreditoDao creditodao = new CreditoDaoImp();
         List<Letras> letritas = new ArrayList();
@@ -602,7 +603,7 @@ public class creditoBean implements Serializable {
             }
             letrasdao.modificarLetra(get);
         }
-        return letraslista = letrasdao.mostrarLetrasXCred(cred);
+        return letraslista = letbean.mostrarSoloLetrasxCred(cred);
     }
 
     public void cargarLetrasCotiza(Credito cred) {
@@ -618,36 +619,36 @@ public class creditoBean implements Serializable {
         pago = new Pagos();
     }
 
-    public void insertarNotaDebito() {
-        LetrasDao letrasdao = new LetrasDaoImplements();
-        PagosDao pagosdao = new PagosDaoImp();
-        pago = new Pagos();
-        Date d = new Date();
-        if (letra.getMonto().compareTo(BigDecimal.ZERO) == 0) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Monto debe ser mayor a cero."));
-        }
-        CreditoDao creditodao = new CreditoDaoImp();
-        letra.setCredito(credito);
-        letra.setDescripcion("ND");
-        letra.setFecreg(d);
-        letra.setFecven(letra.getFecreg()/*fechafin*/);
-        letra.setMontoletra(BigDecimal.ZERO);
-        letra.setInteres(BigDecimal.ZERO);
-        letra.setSaldo(BigDecimal.ZERO/*letra.getMonto()*/);
-        letra.setMora(BigDecimal.ZERO);
-        //letra.setEstado("PN");
-        //credito.setTotaldeuda(credito.getTotaldeuda().add(letra.getMonto()));
-        //creditodao.modificarVenta(credito);
-        letrasdao.insertarLetra(letra);
-        pago.setLetras(letra);
-        pago.setFecreg(letra.getFecreg());
-        pago.setMonto(letra.getMonto());
-        pago.setDescripcion("MORA");
-        pago.setTipo("ND");
-        pago.setOperacion(descND);
-        pagosdao.insertarPago(pago);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Inserto Nota Débito correctamente."));
-    }
+//    public void insertarNotaDebito() {
+//        LetrasDao letrasdao = new LetrasDaoImplements();
+//        PagosDao pagosdao = new PagosDaoImp();
+//        pago = new Pagos();
+//        Date d = new Date();
+//        if (letra.getMonto().compareTo(BigDecimal.ZERO) == 0) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Monto debe ser mayor a cero."));
+//        }
+//        CreditoDao creditodao = new CreditoDaoImp();
+//        letra.setCredito(credito);
+//        letra.setDescripcion("ND");
+//        letra.setFecreg(d);
+//        letra.setFecven(letra.getFecreg()/*fechafin*/);
+//        letra.setMontoletra(BigDecimal.ZERO);
+//        letra.setInteres(BigDecimal.ZERO);
+//        letra.setSaldo(BigDecimal.ZERO/*letra.getMonto()*/);
+//        letra.setMora(BigDecimal.ZERO);
+//        //letra.setEstado("PN");
+//        //credito.setTotaldeuda(credito.getTotaldeuda().add(letra.getMonto()));
+//        //creditodao.modificarVenta(credito);
+//        letrasdao.insertarLetra(letra);
+//        pago.setLetras(letra);
+//        pago.setFecreg(letra.getFecreg());
+//        pago.setMonto(letra.getMonto());
+//        pago.setDescripcion("MORA");
+//        pago.setTipo("ND");
+//        pago.setOperacion(descND);
+//        pagosdao.insertarPago(pago);
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Inserto Nota Débito correctamente."));
+//    }
 
     public void cargarAnexoDNI() {
         filtradafecha = new ArrayList();
@@ -1049,8 +1050,7 @@ public class creditoBean implements Serializable {
                 }
                 credito.setTotaldeuda(BigDecimal.ZERO);
                 credito.setDeudactual(BigDecimal.ZERO);
-                credito.setEstado("EM");
-                credito.setInteres(null);
+                credito.setEstado("EM");                
                 credito.setVerificado(null);
                 btnaprobar = "Aprobar";
                 credito.setModificado(idusuario);
