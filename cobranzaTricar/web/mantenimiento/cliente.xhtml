@@ -10,41 +10,45 @@
         <h:form>
             <p:commandButton value="Nuevo" icon="b-add" action="#{anexoBean.nuevoanexo()}"/>
         </h:form>
-        <br/>
-        <h2>Lista de Clientes</h2>
-        <hr/>
-        <h:form id="formMostrar">
-            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-            <p:dataTable var="item" value="#{anexoBean.verCliente()}" emptyMessage="No hay nada para mostrar" 
-                         paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 50 60 70">
-                <p:column headerText="NOMBRE Y APELLIDO" filterBy="#{item.nombres}" filterMatchMode="contains">
-                    <h:outputText value="#{item.nombres} " />
-                </p:column>
-                <p:column headerText="NUMERO DOC." filterBy="#{item.numdocumento}" filterMatchMode="contains">
-                    <h:outputText value="#{item.numdocumento}" />
-                </p:column>                        
-                <p:column headerText="DIRECCION">
-                    <h:outputText value="#{item.direccion}" />
-                </p:column>
-                <p:column headerText="TELEFONO" >
-                    <h:outputText value="#{item.telefono}" />
-                </p:column>                        
-                <p:column headerText="CELULAR">
-                    <h:outputText value="#{item.celular}" />
-                </p:column>
-                <p:column headerText="REFERENCIA">
-                    <h:outputText value="#{item.referencia}" />
-                </p:column>
-                <p:column headerText="OPCIONES" width="10%" style="text-align: center">
-                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="ui-icon ui-icon-pencil"/>
-                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="ui-icon ui-icon-trash"/>
-                </p:column>
-                <p:column headerText="INGRESOS" width="10%" style="text-align: center">
-                    <p:commandButton icon="b-add" action="#{ocupacionBean.limpIngreso(item)}"/>                                
-                    <p:commandButton icon="b-ver" action="#{ocupacionBean.historial(item)}"/>
-                </p:column>
-            </p:dataTable>
-        </h:form>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                Lista de Cajas
+            </div>
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formMostrar">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable var="item" value="#{anexoBean.verCliente()}" emptyMessage="No hay nada para mostrar" 
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 50 60 70">
+                        <p:column headerText="NOMBRE Y APELLIDO" filterBy="#{item.nombres}" filterMatchMode="contains">
+                            <h:outputText value="#{item.nombres} " />
+                        </p:column>
+                        <p:column headerText="NUMERO DOC." filterBy="#{item.numdocumento}" filterMatchMode="contains">
+                            <h:outputText value="#{item.numdocumento}" />
+                        </p:column>                        
+                        <p:column headerText="DIRECCION">
+                            <h:outputText value="#{item.direccion}" />
+                        </p:column>
+                        <p:column headerText="TELEFONO" >
+                            <h:outputText value="#{item.telefono}" />
+                        </p:column>                        
+                        <p:column headerText="CELULAR">
+                            <h:outputText value="#{item.celular}" />
+                        </p:column>
+                        <p:column headerText="REFERENCIA">
+                            <h:outputText value="#{item.referencia}" />
+                        </p:column>
+                        <p:column headerText="OPCIONES" width="10%" style="text-align: center">
+                            <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="ui-icon ui-icon-pencil"/>
+                            <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="ui-icon ui-icon-trash"/>
+                        </p:column>
+                        <p:column headerText="INGRESOS" width="10%" style="text-align: center">
+                            <p:commandButton icon="b-add" action="#{ocupacionBean.limpIngreso(item)}"/>                                
+                            <p:commandButton icon="b-ver" action="#{ocupacionBean.historial(item)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
 
         <h:form id="formInsertar">
             <p:dialog header="NUEVO CLIENTE" widgetVar="dlginsert" modal="true">
@@ -175,7 +179,7 @@
         <h:form id="frmEditarAnexo">
             <p:dialog header="DATOS DEL CLIENTE" widgetVar="dialogoEditarAnexo" modal="true">
                 <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                <p:panelGrid id="panelEditarAnexo" columns="4">
+                <h:panelGrid id="panelEditarAnexo" columns="4">
                     <p:inputText type="hidden" value="#{anexoBean.anexo.idanexo}"/>
                     <p:inputText type="hidden" value="#{anexoBean.anexo.fechareg}"/>
                     <p:inputText type="hidden" value="#{anexoBean.anexo.codven}"/>
@@ -293,7 +297,7 @@
                     <p:inputText value="#{anexoBean.anexo.email}" id="txtEmail" autocomplete="off">
                         <f:validator validatorId="validatorEmail"/>
                     </p:inputText>
-                </p:panelGrid>                        
+                </h:panelGrid>                        
                 <p:separator/>
                 <p:commandButton value="Actualizar Cliente" icon="b-new" ajax="false" actionListener="#{anexoBean.modificar()}" />
             </p:dialog>

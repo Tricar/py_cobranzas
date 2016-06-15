@@ -75,7 +75,7 @@ public class Pagos implements java.io.Serializable {
         this.letras = letras;
     }
 
-    @Column(name = "operacion", length = 10)
+    @Column(name = "operacion", length = 50)
     public String getOperacion() {
         return this.operacion;
     }

@@ -32,15 +32,15 @@ public class LoginBean implements Serializable {
     }
 
     public void sesionExpired() {
-        String ruta = MyUtil.basepathlogin() + "login.xhtml";   
-        RequestContext context = RequestContext.getCurrentInstance();        
+        String ruta = MyUtil.basepathlogin() + "login.xhtml";
+        RequestContext context = RequestContext.getCurrentInstance();
         FacesContext facescontext = FacesContext.getCurrentInstance();
         HttpSession sesion = (HttpSession) facescontext.getExternalContext().getSession(false);
         sesion.invalidate();
         context.addCallbackParam("loggetOut", true);
         context.addCallbackParam("ruta", ruta);
     }
-    
+
     public void login(ActionEvent actionEvent) {
         this.session = null;
         this.transaction = null;
@@ -70,7 +70,7 @@ public class LoginBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
             context.addCallbackParam("loggedIn", loggedIn);
             context.addCallbackParam("ruta", ruta);
-        } catch (Exception e) {            
+        } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
@@ -148,8 +148,8 @@ public class LoginBean implements Serializable {
     public String ingreso() {
         return "/mantenimiento/ingreso";
     }
-    
-    public String caja(){
+
+    public String caja() {
         return "/sistema/caja";
     }
 

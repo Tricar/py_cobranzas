@@ -112,11 +112,37 @@ public class LetrasDaoImplements implements LetrasDao{
         }
         return lista;
     }
+    
+    @Override
+    public List<Letras> mostrarSoloLetrasxCred(Credito credito, String let) {
+        Session session = null;
+        List<Letras> lista = null;
+        Credito cred = new Credito();        
+        cred = credito;
+        Integer idcred = cred.getIdventa();
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Letras where idventa=:v and descripcion!=:u");
+            query.setParameter("u", let);
+            query.setParameter("v", idcred);
+            lista = (List<Letras>)query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
+    }
 
     @Override
     public boolean registrar(Session session, Letras letras) throws Exception {
         session.save(letras);
         return true;
     }    
+
+    
         
 }

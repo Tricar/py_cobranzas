@@ -12,6 +12,7 @@ import org.hibernate.Session;
 public interface LetrasDao{
     public List<Letras> mostrarLetras();
     public List<Letras> mostrarLetrasXCred(Credito credito);
+    public List<Letras> mostrarSoloLetrasxCred(Credito credito, String let);
     public void insertarLetra(Letras letras);
     public void modificarLetra (Letras letras);
     public void eliminarLetra (Letras letras);

@@ -12,23 +12,26 @@
         <h:form id="frmNuevo">
             <p:commandButton value="Nuevo Color" update=":formInsertar:panelcrearcolor" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
         </h:form>
-        <br/>
-
-        <h2>Lista de Color</h2>
-        <hr/>
-        <h:form id="frmlistarperfil">
-            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-            <p:dataTable id="tablalistarcolor" var="item" value="#{colorBean.verTodo()}" emptyMessage="No hay nada para mostrar"
-                         paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
-                <p:column headerText="DESCRIPCION">
-                    <h:outputText value="#{item.color}"/>
-                </p:column>
-                <p:column width="10%" style="text-align: center">
-                    <p:commandButton actionListener="#{colorBean.cargarColorEditar(item.idcolor)}" icon="ui-icon ui-icon-pencil"/>
-                    <p:commandButton actionListener="#{colorBean.cargarColorEliminar(item.idcolor)}" icon="ui-icon ui-icon-trash"/>
-                </p:column>
-            </p:dataTable>
-        </h:form>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                Lista de Cajas
+            </div>
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="frmlistarperfil">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable id="tablalistarcolor" var="item" value="#{colorBean.verTodo()}" emptyMessage="No hay nada para mostrar"
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
+                        <p:column headerText="DESCRIPCION">
+                            <h:outputText value="#{item.color}"/>
+                        </p:column>
+                        <p:column width="10%" style="text-align: center">
+                            <p:commandButton actionListener="#{colorBean.cargarColorEditar(item.idcolor)}" icon="ui-icon ui-icon-pencil"/>
+                            <p:commandButton actionListener="#{colorBean.cargarColorEliminar(item.idcolor)}" icon="ui-icon ui-icon-trash"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
 
         <h:form id="formInsertar">
             <p:dialog header="Nuevo Color" widgetVar="dlginsertar" modal="true">                        

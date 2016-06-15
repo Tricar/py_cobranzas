@@ -19,6 +19,7 @@ public class cajaBean implements Serializable {
     private List<Caja> cajas = new ArrayList();
     private String btnguardar;
     private List<Caja> listaFiltTienda = new ArrayList();
+    private List<Caja> verTodas = new ArrayList();
 
     public cajaBean() {
     }
@@ -138,6 +139,16 @@ public class cajaBean implements Serializable {
 
     public void setListaFiltTienda(List<Caja> listaFiltTienda) {
         this.listaFiltTienda = listaFiltTienda;
+    }
+
+    public List<Caja> getVerTodas() {
+        CajaDao cajadao = new CajaDaoImp();
+        verTodas = cajadao.mostrarCajas();
+        return verTodas;
+    }
+
+    public void setVerTodas(List<Caja> verTodas) {
+        this.verTodas = verTodas;
     }
 
 }

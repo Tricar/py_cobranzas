@@ -9,15 +9,15 @@
     <ui:define name="content">
         <h2>Gestión de Créditos</h2>
         <h:form>            
-            <p:commandButton action="#{creditoBean.nuevo()}" value="Nuevo Crédito" immediate="true" icon="b-add"/>
+            <p:commandButton action="#{creditoBean.nuevo()}" value="Nueva Solicitud de Crédito" immediate="true" icon="b-add"/>
         </h:form>
         <h:form>            
-            <p:panelGrid columns="2">
+            <h:panelGrid columns="2">
                 <p:outputLabel value="Ingrese Código de crédito:"/>
                 <p:inputText value="#{creditoBean.codigo}"/>                       
                 <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarxCodigoCredito()}"
                                  ajax="false"/>
-            </p:panelGrid>
+            </h:panelGrid>
         </h:form>
         <h:form id="formMostrar">
             <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
@@ -74,7 +74,7 @@
         <h:form id="formRef">
             <p:dialog id="dlg3" header="Refinanciar Credito" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgrefinanciar" modal="true" resizable="false" minWidth="200">
-                <p:panelGrid columns="2">
+                <h:panelGrid columns="2">
                     <p:outputLabel value="Fecha:" />
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy"/>
                     <p:outputLabel value="Deuda Total:"/>
@@ -83,8 +83,7 @@
                     <p:selectOneMenu value="#{creditoBean.crediton.interes}" >                        
                         <f:selectItem itemLabel="2" itemValue='2'/>
                         <f:selectItem itemLabel="3" itemValue='3'/>
-                        <f:selectItem itemLabel="4" itemValue='4'/>
-                        <f:selectItem itemLabel="5" itemValue='5'/>
+                        <f:selectItem itemLabel="4" itemValue='4'/>                        
                     </p:selectOneMenu>
                     <p:outputLabel value="Nro. Letras:" for="txtletra"/>
                     <p:selectOneMenu id="txtletra" value="#{creditoBean.crediton.nletras}" required="true" requiredMessage="Seleccione numero de letra">
@@ -103,7 +102,7 @@
                     </p:selectOneMenu>                    
                     <p:commandButton actionListener="#{creditoBean.refinanciar()}" value="Refinanciar" oncomplete="dlgrefinanciar.hide()"
                                      update=":formMostrar" icon="b-update"/>
-                </p:panelGrid>
+                </h:panelGrid>
             </p:dialog>
         </h:form>
         <h:form id="formEliminar">
@@ -164,7 +163,7 @@
         <h:form id="formNotadebito">
             <p:dialog id="dlg4" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgnotadebito" modal="true" resizable="true" minWidth="200">
-                <p:panelGrid columns="2">
+                <h:panelGrid columns="2">
                     <p:outputLabel value="Fecha:" for="txtfechai"/>
                     <p:calendar id="txtfechai" navigator="true" showOn="button" value="#{creditoBean.letra.fecini}" 
                                 pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">                        
@@ -175,7 +174,7 @@
                     <p:inputText id="txtref" value="#{creditoBean.descND}" required="true" requiredMessage="Ingrese Referencia"/>
                     <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" 
                                      oncomplete="dlgnotadebito.hide()" ajax="false"/>
-                </p:panelGrid>
+                </h:panelGrid>
             </p:dialog>
         </h:form>
     </ui:define>

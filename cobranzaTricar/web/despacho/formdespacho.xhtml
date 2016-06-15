@@ -16,7 +16,7 @@
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
                 <p:growl id="msg12" />
-                <p:panelGrid columns="2">
+                <h:panelGrid columns="2">
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha" disabled="true"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
@@ -79,21 +79,13 @@
                         <f:selectItems value="#{creditoBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                         <p:ajax listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
-                    <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
-                                    completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
-                                    itemLabel="#{v.serie}" itemValue="#{v}" 
-                                    required="true" requiredMessage="Elija un vehículo">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
-                        <p:ajax event="mousemove" listener="#{creditoBean.precioModeloCredito()}"/>
-                    </p:autoComplete>
                     <p:outputLabel value="Boleta/Factura" for="comp"/>
                     <p:inputMask id="comp" mask="999-99999" value="#{creditoBean.credito.comprobante}" required="true" requiredMessage="Ingrese comprobante de pago"/>
                     <p:outputLabel value="Guía Rem" for="guia"/>
                     <p:inputMask id="guia" mask="999-99999" value="#{creditoBean.credito.guia}" required="true" requiredMessage="Ingrese Guía de remisión"/>
                     <p:outputLabel value="Observaciones" for="obs"/>
                     <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" required="true" requiredMessage="Ingrese observaciones" />
-                </p:panelGrid>
+                </h:panelGrid>
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.despachar(loginbean.usuario)}" icon="b-ok"
                                  ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
                 </p:commandButton>

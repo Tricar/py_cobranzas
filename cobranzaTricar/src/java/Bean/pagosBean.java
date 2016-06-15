@@ -14,10 +14,12 @@ import Model.Letras;
 import Model.Movcaja;
 import Model.Pagos;
 import Model.Tipodoc;
+import Model.Usuario;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -55,6 +57,8 @@ public class pagosBean implements Serializable {
     private movcajaBean movcbean = new movcajaBean();
     private Movcaja mcaja = new Movcaja();
     private Caja caja = new Caja();
+    private List<Caja> todasCajas = new ArrayList();
+    private long difdays;
 
     /**
      * Creates a new instance of pagosBean
@@ -96,15 +100,16 @@ public class pagosBean implements Serializable {
             mcaja.setTipomov("IN");
             mcaja.setFechamov(pago.getFecreg());
             mcaja.setMonto(montopago);
+            mcaja.setOrigen(letra);
             movcbean.insertar(mcaja);
             cajabean.modificarExt(caja);
             credito.setDeudactual(credito.getDeudactual().subtract(montopago));
             creditodao.modificarVenta(credito);
             credbean.cargarLetras(credito);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El Pago fue satisfactorio."));
-            RequestContext.getCurrentInstance().update(":formModificar:tablaletras");
+            //RequestContext.getCurrentInstance().update(":formModificar:tablaletras");
             RequestContext.getCurrentInstance().update("formpagar");
             RequestContext.getCurrentInstance().execute("PF('dlgpagar').hide()");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El Pago fue satisfactorio."));
             pago = new Pagos();
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Revise el monto", "Monto excede el saldo"));
@@ -114,16 +119,84 @@ public class pagosBean implements Serializable {
 
     }
 
-    public void cargarLetra(Letras letras) {
+    public void cargarLetraPagos(Letras letras) {
         letra = letras;
+        listafiltrada = new ArrayList();
+        if (letras.getMora().compareTo(BigDecimal.ZERO) == 0) {
+            numletra = letra.getDescripcion();
+            montopago = letra.getSaldo();
+            descripcion = letra.getDescripcion();
+            CreditoDao linkdao = new CreditoDaoImp();
+            credito = linkdao.cargarCreditoxLetra(letra);
+            RequestContext.getCurrentInstance().update("formpagar");
+            RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
+        } else {
+            RequestContext.getCurrentInstance().update("formAlerta");
+            RequestContext.getCurrentInstance().execute("PF('dlgalerta').show()");
+        }
+
+        //return letra;        
+    }
+
+    public void cargarLetraDebito(Letras letras) {
+        letra = letras;
+        listafiltrada = tipobean.listaTipoDoc("ND");
         numletra = letra.getDescripcion();
-        montopago = letra.getSaldo();
+        montopago = letra.getMora();
         descripcion = letra.getDescripcion();
         CreditoDao linkdao = new CreditoDaoImp();
         credito = linkdao.cargarCreditoxLetra(letra);
-        RequestContext.getCurrentInstance().update("formpagar");
-        RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
-        //return letra;        
+        pago = new Pagos();
+        RequestContext.getCurrentInstance().update("formNotadebito");
+        RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').show()");
+        //return letra;
+    }
+
+    public void insertarNotaDebito(Usuario usuario) {
+        LetrasDao letrasdao = new LetrasDaoImplements();
+        PagosDao pagosdao = new PagosDaoImp();
+        try {
+            letra.setMora(BigDecimal.ZERO);
+            letra.setDiffdays(Long.valueOf(0));
+            difdays = letra.getDiffdays();
+            
+            letrasdao.modificarLetra(letra);
+            letra = new Letras();
+            //ago = new Pagos();           
+            letra.setCredito(credito);
+            letra.setDescripcion("ND");
+            letra.setFecreg(pago.getFecreg());
+            letra.setFecven(letra.getFecreg()/*fechafin*/);
+            letra.setMontoletra(montopago);
+            letra.setInteres(BigDecimal.ZERO);
+            letra.setSaldo(BigDecimal.ZERO/*letra.getMonto()*/);
+            letra.setMora(BigDecimal.ZERO);
+            letra.setEstado("CN");
+            letra.setDiffdays(difdays);
+            letrasdao.insertarLetra(letra);
+            pago.setUsuario(usuario.getIdusuario());
+            pago.setLetras(letra);
+            pago.setFecreg(letra.getFecreg());
+            pago.setMonto(montopago);
+            pago.setTipo("ND");
+            pagosdao.insertarPago(pago);
+            caja = pago.getCaja();
+            caja.setTotal(caja.getTotal().add(montopago));
+            mcaja.setCaja(caja);
+            mcaja.setTipomov("IN");
+            mcaja.setFechamov(pago.getFecreg());
+            mcaja.setMonto(montopago);
+            mcaja.setOrigen(letra);
+            movcbean.insertar(mcaja);
+            cajabean.modificarExt(caja);
+            RequestContext.getCurrentInstance().update("formNotadebito");
+            RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').hide()");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Insertó Nota Débito correctamente."));
+        } catch (Exception e) {
+            RequestContext.getCurrentInstance().update("formNotadebito");
+            RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').show()");
+        }
+
     }
 
     public void listaTipoDoc(String tipo) {
@@ -132,6 +205,14 @@ public class pagosBean implements Serializable {
 
     public void disableDest(String tipo) {
         if (tipo.equals("LE")) {
+            disablecaja = false;
+        } else {
+            disablecaja = true;
+        }
+    }
+
+    public void disableDestDeb(String tipo) {
+        if (tipo.equals("ND")) {
             disablecaja = false;
         } else {
             disablecaja = true;
@@ -155,16 +236,13 @@ public class pagosBean implements Serializable {
     public List eliminar(Credito cred, Pagos pag) {
         pago = pag;
         credito = cred;
-        System.out.println("delete en pagosbean: " + credito.getAnexo().getNombres());
         PagosDao pagodao = new PagosDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
         CreditoDao creditodao = new CreditoDaoImp();
         Letras letrapago = new Letras();
         Credito creditopago = new Credito();
-        System.out.println("aca hay un pago: " + pago.getDescripcion());
         try {
             if (pago.getTipo().equals("LE") || pago.getTipo().equals("NC")) {
-                System.out.println("aca hay un pago: " + pago.getDescripcion());
                 pagodao.eliminarPago(pago);
                 letrapago = pago.getLetras();
                 letrapago.setSaldo(letrapago.getSaldo().add(pago.getMonto()));
@@ -349,5 +427,22 @@ public class pagosBean implements Serializable {
 
     public void setCaja(Caja caja) {
         this.caja = caja;
+    }
+
+    public List<Caja> getTodasCajas() {
+        todasCajas = cajabean.getVerTodas();
+        return todasCajas;
+    }
+
+    public void setTodasCajas(List<Caja> todasCajas) {
+        this.todasCajas = todasCajas;
+    }
+
+    public long getDifdays() {
+        return difdays;
+    }
+
+    public void setDifdays(long difdays) {
+        this.difdays = difdays;
     }
 }
