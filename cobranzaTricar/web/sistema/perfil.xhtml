@@ -10,7 +10,7 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                 <h:form id="frmNuevo">
-                    <p:commandButton value="Nuevo Perfil" update=":formInsertar:panelcrearperfil" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
+                    <p:commandButton value="Nuevo" update=":formInsertar:panelcrearperfil" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
                 </h:form>
 
                 <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
@@ -35,15 +35,23 @@
                     </div>
                 </div>
 
-                <h:form id="frmEditarPerfil">
-                    <p:dialog header="Datos del usuario" widgetVar="dialogoEditarPerfil" modal="true">
-                        <h:panelGrid id="panelEditarPerfil" columns="2">     
+                <h:form id="formInsertar">
+                    <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
+                        <h:panelGrid id="panelcrearperfil">
                             <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" 
-                                         autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" 
+                                         style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
-                            <p:message for="txtDescripcion"/>                        
+                            <p:message for="txtDescripcion"/>
+                            <p:commandButton value="Guardar" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="frmEditarPerfil">
+                    <p:dialog header="Datos del usuario" widgetVar="dialogoEditarPerfil" modal="true">
+                        <h:panelGrid id="panelEditarPerfil">                        
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sistema}"/>
@@ -62,8 +70,14 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venLis}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venReg}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venCon}"/>   
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manCaja}"/>
-                            <p:commandButton value="Guardar cambios" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manCaja}"/>    
+                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" 
+                                         autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:message for="txtDescripcion"/>
+                            <p:commandButton value="Guardar" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
@@ -111,21 +125,7 @@
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manDes}"/>
                         <h:outputText value="Despacho" />                        
                         <p:separator/>
-                        <p:commandButton value="Guardar cambios" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
-                    </p:dialog>
-                </h:form>
-
-                <h:form id="formInsertar">
-                    <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
-                        <p:panelGrid id="panelcrearperfil" columns="3">
-                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" 
-                                         style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:message for="txtDescripcion"/>
-                            <p:commandButton value="Registrar Perfil" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
-                        </p:panelGrid>
+                        <p:commandButton value="Asignar" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>
                 </h:form>
 

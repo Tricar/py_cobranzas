@@ -159,7 +159,7 @@ public class pagosBean implements Serializable {
             letra.setMora(BigDecimal.ZERO);
             letra.setDiffdays(Long.valueOf(0));
             difdays = letra.getDiffdays();
-            
+
             letrasdao.modificarLetra(letra);
             letra = new Letras();
             //ago = new Pagos();           
@@ -189,11 +189,11 @@ public class pagosBean implements Serializable {
             mcaja.setOrigen(letra);
             movcbean.insertar(mcaja);
             cajabean.modificarExt(caja);
-            RequestContext.getCurrentInstance().update("formNotadebito");
-            RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').hide()");
+            RequestContext.getCurrentInstance().update("formModificar");
+            RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').hide()");    
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Insertó Nota Débito correctamente."));
         } catch (Exception e) {
-            RequestContext.getCurrentInstance().update("formNotadebito");
+            RequestContext.getCurrentInstance().update("formModificar");
             RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').show()");
         }
 

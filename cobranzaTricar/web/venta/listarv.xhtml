@@ -68,7 +68,7 @@
         </h:form>        
         <hr/>
         <h:form id="formModificar">
-            <p:growl id="mensajeGeneral" showDetail="true" sticky="false" />
+            <p:growl id="mensajeGeneral" showDetail="true" life="2000" />
             <p:dataTable id="tablaletras" var="letras" value="#{creditoBean.letraslista}" 
                          emptyMessage="No hay nada para mostrar" > 
                 <p:inputText type="hidden" value="#{letras.idletras}"/>
@@ -229,7 +229,7 @@
                     <p:inputText id="txtdescripcion" value="#{pagosBean.pago.descripcion}" required="true" 
                                  requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>                    
                     <p:commandButton actionListener="#{pagosBean.insertarNotaDebito(loginbean.usuario)}" 
-                                     value="Guardar" ajax="false"/>
+                                     value="Guardar"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>

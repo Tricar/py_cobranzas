@@ -127,13 +127,13 @@
                             </p:inputText>
                         </h:panelGrid>                        
                         <p:separator/>
-                        <p:commandButton value="Registrar Empleado" icon="b-new" ajax="false" actionListener="#{anexoBean.insertar()}" />
+                        <p:commandButton value="Guardar" icon="ui-icon-disk" ajax="false" actionListener="#{anexoBean.insertar()}" />
                     </p:dialog>
                 </h:form>
 
                 <h:form id="frmEditarAnexo">
                     <p:dialog header="DATOS DEL EMPLEADO" widgetVar="dialogoEditarAnexo" modal="true">
-                        <p:panelGrid id="panelEditarAnexo" columns="4">
+                        <h:panelGrid id="panelEditarAnexo" columns="4">
                             <p:inputText type="hidden" value="#{anexoBean.anexo.idanexo}"/>
                             <h:panelGroup></h:panelGroup>
                             <h:panelGroup></h:panelGroup>
@@ -207,9 +207,9 @@
                                 <f:validator validatorId="validatorVacio"/>
                                 <f:validator validatorId="validatorLetraNumero"/>
                             </p:inputText>
-                        </p:panelGrid>                        
+                        </h:panelGrid>                        
                         <p:separator/>
-                        <p:commandButton value="Actualizar Empleado" icon="b-new" ajax="false" actionListener="#{anexoBean.modificar()}" />
+                        <p:commandButton value="Actualizar" icon="ui-icon-disk" ajax="false" actionListener="#{anexoBean.modificar()}" />
                     </p:dialog>
                 </h:form>
 

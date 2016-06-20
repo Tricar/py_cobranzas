@@ -21,8 +21,7 @@
                         <p:password value="#{loginbean.clave}" autocomplete="off" id="clave" required="true" label="clave" />
                         <div id="cargando" style="width: 50px; height: 50px" class="precarga"/>
                         <f:facet name="footer">  
-                            <p:commandButton id="loginButton" value="Ingresar" update=":growl"   
-                                             actionListener="#{loginbean.login(actionEvent)}" icon="icon-login"   
+                            <p:commandButton id="loginButton" value="Ingresar" update=":growl" actionListener="#{loginbean.login(actionEvent)}" icon="icon-login"   
                                              oncomplete="handleLoginRequest(xhr, status, args)" onclick="ActivarCampoOtroTema();"/>  
                         </f:facet>  
                     </h:panelGrid>  

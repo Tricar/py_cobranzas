@@ -56,8 +56,8 @@
                 </div>
 
                 <h:form id="formInsertar">
-                    <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
-                        <h:panelGrid id="panelcrearperfil" columns="3">
+                    <p:dialog header="Nuevo Usuario" widgetVar="dlginsertar" modal="true">                        
+                        <h:panelGrid id="panelcrearperfil">
                             <p:outputLabel value="Usuario:" for="txtUsuario"/>
                             <p:inputText id="txtUsuario" label="Usuario" value="#{usuarioBean.tusuario.usuario}" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
@@ -71,23 +71,21 @@
                             <p:outputLabel value="Anexo:"/>
                             <p:selectOneMenu value="#{usuarioBean.tusuario.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                <f:selectItems value="#{anexoBean.anexos}" var="anexo" itemLabel="#{anexo.nombre}" itemValue="#{anexo}"/>
+                                <f:selectItems value="#{anexoBean.anexos}" var="anexo" itemLabel="#{anexo.nombres}" itemValue="#{anexo}"/>
                             </p:selectOneMenu>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Perfil:"/>
                             <p:selectOneMenu value="#{usuarioBean.tusuario.perfil}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                 <f:selectItems value="#{perfilBean.verTodo()}" var="perfil" itemLabel="#{perfil.descripcion}" itemValue="#{perfil}"/>
                             </p:selectOneMenu>
-                            <h:panelGroup></h:panelGroup>
-                            <p:commandButton value="Registrar Usuario" icon="b-new" ajax="false" actionListener="#{usuarioBean.registrar()}" />
+                            <p:commandButton value="Guardar" icon="ui-icon-disk" ajax="false" actionListener="#{usuarioBean.registrar()}" />
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
 
                 <h:form id="frmEditarUsuario">
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEditarUsuario" modal="true">
-                        <h:panelGrid id="panelEditarUsuario" columns="3">
+                        <h:panelGrid id="panelEditarUsuario">
                             <p:inputText type="hidden" value="#{usuarioBean.tusuario.idusuario}"/>
                             <p:inputText type="hidden" value="#{usuarioBean.tusuario.clave}"/>                            
                             <p:inputText type="hidden" value="#{usuarioBean.tusuario.fechareg}"/>
@@ -100,7 +98,7 @@
                             <p:inputText id="txtClave" label="Clave" value="#{usuarioBean.txtclavevacia}" autocomplete="off"/>
                             <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Anexo:"/>
-                            <p:selectOneMenu value="#{usuarioBean.tusuario.anexo}" converter="omnifaces.SelectItemsConverter">
+                            <p:selectOneMenu value="#{usuarioBean.tusuario.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                 <f:selectItems value="#{anexoBean.anexos}" var="anexo" itemLabel="#{anexo.nombres}" itemValue="#{anexo}"/>
                             </p:selectOneMenu>
@@ -111,7 +109,7 @@
                                 <f:selectItems value="#{perfilBean.perfiles}" var="perfil" itemLabel="#{perfil.descripcion}" itemValue="#{perfil}"/>
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
-                            <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{usuarioBean.modificar()}"/>
+                            <p:commandButton value="Actualizar" icon="ui-icon-disk" ajax="false" actionListener="#{usuarioBean.modificar()}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
@@ -120,8 +118,8 @@
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarUsuario" modal="true">
                         <p:inputText type="hidden" value="#{usuarioBean.tusuario.idusuario}"/>
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{usuarioBean.eliminar()}" ajax="false" icon="b-ok" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
+                        <p:commandButton value="Si" actionListener="#{usuarioBean.eliminar()}" ajax="false" icon="ui-icon-check" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="ui-icon-close" />
                     </p:dialog>
                 </h:form>
             </ui:define>
