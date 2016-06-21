@@ -37,6 +37,7 @@ public class Letras implements java.io.Serializable {
     private String descripcion;
     private BigDecimal mora;
     private Long diffdays;
+    private Boolean cobradonc;
     private Set pagoses = new HashSet(0);
 
     public Letras() {
@@ -46,7 +47,7 @@ public class Letras implements java.io.Serializable {
         this.idletras = idletras;
     }
 
-    public Letras(Integer idletras, Credito credito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, String descripcion, BigDecimal mora, Long diffdays, Set pagoses) {
+    public Letras(Integer idletras, Credito credito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, String descripcion, BigDecimal mora, Long diffdays, Boolean cobradonc, Set pagoses) {
         this.idletras = idletras;
         this.credito = credito;
         this.montoletra = montoletra;
@@ -60,6 +61,7 @@ public class Letras implements java.io.Serializable {
         this.descripcion = descripcion;
         this.mora = mora;
         this.diffdays = diffdays;
+        this.cobradonc = cobradonc;
         this.pagoses = pagoses;
     }
 
@@ -184,6 +186,15 @@ public class Letras implements java.io.Serializable {
 
     public void setDiffdays(Long diffdays) {
         this.diffdays = diffdays;
+    }
+    
+    @Column(name = "cobradonc")
+    public Boolean getCobradonc() {
+        return this.cobradonc;
+    }
+
+    public void setCobradonc(Boolean cobradonc) {
+        this.cobradonc = cobradonc;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "letras")

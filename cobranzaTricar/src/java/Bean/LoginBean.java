@@ -92,7 +92,7 @@ public class LoginBean implements Serializable {
         context.addCallbackParam("loggetOut", true);
         context.addCallbackParam("ruta", ruta);
     }
-
+    
     public String empleado() {
         return "/sistema/empleado";
     }

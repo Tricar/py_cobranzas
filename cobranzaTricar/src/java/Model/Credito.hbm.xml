@@ -95,6 +95,9 @@
         <property name="comprobante2" type="string">
             <column name="comprobante2" length="50" />
         </property>
+        <property name="calificacion" type="string">
+            <column name="calificacion" length="2" not-null="true" />
+        </property>
         <property name="despachado" type="java.lang.Integer">
             <column name="despachado" />
         </property>

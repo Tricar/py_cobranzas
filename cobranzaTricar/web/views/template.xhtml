@@ -86,6 +86,7 @@
                     <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito - Pago" icon="ui-icon-cart">
                         <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-script" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manRef}" value="Refinanciar" action="#{creditoBean.indexref()}" icon="ui-icon-newwin" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />
                     </p:submenu>
                     <p:submenu rendered="#{loginbean.usuario.perfil.despacho}" label="Despacho" icon="ui-icon-flag">
@@ -96,7 +97,7 @@
                         <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />
                     </p:submenu>
                     <f:facet name="options">
-                        <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>
+                        <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>                        
                         <p:commandButton icon="ui-icon-power" style="margin-left:50px" actionListener="#{loginbean.logout()}"
                                          title="Cerrar Session" oncomplete="handleLoginRequest(xhr, status, args)"/>
                         <p:commandButton icon="ui-icon-suitcase" title="Cambiar Clave"/>

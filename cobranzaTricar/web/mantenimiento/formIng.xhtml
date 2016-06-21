@@ -117,7 +117,7 @@
         <h:form id="formEliminar">
             <p:dialog header="Eliminar #{ocupacionBean.ocupacion.descripcion}" widgetVar="dlgEliminar" modal="true">                
                 <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{ocupacionBean.delete()}" ajax="false" icon="b-ok" />
+                <p:commandButton value="Si" actionListener="#{ocupacionBean.delete()}" update=":formTabla:tablalistarocups" icon="b-ok" />
                 <p:commandButton value="No" onclick="dlgEliminar.hide();" icon="b-cancel" />
             </p:dialog>
         </h:form>

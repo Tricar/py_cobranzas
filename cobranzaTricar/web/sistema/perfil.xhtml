@@ -64,6 +64,7 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venReg}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.venCon}"/>   
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manCaja}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manRef}"/>
                             <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
@@ -105,6 +106,8 @@
                         <h:outputText value="Pagos" />
                         <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venReg}"/>
                         <h:outputText value="Credito" />
+                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manRef}"/>
+                        <h:outputText value="Refinanciar" />
                         <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.venCon}"/>
                         <p:outputLabel value="Proforma" />
                         <br/>

@@ -89,9 +89,7 @@ public class ocupacionBean implements Serializable {
 
     public void insertarCredito(Integer idventa, Ocupacion ocup) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
-        ocupacion = ocup;
-        System.out.println("obj ocupacion bean: " + ocupacion.getDescripcion());
-        System.out.println("ID: " + idventa);
+        ocupacion = ocup;        
         ocupacion.setIdventa(idventa);
         ocupacion.setAnexo(null);
         ocudao.insertarOcupacion(ocupacion);
@@ -269,7 +267,9 @@ public class ocupacionBean implements Serializable {
     public void delete() {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocudao.delete(ocupacion);
-        RequestContext.getCurrentInstance().update(":formTabla:tablalistarocups");
+        RequestContext.getCurrentInstance().update("formTabla");        
+        RequestContext.getCurrentInstance().execute("PF('dlgEliminar').hide()");
+        
     }
 
     public void eliminarSolo(Anexo anexo) {
@@ -278,7 +278,7 @@ public class ocupacionBean implements Serializable {
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         RequestContext.getCurrentInstance().update("formTabla");
         RequestContext.getCurrentInstance().execute("formTabla");
-        RequestContext.getCurrentInstance().execute("PF('dlgeliminar').hide()");;
+        RequestContext.getCurrentInstance().execute("PF('dlgeliminar').hide()");
     }
 
     public void veryIdModify(Integer idocupacion) {

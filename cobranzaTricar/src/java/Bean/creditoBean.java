@@ -95,6 +95,9 @@ public class creditoBean implements Serializable {
     private List<Pagos> pagosxcredito;
     private List<Ocupacion> ocupsxcredito;
     private List<String> listaocups = new ArrayList();
+    private String bandera = "ND";
+    private String mensaje;
+    private List<Ocupacion> listamodificar = new ArrayList();
 
     public creditoBean() {
     }
@@ -201,12 +204,18 @@ public class creditoBean implements Serializable {
 //        }
     }
 
-    public void modificarCredito() {
-        CreditoDao credao = new CreditoDaoImp();
+    public void lanzarDlgModificar() {
         if (credito.getEstado().equals("AP")) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, este crédito ya ha sido aprobado. No se puede modificar", "Crédito Aprobado, no se puede modificar."));
             return;
+        } else {            
+            //RequestContext.getCurrentInstance().update("formModificar");
+            RequestContext.getCurrentInstance().execute("PF('dlgmodificar').show()");
         }
+    }
+
+    public void modificarCredito() {
+        CreditoDao credao = new CreditoDaoImp();
         if (btnguardar.equals("Modificar")) {
             if (inicia.compareTo(iniciapre) == -1 || inicia == null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
@@ -215,14 +224,29 @@ public class creditoBean implements Serializable {
                 credito.setInicial(inicia);
             }
             try {
-                compararListas();
+                if (bandera.equals("SUM")) {
+                    for (int j = 0; j < listamodificar.size(); j++) {
+                        Ocupacion get = listamodificar.get(j);
+                        ocupbean.insertarCredito(credito.getIdventa(), get);
+                    }
+                } if(bandera.equals("RES")) {
+                    for (int j = 0; j < listamodificar.size(); j++) {
+                        Ocupacion get = listamodificar.get(j);
+                        ocupbean.eliminar(get);
+                    }
+                }
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "."));
                 credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
                 credao.modificarVenta(credito);
             } catch (Exception e) {
             }
         }
-
+        ocupsxanexo = ocupbean.cargarxCredito(credito);
+    }
+    
+    public void limpiarlistamod(){
+        listamodificar = new ArrayList();
+        RequestContext.getCurrentInstance().execute("PF('dlgmodificar').hide()");
     }
 
     public void insertarCreditoEspecial() {
@@ -528,39 +552,39 @@ public class creditoBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
         List<Letras> letritas = new ArrayList();
         Calendar calendario = GregorianCalendar.getInstance();
-        Date fecha = calendario.getTime();
-        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
-        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
-        BigDecimal cinco = new BigDecimal(5);
-        BigDecimal cien = new BigDecimal(100);
-        cinco = cinco.divide(cien);
-        LetrasDao letrasdao = new LetrasDaoImplements();
-        letritas = letrasdao.mostrarLetrasXCred(cred);
-        for (int i = 0; i < letritas.size(); i++) {
-            Letras get = letritas.get(i);
-            if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                get.setEstado("CN");
-            } else {
-                if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
-                    if (get.getFecven().after(fecha)) {
-                        get.setEstado("PN");
-                    } else {
-                        get.setEstado("VN");
-                        get.setDiffdays(Diffdays(get.getFecven()));
-                    }
-                }
-            }
-            moraant = get.getMora();
-            moraact = (get.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP);
-            if (get.getEstado().equals("VN")) {
-                if (moraact.compareTo(moraant) == -1) {
-                    get.setMora(moraant);
-                } else {
-                    get.setMora(moraact);
-                }
-            }
-            letrasdao.modificarLetra(get);
-        }
+//        Date fecha = calendario.getTime();
+//        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
+//        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
+//        BigDecimal cinco = new BigDecimal(5);
+//        BigDecimal cien = new BigDecimal(100);
+//        cinco = cinco.divide(cien);
+//        LetrasDao letrasdao = new LetrasDaoImplements();
+//        letritas = letrasdao.mostrarLetrasXCred(cred);
+//        for (int i = 0; i < letritas.size(); i++) {
+//            Letras get = letritas.get(i);
+//            if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
+//                get.setEstado("CN");
+//            } else {
+//                if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
+//                    if (get.getFecven().after(fecha)) {
+//                        get.setEstado("PN");
+//                    } else {
+//                        get.setEstado("VN");
+//                        get.setDiffdays(Diffdays(get.getFecven()));
+//                    }
+//                }
+//            }
+//            moraant = get.getMora();
+//            moraact = (get.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP);
+//            if (get.getEstado().equals("VN")) {
+//                if (moraact.compareTo(moraant) == -1) {
+//                    get.setMora(moraant);
+//                } else {
+//                    get.setMora(moraact);
+//                }
+//            }
+//            letrasdao.modificarLetra(get);
+//        }
         letraslista = letrasdao.mostrarLetrasXCred(cred);
     }
 
@@ -571,38 +595,39 @@ public class creditoBean implements Serializable {
         List<Letras> letritas = new ArrayList();
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
-        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
-        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
-        BigDecimal cinco = new BigDecimal(5);
-        BigDecimal cien = new BigDecimal(100);
-        cinco = cinco.divide(cien);
-        LetrasDao letrasdao = new LetrasDaoImplements();
-        letritas = letrasdao.mostrarLetrasXCred(cred);
-        for (int i = 0; i < letritas.size(); i++) {
-            Letras get = letritas.get(i);
-            if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                get.setEstado("CN");
-            } else {
-                if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
-                    if (get.getFecven().after(fecha)) {
-                        get.setEstado("PN");
-                    } else {
-                        get.setEstado("VN");
-                        get.setDiffdays(Diffdays(get.getFecven()));
-                    }
-                }
-            }
-            moraant = get.getMora();
-            moraact = (get.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP);
-            if (get.getEstado().equals("VN")) {
-                if (moraact.compareTo(moraant) == -1) {
-                    get.setMora(moraant);
-                } else {
-                    get.setMora(moraact);
-                }
-            }
-            letrasdao.modificarLetra(get);
-        }
+//        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
+//        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
+//        BigDecimal cinco = new BigDecimal(5);
+//        BigDecimal cien = new BigDecimal(100);
+//        cinco = cinco.divide(cien);
+//        LetrasDao letrasdao = new LetrasDaoImplements();
+//        letritas = letrasdao.mostrarLetrasXCred(cred);
+//        for (int i = 0; i < letritas.size(); i++) {
+//            Letras get = letritas.get(i);
+//            if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
+//                get.setEstado("CN");
+//            } else {
+//                if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
+//                    if (get.getFecven().after(fecha)) {
+//                        get.setEstado("PN");
+//                    } else {
+//                        get.setEstado("VN");
+//                        get.setDiffdays(Diffdays(get.getFecven()));
+//                        get.setCobradonc(true);
+//                    }
+//                }
+//            }
+//            moraant = get.getMora();
+//            moraact = (get.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP);
+//            if (get.getEstado().equals("VN")) {
+//                if (moraact.compareTo(moraant) == -1) {
+//                    get.setMora(moraant);
+//                } else {
+//                    get.setMora(moraact);
+//                }
+//            }
+//            letrasdao.modificarLetra(get);
+//        }
         return letraslista = letbean.mostrarSoloLetrasxCred(cred);
     }
 
@@ -649,7 +674,6 @@ public class creditoBean implements Serializable {
 //        pagosdao.insertarPago(pago);
 //        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Inserto Nota Débito correctamente."));
 //    }
-
     public void cargarAnexoDNI() {
         filtradafecha = new ArrayList();
         letraslista = new ArrayList();
@@ -735,11 +759,34 @@ public class creditoBean implements Serializable {
         }
         codigo = "";
     }
+    
+    public void cargarVencCodigo() {
+        creditos = new ArrayList();
+        CreditoDao credao = new CreditoDaoImp();
+        Credito modelocredito = new Credito();
+        try {
+            modelocredito = credao.cargarxCodigoCalif(codigo, "VC");
+            creditos.add(modelocredito);
+            if (creditos.get(0) == null) {
+                creditos = null;
+            }
+        } catch (Exception e) {
+        }
+        codigo = "";
+    }
 
     public void cargarPendSinCodi() {
-        CreditoDao credao = new CreditoDaoImp();        
+        CreditoDao credao = new CreditoDaoImp();
         try {
-            creditos = credao.cargarxEstado("AP");                        
+            creditos = credao.cargarxEstado("AP");
+        } catch (Exception e) {
+        }
+    }
+    
+    public void cargarVencidos() {        
+        CreditoDao credao = new CreditoDaoImp();
+        try {
+            creditos = credao.cargarTodosxCalif("VC");
         } catch (Exception e) {
         }
     }
@@ -831,7 +878,7 @@ public class creditoBean implements Serializable {
         precio = credito.getPrecio();
         saldo = precio.subtract(inicia);
         anexo = credito.getAnexo();
-        ocupsxanexo = ocupbean.cargarxCredito(credito);
+        ocupsxanexo = ocupbean.cargarxCredito(credito);        
         iniciapre = Inicial.inicialCredito(anexo.getDistrito(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
         if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("JE")) {
             if (credito.getEstado().equals("EM")) {
@@ -844,6 +891,7 @@ public class creditoBean implements Serializable {
             }
             return "/venta/formaprobar.xhtml";
         } else {
+            mensaje = compararListas();
             btnguardar = "Modificar";
             return "/venta/formmodificar.xhtml";
         }
@@ -898,42 +946,51 @@ public class creditoBean implements Serializable {
         return "/venta/listarv.xhtml";
     }
 
-    public void compararListas() {
-        ocupsxcredito = ocupbean.cargarxCredito(credito);
-        ocupsxanexo = ocupbean.cargarIngresos(credito.getAnexo());
-        if (ocupsxanexo.size() > ocupsxcredito.size()) {
+    public String compararListas() {
+        //ocupsxcredito = ocupbean.cargarxCredito(credito);
+        String msj = new String();
+        ocupsxcredito = ocupbean.cargarIngresos(credito.getAnexo());
+        if (ocupsxcredito.size() > ocupsxanexo.size()) {
+            bandera = "SUM";
+            msj = "Agregar ingresos económicos al cliente";
             int count = 0;
-            for (int i = 0; i < ocupsxanexo.size(); i++) {
-                count = 0;
-                Ocupacion get = ocupsxanexo.get(i);
-                for (int j = 0; j < ocupsxcredito.size(); j++) {
-                    Ocupacion getj = ocupsxcredito.get(j);
-                    if (get.getDescripcion().equals(getj.getDescripcion())) {
+            for (int i = 0; i < ocupsxcredito.size(); i++) {
+                count = 0;                
+                Ocupacion get = ocupsxcredito.get(i);                
+                for (int j = 0; j < ocupsxanexo.size(); j++) {
+                    Ocupacion getj = ocupsxanexo.get(j);                    
+                    if (get.getDescripcion().concat(get.getEmpresa()).equals(getj.getDescripcion().concat(getj.getEmpresa()))) {                        
                         count++;
                     }
                 }
                 if (count == 0) {
-                    ocupbean.insertarCredito(credito.getIdventa(), get);
+                    System.out.println("Entre acá sumar "+msj);                    
+                    //ocupbean.insertarCredito(credito.getIdventa(), get);
+                    listamodificar.add(get);                    
                 }
             }
         } else {
-            if (ocupsxanexo.size() < ocupsxcredito.size()) {
+            if (ocupsxcredito.size() < ocupsxanexo.size()) {
+                bandera = "RES";
+                msj = "Quitar ingresos económicos al cliente";
                 int count = 0;
-                for (int i = 0; i < ocupsxcredito.size(); i++) {
+                for (int i = 0; i < ocupsxanexo.size(); i++) {
                     count = 0;
-                    Ocupacion get = ocupsxcredito.get(i);
-                    for (int j = 0; j < ocupsxanexo.size(); j++) {
-                        Ocupacion getj = ocupsxanexo.get(j);
-                        if (get.getDescripcion().equals(getj.getDescripcion())) {
+                    Ocupacion get = ocupsxanexo.get(i);                    
+                    for (int j = 0; j < ocupsxcredito.size(); j++) {
+                        Ocupacion getj = ocupsxcredito.get(j);                        
+                        if (get.getDescripcion().concat(get.getEmpresa()).equals(getj.getDescripcion().concat(getj.getEmpresa()))) {                            
                             count++;
                         }
                     }
-                    if (count == 0) {
-                        ocupbean.eliminar(get);
+                    if (count == 0) {                        
+                        //ocupbean.eliminar(get);
+                        listamodificar.add(get);                        
                     }
                 }
             }
         }
+        return msj;
     }
 
     public void eliminarpagos() {
@@ -966,6 +1023,12 @@ public class creditoBean implements Serializable {
         filtradafecha = new ArrayList();
         codigo = "";
         return "/venta/index.xhtml";
+    }
+    
+    public String indexref() {
+        creditos = new ArrayList();
+        codigo = "";
+        return "/refinanciar/index.xhtml";
     }
 
     public String nuevocotiza() {
@@ -1050,7 +1113,7 @@ public class creditoBean implements Serializable {
                 }
                 credito.setTotaldeuda(BigDecimal.ZERO);
                 credito.setDeudactual(BigDecimal.ZERO);
-                credito.setEstado("EM");                
+                credito.setEstado("EM");
                 credito.setVerificado(null);
                 btnaprobar = "Aprobar";
                 credito.setModificado(idusuario);
@@ -1136,7 +1199,7 @@ public class creditoBean implements Serializable {
     }
 
     public void cargarObjOcup(Ocupacion ocup) {
-        objocup = ocup;        
+        objocup = ocup;
         listaocups = new ArrayList();
         if (objocup.getBoletas() != null && objocup.getBoletas() == true) {
             listaocups.add("Copia de boletas de pago");
@@ -1186,7 +1249,7 @@ public class creditoBean implements Serializable {
         ocupsxanexo = ocupbean.eliminar(anexo, objocup);
     }
 
-    public void modeloTipo(String tipo) {        
+    public void modeloTipo(String tipo) {
         listafiltrada = modbean.modeloTipo(tipo);
     }
 
@@ -1493,12 +1556,15 @@ public class creditoBean implements Serializable {
     public void Pagosxcredito(Credito cred) {
         pagosBean pagbean = new pagosBean();
         List<Pagos> lista = new ArrayList();
-        System.out.println("credito "+cred.getLiqventa());
+        System.out.println("credito " + cred.getLiqventa());
         lista = pagbean.PagosxCredito(cred);
         if (lista.isEmpty() == false) {
             pagosxcredito = lista;
             RequestContext.getCurrentInstance().update("formhistorial");
             RequestContext.getCurrentInstance().execute("PF('dlghistorial').show()");
+        } else {
+            RequestContext.getCurrentInstance().update("formModificar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "No existen pagos de este cliente."));
         }
 
     }
@@ -1541,5 +1607,29 @@ public class creditoBean implements Serializable {
 
     public void setListaocups(List<String> listaocups) {
         this.listaocups = listaocups;
+    }
+
+    public String getBandera() {
+        return bandera;
+    }
+
+    public void setBandera(String bandera) {
+        this.bandera = bandera;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public List<Ocupacion> getListamodificar() {
+        return listamodificar;
+    }
+
+    public void setListamodificar(List<Ocupacion> listamodificar) {
+        this.listamodificar = listamodificar;
     }
 }
