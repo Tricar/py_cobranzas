@@ -2,12 +2,16 @@ package Bean;
 
 import Dao.AnexoDao;
 import Dao.AnexoDaoImplements;
+import Dao.CajaDao;
+import Dao.CajaDaoImp;
 import Dao.ConceptosDao;
 import Dao.ConceptosDaoImp;
 import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Dao.LetrasDao;
 import Dao.LetrasDaoImplements;
+import Dao.MovcajaDao;
+import Dao.MovcajaDaoImp;
 import Dao.OcupacionDao;
 import Dao.OcupacionDaoImpl;
 import Dao.PagosDao;
@@ -15,12 +19,15 @@ import Dao.PagosDaoImp;
 import Dao.VehiculoDao;
 import Dao.VehiculoDaoImplements;
 import Model.Anexo;
+import Model.Caja;
 import Model.Conceptos;
 import Model.Credito;
 import Model.Letras;
 import Model.Modelo;
+import Model.Movcaja;
 import Model.Ocupacion;
 import Model.Pagos;
+import Model.Tipodoc;
 import Model.Usuario;
 import Model.Vehiculo;
 import java.io.File;
@@ -106,6 +113,13 @@ public class creditoBean implements Serializable {
     private boolean disabledespacho = false;
     private Conceptos concepto = new Conceptos();
     private List<Conceptos> conceptos = new ArrayList();
+    private BigDecimal montopago;
+    private String btnpago;
+    private boolean disablecaja;
+    private List<Tipodoc> listafilttipo = new ArrayList();
+    private boolean disableoper;
+    private boolean disablecomp;
+    private List<Caja> todasCajas = new ArrayList();
 
     public creditoBean() {
     }
@@ -181,6 +195,7 @@ public class creditoBean implements Serializable {
                             credito.setTotaldeuda(BigDecimal.ZERO);
                             credito.setEstado("EM");
                             credito.setEmpresa("CA");
+                            credito.setCalificacion("PN");
                             credito.setElaborado(idusuario);
                             credito.setSwinicial(false);
                             creditodao.insertarVenta(credito);
@@ -467,6 +482,7 @@ public class creditoBean implements Serializable {
                 BigDecimal cien = new BigDecimal(100);
                 credito.setEstado("NA");
                 credito.setEmpresa("CA");
+                credito.setCalificacion("PN");
                 credito.setElaborado(idusuario);
                 credito.setSwinicial(false);
                 creditodao.insertarVenta(credito);
@@ -963,6 +979,7 @@ public class creditoBean implements Serializable {
     }
 
     public String cargardespacho(Usuario usuario) {
+        tipodocBean tipobean = new tipodocBean();
         ConceptosDao condao = new ConceptosDaoImp();
         try {
             modeloTipo(credito.getVehi());
@@ -975,10 +992,16 @@ public class creditoBean implements Serializable {
             ocupsxanexo = ocupbean.cargarxCredito(credito);
             if (usuario.getPerfil().getAbrev().equals("AS")) {
                 if (!credito.getSwinicial()) {
-                    pagosBean pagbean = new pagosBean();
+                    pago = new Pagos();
+//                    pagosBean pagbean = new pagosBean();
+                    listafilttipo = tipobean.listaTipoDoc("IN");
+                    btnpago = "Pagar";
                     concepto = condao.veryIdCredito(credito);
+                    montopago = concepto.getMontopago();
                     System.out.println("concepto: " + concepto.getMontopago());
-                    pagbean.pagovarios(concepto);
+                    RequestContext.getCurrentInstance().update("formpagar");
+                    RequestContext.getCurrentInstance().execute("PF('dlgpagarini').show()");
+//                    pagbean.pagovarios(concepto);
                 } else {
                     btnaprobar = "Despachar";
                     return "/despacho/formdespacho.xhtml";
@@ -1318,55 +1341,118 @@ public class creditoBean implements Serializable {
 
     }
 
-    public void cargarObjOcup(Ocupacion ocup) {
-        objocup = ocup;
-        listaocups = new ArrayList();
-        if (objocup.getBoletas() != null && objocup.getBoletas() == true) {
-            listaocups.add("Copia de boletas de pago");
-        }
-        if (objocup.getConstancia() != null && objocup.getConstancia() == true) {
-            listaocups.add("Copia de Autoavalúo");
-        }
-        if (objocup.getFacbol() != null && objocup.getFacbol() == true) {
-            listaocups.add("Copia de boletas y/o facturas de compras");
-        }
-        if (objocup.getFunc() != null && objocup.getFunc() == true) {
-            listaocups.add("Copia de Licencia de funcionamiento");
-        }
-        if (objocup.getLicencia() != null && objocup.getLicencia() == true) {
-            listaocups.add("Copia de Licencia de conducir");
-        }
-        if (objocup.getPagosunat() != null && objocup.getPagosunat() == true) {
-            listaocups.add("Copia de pagos a sunat");
-        }
-        if (objocup.getRrhh() != null && objocup.getRrhh() == true) {
-            listaocups.add("Copia de Recibo por honorarios");
-        }
-        if (objocup.getTpropiedad() != null && objocup.getTpropiedad() == true) {
-            listaocups.add("Copia de tarjeta de propiedad");
-        }
-        RequestContext.getCurrentInstance().update("formOcup");
-        RequestContext.getCurrentInstance().execute("PF('dlgverocup').show()");
+//    public void cargarObjOcup(Ocupacion ocup) {
+//        objocup = ocup;
+//        listaocups = new ArrayList();
+//        if (objocup.getBoletas() != null && objocup.getBoletas() == true) {
+//            listaocups.add("Copia de boletas de pago");
+//        }
+//        if (objocup.getConstancia() != null && objocup.getConstancia() == true) {
+//            listaocups.add("Copia de Autoavalúo");
+//        }
+//        if (objocup.getFacbol() != null && objocup.getFacbol() == true) {
+//            listaocups.add("Copia de boletas y/o facturas de compras");
+//        }
+//        if (objocup.getFunc() != null && objocup.getFunc() == true) {
+//            listaocups.add("Copia de Licencia de funcionamiento");
+//        }
+//        if (objocup.getLicencia() != null && objocup.getLicencia() == true) {
+//            listaocups.add("Copia de Licencia de conducir");
+//        }
+//        if (objocup.getPagosunat() != null && objocup.getPagosunat() == true) {
+//            listaocups.add("Copia de pagos a sunat");
+//        }
+//        if (objocup.getRrhh() != null && objocup.getRrhh() == true) {
+//            listaocups.add("Copia de Recibo por honorarios");
+//        }
+//        if (objocup.getTpropiedad() != null && objocup.getTpropiedad() == true) {
+//            listaocups.add("Copia de tarjeta de propiedad");
+//        }
+//        RequestContext.getCurrentInstance().update("formOcup");
+//        RequestContext.getCurrentInstance().execute("PF('dlgverocup').show()");
+//
+//    }
+//    public void insertarOcupacion(Anexo anexo, Ocupacion ocup) {
+//        if (anexo == null) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar un cliente."));
+//        } else {
+//            try {
+//                ocupsxanexo = ocupbean.insertar(anexo, ocup);
+//                RequestContext.getCurrentInstance().update("formOcupacion");
+//                RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");
+//            } catch (Exception e) {
+//            }
+//        }
+//
+//    }
+//
+//    public void eliminarIngreso(Anexo anexo) {
+//        System.out.println("ocupa: " + objocup.getDescripcion());
+//        ocupsxanexo = ocupbean.eliminar(anexo, objocup);
+//    }
+//    public void listaTipoDoc() {
+//        tipodocBean tipobean = new tipodocBean();
+//        listafilttipo = tipobean.listaTipoDoc("IN");
+////        if (tipo.equals("NC")) {
+////            montopago = letra.getInteres();
+////            btnpago = "Aplicar";
+////        } else {
+////            montopago = letra.getSaldo();
+////            btnpago = "Pagar";
+////        }
+//    }
 
-    }
-
-    public void insertarOcupacion(Anexo anexo, Ocupacion ocup) {
-        if (anexo == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar un cliente."));
+    public void disableDest(String tipo) {
+        if (tipo.equals("LE")) {
+            disablecaja = false;
         } else {
-            try {
-                ocupsxanexo = ocupbean.insertar(anexo, ocup);
-                RequestContext.getCurrentInstance().update("formOcupacion");
-                RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");
-            } catch (Exception e) {
-            }
+            disablecaja = true;
         }
-
     }
 
-    public void eliminarIngreso(Anexo anexo) {
-        System.out.println("ocupa: " + objocup.getDescripcion());
-        ocupsxanexo = ocupbean.eliminar(anexo, objocup);
+    public void disableNumOper(String tipo) {
+        if (tipo.equals("DB")) {
+            disableoper = false;
+            disablecomp = true;
+        } else {
+            disableoper = true;
+            disablecomp = false;
+        }
+    }
+
+    public void insertarini(int idusuario) {
+        Caja caja = new Caja();
+        Movcaja mcaja = new Movcaja();
+        PagosDao pagosdao = new PagosDaoImp();
+        CreditoDao creditodao = new CreditoDaoImp();
+        CajaDao cajadao = new CajaDaoImp();
+        MovcajaDao movcajadao = new MovcajaDaoImp();
+        try {            
+            pago.setConceptos(concepto);
+            pago.setMonto(montopago);
+            pago.setTipo("IN");
+            pago.setUsuario(idusuario);
+            pagosdao.insertarPago(pago);
+            caja = pago.getCaja();
+            caja.setTotal(caja.getTotal().add(montopago));
+            cajadao.modificarCaja(caja);
+            mcaja.setCaja(caja);
+            mcaja.setTipomov("IN");
+            mcaja.setFechamov(pago.getFecreg());
+            mcaja.setMonto(montopago);
+            mcaja.setConcepto(concepto);
+            movcajadao.insertarMovcaja(mcaja);
+            credito.setSwinicial(true);
+            creditodao.modificarVenta(credito);
+            RequestContext.getCurrentInstance().update("formpagar");
+            RequestContext.getCurrentInstance().execute("PF('dlgpagarini').hide()");
+            RequestContext.getCurrentInstance().update("formpagar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Correcto", "Se registró la inicial."));
+        } catch (Exception e) {
+            RequestContext.getCurrentInstance().update("formpagar");
+            RequestContext.getCurrentInstance().execute("PF('dlgpagarini').show()");
+        }
+
     }
 
     public void modeloTipo(String tipo) {
@@ -1775,5 +1861,63 @@ public class creditoBean implements Serializable {
 
     public void setConceptos(List<Conceptos> conceptos) {
         this.conceptos = conceptos;
+    }
+
+    public BigDecimal getMontopago() {
+        return montopago;
+    }
+
+    public void setMontopago(BigDecimal montopago) {
+        this.montopago = montopago;
+    }
+
+    public String getBtnpago() {
+        return btnpago;
+    }
+
+    public void setBtnpago(String btnpago) {
+        this.btnpago = btnpago;
+    }
+
+    public boolean isDisablecaja() {
+        return disablecaja;
+    }
+
+    public void setDisablecaja(boolean disablecaja) {
+        this.disablecaja = disablecaja;
+    }
+
+    public List<Tipodoc> getListafilttipo() {
+        return listafilttipo;
+    }
+
+    public void setListafilttipo(List<Tipodoc> listafilttipo) {
+        this.listafilttipo = listafilttipo;
+    }
+
+    public boolean isDisableoper() {
+        return disableoper;
+    }
+
+    public void setDisableoper(boolean disableoper) {
+        this.disableoper = disableoper;
+    }
+
+    public boolean isDisablecomp() {
+        return disablecomp;
+    }
+
+    public void setDisablecomp(boolean disablecomp) {
+        this.disablecomp = disablecomp;
+    }
+
+    public List<Caja> getTodasCajas() {
+        cajaBean cajabean = new cajaBean();
+        todasCajas = cajabean.getVerTodas();
+        return todasCajas;
+    }
+
+    public void setTodasCajas(List<Caja> todasCajas) {
+        this.todasCajas = todasCajas;
     }
 }

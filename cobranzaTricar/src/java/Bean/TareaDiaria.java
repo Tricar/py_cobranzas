@@ -29,7 +29,6 @@ public class TareaDiaria {
 //    @Schedule(hour = "*", minute = "*/1", second = "0", persistent = false) //correr cada minuto
     @Schedule(hour = "01", minute = "00", second = "0", persistent = false)
     public void someDailyJob() {
-        letrasBean letbean = new letrasBean();
         letraslista = new ArrayList();
         CreditoDao credao = new CreditoDaoImp();
         List<Letras> letritas = new ArrayList();
@@ -44,33 +43,47 @@ public class TareaDiaria {
         LetrasDao letrasdao = new LetrasDaoImplements();
         for (int i = 0; i < creditos.size(); i++) {
             Credito cred = creditos.get(i);
-            System.out.println("credito "+cred.getLiqventa()+" anexo"+cred.getAnexo().getNombres());
-            letritas = letrasdao.mostrarLetrasXCred(cred);
-            for (int j = 0; j < letritas.size(); j++) {
-                Letras get = letritas.get(j);
-                if (get.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                    get.setEstado("CN");
-                } else {
-                    if (get.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
-                        if (get.getFecven().after(fecha)) {
-                            get.setEstado("PN");
-                        } else {
-                            get.setEstado("VN");
-                            get.setDiffdays(Diffdays(get.getFecven()));
-                            get.setCobradonc(true);
+            System.out.println("credito " + cred.getLiqventa() + " anexo" + cred.getAnexo().getNombres());
+            int contvn = 0;
+            int contcn = 0;
+            if (!cred.getCalificacion().equals("CN")) {
+                letritas = letrasdao.mostrarLetrasXCred(cred);
+                for (int j = 0; j < letritas.size(); j++) {
+                    Letras letras = letritas.get(j);
+//                    if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
+//                        letras.setEstado("CN");
+//                        contcn++;
+//                    } else {
+                    if (!letras.getDescripcion().equals("ND")) {
+                        if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
+                            if (letras.getFecven().after(fecha)) {
+                                letras.setEstado("PN");
+                            } else {
+                                letras.setEstado("VN");
+                                letras.setDiffdays(Diffdays(letras.getFecven()));
+                                letras.setCobradonc(true);
+                                contvn++;
+                            }
                         }
+                        moraant = letras.getMora();
+                        moraact = (letras.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP);
+                        if (letras.getEstado().equals("VN")) {
+                            if (moraact.compareTo(moraant) == -1) {
+                                letras.setMora(moraant);
+                            } else {
+                                letras.setMora(moraact);
+                            }
+                        }
+                        letrasdao.modificarLetra(letras);
                     }
+//                    }
                 }
-                moraant = get.getMora();
-                moraact = (get.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP);
-                if (get.getEstado().equals("VN")) {
-                    if (moraact.compareTo(moraant) == -1) {
-                        get.setMora(moraant);
-                    } else {
-                        get.setMora(moraact);
-                    }
+                if (contvn == letritas.size()) {
+                    cred.setCalificacion("VN");
+                } else {
+                    cred.setCalificacion("PN");
                 }
-                letrasdao.modificarLetra(get);
+                credao.modificarVenta(cred);
             }
         }
         System.out.println("ejecuté toda la linea de actualizar los creditos");
