@@ -1222,6 +1222,7 @@ public class creditoBean implements Serializable {
                     fechafin = sumaDias(fechaini, 30);
                     letras.setSaldo(letras.getMonto());
                     letras.setEstado("PN");
+                    letras.setCobradonc(false);
                     letras.setDescripcion("L" + i + "/L" + credito.getNletras());
                     credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
                     credito.setDeudactual(credito.getTotaldeuda());
@@ -1341,37 +1342,38 @@ public class creditoBean implements Serializable {
 
     }
 
-//    public void cargarObjOcup(Ocupacion ocup) {
-//        objocup = ocup;
-//        listaocups = new ArrayList();
-//        if (objocup.getBoletas() != null && objocup.getBoletas() == true) {
-//            listaocups.add("Copia de boletas de pago");
-//        }
-//        if (objocup.getConstancia() != null && objocup.getConstancia() == true) {
-//            listaocups.add("Copia de Autoavalúo");
-//        }
-//        if (objocup.getFacbol() != null && objocup.getFacbol() == true) {
-//            listaocups.add("Copia de boletas y/o facturas de compras");
-//        }
-//        if (objocup.getFunc() != null && objocup.getFunc() == true) {
-//            listaocups.add("Copia de Licencia de funcionamiento");
-//        }
-//        if (objocup.getLicencia() != null && objocup.getLicencia() == true) {
-//            listaocups.add("Copia de Licencia de conducir");
-//        }
-//        if (objocup.getPagosunat() != null && objocup.getPagosunat() == true) {
-//            listaocups.add("Copia de pagos a sunat");
-//        }
-//        if (objocup.getRrhh() != null && objocup.getRrhh() == true) {
-//            listaocups.add("Copia de Recibo por honorarios");
-//        }
-//        if (objocup.getTpropiedad() != null && objocup.getTpropiedad() == true) {
-//            listaocups.add("Copia de tarjeta de propiedad");
-//        }
-//        RequestContext.getCurrentInstance().update("formOcup");
-//        RequestContext.getCurrentInstance().execute("PF('dlgverocup').show()");
-//
-//    }
+    public void cargarObjOcup(Ocupacion ocup) {
+        objocup = ocup;
+        listaocups = new ArrayList();
+        if (objocup.getBoletas() != null && objocup.getBoletas() == true) {
+            listaocups.add("Copia de boletas de pago");
+        }
+        if (objocup.getConstancia() != null && objocup.getConstancia() == true) {
+            listaocups.add("Copia de Autoavalúo");
+        }
+        if (objocup.getFacbol() != null && objocup.getFacbol() == true) {
+            listaocups.add("Copia de boletas y/o facturas de compras");
+        }
+        if (objocup.getFunc() != null && objocup.getFunc() == true) {
+            listaocups.add("Copia de Licencia de funcionamiento");
+        }
+        if (objocup.getLicencia() != null && objocup.getLicencia() == true) {
+            listaocups.add("Copia de Licencia de conducir");
+        }
+        if (objocup.getPagosunat() != null && objocup.getPagosunat() == true) {
+            listaocups.add("Copia de pagos a sunat");
+        }
+        if (objocup.getRrhh() != null && objocup.getRrhh() == true) {
+            listaocups.add("Copia de Recibo por honorarios");
+        }
+        if (objocup.getTpropiedad() != null && objocup.getTpropiedad() == true) {
+            listaocups.add("Copia de tarjeta de propiedad");
+        }
+        RequestContext.getCurrentInstance().update("formOcup");
+        RequestContext.getCurrentInstance().execute("PF('dlgverocup').show()");
+
+    }
+    
 //    public void insertarOcupacion(Anexo anexo, Ocupacion ocup) {
 //        if (anexo == null) {
 //            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar un cliente."));

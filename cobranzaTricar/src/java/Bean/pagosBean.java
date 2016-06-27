@@ -126,9 +126,9 @@ public class pagosBean implements Serializable {
             }
             numletra = new String();
             montopago = new BigDecimal(BigInteger.ZERO);
-            descripcion = new String();
-            pago = new Pagos();
+            descripcion = new String();            
         }
+        pago = new Pagos();
     }
 
     public void cargarLetraPagos(Letras letras) {
