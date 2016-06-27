@@ -12,7 +12,7 @@
         <h2>Formulario de Ingresos económicos de clientes</h2>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form id="formTabla" prependId="false ">
-                <p:growl id="msg12" />
+                <p:growl id="msg12" showDetail="true"/>
                 <h:panelGrid columns="2">
                     <p:autoComplete id="cliente" value="#{ocupacionBean.anexo}"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
@@ -41,7 +41,7 @@
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
-                <p:commandButton value="Agregar ingresos" icon="b-add" action="#{ocupacionBean.limpiarIngreso()}" />                
+                <p:commandButton value="Agregar ingresos" icon="b-add" action="#{ocupacionBean.limpiarIngreso(ocupacionBean.anexo)}" />                
             </h:form>
         </f:view>
         <h:form id="formOcupacion">

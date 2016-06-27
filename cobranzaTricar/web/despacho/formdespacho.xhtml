@@ -87,7 +87,7 @@
                     <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" required="true" requiredMessage="Ingrese observaciones" />
                 </h:panelGrid>
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.despachar(loginbean.usuario)}" icon="b-ok"
-                                 ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
+                                 ajax="false" disabled="#{creditoBean.disabledespacho}">
                 </p:commandButton>
             </h:form>            
             <h:form>

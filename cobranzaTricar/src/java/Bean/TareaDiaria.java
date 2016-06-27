@@ -26,7 +26,8 @@ public class TareaDiaria {
     private List<Letras> letraslista = new ArrayList();
     private List<Credito> creditos = new ArrayList();
 
-    @Schedule(hour = "01", minute = "0", second = "0", persistent = false)
+//    @Schedule(hour = "*", minute = "*/1", second = "0", persistent = false) //correr cada minuto
+    @Schedule(hour = "01", minute = "00", second = "0", persistent = false)
     public void someDailyJob() {
         letrasBean letbean = new letrasBean();
         letraslista = new ArrayList();
@@ -43,6 +44,7 @@ public class TareaDiaria {
         LetrasDao letrasdao = new LetrasDaoImplements();
         for (int i = 0; i < creditos.size(); i++) {
             Credito cred = creditos.get(i);
+            System.out.println("credito "+cred.getLiqventa()+" anexo"+cred.getAnexo().getNombres());
             letritas = letrasdao.mostrarLetrasXCred(cred);
             for (int j = 0; j < letritas.size(); j++) {
                 Letras get = letritas.get(j);

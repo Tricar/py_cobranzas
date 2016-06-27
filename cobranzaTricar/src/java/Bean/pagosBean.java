@@ -7,6 +7,7 @@ import Dao.LetrasDaoImplements;
 import Dao.PagosDao;
 import Dao.PagosDaoImp;
 import Model.Caja;
+import Model.Conceptos;
 import Model.Credito;
 import Model.Letras;
 import Model.Movcaja;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
@@ -29,7 +31,7 @@ import org.primefaces.context.RequestContext;
  * @author master
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class pagosBean implements Serializable {
 
     private Pagos pago = new Pagos();
@@ -281,6 +283,16 @@ public class pagosBean implements Serializable {
         } catch (Exception e) {
         }
         return pagosxcredito;
+    }
+    
+    public void pagovarios(Conceptos concepto){
+        System.out.println("entre a pagos bean"+concepto.getMontopago());
+        btnpago = "Pagar";
+        montopago = concepto.getMontopago();
+        disablecaja = true;
+        disableoper = true;
+        disablecomp = true;
+        RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
     }
 
     public Pagos getPago() {

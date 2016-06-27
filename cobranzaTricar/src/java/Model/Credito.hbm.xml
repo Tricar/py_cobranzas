@@ -101,11 +101,20 @@
         <property name="despachado" type="java.lang.Integer">
             <column name="despachado" />
         </property>
+        <property name="swinicial" type="java.lang.Boolean">
+            <column name="swinicial" />
+        </property>
         <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idventa" />
             </key>
             <one-to-many class="Model.Letras" />
+        </set>
+        <set name="conceptoses" table="conceptos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idventa" />
+            </key>
+            <one-to-many class="Model.Conceptos" />
         </set>
     </class>
 </hibernate-mapping>

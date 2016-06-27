@@ -255,8 +255,7 @@ public class modeloBean implements Serializable {
     }
     
     public List modeloTipo(String tipo){
-        ModeloDao modelodao = new ModeloDaoImplements();
-        System.out.println("tipo bean modelo: "+tipo);
+        ModeloDao modelodao = new ModeloDaoImplements();        
         listafiltrada = modelodao.modeloxTipo(tipo);
         return listafiltrada;
     }

@@ -23,6 +23,7 @@ public class Pagos implements java.io.Serializable {
 
     private Integer idpagos;
     private Letras letras;
+    private Conceptos conceptos;
     private Tipodoc tipodoc;
     private Caja caja;
     private String operacion;    
@@ -40,9 +41,10 @@ public class Pagos implements java.io.Serializable {
         this.idpagos = idpagos;
     }
 
-    public Pagos(Integer idpagos, Letras letras, String operacion, Tipodoc tipodoc, Caja caja, String clasificacion, BigDecimal monto, Date fecreg, String descripcion, String tipo, Integer usuario) {
+    public Pagos(Integer idpagos, Letras letras, Conceptos conceptos, String operacion, Tipodoc tipodoc, Caja caja, String clasificacion, BigDecimal monto, Date fecreg, String descripcion, String tipo, Integer usuario) {
         this.idpagos = idpagos;
         this.letras = letras;
+        this.conceptos = conceptos;
         this.operacion = operacion;
         this.tipodoc = tipodoc;
         this.caja = caja;
@@ -73,6 +75,16 @@ public class Pagos implements java.io.Serializable {
 
     public void setLetras(Letras letras) {
         this.letras = letras;
+    }
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idconceptos")
+    public Conceptos getConceptos() {
+        return this.conceptos;
+    }
+
+    public void setConceptos(Conceptos conceptos) {
+        this.conceptos = conceptos;
     }
 
     @Column(name = "operacion", length = 50)

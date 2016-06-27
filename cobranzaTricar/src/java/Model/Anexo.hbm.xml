@@ -104,5 +104,11 @@
             </key>
             <one-to-many class="Model.Caja" />
         </set>
+        <set name="conceptoses" table="conceptos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" not-null="true" />
+            </key>
+            <one-to-many class="Model.Conceptos" />
+        </set>
     </class>
 </hibernate-mapping>

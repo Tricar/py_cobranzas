@@ -24,5 +24,6 @@
     <mapping resource="Model/Tipodoc.hbm.xml"/>
     <mapping resource="Model/Caja.hbm.xml"/>
     <mapping resource="Model/Movcaja.hbm.xml"/>
+    <mapping resource="Model/Conceptos.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

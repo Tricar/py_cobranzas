@@ -15,7 +15,7 @@
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
-                <p:growl id="msg12" />
+                <p:growl id="msg12" showDetail="true"/>
                 <h:panelGrid columns="2">
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha"/>

@@ -50,6 +50,7 @@ public class Anexo implements java.io.Serializable {
     private Set usuarios = new HashSet(0);    
     private Set ocupacions = new HashSet(0);
     private Set cajas = new HashSet(0);
+    private Set conceptoses = new HashSet(0);
     private String nombres;
 
     public Anexo() {
@@ -59,7 +60,7 @@ public class Anexo implements java.io.Serializable {
         this.idanexo = idanexo;
     }
 
-    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas, Set conceptoses) {
         this.idanexo = idanexo;
         this.nombre = nombre;
         this.tipodocumento = tipodocumento;
@@ -89,6 +90,7 @@ public class Anexo implements java.io.Serializable {
         this.usuarios = usuarios;        
         this.ocupacions = ocupacions;
         this.cajas = cajas;
+        this.conceptoses = conceptoses;
     }
 
     @Id
@@ -354,6 +356,15 @@ public class Anexo implements java.io.Serializable {
 
     public void setCajas(Set cajas) {
         this.cajas = cajas;
+    }
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "anexo")
+    public Set getConceptoses() {
+        return this.conceptoses;
+    }
+
+    public void setConceptoses(Set conceptoses) {
+        this.conceptoses = conceptoses;
     }
 
     public String getNombres() {
