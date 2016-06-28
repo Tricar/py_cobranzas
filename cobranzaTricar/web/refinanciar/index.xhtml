@@ -60,7 +60,7 @@
                     <h:outputText value="#{cred.estado}" converter="estcredconvert"/>
                 </p:column>                
                 <p:column headerText="OPERACIONES">
-                    <p:commandButton value="V" action="#{creditoBean.cargardespacho(loginbean.usuario)}" >
+                    <p:commandButton value="V" action="#{creditoBean.cargarRefinanciar(loginbean.usuario.idusuario)}" >
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                     </p:commandButton>
                 </p:column>

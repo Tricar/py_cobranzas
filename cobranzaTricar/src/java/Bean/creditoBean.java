@@ -460,6 +460,11 @@ public class creditoBean implements Serializable {
         }
         creditodao.modificarVenta(crediton);
     }
+    
+    public String cargarRefinanciar(int idusuario){
+        CreditoDao credao = new CreditoDaoImp();
+        return "/refinanciar/formrefinancia.xhtml";
+    }
 
     public void insertarCotiza(Integer idusuario) {
         CreditoDao creditodao = new CreditoDaoImp();
@@ -867,7 +872,7 @@ public class creditoBean implements Serializable {
     public void cargarVencidos() {
         CreditoDao credao = new CreditoDaoImp();
         try {
-            creditos = credao.cargarTodosxCalif("VC");
+            creditos = credao.cargarTodosxCalif("VN");
         } catch (Exception e) {
         }
     }
