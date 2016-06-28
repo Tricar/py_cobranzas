@@ -8,11 +8,11 @@
                 template="./../views/template.xhtml">
     <ui:define name="content">                
         <h:form>
-            <p:commandButton value="Nuevo" icon="b-add" action="#{anexoBean.nuevoanexo()}"/>
+            <p:commandButton value="Nuevo" icon="ui-icon-plus" action="#{anexoBean.nuevoanexo()}"/>
         </h:form>
         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
             <div class="ui-datatable-header ui-widget-header ui-corner-top">
-                Lista de Cajas
+                Lista de Cliente
             </div>
             <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                 <h:form id="formMostrar">
@@ -42,8 +42,8 @@
                             <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="ui-icon ui-icon-trash"/>
                         </p:column>
                         <p:column headerText="INGRESOS" width="10%" style="text-align: center">
-                            <p:commandButton icon="b-add" action="#{ocupacionBean.limpIngreso(item)}"/>                                
-                            <p:commandButton icon="b-ver" action="#{ocupacionBean.historial(item)}"/>
+                            <p:commandButton icon="ui-icon-link" action="#{ocupacionBean.limpIngreso(item)}"/>                                
+                            <p:commandButton icon="ui-icon-pin-s" action="#{ocupacionBean.historial(item)}"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
@@ -172,7 +172,7 @@
                     </p:inputText>
                 </h:panelGrid>
                 <p:separator/>
-                <p:commandButton value="Registrar Cliente" icon="b-new" ajax="false" actionListener="#{anexoBean.insertarcliente()}" />
+                <p:commandButton value="Registrar Cliente" icon="ui-icon-disk" ajax="false" actionListener="#{anexoBean.insertarcliente()}" />
             </p:dialog>
         </h:form>
 
@@ -299,7 +299,7 @@
                     </p:inputText>
                 </h:panelGrid>                        
                 <p:separator/>
-                <p:commandButton value="Actualizar Cliente" icon="b-new" ajax="false" actionListener="#{anexoBean.modificar()}" />
+                <p:commandButton value="Actualizar Cliente" icon="ui-icon-disk" ajax="false" actionListener="#{anexoBean.modificar()}" />
             </p:dialog>
         </h:form>
 

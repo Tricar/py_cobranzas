@@ -9,9 +9,9 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <h2>Gestión de ingresos económicos de clientes</h2>
+        <h2 class="BigTopic">Gestión de ingresos económicos de clientes</h2>
         <h:form>            
-            <p:commandButton action="#{ocupacionBean.nuevo()}" value="Nuevo Ingreso" immediate="true" icon="b-add" update="#{ocupacionBean.limpiarlista()}"/>
+            <p:commandButton action="#{ocupacionBean.nuevo()}" value="Nuevo Ingreso" immediate="true" icon="ui-icon-plus" update="#{ocupacionBean.limpiarlista()}"/>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -81,6 +81,8 @@
                     </p:selectOneMenu>
                     <p:outputLabel value="Boleta/Factura" for="comp"/>
                     <p:inputMask id="comp" mask="999-99999" value="#{creditoBean.credito.comprobante}" required="true" requiredMessage="Ingrese comprobante de pago"/>
+                    <p:outputLabel value="Nota de Débito" for="comp2"/>
+                    <p:inputMask id="comp2" mask="999-99999" value="#{creditoBean.credito.comprobante2}" required="true" requiredMessage="Ingrese comprobante de pago"/>
                     <p:outputLabel value="Guía Rem" for="guia"/>
                     <p:inputMask id="guia" mask="999-99999" value="#{creditoBean.credito.guia}" required="true" requiredMessage="Ingrese Guía de remisión"/>
                     <p:outputLabel value="Observaciones" for="obs"/>

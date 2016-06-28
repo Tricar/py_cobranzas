@@ -9,7 +9,6 @@
                 xmlns:o="http://omnifaces.org/ui">
 
     <ui:define name="content">
-        <h2>Gestion de Cajas</h2>
         <h:form >
             <p:commandButton value="Nueva Caja" actionListener="#{cajaBean.nueva()}" icon="ui-icon-plus"/>
         </h:form>
@@ -42,9 +41,9 @@
         </div>
 
         <h:form id="formInsertar">
-            <p:dialog header="Nuevo Color" widgetVar="dlginsertar" modal="true">
+            <p:dialog header="Nuevo" widgetVar="dlginsertar" modal="true">
                 <p:messages id="mesagges" autoUpdate="true" closable="true"/>
-                <h:panelGrid columns="4">
+                <h:panelGrid columns="2">
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                     <p:inputText id="txtDescripcion" label="Descripcion" value="#{cajaBean.caja.descripcion}" required="true" requiredMessage="Ingrese descripción"
                                  style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">                         
@@ -64,7 +63,7 @@
                         <f:selectItem itemLabel="VX1" itemValue="V1" />
                         <f:selectItem itemLabel="VX2" itemValue="V2" />                            
                     </p:selectOneMenu>
-                    <p:commandButton value="#{cajaBean.btnguardar}" icon="b-new" update=":frmlistarperfil:tablalistarcolor" actionListener="#{cajaBean.insertar()}" />
+                    <p:commandButton value="#{cajaBean.btnguardar}" icon="ui-icon-disk" update=":frmlistarperfil:tablalistarcolor" actionListener="#{cajaBean.insertar()}" />
                 </h:panelGrid>
             </p:dialog>
         </h:form>

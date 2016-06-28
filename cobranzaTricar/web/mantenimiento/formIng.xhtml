@@ -9,11 +9,11 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <h2>Formulario de Ingresos económicos de clientes</h2>
+        <h2 class="BigTopic">Formulario de Ingresos económicos de clientes</h2>
         <f:view afterPhase="#{anexoBean.phaseListener}">
-            <h:form id="formTabla" prependId="false ">
+            <h:form id="formTabla" prependId="false">
                 <p:growl id="msg12" />
-                <h:panelGrid columns="2">
+                <h:panelGrid>
                     <p:autoComplete id="cliente" value="#{ocupacionBean.anexo}"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
                                     itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
