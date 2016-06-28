@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Conceptos" table="conceptos" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idconceptos" type="int">
+            <column name="idconceptos" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="credito" class="Model.Credito" fetch="select">
+            <column name="idventa" />
+        </many-to-one>
+        <many-to-one name="anexo" class="Model.Anexo" fetch="select">
+            <column name="idanexo" />
+        </many-to-one>
+        <property name="tipo" type="string">
+            <column name="tipo" length="2" not-null="true" />
+        </property>
+        <property name="montopago" type="big_decimal">
+            <column name="montopago" precision="17" />
+        </property>
+        <property name="total" type="big_decimal">
+            <column name="total" precision="17" />
+        </property>
+        <property name="fecreg" type="timestamp">
+            <column name="fecreg" length="23" />
+        </property>
+        <property name="cobrado" type="java.lang.Boolean">
+            <column name="cobrado" />
+        </property>
+        <set name="pagoses" table="pagos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idconceptos" />
+            </key>
+            <one-to-many class="Model.Pagos" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -27,6 +27,7 @@ public class Movcaja implements java.io.Serializable {
     private Caja caja; 
     private Date fechamov;
     private Letras origen;
+    private Conceptos concepto;
 
     public Movcaja() {
     }
@@ -35,12 +36,13 @@ public class Movcaja implements java.io.Serializable {
         this.idmovcaja = idmovcaja;
     }
 
-    public Movcaja(Integer idmovcaja, BigDecimal total, String tipomov, Caja caja, Letras origen) {
+    public Movcaja(Integer idmovcaja, BigDecimal total, String tipomov, Caja caja, Letras origen, Conceptos concepto) {
         this.idmovcaja = idmovcaja;        
         this.monto = total;
         this.tipomov = tipomov;
         this.caja = caja;                
         this.origen = origen;
+        this.concepto = concepto;
     }
 
     @Id
@@ -101,6 +103,16 @@ public class Movcaja implements java.io.Serializable {
 
     public void setOrigen(Letras origen) {
         this.origen = origen;
+    }
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "anticipo", nullable = false)
+    public Conceptos getConcepto() {
+        return this.concepto;
+    }
+
+    public void setConcepto(Conceptos concepto) {
+        this.concepto = concepto;
     }
 
     @Override

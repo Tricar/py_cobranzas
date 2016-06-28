@@ -21,7 +21,7 @@
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha" disabled="true"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
                     <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito" readonly="true"/>
-                    <p:outputLabel value="Vendedor:" />
+                    <p:outputLabel value="Buscar Vendedor:" />
                     <p:autoComplete value="#{creditoBean.credito.codven}"
                                     completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
                                     itemLabel="#{vend.nombres}" itemValue="#{vend}" readonly="true">
@@ -37,7 +37,7 @@
                         <f:selectItem itemLabel="VX1" itemValue="V1" />
                         <f:selectItem itemLabel="VX2" itemValue="V2" />                            
                     </p:selectOneMenu>
-                    <p:outputLabel value="Cliente:" for="cliente"/>
+                    <p:outputLabel value="Buscar cliente:" for="cliente"/>
                     <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
                                     itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
@@ -52,7 +52,7 @@
                     <p:inputText id="dir" readonly="true" value="#{creditoBean.credito.anexo.direccion}"/>
                     <p:outputLabel value="Distrito:" for="dist"/>
                     <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito}" converter="distritoconverter"/>                    
-                    <p:outputLabel value="Aval:" for="aval"/>
+                    <p:outputLabel value="Buscar Aval:" for="aval"/>
                     <p:autoComplete id="aval" value="#{creditoBean.credito.idaval}"
                                     completeMethod="#{anexoBean.filtrarAval}" var="aval"
                                     itemLabel="#{aval.nombres}" itemValue="#{aval}" 
@@ -81,15 +81,13 @@
                     </p:selectOneMenu>
                     <p:outputLabel value="Boleta/Factura" for="comp"/>
                     <p:inputMask id="comp" mask="999-99999" value="#{creditoBean.credito.comprobante}" required="true" requiredMessage="Ingrese comprobante de pago"/>
-                    <p:outputLabel value="Nota de débito" for="comp2"/>
-                    <p:inputMask id="comp2" mask="999-99999" value="#{creditoBean.credito.comprobante2}" required="true" requiredMessage="Ingrese comprobante de pago"/>
                     <p:outputLabel value="Guía Rem" for="guia"/>
                     <p:inputMask id="guia" mask="999-99999" value="#{creditoBean.credito.guia}" required="true" requiredMessage="Ingrese Guía de remisión"/>
                     <p:outputLabel value="Observaciones" for="obs"/>
                     <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" required="true" requiredMessage="Ingrese observaciones" />
                 </h:panelGrid>
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.despachar(loginbean.usuario)}" icon="b-ok"
-                                 ajax="false" disabled="#{creditoBean.disabledespacho}">
+                                 ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
                 </p:commandButton>
             </h:form>            
             <h:form>

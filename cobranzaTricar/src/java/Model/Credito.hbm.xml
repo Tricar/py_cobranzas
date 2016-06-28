@@ -95,14 +95,26 @@
         <property name="comprobante2" type="string">
             <column name="comprobante2" length="50" />
         </property>
+        <property name="calificacion" type="string">
+            <column name="calificacion" length="2" not-null="true" />
+        </property>
         <property name="despachado" type="java.lang.Integer">
             <column name="despachado" />
+        </property>
+        <property name="swinicial" type="java.lang.Boolean">
+            <column name="swinicial" />
         </property>
         <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idventa" />
             </key>
             <one-to-many class="Model.Letras" />
+        </set>
+        <set name="conceptoses" table="conceptos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idventa" />
+            </key>
+            <one-to-many class="Model.Conceptos" />
         </set>
     </class>
 </hibernate-mapping>

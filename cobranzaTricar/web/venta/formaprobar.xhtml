@@ -15,7 +15,7 @@
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
-                <p:growl id="msg12" />
+                <p:growl id="msg12" showDetail="true"/>
                 <p:panelGrid columns="2">
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha" disabled="true"/>
@@ -116,6 +116,7 @@
                                     required="true" requiredMessage="Elija un vehículo">
                         <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
                         <p:ajax event="mousemove" listener="#{creditoBean.precioModeloCredito()}"/>
+                        <p:ajax event="itemSelect" process="@form" />                       
                     </p:autoComplete>
                     <p:outputLabel value="Verificado por:" for="veri"/>
                     <p:autoComplete id="veri" value="#{creditoBean.credito.verificado}"
@@ -125,7 +126,7 @@
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
-                        <p:ajax event="itemSelect" process="@form" />                        
+                        <p:ajax event="itemSelect" process="@form" />                   
                     </p:autoComplete>                                      
                 </p:panelGrid>
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.aprobarcredito(loginbean.usuario.idusuario)}" icon="b-ok"

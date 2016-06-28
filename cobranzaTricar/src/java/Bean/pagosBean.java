@@ -4,11 +4,10 @@ import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Dao.LetrasDao;
 import Dao.LetrasDaoImplements;
-import Dao.MovcajaDao;
-import Dao.MovcajaDaoImp;
 import Dao.PagosDao;
 import Dao.PagosDaoImp;
 import Model.Caja;
+import Model.Conceptos;
 import Model.Credito;
 import Model.Letras;
 import Model.Movcaja;
@@ -19,7 +18,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -59,6 +57,7 @@ public class pagosBean implements Serializable {
     private Caja caja = new Caja();
     private List<Caja> todasCajas = new ArrayList();
     private long difdays;
+    private String btnpago;
 
     /**
      * Creates a new instance of pagosBean
@@ -69,9 +68,9 @@ public class pagosBean implements Serializable {
     public List<Pagos> PagosxCredito(Credito cred) {
         PagosDao linkdao = new PagosDaoImp();
         pagosxcredito = linkdao.mostrarPagosxCredito(cred);
-        if (pagosxcredito.isEmpty() == true) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "No existen pagos de este cliente."));
-        }
+//        if (pagosxcredito.isEmpty() == true) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "No existen pagos de este cliente."));
+//        }
         credito = cred;
         return pagosxcredito;
     }
@@ -86,42 +85,56 @@ public class pagosBean implements Serializable {
         PagosDao pagosdao = new PagosDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
         CreditoDao creditodao = new CreditoDaoImp();
-        MovcajaDao mcajadao = new MovcajaDaoImp();
         pago.setLetras(letra);
-        if (montopago.compareTo(letra.getSaldo()) != 1) {
-            letra.setSaldo(letra.getSaldo().subtract(montopago));
-            letrasdao.modificarLetra(letra);
-            pago.setMonto(montopago);
-            pago.setUsuario(idusuario);
-            pagosdao.insertarPago(pago);
-            caja = pago.getCaja();
-            caja.setTotal(caja.getTotal().add(montopago));
-            mcaja.setCaja(caja);
-            mcaja.setTipomov("IN");
-            mcaja.setFechamov(pago.getFecreg());
-            mcaja.setMonto(montopago);
-            mcaja.setOrigen(letra);
-            movcbean.insertar(mcaja);
-            cajabean.modificarExt(caja);
-            credito.setDeudactual(credito.getDeudactual().subtract(montopago));
-            creditodao.modificarVenta(credito);
-            credbean.cargarLetras(credito);
-            //RequestContext.getCurrentInstance().update(":formModificar:tablaletras");
-            RequestContext.getCurrentInstance().update("formpagar");
-            RequestContext.getCurrentInstance().execute("PF('dlgpagar').hide()");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El Pago fue satisfactorio."));
-            pago = new Pagos();
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Revise el monto", "Monto excede el saldo"));
+        if (btnpago.equals("Aplicar") && letra.getCobradonc() == true) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ya se hizo el descuento por pronto pago. O letra vencida no procede descuento."));
             RequestContext.getCurrentInstance().update("formpagar");
             RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
+        } else {
+            if (montopago.compareTo(letra.getSaldo()) != 1) {
+                letra.setSaldo(letra.getSaldo().subtract(montopago));
+                pago.setMonto(montopago);
+                pago.setUsuario(idusuario);
+                pagosdao.insertarPago(pago);
+                if (btnpago.equals("Pagar")) {
+                    caja = pago.getCaja();
+                    caja.setTotal(caja.getTotal().add(montopago));
+                    mcaja.setCaja(caja);
+                    mcaja.setTipomov("IN");
+                    mcaja.setFechamov(pago.getFecreg());
+                    mcaja.setMonto(montopago);
+                    mcaja.setOrigen(letra);
+                    movcbean.insertar(mcaja);
+                    cajabean.modificarExt(caja);
+                    letra.setCobradonc(false);
+                } else {
+                    letra.setCobradonc(true);
+                }
+                letrasdao.modificarLetra(letra);
+                credito.setDeudactual(credito.getDeudactual().subtract(montopago));
+                creditodao.modificarVenta(credito);
+                credbean.cargarLetras(credito);
+                //RequestContext.getCurrentInstance().update(":formModificar:tablaletras");
+                RequestContext.getCurrentInstance().update("formModificar");
+                RequestContext.getCurrentInstance().execute("PF('dlgpagar').hide()");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El Pago fue satisfactorio."));
+                pago = new Pagos();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Revise el monto", "Monto excede el saldo"));
+                RequestContext.getCurrentInstance().update("formpagar");
+                RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
+            }
+            numletra = new String();
+            montopago = new BigDecimal(BigInteger.ZERO);
+            descripcion = new String();            
         }
-
+        pago = new Pagos();
     }
 
     public void cargarLetraPagos(Letras letras) {
         letra = letras;
         listafiltrada = new ArrayList();
+        btnpago = "Pagar";
         if (letras.getMora().compareTo(BigDecimal.ZERO) == 0) {
             numletra = letra.getDescripcion();
             montopago = letra.getSaldo();
@@ -134,7 +147,6 @@ public class pagosBean implements Serializable {
             RequestContext.getCurrentInstance().update("formAlerta");
             RequestContext.getCurrentInstance().execute("PF('dlgalerta').show()");
         }
-
         //return letra;        
     }
 
@@ -159,7 +171,6 @@ public class pagosBean implements Serializable {
             letra.setMora(BigDecimal.ZERO);
             letra.setDiffdays(Long.valueOf(0));
             difdays = letra.getDiffdays();
-
             letrasdao.modificarLetra(letra);
             letra = new Letras();
             //ago = new Pagos();           
@@ -190,17 +201,27 @@ public class pagosBean implements Serializable {
             movcbean.insertar(mcaja);
             cajabean.modificarExt(caja);
             RequestContext.getCurrentInstance().update("formModificar");
-            RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').hide()");    
+            RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').hide()");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Insertó Nota Débito correctamente."));
         } catch (Exception e) {
             RequestContext.getCurrentInstance().update("formModificar");
             RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').show()");
         }
-
+        numletra = new String();
+        montopago = new BigDecimal(BigInteger.ZERO);
+        descripcion = new String();
+        pago = new Pagos();
     }
 
     public void listaTipoDoc(String tipo) {
         listafiltrada = tipobean.listaTipoDoc(tipo);
+        if (tipo.equals("NC")) {
+            montopago = letra.getInteres();
+            btnpago = "Aplicar";
+        } else {
+            montopago = letra.getSaldo();
+            btnpago = "Pagar";
+        }
     }
 
     public void disableDest(String tipo) {
@@ -261,6 +282,16 @@ public class pagosBean implements Serializable {
         } catch (Exception e) {
         }
         return pagosxcredito;
+    }
+    
+    public void pagovarios(Conceptos concepto){
+        System.out.println("entre a pagos bean"+concepto.getMontopago());
+        btnpago = "Pagar";
+        montopago = concepto.getMontopago();
+        disablecaja = true;
+        disableoper = true;
+        disablecomp = true;
+        RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
     }
 
     public Pagos getPago() {
@@ -444,5 +475,13 @@ public class pagosBean implements Serializable {
 
     public void setDifdays(long difdays) {
         this.difdays = difdays;
+    }
+
+    public String getBtnpago() {
+        return btnpago;
+    }
+
+    public void setBtnpago(String btnpago) {
+        this.btnpago = btnpago;
     }
 }

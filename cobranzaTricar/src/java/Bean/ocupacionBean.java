@@ -8,8 +8,10 @@ import Model.Ocupacion;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -90,8 +92,6 @@ public class ocupacionBean implements Serializable {
     public void insertarCredito(Integer idventa, Ocupacion ocup) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocupacion = ocup;
-        System.out.println("obj ocupacion bean: " + ocupacion.getDescripcion());
-        System.out.println("ID: " + idventa);
         ocupacion.setIdventa(idventa);
         ocupacion.setAnexo(null);
         ocudao.insertarOcupacion(ocupacion);
@@ -111,19 +111,25 @@ public class ocupacionBean implements Serializable {
 
     }
 
-    public void limpiarIngreso() {
-        opcbol = true;
-        opccons = true;
-        opcfacbol = true;
-        opclic = true;
-        opclicf = true;
-        opcrrhh = true;
-        opcsunat = true;
-        opctprop = true;
-        ocupacion = new Ocupacion();
-        btnGuardar = "Registrar";
-        RequestContext.getCurrentInstance().update("formOcupacion");
-        RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
+    public void limpiarIngreso(Anexo anexo) {
+        if (anexo.getCpropia() != null) {
+            opcbol = true;
+            opccons = true;
+            opcfacbol = true;
+            opclic = true;
+            opclicf = true;
+            opcrrhh = true;
+            opcsunat = true;
+            opctprop = true;
+            ocupacion = new Ocupacion();
+            btnGuardar = "Registrar";
+            RequestContext.getCurrentInstance().update("formOcupacion");
+            RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
+        } else {
+            RequestContext.getCurrentInstance().update("formTabla");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe indicar si el cliente tiene casa propia."));
+        }
+
     }
 
     public void limpIngreso(Anexo anexito) {
@@ -269,7 +275,9 @@ public class ocupacionBean implements Serializable {
     public void delete() {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocudao.delete(ocupacion);
-        RequestContext.getCurrentInstance().update(":formTabla:tablalistarocups");
+        RequestContext.getCurrentInstance().update("formTabla");
+        RequestContext.getCurrentInstance().execute("PF('dlgEliminar').hide()");
+
     }
 
     public void eliminarSolo(Anexo anexo) {
@@ -278,7 +286,7 @@ public class ocupacionBean implements Serializable {
         ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         RequestContext.getCurrentInstance().update("formTabla");
         RequestContext.getCurrentInstance().execute("formTabla");
-        RequestContext.getCurrentInstance().execute("PF('dlgeliminar').hide()");;
+        RequestContext.getCurrentInstance().execute("PF('dlgeliminar').hide()");
     }
 
     public void veryIdModify(Integer idocupacion) {
@@ -298,7 +306,7 @@ public class ocupacionBean implements Serializable {
 
     public String nuevo() {
         anexo = new Anexo();
-        ocupacion = new Ocupacion();        
+        ocupacion = new Ocupacion();
         return "/mantenimiento/formIng.xhtml";
     }
 

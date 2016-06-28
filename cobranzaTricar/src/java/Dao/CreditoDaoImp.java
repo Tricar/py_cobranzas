@@ -299,7 +299,44 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return lista;
     }
-
     
+    @Override
+    public List<Credito> cargarTodosxCalif(String calif) {
+        Session session = null;
+        List<Credito> lista = null;              
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE calificacion=:v");            
+            query.setParameter("v", calif);
+            lista = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public Credito cargarxCodigoCalif(String codigo, String calif) {
+        Session session = null;
+        Credito credito = new Credito();        
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE liqventa=:w and calificacion=:v");
+            query.setParameter("w", codigo);
+            query.setParameter("v", calif);
+            credito = (Credito) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return credito;
+    }
     
 }

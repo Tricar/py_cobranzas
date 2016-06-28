@@ -11,6 +11,9 @@
         <many-to-one name="letras" class="Model.Letras" fetch="select">
             <column name="idletras" />
         </many-to-one>
+        <many-to-one name="conceptos" class="Model.Conceptos" fetch="select">
+            <column name="idconceptos" />
+        </many-to-one>
         <many-to-one name="tipodoc" class="Model.Tipodoc" fetch="select">
             <column name="idtipodoc" />
         </many-to-one>

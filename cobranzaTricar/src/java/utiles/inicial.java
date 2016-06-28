@@ -2,10 +2,6 @@ package utiles;
 
 import java.math.BigDecimal;
 
-/**
- *
- * @author master
- */
 public class inicial {
 
     public BigDecimal inicialCredito(String distrito, String tipov, BigDecimal precio, String modelo) {

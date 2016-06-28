@@ -13,12 +13,12 @@
             <p:commandButton action="#{creditoBean.nuevocotiza()}" value="Nuevo" immediate="true" icon="b-add"/>
         </h:form>
         <h:form>            
-            <p:panelGrid columns="2">
+            <h:panelGrid columns="2">
                 <p:outputLabel value="Ingrese código de Cotización:"/>
                 <p:inputText value="#{creditoBean.codigo}"/>                       
                 <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarxCodigoCotiza()}"
                                  ajax="false"/>
-            </p:panelGrid>
+            </h:panelGrid>
         </h:form>
         <h:form id="formMostrar">
             <p:growl sticky="false" showDetail="true" id="msgaprobar"/> 
@@ -28,10 +28,10 @@
                     <h:outputText value="#{cred.liqventa}" />
                 </p:column>
                 <p:column headerText="Nombres">
-                    <h:outputText value="#{cred.anexoByIdanexo.nombres}" />
+                    <h:outputText value="#{cred.anexo.nombres}" />
                 </p:column>
                 <p:column headerText="Num. Doc.">
-                    <h:outputText value="#{cred.anexoByIdanexo.numdocumento}" />
+                    <h:outputText value="#{cred.anexo.numdocumento}" />
                 </p:column>
                 <p:column headerText="Tienda">
                     <h:outputText value="#{cred.tienda}">
@@ -58,14 +58,12 @@
                     </p:commandButton>
                 </p:column>
                 <p:column headerText="Aprobar">
-                    <p:commandButton value="A" oncomplete="dlgaprobar.show()" update="#{creditoBean.aprobar()}" actionListener="#{vehiculoBean.cargarModeloCotiza(cred)}">
-                        <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
-                    </p:commandButton>
+                    <p:commandButton value="Credito" action="#{creditoBean.cargarDeProf(cred)}" />
                 </p:column>
             </p:dataTable>
         </h:form>
         <h:form id="formEliminar">
-            <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
+            <p:dialog id="dlg2" header="Eliminar Proforma" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">            
                 <h:outputText value="¿Desea eliminar?" />
                 <p:commandButton value="Si" actionListener="#{creditoBean.eliminarCotiza()}" 

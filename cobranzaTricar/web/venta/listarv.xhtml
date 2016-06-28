@@ -62,7 +62,7 @@
                 <p:column headerText="Mostrar">                            
                     <p:commandButton value="Ver" update=":formModificar" icon="b-ver"
                                      actionListener="#{creditoBean.cargarLetrasArray(cred)}"/>
-                    <p:commandButton value="Historial" icon="b-ver" actionListener="#{creditoBean.Pagosxcredito(cred)}"/>
+                    <p:commandButton value="Historial" icon="b-ver" actionListener="#{creditoBean.Pagosxcredito(cred)}" />
                 </p:column>
             </p:dataTable>
         </h:form>        
@@ -166,7 +166,7 @@
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
                         <f:selectItem itemLabel="Letra" itemValue="LE" />
                         <f:selectItem itemLabel="Nota de Credito" itemValue="NC" />
-                        <p:ajax update="tipodoc" listener="#{pagosBean.listaTipoDoc(pagosBean.pago.tipo)}" process="@this" />
+                        <p:ajax update="tipodoc monto btnpagar" listener="#{pagosBean.listaTipoDoc(pagosBean.pago.tipo)}" process="@this" />
                         <p:ajax update="dest" listener="#{pagosBean.disableDest(pagosBean.pago.tipo)}" process="@this" />
                     </p:selectOneMenu>
                     <p:outputLabel value="Comprobante:" for="tipodoc"/>
@@ -187,11 +187,11 @@
                     <p:outputLabel value="Num oper: " for="txtope"/>
                     <p:inputText id="txtope" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disableoper}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <p:outputLabel value="Monto:" for="monto"/>
-                    <p:inputText id="monto" value="#{pagosBean.montopago}" required="true" requiredMessage="Ingrese el monto" class="money"/>
+                    <p:inputText id="monto" value="#{pagosBean.montopago}" required="true" requiredMessage="Ingrese el monto" class="money" readonly="#{pagosBean.disablecaja}"/>
                     <p:outputLabel value="Descripción:" for="txtdescripcion"/>
                     <p:inputText id="txtdescripcion" value="#{pagosBean.pago.descripcion}" required="true" requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <h:panelGroup></h:panelGroup>                    
-                    <p:commandButton actionListener="#{pagosBean.insertar(loginbean.usuario.idusuario)}" value="Pagar" />
+                    <p:commandButton id="btnpagar" actionListener="#{pagosBean.insertar(loginbean.usuario.idusuario)}" value="#{pagosBean.btnpago}" />
                 </h:panelGrid>                
             </p:dialog>
         </h:form>

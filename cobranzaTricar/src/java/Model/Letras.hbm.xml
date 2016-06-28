@@ -44,6 +44,9 @@
         <property name="diffdays" type="java.lang.Long">
             <column name="diffdays" />
         </property>
+        <property name="cobradonc" type="java.lang.Boolean">
+            <column name="cobradonc" />
+        </property>
         <set name="pagoses" table="pagos" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idletras" />

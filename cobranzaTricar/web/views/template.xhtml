@@ -86,6 +86,7 @@
                     <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito - Pago" icon="ui-icon-cart">
                         <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-script" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manRef}" value="Refinanciar" action="#{creditoBean.indexref()}" icon="ui-icon-newwin" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />
                     </p:submenu>
                     <p:submenu rendered="#{loginbean.usuario.perfil.despacho}" label="Despacho" icon="ui-icon-flag">
@@ -96,7 +97,7 @@
                         <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />
                     </p:submenu>
                     <f:facet name="options">
-                        <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>
+                        <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>                        
                         <p:commandButton icon="ui-icon-power" style="margin-left:50px" actionListener="#{loginbean.logout()}"
                                          title="Cerrar Session" oncomplete="handleLoginRequest(xhr, status, args)"/>
                         <p:commandButton icon="ui-icon-suitcase" title="Cambiar Clave"/>
@@ -117,7 +118,7 @@
 
                     <div class="EmptyBox10 ShowOnMobile"></div>
                     <span class="DispInlBlock FontSourceSansLight gray Fs12 Fright  TexAlRight FloatNoneOnMobile"> 
-                        PrimeFaces Spark  |  Derechos reservados.
+                        Tricar Sistemas | Derechos reservados.
                     </span>
                 </div>
 
@@ -127,10 +128,10 @@
                     <h:graphicImage style="height:20px;" class="" library="images" name="logo_tricar.jpg"/>
                     <div class="EmptyBox10"></div>
                     <span class="DispBlock Wid100 FontSourceSansLight gray Fs12 ">
-                        +1 888 123 4567 <br /> info@sparkspark.com
+                        (061)578425 <br /> jlopez@tricar.com.pe / soportetecnico@tricar.com.pe
                     </span>
                 </div>
-                <div class="Container50 Responsive100">
+                <div class="Container50 Responsive100">                    
                     <div class="DispInlBlock Fright">
                         <a href="https://facebook.com/vxperu" class="blue Fs30" target="blank" title="Síguenos en Facebook"><i class="fa fa-facebook-square"></i></a>
                         <a href="#layout-footer" class="blue Fs30"><i class="fa fa-twitter-square"></i></a>

@@ -23,5 +23,8 @@
         <many-to-one name="origen" class="Model.Letras" fetch="select">
             <column name="origen" not-null="true" />
         </many-to-one>
+        <many-to-one name="concepto" class="Model.Conceptos" fetch="select">
+            <column name="anticipo" not-null="true" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

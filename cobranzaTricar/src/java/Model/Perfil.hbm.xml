@@ -65,6 +65,9 @@
         <property name="manCaja" type="java.lang.Boolean">
             <column name="manCaja" />
         </property>
+        <property name="manRef" type="java.lang.Boolean">
+            <column name="manRef" />
+        </property>
         <property name="despacho" type="java.lang.Boolean">
             <column name="despacho" />
         </property>

@@ -11,9 +11,9 @@
     <ui:define name="content">
         <h2 class="BigTopic">Formulario de Ingresos económicos de clientes</h2>
         <f:view afterPhase="#{anexoBean.phaseListener}">
-            <h:form id="formTabla" prependId="false">
-                <p:growl id="msg12" />
-                <h:panelGrid>
+            <h:form id="formTabla" prependId="false ">
+                <p:growl id="msg12" showDetail="true"/>
+                <h:panelGrid columns="2">
                     <p:autoComplete id="cliente" value="#{ocupacionBean.anexo}"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
                                     itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
@@ -41,7 +41,7 @@
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>
-                <p:commandButton value="Agregar ingresos" icon="b-add" action="#{ocupacionBean.limpiarIngreso()}" />                
+                <p:commandButton value="Agregar ingresos" icon="b-add" action="#{ocupacionBean.limpiarIngreso(ocupacionBean.anexo)}" />                
             </h:form>
         </f:view>
         <h:form id="formOcupacion">
@@ -117,7 +117,7 @@
         <h:form id="formEliminar">
             <p:dialog header="Eliminar #{ocupacionBean.ocupacion.descripcion}" widgetVar="dlgEliminar" modal="true">                
                 <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{ocupacionBean.delete()}" ajax="false" icon="b-ok" />
+                <p:commandButton value="Si" actionListener="#{ocupacionBean.delete()}" update=":formTabla:tablalistarocups" icon="b-ok" />
                 <p:commandButton value="No" onclick="dlgEliminar.hide();" icon="b-cancel" />
             </p:dialog>
         </h:form>
