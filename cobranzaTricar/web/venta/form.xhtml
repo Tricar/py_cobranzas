@@ -16,11 +16,20 @@
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
                 <p:growl id="msg12" showDetail="true"/>
-                <h:panelGrid columns="2">
+                <p:panelGrid columns="2">
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
                     <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito"/>
+                    <p:outputLabel value="Buscar Vendedor:" />
+                    <p:autoComplete value="#{creditoBean.credito.codven}"
+                                    completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
+                                    itemLabel="#{vend.nombres}" itemValue="#{vend}">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                        <p:ajax event="itemSelect" process="@form" />
+                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
+                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
+                    </p:autoComplete>
                     <p:outputLabel value="Buscar cliente:" for="cliente"/>
                     <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
@@ -32,7 +41,7 @@
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                     </p:autoComplete>
-                </h:panelGrid>
+                </p:panelGrid>
                 <p:accordionPanel>
                     <p:tab title="Ingresos">
                         <p:dataTable var="ocups" value="#{creditoBean.ocupsxanexo}" 
@@ -49,16 +58,7 @@
                         </p:dataTable>                        
                     </p:tab>                    
                 </p:accordionPanel>
-                <h:panelGrid columns="2">
-                    <p:outputLabel value="Buscar Vendedor:" />
-                    <p:autoComplete value="#{creditoBean.credito.codven}"
-                                    completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
-                                    itemLabel="#{vend.nombres}" itemValue="#{vend}">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
-                    </p:autoComplete>
+                <p:panelGrid columns="2">
                     <p:outputLabel value="Tienda:" for="txttienda"/>
                     <p:selectOneMenu id="txttienda" value="#{creditoBean.credito.tienda}" required="true" requiredMessage="Seleccione la Tienda">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
@@ -142,7 +142,7 @@
                         <f:selectItem itemLabel="5" itemValue='5.00'/>
                         <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
                     </p:selectOneMenu> 
-                </h:panelGrid>
+                </p:panelGrid>
 
                 <p:commandButton value="#{creditoBean.btnguardar}" actionListener="#{creditoBean.insertarCredito(loginbean.usuario.idusuario)}" icon="b-ok"
                                  ajax="false" disabled="#{creditoBean.disableGuardar()}">

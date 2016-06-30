@@ -1429,6 +1429,7 @@ public class creditoBean implements Serializable {
         PagosDao pagosdao = new PagosDaoImp();
         CreditoDao creditodao = new CreditoDaoImp();
         CajaDao cajadao = new CajaDaoImp();
+        ConceptosDao condao = new ConceptosDaoImp();
         MovcajaDao movcajadao = new MovcajaDaoImp();
         try {
             if (montopago.compareTo(concepto.getMontopago()) != 1) {
@@ -1446,6 +1447,8 @@ public class creditoBean implements Serializable {
                 mcaja.setMonto(montopago);
                 mcaja.setConcepto(concepto);
                 movcajadao.insertarMovcaja(mcaja);
+                concepto.setMontopago(concepto.getMontopago().subtract(montopago));
+                condao.modificarConcepto(concepto);
                 if (concepto.getMontopago().compareTo(BigDecimal.ZERO) == 0){
                     credito.setSwinicial(true);
                     creditodao.modificarVenta(credito);
