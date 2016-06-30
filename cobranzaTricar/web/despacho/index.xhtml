@@ -89,7 +89,7 @@
                     <p:outputLabel value="Num oper: " for="txtope"/>
                     <p:inputText id="txtope" value="#{creditoBean.pago.operacion}" disabled="#{creditoBean.disableoper}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <p:outputLabel value="Monto:" for="monto"/>
-                    <p:inputText id="monto" value="#{creditoBean.montopago}" readonly="true"/>
+                    <p:inputText id="monto" value="#{creditoBean.montopago}" class="money" required="true" requiredMessage="Ingrese monto a pagar"/>
                     <p:outputLabel value="Descripción:" for="txtdescripcion"/>
                     <p:inputText id="txtdescripcion" value="#{creditoBean.pago.descripcion}" required="true" requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <h:panelGroup></h:panelGroup>                    

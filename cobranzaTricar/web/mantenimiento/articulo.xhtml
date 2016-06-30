@@ -91,12 +91,12 @@
                             </p:inputText>
                             <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Serie:" for="txtSerie"/>
-                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" autocomplete="off">
+                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Motor:" for="txtMotor"/>
-                            <p:inputText id="txtMotor" label="Motor" value="#{vehiculoBean.vehiculo.motor}" autocomplete="off">
+                            <p:inputText id="txtMotor" label="Motor" value="#{vehiculoBean.vehiculo.motor}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <h:panelGroup></h:panelGroup>

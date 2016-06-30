@@ -112,6 +112,9 @@ public class pagosBean implements Serializable {
                 }
                 letrasdao.modificarLetra(letra);
                 credito.setDeudactual(credito.getDeudactual().subtract(montopago));
+                if (credito.getDeudactual().compareTo(BigDecimal.ZERO) == 0){
+                    credito.setCalificacion("CN");
+                }
                 creditodao.modificarVenta(credito);
                 credbean.cargarLetras(credito);
                 //RequestContext.getCurrentInstance().update(":formModificar:tablaletras");
@@ -124,10 +127,10 @@ public class pagosBean implements Serializable {
                 RequestContext.getCurrentInstance().update("formpagar");
                 RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
             }
-            numletra = new String();
-            montopago = new BigDecimal(BigInteger.ZERO);
-            descripcion = new String();            
         }
+        numletra = new String();
+        montopago = new BigDecimal(BigInteger.ZERO);
+        descripcion = new String();
         pago = new Pagos();
     }
 
@@ -283,9 +286,9 @@ public class pagosBean implements Serializable {
         }
         return pagosxcredito;
     }
-    
-    public void pagovarios(Conceptos concepto){
-        System.out.println("entre a pagos bean"+concepto.getMontopago());
+
+    public void pagovarios(Conceptos concepto) {
+        System.out.println("entre a pagos bean" + concepto.getMontopago());
         btnpago = "Pagar";
         montopago = concepto.getMontopago();
         disablecaja = true;

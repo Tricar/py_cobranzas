@@ -377,7 +377,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarGestor(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarTipo("GE");
+        List<Anexo> tipos = anexoDao.filtarTipoDos("GE","JE");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);

@@ -460,8 +460,8 @@ public class creditoBean implements Serializable {
         }
         creditodao.modificarVenta(crediton);
     }
-    
-    public String cargarRefinanciar(int idusuario){
+
+    public String cargarRefinanciar(int idusuario) {
         CreditoDao credao = new CreditoDaoImp();
         return "/refinanciar/formrefinancia.xhtml";
     }
@@ -789,7 +789,7 @@ public class creditoBean implements Serializable {
         AnexoDao anexodao = new AnexoDaoImplements();
         List<Anexo> anexos = new ArrayList();
         CreditoDao creditodao = new CreditoDaoImp();
-        List<Credito> creditosn = creditodao.mostrarVentas();
+        List<Credito> creditosn = creditodao.cargarxEstado("DP");
         try {
             anexos = anexodao.buscarClienteNombre(nombre, "CN", "CJ");
             for (int i = 0; i < anexos.size(); i++) {
@@ -1003,7 +1003,6 @@ public class creditoBean implements Serializable {
                     btnpago = "Pagar";
                     concepto = condao.veryIdCredito(credito);
                     montopago = concepto.getMontopago();
-                    System.out.println("concepto: " + concepto.getMontopago());
                     RequestContext.getCurrentInstance().update("formpagar");
                     RequestContext.getCurrentInstance().execute("PF('dlgpagarini').show()");
 //                    pagbean.pagovarios(concepto);
@@ -1092,9 +1091,7 @@ public class creditoBean implements Serializable {
     }
 
     public void eliminarpagos() {
-        System.out.println("eliminar en credbean" + credito.getAnexo().getNombres());
         pagosBean pagbean = new pagosBean();
-        System.out.println("probar el pago: " + pago.getDescripcion());
         pagosxcredito = pagbean.eliminar(credito, pago);
     }
 
@@ -1378,7 +1375,7 @@ public class creditoBean implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlgverocup').show()");
 
     }
-    
+
 //    public void insertarOcupacion(Anexo anexo, Ocupacion ocup) {
 //        if (anexo == null) {
 //            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe ingresar un cliente."));
@@ -1408,7 +1405,6 @@ public class creditoBean implements Serializable {
 ////            btnpago = "Pagar";
 ////        }
 //    }
-
     public void disableDest(String tipo) {
         if (tipo.equals("LE")) {
             disablecaja = false;
@@ -1434,27 +1430,35 @@ public class creditoBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
         CajaDao cajadao = new CajaDaoImp();
         MovcajaDao movcajadao = new MovcajaDaoImp();
-        try {            
-            pago.setConceptos(concepto);
-            pago.setMonto(montopago);
-            pago.setTipo("IN");
-            pago.setUsuario(idusuario);
-            pagosdao.insertarPago(pago);
-            caja = pago.getCaja();
-            caja.setTotal(caja.getTotal().add(montopago));
-            cajadao.modificarCaja(caja);
-            mcaja.setCaja(caja);
-            mcaja.setTipomov("IN");
-            mcaja.setFechamov(pago.getFecreg());
-            mcaja.setMonto(montopago);
-            mcaja.setConcepto(concepto);
-            movcajadao.insertarMovcaja(mcaja);
-            credito.setSwinicial(true);
-            creditodao.modificarVenta(credito);
-            RequestContext.getCurrentInstance().update("formpagar");
-            RequestContext.getCurrentInstance().execute("PF('dlgpagarini').hide()");
-            RequestContext.getCurrentInstance().update("formpagar");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Correcto", "Se registró la inicial."));
+        try {
+            if (montopago.compareTo(concepto.getMontopago()) != 1) {
+                pago.setConceptos(concepto);
+                pago.setMonto(montopago);
+                pago.setTipo("IN");
+                pago.setUsuario(idusuario);
+                pagosdao.insertarPago(pago);
+                caja = pago.getCaja();
+                caja.setTotal(caja.getTotal().add(montopago));
+                cajadao.modificarCaja(caja);
+                mcaja.setCaja(caja);
+                mcaja.setTipomov("IN");
+                mcaja.setFechamov(pago.getFecreg());
+                mcaja.setMonto(montopago);
+                mcaja.setConcepto(concepto);
+                movcajadao.insertarMovcaja(mcaja);
+                if (concepto.getMontopago().compareTo(BigDecimal.ZERO) == 0){
+                    credito.setSwinicial(true);
+                    creditodao.modificarVenta(credito);
+                }                                
+                RequestContext.getCurrentInstance().update("formpagar");
+                RequestContext.getCurrentInstance().execute("PF('dlgpagarini').hide()");
+                RequestContext.getCurrentInstance().update("formpagar");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Correcto", "Se registró la inicial."));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Revise el monto", "Monto excede el saldo"));
+                RequestContext.getCurrentInstance().update("formpagar");
+                RequestContext.getCurrentInstance().execute("PF('dlgpagarini').show()");
+            }
         } catch (Exception e) {
             RequestContext.getCurrentInstance().update("formpagar");
             RequestContext.getCurrentInstance().execute("PF('dlgpagarini').show()");
