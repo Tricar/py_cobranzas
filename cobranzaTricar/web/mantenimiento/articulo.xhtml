@@ -30,16 +30,10 @@
                                         <f:converter converterId="marcaconverter"/>
                                     </h:outputText>
                                 </p:column>
-                                <p:column headerText="TIPO">
-                                    <h:outputText value="#{item.tipovehiculo}" />
-                                </p:column>
-                                <p:column headerText="MODELO">
-                                    <h:outputText value="#{item.modelo.modelo}" />
-                                </p:column>
-                                <p:column headerText="COLOR">
-                                    <h:outputText value="#{item.color.color}" />
-                                </p:column>
-                                <p:column headerText="AÑO">
+                                <p:column headerText="ARTICULO">
+                                    <h:outputText value="#{item.tipovehiculo}" />-
+                                    <h:outputText value="#{item.modelo.modelo}" />-
+                                    <h:outputText value="#{item.color.color}" />-
                                     <h:outputText value="#{item.anofabri}" />
                                 </p:column>
                                 <p:column headerText="SERIE" filterBy="#{item.serie}" filterMatchMode="contains">
@@ -48,7 +42,7 @@
                                 <p:column headerText="MOTOR">
                                     <h:outputText value="#{item.motor}" />
                                 </p:column>
-                                <p:column headerText="ESTADO">
+                                <p:column headerText="ESTADO" filterBy="#{item.estado}" filterMatchMode="contains">
                                     <h:outputText value="#{item.estado}">
                                         <f:converter converterId="estadoconverter"/>
                                     </h:outputText>
@@ -64,8 +58,7 @@
 
                 <h:form id="formInsertar">
                     <p:dialog header="Nuevo Articulo" widgetVar="dlginsertar" modal="true">                        
-                        <p:panelGrid id="panelcreararticulo" columns="3">                            
-
+                        <h:panelGrid id="panelcreararticulo" columns="3">
                             <p:outputLabel value="Marca:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.marca}">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
@@ -74,13 +67,13 @@
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Modelo:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter">
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                                 <f:selectItems value="#{modeloBean.modelos}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Color:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.color}" converter="omnifaces.SelectItemsConverter">
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.color}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                                 <f:selectItems value="#{colorBean.colores}" var="color" itemLabel="#{color.color}" itemValue="#{color}"/>
                             </p:selectOneMenu>
@@ -108,7 +101,7 @@
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
                             <p:commandButton value="Registrar Articulo" icon="b-new" ajax="false" actionListener="#{vehiculoBean.registrar()}" />
-                        </p:panelGrid>
+                        </h:panelGrid>
                     </p:dialog>
                 </h:form>
 

@@ -995,7 +995,7 @@ public class creditoBean implements Serializable {
             anexo = credito.getAnexo();
             disabledespacho = false;
             ocupsxanexo = ocupbean.cargarxCredito(credito);
-            if (usuario.getPerfil().getAbrev().equals("AS")) {
+            if (usuario.getPerfil().getAbrev().equals("AS") || usuario.getPerfil().getAbrev().equals("AD")) {
                 if (!credito.getSwinicial()) {
                     pago = new Pagos();
 //                    pagosBean pagbean = new pagosBean();
