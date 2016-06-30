@@ -93,6 +93,9 @@ public class pagosBean implements Serializable {
         } else {
             if (montopago.compareTo(letra.getSaldo()) != 1) {
                 letra.setSaldo(letra.getSaldo().subtract(montopago));
+                if (letra.getSaldo().compareTo(BigDecimal.ZERO) == 0){
+                    letra.setEstado("CN");
+                }
                 pago.setMonto(montopago);
                 pago.setUsuario(idusuario);
                 pagosdao.insertarPago(pago);
@@ -112,7 +115,7 @@ public class pagosBean implements Serializable {
                 }
                 letrasdao.modificarLetra(letra);
                 credito.setDeudactual(credito.getDeudactual().subtract(montopago));
-                if (credito.getDeudactual().compareTo(BigDecimal.ZERO) == 0){
+                if (credito.getDeudactual().compareTo(BigDecimal.ZERO) == 0) {
                     credito.setCalificacion("CN");
                 }
                 creditodao.modificarVenta(credito);
@@ -127,11 +130,12 @@ public class pagosBean implements Serializable {
                 RequestContext.getCurrentInstance().update("formpagar");
                 RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
             }
+            numletra = new String();
+            montopago = new BigDecimal(BigInteger.ZERO);
+            descripcion = new String();
+            pago = new Pagos();
         }
-        numletra = new String();
-        montopago = new BigDecimal(BigInteger.ZERO);
-        descripcion = new String();
-        pago = new Pagos();
+
     }
 
     public void cargarLetraPagos(Letras letras) {

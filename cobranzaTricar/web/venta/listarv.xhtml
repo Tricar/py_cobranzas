@@ -72,9 +72,9 @@
             <p:dataTable id="tablaletras" var="letras" value="#{creditoBean.letraslista}" 
                          emptyMessage="No hay nada para mostrar" > 
                 <p:inputText type="hidden" value="#{letras.idletras}"/>
-                <p:column headerText="Cod venta.">
+                <ui:remove><p:column headerText="Cod venta.">
                     <h:outputText value="#{letras.credito.liqventa}" />
-                </p:column>
+                </p:column></ui:remove>
                 <p:column headerText="Descripcion">
                     <h:outputText value="#{letras.descripcion}"/>
                 </p:column>
@@ -87,11 +87,11 @@
                 <p:column headerText="Total Letra">
                     <h:outputText value="#{letras.monto}"/>
                 </p:column>
-                <p:column headerText="Fecha In.">
+                <ui:remove><p:column headerText="Fecha In.">
                     <h:outputText value="#{letras.fecini}">
                         <f:convertDateTime pattern = "dd/MM/yyyy"/>
                     </h:outputText>
-                </p:column>
+                </p:column></ui:remove>
                 <p:column headerText="Fecha Ven.">
                     <h:outputText value="#{letras.fecven}">
                         <f:convertDateTime  pattern = "dd/MM/yyyy"/>
