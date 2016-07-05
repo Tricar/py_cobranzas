@@ -47,6 +47,18 @@
         <property name="cobradonc" type="java.lang.Boolean">
             <column name="cobradonc" />
         </property>
+        <property name="modificadond" type="java.lang.Boolean">
+            <column name="modificadond" />
+        </property>
+        <property name="modificado" type="java.lang.Integer">
+            <column name="modificado" />
+        </property>
+        <set name="historial" table="historialmora" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idletras" />
+            </key>
+            <one-to-many class="Model.Historialmora" />
+        </set>
         <set name="pagoses" table="pagos" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idletras" />

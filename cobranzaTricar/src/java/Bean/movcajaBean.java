@@ -2,7 +2,6 @@ package Bean;
 
 import Dao.MovcajaDao;
 import Dao.MovcajaDaoImp;
-import Model.Caja;
 import Model.Movcaja;
 import java.io.Serializable;
 import java.util.ArrayList;

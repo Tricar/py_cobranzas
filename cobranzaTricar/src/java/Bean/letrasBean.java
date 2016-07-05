@@ -6,6 +6,7 @@ import Dao.LetrasDao;
 import Dao.LetrasDaoImplements;
 import Model.Credito;
 import Model.Letras;
+import Model.Usuario;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -36,6 +38,26 @@ public class letrasBean implements Serializable {
     public letrasBean() {
     }
 
+    public void cargarModNotaDebito(Letras let) {
+        letra = let;
+        System.out.println("cargado letra: "+letra.getDescripcion());
+        RequestContext.getCurrentInstance().update("formModNd");
+        RequestContext.getCurrentInstance().execute("PF('dlgmodnd').show()");
+    }
+
+    public void modificarMora(Usuario usuario) {
+        try {
+            System.out.println("letra "+letra.getDescripcion());
+            System.out.println("usuario: "+usuario.getUsuario());
+            LetrasDao letdao = new LetrasDaoImplements();
+            letra.setModificado(usuario.getIdusuario());
+            letdao.modificarLetra(letra);
+            RequestContext.getCurrentInstance().update("formModNd");
+            RequestContext.getCurrentInstance().execute("PF('dlgmodnd').hide()");
+        } catch (Exception e) {
+        }
+    }
+
     public List<Letras> getLetras() {
         LetrasDao linkdao = new LetrasDaoImplements();
         letras = linkdao.mostrarLetras();
@@ -47,8 +69,8 @@ public class letrasBean implements Serializable {
         letrasventa = linkdao.mostrarLetrasXCred(credito);
         return letrasventa;
     }
-    
-    public List<Letras> mostrarSoloLetrasxCred(Credito cred){
+
+    public List<Letras> mostrarSoloLetrasxCred(Credito cred) {
         credito = cred;
         LetrasDao letdao = new LetrasDaoImplements();
         letras = letdao.mostrarSoloLetrasxCred(credito, "ND");

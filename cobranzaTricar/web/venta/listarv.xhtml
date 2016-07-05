@@ -7,7 +7,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../views/template.xhtml">
     <ui:define name="content">
-        <h:form>            
+        <h:form id="principal">            
             <ui:remove>
                 <h:panelGrid columns="2">
                     <p:outputLabel value="Fecha Inicio:"/>
@@ -73,8 +73,8 @@
                          emptyMessage="No hay nada para mostrar" > 
                 <p:inputText type="hidden" value="#{letras.idletras}"/>
                 <ui:remove><p:column headerText="Cod venta.">
-                    <h:outputText value="#{letras.credito.liqventa}" />
-                </p:column></ui:remove>
+                        <h:outputText value="#{letras.credito.liqventa}" />
+                    </p:column></ui:remove>
                 <p:column headerText="Descripcion">
                     <h:outputText value="#{letras.descripcion}"/>
                 </p:column>
@@ -88,10 +88,10 @@
                     <h:outputText value="#{letras.monto}"/>
                 </p:column>
                 <ui:remove><p:column headerText="Fecha In.">
-                    <h:outputText value="#{letras.fecini}">
-                        <f:convertDateTime pattern = "dd/MM/yyyy"/>
-                    </h:outputText>
-                </p:column></ui:remove>
+                        <h:outputText value="#{letras.fecini}">
+                            <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column></ui:remove>
                 <p:column headerText="Fecha Ven.">
                     <h:outputText value="#{letras.fecven}">
                         <f:convertDateTime  pattern = "dd/MM/yyyy"/>
@@ -115,7 +115,7 @@
                     <p:commandButton value="P" disabled="#{letras.saldo == '0.00'}"
                                      actionListener="#{pagosBean.cargarLetraPagos(letras)}" />
                     <p:commandButton value="ND" icon="b-add" disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND' or letras.saldo == '0.00'}"
-                                     actionListener="#{pagosBean.cargarLetraDebito(letras)}" />
+                                     actionListener="#{pagosBean.cargarLetraDebito(letras, loginbean.usuario)}" />
                 </p:column>                    
             </p:dataTable>                        
         </h:form>
@@ -126,9 +126,9 @@
                 <p:dataTable var="pagos" value="#{creditoBean.pagosxcredito}" 
                              emptyMessage="No hay nada para mostrar" scrollable="true" scrollHeight="200">
                     <p:inputText type="hidden" value="#{pagos.idpagos}"/>
-                    <p:column headerText="Cod venta.">
-                        <h:outputText value="#{pagos.letras.credito.liqventa}" />
-                    </p:column>
+                    <ui:remove><p:column headerText="Cod venta.">
+                            <h:outputText value="#{pagos.letras.credito.liqventa}" />
+                        </p:column></ui:remove>
                     <p:column headerText="Descripcion">
                         <h:outputText value="#{pagos.descripcion}"/>
                     </p:column>
@@ -187,7 +187,7 @@
                     <p:outputLabel value="Num oper: " for="txtope"/>
                     <p:inputText id="txtope" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disableoper}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <p:outputLabel value="Monto:" for="monto"/>
-                    <p:inputText id="monto" value="#{pagosBean.montopago}" required="true" requiredMessage="Ingrese el monto" class="money" readonly="#{pagosBean.disablecaja}"/>
+                    <p:inputText id="monto" value="#{pagosBean.montopago}" required="true" requiredMessage="Ingrese el monto" class="money" />
                     <p:outputLabel value="Descripción:" for="txtdescripcion"/>
                     <p:inputText id="txtdescripcion" value="#{pagosBean.pago.descripcion}" required="true" requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <h:panelGroup></h:panelGroup>                    
@@ -199,6 +199,10 @@
             <p:dialog header="Intereses moratorios de letra: #{pagosBean.descripcion}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgnotadebito" modal="true" resizable="true" minWidth="200">
                 <h:panelGrid columns="2">
+                    <p:outputLabel value="Si el cliente desea que se cambie la mora"/>
+                    <p:outputLabel value=" "/>
+                    <p:outputLabel value=" contáctese con el encargado de créditos. Gracias"/>
+                    <p:outputLabel value=" "/>
                     <p:outputLabel value="Fecha:" for="txtfechai"/>
                     <p:calendar id="txtfechai" navigator="true" showOn="button" value="#{pagosBean.pago.fecreg}" 
                                 pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">                        
@@ -230,6 +234,27 @@
                                  requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>                    
                     <p:commandButton actionListener="#{pagosBean.insertarNotaDebito(loginbean.usuario)}" 
                                      value="Guardar"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        <h:form id="formDialogo">
+            <p:dialog header="Eliminar Pago" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgdialogo" modal="true" resizable="false" minWidth="200">
+                <h:outputText value="Elija una opción" />
+                <p:commandButton value="Si" actionListener="#{creditoBean.eliminarpagos()}" />
+                <p:commandButton value="No" />
+            </p:dialog>
+        </h:form>
+        <h:form id="formModNd">
+            <p:dialog header="Modificar Mora: #{pagosBean.letra.descripcion}" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgmodnd" modal="true" resizable="true" minWidth="200">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Días transcurridos:" />
+                    <p:inputText value="#{pagosBean.letra.diffdays}" readonly="true"/>
+                    <p:outputLabel value="Monto por mora:" for="monto"/>
+                    <p:inputText id="monto" value="#{pagosBean.letra.mora}" required="true" requiredMessage="Ingrese monto"/>                                       
+                    <p:commandButton actionListener="#{pagosBean.modificarMora(loginbean.usuario)}" 
+                                     value="Modificar"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>

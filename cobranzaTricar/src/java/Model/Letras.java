@@ -38,7 +38,11 @@ public class Letras implements java.io.Serializable {
     private BigDecimal mora;
     private Long diffdays;
     private Boolean cobradonc;
+    private Boolean modificadond;
+    private Integer modificado;
+    private Set historial = new HashSet(0);
     private Set pagoses = new HashSet(0);
+    
 
     public Letras() {
     }
@@ -47,7 +51,7 @@ public class Letras implements java.io.Serializable {
         this.idletras = idletras;
     }
 
-    public Letras(Integer idletras, Credito credito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, String descripcion, BigDecimal mora, Long diffdays, Boolean cobradonc, Set pagoses) {
+    public Letras(Integer idletras, Credito credito, BigDecimal montoletra, Date fecini, Date fecven, BigDecimal monto, BigDecimal interes, BigDecimal saldo, Date fecreg, String estado, String descripcion, BigDecimal mora, Long diffdays, Boolean cobradonc, Boolean modificadond, Integer modificado, Set historial,Set pagoses) {
         this.idletras = idletras;
         this.credito = credito;
         this.montoletra = montoletra;
@@ -62,6 +66,9 @@ public class Letras implements java.io.Serializable {
         this.mora = mora;
         this.diffdays = diffdays;
         this.cobradonc = cobradonc;
+        this.modificadond = modificadond;
+        this.modificado = modificado;
+        this.historial = historial;
         this.pagoses = pagoses;
     }
 
@@ -195,6 +202,33 @@ public class Letras implements java.io.Serializable {
 
     public void setCobradonc(Boolean cobradonc) {
         this.cobradonc = cobradonc;
+    }
+    
+    @Column(name = "modificadond")
+    public Boolean getModificadond() {
+        return this.modificadond;
+    }
+
+    public void setModificadond(Boolean modificadond) {
+        this.modificadond = modificadond;
+    }
+    
+    @Column(name = "modificado")
+    public Integer getModificado() {
+        return this.modificado;
+    }
+
+    public void setModificado(Integer modificado) {
+        this.modificado = modificado;
+    }
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "letras")
+    public Set getHistorial() {
+        return this.historial;
+    }
+
+    public void setHistorial(Set historial) {
+        this.historial = historial;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "letras")
