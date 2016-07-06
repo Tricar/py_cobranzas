@@ -199,10 +199,6 @@
             <p:dialog header="Intereses moratorios de letra: #{pagosBean.descripcion}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgnotadebito" modal="true" resizable="true" minWidth="200">
                 <h:panelGrid columns="2">
-                    <p:outputLabel value="Si el cliente desea que se cambie la mora"/>
-                    <p:outputLabel value=" "/>
-                    <p:outputLabel value=" contáctese con el encargado de créditos. Gracias"/>
-                    <p:outputLabel value=" "/>
                     <p:outputLabel value="Fecha:" for="txtfechai"/>
                     <p:calendar id="txtfechai" navigator="true" showOn="button" value="#{pagosBean.pago.fecreg}" 
                                 pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">                        
