@@ -63,7 +63,7 @@ public class pagosBean implements Serializable {
     private long difdays;
     private String btnpago;
     private letrasBean letbean = new letrasBean();
-    private BigDecimal moraant= new BigDecimal(BigInteger.ZERO);    
+    private BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
     private Historialmora historial = new Historialmora();
 
     /**
@@ -106,7 +106,7 @@ public class pagosBean implements Serializable {
                 pago.setMonto(montopago);
                 pago.setUsuario(idusuario);
                 String temp = pago.getOperacion();
-                pago.setOperacion(pago.getTipodoc().getAbrev().concat(" "+temp));
+                pago.setOperacion(pago.getTipodoc().getAbrev().concat(" " + temp));
                 pagosdao.insertarPago(pago);
                 if (btnpago.equals("Pagar")) {
                     caja = pago.getCaja();
@@ -168,7 +168,19 @@ public class pagosBean implements Serializable {
         //return letra;        
     }
 
-    public void cargarLetraDebito(Letras letras, Usuario usuario) {
+    public void cargarLetraDebito(Letras letras) {
+        letra = letras;
+        listafiltrada = tipobean.listaTipoDoc("ND");
+        numletra = letra.getDescripcion();
+        montopago = letra.getMora();
+        descripcion = letra.getDescripcion();
+        CreditoDao linkdao = new CreditoDaoImp();
+        pago = new Pagos();
+        RequestContext.getCurrentInstance().update("formNotadebito");
+        RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').show()");
+    }
+
+    public void cargarMora(Letras letras, Usuario usuario) {
         letra = letras;
         listafiltrada = tipobean.listaTipoDoc("ND");
         numletra = letra.getDescripcion();
@@ -176,31 +188,22 @@ public class pagosBean implements Serializable {
         descripcion = letra.getDescripcion();
         CreditoDao linkdao = new CreditoDaoImp();
         credito = linkdao.cargarCreditoxLetra(letra);
-        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("JE")) {            
-            //letbean.cargarModNotaDebito(letra);
-            cargarModNotaDebito(letra);
+        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("JE")) {
+            moraant = letra.getMora();
+            difdays = letra.getDiffdays();
+            RequestContext.getCurrentInstance().update("formModNd");
+            RequestContext.getCurrentInstance().execute("PF('dlgmodnd').show()");
         } else {
-            pago = new Pagos();
-            RequestContext.getCurrentInstance().update("formNotadebito");
-            RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').show()");
+            RequestContext.getCurrentInstance().update("formModificar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para cambiar mora."));
         }
-
-        //return letra;
-    }
-    
-    public void cargarModNotaDebito(Letras let) {
-        letra = let;
-        moraant = letra.getMora();
-        difdays = letra.getDiffdays();
-        RequestContext.getCurrentInstance().update("formModNd");
-        RequestContext.getCurrentInstance().execute("PF('dlgmodnd').show()");
     }
 
     public void modificarMora(Usuario usuario) {
         HistoDao histodao = new HistoDaoImp();
         LetrasDao letdao = new LetrasDaoImplements();
         Date fec = new Date();
-        try {                           
+        try {
             letra.setModificadond(true);
             letra.setModificado(usuario.getIdusuario());
             letdao.modificarLetra(letra);
@@ -211,8 +214,7 @@ public class pagosBean implements Serializable {
             historial.setUsuario(usuario.getIdusuario());
             historial.setDiffdays(difdays);
             histodao.insertarHist(historial);
-            RequestContext.getCurrentInstance().update("formMostrar");            
-            RequestContext.getCurrentInstance().update("formModNd");
+            RequestContext.getCurrentInstance().update(":formMostrar:formModificar");
             RequestContext.getCurrentInstance().execute("PF('dlgmodnd').hide()");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se modificó la mora del Cliente."));
         } catch (Exception e) {
@@ -244,7 +246,7 @@ public class pagosBean implements Serializable {
             pago.setLetras(letra);
             pago.setFecreg(letra.getFecreg());
             String temp = pago.getOperacion();
-            pago.setOperacion(pago.getTipodoc().getAbrev().concat(" "+temp));
+            pago.setOperacion(pago.getTipodoc().getAbrev().concat(" " + temp));
             pago.setMonto(montopago);
             pago.setTipo("ND");
             pagosdao.insertarPago(pago);
