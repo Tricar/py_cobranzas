@@ -115,7 +115,7 @@
                 <p:column headerText="Pagar">
                     <p:commandButton value="" icon="fa fa-credit-card" title="Pagar" disabled="#{letras.saldo == '0.00'}"
                                      actionListener="#{pagosBean.cargarLetraPagos(letras)}" />
-                    <p:commandButton value="" icon="fa fa-empire" title="Mora" disabled="#{letras.mora == '0.00'}"
+                    <p:commandButton value="" icon="fa fa-empire" title="Mora" disabled="#{letras.saldo == '0.00'}"
                                      actionListener="#{pagosBean.cargarMora(letras, loginbean.usuario)}" />
                     <p:commandButton value="" icon="fa fa-ioxhost" title="Nota Debito" actionListener="#{pagosBean.cargarLetraDebito(letras)}"
                                      disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND' or letras.saldo == '0.00'}" />
