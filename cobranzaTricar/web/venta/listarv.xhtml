@@ -17,146 +17,182 @@
                     <p:commandButton value="Buscar"  actionListener="#{creditoBean.filtrarFechas()}" ajax="false"/>
                 </h:panelGrid>
             </ui:remove>
-
-            <h:panelGrid columns="6">
-                <p:outputLabel value="Ingrese DNI o RUC:"/>
-                <p:inputMask mask="9?9999999999" maxlength="11" value="#{creditoBean.dni}"/>                       
-                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarAnexoDNI()}"
-                                 ajax="false"/>
-                <p:outputLabel value="Ingrese Nombre:"/>
-                <p:inputText value="#{creditoBean.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
-                <p:commandButton value="Buscar" action="#{creditoBean.cargarCreditoNombre()}"
-                                 actionListener="#{pagosBean.limpiar()}"/>
-            </h:panelGrid>            
+            <div class="layout-portlets-box ui-fluid">
+                <div class="Container50 Responsive50">
+                    <div class="ContainerIndent">
+                        <div class="ui-grid-row">
+                            <div class="ui-panelgrid-cell ui-grid-col-12">
+                                <p:outputLabel class="ui-outputlabel ui-widget" value="Ingrese DNI o RUC:"/>
+                            </div>
+                        </div>
+                        <div class="Container80 Responsive50">
+                            <p:inputMask mask="9?9999999999" maxlength="11" value="#{creditoBean.dni}"/>
+                        </div>
+                        <div class="Container20 Responsive50">
+                            <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarAnexoDNI()}" ajax="false"/> 
+                        </div>
+                    </div>
+                </div>
+                <div class="Container50 Responsive50">
+                    <div class="ContainerIndent">
+                        <div class="ui-grid-row">
+                            <div class="ui-panelgrid-cell ui-grid-col-12">
+                                <p:outputLabel class="ui-outputlabel ui-widget" value="Ingrese Nombre:"/>
+                            </div>
+                        </div>
+                        <div class="Container80 Responsive50">
+                            <p:inputText value="#{creditoBean.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
+                        </div>
+                        <div class="Container20 Responsive50">
+                            <p:commandButton value="Buscar" action="#{creditoBean.cargarCreditoNombre()}" actionListener="#{pagosBean.limpiar()}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </h:form>
-        <h:form id="formMostrar">
-            <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" 
-                         emptyMessage="Ningún cliente coincide con su búsqueda" >
-                <p:column headerText="Cod.">
-                    <h:outputText value="#{cred.liqventa}" />
-                </p:column>
-                <p:column headerText="Nombres">
-                    <h:outputText value="#{cred.anexo.nombres}" />
-                </p:column>
-                <p:column headerText="Num. Doc.">
-                    <h:outputText value="#{cred.anexo.numdocumento}" />
-                </p:column>
-                <p:column headerText="Tienda" >
-                    <h:outputText value="#{cred.tienda}">
-                        <f:converter converterId="tiendaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Empresa" >
-                    <h:outputText value="#{cred.empresa}">
-                        <f:converter converterId="empresaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Vehículo">
-                    <h:outputText value="#{cred.vehiculo.tipovehiculo}">
-                        <f:converter converterId="tvehiculo"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Deuda">
-                    <h:outputText value="#{cred.deudactual}" />
-                </p:column>
-                <p:column headerText="Mostrar">                            
-                    <p:commandButton value="" update=":formModificar" icon="fa fa-cart-arrow-down" title="Mostrar"
-                                     actionListener="#{creditoBean.cargarLetrasArray(cred)}"/>
-                    <p:commandButton value="" icon="fa fa-share-alt-square" title="Historial"
-                                     actionListener="#{creditoBean.Pagosxcredito(cred)}" />
-                </p:column>
-            </p:dataTable>
-        </h:form>        
         <hr/>
-        <h:form id="formModificar">
-            <p:growl id="mensajeGeneral" showDetail="true" life="2000" />
-            <p:dataTable id="tablaletras" var="letras" value="#{creditoBean.letraslista}" 
-                         emptyMessage="No hay nada para mostrar" > 
-                <p:inputText type="hidden" value="#{letras.idletras}"/>
-                <ui:remove><p:column headerText="Cod venta.">
-                        <h:outputText value="#{letras.credito.liqventa}" />
-                    </p:column></ui:remove>
-                <p:column headerText="Descripcion">
-                    <h:outputText value="#{letras.descripcion}"/>
-                </p:column>
-                <p:column headerText="Saldo Capital">
-                    <h:outputText value="#{letras.montoletra}"/>
-                </p:column>
-                <p:column headerText="Interes">
-                    <h:outputText value="#{letras.interes}"/>
-                </p:column>
-                <p:column headerText="Total Letra">
-                    <h:outputText value="#{letras.monto}"/>
-                </p:column>
-                <ui:remove><p:column headerText="Fecha In.">
-                        <h:outputText value="#{letras.fecini}">
-                            <f:convertDateTime pattern = "dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column></ui:remove>
-                <p:column headerText="Fecha Ven.">
-                    <h:outputText value="#{letras.fecven}">
-                        <f:convertDateTime  pattern = "dd/MM/yyyy"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Saldo Deudor">
-                    <h:outputText value="#{letras.saldo}"/>
-                </p:column>
-                <p:column headerText="Mora">
-                    <h:outputText value="#{letras.mora}"/>
-                </p:column>
-                <p:column headerText="D atraso">
-                    <h:outputText value="#{letras.diffdays}"/>
-                </p:column>
-                <p:column headerText="Estado">
-                    <h:outputText value="#{letras.estado}">
-                        <f:converter converterId="letrasconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Pagar">
-                    <p:commandButton value="" icon="fa fa-credit-card" title="Pagar" disabled="#{letras.saldo == '0.00'}"
-                                     actionListener="#{pagosBean.cargarLetraPagos(letras)}" />
-                    <p:commandButton value="" icon="fa fa-empire" title="Mora" disabled="#{letras.saldo == '0.00'}"
-                                     actionListener="#{pagosBean.cargarMora(letras, loginbean.usuario)}" />
-                    <p:commandButton value="" icon="fa fa-ioxhost" title="Nota Debito" actionListener="#{pagosBean.cargarLetraDebito(letras)}"
-                                     disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND' or letras.saldo == '0.00'}" />
-                </p:column>                    
-            </p:dataTable>                        
-        </h:form>
-        <h:form id="formhistorial">
-            <p:dialog header="Historial de Pagos: #{pagosBean.credito.anexo.nombres}" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200" >
-                <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                <p:dataTable var="pagos" value="#{creditoBean.pagosxcredito}" 
-                             emptyMessage="No hay nada para mostrar" scrollable="true" scrollHeight="200">
-                    <p:inputText type="hidden" value="#{pagos.idpagos}"/>
-                    <ui:remove><p:column headerText="Cod venta.">
-                            <h:outputText value="#{pagos.letras.credito.liqventa}" />
-                        </p:column></ui:remove>
-                    <p:column headerText="Descripcion">
-                        <h:outputText value="#{pagos.descripcion}"/>
-                    </p:column>
-                    <p:column headerText="Monto">
-                        <h:outputText value="#{pagos.monto}"/>
-                    </p:column>
-                    <p:column headerText="Operación">
-                        <h:outputText value="#{pagos.operacion}"/>
-                    </p:column>                
-                    <p:column headerText="Fecha">
-                        <h:outputText value="#{pagos.fecreg}">
-                            <f:convertDateTime pattern = "dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Tipo">
-                        <h:outputText value="#{pagos.tipo}">
-                            <f:converter converterId="pagosconverter"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Operaciones">
-                        <p:commandButton icon="b-delete" action="#{creditoBean.cargarPagos(pagos)}" title="Eliminar"/>                                                    
-                    </p:column>
-                </p:dataTable>
-            </p:dialog>
-        </h:form>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formMostrar">
+                    <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" 
+                                 emptyMessage="Ningún cliente coincide con su búsqueda" >
+                        <p:column headerText="Cod.">
+                            <h:outputText value="#{cred.liqventa}" />
+                        </p:column>
+                        <p:column headerText="Nombres">
+                            <h:outputText value="#{cred.anexo.nombres}" />
+                        </p:column>
+                        <p:column headerText="Num. Doc.">
+                            <h:outputText value="#{cred.anexo.numdocumento}" />
+                        </p:column>
+                        <p:column headerText="Tienda" >
+                            <h:outputText value="#{cred.tienda}">
+                                <f:converter converterId="tiendaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Empresa" >
+                            <h:outputText value="#{cred.empresa}">
+                                <f:converter converterId="empresaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Vehículo">
+                            <h:outputText value="#{cred.vehiculo.tipovehiculo}">
+                                <f:converter converterId="tvehiculo"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Deuda">
+                            <h:outputText value="#{cred.deudactual}" />
+                        </p:column>
+                        <p:column headerText="Mostrar">                            
+                            <p:commandButton update=":formModificar" icon="fa fa-cart-arrow-down white" title="Mostrar"
+                                             actionListener="#{creditoBean.cargarLetrasArray(cred)}"/>
+                            <p:commandButton icon="fa fa-share-alt-square white" title="Historial"
+                                             actionListener="#{creditoBean.Pagosxcredito(cred)}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
+        <hr/>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formModificar">
+                    <p:growl id="mensajeGeneral" showDetail="true" life="2000" />
+                    <p:dataTable id="tablaletras" var="letras" value="#{creditoBean.letraslista}" 
+                                 emptyMessage="No hay nada para mostrar" > 
+                        <p:inputText type="hidden" value="#{letras.idletras}"/>
+                        <ui:remove><p:column headerText="Cod venta.">
+                                <h:outputText value="#{letras.credito.liqventa}" />
+                            </p:column></ui:remove>
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{letras.descripcion}"/>
+                        </p:column>
+                        <p:column headerText="Saldo Capital">
+                            <h:outputText value="#{letras.montoletra}"/>
+                        </p:column>
+                        <p:column headerText="Interes">
+                            <h:outputText value="#{letras.interes}"/>
+                        </p:column>
+                        <p:column headerText="Total Letra">
+                            <h:outputText value="#{letras.monto}"/>
+                        </p:column>
+                        <ui:remove><p:column headerText="Fecha In.">
+                                <h:outputText value="#{letras.fecini}">
+                                    <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column></ui:remove>
+                        <p:column headerText="Fecha Ven.">
+                            <h:outputText value="#{letras.fecven}">
+                                <f:convertDateTime  pattern = "dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Saldo Deudor">
+                            <h:outputText value="#{letras.saldo}"/>
+                        </p:column>
+                        <p:column headerText="Mora">
+                            <h:outputText value="#{letras.mora}"/>
+                        </p:column>
+                        <p:column headerText="D atraso">
+                            <h:outputText value="#{letras.diffdays}"/>
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{letras.estado}">
+                                <f:converter converterId="letrasconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Pagar">
+                            <p:commandButton icon="fa fa-credit-card white" title="Pagar" disabled="#{letras.saldo == '0.00'}"
+                                             actionListener="#{pagosBean.cargarLetraPagos(letras)}" />
+                            <p:commandButton icon="fa fa-empire white" title="Mora" disabled="#{letras.saldo == '0.00'}"
+                                             actionListener="#{pagosBean.cargarMora(letras, loginbean.usuario)}" />
+                            <p:commandButton icon="fa fa-ioxhost white" title="Nota Debito" actionListener="#{pagosBean.cargarLetraDebito(letras)}"
+                                             disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND' or letras.saldo == '0.00'}" />
+                        </p:column>                    
+                    </p:dataTable>                        
+                </h:form>
+            </div>
+        </div>
+
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formhistorial">
+                    <p:dialog header="Historial de Pagos: #{pagosBean.credito.anexo.nombres}" showEffect="explode" hideEffect="explode" 
+                              widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200" >
+                        <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                        <p:dataTable var="pagos" value="#{creditoBean.pagosxcredito}" 
+                                     emptyMessage="No hay nada para mostrar" scrollable="true" scrollHeight="200">
+                            <p:inputText type="hidden" value="#{pagos.idpagos}"/>
+                            <ui:remove><p:column headerText="Cod venta.">
+                                    <h:outputText value="#{pagos.letras.credito.liqventa}" />
+                                </p:column></ui:remove>
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{pagos.descripcion}"/>
+                            </p:column>
+                            <p:column headerText="Monto">
+                                <h:outputText value="#{pagos.monto}"/>
+                            </p:column>
+                            <p:column headerText="Operación">
+                                <h:outputText value="#{pagos.operacion}"/>
+                            </p:column>                
+                            <p:column headerText="Fecha">
+                                <h:outputText value="#{pagos.fecreg}">
+                                    <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Tipo">
+                                <h:outputText value="#{pagos.tipo}">
+                                    <f:converter converterId="pagosconverter"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Operaciones">
+                                <p:commandButton icon="fa fa-trash while" action="#{creditoBean.cargarPagos(pagos)}" title="Eliminar"/>                                                    
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>
+                </h:form>
+            </div>
+        </div>        
+
         <h:form id="formpagar">
             <p:dialog id="dlg1" header="Pagar letra #{pagosBean.numletra}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgpagar" modal="true" resizable="false" minWidth="200">
@@ -198,6 +234,7 @@
                 </h:panelGrid>                
             </p:dialog>
         </h:form>
+
         <h:form id="formNotadebito">
             <p:dialog header="Intereses moratorios de letra: #{pagosBean.descripcion}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgnotadebito" modal="true" resizable="true" minWidth="200">
@@ -236,6 +273,7 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form>
+
         <h:form id="formDialogo">
             <p:dialog header="Eliminar Pago" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgdialogo" modal="true" resizable="false" minWidth="200">
@@ -244,6 +282,7 @@
                 <p:commandButton value="No" />
             </p:dialog>
         </h:form>
+
         <h:form id="formModNd">
             <p:dialog header="Modificar Mora: #{pagosBean.letra.descripcion}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgmodnd" modal="true" resizable="true" minWidth="200">
@@ -252,68 +291,76 @@
                     <p:inputText value="#{pagosBean.letra.diffdays}" readonly="true"/>
                     <p:outputLabel value="Monto por mora:" for="monto"/>
                     <p:inputText id="monto" value="#{pagosBean.letra.mora}" required="true" requiredMessage="Ingrese monto"/>                                       
-                    <p:commandButton actionListener="#{pagosBean.modificarMora(loginbean.usuario)}" 
-                                     value="Modificar"/>
+                    <p:commandButton actionListener="#{pagosBean.modificarMora(loginbean.usuario)}" value="Modificar"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>
+
         <h:form id="formEliminar">
             <p:dialog id="dlg2" header="Eliminar Pago" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
-                <h:outputText value="¿Desea eliminar?" />
+                <h:outputText class="fa fa-exclamation-triangle" />
+                <h:outputText class="ui-confirm-dialog-message" value="¿Desea eliminar?" />
                 <p:commandButton value="Si" actionListener="#{creditoBean.eliminarpagos()}" 
-                                 oncomplete="dlgeliminar.hide();" />
-                <p:commandButton value="No" onclick="dlg2.hide();" />
-            </p:dialog>
+                                 icon="ui-button-icon-left ui-icon ui-c ui-icon-check fa fa-check Fs14 white" oncomplete="dlgeliminar.hide();" />
+                <p:commandButton value="No" onclick="dlg2.hide();" 
+                                 icon="ui-button-icon-left ui-icon ui-c ui-icon-close fa fa-close Fs14 white" />
+            </p:dialog>     
         </h:form>
+
         <h:form id="formAlerta">
             <p:dialog id="dlg3" header="Alerta #{pagosBean.pago.descripcion}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgalerta" modal="true" resizable="false" minWidth="200">
                 <h:outputText value="Es necesario pagar primero los intereses por la mora. Gracias" />
                 <br></br>
                 <p:commandButton value="Aceptar" onclick="dlg3.hide();"/>                
-            </p:dialog>
+            </p:dialog>     
         </h:form>
-        <h:form id="formCliente">
-            <p:dialog  header="Seleccionar cliente" showEffect="explode" hideEffect="explode" widgetVar="dlgcargar" modal="true" >
-                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" 
-                             emptyMessage="Ningún cliente coincide con su búsqueda" >
-                    <p:column headerText="Cod.">
-                        <h:outputText value="#{cred.liqventa}" />
-                    </p:column>
-                    <p:column headerText="Nombres">
-                        <h:outputText value="#{cred.anexo.nombres}" />
-                    </p:column>
-                    <p:column headerText="Num. Doc.">
-                        <h:outputText value="#{cred.anexo.numdocumento}" />
-                    </p:column>
-                    <p:column headerText="Tienda" >
-                        <h:outputText value="#{cred.tienda}">
-                            <f:converter converterId="tiendaconverter"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Empresa" >
-                        <h:outputText value="#{cred.empresa}">
-                            <f:converter converterId="empresaconverter"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Vehículo">
-                        <h:outputText value="#{cred.vehiculo.tipovehiculo}">
-                            <f:converter converterId="tvehiculo"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Deuda">
-                        <h:outputText value="#{cred.deudactual}" />
-                    </p:column>
-                    <p:column>
-                        <p:commandButton actionListener="#{creditoBean.pasarCliente(cred)}" oncomplete="dlgcargar.hide()"
-                                         value="Seleccionar" ajax="false">
-                            <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
-                        </p:commandButton>
-                    </p:column>
-                </p:dataTable>
-            </p:dialog>
-        </h:form>
+
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formCliente">
+                    <p:dialog header="Seleccionar cliente" showEffect="explode" hideEffect="explode" widgetVar="dlgcargar" modal="true" >
+                        <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                        <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" emptyMessage="Ningún cliente coincide con su búsqueda">
+                            <p:column headerText="Cod.">
+                                <h:outputText value="#{cred.liqventa}" />
+                            </p:column>
+                            <p:column headerText="Nombres">
+                                <h:outputText value="#{cred.anexo.nombres}" />
+                            </p:column>
+                            <p:column headerText="Num. Doc.">
+                                <h:outputText value="#{cred.anexo.numdocumento}" />
+                            </p:column>
+                            <p:column headerText="Tienda" >
+                                <h:outputText value="#{cred.tienda}">
+                                    <f:converter converterId="tiendaconverter"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Empresa" >
+                                <h:outputText value="#{cred.empresa}">
+                                    <f:converter converterId="empresaconverter"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Vehículo">
+                                <h:outputText value="#{cred.vehiculo.tipovehiculo}">
+                                    <f:converter converterId="tvehiculo"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Deuda">
+                                <h:outputText value="#{cred.deudactual}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton actionListener="#{creditoBean.pasarCliente(cred)}" oncomplete="dlgcargar.hide()"
+                                                 value="Seleccionar" ajax="false">
+                                    <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>
+                </h:form>
+            </div>
+        </div>
+
     </ui:define>
 </ui:composition>

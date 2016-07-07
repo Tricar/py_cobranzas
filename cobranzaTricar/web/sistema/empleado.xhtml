@@ -12,7 +12,7 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">                
                 <h:form>
-                    <p:commandButton value="Nuevo" icon="ui-icon-plus" oncomplete="dlginsertar.show()"/>
+                    <p:commandButton value="Nuevo" icon="fa fa-plus" oncomplete="dlginsertar.show()"/>
                 </h:form>
 
                 <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
@@ -45,8 +45,8 @@
                                     </h:outputText>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="ui-icon-pencil"/>
-                                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="ui-icon-trash"/>
+                                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="fa fa-pencil"/>
+                                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="fa fa-trash"/>
                                 </p:column>
                             </p:dataTable>
                         </h:form>

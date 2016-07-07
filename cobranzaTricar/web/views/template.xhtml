@@ -98,9 +98,9 @@
                     </p:submenu>
                     <f:facet name="options">
                         <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>                        
-                        <p:commandButton icon="ui-icon-power" style="margin-left:50px" actionListener="#{loginbean.logout()}"
+                        <p:commandButton icon="fa fa-power-off white" style="margin-left:50px" actionListener="#{loginbean.logout()}"
                                          title="Cerrar Session" oncomplete="handleLoginRequest(xhr, status, args)"/>
-                        <p:commandButton icon="ui-icon-suitcase" title="Cambiar Clave"/>
+                        <p:commandButton icon="fa fa-unlock-alt white" title="Cambiar Clave"/>
                     </f:facet>
                 </p:menubar>
             </h:form>
