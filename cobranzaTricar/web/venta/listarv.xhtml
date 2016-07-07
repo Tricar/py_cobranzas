@@ -24,7 +24,7 @@
                 <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarAnexoDNI()}"
                                  ajax="false"/>
                 <p:outputLabel value="Ingrese Nombre:"/>
-                <p:inputText value="#{creditoBean.nombre}"/>
+                <p:inputText value="#{creditoBean.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
                 <p:commandButton value="Buscar" action="#{creditoBean.cargarCreditoNombre()}"
                                  actionListener="#{pagosBean.limpiar()}"/>
             </h:panelGrid>            
@@ -60,9 +60,10 @@
                     <h:outputText value="#{cred.deudactual}" />
                 </p:column>
                 <p:column headerText="Mostrar">                            
-                    <p:commandButton value="Ver" update=":formModificar" icon="b-ver"
+                    <p:commandButton value="" update=":formModificar" icon="fa fa-cart-arrow-down" title="Mostrar"
                                      actionListener="#{creditoBean.cargarLetrasArray(cred)}"/>
-                    <p:commandButton value="Historial" icon="b-ver" actionListener="#{creditoBean.Pagosxcredito(cred)}" />
+                    <p:commandButton value="" icon="fa fa-share-alt-square" title="Historial"
+                                     actionListener="#{creditoBean.Pagosxcredito(cred)}" />
                 </p:column>
             </p:dataTable>
         </h:form>        
@@ -112,10 +113,12 @@
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Pagar">
-                    <p:commandButton value="P" disabled="#{letras.saldo == '0.00'}"
+                    <p:commandButton value="" icon="fa fa-credit-card" title="Pagar" disabled="#{letras.saldo == '0.00'}"
                                      actionListener="#{pagosBean.cargarLetraPagos(letras)}" />
-                    <p:commandButton value="ND" icon="b-add" disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND' or letras.saldo == '0.00'}"
-                                     actionListener="#{pagosBean.cargarLetraDebito(letras, loginbean.usuario)}" />
+                    <p:commandButton value="" icon="fa fa-empire" title="Mora" disabled="#{letras.mora == '0.00'}"
+                                     actionListener="#{pagosBean.cargarMora(letras, loginbean.usuario)}" />
+                    <p:commandButton value="" icon="fa fa-ioxhost" title="Nota Debito" actionListener="#{pagosBean.cargarLetraDebito(letras)}"
+                                     disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND' or letras.saldo == '0.00'}" />
                 </p:column>                    
             </p:dataTable>                        
         </h:form>
@@ -183,7 +186,7 @@
                         <f:selectItems value="#{pagosBean.todasCajas}" var="caja" itemLabel="#{caja.descripcion}" itemValue="#{caja}"/>                        
                     </p:selectOneMenu>
                     <p:outputLabel value="Comprobante: " for="comp"/>
-                    <p:inputMask mask="999-99999" id="comp" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disablecomp}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <p:inputMask mask="" id="comp" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disablecomp}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <p:outputLabel value="Num oper: " for="txtope"/>
                     <p:inputText id="txtope" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disableoper}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <p:outputLabel value="Monto:" for="monto"/>
