@@ -7,6 +7,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../views/template.xhtml">
     <ui:define name="content">
+
         <h:form id="principal">            
             <ui:remove>
                 <h:panelGrid columns="2">
@@ -17,43 +18,18 @@
                     <p:commandButton value="Buscar"  actionListener="#{creditoBean.filtrarFechas()}" ajax="false"/>
                 </h:panelGrid>
             </ui:remove>
-            <div class="layout-portlets-box ui-fluid">
-                <div class="Container50 Responsive50">
-                    <div class="ContainerIndent">
-                        <div class="ui-grid-row">
-                            <div class="ui-panelgrid-cell ui-grid-col-12">
-                                <p:outputLabel class="ui-outputlabel ui-widget" value="Ingrese DNI o RUC:"/>
-                            </div>
-                        </div>
-                        <div class="Container80 Responsive50">
-                            <p:inputMask mask="9?9999999999" maxlength="11" value="#{creditoBean.dni}"/>
-                        </div>
-                        <div class="Container20 Responsive50">
-                            <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarAnexoDNI()}" ajax="false"/> 
-                        </div>
-                    </div>
-                </div>
-                <div class="Container50 Responsive50">
-                    <div class="ContainerIndent">
-                        <div class="ui-grid-row">
-                            <div class="ui-panelgrid-cell ui-grid-col-12">
-                                <p:outputLabel class="ui-outputlabel ui-widget" value="Ingrese Nombre:"/>
-                            </div>
-                        </div>
-                        <div class="Container80 Responsive50">
-                            <p:inputText value="#{creditoBean.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
-                        </div>
-                        <div class="Container20 Responsive50">
-                            <p:commandButton value="Buscar" action="#{creditoBean.cargarCreditoNombre()}" actionListener="#{pagosBean.limpiar()}"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <p:outputLabel value="Ingrese DNI o RUC:"/>
+                <p:inputMask mask="9?9999999999" maxlength="11" value="#{creditoBean.dni}"/>
+                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarAnexoDNI()}" ajax="false"/> 
+                <p:outputLabel value="Ingrese Nombre:"/>
+                <p:inputText value="#{creditoBean.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
+                <p:commandButton value="Buscar" action="#{creditoBean.cargarCreditoNombre()}" actionListener="#{pagosBean.limpiar()}"/>
         </h:form>
-        <hr/>
-        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                <h:form id="formMostrar">
+
+        <h:form id="formMostrar">
+            <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                     <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" 
                                  emptyMessage="Ningún cliente coincide con su búsqueda" >
                         <p:column headerText="Cod.">
@@ -90,13 +66,13 @@
                                              actionListener="#{creditoBean.Pagosxcredito(cred)}" />
                         </p:column>
                     </p:dataTable>
-                </h:form>
+                </div>
             </div>
-        </div>
-        <hr/>
-        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                <h:form id="formModificar">
+        </h:form>
+
+        <h:form id="formModificar">
+            <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                     <p:growl id="mensajeGeneral" showDetail="true" life="2000" />
                     <p:dataTable id="tablaletras" var="letras" value="#{creditoBean.letraslista}" 
                                  emptyMessage="No hay nada para mostrar" > 
@@ -148,14 +124,14 @@
                             <p:commandButton icon="fa fa-ioxhost white" title="Nota Debito" actionListener="#{pagosBean.cargarLetraDebito(letras)}"
                                              disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND' or letras.saldo == '0.00'}" />
                         </p:column>                    
-                    </p:dataTable>                        
-                </h:form>
-            </div>
-        </div>
+                    </p:dataTable> 
+                </div>
+            </div>                       
+        </h:form>
 
-        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                <h:form id="formhistorial">
+        <h:form id="formhistorial">
+            <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                     <p:dialog header="Historial de Pagos: #{pagosBean.credito.anexo.nombres}" showEffect="explode" hideEffect="explode" 
                               widgetVar="dlghistorial" modal="true" resizable="true" minWidth="200" >
                         <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
@@ -189,9 +165,9 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                </h:form>
-            </div>
-        </div>        
+                </div>
+            </div>    
+        </h:form>    
 
         <h:form id="formpagar">
             <p:dialog id="dlg1" header="Pagar letra #{pagosBean.numletra}" showEffect="explode" hideEffect="explode" 
@@ -317,9 +293,9 @@
             </p:dialog>     
         </h:form>
 
-        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                <h:form id="formCliente">
+        <h:form id="formCliente">
+            <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                     <p:dialog header="Seleccionar cliente" showEffect="explode" hideEffect="explode" widgetVar="dlgcargar" modal="true" >
                         <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
                         <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" emptyMessage="Ningún cliente coincide con su búsqueda">
@@ -358,9 +334,9 @@
                             </p:column>
                         </p:dataTable>
                     </p:dialog>
-                </h:form>
+                </div>
             </div>
-        </div>
+        </h:form>
 
     </ui:define>
 </ui:composition>
