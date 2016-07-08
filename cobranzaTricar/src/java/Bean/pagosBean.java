@@ -129,7 +129,6 @@ public class pagosBean implements Serializable {
                 }
                 creditodao.modificarVenta(credito);
                 credbean.cargarLetras(credito);
-                //RequestContext.getCurrentInstance().update(":formModificar:tablaletras");
                 RequestContext.getCurrentInstance().update("principal");
                 RequestContext.getCurrentInstance().update("formMostrar");
                 RequestContext.getCurrentInstance().update("formModificar");
@@ -214,8 +213,12 @@ public class pagosBean implements Serializable {
             historial.setUsuario(usuario.getIdusuario());
             historial.setDiffdays(difdays);
             histodao.insertarHist(historial);
-            RequestContext.getCurrentInstance().update(":formMostrar:formModificar");
+            credbean.cargarLetras(credito);
+            RequestContext.getCurrentInstance().update("principal");
+            RequestContext.getCurrentInstance().update("formMostrar");
+            RequestContext.getCurrentInstance().update("formModificar");
             RequestContext.getCurrentInstance().execute("PF('dlgmodnd').hide()");
+            pago = new Pagos();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se modificó la mora del Cliente."));
         } catch (Exception e) {
         }
