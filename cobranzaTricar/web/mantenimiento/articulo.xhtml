@@ -14,7 +14,7 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="b-add"/>
+                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="fa fa-plus white"/>
                 </h:form>
                 <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                     <div class="ui-datatable-header ui-widget-header ui-corner-top">
@@ -48,8 +48,8 @@
                                     </h:outputText>
                                 </p:column>
                                 <p:column width="10%" style="text-align: center">
-                                    <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEditar(item.idvehiculo)}" icon="ui-icon ui-icon-pencil"/>
-                                    <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEliminar(item.idvehiculo)}" icon="ui-icon ui-icon-trash"/>
+                                    <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEditar(item.idvehiculo)}" icon="fa fa-pencil white"/>
+                                    <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEliminar(item.idvehiculo)}" icon="fa fa-trash white"/>
                                 </p:column>
                             </p:dataTable>
                         </h:form>
@@ -100,7 +100,7 @@
                                 <f:selectItem itemLabel="NO DISPONIBLE" itemValue="N" />                     
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
-                            <p:commandButton value="Registrar Articulo" icon="b-new" ajax="false" actionListener="#{vehiculoBean.registrar()}" />
+                            <p:commandButton value="Registrar Articulo" icon="fa fa-save white" ajax="false" actionListener="#{vehiculoBean.registrar()}" />
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
@@ -150,7 +150,7 @@
                                 <f:selectItem itemLabel="NO DISPONIBLE" itemValue="N" />                     
                             </p:selectOneMenu>
                             <h:panelGroup></h:panelGroup>
-                            <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{vehiculoBean.modificar()}"/>
+                            <p:commandButton value="Guardar cambios" icon="fa fa-save white" ajax="false" actionListener="#{vehiculoBean.modificar()}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
@@ -159,8 +159,9 @@
                     <p:dialog header="Datos del Articulo" widgetVar="dialogoEliminarArticulo" modal="true">
                         <p:inputText type="hidden" value="#{vehiculoBean.vehiculo.idvehiculo}"/>
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{vehiculoBean.eliminar()}" ajax="false" icon="b-ok" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
+                        <p:separator/>
+                        <p:commandButton value="Si" actionListener="#{vehiculoBean.eliminar()}" ajax="false" icon="fa fa-check blue" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
                     </p:dialog>
                 </h:form>
             </ui:define>

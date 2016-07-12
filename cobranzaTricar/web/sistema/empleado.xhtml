@@ -12,7 +12,7 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">                
                 <h:form>
-                    <p:commandButton value="Nuevo" icon="fa fa-plus" oncomplete="dlginsertar.show()"/>
+                    <p:commandButton value="Nuevo" icon="fa fa-plus white" oncomplete="dlginsertar.show()"/>
                 </h:form>
 
                 <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
@@ -45,8 +45,8 @@
                                     </h:outputText>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="fa fa-pencil"/>
-                                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="fa fa-trash"/>
+                                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="fa fa-pencil white"/>
+                                    <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="fa fa-trash white"/>
                                 </p:column>
                             </p:dataTable>
                         </h:form>
@@ -127,7 +127,7 @@
                             </p:inputText>
                         </h:panelGrid>                        
                         <p:separator/>
-                        <p:commandButton value="Guardar" icon="ui-icon-disk" ajax="false" actionListener="#{anexoBean.insertar()}" />
+                        <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{anexoBean.insertar()}" />
                     </p:dialog>
                 </h:form>
 
@@ -209,7 +209,7 @@
                             </p:inputText>
                         </h:panelGrid>                        
                         <p:separator/>
-                        <p:commandButton value="Actualizar" icon="ui-icon-disk" ajax="false" actionListener="#{anexoBean.modificar()}" />
+                        <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{anexoBean.modificar()}" />
                     </p:dialog>
                 </h:form>
 
@@ -218,8 +218,8 @@
                         <p:inputText type="hidden" value="#{anexoBean.anexo.idanexo}"/>
                         <h:outputText value="¿Desea eliminar?" />
                         <p:separator/>
-                        <p:commandButton value="Si" actionListener="#{anexoBean.eliminar()}" ajax="false" icon="ui-icon-check" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="ui-icon-close" />
+                        <p:commandButton value="Si" actionListener="#{anexoBean.eliminar()}" ajax="false" icon="fa fa-check blue" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
                     </p:dialog>
                 </h:form>
 
