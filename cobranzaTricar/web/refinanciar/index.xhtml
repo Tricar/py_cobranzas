@@ -19,53 +19,60 @@
                                  ajax="false"/>
             </h:panelGrid>
         </h:form>
-        <h:form id="formMostrar">
-            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-            <p:dataTable var="cred" value="#{creditoBean.creditos}" 
-                         emptyMessage="No hay nada para mostrar">
-                <p:column headerText="Cod.">
-                    <h:outputText value="#{cred.liqventa}" />
-                </p:column>
-                <p:column headerText="Nombres">
-                    <h:outputText value="#{cred.anexo.nombres}" />
-                </p:column>
-                <p:column headerText="Num. Doc.">
-                    <h:outputText value="#{cred.anexo.numdocumento}" />
-                </p:column>
-                <p:column headerText="Tienda">
-                    <h:outputText value="#{cred.tienda}">
-                        <f:converter converterId="tiendaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Empresa">
-                    <h:outputText value="#{cred.empresa}">
-                        <f:converter converterId="empresaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Vehículo">
-                    <h:outputText value="#{cred.vehi}">
-                        <f:converter converterId="tvehiculo"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Modelo">
-                    <h:outputText value="#{cred.modelo.modelo}"/>
-                </p:column>
-                <p:column headerText="Monto financiado">
-                    <h:outputText value="#{cred.saldo}" />
-                </p:column>
-                <p:column headerText="Total deuda">
-                    <h:outputText value="#{cred.deudactual}" />
-                </p:column>
-                <p:column headerText="Estado">
-                    <h:outputText value="#{cred.estado}" converter="estcredconvert"/>
-                </p:column>                
-                <p:column headerText="OPERACIONES">
-                    <p:commandButton value="V" action="#{creditoBean.cargarRefinanciar(loginbean.usuario.idusuario)}" >
-                        <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
-                    </p:commandButton>
-                </p:column>
-            </p:dataTable>
-        </h:form>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                Créditos vencidos
+            </div>
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formMostrar">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable var="cred" value="#{creditoBean.creditos}" emptyMessage="No hay nada para mostrar" 
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 50 60 70">
+                        <p:column headerText="Cod.">
+                            <h:outputText value="#{cred.liqventa}" />
+                        </p:column>
+                        <p:column headerText="Nombres">
+                            <h:outputText value="#{cred.anexo.nombres}" />
+                        </p:column>
+                        <p:column headerText="Num. Doc.">
+                            <h:outputText value="#{cred.anexo.numdocumento}" />
+                        </p:column>
+                        <p:column headerText="Tienda">
+                            <h:outputText value="#{cred.tienda}">
+                                <f:converter converterId="tiendaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Empresa">
+                            <h:outputText value="#{cred.empresa}">
+                                <f:converter converterId="empresaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Vehículo">
+                            <h:outputText value="#{cred.vehi}">
+                                <f:converter converterId="tvehiculo"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Modelo">
+                            <h:outputText value="#{cred.modelo.modelo}"/>
+                        </p:column>
+                        <p:column headerText="Monto financiado">
+                            <h:outputText value="#{cred.saldo}" />
+                        </p:column>
+                        <p:column headerText="Total deuda">
+                            <h:outputText value="#{cred.deudactual}" />
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{cred.calificacion}" converter="califconverter"/>
+                        </p:column>                
+                        <p:column headerText="OPERACIONES">
+                            <p:commandButton value="V" action="#{creditoBean.cargarRefinanciar(loginbean.usuario.idusuario)}" >
+                                <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
         <hr/>
         <ui:remove>
             <h:form id="formVer">
