@@ -8,7 +8,7 @@
                 template="./../views/template.xhtml">
     <ui:define name="content">                
         <h:form>
-            <p:commandButton value="Nuevo" icon="ui-icon-plus" action="#{anexoBean.nuevoanexo()}"/>
+            <p:commandButton value="Nuevo" icon="fa fa-plus white" action="#{anexoBean.nuevoanexo()}"/>
         </h:form>
         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
             <div class="ui-datatable-header ui-widget-header ui-corner-top">
@@ -38,12 +38,12 @@
                             <h:outputText value="#{item.referencia}" />
                         </p:column>
                         <p:column headerText="OPCIONES" width="10%" style="text-align: center">
-                            <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="ui-icon ui-icon-pencil"/>
-                            <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="ui-icon ui-icon-trash"/>
+                            <p:commandButton actionListener="#{anexoBean.cargarAnexoEditar(item.idanexo)}" icon="fa fa-pencil white"/>
+                            <p:commandButton actionListener="#{anexoBean.cargarAnexoEliminar(item.idanexo)}" icon="fa fa-trash white"/>
                         </p:column>
                         <p:column headerText="INGRESOS" width="10%" style="text-align: center">
-                            <p:commandButton icon="ui-icon-link" action="#{ocupacionBean.limpIngreso(item)}"/>                                
-                            <p:commandButton icon="ui-icon-pin-s" action="#{ocupacionBean.historial(item)}"/>
+                            <p:commandButton icon="fa fa-chain-broken white" action="#{ocupacionBean.limpIngreso(item)}" title="Agregar ingreso" />                                
+                            <p:commandButton icon="fa fa-thumb-tack white" action="#{ocupacionBean.historial(item)}" title="Lista de ingreso" />
                         </p:column>
                     </p:dataTable>
                 </h:form>
@@ -172,7 +172,7 @@
                     </p:inputText>
                 </h:panelGrid>
                 <p:separator/>
-                <p:commandButton value="Registrar Cliente" icon="ui-icon-disk" ajax="false" actionListener="#{anexoBean.insertarcliente()}" />
+                <p:commandButton value="Registrar Cliente" icon="fa fa-save white" ajax="false" actionListener="#{anexoBean.insertarcliente()}" />
             </p:dialog>
         </h:form>
 
@@ -299,7 +299,7 @@
                     </p:inputText>
                 </h:panelGrid>                        
                 <p:separator/>
-                <p:commandButton value="Actualizar Cliente" icon="ui-icon-disk" ajax="false" actionListener="#{anexoBean.modificar()}" />
+                <p:commandButton value="Actualizar Cliente" icon="fa fa-save white" ajax="false" actionListener="#{anexoBean.modificar()}" />
             </p:dialog>
         </h:form>
 
@@ -377,8 +377,7 @@
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
                     </p:selectOneRadio>                    
-                    <p:commandButton actionListener="#{ocupacionBean.insert()}"
-                                     value="#{ocupacionBean.btnGuardar}" />
+                    <p:commandButton actionListener="#{ocupacionBean.insert()}" value="#{ocupacionBean.btnGuardar}" />
                 </p:panelGrid>
             </p:dialog>
         </h:form>
@@ -399,7 +398,7 @@
                         <h:outputText value="#{ocups.montoin}" />
                     </p:column>
                     <p:column headerText="Operaciones">                        
-                        <p:commandButton oncomplete="dlgdelete.show()" icon="b-delete">
+                        <p:commandButton oncomplete="dlgdelete.show()" icon="fa fa-trash white">
                             <f:setPropertyActionListener target="#{ocupacionBean.ocupacion}" value="#{ocups}" />                                    
                         </p:commandButton>
                     </p:column>
@@ -408,12 +407,12 @@
         </h:form>
 
         <h:form id="formDelete">
-            <p:dialog header="Eliminar Ingreso de Cliente" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgdelete" modal="true" resizable="false" minWidth="200">
+            <p:dialog header="Eliminar Ingreso de Cliente" widgetVar="dlgdelete" modal="true">
                 <h:outputText value="¿Desea eliminar?" />
+                <p:separator/>
                 <p:commandButton value="Si" actionListener="#{ocupacionBean.eliminarSolo(creditoBean.credito.anexo)}" 
-                                 ajax="false" oncomplete="dlgeliminar.hide();" />
-                <p:commandButton value="No" onclick="dlg2.hide();" />
+                                 ajax="false" oncomplete="dlgeliminar.hide();" icon="fa fa-check blue" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
             </p:dialog>
         </h:form>
     </ui:define>
