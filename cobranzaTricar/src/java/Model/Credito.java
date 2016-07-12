@@ -58,6 +58,8 @@ public class Credito implements java.io.Serializable {
     private String comprobante2;
     private String calificacion;
     private Boolean swinicial;
+    private Boolean refinanciado;
+    private String estadoref;
     private Set letrases = new HashSet(0);
     private Set conceptoses = new HashSet(0);
 
@@ -76,7 +78,7 @@ public class Credito implements java.io.Serializable {
         this.interes = interes;
     }
 
-    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Set letrases, Set conceptoses) {
+    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Set letrases, Set conceptoses) {
         this.idventa = idventa;
         this.anexo = anexo;
         this.vehiculo = vehiculo;
@@ -109,6 +111,8 @@ public class Credito implements java.io.Serializable {
         this.comprobante2 = comprobante2;
         this.calificacion = calificacion;
         this.swinicial = swinicial;
+        this.refinanciado = refinanciado;
+        this.estadoref = estadoref;
         this.letrases = letrases;
         this.conceptoses = conceptoses;
     }
@@ -417,6 +421,24 @@ public class Credito implements java.io.Serializable {
 
     public void setSwinicial(Boolean swinicial) {
         this.swinicial = swinicial;
+    }
+    
+    @Column(name = "refinanciado")
+    public Boolean getRefinanciado() {
+        return this.refinanciado;
+    }
+
+    public void setRefinanciado(Boolean refinanciado) {
+        this.refinanciado = refinanciado;
+    }
+    
+    @Column(name = "estadoref", length = 2)
+    public String getEstadoref() {
+        return this.estadoref;
+    }
+
+    public void setEstadoref(String estadoref) {
+        this.estadoref = estadoref;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "credito")

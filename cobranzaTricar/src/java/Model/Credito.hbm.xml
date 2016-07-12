@@ -104,6 +104,12 @@
         <property name="swinicial" type="java.lang.Boolean">
             <column name="swinicial" />
         </property>
+        <property name="refinanciado" type="java.lang.Boolean">
+            <column name="refinanciado" />
+        </property>
+        <property name="estadoref" type="string">
+            <column name="estadoref" length="2"/>
+        </property>
         <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idventa" />

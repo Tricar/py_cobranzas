@@ -44,7 +44,7 @@ public class TareaDiaria {
         for (int i = 0; i < creditos.size(); i++) {
             Credito cred = creditos.get(i);
             System.out.println("credito " + cred.getLiqventa() + " anexo" + cred.getAnexo().getNombres());
-            int contvn = 0;            
+            int contvn = 0;
             if (!cred.getCalificacion().equals("CN")) {
                 letritas = letrasdao.mostrarLetrasXCred(cred);
                 for (int j = 0; j < letritas.size(); j++) {
@@ -87,6 +87,12 @@ public class TareaDiaria {
         }
         System.out.println("ejecuté toda la linea de actualizar los creditos");
     }
+
+//    @Schedule(hour = "*", minute = "*/1", second = "0", persistent = false)
+//    public void someMinuteJob() {
+//        // Do your job here which should run every 15 minute of hour.
+//        System.out.println("Imprimir cada 1 mins");
+//    }
 
     public long Diffdays(Date fechavenc) {
         long mili = fechavenc.getTime();

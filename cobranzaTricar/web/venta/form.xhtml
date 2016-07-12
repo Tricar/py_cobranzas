@@ -124,9 +124,9 @@
                         <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>
                     </p:inputText>
                     <h:outputText value="¿Inicial distinta? " />
-                    <p:selectBooleanCheckbox value="#{creditoBean.valuei}">
+                    <p:selectBooleanButton value="#{creditoBean.valuei}" onLabel="Si" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:40px">
                         <p:ajax update="msg12 txtinicial txtinicial2" listener="#{creditoBean.addMessageini}" />
-                    </p:selectBooleanCheckbox>
+                    </p:selectBooleanButton>
                     <p:outputLabel id="lblinicial2" value="Ingrese inicial:" for="txtinicial2"/>
                     <p:inputText id="txtinicial2" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei2}">
                         <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>
