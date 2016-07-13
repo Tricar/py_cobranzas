@@ -280,6 +280,26 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return tcredito;
     }
+    
+    @Override
+    public Credito veryId(int idventa) {
+        Session session = null;
+        Credito tcredito = new Credito();
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE idventa=:id" );
+            query.setParameter("id", idventa);
+            tcredito = (Credito) query.uniqueResult();            
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return tcredito;
+    }
 
     @Override
     public List<Credito> cargarxEstado(String estado) {
@@ -325,7 +345,7 @@ public class CreditoDaoImp implements CreditoDao{
         Credito credito = new Credito();        
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE liqventa=:w and calificacion=:v");
+            Query query = session.createQuery("FROM Credito WHERE liqventa=:w and calificacion!=:v");
             query.setParameter("w", codigo);
             query.setParameter("v", calif);
             credito = (Credito) query.uniqueResult();

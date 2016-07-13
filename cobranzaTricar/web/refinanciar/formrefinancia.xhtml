@@ -18,9 +18,9 @@
             <p:growl id="msg12" showDetail="true"/>
             <h:panelGrid columns="4">
                 <p:outputLabel value="FECHA DE CREDITO:" />
-                <p:calendar value="#{creditoBean.credito.fechareg}" readonly="true"/>
+                <p:calendar value="#{creditoBean.credito.fechareg}" readonly="true" pattern="dd/MM/yyyy"/>
                 <p:outputLabel value="CODIGO:" />
-                <p:inputText value="#{creditoBean.crediton.liqventa}" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.liqventa}" readonly="true"/>
                 <p:outputLabel value="VENDEDOR:" />                    
                 <p:inputText value="#{creditoBean.crediton.codven.nombres}" readonly="true"/>
                 <p:outputLabel value="MONTO FINANCIADO:"/>
@@ -70,7 +70,7 @@
                     <f:selectItem itemLabel="12" itemValue='12'/>
                 </p:selectOneMenu>
             </h:panelGrid>
-            <p:commandButton value="#{creditoBean.btnguardar}" action="#{creditoBean.refinanciar(loginbean.usuario.idusuario)}" icon="fa fa-thumbs-o-up white"
+            <p:commandButton value="#{creditoBean.btnguardar}" action="#{creditoBean.refinanciar(loginbean.usuario)}" icon="fa fa-thumbs-o-up white"
                              ajax="false" disabled="#{creditoBean.value}">
             </p:commandButton>
         </h:form>
