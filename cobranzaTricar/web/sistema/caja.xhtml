@@ -61,7 +61,8 @@
                     <p:selectOneMenu id="txttienda" value="#{cajaBean.caja.tienda}" required="true" requiredMessage="Seleccione la Tienda">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                         <f:selectItem itemLabel="VX1" itemValue="V1" />
-                        <f:selectItem itemLabel="VX2" itemValue="V2" />                            
+                        <f:selectItem itemLabel="VX2" itemValue="V2" />
+                        <f:selectItem itemLabel="VX3" itemValue="V3" />
                     </p:selectOneMenu>
                     <p:commandButton value="#{cajaBean.btnguardar}" icon="ui-icon-disk" update=":frmlistarperfil:tablalistarcolor" actionListener="#{cajaBean.insertar()}" />
                 </h:panelGrid>
