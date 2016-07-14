@@ -60,6 +60,7 @@
                     <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" >
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                     </p:commandButton>
+                    <ui:remove>
                     <p:commandButton update=":formVer" icon="b-ver" title="Mostrar" actionListener="#{creditoBean.cargarLetras(cred)}"/>                         
                     <p:commandButton value="R" update=":formRef" oncomplete="dlgrefinanciar.show()" title="Refinanciar">
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
@@ -68,6 +69,7 @@
                         <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                     </p:commandButton>
                     <p:commandButton icon="b-Print" ajax="false" actionListener="#{reportesBean.exportarLiq(cred.liqventa)}" title="Imprimir"/>
+                    </ui:remove>
                 </p:column>
             </p:dataTable>
         </h:form>

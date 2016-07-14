@@ -118,7 +118,7 @@ public class creditoBean implements Serializable {
     private boolean disablecaja;
     private List<Tipodoc> listafilttipo = new ArrayList();
     private boolean disableoper;
-    private boolean disablecomp;
+    private boolean disablecomp;    
     private List<Caja> todasCajas = new ArrayList();
 
     public creditoBean() {
@@ -1019,6 +1019,7 @@ public class creditoBean implements Serializable {
         ConceptosDao condao = new ConceptosDaoImp();
         try {
             modeloTipo(credito.getVehi());
+            codigo = new String();
             sw = 1;
             inicia = credito.getInicial();
             precio = credito.getPrecio();
@@ -1059,6 +1060,7 @@ public class creditoBean implements Serializable {
             vehiculo = credito.getVehiculo();
             vehiculo.setEstado("N");
             vehiculodao.modificarVehiculo(vehiculo);
+            credito.setLiqventa(codigo);
             credito.setEstado("DP");
             credito.setDespachado(usuario.getIdusuario());
             credao.modificarVenta(credito);
