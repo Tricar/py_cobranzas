@@ -62,6 +62,7 @@ public class Credito implements java.io.Serializable {
     private String estadoref;
     private Integer anterior;
     private String resena;
+    private String obsver;
     private Set letrases = new HashSet(0);
     private Set conceptoses = new HashSet(0);
 
@@ -80,7 +81,7 @@ public class Credito implements java.io.Serializable {
         this.interes = interes;
     }
 
-    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, String resena, Set letrases, Set conceptoses) {
+    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, String resena, String obsver, Set letrases, Set conceptoses) {
         this.idventa = idventa;
         this.anexo = anexo;
         this.vehiculo = vehiculo;
@@ -117,6 +118,7 @@ public class Credito implements java.io.Serializable {
         this.estadoref = estadoref;
         this.anterior = anterior;
         this.resena = resena;
+        this.obsver = obsver;
         this.letrases = letrases;
         this.conceptoses = conceptoses;
     }
@@ -461,6 +463,15 @@ public class Credito implements java.io.Serializable {
 
     public void setResena(String resena) {
         this.resena = resena;
+    }
+    
+    @Column(name = "obsver", length = 400)
+    public String getObsver() {
+        return this.obsver;
+    }
+
+    public void setObsver(String obsver) {
+        this.obsver = obsver;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "credito")

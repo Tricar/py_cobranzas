@@ -116,6 +116,9 @@
         <property name="resena" type="string">
             <column name="resena" length="400" />
         </property>
+        <property name="obsver" type="string">
+            <column name="obsver" length="400" />
+        </property>
         <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idventa" />

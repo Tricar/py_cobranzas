@@ -22,9 +22,9 @@
                     <p:outputLabel value="Código:" for="txtcodigo"/>
                     <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito" readonly="true"/>
                     <p:outputLabel value="Cliente:" for="cliente"/>
-                    <p:inputText id="cliente" value="#{creditoBean.credito.anexo}" readonly="true"/>                                    
+                    <p:inputText id="cliente" value="#{creditoBean.credito.anexo.nombres}" readonly="true"/>                                    
                     <p:outputLabel value="Vendedor:" />
-                    <p:inputText value="#{creditoBean.credito.codven}" readonly="true"/>                                    
+                    <p:inputText value="#{creditoBean.credito.codven.nombres}" readonly="true"/>                                    
                     <p:outputLabel value="Tienda:" for="txttienda"/>
                     <p:selectOneMenu id="txttienda" value="#{creditoBean.credito.tienda}" required="true" 
                                      requiredMessage="Seleccione la Tienda" disabled="true">
@@ -95,7 +95,9 @@
                     <p:outputLabel value="Saldo:"/>                                    
                     <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
                     <p:outputLabel value="Reseña: "/>
-                    <p:inputTextarea value="#{creditoBean.credito.resena}" required="true" requiredMessage="Ingrese reseña del crédito"/>
+                    <p:inputTextarea value="#{creditoBean.credito.resena}" readonly="true"/>
+                    <p:outputLabel value="Observaciones verificación: "/>
+                    <p:inputTextarea value="#{creditoBean.credito.obsver}" required="true" requiredMessage="Ingrese observaciones del verficador"/>
                     <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
                     <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
                                     completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
