@@ -29,7 +29,7 @@
                             <h:outputText value="#{caja.encargado.nombres}"/>
                         </p:column>
                         <p:column headerText="TIENDA">
-                            <h:outputText value="#{caja.tienda}"/>
+                            <h:outputText value="#{caja.tienda}" converter="tiendaconverter"/>
                         </p:column>
                         <p:column width="10%" style="text-align: center">
                             <p:commandButton actionListener="#{cajaBean.cargarPorIdModify(caja.idcaja)}" icon="ui-icon ui-icon-pencil"/>
