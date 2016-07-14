@@ -1180,7 +1180,7 @@ public class creditoBean implements Serializable {
         creditos = new ArrayList();
         letraslista = new ArrayList();
         filtradafecha = new ArrayList();
-        return "/refinanciar/index.xhtml";
+        return "/despacho/index.xhtml";
     }
 
     public String nuevodespacho() {
