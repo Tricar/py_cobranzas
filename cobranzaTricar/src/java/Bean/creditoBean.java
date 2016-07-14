@@ -1302,6 +1302,15 @@ public class creditoBean implements Serializable {
         credao.modificarVenta(credito);
         letrascredito = letrasdao.mostrarLetrasXCred(credito);
     }
+    
+    public void rechazarcredito(Usuario usuario){
+        CreditoDao credao = new CreditoDaoImp();
+        try {
+            credito.setEstado("RC");
+            credao.modificarVenta(credito);
+        } catch (Exception e) {
+        }
+    }
 
     public void exportarPDF(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();

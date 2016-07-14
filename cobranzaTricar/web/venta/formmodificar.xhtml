@@ -136,7 +136,9 @@
                         <f:selectItem itemLabel="6" itemValue='6.00'/>
                         <f:selectItem itemLabel="5" itemValue='5.00'/>
                         <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
-                    </p:selectOneMenu> 
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Reseña: "/>
+                    <p:inputTextarea value="#{creditoBean.credito.resena}" required="true" requiredMessage="Ingrese reseña del crédito"/>
                 </p:panelGrid>
                 <p:commandButton value="#{creditoBean.btnguardar}" actionListener="#{creditoBean.lanzarDlgModificar()}" icon="b-ok">
                 </p:commandButton>

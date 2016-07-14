@@ -61,7 +61,7 @@ public class Credito implements java.io.Serializable {
     private Boolean refinanciado;
     private String estadoref;
     private Integer anterior;
-    private Integer siguiente;
+    private String resena;
     private Set letrases = new HashSet(0);
     private Set conceptoses = new HashSet(0);
 
@@ -80,7 +80,7 @@ public class Credito implements java.io.Serializable {
         this.interes = interes;
     }
 
-    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, Integer siguiente, Set letrases, Set conceptoses) {
+    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, String resena, Set letrases, Set conceptoses) {
         this.idventa = idventa;
         this.anexo = anexo;
         this.vehiculo = vehiculo;
@@ -116,7 +116,7 @@ public class Credito implements java.io.Serializable {
         this.refinanciado = refinanciado;
         this.estadoref = estadoref;
         this.anterior = anterior;
-        this.siguiente = siguiente;
+        this.resena = resena;
         this.letrases = letrases;
         this.conceptoses = conceptoses;
     }
@@ -454,13 +454,13 @@ public class Credito implements java.io.Serializable {
         this.anterior = anterior;
     }
     
-    @Column(name = "siguiente")
-    public Integer getSiguiente() {
-        return this.siguiente;
+    @Column(name = "resena", length = 400)
+    public String getResena() {
+        return this.resena;
     }
 
-    public void setSiguiente(Integer siguiente) {
-        this.siguiente = siguiente;
+    public void setResena(String resena) {
+        this.resena = resena;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "credito")

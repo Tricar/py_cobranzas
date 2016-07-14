@@ -21,26 +21,10 @@
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha" disabled="true"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
                     <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito" readonly="true"/>
-                    <p:outputLabel value="Buscar cliente:" for="cliente"/>
-                    <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
-                                    completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
-                                    itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
-                                    required="true" requiredMessage="Ingrese cliente" readonly="true">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="mousemove" update="aval dir dist precio lblinicial res txtinicial"  listener="#{creditoBean.precioModeloCredito()}"/>
-                        <p:ajax event="itemSelect" listener="#{creditoBean.cargarIngreso(creditoBean.credito.anexo)}" update="@form"/>
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
-                    </p:autoComplete>
+                    <p:outputLabel value="Cliente:" for="cliente"/>
+                    <p:inputText id="cliente" value="#{creditoBean.credito.anexo}" readonly="true"/>                                    
                     <p:outputLabel value="Vendedor:" />
-                    <p:autoComplete value="#{creditoBean.credito.codven}"
-                                    completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
-                                    itemLabel="#{vend.nombres}" itemValue="#{vend}" readonly="true">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" process="@form" />
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
-                    </p:autoComplete>
+                    <p:inputText value="#{creditoBean.credito.codven}" readonly="true"/>                                    
                     <p:outputLabel value="Tienda:" for="txttienda"/>
                     <p:selectOneMenu id="txttienda" value="#{creditoBean.credito.tienda}" required="true" 
                                      requiredMessage="Seleccione la Tienda" disabled="true">
@@ -53,15 +37,7 @@
                     <p:outputLabel value="Distrito:" for="dist"/>
                     <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito}" converter="distritoconverter"/>                    
                     <p:outputLabel value="Buscar Aval:" for="aval"/>
-                    <p:autoComplete id="aval" value="#{creditoBean.credito.idaval}"
-                                    completeMethod="#{anexoBean.filtrarAval}" var="aval"
-                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" 
-                                    required="true" requiredMessage="Ingrese aval" disabled="#{creditoBean.value2}" readonly="true">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
-                        <p:ajax event="itemSelect" process="@form" />                        
-                    </p:autoComplete>
+                    <p:inputText id="aval" value="#{creditoBean.credito.idaval}" readonly="true" />                                    
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" disabled="true">                        
                         <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
@@ -83,7 +59,16 @@
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                         <f:selectItems value="#{creditoBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                         <p:ajax update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
-                    </p:selectOneMenu> 
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Interés:" for="interes"/>
+                    <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" 
+                                     requiredMessage="Ingrese el interés aplicado">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="7" itemValue='7.00'/> 
+                        <f:selectItem itemLabel="6" itemValue='6.00'/>
+                        <f:selectItem itemLabel="5" itemValue='5.00'/>
+                        <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
+                    </p:selectOneMenu>
                     <p:outputLabel value="Nro. Letras:" for="nletras"/>
                     <p:selectOneMenu id="nletras" value="#{creditoBean.credito.nletras}" required="true" 
                                      requiredMessage="Ingrese número de letras" disabled="true">
@@ -108,7 +93,9 @@
                     <p:inputText id="txtinicial" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei}" readonly="true">                        
                     </p:inputText>
                     <p:outputLabel value="Saldo:"/>                                    
-                    <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>                    
+                    <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
+                    <p:outputLabel value="Reseña: "/>
+                    <p:inputTextarea value="#{creditoBean.credito.resena}" required="true" requiredMessage="Ingrese reseña del crédito"/>
                     <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
                     <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
                                     completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
@@ -129,8 +116,10 @@
                         <p:ajax event="itemSelect" process="@form" />                   
                     </p:autoComplete>                                      
                 </p:panelGrid>
-                <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.aprobarcredito(loginbean.usuario.idusuario)}" icon="b-ok"
+                <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.aprobarcredito(loginbean.usuario.idusuario)}" icon="fa fa-check red"
                                  ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
+                </p:commandButton>
+                <p:commandButton value="Rechazar" action="#{creditoBean.rechazarcredito(loginbean.usuario)}" icon="fa fa-ban blue">
                 </p:commandButton>
             </h:form>
             <h:form>
@@ -151,47 +140,47 @@
                     </p:column>
                 </p:dataTable>   
             </h:form>            
-                <h:form id="formMostrar">
-                    <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
-                    <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
-                                 emptyMessage="No hay nada para mostrar">
-                        <p:column headerText="Cod venta.">
-                            <h:outputText value="#{letras.credito.liqventa}" />
+            <h:form id="formMostrar">
+                <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
+                <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
+                             emptyMessage="No hay nada para mostrar">
+                    <p:column headerText="Cod venta.">
+                        <h:outputText value="#{letras.credito.liqventa}" />
+                    </p:column>
+                    <p:column headerText="Descripcion">
+                        <h:outputText value="#{letras.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{letras.montoletra}"/>
+                    </p:column>
+                    <p:column headerText="Interes">
+                        <h:outputText value="#{letras.interes}"/>
+                    </p:column>
+                    <p:column headerText="Total Letra">
+                        <h:outputText value="#{letras.monto}"/>
+                    </p:column>
+                    <p:column headerText="Fecha In.">
+                        <h:outputText value="#{letras.fecini}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Fecha Ven.">
+                        <h:outputText value="#{letras.fecven}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <ui:remove>
+                        <p:column headerText="Saldo">
+                            <h:outputText value="#{letras.saldo}"/>
                         </p:column>
-                        <p:column headerText="Descripcion">
-                            <h:outputText value="#{letras.descripcion}"/>
-                        </p:column>
-                        <p:column headerText="Monto">
-                            <h:outputText value="#{letras.montoletra}"/>
-                        </p:column>
-                        <p:column headerText="Interes">
-                            <h:outputText value="#{letras.interes}"/>
-                        </p:column>
-                        <p:column headerText="Total Letra">
-                            <h:outputText value="#{letras.monto}"/>
-                        </p:column>
-                        <p:column headerText="Fecha In.">
-                            <h:outputText value="#{letras.fecini}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{letras.estado}">
+                                <f:converter converterId="letrasconverter"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Fecha Ven.">
-                            <h:outputText value="#{letras.fecven}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputText>
-                        </p:column>
-                        <ui:remove>
-                            <p:column headerText="Saldo">
-                                <h:outputText value="#{letras.saldo}"/>
-                            </p:column>
-                            <p:column headerText="Estado">
-                                <h:outputText value="#{letras.estado}">
-                                    <f:converter converterId="letrasconverter"/>
-                                </h:outputText>
-                            </p:column>
-                        </ui:remove>
-                    </p:dataTable>
-                </h:form>            
+                    </ui:remove>
+                </p:dataTable>
+            </h:form>            
             <h:form id="formOcup">
                 <p:dialog header="Detalle" showEffect="explode" hideEffect="explode" 
                           widgetVar="dlgverocup" modal="true" resizable="false" minWidth="200">
