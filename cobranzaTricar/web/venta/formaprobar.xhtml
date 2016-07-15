@@ -118,7 +118,7 @@
                         <p:ajax event="itemSelect" process="@form" />                   
                     </p:autoComplete>                                      
                 </p:panelGrid>
-                <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.aprobarcredito(loginbean.usuario.idusuario)}" icon="fa fa-check red"
+                <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.aprobarcredito(loginbean.usuario)}" icon="fa fa-check red"
                                  ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
                 </p:commandButton>
                 <p:commandButton value="Rechazar" action="#{creditoBean.rechazarcredito(loginbean.usuario)}" icon="fa fa-ban blue">

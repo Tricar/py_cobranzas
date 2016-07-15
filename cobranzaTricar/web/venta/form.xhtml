@@ -146,7 +146,7 @@
                     <p:inputTextarea value="#{creditoBean.credito.resena}" required="true" requiredMessage="Ingrese reseña del crédito"/>
                 </p:panelGrid>
 
-                <p:commandButton value="#{creditoBean.btnguardar}" actionListener="#{creditoBean.insertarCredito(loginbean.usuario.idusuario)}" icon="b-ok"
+                <p:commandButton value="#{creditoBean.btnguardar}" actionListener="#{creditoBean.insertarCredito(loginbean.usuario)}" icon="b-ok"
                                  ajax="false" disabled="#{creditoBean.disableGuardar()}">
                 </p:commandButton>
             </h:form>            
