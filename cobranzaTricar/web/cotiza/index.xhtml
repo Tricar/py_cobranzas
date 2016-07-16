@@ -8,22 +8,20 @@
                 template="./../views/template.xhtml"
                 xmlns:o="http://omnifaces.org/ui">
     <ui:define name="content">
-        <h2>Gestión de Proformas</h2>
+        <h2 class="BigTopic">Gestión de Proformas</h2>
         <h:form>
-            <p:commandButton action="#{creditoBean.nuevocotiza()}" value="Nuevo" immediate="true" icon="b-add"/>
+            <p:commandButton action="#{creditoBean.nuevocotiza()}" value="Nuevo" immediate="true" icon="fa fa-plus white"/>
         </h:form>
         <h:form>            
             <h:panelGrid columns="2">
                 <p:outputLabel value="Ingrese código de Cotización:"/>
                 <p:inputText value="#{creditoBean.codigo}"/>                       
-                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarxCodigoCotiza()}"
-                                 ajax="false"/>
+                <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarxCodigoCotiza()}" ajax="false"/>
             </h:panelGrid>
         </h:form>
         <h:form id="formMostrar">
             <p:growl sticky="false" showDetail="true" id="msgaprobar"/> 
-            <p:dataTable var="cred" value="#{creditoBean.creditos}" 
-                         emptyMessage="No hay nada para mostrar">
+            <p:dataTable var="cred" value="#{creditoBean.creditos}" emptyMessage="No hay nada para mostrar">
                 <p:column headerText="Cotización.">
                     <h:outputText value="#{cred.liqventa}" />
                 </p:column>

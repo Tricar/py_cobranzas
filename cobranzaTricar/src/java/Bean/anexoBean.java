@@ -332,6 +332,35 @@ public class anexoBean implements Serializable {
             }
         }
     }
+    
+    public void modificarAval() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            if (daotanexo.verByDocumentoDifer(this.session, this.anexo.getIdanexo(), this.anexo.getNumdocumento()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya Existe."));
+                return;
+            }
+            
+            daotanexo.modificar(this.session, this.anexo);
+            this.transaction.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
+            this.anexo = new Anexo();
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            this.anexo = new Anexo();
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
 
     public void eliminar() {
         this.session = null;
@@ -379,6 +408,29 @@ public class anexoBean implements Serializable {
         String convertido = fecha.format(anexo.getFechanac());               
         fecnac = convertido;        
         año = anexo.getEdad();
+        RequestContext.getCurrentInstance().update("frmEditarAnexo:panelEditarAnexo");
+        RequestContext.getCurrentInstance().execute("PF('dialogoEditarAnexo').show()");
+    }
+    
+    public void cargarAvalEditar(int idanexo) throws ParseException {
+        this.session = null;
+        this.transaction = null;
+        try {
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            anexo = daotanexo.verByIdanexo(this.session, idanexo);
+            this.transaction.commit();
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }        
         RequestContext.getCurrentInstance().update("frmEditarAnexo:panelEditarAnexo");
         RequestContext.getCurrentInstance().execute("PF('dialogoEditarAnexo').show()");
     }
@@ -458,7 +510,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarAval(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarAval("AD");
+        List<Anexo> tipos = anexoDao.filtarAval("VE", "AV");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);

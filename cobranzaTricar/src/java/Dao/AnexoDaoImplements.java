@@ -296,13 +296,14 @@ public class AnexoDaoImplements implements AnexoDao {
     }
 
     @Override
-    public List<Anexo> filtarAval(String tipo) {
+    public List<Anexo> filtarAval(String tipo1, String tipo2) {
         Session session = null;
         List<Anexo> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Anexo WHERE tipoanexo<>:u");
-            query.setParameter("u", tipo);            
+            Query query = session.createQuery("FROM Anexo WHERE tipoanexo=:u or tipoanexo=:p");
+            query.setParameter("u", tipo1);
+            query.setParameter("p", tipo2);
             lista = (List<Anexo>) query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
