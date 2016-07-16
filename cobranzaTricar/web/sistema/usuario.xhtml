@@ -13,7 +13,7 @@
 
             <ui:define name="content">
                 <h:form>
-                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
+                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="fa fa-plus white"/>
                 </h:form>
 
                 <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
@@ -47,8 +47,8 @@
                                     <h:outputText value="#{item.perfil.descripcion}" />
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEditar(item.idusuario)}" icon="ui-icon ui-icon-pencil"/>
-                                    <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEliminar(item.idusuario)}" icon="ui-icon ui-icon-trash"/>
+                                    <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEditar(item.idusuario)}" icon="fa fa-pencil white"/>
+                                    <p:commandButton actionListener="#{usuarioBean.cargarUsuarioEliminar(item.idusuario)}" icon="fa fa-trash white"/>
                                 </p:column>
                             </p:dataTable>
                         </h:form>
@@ -57,17 +57,15 @@
 
                 <h:form id="formInsertar">
                     <p:dialog header="Nuevo Usuario" widgetVar="dlginsertar" modal="true">                        
-                        <h:panelGrid id="panelcrearperfil">
+                        <h:panelGrid id="panelcrearperfil" columns="2">
                             <p:outputLabel value="Usuario:" for="txtUsuario"/>
                             <p:inputText id="txtUsuario" label="Usuario" value="#{usuarioBean.tusuario.usuario}" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
-                            <p:message for="txtUsuario"/>
                             <p:outputLabel value="Clave:" for="txtClave"/>
                             <p:inputText id="txtClave" label="Clave" value="#{usuarioBean.tusuario.clave}" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
-                            <p:message for="txtClave"/>
                             <p:outputLabel value="Anexo:"/>
                             <p:selectOneMenu value="#{usuarioBean.tusuario.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
@@ -78,38 +76,35 @@
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                 <f:selectItems value="#{perfilBean.verTodo()}" var="perfil" itemLabel="#{perfil.descripcion}" itemValue="#{perfil}"/>
                             </p:selectOneMenu>
-                            <p:commandButton value="Guardar" icon="ui-icon-disk" ajax="false" actionListener="#{usuarioBean.registrar()}" />
+                            <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{usuarioBean.registrar()}" />
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
 
                 <h:form id="frmEditarUsuario">
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEditarUsuario" modal="true">
-                        <h:panelGrid id="panelEditarUsuario">
+                        <h:panelGrid id="panelEditarUsuario" columns="2">
                             <p:inputText type="hidden" value="#{usuarioBean.tusuario.idusuario}"/>
                             <p:inputText type="hidden" value="#{usuarioBean.tusuario.clave}"/>                            
                             <p:inputText type="hidden" value="#{usuarioBean.tusuario.fechareg}"/>
+                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Usuario:" for="txtUsuario"/>
                             <p:inputText id="txtUsuario" label="Usuario" value="#{usuarioBean.tusuario.usuario}" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
-                            <p:message for="txtUsuario"/>
                             <p:outputLabel value="Clave:"/>
                             <p:inputText id="txtClave" label="Clave" value="#{usuarioBean.txtclavevacia}" autocomplete="off"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Anexo:"/>
                             <p:selectOneMenu value="#{usuarioBean.tusuario.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                 <f:selectItems value="#{anexoBean.anexos}" var="anexo" itemLabel="#{anexo.nombres}" itemValue="#{anexo}"/>
                             </p:selectOneMenu>
-                            <h:panelGroup></h:panelGroup>
                             <p:outputLabel value="Perfil:"/>
                             <p:selectOneMenu value="#{usuarioBean.tusuario.perfil}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                 <f:selectItems value="#{perfilBean.perfiles}" var="perfil" itemLabel="#{perfil.descripcion}" itemValue="#{perfil}"/>
                             </p:selectOneMenu>
-                            <h:panelGroup></h:panelGroup>
-                            <p:commandButton value="Actualizar" icon="ui-icon-disk" ajax="false" actionListener="#{usuarioBean.modificar()}"/>
+                            <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{usuarioBean.modificar()}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
@@ -118,8 +113,9 @@
                     <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarUsuario" modal="true">
                         <p:inputText type="hidden" value="#{usuarioBean.tusuario.idusuario}"/>
                         <h:outputText value="¿Desea eliminar?" />
-                        <p:commandButton value="Si" actionListener="#{usuarioBean.eliminar()}" ajax="false" icon="ui-icon-check" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="ui-icon-close" />
+                        <p:separator/>
+                        <p:commandButton value="Si" actionListener="#{usuarioBean.eliminar()}" ajax="false" icon="fa fa-check blue" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
                     </p:dialog>
                 </h:form>
             </ui:define>

@@ -26,20 +26,21 @@ public class Perfil implements java.io.Serializable {
     private Boolean sisEmp;
     private Boolean sisUsu;
     private Boolean sisPer;
+    private Boolean sisCaja;
     private Boolean mante;
     private Boolean manCli;
+    private Boolean manIng;
+    private Boolean manAval;
     private Boolean manArt;
     private Boolean manMod;
     private Boolean manCol;
-    private Boolean venta;
-    private Boolean venLis;
-    private Boolean venReg;
-    private Boolean venCon;
+    private Boolean creco;
+    private Boolean creLis;
+    private Boolean creReg;
+    private Boolean creCon;
+    private Boolean creRef;
     private Boolean despacho;
-    private Boolean manIng;
-    private Boolean manDes;
-    private Boolean manCaja;
-    private Boolean manRef;
+    private Boolean desDes;
     private Set usuarios = new HashSet(0);
 
     public Perfil() {
@@ -49,7 +50,7 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean mante, Boolean manCli, Boolean manArt, Boolean manMod, Boolean manCol, Boolean venta, Boolean venLis, Boolean venReg, Boolean venCon, Boolean manIng, Boolean manDes, Boolean manCaja, Boolean manRef, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean sisCaja, Boolean mante, Boolean manCli, Boolean manAval, Boolean manArt, Boolean manMod, Boolean manCol, Boolean creco, Boolean creLis, Boolean creReg, Boolean creCon, Boolean creRef, Boolean manIng, Boolean despacho, Boolean desDes, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.abrev = abrev;
@@ -58,19 +59,21 @@ public class Perfil implements java.io.Serializable {
         this.sisEmp = sisEmp;
         this.sisUsu = sisUsu;
         this.sisPer = sisPer;
+        this.sisCaja = sisCaja;
         this.mante = mante;
         this.manCli = manCli;
+        this.manAval = manAval;
         this.manArt = manArt;
         this.manMod = manMod;
         this.manCol = manCol;
-        this.venta = venta;
-        this.venLis = venLis;
-        this.venReg = venReg;
-        this.venCon = venCon;
+        this.creco = creco;
+        this.creLis = creLis;
+        this.creReg = creReg;
+        this.creCon = creCon;
+        this.creRef = creRef;
         this.manIng = manIng;
-        this.manDes = manDes;
-        this.manCaja = manCaja;
-        this.manRef = manRef;
+        this.despacho = despacho;
+        this.desDes = desDes;
         this.usuarios = usuarios;        
     }
 
@@ -147,6 +150,15 @@ public class Perfil implements java.io.Serializable {
     public void setSisPer(Boolean sisPer) {
         this.sisPer = sisPer;
     }
+    
+    @Column(name = "sisCaja")
+    public Boolean getSisCaja() {
+        return this.sisCaja;
+    }
+
+    public void setSisCaja(Boolean sisCaja) {
+        this.sisCaja = sisCaja;
+    }
 
     @Column(name = "mante")
     public Boolean getMante() {
@@ -164,6 +176,24 @@ public class Perfil implements java.io.Serializable {
 
     public void setManCli(Boolean manCli) {
         this.manCli = manCli;
+    }
+    
+    @Column(name = "manIng")
+    public Boolean getManIng() {
+        return this.manIng;
+    }
+
+    public void setManIng(Boolean manIng) {
+        this.manIng = manIng;
+    }
+
+    @Column(name = "manAval")
+    public Boolean getManAval() {
+        return this.manAval;
+    }
+
+    public void setManAval(Boolean manAval) {
+        this.manAval = manAval;
     }
 
     @Column(name = "manArt")
@@ -193,49 +223,49 @@ public class Perfil implements java.io.Serializable {
         this.manCol = manCol;
     }
 
-    @Column(name = "venta")
-    public Boolean getVenta() {
-        return this.venta;
+    @Column(name = "creco")
+    public Boolean getCreco() {
+        return this.creco;
     }
 
-    public void setVenta(Boolean venta) {
-        this.venta = venta;
+    public void setCreco(Boolean creco) {
+        this.creco = creco;
     }
 
-    @Column(name = "venLis")
-    public Boolean getVenLis() {
-        return this.venLis;
+    @Column(name = "creLis")
+    public Boolean getCreLis() {
+        return this.creLis;
     }
 
-    public void setVenLis(Boolean venLis) {
-        this.venLis = venLis;
+    public void setCreLis(Boolean creLis) {
+        this.creLis = creLis;
     }
 
-    @Column(name = "venReg")
-    public Boolean getVenReg() {
-        return this.venReg;
+    @Column(name = "creReg")
+    public Boolean getCreReg() {
+        return this.creReg;
     }
 
-    public void setVenReg(Boolean venReg) {
-        this.venReg = venReg;
+    public void setCreReg(Boolean creReg) {
+        this.creReg = creReg;
     }
 
-    @Column(name = "venCon")
-    public Boolean getVenCon() {
-        return this.venCon;
+    @Column(name = "creCon")
+    public Boolean getCreCon() {
+        return this.creCon;
     }
 
-    public void setVenCon(Boolean venCon) {
-        this.venCon = venCon;
+    public void setCreCon(Boolean creCon) {
+        this.creCon = creCon;
     }
     
-    @Column(name = "manIng")
-    public Boolean getManIng() {
-        return this.manIng;
+    @Column(name = "creRef")
+    public Boolean getCreRef() {
+        return this.creRef;
     }
 
-    public void setManIng(Boolean manIng) {
-        this.manIng = manIng;
+    public void setCreRef(Boolean creRef) {
+        this.creRef = creRef;
     }
     
      @Column(name = "despacho")
@@ -247,31 +277,13 @@ public class Perfil implements java.io.Serializable {
         this.despacho = despacho;
     }
     
-    @Column(name = "manDes")
-    public Boolean getManDes() {
-        return this.manDes;
+    @Column(name = "desDes")
+    public Boolean getDesDes() {
+        return this.desDes;
     }
 
-    public void setManDes(Boolean manDes) {
-        this.manDes = manDes;
-    }
-    
-    @Column(name = "manCaja")
-    public Boolean getManCaja() {
-        return this.manCaja;
-    }
-
-    public void setManCaja(Boolean manCaja) {
-        this.manCaja = manCaja;
-    }
-    
-    @Column(name = "manRef")
-    public Boolean getManRef() {
-        return this.manRef;
-    }
-
-    public void setManRef(Boolean manRef) {
-        this.manRef = manRef;
+    public void setDesDes(Boolean desDes) {
+        this.desDes = desDes;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "perfil")

@@ -108,7 +108,7 @@ public class Vehiculo implements java.io.Serializable {
         this.serie = serie;
     }
 
-    @Column(name = "anofabri")
+    @Column(name = "anofabri", nullable = false)
     public Integer getAnofabri() {
         return this.anofabri;
     }

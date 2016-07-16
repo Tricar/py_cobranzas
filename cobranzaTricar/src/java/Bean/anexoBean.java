@@ -74,6 +74,29 @@ public class anexoBean implements Serializable {
             }
         }
     }
+    
+    public List<Anexo> verAval() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            AnexoDaoImplements anexoDao = new AnexoDaoImplements();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.anexos = anexoDao.verAval(this.session);
+            this.transaction.commit();
+            return anexos;
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
 
     public void nuevoanexo() {
         anexo = new Anexo();
@@ -215,6 +238,41 @@ public class anexoBean implements Serializable {
             fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
             this.anexo.setFechanac(fechaNac);
             this.anexo.setEdad(año);
+            daotanexo.registrar(this.session, this.anexo);
+            this.transaction.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+            this.anexo = new Anexo();
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            this.anexo = new Anexo();
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public void insertaraval() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            if (daotanexo.verByDocumento(this.session, this.anexo.getNumdocumento()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Aval ya existe en DB."));
+                this.anexo = new Anexo();
+                return;
+            }
+            
+            this.anexo.setTipodocumento("DNI");
+            this.anexo.setTipoanexo("AV");
+            Date d = new Date();
+            this.anexo.setFechareg(d);
+            this.anexo.setCodven("");
             daotanexo.registrar(this.session, this.anexo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
