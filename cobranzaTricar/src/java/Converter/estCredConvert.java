@@ -10,7 +10,7 @@ import javax.faces.convert.FacesConverter;
  * @author master
  */
 @FacesConverter("estcredconvert")
-public class estCredConvert implements Converter{
+public class estCredConvert implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -19,17 +19,22 @@ public class estCredConvert implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        String estado ="";
-        if (value != null){
+        String estado = "";
+        if (value != null) {
             estado = (String) value;
             switch (estado) {
-                case "EM": estado = "EMITIDO";
+                case "EM":
+                    estado = "EMITIDO";
                     break;
-                case "AP": estado = "APROBADO";
-                    break;                                
+                case "AP":
+                    estado = "APROBADO";
+                    break;
+                case "RC":
+                    estado = "RECHAZADO";
+                    break;
             }
         }
         return estado;
     }
-    
+
 }

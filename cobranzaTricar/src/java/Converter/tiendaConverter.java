@@ -35,6 +35,9 @@ public class tiendaConverter implements Converter {
                 case "T ":
                     tienda = "TARAPOTO";
                     break;
+                case "V3":
+                    tienda = "VX3";
+                    break;
             }
         }
         return tienda;

@@ -20,7 +20,7 @@
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha" disabled="true"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
-                    <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito" readonly="true"/>
+                    <p:inputText id="txtcodigo" value="#{creditoBean.codigo}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito" />
                     <p:outputLabel value="Vendedor:" />
                     <p:autoComplete value="#{creditoBean.credito.codven}"
                                     completeMethod="#{anexoBean.filtrarVendedor}" var="vend"

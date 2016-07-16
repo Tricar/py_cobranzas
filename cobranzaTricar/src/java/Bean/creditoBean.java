@@ -118,7 +118,7 @@ public class creditoBean implements Serializable {
     private boolean disablecaja;
     private List<Tipodoc> listafilttipo = new ArrayList();
     private boolean disableoper;
-    private boolean disablecomp;
+    private boolean disablecomp;    
     private List<Caja> todasCajas = new ArrayList();
 
     public creditoBean() {
@@ -167,7 +167,7 @@ public class creditoBean implements Serializable {
         saldo = precio.subtract(inicia);
     }
 
-    public void insertarCredito(Integer idusuario) {
+    public void insertarCredito(Usuario usuario) {
         CreditoDao creditodao = new CreditoDaoImp();
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
@@ -196,7 +196,7 @@ public class creditoBean implements Serializable {
                             credito.setEstado("EM");
                             credito.setEmpresa("CA");
                             credito.setCalificacion("PN");
-                            credito.setElaborado(idusuario);
+                            credito.setElaborado(usuario.getAnexo().getIdanexo());                            
                             credito.setSwinicial(false);
                             creditodao.insertarVenta(credito);
                             sw = 1;
@@ -1019,6 +1019,7 @@ public class creditoBean implements Serializable {
         ConceptosDao condao = new ConceptosDaoImp();
         try {
             modeloTipo(credito.getVehi());
+            codigo = new String();
             sw = 1;
             inicia = credito.getInicial();
             precio = credito.getPrecio();
@@ -1059,6 +1060,7 @@ public class creditoBean implements Serializable {
             vehiculo = credito.getVehiculo();
             vehiculo.setEstado("N");
             vehiculodao.modificarVehiculo(vehiculo);
+            credito.setLiqventa(codigo);
             credito.setEstado("DP");
             credito.setDespachado(usuario.getIdusuario());
             credao.modificarVenta(credito);
@@ -1225,7 +1227,7 @@ public class creditoBean implements Serializable {
         }
     }
 
-    public void aprobarcredito(Integer idusuario) {
+    public void aprobarcredito(Usuario usuario) {
         CreditoDao credao = new CreditoDaoImp();
         VehiculoDao vehidao = new VehiculoDaoImplements();
         ConceptosDao condao = new ConceptosDaoImp();
@@ -1259,7 +1261,7 @@ public class creditoBean implements Serializable {
                     letras.setDescripcion("L" + i + "/L" + credito.getNletras());
                     credito.setTotaldeuda(credito.getTotaldeuda().add(letras.getSaldo()));
                     credito.setDeudactual(credito.getTotaldeuda());
-                    credito.setAprobado(idusuario);
+                    credito.setAprobado(usuario.getAnexo().getIdanexo());
                     letrasdao.insertarLetra(letras);
                 }
                 concepto.setMontopago(credito.getInicial());
@@ -1274,7 +1276,7 @@ public class creditoBean implements Serializable {
                 credito.setSwinicial(false);
                 credito.setEstado("AP");
                 btnaprobar = "Desaprobar";
-                credito.setModificado(idusuario);
+                credito.setModificado(usuario.getAnexo().getIdanexo());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se aprobó el crédito."));
             } else {
                 concepto = condao.veryIdCredito(credito);
@@ -1294,13 +1296,22 @@ public class creditoBean implements Serializable {
                 credito.setVerificado(null);
                 credito.setVehiculo(null);
                 btnaprobar = "Aprobar";
-                credito.setModificado(idusuario);
+                credito.setModificado(usuario.getAnexo().getIdanexo());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se desaprobó el crédito."));
             }
         } catch (Exception e) {
         }
         credao.modificarVenta(credito);
         letrascredito = letrasdao.mostrarLetrasXCred(credito);
+    }
+    
+    public void rechazarcredito(Usuario usuario){
+        CreditoDao credao = new CreditoDaoImp();
+        try {
+            credito.setEstado("RC");
+            credao.modificarVenta(credito);
+        } catch (Exception e) {
+        }
     }
 
     public void exportarPDF(String codigo) throws JRException, NamingException, SQLException, IOException {

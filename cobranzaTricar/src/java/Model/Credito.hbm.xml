@@ -113,8 +113,11 @@
         <property name="anterior" type="java.lang.Integer">
             <column name="anterior"  />
         </property>
-        <property name="siguiente" type="java.lang.Integer">
-            <column name="siguiente"  />
+        <property name="resena" type="string">
+            <column name="resena" length="400" />
+        </property>
+        <property name="obsver" type="string">
+            <column name="obsver" length="400" />
         </property>
         <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
             <key>
