@@ -11,7 +11,7 @@
     <ui:define name="content">
         <h2 class="BigTopic">Solicitud de Crédito Directo</h2>
         <h:form>
-            <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="b-back"/>
+            <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
@@ -70,10 +70,9 @@
                     <p:outputLabel value="Distrito:" for="dist"/>
                     <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito}" converter="distritoconverter"/>                    
                     <p:outputLabel value="Buscar Aval:" for="aval"/>
-                    <p:autoComplete id="aval" value="#{creditoBean.credito.idaval}"
-                                    completeMethod="#{anexoBean.filtrarAval}" var="aval"
-                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" 
-                                    required="true" requiredMessage="Ingrese aval" disabled="#{creditoBean.value2}">
+                    <p:autoComplete id="aval" value="#{creditoBean.credito.idaval}" completeMethod="#{anexoBean.filtrarAval}" var="aval"
+                                    itemLabel="#{aval.nombres}" itemValue="#{aval}" required="true" requiredMessage="Ingrese aval" 
+                                    disabled="#{creditoBean.value2}">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                         <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
                         <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
@@ -146,7 +145,7 @@
                     <p:inputTextarea value="#{creditoBean.credito.resena}" required="true" requiredMessage="Ingrese reseña del crédito"/>
                 </p:panelGrid>
 
-                <p:commandButton value="#{creditoBean.btnguardar}" actionListener="#{creditoBean.insertarCredito(loginbean.usuario)}" icon="b-ok"
+                <p:commandButton value="#{creditoBean.btnguardar}" actionListener="#{creditoBean.insertarCredito(loginbean.usuario)}" icon="fa fa-floppy-o white"
                                  ajax="false" disabled="#{creditoBean.disableGuardar()}">
                 </p:commandButton>
             </h:form>            
@@ -257,8 +256,7 @@
                         <f:selectItem itemLabel="SI" itemValue="true"/>
                         <f:selectItem itemLabel="NO" itemValue="false"/>                        
                     </p:selectOneRadio>                    
-                    <p:commandButton actionListener="#{ocupacionBean.insert()}"
-                                     value="#{ocupacionBean.btnGuardar}" />
+                    <p:commandButton actionListener="#{ocupacionBean.insert()}" value="#{ocupacionBean.btnGuardar}" />
                 </h:panelGrid>
             </p:dialog>
         </h:form>      

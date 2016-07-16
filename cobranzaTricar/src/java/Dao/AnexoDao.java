@@ -24,7 +24,7 @@ public interface AnexoDao {
     public List<Anexo> filtarTipo(String tipo);
     public List<Anexo> filtarTipoTres(String tipo, String tipo1, String tipo2);
     public List<Anexo> filtarTipoDos(String tipo, String tipo1);
-    public List<Anexo> filtarAval(String tipo);
+    public List<Anexo> filtarAval(String tipo1, String tipo2);
     public List<Anexo> buscarxNombre(String nombre);
     public List<Anexo> buscarClienteNombre(String nombre, String tipo, String tipo1);
     public List<Anexo> buscarClientexDoc(String dni, String tipo, String tipo1);

@@ -226,6 +226,7 @@ public class PerfilBean implements Serializable {
             perfil.setCreLis(false);
             perfil.setCreReg(false);
             perfil.setCreCon(false);
+            perfil.setCreRef(false);
             perfil.setDespacho(false);            
             perfil.setDesDes(false);
             linkDao.registrar(this.session, this.perfil);
