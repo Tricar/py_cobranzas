@@ -37,7 +37,7 @@
                     <p:outputLabel value="Distrito:" for="dist"/>
                     <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito}" converter="distritoconverter"/>                    
                     <p:outputLabel value="Buscar Aval:" for="aval"/>
-                    <p:inputText id="aval" value="#{creditoBean.credito.idaval}" readonly="true" />                                    
+                    <p:inputText id="aval" value="#{creditoBean.credito.idaval.nombres}" readonly="true" />                                    
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" disabled="true">                        
                         <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
@@ -121,8 +121,12 @@
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.aprobarcredito(loginbean.usuario)}" icon="fa fa-check red"
                                  ajax="false" disabled="#{creditoBean.aprobacion(loginbean.usuario)}">
                 </p:commandButton>
-                <p:commandButton value="Rechazar" action="#{creditoBean.rechazarcredito(loginbean.usuario)}" icon="fa fa-ban blue">
-                </p:commandButton>
+                <p:commandButton value="Rechazar" action="#{creditoBean.rechazarcredito(loginbean.usuario)}" icon="fa fa-ban blue" ajax="false">
+                </p:commandButton>                
+            </h:form>
+            <h:form>
+                <h:commandButton actionListener="#{reportesBean.exportarFormato(creditoBean.credito.liqventa, creditoBean.credito)}" value="Imp. Formato." disabled="#{creditoBean.value}"/>
+                <h:commandButton actionListener="#{reportesBean.exportarCronograma(creditoBean.credito.liqventa, creditoBean.credito)}" value="Imp. Cronograma." disabled="#{creditoBean.value}"/>
             </h:form>
             <h:form>
                 <h2>Ingresos económicos del cliente y adjuntos </h2>

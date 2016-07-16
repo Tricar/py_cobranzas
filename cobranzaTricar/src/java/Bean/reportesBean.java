@@ -1,5 +1,6 @@
 package Bean;
 
+import Model.Credito;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -63,12 +64,12 @@ public class reportesBean implements Serializable {
             stream.flush();
             stream.close();
             FacesContext.getCurrentInstance().responseComplete();
-        } else{
+        } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Crear proforma primero."));
         }
         con.close();
     }
-    
+
     public void exportarLiq(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
@@ -85,8 +86,61 @@ public class reportesBean implements Serializable {
             stream.flush();
             stream.close();
             FacesContext.getCurrentInstance().responseComplete();
-        } else{
+        } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Genere el crédito primero"));
+        }
+        con.close();
+    }
+
+    public void exportarFormato(String codigo, Credito credito) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (credito.getEstado().equals("AP")) {
+            if (StringUtils.isNotBlank(codigo)) {
+                parametros.put("codigo", codigo);
+                File jasper = new File("D:/reporte/form_aproba.jasper");
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                response.addHeader("Content-disposition", "attachment; filename=Formato" + codigo + ".pdf");
+                ServletOutputStream stream = response.getOutputStream();
+                JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                stream.flush();
+                stream.close();
+                FacesContext.getCurrentInstance().responseComplete();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Genere el crédito primero"));
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El credito debe estar aprobado"));
+        }
+
+        con.close();
+    }
+
+    public void exportarCronograma(String codigo, Credito credito) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (credito.getEstado().equals("AP")) {
+            if (StringUtils.isNotBlank(codigo)) {
+                parametros.put("codigo", codigo);
+                File jasper = new File("D:/reporte/cronograma.jasper");
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                response.addHeader("Content-disposition", "attachment; filename=Cronograma" + codigo + ".pdf");
+                ServletOutputStream stream = response.getOutputStream();
+                JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                stream.flush();
+                stream.close();
+                FacesContext.getCurrentInstance().responseComplete();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Genere el crédito primero"));
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El credito debe estar aprobado"));
         }
         con.close();
     }

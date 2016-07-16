@@ -118,7 +118,7 @@ public class creditoBean implements Serializable {
     private boolean disablecaja;
     private List<Tipodoc> listafilttipo = new ArrayList();
     private boolean disableoper;
-    private boolean disablecomp;    
+    private boolean disablecomp;
     private List<Caja> todasCajas = new ArrayList();
 
     public creditoBean() {
@@ -196,7 +196,7 @@ public class creditoBean implements Serializable {
                             credito.setEstado("EM");
                             credito.setEmpresa("CA");
                             credito.setCalificacion("PN");
-                            credito.setElaborado(usuario.getAnexo().getIdanexo());                            
+                            credito.setElaborado(usuario.getAnexo().getIdanexo());
                             credito.setSwinicial(false);
                             creditodao.insertarVenta(credito);
                             sw = 1;
@@ -999,10 +999,12 @@ public class creditoBean implements Serializable {
         iniciapre = Inicial.inicialCredito(anexo.getDistrito(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
         if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("JE")) {
             if (credito.getEstado().equals("EM")) {
+                value = true;
                 disableaval = false;
                 btnaprobar = "Aprobar";
                 return "/venta/formaprobar.xhtml";
             } else {
+                value = false;
                 disableaval = true;
                 btnaprobar = "Desaprobar";
             }
@@ -1275,6 +1277,7 @@ public class creditoBean implements Serializable {
                 vehidao.modificarVehiculo(vehiculo);
                 credito.setSwinicial(false);
                 credito.setEstado("AP");
+                value = false;
                 btnaprobar = "Desaprobar";
                 credito.setModificado(usuario.getAnexo().getIdanexo());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se aprobó el crédito."));
@@ -1304,12 +1307,17 @@ public class creditoBean implements Serializable {
         credao.modificarVenta(credito);
         letrascredito = letrasdao.mostrarLetrasXCred(credito);
     }
-    
-    public void rechazarcredito(Usuario usuario){
+
+    public void rechazarcredito(Usuario usuario) {
         CreditoDao credao = new CreditoDaoImp();
         try {
-            credito.setEstado("RC");
-            credao.modificarVenta(credito);
+            if (credito.getEstado().equals("AP")) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Debe desaprobar el crédito primero"));
+            } else {
+                credito.setEstado("RC");
+                credao.modificarVenta(credito);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se rechazó el crédito"));
+            }
         } catch (Exception e) {
         }
     }
