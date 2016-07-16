@@ -5,6 +5,7 @@ import Dao.ModeloDaoImplements;
 import Dao.VehiculoDao;
 import Dao.VehiculoDaoImplements;
 import Model.Credito;
+import Model.Usuario;
 import Model.Vehiculo;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
@@ -44,42 +45,58 @@ public class vehiculoBean implements Serializable {
         this.vehiculo = new Vehiculo();
     }
 
-    public void registrar() {
-        this.session = null;
-        this.transaction = null;
+    public void nuevo(Usuario usuario) {
+        if (usuario.getPerfil().getAbrev().equals("AD")) {
+            vehiculo = new Vehiculo();
+            RequestContext.getCurrentInstance().update("formInsertar");
+            RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
+        } else {
+            RequestContext.getCurrentInstance().update("formMostrar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
+        }
+    }
 
-        try {
+    public void registrar(Usuario usuario) {
+        if (usuario.getPerfil().getAbrev().equals("AD")) {
+            this.session = null;
+            this.transaction = null;
 
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
+            try {
 
-            VehiculoDaoImplements dao = new VehiculoDaoImplements();
-            if (dao.verBySerie(this.session, this.vehiculo.getSerie()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Articulo ya existe en DB."));
+                this.session = HibernateUtil.getSessionFactory().openSession();
+                this.transaction = session.beginTransaction();
+
+                VehiculoDaoImplements dao = new VehiculoDaoImplements();
+                if (dao.verBySerie(this.session, this.vehiculo.getSerie()) != null) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Articulo ya existe en DB."));
+                    this.vehiculo = new Vehiculo();
+                    return;
+                }
+
+                Date d = new Date();
+                vehiculo.setFechareg(d);
+                vehiculo.setTipovehiculo(vehiculo.getModelo().getTipo());
+                dao.registrar(this.session, this.vehiculo);
+
+                this.transaction.commit();
+
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+
                 this.vehiculo = new Vehiculo();
-                return;
+            } catch (Exception e) {
+                if (this.transaction != null) {
+                    this.transaction.rollback();
+                }
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+                this.vehiculo = new Vehiculo();
+            } finally {
+                if (this.session != null) {
+                    this.session.close();
+                }
             }
-
-            Date d = new Date();
-            vehiculo.setFechareg(d);
-            vehiculo.setTipovehiculo(vehiculo.getModelo().getTipo());
-            dao.registrar(this.session, this.vehiculo);
-
-            this.transaction.commit();
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-
-            this.vehiculo = new Vehiculo();
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-            this.vehiculo = new Vehiculo();
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
+        } else {
+            RequestContext.getCurrentInstance().update("formMostrar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
         }
     }
 
@@ -137,53 +154,63 @@ public class vehiculoBean implements Serializable {
         }
     }
 
-    public void cargarArticuloEditar(Integer codigoUsuario) {
-        this.session = null;
-        this.transaction = null;
+    public void cargarArticuloEditar(Integer codigoUsuario, Usuario usuario) {
+        if (usuario.getPerfil().getAbrev().equals("AD")) {
+            this.session = null;
+            this.transaction = null;
 
-        try {
+            try {
 
-            VehiculoDaoImplements dao = new VehiculoDaoImplements();
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-            this.vehiculo = dao.verByIdvehiculo(this.session, codigoUsuario);
-            this.transaction.commit();
-            RequestContext.getCurrentInstance().update("frmEditarArticulo:panelEditarArticulo");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEditarArticulo').show()");
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
+                VehiculoDaoImplements dao = new VehiculoDaoImplements();
+                this.session = HibernateUtil.getSessionFactory().openSession();
+                this.transaction = session.beginTransaction();
+                this.vehiculo = dao.verByIdvehiculo(this.session, codigoUsuario);
+                this.transaction.commit();
+                RequestContext.getCurrentInstance().update("frmEditarArticulo:panelEditarArticulo");
+                RequestContext.getCurrentInstance().execute("PF('dialogoEditarArticulo').show()");
+            } catch (Exception e) {
+                if (this.transaction != null) {
+                    this.transaction.rollback();
+                }
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            } finally {
+                if (this.session != null) {
+                    this.session.close();
+                }
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
+        } else {
+            RequestContext.getCurrentInstance().update("formMostrar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
         }
     }
 
-    public void cargarArticuloEliminar(Integer codigoUsuario) {
-        this.session = null;
-        this.transaction = null;
+    public void cargarArticuloEliminar(Integer codigoUsuario, Usuario usuario) {
+        if (usuario.getPerfil().getAbrev().equals("AD")) {
+            this.session = null;
+            this.transaction = null;
 
-        try {
+            try {
 
-            VehiculoDaoImplements dao = new VehiculoDaoImplements();
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-            this.vehiculo = dao.verByIdvehiculo(this.session, codigoUsuario);
-            this.transaction.commit();
-            RequestContext.getCurrentInstance().update("frmEliminarArticulo");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarArticulo').show()");
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
+                VehiculoDaoImplements dao = new VehiculoDaoImplements();
+                this.session = HibernateUtil.getSessionFactory().openSession();
+                this.transaction = session.beginTransaction();
+                this.vehiculo = dao.verByIdvehiculo(this.session, codigoUsuario);
+                this.transaction.commit();
+                RequestContext.getCurrentInstance().update("frmEliminarArticulo");
+                RequestContext.getCurrentInstance().execute("PF('dialogoEliminarArticulo').show()");
+            } catch (Exception e) {
+                if (this.transaction != null) {
+                    this.transaction.rollback();
+                }
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            } finally {
+                if (this.session != null) {
+                    this.session.close();
+                }
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
+        } else {
+            RequestContext.getCurrentInstance().update("formMostrar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
         }
     }
 

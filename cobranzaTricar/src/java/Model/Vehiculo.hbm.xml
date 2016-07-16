@@ -21,7 +21,7 @@
             <column name="serie" length="20" not-null="true" />
         </property>
         <property name="anofabri" type="java.lang.Integer">
-            <column name="anofabri" />
+            <column name="anofabri" not-null="true" />
         </property>
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" />

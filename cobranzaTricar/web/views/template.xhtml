@@ -68,31 +68,32 @@
             </div>
             <h:form id="layout-menu" class="BordRad3 Unselectable">
                 <p:menubar >
-                    <p:menuitem value="Inicio" icon="ui-icon-home" outcome="/views/index" />
-                    <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Configuracion" icon="ui-icon-suitcase">
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="ui-icon-newwin" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="ui-icon-person" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="ui-icon-clipboard" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="ui-icon-copy" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCaja}" value="Caja" action="#{loginbean.caja()}" icon="ui-icon-copy" />
+                    <p:menuitem value="Inicio" icon="fa fa-home" outcome="/views/index" />
+                    <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Configuracion" icon="fa fa-briefcase">
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="fa fa-street-view" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="fa fa-user-plus" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="fa fa-drupal" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="fa fa-user-secret" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisCaja}" value="Caja" action="#{loginbean.caja()}" icon="fa fa-dropbox" />
                     </p:submenu>
-                    <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="ui-icon-gear">
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="ui-icon-person" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manIng}" value="Ingresos" action="#{loginbean.ingreso()}" icon="ui-icon-document" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" action="#{loginbean.articulo()}" icon="ui-icon-flag" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" action="#{loginbean.modelo()}" icon="ui-icon-star" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" action="#{loginbean.color()}" icon="ui-icon-pencil" />
+                    <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="fa fa-archive">
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="fa fa-male" />                        
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manAval}" value="Aval" action="#{loginbean.aval()}" icon="fa fa-smile-o" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manIng}" value="Ingresos" action="#{loginbean.ingreso()}" icon="fa fa-money" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" action="#{loginbean.articulo()}" icon="fa fa-motorcycle" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" action="#{loginbean.modelo()}" icon="fa fa-tablet" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" action="#{loginbean.color()}" icon="fa fa-tint" />
                     </p:submenu>
-                    <p:submenu rendered="#{loginbean.usuario.perfil.venta}" label="Credito - Pago" icon="ui-icon-cart">
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.venCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="ui-icon-script" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.venReg}" value="Crédito" action="#{creditoBean.index()}" icon="ui-icon-newwin" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manRef}" value="Refinanciar" action="#{creditoBean.indexref()}" icon="ui-icon-newwin" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.venLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="ui-icon-grip-dotted-vertical" />
+                    <p:submenu rendered="#{loginbean.usuario.perfil.creco}" label="Credito - Pago" icon="fa fa-calculator">
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.creCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="fa fa-file" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.creReg}" value="Crédito" action="#{creditoBean.index()}" icon="fa fa-shirtsinbulk" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.creRef}" value="Refinanciar" action="#{creditoBean.indexref()}" icon="fa fa-medium" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.creLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="fa fa-pinterest-p" />
                     </p:submenu>
-                    <p:submenu rendered="#{loginbean.usuario.perfil.despacho}" label="Despacho" icon="ui-icon-flag">
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manDes}" value="Despacho" action="#{creditoBean.indexdespacho()}" icon="ui-icon-calculator" />
+                    <p:submenu rendered="#{loginbean.usuario.perfil.despacho}" label="Despacho" icon="fa fa-slideshare">
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.desDes}" value="Despacho" action="#{creditoBean.indexdespacho()}" icon="fa fa-share-alt" />
                     </p:submenu>
-                    <p:submenu label="Reporte" icon="ui-icon-print">
+                    <p:submenu label="Reporte" icon="fa fa-line-chart">
                         <p:menuitem value="Deuda Vencida" action="#{loginbean.deudor()}" icon="ui-icon-bookmark" />
                         <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />
                     </p:submenu>

@@ -10,7 +10,7 @@
         <ui:composition template="./../views/template.xhtml">
             <ui:define name="content">
                 <h:form id="frmNuevo">
-                    <p:commandButton value="Nuevo" update=":formInsertar:panelcrearperfil" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
+                    <p:commandButton value="Nuevo" update=":formInsertar:panelcrearperfil" oncomplete="dlginsertar.show()" icon="fa fa-plus white"/>
                 </h:form>
 
                 <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
@@ -26,9 +26,9 @@
                                     <h:outputText value="#{item.descripcion}"/>
                                 </p:column>
                                 <p:column>
-                                    <p:commandButton actionListener="#{perfilBean.cargarPerfilEditar(item.idperfil)}" icon="ui-icon ui-icon-pencil"/>
-                                    <p:commandButton actionListener="#{perfilBean.cargarPerfilEliminar(item.idperfil)}" icon="ui-icon ui-icon-trash"/>
-                                    <p:commandButton actionListener="#{perfilBean.cargarMenuAsignar(item.idperfil)}" icon="ui-icon ui-icon-wrench"/>
+                                    <p:commandButton actionListener="#{perfilBean.cargarPerfilEditar(item.idperfil)}" icon="fa fa-pencil white"/>
+                                    <p:commandButton actionListener="#{perfilBean.cargarPerfilEliminar(item.idperfil)}" icon="fa fa-trash white"/>
+                                    <p:commandButton actionListener="#{perfilBean.cargarMenuAsignar(item.idperfil)}" icon="fa fa-flask white"/>
                                 </p:column>
                             </p:dataTable>
                         </h:form>
@@ -37,21 +37,31 @@
 
                 <h:form id="formInsertar">
                     <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
-                        <h:panelGrid id="panelcrearperfil">
+                        <h:panelGrid id="panelcrearperfil" columns="2">
                             <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" 
-                                         style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
-                            <p:message for="txtDescripcion"/>
-                            <p:commandButton value="Guardar" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
+                            <p:outputLabel value="Abrebiado:" for="txtAbreviado"/>
+                            <p:inputText id="txtAbreviado" label="Abrebiado" value="#{perfilBean.perfil.abrev}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
 
                 <h:form id="frmEditarPerfil">
-                    <p:dialog header="Datos del usuario" widgetVar="dialogoEditarPerfil" modal="true">
-                        <h:panelGrid id="panelEditarPerfil">                        
+                    <p:dialog header="Datos del Perfil" widgetVar="dialogoEditarPerfil" modal="true">
+                        <h:panelGrid id="panelEditarPerfil" columns="2">
+                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="Abrebiado:" for="txtAbreviado"/>
+                            <p:inputText id="txtAbreviado" label="Abrebiado" value="#{perfilBean.perfil.abrev}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sistema}"/>
@@ -59,75 +69,77 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisVende}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisUsu}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisPer}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisCaja}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.mante}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manArt}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manCli}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manIng}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manMod}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manDes}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.manCol}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.venta}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.venLis}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.venReg}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.venCon}"/>   
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manCaja}"/>    
-                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" 
-                                         autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:message for="txtDescripcion"/>
-                            <p:commandButton value="Guardar" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.creco}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.creLis}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.creReg}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.creCon}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.despacho}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.desDes}"/>
+                            <h:panelGroup></h:panelGroup>
+                            <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
 
                 <h:form id="frmAsignarMenu">
                     <p:dialog header="Datos del usuario" widgetVar="dialogoAsignarMenu" modal="true">
-                        <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
-                        <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
-                        <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
-                        <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
-                        <br/>
-                        <br/><h:outputText value="Sistema:" />
-                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisEmp}"/>
-                        <p:outputLabel value="Empleados" />
-                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisUsu}"/>
-                        <p:outputLabel value="Usuarios" />
-                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.sisVende}"/>
-                        <p:outputLabel value="Vendedor" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
-                        <p:outputLabel value="Perfiles" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCaja}"/>
-                        <p:outputLabel value="Caja" />
-                        <br/>
-                        <br/><h:outputText value="Mantenimiento:" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>
-                        <h:outputText value="Clientes" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manArt}"/>
-                        <h:outputText value="Artículos" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manIng}"/>
-                        <h:outputText value="Ingresos" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manMod}"/>
-                        <h:outputText value="Modelos" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCol}"/>
-                        <h:outputText value="Colores" />
-                        <br/>
-                        <br/><h:outputText value="Venta:" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venLis}"/>
-                        <h:outputText value="Pagos" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.venReg}"/>
-                        <h:outputText value="Credito" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manRef}"/>
-                        <h:outputText value="Refinanciar" />
-                        <br/><p:selectBooleanCheckbox value="#{perfilBean.perfil.venCon}"/>
-                        <p:outputLabel value="Proforma" />
-                        <br/>
-                        <br/><h:outputText value="Despacho:" />
-                        <br/><p:selectBooleanCheckbox  value="#{perfilBean.perfil.manDes}"/>
-                        <h:outputText value="Despacho" />                        
-                        <p:separator/>
-                        <p:commandButton value="Asignar" icon="ui-icon-disk" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                        <h:panelGrid id="panelEditarPerfil" columns="4">
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
+                            <h:panelGroup></h:panelGroup>
+                            <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
+                            <h:outputText value="Sistema:" />
+                            <h:panelGroup></h:panelGroup>
+                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisEmp}"/>
+                            <p:outputLabel value="Empleados" />
+                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisUsu}"/>
+                            <p:outputLabel value="Usuarios" />
+                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisVende}"/>
+                            <p:outputLabel value="Vendedor" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
+                            <p:outputLabel value="Perfiles" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisCaja}"/>
+                            <p:outputLabel value="Caja" />
+                            <h:panelGroup></h:panelGroup>
+                            <br/><h:outputText value="Mantenimiento:" /><br/>
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>
+                            <h:outputText value="Clientes" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manAval}"/>
+                            <h:outputText value="Avales" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manArt}"/>
+                            <h:outputText value="Artículos" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manIng}"/>
+                            <h:outputText value="Ingresos" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manMod}"/>
+                            <h:outputText value="Modelos" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCol}"/>
+                            <h:outputText value="Colores" />
+                            <br/><h:outputText value="Venta:" /><br/>
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.creLis}"/>
+                            <h:outputText value="Pagos" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.creReg}"/>
+                            <h:outputText value="Credito" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.creRef}"/>
+                            <h:outputText value="Refinanciar" />
+                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.creCon}"/>
+                            <p:outputLabel value="Proforma" />
+                            <br/><h:outputText value="Despacho:" /><br/>
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.desDes}"/>
+                            <h:outputText value="Despacho" />                        
+                            <p:separator/>
+                            <p:commandButton value="Asignar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                        </h:panelGrid>
                     </p:dialog>
                 </h:form>
 
@@ -136,8 +148,8 @@
                         <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                         <h:outputText value="¿Desea eliminar?" />
                         <p:separator/>
-                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" icon="ui-icon-check" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="ui-icon-close" />
+                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" icon="fa fa-check blue" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
                     </p:dialog>
                 </h:form>
 

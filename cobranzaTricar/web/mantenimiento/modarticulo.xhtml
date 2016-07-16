@@ -9,7 +9,7 @@
 
     <ui:define name="content">
         <h:form id="frmNuevo">
-            <p:commandButton value="Nuevo Modelo" update=":formInsertar:panelcrearmodelo" oncomplete="dlginsertar.show()" icon="ui-icon-plus"/>
+            <p:commandButton value="Nuevo Modelo" update=":formInsertar:panelcrearmodelo" oncomplete="dlginsertar.show()" icon="fa fa-plus white"/>
         </h:form>
         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
             <div class="ui-datatable-header ui-widget-header ui-corner-top">
@@ -27,8 +27,8 @@
                             <h:outputText value="#{item.tipo}"/>
                         </p:column>
                         <p:column width="10%" style="text-align: center">
-                            <p:commandButton actionListener="#{modeloBean.cargarModeloEditar(item.idmodelo)}" icon="ui-icon ui-icon-pencil"/>
-                            <p:commandButton actionListener="#{modeloBean.cargarModeloEliminar(item.idmodelo)}" icon="ui-icon ui-icon-trash"/>
+                            <p:commandButton actionListener="#{modeloBean.cargarModeloEditar(item.idmodelo)}" icon="fa fa-pencil white"/>
+                            <p:commandButton actionListener="#{modeloBean.cargarModeloEliminar(item.idmodelo)}" icon="fa fa-trash white"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
@@ -37,13 +37,12 @@
 
         <h:form id="formInsertar">
             <p:dialog header="Nuevo Modelo" widgetVar="dlginsertar" modal="true">                        
-                <h:panelGrid id="panelcrearmodelo" columns="3">
+                <h:panelGrid id="panelcrearmodelo" columns="2">
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                     <p:inputText id="txtDescripcion" label="Descripcion" value="#{modeloBean.model.modelo}" 
                                  style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
-                    <p:message for="txtDescripcion"/>
                     <p:outputLabel value="Tipo Vehículo:"/>
                     <p:selectOneMenu value="#{modeloBean.model.tipo}" >                        
                         <f:selectItem itemLabel="MTX" itemValue="MX" />
@@ -51,22 +50,20 @@
                         <f:selectItem itemLabel="MTF" itemValue="MF" />
                         <f:selectItem itemLabel="MTC" itemValue="MC" />                                
                     </p:selectOneMenu>
-                    <p:commandButton value="Registrar Modelo" icon="b-new" ajax="false" actionListener="#{modeloBean.registrar()}" />
+                    <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{modeloBean.registrar()}" />
                 </h:panelGrid>
             </p:dialog>
         </h:form>
 
         <h:form id="frmEditarModelo">
             <p:dialog header="Datos del usuario" widgetVar="dialogoEditarModelo" modal="true">
-                <h:panelGrid id="panelEditarModelo" columns="3">                        
-                    <h:panelGroup></h:panelGroup>
+                <h:panelGrid id="panelEditarModelo" columns="2">
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                     <p:inputText id="txtDescripcion" label="Descripcion" value="#{modeloBean.model.modelo}" style="text-transform: uppercase" 
                                  autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
-                    <h:panelGroup></h:panelGroup>  
-                    <p:commandButton value="Guardar cambios" icon="b-new" ajax="false" actionListener="#{modeloBean.modificar()}"/>
+                    <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{modeloBean.modificar()}"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>
@@ -75,8 +72,9 @@
             <p:dialog header="Eliminar Modelo" widgetVar="dialogoEliminarModelo" modal="true">
                 <p:inputText type="hidden" value="#{modeloBean.model.idmodelo}"/>
                 <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{modeloBean.eliminar()}" ajax="false" icon="b-ok" />
-                <p:commandButton value="No" onclick="dlg2.hide();" icon="b-cancel" />
+                <p:separator/>
+                <p:commandButton value="Si" actionListener="#{modeloBean.eliminar()}" ajax="false" icon="fa fa-check blue" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
             </p:dialog>
         </h:form>
     </ui:define>

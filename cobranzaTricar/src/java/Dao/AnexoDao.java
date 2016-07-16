@@ -13,6 +13,7 @@ public interface AnexoDao {
     public void insertar(Anexo anexo);
     public List<Anexo> verTodo(Session session) throws Exception;
     public List<Anexo> verCliente(Session session) throws Exception;
+    public List<Anexo> verAval(Session session) throws Exception;
     public List<Anexo> verEmpleado(Session session) throws Exception;
     public List<Anexo> verVendedor(Session session) throws Exception;
     public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception;

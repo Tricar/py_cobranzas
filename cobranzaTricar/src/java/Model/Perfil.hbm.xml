@@ -29,11 +29,20 @@
         <property name="sisPer" type="java.lang.Boolean">
             <column name="sisPer" />
         </property>
+        <property name="sisCaja" type="java.lang.Boolean">
+            <column name="sisCaja" />
+        </property>
         <property name="mante" type="java.lang.Boolean">
             <column name="mante" />
         </property>
         <property name="manCli" type="java.lang.Boolean">
             <column name="manCli" />
+        </property>
+        <property name="manIng" type="java.lang.Boolean">
+            <column name="manIng" />
+        </property>
+        <property name="manAval" type="java.lang.Boolean">
+            <column name="manAval" />
         </property>
         <property name="manArt" type="java.lang.Boolean">
             <column name="manArt" />
@@ -44,32 +53,26 @@
         <property name="manCol" type="java.lang.Boolean">
             <column name="manCol" />
         </property>
-        <property name="venta" type="java.lang.Boolean">
-            <column name="venta" />
+        <property name="creco" type="java.lang.Boolean">
+            <column name="creco" />
         </property>
-        <property name="venLis" type="java.lang.Boolean">
-            <column name="venLis" />
+        <property name="creLis" type="java.lang.Boolean">
+            <column name="creLis" />
         </property>
-        <property name="venReg" type="java.lang.Boolean">
-            <column name="venReg" />
+        <property name="creReg" type="java.lang.Boolean">
+            <column name="creReg" />
         </property>
-        <property name="venCon" type="java.lang.Boolean">
-            <column name="venCon" />
+        <property name="creCon" type="java.lang.Boolean">
+            <column name="creCon" />
         </property>
-        <property name="manIng" type="java.lang.Boolean">
-            <column name="manIng" />
-        </property>
-        <property name="manDes" type="java.lang.Boolean">
-            <column name="manDes" />
-        </property>
-        <property name="manCaja" type="java.lang.Boolean">
-            <column name="manCaja" />
-        </property>
-        <property name="manRef" type="java.lang.Boolean">
-            <column name="manRef" />
+        <property name="creRef" type="java.lang.Boolean">
+            <column name="creRef" />
         </property>
         <property name="despacho" type="java.lang.Boolean">
             <column name="despacho" />
+        </property>
+        <property name="desDes" type="java.lang.Boolean">
+            <column name="desDes" />
         </property>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>

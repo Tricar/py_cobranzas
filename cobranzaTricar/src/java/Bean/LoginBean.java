@@ -112,6 +112,10 @@ public class LoginBean implements Serializable {
     public String cliente() {
         return "/mantenimiento/cliente";
     }
+    
+    public String aval() {
+        return "/mantenimiento/aval";
+    }
 
     public String articulo() {
         return "/mantenimiento/articulo";

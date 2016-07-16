@@ -85,22 +85,22 @@ public class PerfilBean implements Serializable {
             } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false && perfil.getSisVende()==false && perfil.getSisEmp()==false) {
                 perfil.setSistema(false);
             }
-            if (perfil.getManArt() == true || perfil.getManCli() == true || perfil.getManCol() == true
+            if (perfil.getManArt() == true || perfil.getManAval() == true || perfil.getManCli() == true || perfil.getManCol() == true
                     || perfil.getManMod() == true || perfil.getManIng()== true) {
                 perfil.setMante(true);
-            } else if (perfil.getManArt() == false && perfil.getManCli() == false && perfil.getManCol() == false
+            } else if (perfil.getManArt() == false && perfil.getManAval() == false && perfil.getManCli() == false && perfil.getManCol() == false
                     && perfil.getManMod() == false && perfil.getManIng()== false) {
                 perfil.setMante(false);
             }
-            if (perfil.getVenLis() == true || perfil.getVenReg() == true) {
-                perfil.setVenta(true);
-            } else if (perfil.getVenLis() == false && perfil.getVenReg() == false) {
-                perfil.setVenta(false);
+            if (perfil.getCreLis() == true || perfil.getCreReg() == true) {
+                perfil.setCreco(true);
+            } else if (perfil.getCreLis() == false && perfil.getCreReg() == false) {
+                perfil.setCreco(false);
             }
             
-            if (perfil.getManDes()== true) {
+            if (perfil.getDesDes()== true) {
                 perfil.setDespacho(true);
-            } else if (perfil.getManDes()== false) {
+            } else if (perfil.getDesDes()== false) {
                 perfil.setDespacho(false);
             }
             PerfilDaoImpl perfilDao = new PerfilDaoImpl();
@@ -214,14 +214,20 @@ public class PerfilBean implements Serializable {
             perfil.setSisEmp(false);
             perfil.setSisVende(false);
             perfil.setSisUsu(false);
+            perfil.setSisCaja(false);
             perfil.setMante(false);
-            perfil.setManArt(false);
             perfil.setManCli(false);
+            perfil.setManIng(false);
+            perfil.setManArt(false);
+            perfil.setManAval(false);
             perfil.setManCol(false);
             perfil.setManMod(false);
-            perfil.setVenta(false);
-            perfil.setVenLis(false);
-            perfil.setVenReg(false);
+            perfil.setCreco(false);
+            perfil.setCreLis(false);
+            perfil.setCreReg(false);
+            perfil.setCreCon(false);
+            perfil.setDespacho(false);            
+            perfil.setDesDes(false);
             linkDao.registrar(this.session, this.perfil);
             this.transaction.commit();
             this.perfil = new Perfil();
