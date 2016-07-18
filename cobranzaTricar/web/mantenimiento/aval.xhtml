@@ -51,7 +51,7 @@
                 <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
                 <h:panelGrid columns="4">
                     <p:outputLabel value="DOCUMENTO:" for="txtDocumento"/>
-                    <p:inputMask mask="9?999999" id="txtDocumento" value="#{anexoBean.anexo.numdocumento}" maxlength="11">
+                    <p:inputMask mask="9?9999999" id="txtDocumento" value="#{anexoBean.anexo.numdocumento}" maxlength="11">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputMask>                               
                     <p:outputLabel  value="NOMBRE:" for="txtNombre"/>
