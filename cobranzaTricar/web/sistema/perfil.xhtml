@@ -97,11 +97,13 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
                             <h:panelGroup></h:panelGroup>
-                            <h:outputText value="#{perfilBean.perfil.descripcion}" style="font-weight:bold"/>
+                            <h:outputText class="red Fs20" value="#{perfilBean.perfil.descripcion}"/>
                             <h:panelGroup></h:panelGroup>
                             <h:panelGroup></h:panelGroup>
                             <h:panelGroup></h:panelGroup>
-                            <h:outputText value="Sistema:" />
+                            <h:outputText class="blue Fs16" value="Sistema:" />
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
                             <h:panelGroup></h:panelGroup>
                             <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisEmp}"/>
                             <p:outputLabel value="Empleados" />
@@ -114,7 +116,11 @@
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisCaja}"/>
                             <p:outputLabel value="Caja" />
                             <h:panelGroup></h:panelGroup>
-                            <br/><h:outputText value="Mantenimiento:" /><br/>
+                            <h:panelGroup></h:panelGroup>
+                            <h:outputText class="blue Fs16" value="Mantenimiento:" />
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>
                             <h:outputText value="Clientes" />
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manAval}"/>
@@ -126,8 +132,11 @@
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manMod}"/>
                             <h:outputText value="Modelos" />
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCol}"/>
-                            <h:outputText value="Colores" />
-                            <br/><h:outputText value="Venta:" /><br/>
+                            <h:outputText value="Colores" />   
+                            <h:outputText class="blue Fs16" value="Venta:" />
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.creLis}"/>
                             <h:outputText value="Pagos" />
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.creReg}"/>
@@ -136,12 +145,14 @@
                             <h:outputText value="Refinanciar" />
                             <p:selectBooleanCheckbox value="#{perfilBean.perfil.creCon}"/>
                             <p:outputLabel value="Proforma" />
-                            <br/><h:outputText value="Despacho:" /><br/>
+                            <h:outputText class="blue Fs16" value="Despacho:" />                            
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
+                            <h:panelGroup></h:panelGroup>
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.desDes}"/>
-                            <h:outputText value="Despacho" />                        
-                            <p:separator/>
-                            <p:commandButton value="Asignar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                            <h:outputText value="Despacho" />   
                         </h:panelGrid>
+                        <p:commandButton value="Asignar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>
                 </h:form>
 
