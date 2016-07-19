@@ -46,50 +46,52 @@ public class TareaDiaria {
             Credito cred = creditos.get(i);
             System.out.println("credito " + cred.getLiqventa() + " anexo" + cred.getAnexo().getNombres());
             int contvn = 0;
-            if (!cred.getCalificacion().equals("CN")) {
-                letritas = letrasdao.mostrarLetrasXCred(cred);
-                for (int j = 0; j < letritas.size(); j++) {
-                    Letras letras = letritas.get(j);
+            if (!cred.getEstado().equals("EM")) {
+                if (!cred.getCalificacion().equals("CN")) {
+                    letritas = letrasdao.mostrarLetrasXCred(cred);
+                    for (int j = 0; j < letritas.size(); j++) {
+                        Letras letras = letritas.get(j);
 //                    if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
 //                        letras.setEstado("CN");
 //                        contcn++;
 //                    } else {
-                    if (!letras.getDescripcion().equals("ND")) {
-                        if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
-                            if (letras.getFecven().after(fecha)) {
-                                letras.setEstado("PN");
-                            } else {
-                                letras.setEstado("VN");
-                                letras.setDiffdays(Diffdays(letras.getFecven()));
-                                letras.setCobradonc(true);
-                                contvn++;
+                        if (!letras.getDescripcion().equals("ND")) {
+                            if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
+                                if (letras.getFecven().after(fecha)) {
+                                    letras.setEstado("PN");
+                                } else {
+                                    letras.setEstado("VN");
+                                    letras.setDiffdays(Diffdays(letras.getFecven()));
+                                    letras.setCobradonc(true);
+                                    contvn++;
+                                }
                             }
-                        }                        
 //                        moraant = letras.getMora();
 //                        moraact = (letras.getSaldo().multiply(interes)).setScale(1, RoundingMode.UP);
-                        if (letras.getEstado().equals("VN")) {
-                            if (letras.getDiffdays()>8) {
-                                interes = factormora.multiply(BigDecimal.valueOf(letras.getDiffdays())).setScale(5, RoundingMode.HALF_DOWN);
-                                letras.setMora(letras.getSaldo().multiply(interes).setScale(0, RoundingMode.UP));
-                            } else {
-                                letras.setMora(BigDecimal.ZERO);
-                            }                  
+                            if (letras.getEstado().equals("VN")) {
+                                if (letras.getDiffdays() > 8) {
+                                    interes = factormora.multiply(BigDecimal.valueOf(letras.getDiffdays())).setScale(5, RoundingMode.HALF_DOWN);
+                                    letras.setMora(letras.getSaldo().multiply(interes).setScale(0, RoundingMode.UP));
+                                } else {
+                                    letras.setMora(BigDecimal.ZERO);
+                                }
 //                            if (moraact.compareTo(moraant) == -1) {
 //                                letras.setMora(moraant);
 //                            } else {
 //                                letras.setMora(moraact);
 //                            }
+                            }
+                            letrasdao.modificarLetra(letras);
                         }
-                        letrasdao.modificarLetra(letras);
-                    }
 //                    }
+                    }
+                    if (contvn == letritas.size()) {
+                        cred.setCalificacion("VN");
+                    } else {
+                        cred.setCalificacion("PN");
+                    }
+                    credao.modificarVenta(cred);
                 }
-                if (contvn == letritas.size()) {
-                    cred.setCalificacion("VN");
-                } else {
-                    cred.setCalificacion("PN");
-                }
-                credao.modificarVenta(cred);
             }
         }
         System.out.println("ejecuté toda la linea de actualizar los creditos");
@@ -100,7 +102,6 @@ public class TareaDiaria {
 //        // Do your job here which should run every 15 minute of hour.
 //        System.out.println("Imprimir cada 1 mins");
 //    }
-
     public long Diffdays(Date fechavenc) {
         long mili = fechavenc.getTime();
         long mili2 = new Date().getTime();

@@ -32,6 +32,9 @@
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" not-null="true" />
         </property>
+        <property name="fecaprob" type="timestamp">
+            <column name="fecaprob" length="23" not-null="true" />
+        </property>
         <property name="aprobado" type="java.lang.Integer">
             <column name="aprobado" />
         </property>

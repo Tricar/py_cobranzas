@@ -77,7 +77,6 @@ public class precio {
                 case "VX110 LYRA":
                     precio = BigDecimal.valueOf(3090.00);
                     break;
-
             }
         }
         return precio;

@@ -16,7 +16,7 @@
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
                 <p:growl id="msg12" showDetail="true"/>
-                <p:panelGrid columns="2">
+                <p:panelGrid columns="4">
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
                     <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
@@ -58,7 +58,7 @@
                         </p:dataTable>                        
                     </p:tab>                    
                 </p:accordionPanel>
-                <p:panelGrid columns="2">
+                <p:panelGrid columns="4">
                     <p:outputLabel value="Tienda:" for="txttienda"/>
                     <p:selectOneMenu id="txttienda" value="#{creditoBean.credito.tienda}" required="true" requiredMessage="Seleccione la Tienda">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>

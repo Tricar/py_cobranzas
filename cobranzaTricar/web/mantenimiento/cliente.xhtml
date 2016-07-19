@@ -146,8 +146,7 @@
                     </p:inputText>
                     <p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
                     <p:inputText value="#{anexoBean.anexo.referencia}" id="txtReferencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                        <f:validator validatorId="validatorVacio"/>
-                        <f:validator validatorId="validatorLetraNumSig"/>
+                        <f:validator validatorId="validatorVacio"/>                        
                     </p:inputText>
                     <p:outputLabel value="TELEFONO:" />
                     <p:inputMask mask="9?99999999" value="#{anexoBean.anexo.telefono}" maxlength="9"/>
@@ -323,26 +322,21 @@
                         <f:selectItem itemLabel="Dependiente" itemValue="DP" />
                         <f:selectItem itemLabel="Independiente" itemValue="IN" />
                         <f:selectItem itemLabel="Transportista" itemValue="TR" />
-                        <p:ajax update="opcbol opcfacbol opcrrhh opccons opctprop opclic opcsunat opclicf" listener="#{ocupacionBean.actualizar()}" process="@this" />
+                        <p:ajax update="opcbol opcfacbol opcrrhh opctprop opclic opcsunat opclicf" listener="#{ocupacionBean.actualizar()}" process="@this" />
                     </p:selectOneMenu>
                     <p:outputLabel value="Seleccione:" for="cmbclase"/>
                     <p:selectOneMenu id="cmbclase" value="#{ocupacionBean.ocupacion.clase}" required="true" requiredMessage="Seleccione Tipo">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
                         <f:selectItem itemLabel="Formal" itemValue="FR" />
                         <f:selectItem itemLabel="Informal" itemValue="IF" />                        
-                        <p:ajax update="opcbol opcfacbol opcrrhh opccons opctprop opclic opcsunat opclicf" listener="#{ocupacionBean.actualizar()}" process="@this" />
+                        <p:ajax update="opcbol opcfacbol opcrrhh opctprop opclic opcsunat opclicf" listener="#{ocupacionBean.actualizar()}" process="@this" />
                     </p:selectOneMenu>
                     <p:outputLabel value="Descripción:" for="txtdesc"/>
                     <p:inputText id="txtdesc" value="#{ocupacionBean.ocupacion.descripcion}" onkeyup="javascript:this.value = this.value.toUpperCase();" required="true" requiredMessage="Ingrese Descripción"/>
                     <p:outputLabel value="Empresa:" for="txtem"/>
                     <p:inputText id="txtem" value="#{ocupacionBean.ocupacion.empresa}" onkeyup="javascript:this.value = this.value.toUpperCase();" required="true" requiredMessage="Ingrese Descripción"/>
                     <p:outputLabel value="Monto ingresos:" for="txtmonto"/>
-                    <p:inputText id="txtmonto" value="#{ocupacionBean.ocupacion.montoin}" class="money" required="true" requiredMessage="Ingrese Monto"/>
-                    <p:outputLabel value="Autoavalúo:" for="opccons"/>
-                    <p:selectOneRadio id="opccons" value="#{ocupacionBean.ocupacion.constancia}" disabled="#{ocupacionBean.opccons}" requiredMessage="Seleccione una opción">
-                        <f:selectItem itemLabel="SI" itemValue="true"/>
-                        <f:selectItem itemLabel="NO" itemValue="false"/>                        
-                    </p:selectOneRadio>
+                    <p:inputText id="txtmonto" value="#{ocupacionBean.ocupacion.montoin}" class="money" required="true" requiredMessage="Ingrese Monto"/>                    
                     <p:outputLabel value="Boletas de pago:" for="opcbol"/>
                     <p:selectOneRadio id="opcbol" value="#{ocupacionBean.ocupacion.boletas}" disabled="#{ocupacionBean.opcbol}" required="true" requiredMessage="Seleccione una opción">
                         <f:selectItem itemLabel="SI" itemValue="true"/>

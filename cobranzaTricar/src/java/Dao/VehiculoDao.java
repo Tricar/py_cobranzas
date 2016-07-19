@@ -1,7 +1,6 @@
 
 package Dao;
 
-import Model.Modelo;
 import Model.Vehiculo;
 import java.util.List;
 import org.hibernate.Session;

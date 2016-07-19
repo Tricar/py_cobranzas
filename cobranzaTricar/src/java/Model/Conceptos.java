@@ -31,7 +31,7 @@ public class Conceptos implements java.io.Serializable {
     private BigDecimal montopago;
     private BigDecimal total;    
     private Date fecreg;      
-    private Boolean cobrado;    
+    private Boolean cobrado;
     private Set pagoses = new HashSet(0);
 
     public Conceptos() {

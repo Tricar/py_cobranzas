@@ -1233,6 +1233,7 @@ public class creditoBean implements Serializable {
         CreditoDao credao = new CreditoDaoImp();
         VehiculoDao vehidao = new VehiculoDaoImplements();
         ConceptosDao condao = new ConceptosDaoImp();
+        Date fecaprob = new Date();
         try {
             if (btnaprobar.equals("Aprobar")) {
                 Letras letras = new Letras();
@@ -1242,6 +1243,8 @@ public class creditoBean implements Serializable {
                 BigDecimal cien = new BigDecimal(100);
                 interes = (credito.getInteres().multiply(nletras)).divide(cien);
                 Date fechaini = new Date();
+                //credito.setFecaprob(fecaprob);
+                //fechaini = credito.getFecaprob();
                 fechaini = credito.getFechareg();
                 Date fechafin = new Date();
                 fechafin = sumaDias(fechaini, 30);
@@ -1277,7 +1280,7 @@ public class creditoBean implements Serializable {
                 vehidao.modificarVehiculo(vehiculo);
                 credito.setSwinicial(false);
                 credito.setEstado("AP");
-                value = false;
+                value = false;                
                 btnaprobar = "Desaprobar";
                 credito.setModificado(usuario.getAnexo().getIdanexo());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se aprobó el crédito."));
