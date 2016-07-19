@@ -35,11 +35,12 @@ public class TareaDiaria {
         creditos = credao.mostrarVentas();
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
-        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
-        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
-        BigDecimal cinco = new BigDecimal(5);
-        BigDecimal cien = new BigDecimal(100);
-        cinco = cinco.divide(cien);
+//        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
+//        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
+        BigDecimal interes = new BigDecimal(BigInteger.ZERO);
+        BigDecimal factormora = new BigDecimal(0.002);
+        //BigDecimal cien = new BigDecimal(100);
+        //cinco = cinco.divide(cien);
         LetrasDao letrasdao = new LetrasDaoImplements();
         for (int i = 0; i < creditos.size(); i++) {
             Credito cred = creditos.get(i);
@@ -63,15 +64,21 @@ public class TareaDiaria {
                                 letras.setCobradonc(true);
                                 contvn++;
                             }
-                        }
-                        moraant = letras.getMora();
-                        moraact = (letras.getSaldo().multiply(cinco)).setScale(1, RoundingMode.UP);
+                        }                        
+//                        moraant = letras.getMora();
+//                        moraact = (letras.getSaldo().multiply(interes)).setScale(1, RoundingMode.UP);
                         if (letras.getEstado().equals("VN")) {
-                            if (moraact.compareTo(moraant) == -1) {
-                                letras.setMora(moraant);
+                            if (letras.getDiffdays()>8) {
+                                interes = factormora.multiply(BigDecimal.valueOf(letras.getDiffdays())).setScale(5, RoundingMode.HALF_DOWN);
+                                letras.setMora(letras.getSaldo().multiply(interes).setScale(0, RoundingMode.UP));
                             } else {
-                                letras.setMora(moraact);
-                            }
+                                letras.setMora(BigDecimal.ZERO);
+                            }                  
+//                            if (moraact.compareTo(moraant) == -1) {
+//                                letras.setMora(moraant);
+//                            } else {
+//                                letras.setMora(moraact);
+//                            }
                         }
                         letrasdao.modificarLetra(letras);
                     }
