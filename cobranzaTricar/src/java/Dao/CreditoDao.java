@@ -22,8 +22,8 @@ public interface CreditoDao {
     public List<Credito> cargarxEstado (String estado);
     public List<Credito> cargarTodosxCalif (String calif);
     public Credito cargarxCodigoCalif (String codigo, String calif);
-    public Credito cargarxCodigoEstadoDos (String codigo, String estado, String estado1);
-//    public List<Credito> cargarCreditoxNombre(String nombre);
+    public Credito cargarxCodigoEstadoDos (String codigo, String estado, String estado1);    
+    public Credito cargarxCodigoEst (String codigo, String condicionpago);
     public Credito veryLiqventa (String liq);
     public Credito veryId(int idventa);
     public boolean registrar(Session session, Credito credito)throws Exception;

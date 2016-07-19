@@ -128,22 +128,5 @@
                 </p:column>
             </p:dataTable>            
         </h:form>
-        <h:form id="formNotadebito">
-            <p:dialog id="dlg4" header="Ingrese los datos" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgnotadebito" modal="true" resizable="true" minWidth="200">
-                <h:panelGrid columns="2">
-                    <p:outputLabel value="Fecha:" for="txtfechai"/>
-                    <p:calendar id="txtfechai" navigator="true" showOn="button" value="#{creditoBean.letra.fecini}" 
-                                pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">                        
-                    </p:calendar>
-                    <p:outputLabel value="Monto:" for="txtmonto"/>
-                    <p:inputText id="txtmonto" value="#{creditoBean.letra.monto}" class="money" required="true" requiredMessage="Ingrese Monto"/>
-                    <p:outputLabel value="Referencia:" for="txtref"/>
-                    <p:inputText id="txtref" value="#{creditoBean.descND}" required="true" requiredMessage="Ingrese Referencia"/>
-                    <p:commandButton actionListener="#{creditoBean.insertarNotaDebito()}" value="Guardar" 
-                                     oncomplete="dlgnotadebito.hide()" ajax="false"/>
-                </h:panelGrid>
-            </p:dialog>
-        </h:form>
     </ui:define>
 </ui:composition>

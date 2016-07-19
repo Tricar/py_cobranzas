@@ -225,7 +225,6 @@ public class creditoBean implements Serializable {
                 }
             }
         }
-//        }
     }
 
     public void solicitarDeProf(Integer idusuario) {
@@ -1509,7 +1508,7 @@ public class creditoBean implements Serializable {
                 RequestContext.getCurrentInstance().update("formpagar");
                 RequestContext.getCurrentInstance().execute("PF('dlgpagarini').hide()");
                 RequestContext.getCurrentInstance().update("formpagar");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Correcto", "Se registró la inicial."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se registró la inicial."));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Revise el monto", "Monto excede el saldo"));
                 RequestContext.getCurrentInstance().update("formpagar");

@@ -85,16 +85,15 @@
                         <f:selectItems value="#{creditoBean.todasCajas}" var="caja" itemLabel="#{caja.descripcion}" itemValue="#{caja}"/>                        
                     </p:selectOneMenu>
                     <p:outputLabel value="Comprobante: " for="comp"/>
-                    <p:inputMask mask="999-99999" id="comp" value="#{creditoBean.pago.operacion}" disabled="#{creditoBean.disablecomp}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <p:inputMask mask="999-99999" id="comp" value="#{creditoBean.pago.operacion}" disabled="#{creditoBean.disablecomp}" required="true" requiredMessage="Ingrese número comprobante"/>
                     <p:outputLabel value="Num oper: " for="txtope"/>
                     <p:inputText id="txtope" value="#{creditoBean.pago.operacion}" disabled="#{creditoBean.disableoper}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <p:outputLabel value="Monto:" for="monto"/>
                     <p:inputText id="monto" value="#{creditoBean.montopago}" class="money" required="true" requiredMessage="Ingrese monto a pagar"/>
                     <p:outputLabel value="Descripción:" for="txtdescripcion"/>
                     <p:inputText id="txtdescripcion" value="#{creditoBean.pago.descripcion}" required="true" requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
-                    <h:panelGroup></h:panelGroup>                    
-                    <p:commandButton id="btnpagar" actionListener="#{creditoBean.insertarini(loginbean.usuario.idusuario)}" value="#{creditoBean.btnpago}" />
-                </h:panelGrid>                
+                </h:panelGrid>            
+                <p:commandButton id="btnpagar" actionListener="#{creditoBean.insertarini(loginbean.usuario.idusuario)}" value="#{creditoBean.btnpago}" />              
             </p:dialog>
         </h:form>
         <hr/>

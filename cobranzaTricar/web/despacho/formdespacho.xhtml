@@ -11,7 +11,7 @@
     <ui:define name="content">
         <h2 class="BigTopic">Agregar Documentos de Despacho</h2>
         <h:form>
-            <p:commandButton action="#{creditoBean.indexdespacho()}" value="Regresar" immediate="true" icon="b-back"/>
+            <p:commandButton action="#{creditoBean.indexdespacho()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
@@ -86,9 +86,9 @@
                     <p:outputLabel value="Guía Rem" for="guia"/>
                     <p:inputMask id="guia" mask="999-99999" value="#{creditoBean.credito.guia}" required="true" requiredMessage="Ingrese Guía de remisión"/>
                     <p:outputLabel value="Observaciones" for="obs"/>
-                    <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" required="true" requiredMessage="Ingrese observaciones" />
+                    <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" requiredMessage="Ingrese observaciones" />
                 </h:panelGrid>
-                <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.despachar(loginbean.usuario)}" icon="b-ok"
+                <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.despachar(loginbean.usuario)}" icon="fa fa-recycle white"
                                  ajax="false" disabled="#{creditoBean.disabledespacho}">
                 </p:commandButton>
             </h:form>            

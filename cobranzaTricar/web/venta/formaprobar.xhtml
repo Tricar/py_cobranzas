@@ -9,9 +9,9 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <h2>Solicitud de Crédito Directo</h2>
+        <h2 class="BigTopic">Solicitud de Crédito Directo</h2>
         <h:form>
-            <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="b-back"/>
+            <p:commandButton action="#{creditoBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
