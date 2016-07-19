@@ -510,7 +510,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarAval(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarAval("VE", "AV");
+        List<Anexo> tipos = anexoDao.filtarTipoTres("VE", "AV", "AD");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);

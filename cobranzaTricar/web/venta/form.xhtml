@@ -116,7 +116,7 @@
                         <f:selectItem itemLabel="1" itemValue='1' />                                                                                                                                                                        
                     </p:selectOneMenu>                                                
                     <p:outputLabel value="Precio:"/>
-                    <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true">                        
+                    <p:inputText id="precio" value="#{creditoBean.precio}" readonly="false">                        
                     </p:inputText>                    
                     <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" for="txtinicial"/>
                     <p:inputText id="txtinicial" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei}">
@@ -131,7 +131,7 @@
                         <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>
                     </p:inputText>
                     <p:outputLabel value="Saldo:"/>                                    
-                    <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
+                    <p:inputText id="res" value="#{creditoBean.saldo}" readonly="false"/>
                     <p:outputLabel value="Interés:" for="interes"/>
                     <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" 
                                      requiredMessage="Ingrese el interés aplicado">

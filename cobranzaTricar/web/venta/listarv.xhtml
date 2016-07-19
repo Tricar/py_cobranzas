@@ -198,7 +198,7 @@
                         <f:selectItems value="#{pagosBean.todasCajas}" var="caja" itemLabel="#{caja.descripcion}" itemValue="#{caja}"/>                        
                     </p:selectOneMenu>
                     <p:outputLabel value="Comprobante: " for="comp"/>
-                    <p:inputMask mask="" id="comp" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disablecomp}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <p:inputMask mask="999-99999" id="comp" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disablecomp}" required="true" requiredMessage="Ingrese número comprobante"/>
                     <p:outputLabel value="Num oper: " for="txtope"/>
                     <p:inputText id="txtope" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disableoper}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
                     <p:outputLabel value="Monto:" for="monto"/>
@@ -234,8 +234,7 @@
                         <f:selectItems value="#{pagosBean.todasCajas}" var="caja" itemLabel="#{caja.descripcion}" itemValue="#{caja}"/>                        
                     </p:selectOneMenu>
                     <p:outputLabel value="Comprobante: " for="comp"/>
-                    <p:inputMask mask="999-99999" id="comp" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disablecomp}" 
-                                 required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <p:inputMask mask="999-99999" id="comp" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disablecomp}" required="true" requiredMessage="Ingrese número comprobante" />
                     <p:outputLabel value="Num oper: " for="txtope"/>
                     <p:inputText id="txtope" value="#{pagosBean.pago.operacion}" disabled="#{pagosBean.disableoper}" 
                                  required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
