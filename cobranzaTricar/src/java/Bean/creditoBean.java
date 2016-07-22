@@ -120,6 +120,7 @@ public class creditoBean implements Serializable {
     private boolean disableoper;
     private boolean disablecomp;
     private List<Caja> todasCajas = new ArrayList();
+    private List<Date> fechas = new ArrayList();
 
     public creditoBean() {
     }
@@ -524,19 +525,20 @@ public class creditoBean implements Serializable {
                 interes = (credito.getInteres().multiply(nletras)).divide(cien);
                 Date fechaini = new Date();
                 fechaini = credito.getFechareg();
-                Date fechafin = new Date();
-                fechafin = sumaDias(fechaini, 30);
+                //Date fechafin = new Date();
+                fechas = fechasLetras(fechaini);                
                 BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
                 letras.setFecreg(credito.getFechareg());
                 for (int i = 1; i <= (credito.getNletras()); i++) {
+                    Date fechaf = fechas.get(i-1);
                     letras.setCredito(credito);
                     letras.setMontoletra(montoletras);
                     letras.setInteres(mtointeres);
                     letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
                     letras.setFecini(fechaini);
-                    letras.setFecven(fechafin);
-                    fechaini = fechafin;
-                    fechafin = sumaDias(fechaini, 30);
+                    letras.setFecven(fechaf);
+                    fechaini = fechaf;
+                    //fechafin = sumaDias(fechaini, 30);
                     letras.setSaldo(letras.getMonto());
                     letras.setEstado("NA");
                     letras.setMora(BigDecimal.ZERO);
@@ -607,6 +609,38 @@ public class creditoBean implements Serializable {
         cal.setTime(fecha);
         cal.add(Calendar.DAY_OF_YEAR, dias);
         return cal.getTime();
+    }
+    
+    public List fechasLetras(Date fecha){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha);
+        int sumar = 0;
+        int inicial = 0;
+        int fin = 0;
+        int difdays = 0;        
+        boolean sw = true;
+        for (int i = 0; i < credito.getNletras(); i++) {
+            if (sw) {
+                inicial = cal.get(Calendar.DATE);
+                int j = 1;
+                cal.add(Calendar.MONTH, j);
+                System.out.println(cal.getTime());
+                fechas.add(cal.getTime());
+                fin = cal.get(Calendar.DATE);
+            }
+            sw = true;
+            if (inicial - fin != 0) {
+                difdays = inicial - fin;
+                sumar = fin + difdays;
+                cal.add(Calendar.DATE, sumar);
+                System.out.println(cal.getTime());
+                fechas.add(cal.getTime());
+                inicial = 0;
+                fin = 0;
+                sw = false;
+            }
+        }
+        return fechas;
     }
 
     public long Diffdays(Date fechavenc) {
@@ -1245,20 +1279,22 @@ public class creditoBean implements Serializable {
                 //credito.setFecaprob(fecaprob);
                 //fechaini = credito.getFecaprob();
                 fechaini = credito.getFechareg();
-                Date fechafin = new Date();
-                fechafin = sumaDias(fechaini, 30);
+                //Date fechafin = new Date();
+                fechas = fechasLetras(fechaini);
+                //fechafin = sumaDias(fechaini, 30);
                 BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
                 letras.setFecreg(credito.getFechareg());
-                for (int i = 1; i <= (credito.getNletras()); i++) {
+                for (int i = 1; i <= credito.getNletras(); i++) {
+                    Date fechaf = fechas.get(i-1);
                     letras.setCredito(credito);
                     letras.setMontoletra(montoletras);
                     letras.setInteres(mtointeres);
                     letras.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
                     letras.setFecini(fechaini);
-                    letras.setFecven(fechafin);
+                    letras.setFecven(fechaf);
                     letras.setMora(BigDecimal.ZERO);
-                    fechaini = fechafin;
-                    fechafin = sumaDias(fechaini, 30);
+                    fechaini = fechaf;
+                    //fechafin = sumaDias(fechaini, 30);
                     letras.setSaldo(letras.getMonto());
                     letras.setEstado("PN");
                     letras.setCobradonc(false);
@@ -1985,5 +2021,13 @@ public class creditoBean implements Serializable {
 
     public void setTodasCajas(List<Caja> todasCajas) {
         this.todasCajas = todasCajas;
+    }
+
+    public List<Date> getFechas() {
+        return fechas;
+    }
+
+    public void setFechas(List<Date> fechas) {
+        this.fechas = fechas;
     }
 }

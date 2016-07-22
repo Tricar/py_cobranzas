@@ -477,7 +477,7 @@ public class Credito implements java.io.Serializable {
         this.resena = resena;
     }
     
-    @Column(name = "obsver", length = 400)
+    @Column(name = "obsver", length = 1000)
     public String getObsver() {
         return this.obsver;
     }
