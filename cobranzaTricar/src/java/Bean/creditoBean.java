@@ -121,6 +121,13 @@ public class creditoBean implements Serializable {
     private boolean disablecomp;
     private List<Caja> todasCajas = new ArrayList();
     private List<Date> fechas = new ArrayList();
+    private BigDecimal sinicial = new BigDecimal(BigInteger.ZERO);
+    private boolean valuesi;
+    private boolean valuesi2;
+    private List<Anexo> avales = new ArrayList();
+    private List<Anexo> avalesant = new ArrayList();
+    private List<Anexo> avalesmod = new ArrayList();
+    private String banderaval;
 
     public creditoBean() {
     }
@@ -137,7 +144,7 @@ public class creditoBean implements Serializable {
         res = precio.subtract(credito.getInicial());
     }
 
-    public void resProformar() {
+    public void resSaldo() {
         saldo = precio.subtract(inicia);
     }
 
@@ -153,7 +160,6 @@ public class creditoBean implements Serializable {
 
     public void precioModeloCreditoEspecial() {
         precio Precio = new precio();
-        inicial Inicial = new inicial();
         precio = (Precio.precioModelo(credito.getVehiculo().getModelo().getModelo()));
 
     }
@@ -170,6 +176,7 @@ public class creditoBean implements Serializable {
 
     public void insertarCredito(Usuario usuario) {
         CreditoDao creditodao = new CreditoDaoImp();
+        credavalBean credavalbean = new credavalBean();
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
         } else {
@@ -183,45 +190,82 @@ public class creditoBean implements Serializable {
             } else {
                 credito.setInicial(inicia);
             }
-            if (credito.getAnexo().getIdanexo().equals(credito.getIdaval())) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El aval no puede ser el mismo cliente."));
+            if (ocupsxanexo.isEmpty() == true) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, Cliente debe tener al menos un ingreso econónmico", "El cliente debe tener al menos un ingreso económico"));
             } else {
-                if (ocupsxanexo.isEmpty() == true) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, Cliente debe tener al menos un ingreso econónmico", "El cliente debe tener al menos un ingreso económico"));
-                } else {
-                    credito.setPrecio(precio);
-                    credito.setSaldo(precio.subtract(inicia));
-                    if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1 && (sw == 0)) {
+                credito.setPrecio(precio);
+                credito.setInicial(inicia);
+                credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
+                if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1 && (sw == 0)) {
+                    if (!valuesi2) {
+                        Calendar fecven = Calendar.getInstance();
+                        Calendar fecreg = Calendar.getInstance();
+                        Calendar fec2ini = Calendar.getInstance();
+                        fec2ini.setTime(fecha2);
+                        fecreg.setTime(credito.getFechareg());
+                        fecven.setTime(credito.getFechareg());
+                        fecven.add(Calendar.DAY_OF_YEAR, 15);
+                        if (fec2ini.before(fecven) && fec2ini.after(fecreg)) {
+                            try {
+                                credito.setFecsinicial(fecha2);
+                                credito.setTotaldeuda(BigDecimal.ZERO);
+                                credito.setEstado("EM");
+                                credito.setSinicial(sinicial);
+                                credito.setEmpresa("CA");
+                                credito.setCalificacion("PN");
+                                credito.setElaborado(usuario.getAnexo().getIdanexo());
+                                credito.setSwinicial(false);
+                                creditodao.insertarVenta(credito);
+                                if (avales.isEmpty() == false) {
+                                    credavalbean.insertarCreditoAval(credito, avales);
+                                }
+                                sw = 1;
+                                for (int i = 0; i < ocupsxanexo.size(); i++) {
+                                    Ocupacion get = ocupsxanexo.get(i);
+                                    ocupbean.insertarCredito(credito.getIdventa(), get);
+                                }
+                                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El crédito se registró correctamente."));
+                            } catch (Exception e) {
+                            }
+                        } else {
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Modifique la fecha de la segunda inicial"));
+                        }
+                    } else {
                         try {
                             credito.setTotaldeuda(BigDecimal.ZERO);
+                            credito.setSinicial(BigDecimal.ZERO);
                             credito.setEstado("EM");
                             credito.setEmpresa("CA");
                             credito.setCalificacion("PN");
                             credito.setElaborado(usuario.getAnexo().getIdanexo());
                             credito.setSwinicial(false);
                             creditodao.insertarVenta(credito);
+                            if (avales.isEmpty() == false) {
+                                credavalbean.insertarCreditoAval(credito, avales);
+                            }
                             sw = 1;
                             for (int i = 0; i < ocupsxanexo.size(); i++) {
                                 Ocupacion get = ocupsxanexo.get(i);
                                 ocupbean.insertarCredito(credito.getIdventa(), get);
                             }
+                            System.out.println("valor de la lista avales: " + avales.isEmpty());
                             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El crédito se registró correctamente."));
                         } catch (Exception e) {
-
                         }
-                    } else {
-                        if (sw == 1) {
-                            btnaprobar = "Desaprobar";
-                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Este crédito ya ha sido registrado"));
-                            return;
-                        }
-                        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esto es una venta al contado"));
-                            return;
-                        }
-                        if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
-                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial supera monto de vehículo"));
-                        }
+                    }
+                } else {
+                    if (sw == 1) {
+                        btnaprobar = "Desaprobar";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Este crédito ya ha sido registrado"));
+                        return;
+                    }
+                    if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Esto es una venta al contado"));
+                        return;
+                    }
+                    if (credito.getSaldo().compareTo(BigDecimal.ZERO) == -1) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial supera monto de vehículo"));
+                        return;
                     }
                 }
             }
@@ -285,19 +329,61 @@ public class creditoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, este crédito ya ha sido aprobado. No se puede modificar", "Crédito Aprobado, no se puede modificar."));
             return;
         } else {
-            //RequestContext.getCurrentInstance().update("formModificar");
+            avalesmod = new ArrayList();
+            if (avalesant.isEmpty() == false && avales.isEmpty() == false) {
+                if (avalesant.size() > avales.size()) {
+                    banderaval = "RES";
+                    for (int i = 0; i < avalesant.size(); i++) {
+                        int c = 0;
+                        Anexo get = avalesant.get(i);
+                        for (int j = 0; j < avales.size(); j++) {
+                            Anexo get1 = avales.get(j);
+                            if (get.getIdanexo().equals(get1.getIdanexo())) {
+                                c++;
+                            }
+                        }
+                        if (c == 0) {
+                            avalesmod.add(get);
+                        }
+                    }
+                } else {
+                    if (avales.size() > avalesant.size()) {
+                        banderaval = "SUM";
+                        for (int i = 0; i < avales.size(); i++) {
+                            int c = 0;
+                            Anexo get = avales.get(i);
+                            for (int j = 0; j < avalesant.size(); j++) {
+                                Anexo get1 = avalesant.get(j);
+                                if (get.getIdanexo().equals(get1.getIdanexo())) {
+                                    c++;
+                                }
+                            }
+                            if (c == 0) {
+                                avalesmod.add(get);
+                            }
+                        }
+                    }
+                }
+            }
             RequestContext.getCurrentInstance().execute("PF('dlgmodificar').show()");
         }
     }
 
     public void modificarCredito() {
+        credavalBean credavalbean = new credavalBean();
         CreditoDao credao = new CreditoDaoImp();
         if (btnguardar.equals("Modificar")) {
-            if (inicia.compareTo(iniciapre) == -1 || inicia == null) {
+            if (inicia.compareTo(credito.getInicial()) == -1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
                 return;
             } else {
                 credito.setInicial(inicia);
+            }
+            if (sinicial.compareTo(credito.getSinicial()) == -1) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "2DA inicial debe ser Mayor."));
+                return;
+            } else {
+                credito.setSinicial(sinicial);
             }
             try {
                 if (bandera.equals("SUM")) {
@@ -312,8 +398,23 @@ public class creditoBean implements Serializable {
                         ocupbean.eliminar(get);
                     }
                 }
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "."));
-                credito.setSaldo(credito.getPrecio().subtract(credito.getInicial()));
+                if (avalesant.isEmpty() && avales.isEmpty() == false) {
+                    credavalbean.insertarCreditoAval(credito, avales);
+                }
+                if (banderaval.equals("SUM")) {
+                    for (int i = 0; i < avalesmod.size(); i++) {
+                        Anexo get = avalesmod.get(i);
+                        credavalbean.insertar(credito, get);
+                    }
+                }
+                if (banderaval.equals("RES")) {
+                    for (int j = 0; j < avalesmod.size(); j++) {
+                        Anexo get = avalesmod.get(j);
+                        credavalbean.eliminar(get, credito);
+                    }
+                }
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Se Modificó la solicitud de crédito"));
+                credito.setSaldo(credito.getPrecio().subtract((credito.getInicial().add(credito.getSinicial()))));
                 credao.modificarVenta(credito);
             } catch (Exception e) {
             }
@@ -526,11 +627,11 @@ public class creditoBean implements Serializable {
                 Date fechaini = new Date();
                 fechaini = credito.getFechareg();
                 //Date fechafin = new Date();
-                fechas = fechasLetras(fechaini);                
+                fechas = fechasLetras(fechaini);
                 BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
                 letras.setFecreg(credito.getFechareg());
                 for (int i = 1; i <= (credito.getNletras()); i++) {
-                    Date fechaf = fechas.get(i-1);
+                    Date fechaf = fechas.get(i - 1);
                     letras.setCredito(credito);
                     letras.setMontoletra(montoletras);
                     letras.setInteres(mtointeres);
@@ -610,14 +711,14 @@ public class creditoBean implements Serializable {
         cal.add(Calendar.DAY_OF_YEAR, dias);
         return cal.getTime();
     }
-    
-    public List fechasLetras(Date fecha){
+
+    public List fechasLetras(Date fecha) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
         int sumar = 0;
         int inicial = 0;
         int fin = 0;
-        int difdays = 0;        
+        int difdays = 0;
         boolean sw = true;
         for (int i = 0; i < credito.getNletras(); i++) {
             if (sw) {
@@ -700,9 +801,9 @@ public class creditoBean implements Serializable {
 
     public void cargarLetras(Credito cred) {
         letraslista = new ArrayList();
-        CreditoDao creditodao = new CreditoDaoImp();
-        List<Letras> letritas = new ArrayList();
-        Calendar calendario = GregorianCalendar.getInstance();
+//        CreditoDao creditodao = new CreditoDaoImp();
+//        List<Letras> letritas = new ArrayList();
+//        Calendar calendario = GregorianCalendar.getInstance();
 //        Date fecha = calendario.getTime();
 //        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
 //        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
@@ -742,10 +843,10 @@ public class creditoBean implements Serializable {
     public List<Letras> cargarLetrasArray(Credito cred) {
         letrasBean letbean = new letrasBean();
         letraslista = new ArrayList();
-        CreditoDao creditodao = new CreditoDaoImp();
-        List<Letras> letritas = new ArrayList();
+//        CreditoDao creditodao = new CreditoDaoImp();
+//        List<Letras> letritas = new ArrayList();
         Calendar calendario = GregorianCalendar.getInstance();
-        Date fecha = calendario.getTime();
+//        Date fecha = calendario.getTime();
 //        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
 //        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
 //        BigDecimal cinco = new BigDecimal(5);
@@ -1006,27 +1107,39 @@ public class creditoBean implements Serializable {
         credito = new Credito();
         precio = BigDecimal.ZERO;
         inicia = BigDecimal.ZERO;
+        sinicial = BigDecimal.ZERO;
         iniciapre = BigDecimal.ZERO;
         res = BigDecimal.ZERO;
         saldo = BigDecimal.ZERO;
+        fecha2 = null;
         value2 = true;
         sw = 0;
         value = false;
         valuei = false;
         valuei2 = true;
+        valuesi = false;
+        valuesi2 = true;
         btnaprobar = "Aprobar";
         btnguardar = "Guardar";
+        avales = new ArrayList();
         ocupsxanexo = new ArrayList();
         return "/venta/form.xhtml";
     }
 
     public String cargar(Usuario usuario) {
+        credavalBean credavalbean = new credavalBean();
         modeloTipo(credito.getVehi());
         sw = 1;
         inicial Inicial = new inicial();
+        avales = credavalbean.avalesxCredito(credito);
+        if (credito.getSinicial().compareTo(BigDecimal.ZERO) == 1) {
+            sinicial = credito.getSinicial();
+            valuesi = false;
+        }
         inicia = credito.getInicial();
         precio = credito.getPrecio();
         saldo = precio.subtract(inicia);
+        saldo = saldo.subtract(sinicial);
         anexo = credito.getAnexo();
         ocupsxanexo = ocupbean.cargarxCredito(credito);
         iniciapre = Inicial.inicialCredito(anexo.getDistrito(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
@@ -1043,6 +1156,8 @@ public class creditoBean implements Serializable {
             }
             return "/venta/formaprobar.xhtml";
         } else {
+            valuei = false;
+            valuei2 = true;
             mensaje = compararListas();
             btnguardar = "Modificar";
             return "/venta/formmodificar.xhtml";
@@ -1112,8 +1227,11 @@ public class creditoBean implements Serializable {
     }
 
     public String compararListas() {
-        //ocupsxcredito = ocupbean.cargarxCredito(credito);
+        //ocupsxcredito = ocupbean.cargarxCredito(credito);        
         String msj = new String();
+        if (avales.isEmpty() == false) {
+            avalesant = avales;
+        }
         ocupsxcredito = ocupbean.cargarIngresos(credito.getAnexo());
         if (ocupsxcredito.size() > ocupsxanexo.size()) {
             bandera = "SUM";
@@ -1129,7 +1247,6 @@ public class creditoBean implements Serializable {
                     }
                 }
                 if (count == 0) {
-                    System.out.println("Entre acá sumar " + msj);
                     //ocupbean.insertarCredito(credito.getIdventa(), get);
                     listamodificar.add(get);
                 }
@@ -1271,9 +1388,10 @@ public class creditoBean implements Serializable {
             if (btnaprobar.equals("Aprobar")) {
                 Letras letras = new Letras();
                 BigDecimal nletras = new BigDecimal(credito.getNletras());
-                BigDecimal montoletras = credito.getSaldo().divide(nletras, 2).setScale(1, RoundingMode.UP);
                 BigDecimal interes = new BigDecimal(0);
                 BigDecimal cien = new BigDecimal(100);
+                BigDecimal saldonuevo = new BigDecimal(0);
+                saldonuevo = credito.getSaldo();
                 interes = (credito.getInteres().multiply(nletras)).divide(cien);
                 Date fechaini = new Date();
                 //credito.setFecaprob(fecaprob);
@@ -1281,11 +1399,29 @@ public class creditoBean implements Serializable {
                 fechaini = credito.getFechareg();
                 //Date fechafin = new Date();
                 fechas = fechasLetras(fechaini);
-                //fechafin = sumaDias(fechaini, 30);
+                //fechafin = sumaDias(fechaini, 30);                
+                if (credito.getSinicial().compareTo(BigDecimal.ZERO) == 1) {
+                    letras.setCredito(credito);
+                    letras.setMontoletra(credito.getSinicial());
+                    letras.setInteres(BigDecimal.ZERO);
+                    letras.setMonto(credito.getSinicial());
+                    letras.setFecini(credito.getFechareg());
+                    letras.setFecven(credito.getFecsinicial());
+                    letras.setMora(BigDecimal.ZERO);
+                    letras.setSaldo(credito.getSinicial());
+                    letras.setEstado("PN");
+                    letras.setCobradonc(false);
+                    letras.setDescripcion("2DA INICIAL");
+                    letrasdao.insertarLetra(letras);
+                    saldonuevo = credito.getSaldo().subtract(credito.getSinicial());
+                    credito.setTotaldeuda(credito.getTotaldeuda().add(credito.getSinicial()));
+                    credito.setDeudactual(credito.getTotaldeuda());
+                }
+                BigDecimal montoletras = saldonuevo.divide(nletras, 2).setScale(1, RoundingMode.UP);
                 BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
                 letras.setFecreg(credito.getFechareg());
                 for (int i = 1; i <= credito.getNletras(); i++) {
-                    Date fechaf = fechas.get(i-1);
+                    Date fechaf = fechas.get(i - 1);
                     letras.setCredito(credito);
                     letras.setMontoletra(montoletras);
                     letras.setInteres(mtointeres);
@@ -1315,7 +1451,7 @@ public class creditoBean implements Serializable {
                 vehidao.modificarVehiculo(vehiculo);
                 credito.setSwinicial(false);
                 credito.setEstado("AP");
-                value = false;                
+                value = false;
                 btnaprobar = "Desaprobar";
                 credito.setModificado(usuario.getAnexo().getIdanexo());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se aprobó el crédito."));
@@ -1336,9 +1472,11 @@ public class creditoBean implements Serializable {
                 credito.setEstado("EM");
                 credito.setVerificado(null);
                 credito.setVehiculo(null);
+                credito.setObsver(null);
                 btnaprobar = "Aprobar";
                 credito.setModificado(usuario.getAnexo().getIdanexo());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se desaprobó el crédito."));
+                concepto = new Conceptos();
             }
         } catch (Exception e) {
         }
@@ -1403,6 +1541,18 @@ public class creditoBean implements Serializable {
             valuei2 = false;
         } else {
             valuei2 = true;
+        }
+        System.out.println("values: " + valuei2);
+    }
+
+    public void addMessageini2() {
+        // String summary = valuei ? "SI" : "NO";
+        // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
+        if (valuesi) {
+            valuesi2 = false;
+        } else {
+            valuesi2 = true;
+            fecha2 = null;
         }
     }
 
@@ -2029,5 +2179,61 @@ public class creditoBean implements Serializable {
 
     public void setFechas(List<Date> fechas) {
         this.fechas = fechas;
+    }
+
+    public BigDecimal getSinicial() {
+        return sinicial;
+    }
+
+    public void setSinicial(BigDecimal sinicial) {
+        this.sinicial = sinicial;
+    }
+
+    public boolean isValuesi() {
+        return valuesi;
+    }
+
+    public void setValuesi(boolean valuesi) {
+        this.valuesi = valuesi;
+    }
+
+    public boolean isValuesi2() {
+        return valuesi2;
+    }
+
+    public void setValuesi2(boolean valuesi2) {
+        this.valuesi2 = valuesi2;
+    }
+
+    public List<Anexo> getAvales() {
+        return avales;
+    }
+
+    public void setAvales(List<Anexo> avales) {
+        this.avales = avales;
+    }
+
+    public List<Anexo> getAvalesant() {
+        return avalesant;
+    }
+
+    public void setAvalesant(List<Anexo> avalesant) {
+        this.avalesant = avalesant;
+    }
+
+    public List<Anexo> getAvalesmod() {
+        return avalesmod;
+    }
+
+    public void setAvalesmod(List<Anexo> avalesmod) {
+        this.avalesmod = avalesmod;
+    }
+
+    public String getBanderaval() {
+        return banderaval;
+    }
+
+    public void setBanderaval(String banderaval) {
+        this.banderaval = banderaval;
     }
 }

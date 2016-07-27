@@ -109,7 +109,7 @@
                                 <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true" />
                                 <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" />
                                 <p:inputText id="txtinicial" value="#{creditoBean.inicia}" required="true" requiredMessage="Ingrese incial" class="money">
-                                    <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>                        
+                                    <p:ajax event="keyup" update="res" listener="#{creditoBean.resSaldo()}"/>                        
                                 </p:inputText>
                             </h:panelGrid>  
                             <h:commandButton actionListener="#{reportesBean.exportarProf(creditoBean.credito.liqventa)}" value="Imprimir Proforma" />

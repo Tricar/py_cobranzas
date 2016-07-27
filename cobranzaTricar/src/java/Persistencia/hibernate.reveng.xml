@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
-    <schema-selection match-catalog="cobranzas" match-schema="dbo"/>
-    <table-filter match-name="anexo"/>
-    <table-filter match-name="usuario"/>
-    <table-filter match-name="sysdiagrams"/>
-    <table-filter match-name="credito"/>
-    <table-filter match-name="vehiculo"/>
-    <table-filter match-name="modelo"/>
-    <table-filter match-name="pagos"/>
-    <table-filter match-name="letras"/>
-    <table-filter match-name="color"/>
-    <table-filter match-name="perfil"/>
-    <table-filter match-name="tipocambio"/> 
-    <table-filter match-name="ocupacion"/>  
+  <schema-selection match-catalog="cobranzas" match-schema="dbo"/>
+  <table-filter match-name="color"/>
+  <table-filter match-name="vehiculo"/>
+  <table-filter match-name="ocupacion"/>
+  <table-filter match-name="numeracion"/>
+  <table-filter match-name="historialmora"/>
+  <table-filter match-name="modelo"/>
+  <table-filter match-name="perfil"/>
+  <table-filter match-name="conceptos"/>
+  <table-filter match-name="creditoaval"/>
+  <table-filter match-name="tipocambio"/>
+  <table-filter match-name="anexo"/>
+  <table-filter match-name="pagos"/>
+  <table-filter match-name="requisitos"/>
+  <table-filter match-name="usuario"/>
+  <table-filter match-name="caja"/>
+  <table-filter match-name="movcaja"/>
+  <table-filter match-name="credito"/>
+  <table-filter match-name="tipodoc"/>
+  <table-filter match-name="letras"/>
+  <table-filter match-name="sysdiagrams"/>
 </hibernate-reverse-engineering>

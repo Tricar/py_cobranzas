@@ -27,5 +27,7 @@
     <mapping resource="Model/Conceptos.hbm.xml"/>
     <mapping resource="Model/Historialmora.hbm.xml"/>
     <mapping resource="Model/Requisitos.hbm.xml"/>
+    <mapping resource="Model/Creditoaval.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
+

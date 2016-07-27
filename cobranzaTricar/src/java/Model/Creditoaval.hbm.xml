@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 25, 2016 12:39:13 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Creditoaval" table="creditoaval" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idcreditoaval" type="int">
+            <column name="idcreditoaval" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="anexo" class="Model.Anexo" fetch="select">
+            <column name="idanexo" />
+        </many-to-one>
+        <many-to-one name="credito" class="Model.Credito" fetch="select">
+            <column name="idventa" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
