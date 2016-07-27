@@ -416,5 +416,26 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return credito;
     }
+
+    @Override
+    public Credito cargarxCodigoVenta(String codigo, String estado, String estado1) {
+        Session session = null;
+        Credito credito = new Credito();        
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE liqventa=:w and (condicionpago=:v or condicionpago=:u)");
+            query.setParameter("w", codigo);
+            query.setParameter("v", estado);
+            query.setParameter("u", estado1);
+            credito = (Credito) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return credito;
+    }
     
 }

@@ -19,114 +19,66 @@
                                  ajax="false"/>
             </h:panelGrid>
         </h:form>
-        <h:form id="formMostrar">
-            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-            <p:dataTable var="cred" value="#{creditoBean.creditos}" 
-                         emptyMessage="No hay nada para mostrar">
-                <p:column headerText="Cod.">
-                    <h:outputText value="#{cred.liqventa}" />
-                </p:column>
-                <p:column headerText="Nombres">
-                    <h:outputText value="#{cred.anexo.nombres}" />
-                </p:column>
-                <p:column headerText="Num. Doc.">
-                    <h:outputText value="#{cred.anexo.numdocumento}" />
-                </p:column>
-                <p:column headerText="Tienda">
-                    <h:outputText value="#{cred.tienda}">
-                        <f:converter converterId="tiendaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Empresa">
-                    <h:outputText value="#{cred.empresa}">
-                        <f:converter converterId="empresaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Vehículo">
-                    <h:outputText value="#{cred.vehi}">
-                        <f:converter converterId="tvehiculo"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Modelo">
-                    <h:outputText value="#{cred.modelo.modelo}"/>
-                </p:column>
-                <p:column headerText="Monto financiado">
-                    <h:outputText value="#{cred.saldo}" />
-                </p:column>
-                <p:column headerText="Estado">
-                    <h:outputText value="#{cred.estado}" converter="estcredconvert"/>
-                </p:column>                
-                <p:column headerText="OPERACIONES">
-                    <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" >
-                        <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
-                    </p:commandButton>
-                    <ui:remove>
-                    <p:commandButton update=":formVer" icon="b-ver" title="Mostrar" actionListener="#{creditoBean.cargarLetras(cred)}"/>                         
-                    <p:commandButton value="R" update=":formRef" oncomplete="dlgrefinanciar.show()" title="Refinanciar">
-                        <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
-                    </p:commandButton>
-                    <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar" title="Eliminar">
-                        <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
-                    </p:commandButton>
-                    <p:commandButton icon="b-Print" ajax="false" actionListener="#{reportesBean.exportarLiq(cred.liqventa)}" title="Imprimir"/>
-                    </ui:remove>
-                </p:column>
-            </p:dataTable>
-        </h:form>
-        <h:form id="formEliminar">
-            <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
-                <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{creditoBean.eliminar()}" 
-                                 ajax="false" oncomplete="dlgeliminar.hide();" />
-                <p:commandButton value="No" onclick="dlg2.hide();" />
-            </p:dialog>
-        </h:form>
-        <hr/>
-        <h:form id="formVer">
-            <p:dataTable var="letras" value="#{creditoBean.letraslista}" 
-                         emptyMessage="No hay nada para mostrar">
-                <p:column headerText="Descripcion">
-                    <h:outputText value="#{letras.descripcion}"/>
-                </p:column>
-                <p:column headerText="Saldo Capital">
-                    <h:outputText value="#{letras.montoletra}"/>
-                </p:column>
-                <p:column headerText="Interes">
-                    <h:outputText value="#{letras.interes}"/>
-                </p:column>
-                <p:column headerText="Total Letra">
-                    <h:outputText value="#{letras.monto}"/>
-                </p:column>
-                <p:column headerText="Fecha In.">
-                    <h:outputText value="#{letras.fecini}">
-                        <f:convertDateTime pattern = "dd/MM/yyyy"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Fecha Ven.">
-                    <h:outputText value="#{letras.fecven}">
-                        <f:convertDateTime pattern = "dd/MM/yyyy"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Saldo Deudor">
-                    <h:outputText value="#{letras.saldo}"/>
-                </p:column>
-                <p:column headerText="Mora">
-                    <h:outputText value="#{letras.mora}"/>
-                </p:column> 
-                <p:column headerText="Dias atraso">
-                    <h:outputText value="#{letras.diffdays}"/>
-                </p:column> 
-                <p:column headerText="Estado">
-                    <h:outputText value="#{letras.estado}">
-                        <f:converter converterId="letrasconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="N. Deb.">
-                    <p:commandButton value="ND" icon="b-add" oncomplete="dlgnotadebito.show()" disabled="#{letras.mora == '0.00' or letras.descripcion == 'ND'}"
-                                     actionListener="#{creditoBean.cargarLetra(letras)}" />
-                </p:column>
-            </p:dataTable>            
-        </h:form>
+
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formMostrar">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable var="cred" value="#{creditoBean.creditos}" 
+                                 emptyMessage="No hay nada para mostrar">
+                        <p:column headerText="Cod.">
+                            <h:outputText value="#{cred.liqventa}" />
+                        </p:column>
+                        <p:column headerText="Nombres">
+                            <h:outputText value="#{cred.anexo.nombres}" />
+                        </p:column>
+                        <p:column headerText="Num. Doc.">
+                            <h:outputText value="#{cred.anexo.numdocumento}" />
+                        </p:column>
+                        <p:column headerText="Tienda">
+                            <h:outputText value="#{cred.tienda}">
+                                <f:converter converterId="tiendaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Empresa">
+                            <h:outputText value="#{cred.empresa}">
+                                <f:converter converterId="empresaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Vehículo">
+                            <h:outputText value="#{cred.vehi}">
+                                <f:converter converterId="tvehiculo"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Modelo">
+                            <h:outputText value="#{cred.modelo.modelo}"/>
+                        </p:column>
+                        <p:column headerText="Monto financiado">
+                            <h:outputText value="#{cred.saldo}" />
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{cred.estado}" converter="estcredconvert"/>
+                        </p:column>                
+                        <p:column headerText="OPERACIONES">
+                            <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" >
+                                <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                            </p:commandButton>
+                            <p:commandButton ajax="false" actionListener="#{ventaBean.exportarFormato(cred.liqventa, cred.condicionpago, cred.estado)}" title="Solicitud de Credito" icon="fa fa-print white" />
+                            <ui:remove>
+                                <p:commandButton update=":formVer" icon="b-ver" title="Mostrar" actionListener="#{creditoBean.cargarLetras(cred)}"/>                         
+                                <p:commandButton value="R" update=":formRef" oncomplete="dlgrefinanciar.show()" title="Refinanciar">
+                                    <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                                </p:commandButton>
+                                <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar" title="Eliminar">
+                                    <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
+                                </p:commandButton>
+                                <p:commandButton icon="b-Print" ajax="false" actionListener="#{reportesBean.exportarLiq(cred.liqventa)}" title="Imprimir"/>
+                            </ui:remove>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
+
     </ui:define>
 </ui:composition>

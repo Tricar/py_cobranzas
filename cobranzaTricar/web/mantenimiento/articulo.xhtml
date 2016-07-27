@@ -76,7 +76,7 @@
                             <p:outputLabel value="Año" for="txtAno"/>
                             <p:inputText id="txtAno" label="Ano" value="#{vehiculoBean.vehiculo.anofabri}" autocomplete="off" />
                             <p:outputLabel value="Serie:" for="txtSerie"/>
-                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" autocomplete="off">
+                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:outputLabel value="Motor:" for="txtMotor"/>
@@ -104,12 +104,12 @@
                                 <f:selectItem itemLabel="TRICAR" itemValue="T" />                                                              
                             </p:selectOneMenu>
                             <p:outputLabel value="Modelo:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter">
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                                 <f:selectItems value="#{modeloBean.modelos}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Color:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.color}" converter="omnifaces.SelectItemsConverter">
+                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.color}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
                                 <f:selectItems value="#{colorBean.colores}" var="color" itemLabel="#{color.color}" itemValue="#{color}"/>
                             </p:selectOneMenu>
@@ -118,11 +118,11 @@
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:outputLabel value="Serie:" for="txtSerie"/>
-                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" autocomplete="off">
+                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:outputLabel value="Motor:" for="txtMotor"/>
-                            <p:inputText id="txtMotor" label="Motor" value="#{vehiculoBean.vehiculo.motor}" autocomplete="off">
+                            <p:inputText id="txtMotor" label="Motor" value="#{vehiculoBean.vehiculo.motor}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:outputLabel value="Estado:" />

@@ -476,7 +476,7 @@ public class anexoBean implements Serializable {
         AnexoDao anexoDao = new AnexoDaoImplements();
         List<Anexo> tipos = anexoDao.filtarTipo("VE");
         for (Anexo tipo : tipos) {
-            if (tipo.getNombre().startsWith(name.toUpperCase())) {
+            if (tipo.getNombres().startsWith(name.toUpperCase())) {
                 query.add(tipo);
             }
         }

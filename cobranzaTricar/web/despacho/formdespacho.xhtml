@@ -86,7 +86,7 @@
                     <p:outputLabel value="Guía Rem" for="guia"/>
                     <p:inputMask id="guia" mask="999-99999" value="#{creditoBean.credito.guia}" required="true" requiredMessage="Ingrese Guía de remisión"/>
                     <p:outputLabel value="Observaciones" for="obs"/>
-                    <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" requiredMessage="Ingrese observaciones" />
+                    <p:inputTextarea id="obs" value="#{creditoBean.credito.adicional}" requiredMessage="Ingrese observaciones" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" />
                 </h:panelGrid>
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.despachar(loginbean.usuario)}" icon="fa fa-recycle white"
                                  ajax="false" disabled="#{creditoBean.disabledespacho}">

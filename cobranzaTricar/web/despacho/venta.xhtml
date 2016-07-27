@@ -11,65 +11,57 @@
         <h:form>            
             <p:commandButton action="#{ventaBean.nuevo()}" value="Nueva venta" immediate="true" icon="fa fa-plus white"/>
         </h:form>
-        <h:form>            
+        <h:form>
             <h:panelGrid columns="2">
                 <p:outputLabel value="Ingrese Código de crédito:" />
                 <p:inputText value="#{ventaBean.codigo}" />
                 <p:commandButton value="Buscar" actionListener="#{ventaBean.cargarxCodigoVenta()}" ajax="false" />
             </h:panelGrid>
         </h:form>
-        <h:form id="formMostrar">
-            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-            <p:dataTable var="cred" value="#{ventaBean.creditos}" 
-                         emptyMessage="No hay nada para mostrar">
-                <p:column headerText="Cod.">
-                    <h:outputText value="#{cred.liqventa}" />
-                </p:column>
-                <p:column headerText="Nombres">
-                    <h:outputText value="#{cred.anexo.nombres}" />
-                </p:column>
-                <p:column headerText="Num. Doc.">
-                    <h:outputText value="#{cred.anexo.numdocumento}" />
-                </p:column>
-                <p:column headerText="Tienda">
-                    <h:outputText value="#{cred.tienda}">
-                        <f:converter converterId="tiendaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Empresa">
-                    <h:outputText value="#{cred.empresa}">
-                        <f:converter converterId="empresaconverter"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Vehículo">
-                    <h:outputText value="#{cred.vehi}">
-                        <f:converter converterId="tvehiculo"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Modelo">
-                    <h:outputText value="#{cred.modelo.modelo}"/>
-                </p:column>
-                <p:column headerText="Monto financiado">
-                    <h:outputText value="#{cred.saldo}" />
-                </p:column>
-                <p:column headerText="Estado">
-                    <h:outputText value="#{cred.estado}" converter="estcredconvert"/>
-                </p:column>                
-                <p:column headerText="OPERACIONES">
-                    
-                </p:column>
-            </p:dataTable>
-        </h:form>
-        
-        <h:form id="formEliminar">
-            <p:dialog id="dlg2" header="Eliminar Credito" showEffect="explode" hideEffect="explode" 
-                      widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
-                <h:outputText value="¿Desea eliminar?" />
-                <p:commandButton value="Si" actionListener="#{creditoBean.eliminar()}" 
-                                 ajax="false" oncomplete="dlgeliminar.hide();" />
-                <p:commandButton value="No" onclick="dlg2.hide();" />
-            </p:dialog>
-        </h:form>
-        
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formMostrar">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable var="cred" value="#{ventaBean.creditos}" 
+                                 emptyMessage="No hay nada para mostrar">
+                        <p:column headerText="Cod.">
+                            <h:outputText value="#{cred.liqventa}" />
+                        </p:column>
+                        <p:column headerText="Nombres">
+                            <h:outputText value="#{cred.anexo.nombres}" />
+                        </p:column>
+                        <p:column headerText="Num. Doc.">
+                            <h:outputText value="#{cred.anexo.numdocumento}" />
+                        </p:column>
+                        <p:column headerText="Tienda">
+                            <h:outputText value="#{cred.tienda}">
+                                <f:converter converterId="tiendaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Empresa">
+                            <h:outputText value="#{cred.empresa}">
+                                <f:converter converterId="empresaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Vehículo">
+                            <h:outputText value="#{cred.vehi}">
+                                <f:converter converterId="tvehiculo"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Modelo">
+                            <h:outputText value="#{cred.modelo.modelo}"/>
+                        </p:column>
+                        <p:column headerText="Monto financiado">
+                            <h:outputText value="#{cred.saldo}" />
+                        </p:column>              
+                        <p:column headerText="OPERACIONES">
+                            <p:commandButton ajax="false" actionListener="#{ventaBean.exportarFormato(cred.liqventa, cred.condicionpago, cred.estado)}" title="Liquidacion" icon="fa fa-print white" />
+                            <p:commandButton ajax="false" actionListener="#{ventaBean.exportarFormato(cred.liqventa, cred.condicionpago, cred.estado)}" title="Cronograma" icon="fa fa-print white" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
+
     </ui:define>
 </ui:composition>

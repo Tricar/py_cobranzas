@@ -1030,6 +1030,7 @@ public class creditoBean implements Serializable {
             ocupsxanexo = ocupbean.cargarxCredito(credito);
             if (usuario.getPerfil().getAbrev().equals("AS") || usuario.getPerfil().getAbrev().equals("AD")) {
                 if (!credito.getSwinicial()) {
+                    System.err.println("Sinicial");
                     pago = new Pagos();
 //                    pagosBean pagbean = new pagosBean();
                     listafilttipo = tipobean.listaTipoDoc("IN");
@@ -1040,6 +1041,7 @@ public class creditoBean implements Serializable {
                     RequestContext.getCurrentInstance().execute("PF('dlgpagarini').show()");
 //                    pagbean.pagovarios(concepto);
                 } else {
+                    System.err.println("Despachar");
                     btnaprobar = "Despachar";
                     return "/despacho/formdespacho.xhtml";
                 }

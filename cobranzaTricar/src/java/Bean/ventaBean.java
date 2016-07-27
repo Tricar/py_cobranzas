@@ -1,15 +1,23 @@
 package Bean;
 
 import Dao.AnexoDaoImplements;
+import Dao.ConceptosDao;
+import Dao.ConceptosDaoImp;
 import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
+import Dao.LetrasDao;
+import Dao.LetrasDaoImplements;
+import Dao.VehiculoDao;
+import Dao.VehiculoDaoImplements;
 import Model.Anexo;
+import Model.Conceptos;
 import Model.Credito;
 import Model.Letras;
 import Model.Modelo;
 import Model.Ocupacion;
 import Model.Pagos;
 import Model.Usuario;
+import Model.Vehiculo;
 import Persistencia.HibernateUtil;
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +64,7 @@ public class ventaBean implements Serializable {
     private ocupacionBean ocupbean = new ocupacionBean();
     private int sw = 0;
     private String codigo;
+    private String tipo;
     private boolean value;
     private boolean value2;
     private boolean valuei2;
@@ -65,6 +74,8 @@ public class ventaBean implements Serializable {
     private List<Pagos> pagosxcredito;
     private List<Ocupacion> ocupsxcredito;
     private modeloBean modbean = new modeloBean();
+    private Conceptos concepto = new Conceptos();
+    public Vehiculo vehiculo = new Vehiculo();
 
     public ventaBean() {
 
@@ -77,13 +88,13 @@ public class ventaBean implements Serializable {
         codigo = "";
         return "/despacho/venta.xhtml";
     }
-    
+
     public void nuevoanexo() {
         anexo = new Anexo();
         RequestContext.getCurrentInstance().update("formInsertar");
         RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
     }
-    
+
     public void modeloTipo(String tipo) {
         listafiltrada = modbean.modeloTipo(tipo);
     }
@@ -101,7 +112,7 @@ public class ventaBean implements Serializable {
         CreditoDao creditodao = new CreditoDaoImp();
         Credito modelocredito = new Credito();
         try {
-            modelocredito = creditodao.cargarxCodigoEst(codigo, "CO");
+            modelocredito = creditodao.cargarxCodigoVenta(codigo, "CO", "CD");
             creditos.add(modelocredito);
             if (creditos.get(0) == null) {
                 creditos = null;
@@ -135,7 +146,7 @@ public class ventaBean implements Serializable {
         ocupsxanexo = new ArrayList();
         return "/despacho/form.xhtml";
     }
-    
+
     public void insertarcliente() {
         this.session = null;
         this.transaction = null;
@@ -180,6 +191,8 @@ public class ventaBean implements Serializable {
 
     public void insertarVenta(Usuario usuario) {
         CreditoDao creditodao = new CreditoDaoImp();
+        ConceptosDao condao = new ConceptosDaoImp();
+        VehiculoDao vehidao = new VehiculoDaoImplements();
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
         } else {
@@ -187,13 +200,25 @@ public class ventaBean implements Serializable {
             if (sw == 0) {
                 try {
                     credito.setTotaldeuda(BigDecimal.ZERO);
+                    credito.setDeudactual(BigDecimal.ZERO);
                     credito.setCondicionpago("CO");
-                    credito.setEstado("EM");
+                    credito.setEstado("AP");
                     credito.setEmpresa("CA");
                     credito.setCalificacion("PN");
-                    credito.setInicial(BigDecimal.ZERO);
+                    credito.setSwinicial(false);
+                    credito.setInicial(credito.getPrecio());
+                    credito.setSaldo(BigDecimal.ZERO);
                     credito.setElaborado(usuario.getAnexo().getIdanexo());
                     creditodao.insertarVenta(credito);
+                    concepto.setMontopago(credito.getInicial());
+                    concepto.setTipo("IN");
+                    concepto.setTotal(credito.getInicial());
+                    concepto.setFecreg(credito.getFechareg());
+                    concepto.setCredito(credito);
+                    condao.insertarConcepto(concepto);
+                    vehiculo = credito.getVehiculo();
+                    vehiculo.setEstado("N");
+                    vehidao.modificarVehiculo(vehiculo);
                     sw = 1;
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La venta se registró correctamente."));
                 } catch (Exception e) {
@@ -209,23 +234,61 @@ public class ventaBean implements Serializable {
         }
     }
 
-    public void exportarPDF(String codigo) throws JRException, NamingException, SQLException, IOException {
+    public void eliminar() {
+        CreditoDao creditodao = new CreditoDaoImp();
+        LetrasDao letrasdao = new LetrasDaoImplements();
+        Vehiculo vehiculo = new Vehiculo();
+        if (credito.getEstado().equals("EM")) {
+            creditodao.eliminarVenta(credito);
+            ocupsxanexo = ocupbean.cargarxCredito(credito);
+            for (int i = 0; i < ocupsxanexo.size(); i++) {
+                Ocupacion get = ocupsxanexo.get(i);
+                ocupbean.eliminar(get);
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Este crédito ya ha sido procesado. No se puede eliminar."));
+            return;
+        }
+        credito = new Credito();
+        creditos = new ArrayList();
+    }
+
+    public void exportarFormato(String codigo, String tipo, String estado) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("codigo", codigo);
-        System.out.println("liq venta :" + codigo);
-        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/report/proforma.jasper"));
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=Proforma" + codigo + ".pdf");
-        ServletOutputStream stream = response.getOutputStream();
-        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
-        stream.flush();
-        stream.close();
-        FacesContext.getCurrentInstance().responseComplete();
-
+        if (estado.equals("DP")) {
+            if (tipo.equals("CO")) {
+                System.out.println("entre a contado");
+                parametros.put("liqventa", codigo);
+                File jasper = new File("D:/reporte/liquicontado.jasper");
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".pdf");
+                ServletOutputStream stream = response.getOutputStream();
+                JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                stream.flush();
+                stream.close();
+                FacesContext.getCurrentInstance().responseComplete();
+            } else if (tipo.equals("CD")) {
+                System.out.println("entre a credito");
+                parametros.put("liqventa", codigo);
+                File jasper = new File("D:/reporte/liquicredito.jasper");
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".pdf");
+                ServletOutputStream stream = response.getOutputStream();
+                JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                stream.flush();
+                stream.close();
+                FacesContext.getCurrentInstance().responseComplete();
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La venta no se encuentra despachada."));
+            return;
+        }
+        con.close();
     }
 
     public Credito getCredito() {
@@ -245,7 +308,7 @@ public class ventaBean implements Serializable {
     public List<Credito> getCreditos() {
         return creditos;
     }
-    
+
     public List<Credito> getFiltradafecha() {
         return filtradafecha;
     }
@@ -253,7 +316,7 @@ public class ventaBean implements Serializable {
     public void setVentas(List<Credito> creditos) {
         this.creditos = creditos;
     }
-    
+
     public List<Letras> getLetraslista() {
         return letraslista;
     }
@@ -268,6 +331,14 @@ public class ventaBean implements Serializable {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public void setCreditos(List<Credito> creditos) {
@@ -289,7 +360,7 @@ public class ventaBean implements Serializable {
     public void setSw(int sw) {
         this.sw = sw;
     }
-    
+
     public boolean isValue() {
         return value;
     }
@@ -385,7 +456,7 @@ public class ventaBean implements Serializable {
     public void setAnexo(Anexo anexo) {
         this.anexo = anexo;
     }
-    
+
     public void setRazonsocial(String razonsocial) {
         this.razonsocial = razonsocial;
     }
@@ -393,5 +464,21 @@ public class ventaBean implements Serializable {
     public String getRazonsocial() {
         return razonsocial;
     }
-    
+
+    public Conceptos getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(Conceptos concepto) {
+        this.concepto = concepto;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
 }
