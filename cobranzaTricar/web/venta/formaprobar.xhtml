@@ -16,13 +16,15 @@
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form prependId="false ">
                 <p:growl id="msg12" showDetail="true"/>
-                <p:panelGrid columns="2">
+                <p:panelGrid columns="4">
                     <p:outputLabel value="Fecha:" for="txtfecha"/>
-                    <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha" disabled="true"/>
+                    <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" pattern="dd/MM/yyyy" readonly="true"/>
                     <p:outputLabel value="Código:" for="txtcodigo"/>
-                    <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito" readonly="true"/>
+                    <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" readonly="true"/>
                     <p:outputLabel value="Cliente:" for="cliente"/>
-                    <p:inputText id="cliente" value="#{creditoBean.credito.anexo.nombres}" readonly="true"/>                                    
+                    <p:inputText id="cliente" value="#{creditoBean.credito.anexo.nombres}" readonly="true"/>
+                    <p:outputLabel value="DNI Cliente" for="dni"/>
+                    <p:inputText id="dni" value="#{creditoBean.credito.anexo.numdocumento}" readonly="true"/>
                     <p:outputLabel value="Vendedor:" />
                     <p:inputText value="#{creditoBean.credito.codven.nombres}" readonly="true"/>                                    
                     <p:outputLabel value="Tienda:" for="txttienda"/>
@@ -35,9 +37,14 @@
                     <p:outputLabel value="Dirección:" for="dir"/>
                     <p:inputText id="dir" readonly="true" value="#{creditoBean.credito.anexo.direccion}"/>
                     <p:outputLabel value="Distrito:" for="dist"/>
-                    <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito}" converter="distritoconverter"/>                    
-                    <p:outputLabel value="Buscar Aval:" for="aval"/>
-                    <p:inputText id="aval" value="#{creditoBean.credito.idaval.nombres}" readonly="true" />                                    
+                    <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito}" converter="distritoconverter"/>                   
+                    <p:outputLabel value="Referencia:" for="ref"/>
+                    <p:inputTextarea id="ref" readonly="true" value="#{creditoBean.credito.anexo.referencia}"/>
+                    <p:outputLabel value="Aval(es):" for="aval"/>
+                    <p:autoComplete id="aval" value="#{creditoBean.avales}" multiple="true" completeMethod="#{anexoBean.filtrarAval}" var="aval"
+                                    itemLabel="#{aval.nombres.concat('-DNI: ').concat(aval.numdocumento)}" itemValue="#{aval}" disabled="true" >
+                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                       
+                    </p:autoComplete>                                    
                     <p:outputLabel value="Modalidad:" />
                     <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" disabled="true">                        
                         <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
@@ -61,8 +68,7 @@
                         <p:ajax update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Interés:" for="interes"/>
-                    <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" 
-                                     requiredMessage="Ingrese el interés aplicado">
+                    <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" disabled="true">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                         <f:selectItem itemLabel="7" itemValue='7.00'/> 
                         <f:selectItem itemLabel="6" itemValue='6.00'/>
@@ -70,8 +76,7 @@
                         <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
                     </p:selectOneMenu>
                     <p:outputLabel value="Nro. Letras:" for="nletras"/>
-                    <p:selectOneMenu id="nletras" value="#{creditoBean.credito.nletras}" required="true" 
-                                     requiredMessage="Ingrese número de letras" disabled="true">
+                    <p:selectOneMenu id="nletras" value="#{creditoBean.credito.nletras}" disabled="true">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                         <f:selectItem itemLabel="12" itemValue='12'/>
                         <f:selectItem itemLabel="11" itemValue='11'/>
@@ -90,12 +95,23 @@
                     <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true"> 
                     </p:inputText>                    
                     <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" for="txtinicial"/>
-                    <p:inputText id="txtinicial" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei}" readonly="true">                        
+                    <p:inputText id="txtinicial" value="#{creditoBean.credito.inicial}" readonly="true">                        
                     </p:inputText>
+                    <p:outputLabel id="lblsinicial" value="2da Inicial:" for="txtsinicial"/>
+                    <p:inputText id="txtsinicial" value="#{creditoBean.credito.sinicial}" readonly="true">
+                    </p:inputText>
+                    <p:outputLabel id="lblfecha2" value="Fecha pago 2da Inicial:" for="txtfecha2"/>
+                    <p:calendar id="txtfecha2" value="#{creditoBean.credito.fecsinicial}" pattern="dd/MM/yyyy" disabled="true">
+                    </p:calendar>
                     <p:outputLabel value="Saldo:"/>                                    
                     <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
-                    <p:outputLabel value="Reseña: "/>
-                    <p:inputTextarea value="#{creditoBean.credito.resena}" readonly="true"/>
+                </p:panelGrid>
+                    <p:fieldset legend="Reseña">
+                        <h:panelGrid>
+                            <h:outputText value="#{creditoBean.credito.resena}" />
+                        </h:panelGrid>
+                    </p:fieldset>                        
+                <p:panelGrid columns="4">
                     <p:outputLabel value="Observaciones verificación: "/>
                     <p:inputTextarea value="#{creditoBean.credito.obsver}" required="true" requiredMessage="Ingrese observaciones del verficador"/>
                     <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
@@ -164,11 +180,6 @@
                     </p:column>
                     <p:column headerText="Total Letra">
                         <h:outputText value="#{letras.monto}"/>
-                    </p:column>
-                    <p:column headerText="Fecha In.">
-                        <h:outputText value="#{letras.fecini}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
                     </p:column>
                     <p:column headerText="Fecha Ven.">
                         <h:outputText value="#{letras.fecven}">

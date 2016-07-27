@@ -66,7 +66,7 @@ public class vehiculoBean implements Serializable {
                 this.session = HibernateUtil.getSessionFactory().openSession();
                 this.transaction = session.beginTransaction();
 
-                VehiculoDaoImplements dao = new VehiculoDaoImplements();
+                VehiculoDao dao = new VehiculoDaoImplements();
                 if (dao.verBySerie(this.session, this.vehiculo.getSerie()) != null) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Articulo ya existe en DB."));
                     this.vehiculo = new Vehiculo();
@@ -107,7 +107,7 @@ public class vehiculoBean implements Serializable {
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            VehiculoDaoImplements dao = new VehiculoDaoImplements();
+            VehiculoDao dao = new VehiculoDaoImplements();
             if (dao.verBySerieDifer(this.session, this.vehiculo.getIdvehiculo(), this.vehiculo.getSerie()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Articulo ya Existe."));
                 return;
@@ -137,7 +137,7 @@ public class vehiculoBean implements Serializable {
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            VehiculoDaoImplements dao = new VehiculoDaoImplements();
+            VehiculoDao dao = new VehiculoDaoImplements();
             dao.eliminar(this.session, this.vehiculo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Articulo Correctamente."));
@@ -161,7 +161,7 @@ public class vehiculoBean implements Serializable {
 
             try {
 
-                VehiculoDaoImplements dao = new VehiculoDaoImplements();
+                VehiculoDao dao = new VehiculoDaoImplements();
                 this.session = HibernateUtil.getSessionFactory().openSession();
                 this.transaction = session.beginTransaction();
                 this.vehiculo = dao.verByIdvehiculo(this.session, codigoUsuario);
@@ -191,7 +191,7 @@ public class vehiculoBean implements Serializable {
 
             try {
 
-                VehiculoDaoImplements dao = new VehiculoDaoImplements();
+                VehiculoDao dao = new VehiculoDaoImplements();
                 this.session = HibernateUtil.getSessionFactory().openSession();
                 this.transaction = session.beginTransaction();
                 this.vehiculo = dao.verByIdvehiculo(this.session, codigoUsuario);
@@ -230,7 +230,7 @@ public class vehiculoBean implements Serializable {
         this.transaction = null;
 
         try {
-            VehiculoDaoImplements dao = new VehiculoDaoImplements();
+            VehiculoDao dao = new VehiculoDaoImplements();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
             this.vehiculos = dao.verTodo(this.session);
@@ -292,8 +292,7 @@ public class vehiculoBean implements Serializable {
         return query;
     }
 
-    public void cargarModeloCotiza(Credito cred) {
-        ModeloDao modelodao = new ModeloDaoImplements();
+    public void cargarModeloCotiza(Credito cred) {        
         Integer modelo = cred.getModelo().getIdmodelo();
         idmodelo = Integer.toString(modelo);
     }

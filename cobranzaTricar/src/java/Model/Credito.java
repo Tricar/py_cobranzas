@@ -34,6 +34,7 @@ public class Credito implements java.io.Serializable {
     private int nletras;
     private Anexo codven;
     private Date fechareg;
+    private Date fecaprob;
     private Integer aprobado;
     private Integer elaborado;
     private Integer modificado;
@@ -42,6 +43,8 @@ public class Credito implements java.io.Serializable {
     private String empresa;
     private BigDecimal precio;
     private BigDecimal inicial;
+    private BigDecimal sinicial;
+    private Date fecsinicial;
     private BigDecimal saldo;
     private BigDecimal interes;
     private Anexo verificado;
@@ -81,7 +84,7 @@ public class Credito implements java.io.Serializable {
         this.interes = interes;
     }
 
-    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, String resena, String obsver, Set letrases, Set conceptoses) {
+    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Date fecaprob, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, Date fecsinicial, BigDecimal sinicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, String resena, String obsver, Set letrases, Set conceptoses) {
         this.idventa = idventa;
         this.anexo = anexo;
         this.vehiculo = vehiculo;
@@ -91,6 +94,7 @@ public class Credito implements java.io.Serializable {
         this.nletras = nletras;
         this.codven = codven;
         this.fechareg = fechareg;
+        this.fecaprob = fecaprob;
         this.aprobado = aprobado;
         this.elaborado = elaborado;
         this.despachado = despachado;
@@ -98,6 +102,8 @@ public class Credito implements java.io.Serializable {
         this.empresa = empresa;
         this.precio = precio;
         this.inicial = inicial;
+        this.sinicial = sinicial;
+        this.fecsinicial = fecsinicial;
         this.saldo = saldo;
         this.interes = interes;
         this.verificado = verificado;
@@ -210,6 +216,16 @@ public class Credito implements java.io.Serializable {
     public void setFechareg(Date fechareg) {
         this.fechareg = fechareg;
     }
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecaprob", nullable = false, length = 23)
+    public Date getFecaprob() {
+        return this.fecaprob;
+    }
+
+    public void setFecaprob(Date fecaprob) {
+        this.fecaprob = fecaprob;
+    }
 
     @Column(name = "aprobado")
     public Integer getAprobado() {
@@ -281,6 +297,25 @@ public class Credito implements java.io.Serializable {
 
     public void setInicial(BigDecimal inicial) {
         this.inicial = inicial;
+    }
+    
+    @Column(name = "sinicial", nullable = false, precision = 17)
+    public BigDecimal getSinicial() {
+        return this.sinicial;
+    }
+
+    public void setSinicial(BigDecimal sinicial) {
+        this.sinicial = sinicial;
+    }
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecsinicial", nullable = false, length = 23)
+    public Date getFecsinicial() {
+        return this.fecsinicial;
+    }
+
+    public void setFecsinicial(Date fecsinicial) {
+        this.fecsinicial = fecsinicial;
     }
 
     @Column(name = "saldo", precision = 17)
@@ -465,7 +500,7 @@ public class Credito implements java.io.Serializable {
         this.resena = resena;
     }
     
-    @Column(name = "obsver", length = 400)
+    @Column(name = "obsver", length = 1000)
     public String getObsver() {
         return this.obsver;
     }

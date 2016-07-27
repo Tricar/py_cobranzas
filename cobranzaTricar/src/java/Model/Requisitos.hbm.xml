@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Requisitos" table="requisitos" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idrequisitos" type="int">
+            <column name="idrequisitos" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="credito" class="Model.Credito" fetch="select">
+            <column name="idventa" />
+        </many-to-one>
+        <property name="copdni" type="string">
+            <column name="copdni" length="20" />
+        </property>
+        <property name="copiadni" type="java.lang.Boolean">
+            <column name="copiadni" />
+        </property>
+        <property name="recibagua" type="string">
+            <column name="recibagua" length="20" />
+        </property>
+        <property name="reciboagua" type="java.lang.Boolean">
+            <column name="reciboagua" />
+        </property>
+        <property name="recibluz" type="string">
+            <column name="recibluz" length="20" />
+        </property>
+        <property name="reciboluz" type="java.lang.Boolean">
+            <column name="reciboluz" />
+        </property>
+        <property name="croq" type="string">
+            <column name="croq" length="20" />
+        </property>
+        <property name="croquis" type="java.lang.Boolean">
+            <column name="croquis" />
+        </property>
+        <property name="copiadnicon" type="string">
+            <column name="copiadnicon" length="20" />
+        </property>
+        <property name="copiadniconyuge" type="java.lang.Boolean">
+            <column name="copiadniconyuge" />
+        </property>
+        <property name="otrosobs" type="string">
+            <column name="otrosobs" length="100" />
+        </property>
+        <property name="otros" type="java.lang.Boolean">
+            <column name="otros" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -50,6 +50,7 @@ public class Anexo implements java.io.Serializable {
     private Set usuarios = new HashSet(0);    
     private Set ocupacions = new HashSet(0);
     private Set cajas = new HashSet(0);
+    private Set creditoavals = new HashSet(0);
     private Set conceptoses = new HashSet(0);
     private String nombres;
 
@@ -60,7 +61,7 @@ public class Anexo implements java.io.Serializable {
         this.idanexo = idanexo;
     }
 
-    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas, Set conceptoses) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas, Set conceptoses, Set creditoavals) {
         this.idanexo = idanexo;
         this.nombre = nombre;
         this.tipodocumento = tipodocumento;
@@ -91,6 +92,7 @@ public class Anexo implements java.io.Serializable {
         this.ocupacions = ocupacions;
         this.cajas = cajas;
         this.conceptoses = conceptoses;
+        this.creditoavals = creditoavals;
     }
 
     @Id
@@ -365,6 +367,15 @@ public class Anexo implements java.io.Serializable {
 
     public void setConceptoses(Set conceptoses) {
         this.conceptoses = conceptoses;
+    }
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="anexo")
+    public Set getCreditoavals() {
+        return this.creditoavals;
+    }
+    
+    public void setCreditoavals(Set creditoavals) {
+        this.creditoavals = creditoavals;
     }
 
     public String getNombres() {

@@ -21,10 +21,10 @@
 
             <p:outputLabel value="Ingrese DNI o RUC:"/>
             <p:inputMask mask="9?9999999999" maxlength="11" value="#{creditoBean.dni}"/>
-            <p:commandButton value="Buscar" actionListener="#{creditoBean.cargarAnexoDNI()}" ajax="false"/> 
+            <p:commandButton value="Buscar" icon="fa fa-search white" actionListener="#{creditoBean.cargarAnexoDNI()}" ajax="false"/> 
             <p:outputLabel value="Ingrese Nombre:"/>
             <p:inputText value="#{creditoBean.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
-            <p:commandButton value="Buscar" action="#{creditoBean.cargarCreditoNombre()}" actionListener="#{pagosBean.limpiar()}"/>
+            <p:commandButton value="Buscar" icon="fa fa-search white" action="#{creditoBean.cargarCreditoNombre()}" actionListener="#{pagosBean.limpiar()}"/>
         </h:form>
 
         <h:form id="formMostrar">

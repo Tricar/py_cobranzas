@@ -629,9 +629,8 @@ public class anexoBean implements Serializable {
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente NO necesitará aval o garante"));
         }
-
     }
-
+    
     public void handleKeyEvent() {
         text = text.toUpperCase();
     }
@@ -643,7 +642,7 @@ public class anexoBean implements Serializable {
 
     public void handleUnSelect(UnselectEvent e) {
         Anexo p = (Anexo) e.getObject();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Remove Player :: Player Info: ID :: " + p.getIdanexo() + " :: Name :: " + p.getNombre(), ""));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Anexo removido :: " + p.getNombre() + " " + p.getApepat() + " " + p.getApemat(), ""));
     }
 
     public void phaseListener(PhaseEvent e) {

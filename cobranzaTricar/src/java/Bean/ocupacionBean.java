@@ -135,7 +135,7 @@ public class ocupacionBean implements Serializable {
     public void limpIngreso(Anexo anexito) {
         anexo = anexito;
         opcbol = true;
-        opccons = true;
+        //opccons = true;
         opcfacbol = true;
         opclic = true;
         opclicf = true;
@@ -158,7 +158,7 @@ public class ocupacionBean implements Serializable {
     public void actualizar() {
         if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) && anexo.getCpropia().equals("SI")) {
             opcbol = false;
-            opccons = false;
+            //opccons = false;
             opcfacbol = true;
             opclic = true;
             opcrrhh = true;
@@ -168,7 +168,7 @@ public class ocupacionBean implements Serializable {
         }
         if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) && anexo.getCpropia().equals("NO")) {
             opcbol = false;
-            opccons = true;
+            //opccons = true;
             opcfacbol = true;
             opclic = true;
             opcrrhh = true;
@@ -178,7 +178,7 @@ public class ocupacionBean implements Serializable {
         }
         if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF")) && anexo.getCpropia().equals("SI")) {
             opcbol = true;
-            opccons = false;
+            //opccons = false;
             opcfacbol = true;
             opclic = true;
             opcrrhh = false;
@@ -188,7 +188,7 @@ public class ocupacionBean implements Serializable {
         }
         if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("IF")) && anexo.getCpropia().equals("NO")) {
             opcbol = true;
-            opccons = true;
+            //opccons = true;
             opcfacbol = true;
             opclic = true;
             opcrrhh = false;
@@ -199,7 +199,7 @@ public class ocupacionBean implements Serializable {
         if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("FR")) && anexo.getCpropia().equals("SI")) {
             opcsunat = false;
             opcbol = true;
-            opccons = false;
+            //opccons = false;
             opcfacbol = true;
             opclic = true;
             opcrrhh = true;
@@ -209,7 +209,7 @@ public class ocupacionBean implements Serializable {
         if ((ocupacion.getTipo().equals("IN") && ocupacion.getClase().equals("FR")) && anexo.getCpropia().equals("NO")) {
             opcsunat = false;
             opcbol = true;
-            opccons = true;
+            //opccons = true;
             opcfacbol = true;
             opclic = true;
             opcrrhh = true;
@@ -221,7 +221,7 @@ public class ocupacionBean implements Serializable {
             opclic = true;
             opcfacbol = false;
             opcbol = true;
-            opccons = false;
+            //opccons = false;
             opcrrhh = true;
             opcsunat = true;
             opclicf = true;
@@ -231,7 +231,7 @@ public class ocupacionBean implements Serializable {
             opclic = true;
             opcfacbol = false;
             opcbol = true;
-            opccons = true;
+            //opccons = true;
             opcrrhh = true;
             opcsunat = true;
             opclicf = true;
@@ -241,7 +241,7 @@ public class ocupacionBean implements Serializable {
             opclic = false; //lic cond
             opcfacbol = true;
             opcbol = true;
-            opccons = false; //autoavaluo
+            //opccons = false; //autoavaluo
             opcrrhh = true;
             opcsunat = true;
             opclicf = true;
@@ -251,7 +251,7 @@ public class ocupacionBean implements Serializable {
             opclic = false; //lic cond
             opcfacbol = true;
             opcbol = true;
-            opccons = true;
+            //opccons = true;
             opcrrhh = true;
             opcsunat = true;
             opclicf = true;

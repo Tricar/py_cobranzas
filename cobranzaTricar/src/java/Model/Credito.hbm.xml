@@ -32,6 +32,9 @@
         <property name="fechareg" type="timestamp">
             <column name="fechareg" length="23" not-null="true" />
         </property>
+        <property name="fecaprob" type="timestamp">
+            <column name="fecaprob" length="23" not-null="true" />
+        </property>
         <property name="aprobado" type="java.lang.Integer">
             <column name="aprobado" />
         </property>
@@ -52,6 +55,12 @@
         </property>
         <property name="inicial" type="big_decimal">
             <column name="inicial" precision="17" not-null="true" />
+        </property>
+        <property name="sinicial" type="big_decimal">
+            <column name="sinicial" precision="17" not-null="true" />
+        </property>
+        <property name="fecsinicial" type="timestamp">
+            <column name="fecsinicial" length="23" not-null="true" />
         </property>
         <property name="saldo" type="big_decimal">
             <column name="saldo" precision="17" />
