@@ -16,7 +16,7 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class credavalBean implements Serializable {
 
-    private List<Creditoaval> listafiltrada = new ArrayList();    
+    private List<Creditoaval> listafiltrada = new ArrayList();
     private Creditoaval credaval = new Creditoaval();
     private List<Creditoaval> credavales = new ArrayList();
     private String btnguardar;
@@ -72,15 +72,15 @@ public class credavalBean implements Serializable {
         credaval = linkdao.getbyId(idmovcaja);
         RequestContext.getCurrentInstance().update("frmEliminar");
         RequestContext.getCurrentInstance().execute("PF('dlgEliminar').show()");
-    }    
+    }
 
     public List<Creditoaval> getCreditoavals() {
         CredavalDao linkdao = new CredavalDaoImp();
         credavales = linkdao.mostrarCreditoavals();
         return credavales;
     }
-    
-    public void insertarCreditoAval(Credito cred, List<Anexo> avals){
+
+    public void insertarCreditoAval(Credito cred, List<Anexo> avals) {
         CredavalDao linkdao = new CredavalDaoImp();
         credito = cred;
         avales = avals;
@@ -91,14 +91,20 @@ public class credavalBean implements Serializable {
             linkdao.insertarCreditoaval(credaval);
         }
     }
-    
-    public List<Anexo> avalesxCredito(Credito cred){        
+
+    public List<Anexo> avalesxCredito(Credito cred) {
         CredavalDao linkdao = new CredavalDaoImp();
-        credito = cred;
+        credito = cred;        
         listafiltrada = linkdao.avales(credito);
-        for (int i = 0; i < listafiltrada.size(); i++) {
-            Creditoaval get = listafiltrada.get(i);
-            avales.add(get.getAnexo());
+        if (!listafiltrada.isEmpty()) {
+            for (int i = 0; i < listafiltrada.size(); i++) {
+                try {                    
+                    Creditoaval get = listafiltrada.get(i);
+                    avales.add(get.getAnexo());
+                } catch (Exception e) {
+                }
+            }            
+            return avales;            
         }
         return avales;
     }
@@ -141,7 +147,7 @@ public class credavalBean implements Serializable {
 
     public void setListaFiltTienda(List<Creditoaval> listaFiltTienda) {
         this.listaFiltTienda = listaFiltTienda;
-    }    
+    }
 
     public Credito getCredito() {
         return credito;

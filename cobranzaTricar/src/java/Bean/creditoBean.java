@@ -45,6 +45,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -128,6 +129,23 @@ public class creditoBean implements Serializable {
     private List<Anexo> avalesant = new ArrayList();
     private List<Anexo> avalesmod = new ArrayList();
     private String banderaval;
+    private String[] selectedReqs;    
+    private String banderareq = new String();
+    private List<String> reqs;
+
+    @PostConstruct
+    public void init() {
+        reqs = new ArrayList<String>();
+        reqs.add("1.Copia DNI Titular");
+        reqs.add("2.Copia DNI conyuge");
+        reqs.add("3.Copia DNI aval(es)");
+        reqs.add("4.Copia de Título o Constancia");
+        reqs.add("5.Copia Recibo de agua");
+        reqs.add("6.Copia Recibo de luz");
+        reqs.add("7.Copia de Croquis");
+        reqs.add("8.Copia de Recibo de ingreso");
+        reqs.add("9.Otros");
+    }
 
     public creditoBean() {
     }
@@ -177,6 +195,7 @@ public class creditoBean implements Serializable {
     public void insertarCredito(Usuario usuario) {
         CreditoDao creditodao = new CreditoDaoImp();
         credavalBean credavalbean = new credavalBean();
+        requisitosBean reqsbean = new requisitosBean();
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
         } else {
@@ -216,6 +235,7 @@ public class creditoBean implements Serializable {
                                 credito.setElaborado(usuario.getAnexo().getIdanexo());
                                 credito.setSwinicial(false);
                                 creditodao.insertarVenta(credito);
+                                reqsbean.insertar(credito, selectedReqs);
                                 if (avales.isEmpty() == false) {
                                     credavalbean.insertarCreditoAval(credito, avales);
                                 }
@@ -240,6 +260,7 @@ public class creditoBean implements Serializable {
                             credito.setElaborado(usuario.getAnexo().getIdanexo());
                             credito.setSwinicial(false);
                             creditodao.insertarVenta(credito);
+                            reqsbean.insertar(credito, selectedReqs);
                             if (avales.isEmpty() == false) {
                                 credavalbean.insertarCreditoAval(credito, avales);
                             }
@@ -248,7 +269,6 @@ public class creditoBean implements Serializable {
                                 Ocupacion get = ocupsxanexo.get(i);
                                 ocupbean.insertarCredito(credito.getIdventa(), get);
                             }
-                            System.out.println("valor de la lista avales: " + avales.isEmpty());
                             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El crédito se registró correctamente."));
                         } catch (Exception e) {
                         }
@@ -325,6 +345,7 @@ public class creditoBean implements Serializable {
     }
 
     public void lanzarDlgModificar() {
+        List<String> where = new ArrayList<String>();
         if (credito.getEstado().equals("AP")) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, este crédito ya ha sido aprobado. No se puede modificar", "Crédito Aprobado, no se puede modificar."));
             return;
@@ -365,13 +386,59 @@ public class creditoBean implements Serializable {
                     }
                 }
             }
+//            selectedmodificar = new String[9];
+//            System.out.println("Estoy esperando entrar");
+//            if (selectedanterior.length != selectedReqs.length) {
+//                if (selectedanterior.length > selectedReqs.length) {
+//                    System.out.println("entré para quitar");
+//                    banderareq = "RES";
+//                    for (int i = 0; i < selectedanterior.length; i++) {
+//                        String Req = selectedanterior[i];
+//                        int c = 0;
+//                        for (int j = 0; j < selectedReqs.length; j++) {
+//                            String selectedReq = selectedReqs[j];
+//                            if (selectedReq.equals(Req)) {
+//                                System.err.println("Muestra la comparacion : "+selectedReq+" == "+Req+"  Guardo ");
+//                                c++;
+//                            }
+//                            if (c == 0) {
+//                                where.add(Req);
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    if (selectedanterior.length < selectedReqs.length) {
+//                        banderareq = "SUM";
+//                        System.out.println("entré para agreagr");
+//                        for (int i = 0; i < selectedReqs.length; i++) {
+//                            String Req = selectedReqs[i];
+//                            int c = 0;
+//                            for (int j = 0; j < selectedanterior.length; j++) {
+//                                String selectedReq = selectedanterior[j];
+//                                if (selectedReq.equals(Req)) {
+//                                    c++;
+//                                }
+//                                if (c == 0) {
+//                                    where.add(Req);
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                }
+//                String[] selectedReqs = new String[where.size()];
+//                where.toArray(selectedReqs);
+//                selectedmodificar = selectedReqs;
+//            }
             RequestContext.getCurrentInstance().execute("PF('dlgmodificar').show()");
         }
     }
 
     public void modificarCredito() {
         credavalBean credavalbean = new credavalBean();
+        requisitosBean reqsbean = new requisitosBean();
         CreditoDao credao = new CreditoDaoImp();
+        System.out.println("MEnsaje: " + btnguardar);
         if (btnguardar.equals("Modificar")) {
             if (inicia.compareTo(credito.getInicial()) == -1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
@@ -398,9 +465,12 @@ public class creditoBean implements Serializable {
                         ocupbean.eliminar(get);
                     }
                 }
-                if (avalesant.isEmpty() && avales.isEmpty() == false) {
-                    credavalbean.insertarCreditoAval(credito, avales);
-                }
+            } catch (Exception e) {
+            }
+            if (avalesant.isEmpty() && avales.isEmpty() == false) {
+                credavalbean.insertarCreditoAval(credito, avales);
+            }
+            try {
                 if (banderaval.equals("SUM")) {
                     for (int i = 0; i < avalesmod.size(); i++) {
                         Anexo get = avalesmod.get(i);
@@ -413,11 +483,15 @@ public class creditoBean implements Serializable {
                         credavalbean.eliminar(get, credito);
                     }
                 }
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Se Modificó la solicitud de crédito"));
-                credito.setSaldo(credito.getPrecio().subtract((credito.getInicial().add(credito.getSinicial()))));
-                credao.modificarVenta(credito);
             } catch (Exception e) {
             }
+            try {
+                reqsbean.modificar(credito, selectedReqs);
+            } catch (Exception e) {
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Se Modificó la solicitud de crédito"));
+            credito.setSaldo(credito.getPrecio().subtract((credito.getInicial().add(credito.getSinicial()))));
+            credao.modificarVenta(credito);
         }
         ocupsxanexo = ocupbean.cargarxCredito(credito);
     }
@@ -1104,6 +1178,7 @@ public class creditoBean implements Serializable {
     }
 
     public String nuevo() {
+        selectedReqs = new String[9];
         credito = new Credito();
         precio = BigDecimal.ZERO;
         inicia = BigDecimal.ZERO;
@@ -1127,11 +1202,17 @@ public class creditoBean implements Serializable {
     }
 
     public String cargar(Usuario usuario) {
+        requisitosBean reqsbean = new requisitosBean();
         credavalBean credavalbean = new credavalBean();
         modeloTipo(credito.getVehi());
+        avales = new ArrayList();
+        List<Anexo> rec = new ArrayList();
         sw = 1;
         inicial Inicial = new inicial();
-        avales = credavalbean.avalesxCredito(credito);
+        rec = credavalbean.avalesxCredito(credito);
+        if (!rec.isEmpty()) {
+            avales = rec;
+        }
         if (credito.getSinicial().compareTo(BigDecimal.ZERO) == 1) {
             sinicial = credito.getSinicial();
             valuesi = false;
@@ -1144,6 +1225,7 @@ public class creditoBean implements Serializable {
         ocupsxanexo = ocupbean.cargarxCredito(credito);
         iniciapre = Inicial.inicialCredito(anexo.getDistrito(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
         if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("JE")) {
+            selectedReqs = reqsbean.mostrarSoloRequisitosxCred(credito);
             if (credito.getEstado().equals("EM")) {
                 value = true;
                 disableaval = false;
@@ -1230,10 +1312,13 @@ public class creditoBean implements Serializable {
 
     public String compararListas() {
         //ocupsxcredito = ocupbean.cargarxCredito(credito);        
+        requisitosBean reqsbean = new requisitosBean();
         String msj = new String();
         if (avales.isEmpty() == false) {
             avalesant = avales;
         }
+        selectedReqs = reqsbean.mostrarReqsParaModificar(credito);        
+        reqsbean.eliminarParaModificar(credito);
         ocupsxcredito = ocupbean.cargarIngresos(credito.getAnexo());
         if (ocupsxcredito.size() > ocupsxanexo.size()) {
             bandera = "SUM";
@@ -2237,5 +2322,25 @@ public class creditoBean implements Serializable {
 
     public void setBanderaval(String banderaval) {
         this.banderaval = banderaval;
+    }
+
+    public String[] getSelectedReqs() {
+        return selectedReqs;
+    }
+
+    public void setSelectedReqs(String[] selectedReqs) {
+        this.selectedReqs = selectedReqs;
+    }
+
+    public List<String> getReqs() {
+        return reqs;
+    }
+
+    public String getBanderareq() {
+        return banderareq;
+    }
+
+    public void setBanderareq(String banderareq) {
+        this.banderareq = banderareq;
     }
 }
