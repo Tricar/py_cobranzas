@@ -69,14 +69,51 @@ public class reportesBean implements Serializable {
         con.close();
     }
 
-    public void exportarLiq(String codigo) throws JRException, NamingException, SQLException, IOException {
+    public void exportarLiq(String codigo, Credito cred) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
+        CredavalDao linkdao = new CredavalDaoImp();
+        List<Creditoaval> listafiltrada = new ArrayList();
+        avales = new ArrayList();
+        String naval1 = null;
+        String dniaval1 = null;
+        String naval2 = null;
+        String dniaval2 = null;
+        try {
+            listafiltrada = linkdao.avales(cred);
+            for (int i = 0; i < listafiltrada.size(); i++) {
+                Creditoaval get = listafiltrada.get(i);
+                avales.add(get.getAnexo());
+            }
+            if (avales.size() >= 0) {
+                naval1 = avales.get(0).getNombre().concat(" ").concat(avales.get(0).getApepat()).concat(" ").concat(avales.get(0).getApemat());
+                dniaval1 = avales.get(0).getNumdocumento();
+                naval2 = avales.get(1).getNombre().concat(" ").concat(avales.get(1).getApepat()).concat(" ").concat(avales.get(1).getApemat());
+                dniaval2 = avales.get(1).getNumdocumento();
+            }
+        } catch (Exception e) {
+        }
+        if (naval1 == null) {
+            naval1 = " ";
+        }
+        if (dniaval1 == null) {
+            dniaval1 = " ";
+        }
+        if (naval2 == null) {
+            naval2 = " ";
+        }
+        if (dniaval2 == null) {
+            dniaval2 = " ";
+        }
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(codigo)) {
             parametros.put("liqventa", codigo);
-            File jasper = new File("D:/reporte/liquidacion.jasper");
+            parametros.put("nombresaval1", naval1);            
+            parametros.put("dniaval1", dniaval1);
+            parametros.put("nombresaval2", naval2);            
+            parametros.put("dniaval2", dniaval2);
+            File jasper = new File("D:/reporte/liquicredito.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             response.addHeader("Content-disposition", "attachment; filename=Liquidacion" + codigo + ".pdf");
@@ -94,7 +131,7 @@ public class reportesBean implements Serializable {
     public void exportarFormato(String codigo, Credito cred) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
-        con = conn.getConnection();        
+        con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (cred.getEstado().equals("AP")) {
             if (StringUtils.isNotBlank(codigo)) {
@@ -161,14 +198,11 @@ public class reportesBean implements Serializable {
         String dniaval2 = null;
         try {
             listafiltrada = linkdao.avales(cred);
-            System.out.println("Entré a rellenar la lista");
             for (int i = 0; i < listafiltrada.size(); i++) {
                 Creditoaval get = listafiltrada.get(i);
                 avales.add(get.getAnexo());
-                System.out.println("agregando avales: "+avales.get(i).getNombre());
             }
             if (avales.size() >= 0) {
-                System.out.println("Agregando avales a los parametros");
                 naval1 = avales.get(0).getNombre();
                 apaval1 = avales.get(0).getApepat().concat(" ").concat(avales.get(0).getApemat());
                 dniaval1 = avales.get(0).getNumdocumento();
@@ -181,7 +215,7 @@ public class reportesBean implements Serializable {
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (cred.getEstado().equals("AP")) {
             if (StringUtils.isNotBlank(codigo)) {
-                parametros.put("codigo", codigo);                
+                parametros.put("codigo", codigo);
                 parametros.put("nombreaval1", naval1);
                 parametros.put("apesaval1", apaval1);
                 parametros.put("dniaval1", dniaval1);
