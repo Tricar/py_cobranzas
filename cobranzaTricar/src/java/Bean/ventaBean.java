@@ -3,6 +3,8 @@ package Bean;
 import Dao.AnexoDaoImplements;
 import Dao.ConceptosDao;
 import Dao.ConceptosDaoImp;
+import Dao.CredavalDao;
+import Dao.CredavalDaoImp;
 import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Dao.LetrasDao;
@@ -12,6 +14,7 @@ import Dao.VehiculoDaoImplements;
 import Model.Anexo;
 import Model.Conceptos;
 import Model.Credito;
+import Model.Creditoaval;
 import Model.Letras;
 import Model.Modelo;
 import Model.Ocupacion;
@@ -41,6 +44,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
@@ -58,6 +62,7 @@ public class ventaBean implements Serializable {
     public Credito credito = new Credito();
     public List<Credito> creditos = new ArrayList();
     public List<Letras> letraslista = new ArrayList();
+    private List<Anexo> avales = new ArrayList();
     public List<Credito> filtradafecha;
     private BigDecimal precio;
     private List<Ocupacion> ocupsxanexo = new ArrayList();
@@ -260,7 +265,6 @@ public class ventaBean implements Serializable {
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (estado.equals("DP")) {
             if (tipo.equals("CO")) {
-                System.out.println("entre a contado");
                 parametros.put("liqventa", codigo);
                 File jasper = new File("D:/reporte/liquicontado.jasper");
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
@@ -272,7 +276,6 @@ public class ventaBean implements Serializable {
                 stream.close();
                 FacesContext.getCurrentInstance().responseComplete();
             } else if (tipo.equals("CD")) {
-                System.out.println("entre a credito");
                 parametros.put("liqventa", codigo);
                 File jasper = new File("D:/reporte/liquicredito.jasper");
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
@@ -286,6 +289,36 @@ public class ventaBean implements Serializable {
             }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La venta no se encuentra despachada."));
+            return;
+        }
+        con.close();
+    }
+
+    public void exportarCronograma(String codigo, String tipo, String estado) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        CredavalDao linkdao = new CredavalDaoImp();
+        List<Creditoaval> listafiltrada = new ArrayList();
+        avales = new ArrayList();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (estado.equals("DP")) {
+                if (StringUtils.isNotBlank(codigo)) {
+                    parametros.put("codigo", codigo);
+                    File jasper = new File("D:/reporte/cronograma.jasper");
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+                    HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                    response.addHeader("Content-disposition", "attachment; filename=Cronograma" + codigo + ".pdf");
+                    ServletOutputStream stream = response.getOutputStream();
+                    JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                    stream.flush();
+                    stream.close();
+                    FacesContext.getCurrentInstance().responseComplete();
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Genere el crédito primero"));
+                }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El credito no se encuentra despachada."));
             return;
         }
         con.close();
@@ -479,6 +512,14 @@ public class ventaBean implements Serializable {
 
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
+    }
+
+    public List<Anexo> getAvales() {
+        return avales;
+    }
+
+    public void setAvales(List<Anexo> avales) {
+        this.avales = avales;
     }
 
 }

@@ -63,7 +63,7 @@
                             <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" >
                                 <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                             </p:commandButton>
-                            <p:commandButton ajax="false" actionListener="#{ventaBean.exportarFormato(cred.liqventa, cred.condicionpago, cred.estado)}" title="Solicitud de Credito" icon="fa fa-print white" />
+                            <p:commandButton ajax="false" actionListener="#{creditoBean.exportarFormato(cred.liqventa, cred.condicionpago, cred.estado)}" title="Solicitud de Credito" icon="fa fa-print white" />
                             <ui:remove>
                                 <p:commandButton update=":formVer" icon="b-ver" title="Mostrar" actionListener="#{creditoBean.cargarLetras(cred)}"/>                         
                                 <p:commandButton value="R" update=":formRef" oncomplete="dlgrefinanciar.show()" title="Refinanciar">

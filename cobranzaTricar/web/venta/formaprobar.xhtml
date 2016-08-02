@@ -150,7 +150,7 @@
                 <h:commandButton actionListener="#{reportesBean.exportarCronograma(creditoBean.credito.liqventa, creditoBean.credito)}" value="Imp. Cronograma." disabled="#{creditoBean.value}"/>
             </h:form>
             <h:form>
-                <h2>Ingresos económicos del cliente y adjuntos </h2>
+                <h2 class="BigTopic">Ingresos económicos del cliente y adjuntos </h2>
                 <p:dataTable var="ocups" value="#{creditoBean.ocupsxanexo}" 
                              emptyMessage="No hay nada para mostrar">
                     <p:column headerText="Descripción">

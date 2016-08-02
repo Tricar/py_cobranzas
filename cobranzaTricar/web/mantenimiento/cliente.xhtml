@@ -103,7 +103,17 @@
                     <p:outputLabel value="DNI:" for="txtDniCon"/>
                     <p:inputMask disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtDniCon" mask="9?9999999" value="#{anexoBean.anexo.dniconyu}" maxlength="8">
                         <f:validator validatorId="validatorVacio"/>
-                    </p:inputMask>
+                    </p:inputMask>                    
+                    <p:outputLabel value="DIRECCION:" for="txtDireccionCon"/>
+                    <p:inputText disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtDireccionCon" value="#{anexoBean.anexo.direccionconyu}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                        <f:validator validatorId="validatorLetra"/>
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="OCUPACION:" for="txtOcupacion"/>
+                    <p:inputText disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtOcupacion" value="#{anexoBean.anexo.ocupacionconyu}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                        <f:validator validatorId="validatorLetra"/>
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
                     <p:outputLabel value="CASA PROPIA:" for="cmbcasa" />
                     <p:selectOneMenu id="cmbcasa" value="#{anexoBean.anexo.cpropia}" required="true" requiredMessage="Debe Seleccionar una opción">
                         <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
