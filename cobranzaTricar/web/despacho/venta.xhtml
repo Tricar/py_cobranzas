@@ -56,7 +56,7 @@
                         </p:column>              
                         <p:column headerText="OPERACIONES">
                             <p:commandButton ajax="false" actionListener="#{ventaBean.exportarFormato(cred.liqventa, cred.condicionpago, cred.estado)}" title="Liquidacion" icon="fa fa-print white" />
-                            <p:commandButton ajax="false" actionListener="#{ventaBean.exportarFormato(cred.liqventa, cred.condicionpago, cred.estado)}" title="Cronograma" icon="fa fa-print white" />
+                            <p:commandButton disabled="#{cred.condicionpago != 'CD'}" ajax="false" actionListener="#{ventaBean.exportarCronograma(cred.liqventa, cred.condicionpago, cred.estado)}" title="Cronograma" icon="fa fa-calendar white" />
                         </p:column>
                     </p:dataTable>
                 </h:form>

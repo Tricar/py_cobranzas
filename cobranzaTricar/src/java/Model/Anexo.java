@@ -45,6 +45,8 @@ public class Anexo implements java.io.Serializable {
     private String estcivil;
     private String conyuge;
     private String dniconyu;
+    private String direccionconyu;    
+    private String ocupacionconyu;
     private String cpropia;
     private Set creditos = new HashSet(0);
     private Set usuarios = new HashSet(0);    
@@ -61,7 +63,7 @@ public class Anexo implements java.io.Serializable {
         this.idanexo = idanexo;
     }
 
-    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas, Set conceptoses, Set creditoavals) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String direccionconyu, String ocupacionconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas, Set conceptoses, Set creditoavals) {
         this.idanexo = idanexo;
         this.nombre = nombre;
         this.tipodocumento = tipodocumento;
@@ -86,6 +88,8 @@ public class Anexo implements java.io.Serializable {
         this.estcivil = estcivil;
         this.conyuge = conyuge;
         this.dniconyu = dniconyu;
+        this.direccionconyu = direccionconyu;
+        this.ocupacionconyu = ocupacionconyu;
         this.cpropia = cpropia;
         this.creditos = creditos;
         this.usuarios = usuarios;        
@@ -313,6 +317,24 @@ public class Anexo implements java.io.Serializable {
 
     public void setDniconyu(String dniconyu) {
         this.dniconyu = dniconyu;
+    }
+
+    @Column(name = "direccionconyu", length = 100)
+    public String getDireccionconyu() {
+        return this.direccionconyu;
+    }
+
+    public void setDireccionconyu(String direccionconyu) {
+        this.direccionconyu = direccionconyu;
+    }
+
+    @Column(name = "ocupacionconyu", length = 50)
+    public String getOcupacionconyu() {
+        return this.ocupacionconyu;
+    }
+
+    public void setOcupacionconyu(String ocupacionconyu) {
+        this.ocupacionconyu = ocupacionconyu;
     }
     
     @Column(name = "cpropia", length = 3)

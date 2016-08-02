@@ -10,7 +10,7 @@
 
     <ui:define name="content">
         <h:form>
-            <p:commandButton action="#{creditoBean.indexcotiza()}" value="Regresar" immediate="true" icon="b-back"/>            
+            <p:commandButton action="#{creditoBean.indexcotiza()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>            
         </h:form>
         <div class="layout-portlets-box">
             <div class="Container100 ui-fluid">
@@ -30,92 +30,147 @@
                                                 <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese fecha"/>
                                             </span>
                                         </div>
-
-                                        <p:outputLabel value="Buscar cliente:" for="cliente"/>
-                                        <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
-                                                        completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
-                                                        itemLabel="#{cliente.nombres}" itemValue="#{cliente}"
-                                                        required="true" requiredMessage="Ingrese cliente">
-                                            <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                                                                        
-                                            <p:ajax event="mousemove" update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}"/>
-                                        </p:autoComplete>
-
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Buscar cliente:" for="cliente"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
+                                                            completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
+                                                            itemLabel="#{cliente.nombres}" itemValue="#{cliente}"
+                                                            required="true" requiredMessage="Ingrese cliente">
+                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                                                                        
+                                                <p:ajax event="mousemove" update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}"/>
+                                            </p:autoComplete>
+                                        </div>
                                     </div>
-                                    <p:outputLabel value="Modalidad:" />
-                                    <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
-                                        <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
-                                        <f:selectItem itemLabel="Financiado" itemValue="FI"/>
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Saldo:"/>                                    
-                                    <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
-                                    <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCotiza(loginbean.usuario.idusuario)}" icon="ui-icon-check" ajax="false"/>  
-
-                                    <p:outputLabel value="Código:" for="txtcodigo"/>
-                                    <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito"/>
-                                    <p:outputLabel value="Buscar vendedor:" for="vendedor"/>
-                                    <p:autoComplete id="vendedor" value="#{creditoBean.credito.codven}"
-                                                    completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
-                                                    itemLabel="#{anexo.nombres}" itemValue="#{anexo}"
-                                                    required="true" requiredMessage="Ingrese vendedor">
-                                        <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                        
-                                    </p:autoComplete>
-                                    <p:outputLabel value="Nro. Letras:" for="nletras"/>
-                                    <p:selectOneMenu id="nletras" value="#{creditoBean.credito.nletras}" required="true" requiredMessage="Seleccione número de letras">
-                                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                        <f:selectItem itemLabel="1" itemValue='1' />
-                                        <f:selectItem itemLabel="2" itemValue='2' />
-                                        <f:selectItem itemLabel="3" itemValue='3'/>
-                                        <f:selectItem itemLabel="4" itemValue='4'/>
-                                        <f:selectItem itemLabel="5" itemValue='5'/>
-                                        <f:selectItem itemLabel="6" itemValue='6'/>
-                                        <f:selectItem itemLabel="7" itemValue='7'/>
-                                        <f:selectItem itemLabel="8" itemValue='8'/>
-                                        <f:selectItem itemLabel="9" itemValue='9'/>
-                                        <f:selectItem itemLabel="10" itemValue='10'/>
-                                        <f:selectItem itemLabel="11" itemValue='11'/>
-                                        <f:selectItem itemLabel="12" itemValue='12'/>
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Interés:" for="interes"/>
-                                    <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" requiredMessage="Seleccione interés">
-                                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                        <f:selectItem itemLabel="7" itemValue='7.00'/> 
-                                        <f:selectItem itemLabel="6" itemValue='6.00'/>
-                                        <f:selectItem itemLabel="5" itemValue='5.00'/>
-                                        <f:selectItem itemLabel="0" itemValue='0.00'/> 
-                                    </p:selectOneMenu>
-
-                                    <p:outputLabel value="Tienda:" for="tienda"/>
-                                    <p:selectOneMenu id="tienda" value="#{creditoBean.credito.tienda}" required="true" requiredMessage="Seleccione la Tienda">
-                                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                        <f:selectItem itemLabel="VX1" itemValue="V1" />
-                                        <f:selectItem itemLabel="VX2" itemValue="V2" />                            
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Tipo Vehículo:" for="tipo"/>
-                                    <p:selectOneMenu id="tipo" value="#{creditoBean.credito.vehi}" required="true" requiredMessage="Seleccione Tipo de vehículo">
-                                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
-                                        <f:selectItem itemLabel="MTX" itemValue="MX" />
-                                        <f:selectItem itemLabel="ML" itemValue="ML" />
-                                        <f:selectItem itemLabel="MTF" itemValue="MF" />
-                                        <f:selectItem itemLabel="MTC" itemValue="MC" />
-                                        <p:ajax update="modeloc" listener="#{creditoBean.modeloTipo(creditoBean.credito.vehi)}" process="@this" />
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Modelo:" for="modeloc"/>
-                                    <p:selectOneMenu id="modeloc" value="#{creditoBean.credito.modelo}" converter="omnifaces.SelectItemsConverter"
-                                                     required="true" requiredMessage="Seleccione Modelo">
-                                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                        <f:selectItems value="#{creditoBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
-                                        <p:ajax update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Precio:"/>
-                                    <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true" />
-                                    <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" />
-                                    <p:inputText id="txtinicial" value="#{creditoBean.inicia}" required="true" requiredMessage="Ingrese incial" class="money">
-                                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>                        
-                                    </p:inputText>
-
                                     <div class="ui-grid-row">
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <h:commandButton actionListener="#{reportesBean.exportarProf(creditoBean.credito.liqventa)}" value="Imprimir Proforma" />
+                                            <p:outputLabel value="Modalidad:" />
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
+                                                <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
+                                                <f:selectItem itemLabel="Financiado" itemValue="FI"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Saldo:"/> 
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Código:" for="txtcodigo"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Buscar vendedor:" for="vendedor"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:autoComplete id="vendedor" value="#{creditoBean.credito.codven}"
+                                                            completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
+                                                            itemLabel="#{anexo.nombres}" itemValue="#{anexo}"
+                                                            required="true" requiredMessage="Ingrese vendedor">
+                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                        
+                                            </p:autoComplete>
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Nro. Letras:" for="nletras"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectOneMenu id="nletras" value="#{creditoBean.credito.nletras}" required="true" requiredMessage="Seleccione número de letras">
+                                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                                <f:selectItem itemLabel="1" itemValue='1' />
+                                                <f:selectItem itemLabel="2" itemValue='2' />
+                                                <f:selectItem itemLabel="3" itemValue='3'/>
+                                                <f:selectItem itemLabel="4" itemValue='4'/>
+                                                <f:selectItem itemLabel="5" itemValue='5'/>
+                                                <f:selectItem itemLabel="6" itemValue='6'/>
+                                                <f:selectItem itemLabel="7" itemValue='7'/>
+                                                <f:selectItem itemLabel="8" itemValue='8'/>
+                                                <f:selectItem itemLabel="9" itemValue='9'/>
+                                                <f:selectItem itemLabel="10" itemValue='10'/>
+                                                <f:selectItem itemLabel="11" itemValue='11'/>
+                                                <f:selectItem itemLabel="12" itemValue='12'/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Interés:" for="interes"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" requiredMessage="Seleccione interés">
+                                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                                <f:selectItem itemLabel="7" itemValue='7.00'/> 
+                                                <f:selectItem itemLabel="6" itemValue='6.00'/>
+                                                <f:selectItem itemLabel="5" itemValue='5.00'/>
+                                                <f:selectItem itemLabel="0" itemValue='0.00'/> 
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Tienda:" for="tienda"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectOneMenu id="tienda" value="#{creditoBean.credito.tienda}" required="true" requiredMessage="Seleccione la Tienda">
+                                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                                <f:selectItem itemLabel="VX1" itemValue="V1" />
+                                                <f:selectItem itemLabel="VX2" itemValue="V2" />                            
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Tipo Vehículo:" for="tipo"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectOneMenu id="tipo" value="#{creditoBean.credito.vehi}" required="true" requiredMessage="Seleccione Tipo de vehículo">
+                                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
+                                                <f:selectItem itemLabel="MTX" itemValue="MX" />
+                                                <f:selectItem itemLabel="ML" itemValue="ML" />
+                                                <f:selectItem itemLabel="MTF" itemValue="MF" />
+                                                <f:selectItem itemLabel="MTC" itemValue="MC" />
+                                                <p:ajax update="modeloc" listener="#{creditoBean.modeloTipo(creditoBean.credito.vehi)}" process="@this" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Modelo:" for="modeloc"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectOneMenu id="modeloc" value="#{creditoBean.credito.modelo}" converter="omnifaces.SelectItemsConverter"
+                                                             required="true" requiredMessage="Seleccione Modelo">
+                                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                                <f:selectItems value="#{creditoBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
+                                                <p:ajax update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Precio:"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true" />
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" />
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="txtinicial" value="#{creditoBean.inicia}" required="true" requiredMessage="Ingrese incial" class="money">
+                                                <p:ajax event="keyup" update="res" listener="#{creditoBean.resProformar()}"/>                        
+                                            </p:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">                                            
+                                            <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCotiza(loginbean.usuario.idusuario)}" icon="fa fa-floppy-o white" ajax="false"/>  
+                                            <p:commandButton value="Imprimir" actionListener="#{reportesBean.exportarProf(creditoBean.credito.liqventa)}" icon="fa fa-print white" ajax="false" />
                                         </div>
                                     </div>
                                 </div>
@@ -125,32 +180,35 @@
                 </div>
             </div>
         </div>
-        <hr></hr>
-        <h:form id="formMostrar">
-            <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
-            <p:dataTable var="letras" value="#{creditoBean.letrascredito}" 
-                         emptyMessage="No hay nada para mostrar">
-                <p:column headerText="Cod venta.">
-                    <h:outputText value="#{letras.credito.liqventa}" />
-                </p:column>
-                <p:column headerText="Descripcion">
-                    <h:outputText value="#{letras.descripcion}"/>
-                </p:column>
-                <p:column headerText="Monto">
-                    <h:outputText value="#{letras.montoletra}"/>
-                </p:column>
-                <p:column headerText="Interes">
-                    <h:outputText value="#{letras.interes}"/>
-                </p:column>
-                <p:column headerText="Total Letra">
-                    <h:outputText value="#{letras.monto}"/>
-                </p:column>
-                <p:column headerText="Fecha Ven.">
-                    <h:outputText value="#{letras.fecven}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:outputText>
-                </p:column>                
-            </p:dataTable>          
-        </h:form>        
+        <hr/><div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formMostrar">
+                    <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
+                    <p:dataTable var="letras" value="#{creditoBean.letrascredito}" 
+                                 emptyMessage="No hay nada para mostrar">
+                        <p:column headerText="Cod venta.">
+                            <h:outputText value="#{letras.credito.liqventa}" />
+                        </p:column>
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{letras.descripcion}"/>
+                        </p:column>
+                        <p:column headerText="Monto">
+                            <h:outputText value="#{letras.montoletra}"/>
+                        </p:column>
+                        <p:column headerText="Interes">
+                            <h:outputText value="#{letras.interes}"/>
+                        </p:column>
+                        <p:column headerText="Total Letra">
+                            <h:outputText value="#{letras.monto}"/>
+                        </p:column>
+                        <p:column headerText="Fecha Ven.">
+                            <h:outputText value="#{letras.fecven}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>                
+                    </p:dataTable>          
+                </h:form>
+            </div>
+        </div>
     </ui:define>
 </ui:composition>

@@ -77,6 +77,12 @@
         <property name="dniconyu" type="string">
             <column name="dniconyu" length="8" />
         </property>
+        <property name="direccionconyu" type="string">
+            <column name="direccionconyu" length="100" />
+        </property>
+        <property name="ocupacionconyu" type="string">
+            <column name="ocupacionconyu" length="50" />
+        </property>
         <property name="cpropia" type="string">
             <column name="cpropia" length="2" />
         </property>

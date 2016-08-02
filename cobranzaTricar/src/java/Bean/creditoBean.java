@@ -1486,6 +1486,24 @@ public class creditoBean implements Serializable {
         letrascredito = letrasdao.mostrarLetrasXCred(credito);
     }
 
+    public void exportarFormato(String codigo, String tipo, String estado) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("liqventa", codigo);
+        File jasper = new File("D:/reporte/solicitud.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=SOLICITUD-" + codigo + ".pdf");
+        ServletOutputStream stream = response.getOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+
     public void rechazarcredito(Usuario usuario) {
         CreditoDao credao = new CreditoDaoImp();
         try {

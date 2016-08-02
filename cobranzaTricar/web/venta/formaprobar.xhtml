@@ -106,11 +106,11 @@
                     <p:outputLabel value="Saldo:"/>                                    
                     <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
                 </p:panelGrid>
-                    <p:fieldset legend="Reseña">
-                        <h:panelGrid>
-                            <h:outputText value="#{creditoBean.credito.resena}" />
-                        </h:panelGrid>
-                    </p:fieldset>                        
+                <p:fieldset legend="Reseña">
+                    <h:panelGrid>
+                        <h:outputText value="#{creditoBean.credito.resena}" />
+                    </h:panelGrid>
+                </p:fieldset>                        
                 <p:panelGrid columns="4">
                     <p:outputLabel value="Observaciones verificación: "/>
                     <p:inputTextarea value="#{creditoBean.credito.obsver}" required="true" requiredMessage="Ingrese observaciones del verficador"/>
@@ -145,7 +145,7 @@
                 <h:commandButton actionListener="#{reportesBean.exportarCronograma(creditoBean.credito.liqventa, creditoBean.credito)}" value="Imp. Cronograma." disabled="#{creditoBean.value}"/>
             </h:form>
             <h:form>
-                <h2>Ingresos económicos del cliente y adjuntos </h2>
+                <h2 class="BigTopic">Ingresos económicos del cliente y adjuntos </h2>
                 <p:dataTable var="ocups" value="#{creditoBean.ocupsxanexo}" 
                              emptyMessage="No hay nada para mostrar">
                     <p:column headerText="Descripción">

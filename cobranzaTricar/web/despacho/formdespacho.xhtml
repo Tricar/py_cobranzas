@@ -91,9 +91,6 @@
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.despachar(loginbean.usuario)}" icon="fa fa-recycle white"
                                  ajax="false" disabled="#{creditoBean.disabledespacho}">
                 </p:commandButton>
-            </h:form>            
-            <h:form>
-                <h:commandButton actionListener="#{reportesBean.exportarLiq(creditoBean.codigo)}" value="Imp. Liquid." />
             </h:form>
         </f:view>             
     </ui:define>
