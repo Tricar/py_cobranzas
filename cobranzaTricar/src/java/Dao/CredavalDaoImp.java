@@ -37,7 +37,7 @@ public class CredavalDaoImp implements CredavalDao {
     public List<Creditoaval> avales (Credito credito) {
         Session session = null;
         List<Creditoaval> lista = null;        
-        int idventa = credito.getIdventa();        
+        int idventa = credito.getIdventa();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Creditoaval WHERE idventa=:id");

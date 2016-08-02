@@ -19,40 +19,46 @@ public class Requisitos implements java.io.Serializable {
     private Integer idrequisitos;
     private Credito credito;
     private String copdni;
-    private String copdniaval;
-    private String coptitulo;
-    private String coprecibo;
-    private String recibagua;    
-    private String recibluz;    
-    private String croq;    
-    private String copdnicon;    
-    private String otros;    
+    private Boolean copiadni;
+    private String recibagua;
+    private Boolean reciboagua;
+    private String recibluz;
+    private Boolean reciboluz;
+    private String croq;
+    private Boolean croquis;
+    private String copiadnicon;
+    private Boolean copiadniconyuge;
+    private String otrosobs;
+    private Boolean otros;
     
 
     public Requisitos() {
     }
 
-    public Requisitos(Integer idrequisitos) {
-        this.idrequisitos = idrequisitos;
+    public Requisitos(Integer idconceptos) {
+        this.idrequisitos = idconceptos;
     }
 
-    public Requisitos(Integer idrequisitos, Credito credito, String copdni, String copdniaval, String coptitulo, String coprecibo, String recibagua, String recibluz, String croq, String copdnicon, String otros)  {
-        this.idrequisitos = idrequisitos;
+    public Requisitos(Integer idconceptos, Credito credito, String copdni, Boolean copiadni, String recibagua, Boolean reciboagua, String recibluz, Boolean reciboluz, String croq, Boolean croquis, String copiadnicon, Boolean copiadniconyuge, String otrosobs, Boolean otros) {
+        this.idrequisitos = idconceptos;
         this.credito = credito;
         this.copdni = copdni;
-        this.copdniaval = copdniaval;
-        this.coptitulo = coptitulo;
-        this.coprecibo = coprecibo;
-        this.recibagua = recibagua;        
-        this.recibluz = recibluz;        
-        this.croq = croq;        
-        this.copdnicon = copdnicon;        
-        this.otros = otros;        
+        this.copiadni = copiadni;
+        this.recibagua = recibagua;
+        this.reciboagua = reciboagua;
+        this.recibluz = recibluz;
+        this.reciboluz = reciboluz;
+        this.croq = croq;
+        this.croquis = croquis;
+        this.copiadnicon = copiadnicon;
+        this.copiadniconyuge = copiadniconyuge;
+        this.otrosobs = otrosobs;
+        this.otros = otros;
     }
 
     @Id
 
-    @Column(name = "idrequisitos", unique = true, nullable = false)
+    @Column(name = "idconceptos", unique = true, nullable = false)
     public Integer getIdrequisitos() {
         return this.idrequisitos;
     }
@@ -71,7 +77,7 @@ public class Requisitos implements java.io.Serializable {
         this.credito = credito;
     }
     
-    @Column(name = "copdni", length = 50)
+    @Column(name = "copdni", length = 20)
     public String getCopdni() {
         return this.copdni;
     }    
@@ -80,34 +86,16 @@ public class Requisitos implements java.io.Serializable {
         this.copdni = copdni;
     }
     
-    @Column(name = "copdniaval", length = 50)
-    public String getCopdniaval() {
-        return this.copdniaval;
-    }    
+    @Column(name = "copiadni")
+    public Boolean getCopiadni() {
+        return this.copiadni;
+    }
 
-    public void setCopdniaval(String copdniaval) {
-        this.copdniaval = copdniaval;
+    public void setCopiadni(Boolean copiadni) {
+        this.copiadni = copiadni;
     }
     
-    @Column(name = "coptitulo", length = 50)
-    public String getCoptitulo() {
-        return this.coptitulo;
-    }    
-
-    public void setCoptitulo(String coptitulo) {
-        this.coptitulo = coptitulo;
-    }
-    
-    @Column(name = "coprecibo", length = 50)
-    public String getCoprecibo() {
-        return this.coprecibo;
-    }    
-
-    public void setCoprecibo(String coprecibo) {
-        this.coprecibo = coprecibo;
-    }
-    
-    @Column(name = "recibagua", length = 50)
+    @Column(name = "recibagua", length = 20)
     public String getRecibagua() {
         return this.recibagua;
     }    
@@ -116,16 +104,34 @@ public class Requisitos implements java.io.Serializable {
         this.recibagua = recibagua;
     }
     
-    @Column(name = "recibluz", length = 50)
+    @Column(name = "reciboagua")
+    public Boolean getReciboagua() {
+        return this.reciboagua;
+    }
+
+    public void setReciboagua(Boolean reciboagua) {
+        this.reciboagua = reciboagua;
+    }
+    
+    @Column(name = "recibluz", length = 20)
     public String getRecibluz() {
         return this.recibluz;
     }    
 
     public void setRecibluz(String recibluz) {
         this.recibluz = recibluz;
-    }   
+    }
     
-    @Column(name = "croq", length = 50)
+    @Column(name = "reciboluz")
+    public Boolean getReciboluz() {
+        return this.reciboluz;
+    }
+
+    public void setReciboluz(Boolean reciboluz) {
+        this.reciboluz = reciboluz;
+    }    
+    
+    @Column(name = "croq", length = 20)
     public String getCroq() {
         return this.croq;
     }    
@@ -134,21 +140,48 @@ public class Requisitos implements java.io.Serializable {
         this.croq = croq;
     }
     
-    @Column(name = "copdnicon", length = 50)
-    public String getCopdnicon() {
-        return this.copdnicon;
-    }    
+    @Column(name = "croquis")
+    public Boolean getCroquis() {
+        return this.croquis;
+    }
 
-    public void setCopdnicon(String copdnicon) {
-        this.copdnicon = copdnicon;
+    public void setCroquis(Boolean croquis) {
+        this.croquis = croquis;
     }
     
-    @Column(name = "otros", length = 50)
-    public String getOtros() {
-        return this.otros;
+    @Column(name = "copiadnicon", length = 20)
+    public String getCopiadnicon() {
+        return this.copiadnicon;
     }    
 
-    public void setOtros(String otros) {
+    public void setCopiadnicon(String copiadnicon) {
+        this.copiadnicon = copiadnicon;
+    }
+    
+    @Column(name = "copiadniconyuge")
+    public Boolean getCopiadniconyuge() {
+        return this.copiadniconyuge;
+    }
+
+    public void setCopiadniconyuge(Boolean copiadniconyuge) {
+        this.copiadniconyuge = copiadniconyuge;
+    }
+    
+    @Column(name = "otrosobs", length = 20)
+    public String getOtrosobs() {
+        return this.otrosobs;
+    }    
+
+    public void setOtrosobs(String otrosobs) {
+        this.otrosobs = otrosobs;
+    }
+    
+    @Column(name = "otros")
+    public Boolean getOtros() {
+        return this.otros;
+    }
+
+    public void setOtros(Boolean otros) {
         this.otros = otros;
     }
 

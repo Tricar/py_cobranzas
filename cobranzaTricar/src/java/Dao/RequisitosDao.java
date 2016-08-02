@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface RequisitosDao{
     public List<Requisitos> mostrarRequisitos();
-    public Requisitos mostrarRequisitosXCred(Credito credito);    
+    public List<Requisitos> mostrarRequisitosXCred(Credito credito);    
     public void insertarRequisito(Requisitos requisitos);
     public void modificarRequisito (Requisitos requisitos);
     public void eliminarRequisito (Requisitos requisitos);    

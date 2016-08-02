@@ -91,15 +91,17 @@ public class RequisitosDaoImp implements RequisitosDao{
     }
 
     @Override
-    public Requisitos mostrarRequisitosXCred(Credito credito) {
+    public List<Requisitos> mostrarRequisitosXCred(Credito credito) {
         Session session = null;
-        Requisitos req = null;
-        Integer idcred = credito.getIdventa();
+        List<Requisitos> lista = null;
+        Credito cred = new Credito();
+        cred = credito;
+        Integer idcred = cred.getIdventa();
         try{
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Requisitos where idventa=:v");
             query.setParameter("v", idcred);
-            req = (Requisitos)query.uniqueResult();
+            lista = (List<Requisitos>)query.list();
         }catch (HibernateException e){
             System.out.println(e.getMessage());
         }
@@ -108,7 +110,7 @@ public class RequisitosDaoImp implements RequisitosDao{
                 session.close();
             }
         }
-        return req;
+        return lista;
     }
     
     @Override
