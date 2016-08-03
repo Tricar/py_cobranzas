@@ -128,6 +128,9 @@ public class creditoBean implements Serializable {
     private List<Anexo> avalesant = new ArrayList();
     private List<Anexo> avalesmod = new ArrayList();
     private String banderaval;
+    private String[] selectedReqs;    
+    private String banderareq = new String();
+    private List<String> reqs;
 
     public creditoBean() {
     }
@@ -370,6 +373,7 @@ public class creditoBean implements Serializable {
     }
 
     public void modificarCredito() {
+        requisitosBean reqsbean = new requisitosBean();
         credavalBean credavalbean = new credavalBean();
         CreditoDao credao = new CreditoDaoImp();
         if (btnguardar.equals("Modificar")) {
@@ -398,9 +402,12 @@ public class creditoBean implements Serializable {
                         ocupbean.eliminar(get);
                     }
                 }
-                if (avalesant.isEmpty() && avales.isEmpty() == false) {
-                    credavalbean.insertarCreditoAval(credito, avales);
-                }
+            } catch (Exception e) {
+            }
+            if (avalesant.isEmpty() && avales.isEmpty() == false) {
+                credavalbean.insertarCreditoAval(credito, avales);
+            }
+            try {
                 if (banderaval.equals("SUM")) {
                     for (int i = 0; i < avalesmod.size(); i++) {
                         Anexo get = avalesmod.get(i);
@@ -413,11 +420,15 @@ public class creditoBean implements Serializable {
                         credavalbean.eliminar(get, credito);
                     }
                 }
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Se Modificó la solicitud de crédito"));
-                credito.setSaldo(credito.getPrecio().subtract((credito.getInicial().add(credito.getSinicial()))));
-                credao.modificarVenta(credito);
             } catch (Exception e) {
             }
+            try {
+                reqsbean.modificar(credito, selectedReqs);
+            } catch (Exception e) {
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Se Modificó la solicitud de crédito"));
+            credito.setSaldo(credito.getPrecio().subtract((credito.getInicial().add(credito.getSinicial()))));
+            credao.modificarVenta(credito);
         }
         ocupsxanexo = ocupbean.cargarxCredito(credito);
     }
@@ -1127,11 +1138,17 @@ public class creditoBean implements Serializable {
     }
 
     public String cargar(Usuario usuario) {
+        requisitosBean reqsbean = new requisitosBean();
         credavalBean credavalbean = new credavalBean();
         modeloTipo(credito.getVehi());
+        avales = new ArrayList();
+        List<Anexo> rec = new ArrayList();
         sw = 1;
         inicial Inicial = new inicial();
-        avales = credavalbean.avalesxCredito(credito);
+        rec = credavalbean.avalesxCredito(credito);
+        if (!rec.isEmpty()) {
+            avales = rec;
+        }
         if (credito.getSinicial().compareTo(BigDecimal.ZERO) == 1) {
             sinicial = credito.getSinicial();
             valuesi = false;
@@ -1140,10 +1157,11 @@ public class creditoBean implements Serializable {
         precio = credito.getPrecio();
         saldo = precio.subtract(inicia);
         saldo = saldo.subtract(sinicial);
-        anexo = credito.getAnexo();
+        anexo = credito.getAnexo();        
         ocupsxanexo = ocupbean.cargarxCredito(credito);
         iniciapre = Inicial.inicialCredito(anexo.getDistrito(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
         if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("JE")) {
+            selectedReqs = reqsbean.mostrarSoloRequisitosxCred(credito);
             if (credito.getEstado().equals("EM")) {
                 value = true;
                 disableaval = false;
@@ -2255,5 +2273,29 @@ public class creditoBean implements Serializable {
 
     public void setBanderaval(String banderaval) {
         this.banderaval = banderaval;
+    }
+
+    public String[] getSelectedReqs() {
+        return selectedReqs;
+    }
+
+    public void setSelectedReqs(String[] selectedReqs) {
+        this.selectedReqs = selectedReqs;
+    }
+
+    public String getBanderareq() {
+        return banderareq;
+    }
+
+    public void setBanderareq(String banderareq) {
+        this.banderareq = banderareq;
+    }
+
+    public List<String> getReqs() {
+        return reqs;
+    }
+
+    public void setReqs(List<String> reqs) {
+        this.reqs = reqs;
     }
 }
