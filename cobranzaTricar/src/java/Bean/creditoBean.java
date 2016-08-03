@@ -1184,8 +1184,7 @@ public class creditoBean implements Serializable {
                 disableaval = false;
                 btnaprobar = "Aprobar";
                 return "/venta/formaprobar.xhtml";
-            } else {
-                selectedReqs = reqsbean.mostrarSoloRequisitosxCred(credito);
+            } else {                
                 value = false;
                 disableaval = true;
                 btnaprobar = "Desaprobar";
