@@ -41,6 +41,7 @@ public class Perfil implements java.io.Serializable {
     private Boolean creRef;
     private Boolean despacho;
     private Boolean desDes;
+    private Boolean desVen;
     private Set usuarios = new HashSet(0);
 
     public Perfil() {
@@ -50,7 +51,7 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean sisCaja, Boolean mante, Boolean manCli, Boolean manAval, Boolean manArt, Boolean manMod, Boolean manCol, Boolean creco, Boolean creLis, Boolean creReg, Boolean creCon, Boolean creRef, Boolean manIng, Boolean despacho, Boolean desDes, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean sisCaja, Boolean mante, Boolean manCli, Boolean manAval, Boolean manArt, Boolean manMod, Boolean manCol, Boolean creco, Boolean creLis, Boolean creReg, Boolean creCon, Boolean creRef, Boolean manIng, Boolean despacho, Boolean desDes, Boolean desVen, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.abrev = abrev;
@@ -74,7 +75,8 @@ public class Perfil implements java.io.Serializable {
         this.manIng = manIng;
         this.despacho = despacho;
         this.desDes = desDes;
-        this.usuarios = usuarios;        
+        this.desVen = desVen;
+        this.usuarios = usuarios;      
     }
 
     @Id
@@ -284,6 +286,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setDesDes(Boolean desDes) {
         this.desDes = desDes;
+    }
+    
+    @Column(name = "desVen")
+    public Boolean getDesVen() {
+        return this.desVen;
+    }
+
+    public void setDesVen(Boolean desVen) {
+        this.desVen = desVen;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "perfil")

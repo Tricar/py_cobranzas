@@ -74,6 +74,9 @@
         <property name="desDes" type="java.lang.Boolean">
             <column name="desDes" />
         </property>
+        <property name="desVen" type="java.lang.Boolean">
+            <column name="desVen" />
+        </property>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idperfil" />

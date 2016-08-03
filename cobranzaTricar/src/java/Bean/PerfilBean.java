@@ -43,15 +43,12 @@ public class PerfilBean implements Serializable {
         this.transaction = null;
 
         try {
+            
             PerfilDaoImpl daoperfil = new PerfilDaoImpl();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-
             this.perfiles = daoperfil.verTodo(this.session);
-
             this.transaction.commit();
-
             return perfiles;
 
         } catch (Exception e) {
@@ -80,16 +77,16 @@ public class PerfilBean implements Serializable {
                 perfil = new Perfil();
                 return;
             }
-            if (perfil.getSisPer() == true || perfil.getSisUsu() == true || perfil.getSisVende()==true || perfil.getSisEmp()==true) {
+            if (perfil.getSisPer() == true || perfil.getSisUsu() == true || perfil.getSisVende() == true || perfil.getSisEmp() == true) {
                 perfil.setSistema(true);
-            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false && perfil.getSisVende()==false && perfil.getSisEmp()==false) {
+            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false && perfil.getSisVende() == false && perfil.getSisEmp() == false) {
                 perfil.setSistema(false);
             }
             if (perfil.getManArt() == true || perfil.getManAval() == true || perfil.getManCli() == true || perfil.getManCol() == true
-                    || perfil.getManMod() == true || perfil.getManIng()== true) {
+                    || perfil.getManMod() == true || perfil.getManIng() == true) {
                 perfil.setMante(true);
             } else if (perfil.getManArt() == false && perfil.getManAval() == false && perfil.getManCli() == false && perfil.getManCol() == false
-                    && perfil.getManMod() == false && perfil.getManIng()== false) {
+                    && perfil.getManMod() == false && perfil.getManIng() == false) {
                 perfil.setMante(false);
             }
             if (perfil.getCreLis() == true || perfil.getCreReg() == true) {
@@ -97,10 +94,9 @@ public class PerfilBean implements Serializable {
             } else if (perfil.getCreLis() == false && perfil.getCreReg() == false) {
                 perfil.setCreco(false);
             }
-            
-            if (perfil.getDesDes()== true) {
+            if (perfil.getDesDes() == true || perfil.getDesVen() == true) {
                 perfil.setDespacho(true);
-            } else if (perfil.getDesDes()== false) {
+            } else if (perfil.getDesDes() == false && perfil.getDesVen() == false) {
                 perfil.setDespacho(false);
             }
             PerfilDaoImpl perfilDao = new PerfilDaoImpl();
@@ -227,8 +223,9 @@ public class PerfilBean implements Serializable {
             perfil.setCreReg(false);
             perfil.setCreCon(false);
             perfil.setCreRef(false);
-            perfil.setDespacho(false);            
+            perfil.setDespacho(false);
             perfil.setDesDes(false);
+            perfil.setDesVen(false);
             linkDao.registrar(this.session, this.perfil);
             this.transaction.commit();
             this.perfil = new Perfil();

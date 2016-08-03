@@ -83,8 +83,8 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.creCon}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.creRef}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.despacho}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.desVen}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.desDes}"/>
-                            <h:panelGroup></h:panelGroup>
                             <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
@@ -149,8 +149,10 @@
                             <h:panelGroup></h:panelGroup>
                             <h:panelGroup></h:panelGroup>
                             <h:panelGroup></h:panelGroup>
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.desVen}"/>
+                            <h:outputText value="Venta" />
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.desDes}"/>
-                            <h:outputText value="Despacho" />   
+                            <h:outputText value="Despacho" />
                         </h:panelGrid>
                         <p:commandButton value="Asignar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>
