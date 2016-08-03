@@ -45,6 +45,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -131,6 +132,20 @@ public class creditoBean implements Serializable {
     private String[] selectedReqs;    
     private String banderareq = new String();
     private List<String> reqs;
+    
+    @PostConstruct
+    public void init() {
+        reqs = new ArrayList<String>();
+        reqs.add("1.Copia DNI Titular");
+        reqs.add("2.Copia DNI conyuge");
+        reqs.add("3.Copia DNI aval(es)");
+        reqs.add("4.Copia de Título o Constancia");
+        reqs.add("5.Copia Recibo de agua");
+        reqs.add("6.Copia Recibo de luz");
+        reqs.add("7.Copia de Croquis");
+        reqs.add("8.Copia de Recibo de ingreso");
+        reqs.add("9.Otros");
+    }
 
     public creditoBean() {
     }
@@ -423,6 +438,7 @@ public class creditoBean implements Serializable {
             } catch (Exception e) {
             }
             try {
+                reqsbean.eliminarParaModificar(credito);
                 reqsbean.modificar(credito, selectedReqs);
             } catch (Exception e) {
             }
@@ -1115,6 +1131,7 @@ public class creditoBean implements Serializable {
     }
 
     public String nuevo() {
+        selectedReqs = new String[9];
         credito = new Credito();
         precio = BigDecimal.ZERO;
         inicia = BigDecimal.ZERO;
@@ -1247,11 +1264,13 @@ public class creditoBean implements Serializable {
     }
 
     public String compararListas() {
-        //ocupsxcredito = ocupbean.cargarxCredito(credito);        
+        //ocupsxcredito = ocupbean.cargarxCredito(credito); 
+        requisitosBean reqsbean = new requisitosBean();
         String msj = new String();
         if (avales.isEmpty() == false) {
             avalesant = avales;
         }
+        selectedReqs = reqsbean.mostrarReqsParaModificar(credito);
         ocupsxcredito = ocupbean.cargarIngresos(credito.getAnexo());
         if (ocupsxcredito.size() > ocupsxanexo.size()) {
             bandera = "SUM";
