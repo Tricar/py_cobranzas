@@ -152,6 +152,11 @@
                     </p:selectOneMenu>
                     <p:outputLabel value="Reseña: "/>
                     <p:inputTextarea value="#{creditoBean.credito.resena}" required="true" requiredMessage="Ingrese reseña del crédito"/>
+                    <h:outputLabel for="menu" value="Elija: " />
+                    <p:selectCheckboxMenu id="menu" value="#{creditoBean.selectedReqs}" label="Requisitos" required="true" requiredMessage="Marque algún requisito"
+                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                        <f:selectItems value="#{creditoBean.reqs}" />
+                    </p:selectCheckboxMenu>
                 </p:panelGrid>
 
                 <p:commandButton value="#{creditoBean.btnguardar}" actionListener="#{creditoBean.insertarCredito(loginbean.usuario)}" icon="fa fa-floppy-o white"

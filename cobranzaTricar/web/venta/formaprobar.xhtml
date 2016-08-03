@@ -111,6 +111,11 @@
                         <h:outputText value="#{creditoBean.credito.resena}" />
                     </h:panelGrid>
                 </p:fieldset>                        
+                <p:fieldset legend="Requisitos adicionales">
+                    <p:dataList value="#{creditoBean.selectedReqs}" var="reqs" >
+                        #{reqs}
+                    </p:dataList>
+                </p:fieldset>
                 <p:panelGrid columns="4">
                     <p:outputLabel value="Observaciones verificación: "/>
                     <p:inputTextarea value="#{creditoBean.credito.obsver}" required="true" requiredMessage="Ingrese observaciones del verficador"/>
