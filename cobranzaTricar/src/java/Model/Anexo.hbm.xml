@@ -25,10 +25,10 @@
         </property>
         <property name="cpm" type="string">
             <column name="cpm" length="50" />
-        </property>
-        <property name="distrito" type="string">
-            <column name="distrito" length="50" />
-        </property>
+        </property>       
+        <many-to-one name="distrito" class="Model.Distrito" fetch="select">
+            <column name="iddistrito" />
+        </many-to-one>
         <property name="sector" type="string">
             <column name="sector" length="50" />
         </property>

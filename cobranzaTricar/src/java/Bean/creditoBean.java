@@ -170,7 +170,7 @@ public class creditoBean implements Serializable {
         precio Precio = new precio();
         inicial Inicial = new inicial();
         precio = (Precio.precioModelo(credito.getVehiculo().getModelo().getModelo()));
-        String distrito = credito.getAnexo().getDistrito();
+        String distrito = credito.getAnexo().getDistrito().getAbrev();
         String tipov = credito.getVehiculo().getTipovehiculo();
         iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getVehiculo().getModelo().getModelo());
         saldo = precio.subtract(inicia);
@@ -186,7 +186,7 @@ public class creditoBean implements Serializable {
         precio Precio = new precio();
         inicial Inicial = new inicial();
         precio = (Precio.precioModelo(credito.getModelo().getModelo()));
-        String distrito = credito.getAnexo().getDistrito();
+        String distrito = credito.getAnexo().getDistrito().getAbrev();
         String tipov = credito.getVehi();
         iniciapre = Inicial.inicialCredito(distrito, tipov, precio, credito.getModelo().getModelo());
         saldo = precio.subtract(inicia);
@@ -1176,7 +1176,7 @@ public class creditoBean implements Serializable {
         saldo = saldo.subtract(sinicial);
         anexo = credito.getAnexo();        
         ocupsxanexo = ocupbean.cargarxCredito(credito);
-        iniciapre = Inicial.inicialCredito(anexo.getDistrito(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
+        iniciapre = Inicial.inicialCredito(anexo.getDistrito().getAbrev(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
         if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("JE")) {
             selectedReqs = reqsbean.mostrarSoloRequisitosxCred(credito);
             if (credito.getEstado().equals("EM")) {
@@ -1413,7 +1413,7 @@ public class creditoBean implements Serializable {
             saldo = credito.getSaldo();
             credito.setFechareg(fecha);
             credito.setLiqventa(null);
-            iniciapre = Inicial.inicialCredito(anexo.getDistrito(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
+            iniciapre = Inicial.inicialCredito(anexo.getDistrito().getAbrev(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
             return "/cotiza/formcargarcotiza.xhtml";
         }
     }

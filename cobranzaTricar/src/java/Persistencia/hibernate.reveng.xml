@@ -8,6 +8,7 @@
   <table-filter match-name="numeracion"/>
   <table-filter match-name="historialmora"/>
   <table-filter match-name="modelo"/>
+  <table-filter match-name="distrito"/>
   <table-filter match-name="perfil"/>
   <table-filter match-name="conceptos"/>
   <table-filter match-name="creditoaval"/>

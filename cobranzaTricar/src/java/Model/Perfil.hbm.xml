@@ -26,6 +26,9 @@
         <property name="sisUsu" type="java.lang.Boolean">
             <column name="sisUsu" />
         </property>
+        <property name="sisDist" type="java.lang.Boolean">
+            <column name="sisDist" />
+        </property>
         <property name="sisPer" type="java.lang.Boolean">
             <column name="sisPer" />
         </property>

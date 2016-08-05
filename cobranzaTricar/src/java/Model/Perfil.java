@@ -26,6 +26,7 @@ public class Perfil implements java.io.Serializable {
     private Boolean sisEmp;
     private Boolean sisUsu;
     private Boolean sisPer;
+    private Boolean sisDist;
     private Boolean sisCaja;
     private Boolean mante;
     private Boolean manCli;
@@ -51,7 +52,7 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean sisCaja, Boolean mante, Boolean manCli, Boolean manAval, Boolean manArt, Boolean manMod, Boolean manCol, Boolean creco, Boolean creLis, Boolean creReg, Boolean creCon, Boolean creRef, Boolean manIng, Boolean despacho, Boolean desDes, Boolean desVen, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean sisDist, Boolean sisCaja, Boolean mante, Boolean manCli, Boolean manAval, Boolean manArt, Boolean manMod, Boolean manCol, Boolean creco, Boolean creLis, Boolean creReg, Boolean creCon, Boolean creRef, Boolean manIng, Boolean despacho, Boolean desDes, Boolean desVen, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.abrev = abrev;
@@ -60,6 +61,7 @@ public class Perfil implements java.io.Serializable {
         this.sisEmp = sisEmp;
         this.sisUsu = sisUsu;
         this.sisPer = sisPer;
+        this.sisDist = sisDist;
         this.sisCaja = sisCaja;
         this.mante = mante;
         this.manCli = manCli;
@@ -142,6 +144,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setSisUsu(Boolean sisUsu) {
         this.sisUsu = sisUsu;
+    }    
+
+    @Column(name = "sisDist")
+    public Boolean getSisDist() {
+        return this.sisDist;
+    }
+
+    public void setSisDist(Boolean sisDist) {
+        this.sisDist = sisDist;
     }
 
     @Column(name = "sisPer")

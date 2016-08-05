@@ -3,9 +3,9 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-    <property name="hibernate.connection.url">jdbc:sqlserver://server-pc:1433;databaseName=cobranzas</property>
+    <property name="hibernate.connection.url">jdbc:sqlserver://ricardo-pc:1433;databaseName=cobranzas</property>
     <property name="hibernate.connection.username">sa</property>
-    <property name="hibernate.connection.password">tricar2012</property>
+    <property name="hibernate.connection.password">admin</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
@@ -28,6 +28,6 @@
     <mapping resource="Model/Historialmora.hbm.xml"/>
     <mapping resource="Model/Requisitos.hbm.xml"/>
     <mapping resource="Model/Creditoaval.hbm.xml"/>
+    <mapping resource="Model/Distrito.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
-

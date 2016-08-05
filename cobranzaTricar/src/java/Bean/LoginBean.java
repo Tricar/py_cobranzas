@@ -109,6 +109,10 @@ public class LoginBean implements Serializable {
         return "/sistema/perfil";
     }
 
+    public String distrito() {
+        return "/sistema/distrito";
+    }
+
     public String cliente() {
         return "/mantenimiento/cliente";
     }

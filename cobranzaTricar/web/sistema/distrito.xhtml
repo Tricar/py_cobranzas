@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Gestion de Distrito </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../views/template.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="fa fa-plus white"/>
+                </h:form>
+
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                        Lista de Distrito
+                    </div>
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                        <h:form id="formMostrar">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <p:dataTable var="item" value="#{distritoBean.verTodo()}" 
+                                         emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
+                                         paginatorPosition="top" rowsPerPageTemplate="10">
+                                <p:column headerText="DISTRITO">
+                                    <h:outputText value="#{item.distrito}" />
+                                </p:column> 
+                                <p:column headerText="ABREVIADO">
+                                    <h:outputText value="#{item.abrev}" />
+                                </p:column>                                               
+                                <p:column headerText="FECHA">
+                                    <h:outputText value="#{item.fechreg}">
+                                        <f:convertDateTime/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton actionListener="#{distritoBean.cargarDistritoEditar(item.iddistrito)}" icon="fa fa-pencil white"/>
+                                    <p:commandButton actionListener="#{distritoBean.cargarDistritoEliminar(item.iddistrito)}" icon="fa fa-trash white"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
+
+                <h:form id="formInsertar">
+                    <p:dialog header="Nuevo Distrito" widgetVar="dlginsertar" modal="true">                        
+                        <h:panelGrid id="panelcrearDistrito" columns="2">
+                            <p:outputLabel value="Distrito:" for="txtDistrito"/>
+                            <p:inputText id="txtDistrito" label="Distrito" value="#{distritoBean.tdistrito.distrito}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="Abreviado:" for="txtAbreviado"/>
+                            <p:inputText id="txtAbreviado" label="Abreviado" value="#{distritoBean.tdistrito.abrev}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{distritoBean.registrar()}" />
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="frmEditarDistrito">
+                    <p:dialog header="Editar Distrito" widgetVar="dialogoEditarDistrito" modal="true">
+                        <h:panelGrid id="panelEditarDistrito" columns="2">
+                            <p:inputText type="hidden" value="#{distritoBean.tdistrito.iddistrito}"/>                          
+                            <p:inputText type="hidden" value="#{distritoBean.tdistrito.fechreg}"/>
+                            <p:outputLabel value="Distrito:" for="txtDistrito"/>
+                            <p:inputText id="txtDistrito" label="Distrito" value="#{distritoBean.tdistrito.distrito}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="Abreviado:" for="txtAbreviado"/>
+                            <p:inputText id="txtAbreviado" label="Abreviado" value="#{distritoBean.tdistrito.abrev}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{distritoBean.modificar()}"/>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="frmEliminarDistrito">
+                    <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarDistrito" modal="true">
+                        <p:inputText type="hidden" value="#{distritoBean.tdistrito.iddistrito}"/>
+                        <h:outputText value="¿Desea eliminar?" />
+                        <p:separator/>
+                        <p:commandButton value="Si" actionListener="#{distritoBean.eliminar()}" ajax="false" icon="fa fa-check blue" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

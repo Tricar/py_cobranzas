@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,7 +30,7 @@ public class Anexo implements java.io.Serializable {
     private String direccion;
     private String aahh;
     private String cpm;
-    private String distrito;
+    private Distrito distrito;
     private String sector;
     private String referencia;
     private String telefono;
@@ -63,7 +65,7 @@ public class Anexo implements java.io.Serializable {
         this.idanexo = idanexo;
     }
 
-    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String direccionconyu, String ocupacionconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas, Set conceptoses, Set creditoavals) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, Distrito distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String direccionconyu, String ocupacionconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas, Set conceptoses, Set creditoavals) {
         this.idanexo = idanexo;
         this.nombre = nombre;
         this.tipodocumento = tipodocumento;
@@ -163,13 +165,14 @@ public class Anexo implements java.io.Serializable {
     public void setCpm(String cpm) {
         this.cpm = cpm;
     }
-
-    @Column(name = "distrito", length = 50)
-    public String getDistrito() {
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iddistrito")
+    public Distrito getDistrito() {
         return this.distrito;
     }
 
-    public void setDistrito(String distrito) {
+    public void setDistrito(Distrito distrito) {
         this.distrito = distrito;
     }
 
