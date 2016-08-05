@@ -195,6 +195,7 @@ public class creditoBean implements Serializable {
     public void insertarCredito(Usuario usuario) {
         CreditoDao creditodao = new CreditoDaoImp();
         credavalBean credavalbean = new credavalBean();
+        requisitosBean reqsbean = new requisitosBean();
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
         } else {
@@ -234,6 +235,7 @@ public class creditoBean implements Serializable {
                                 credito.setElaborado(usuario.getAnexo().getIdanexo());
                                 credito.setSwinicial(false);
                                 creditodao.insertarVenta(credito);
+                                reqsbean.insertar(credito, selectedReqs);
                                 if (avales.isEmpty() == false) {
                                     credavalbean.insertarCreditoAval(credito, avales);
                                 }
@@ -258,6 +260,7 @@ public class creditoBean implements Serializable {
                             credito.setElaborado(usuario.getAnexo().getIdanexo());
                             credito.setSwinicial(false);
                             creditodao.insertarVenta(credito);
+                            reqsbean.insertar(credito, selectedReqs);
                             if (avales.isEmpty() == false) {
                                 credavalbean.insertarCreditoAval(credito, avales);
                             }
