@@ -75,7 +75,7 @@
                         <f:validator validatorId="validatorLetraNumSig"/>
                     </p:inputText>
                     <p:outputLabel value="DISTRITO:"/>
-                    <p:selectOneMenu value="#{anexoBean.anexo.distrito}">
+                    <p:selectOneMenu value="#{anexoBean.anexo.distrito}" converter="omnifaces.SelectItemsConverter">
                         <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                         <f:selectItems value="#{distritoBean.listatdistrito}" var="distrito" itemLabel="#{distrito.distrito}" itemValue="#{distrito}"/>
                     </p:selectOneMenu>
@@ -124,7 +124,7 @@
                         <f:validator validatorId="validatorLetraNumSig"/>
                     </p:inputText>
                     <p:outputLabel value="DISTRITO:"/>
-                    <p:selectOneMenu value="#{anexoBean.anexo.distrito}">
+                    <p:selectOneMenu value="#{anexoBean.anexo.distrito}" converter="omnifaces.SelectItemsConverter">
                         <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                         <f:selectItems value="#{distritoBean.listatdistrito}" var="distrito" itemLabel="#{distrito.distrito}" itemValue="#{distrito}"/>
                     </p:selectOneMenu>
