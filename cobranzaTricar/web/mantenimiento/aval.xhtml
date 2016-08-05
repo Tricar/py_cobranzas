@@ -75,19 +75,9 @@
                         <f:validator validatorId="validatorLetraNumSig"/>
                     </p:inputText>
                     <p:outputLabel value="DISTRITO:" for="txtDistrito"/>
-                    <p:selectOneMenu id="txtDistrito" value="#{anexoBean.anexo.distrito}" required="true" requiredMessage="Debe Seleccionar distrito">
-                        <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
-                        <f:selectItem itemLabel="CALLERIA" itemValue="CA" />
-                        <f:selectItem itemLabel="YARINACOCHA" itemValue="YA" />
-                        <f:selectItem itemLabel="MANANTAY" itemValue="MA" />
-                        <f:selectItem itemLabel="CAMPO VERDE" itemValue="CV" />
-                        <f:selectItem itemLabel="NUEVA REQUENA" itemValue="NR" />
-                        <f:selectItem itemLabel="NESHUYA" itemValue="NE" />
-                        <f:selectItem itemLabel="CURIMANA" itemValue="CU" />
-                        <f:selectItem itemLabel="TOURNAVISTA" itemValue="TV" />
-                        <f:selectItem itemLabel="IRAZOLA" itemValue="IR" />
-                        <f:selectItem itemLabel="MASISEA" itemValue="MS" />
-                        <f:selectItem itemLabel="SARAYACU" itemValue="SA" />
+                    <p:selectOneMenu value="#{anexoBean.anexo.distrito}" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                        <f:selectItems value="#{distritoBean.listatdistrito}" var="distrito" itemLabel="#{distrito.distrito}" itemValue="#{distrito}"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
                     <p:inputText value="#{anexoBean.anexo.referencia}" id="txtReferencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
