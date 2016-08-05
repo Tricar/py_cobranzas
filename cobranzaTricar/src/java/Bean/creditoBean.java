@@ -574,13 +574,13 @@ public class creditoBean implements Serializable {
                         //get.setSaldo(BigDecimal.ZERO);
                         if (get.getSaldo().compareTo(BigDecimal.ZERO) != 0) {
                             get.setEstado("RF");                            
-                            get.setDescripcion("Ref. :" + crednuevo.getLiqventa());
+                            get.setDescripcion("Ref. :" + credito.getLiqventa());
                             get.setSaldo(BigDecimal.ZERO);
                             letrasdao.modificarLetra(get);
                         }
                     }
                     Date fechaini = credito.getFechareg();
-                    fechas = fechasLetras(credito.getFechareg(), credito.getNletras());
+                    fechas = fechasLetras(fechaini, credito.getNletras());
                     BigDecimal deuda = credant.getDeudactual();                    
                     BigDecimal nletras = new BigDecimal(credito.getNletras());
                     BigDecimal montoletras = deuda.divide(nletras, 2);
