@@ -55,7 +55,7 @@
                     <p:outputLabel value="Dirección:" for="dir"/>
                     <p:inputText id="dir" readonly="true" value="#{creditoBean.credito.anexo.direccion}"/>
                     <p:outputLabel value="Distrito:" for="dist"/>
-                    <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito.distrito}" converter="distritoconverter"/>
+                    <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito.distrito}"/>
                     <h:outputText value="¿Modificar Aval? " />
                     <p:selectBooleanButton value="#{creditoBean.valuei}" onLabel="Si" offLabel="No" onIcon="ui-icon-check blue" offIcon="ui-icon-close red" style="width:40px">
                         <p:ajax update="aval" listener="#{creditoBean.addMessageini}" />
@@ -106,7 +106,7 @@
                         <f:selectItem itemLabel="4" itemValue='4'/>
                         <f:selectItem itemLabel="3" itemValue='3'/>
                         <f:selectItem itemLabel="2" itemValue='2' />
-                        <f:selectItem itemLabel="1" itemValue='1' />                                                                                                                                                                        
+                        <f:selectItem itemLabel="1" itemValue='1' />                        
                     </p:selectOneMenu>                                                
                     <p:outputLabel value="Precio:"/>
                     <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true"> 
