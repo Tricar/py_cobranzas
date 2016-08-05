@@ -1184,7 +1184,7 @@ public class creditoBean implements Serializable {
                 disableaval = false;
                 btnaprobar = "Aprobar";
                 return "/venta/formaprobar.xhtml";
-            } else {
+            } else {                
                 value = false;
                 disableaval = true;
                 btnaprobar = "Desaprobar";

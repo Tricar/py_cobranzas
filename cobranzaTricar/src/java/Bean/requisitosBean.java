@@ -40,7 +40,7 @@ public class requisitosBean implements Serializable {
         RequisitosDao letdao = new RequisitosDaoImp();
         requisito = letdao.mostrarRequisitosXCred(credito);
         if (requisito.getCopdni() != null) {
-            where.add(requisito.getCopdni());
+            where.add(requisito.getCopdni().substring(2));
         }
         if (requisito.getCopdnicon() != null) {
             where.add(requisito.getCopdnicon().substring(2));
