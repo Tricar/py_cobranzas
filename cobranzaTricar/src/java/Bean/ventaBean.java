@@ -262,6 +262,42 @@ public class ventaBean implements Serializable {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
+        Credito cred = new Credito();
+        CreditoDao credao = new CreditoDaoImp();
+        cred = credao.veryLiqventa(codigo);
+        CredavalDao linkdao = new CredavalDaoImp();
+        List<Creditoaval> listafiltrada = new ArrayList();
+        avales = new ArrayList();
+        String naval1 = null;
+        String dniaval1 = null;
+        String naval2 = null;
+        String dniaval2 = null;
+        try {
+            listafiltrada = linkdao.avales(cred);
+            for (int i = 0; i < listafiltrada.size(); i++) {
+                Creditoaval get = listafiltrada.get(i);
+                avales.add(get.getAnexo());
+            }
+            if (avales.size() >= 0) {
+                naval1 = avales.get(0).getNombre().concat(" ").concat(avales.get(0).getApepat()).concat(" ").concat(avales.get(0).getApemat());
+                dniaval1 = avales.get(0).getNumdocumento();
+                naval2 = avales.get(1).getNombre().concat(" ").concat(avales.get(1).getApepat()).concat(" ").concat(avales.get(1).getApemat());
+                dniaval2 = avales.get(1).getNumdocumento();
+            }
+        } catch (Exception e) {
+        }
+        if (naval1 == null) {
+            naval1 = " ";
+        }
+        if (dniaval1 == null) {
+            dniaval1 = " ";
+        }
+        if (naval2 == null) {
+            naval2 = " ";
+        }
+        if (dniaval2 == null) {
+            dniaval2 = " ";
+        }
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (estado.equals("DP")) {
             if (tipo.equals("CO")) {
@@ -276,6 +312,11 @@ public class ventaBean implements Serializable {
                 stream.close();
                 FacesContext.getCurrentInstance().responseComplete();
             } else if (tipo.equals("CD")) {
+                parametros.put("liqventa", codigo);
+                parametros.put("nombresaval1", naval1);
+                parametros.put("dniaval1", dniaval1);
+                parametros.put("nombresaval2", naval2);
+                parametros.put("dniaval2", dniaval2);
                 parametros.put("liqventa", codigo);
                 File jasper = new File("D:/reporte/liquicredito.jasper");
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
@@ -303,20 +344,20 @@ public class ventaBean implements Serializable {
         avales = new ArrayList();
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (estado.equals("DP")) {
-                if (StringUtils.isNotBlank(codigo)) {
-                    parametros.put("codigo", codigo);
-                    File jasper = new File("D:/reporte/cronograma.jasper");
-                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
-                    HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                    response.addHeader("Content-disposition", "attachment; filename=Cronograma" + codigo + ".pdf");
-                    ServletOutputStream stream = response.getOutputStream();
-                    JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
-                    stream.flush();
-                    stream.close();
-                    FacesContext.getCurrentInstance().responseComplete();
-                } else {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Genere el crédito primero"));
-                }
+            if (StringUtils.isNotBlank(codigo)) {
+                parametros.put("codigo", codigo);
+                File jasper = new File("D:/reporte/cronograma.jasper");
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                response.addHeader("Content-disposition", "attachment; filename=Cronograma" + codigo + ".pdf");
+                ServletOutputStream stream = response.getOutputStream();
+                JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                stream.flush();
+                stream.close();
+                FacesContext.getCurrentInstance().responseComplete();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Genere el crédito primero"));
+            }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El credito no se encuentra despachada."));
             return;
