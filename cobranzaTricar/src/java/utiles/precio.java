@@ -11,7 +11,7 @@ public class precio {
     public BigDecimal precioModelo(String modelo) {
         String model = modelo;
         BigDecimal precio = new BigDecimal(0);
-        if (model != null) {
+        if (model != null) { 
 
             switch (model) {
                 case "VX150":

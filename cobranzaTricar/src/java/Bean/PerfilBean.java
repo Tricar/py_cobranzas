@@ -77,9 +77,9 @@ public class PerfilBean implements Serializable {
                 perfil = new Perfil();
                 return;
             }
-            if (perfil.getSisPer() == true || perfil.getSisUsu() == true || perfil.getSisVende() == true || perfil.getSisEmp() == true) {
+            if (perfil.getSisPer() == true || perfil.getSisUsu() == true || perfil.getSisVende() == true || perfil.getSisDist()== true || perfil.getSisEmp() == true) {
                 perfil.setSistema(true);
-            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false && perfil.getSisVende() == false && perfil.getSisEmp() == false) {
+            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false && perfil.getSisVende() == false && perfil.getSisDist() == false && perfil.getSisEmp() == false) {
                 perfil.setSistema(false);
             }
             if (perfil.getManArt() == true || perfil.getManAval() == true || perfil.getManCli() == true || perfil.getManCol() == true
@@ -210,6 +210,7 @@ public class PerfilBean implements Serializable {
             perfil.setSisEmp(false);
             perfil.setSisVende(false);
             perfil.setSisUsu(false);
+            perfil.setSisDist(false);
             perfil.setSisCaja(false);
             perfil.setMante(false);
             perfil.setManCli(false);

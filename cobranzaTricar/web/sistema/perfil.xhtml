@@ -68,6 +68,7 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisEmp}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisVende}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisUsu}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisDist}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisPer}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.sisCaja}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.mante}"/>
@@ -97,8 +98,8 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
                             <h:panelGroup></h:panelGroup>
-                            <h:outputText class="red Fs20" value="#{perfilBean.perfil.descripcion}"/>
                             <h:panelGroup></h:panelGroup>
+                            <h:outputText class="red Fs20" value="#{perfilBean.perfil.descripcion}"/>
                             <h:panelGroup></h:panelGroup>
                             <h:panelGroup></h:panelGroup>
                             <h:outputText class="blue Fs16" value="Sistema:" />
@@ -111,12 +112,12 @@
                             <p:outputLabel value="Usuarios" />
                             <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisVende}"/>
                             <p:outputLabel value="Vendedor" />
+                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisDist}"/>
+                            <p:outputLabel value="Distrito" />
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
                             <p:outputLabel value="Perfiles" />
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisCaja}"/>
                             <p:outputLabel value="Caja" />
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
                             <h:outputText class="blue Fs16" value="Mantenimiento:" />
                             <h:panelGroup></h:panelGroup>
                             <h:panelGroup></h:panelGroup>
