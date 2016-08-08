@@ -58,12 +58,14 @@ public class TareaDiaria {
                         if (!letras.getDescripcion().equals("ND")) {
                             if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
                                 if (letras.getFecven().after(fecha)) {
-                                    letras.setEstado("PN");
-                                } else {
-                                    letras.setEstado("VN");
-                                    letras.setDiffdays(Diffdays(letras.getFecven()));
-                                    letras.setCobradonc(true);
-                                    contvn++;
+                                    if (Diffdays(letras.getFecven()) >= 1) {
+                                        letras.setEstado("VN");
+                                        letras.setDiffdays(Diffdays(letras.getFecven()));
+                                        letras.setCobradonc(true);
+                                        contvn++;
+                                    } else {
+                                        letras.setEstado("PN");
+                                    }
                                 }
                             }
 //                        moraant = letras.getMora();
@@ -85,7 +87,7 @@ public class TareaDiaria {
                         }
 //                    }
                     }
-                    if (contvn == letritas.size()) {
+                    if (contvn == letritas.size()) {                        
                         cred.setCalificacion("VN");
                     } else {
                         cred.setCalificacion("PN");

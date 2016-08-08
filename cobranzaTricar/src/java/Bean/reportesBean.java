@@ -5,9 +5,12 @@ import Dao.CredavalDaoImp;
 import Model.Anexo;
 import Model.Credito;
 import Model.Creditoaval;
+import Model.Letras;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,7 +51,11 @@ public class reportesBean implements Serializable {
      */
     public reportesBean() {
     }
-
+    
+    public void calcularConsolidado(){
+        
+    }
+    
     public void exportarProf(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;

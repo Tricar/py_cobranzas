@@ -11,7 +11,7 @@
     <ui:define name="content">
         <h2>Solicitud de refinanciamiento de Crédito</h2>
         <h:form>
-            <p:commandButton action="#{creditoBean.indexdespacho()}" value="Regresar" immediate="true" icon="fa fa-arrow-left white"/>
+            <p:commandButton action="#{creditoBean.indexref()}" value="Regresar" immediate="true" icon="fa fa-arrow-left white"/>
         </h:form>
         <h2>Datos del crédito</h2>
         <h:form prependId="false ">
@@ -22,23 +22,25 @@
                 <p:outputLabel value="CODIGO:" />
                 <p:inputText value="#{creditoBean.credito.liqventa}" readonly="true"/>
                 <p:outputLabel value="VENDEDOR:" />                    
-                <p:inputText value="#{creditoBean.crediton.codven.nombres}" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.codven.nombres}" readonly="true"/>
                 <p:outputLabel value="MONTO FINANCIADO:"/>
-                <p:inputText value="#{creditoBean.crediton.totaldeuda}" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.totaldeuda}" readonly="true"/>
                 <p:outputLabel value="SALDO DEUDOR:"/>
-                <p:inputText value="#{creditoBean.crediton.deudactual}" readonly="true"/>                    
+                <p:inputText value="#{creditoBean.credito.deudactual}" readonly="true"/>                    
                 <p:outputLabel value="CLIENTE:"/>                    
-                <p:inputText value="#{creditoBean.crediton.anexo.nombres}" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.anexo.nombres}" readonly="true"/>
                 <p:outputLabel value="DIRECCION CLIENTE:" />
-                <p:inputText value="#{creditoBean.crediton.anexo.direccion}" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.anexo.direccion}" readonly="true"/>
                 <p:outputLabel value="Distrito:"/>
-                <p:inputText value="#{creditoBean.crediton.anexo.distrito}" converter="distritoconverter" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.anexo.distrito.distrito}" readonly="true"/>
                 <p:outputLabel value="AVAL:" />
-                <p:inputText value="#{creditoBean.crediton.idaval.nombres}" readonly="true"/>                    
+                <p:inputText value="#{creditoBean.credito.idaval.nombres}" readonly="true"/>                    
                 <p:outputLabel value="TIPO VEHICULO:" />
-                <p:inputText value="#{creditoBean.crediton.vehi}" readonly="true" />                    
+                <p:inputText value="#{creditoBean.credito.vehi}" readonly="true" />                    
                 <p:outputLabel value="MODELO:" />
-                <p:inputText value="#{creditoBean.crediton.modelo.modelo}" readonly="true" />                    
+                <p:inputText value="#{creditoBean.credito.modelo.modelo}" readonly="true" />                  
+                <p:outputLabel value="CODIGO REF:" />
+                <p:inputText value="#{creditoBean.codigoref}" readonly="true" />
             </h:panelGrid>            
         </h:form>
         <h2>Datos para la refinanciación</h2>
@@ -47,7 +49,7 @@
                 <p:outputLabel value="FECHA REFINANCIAMIENTO:" for="txtfecha"/>
                 <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.fecha1}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha"/>
                 <p:outputLabel value="INTERES:" />
-                <p:selectOneMenu value="#{creditoBean.crediton.interes}" required="true" requiredMessage="Seleccione numero de letra">
+                <p:selectOneMenu value="#{creditoBean.interes}" required="true" requiredMessage="Seleccione numero de letra">
                     <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                     <f:selectItem itemLabel="0" itemValue='0'/>
                     <f:selectItem itemLabel="2" itemValue='2'/>
@@ -55,7 +57,7 @@
                     <f:selectItem itemLabel="4" itemValue='4'/>                        
                 </p:selectOneMenu>
                 <p:outputLabel value="NUMERO DE LETRAS:" for="txtletra"/>
-                <p:selectOneMenu id="txtletra" value="#{creditoBean.crediton.nletras}" required="true" requiredMessage="Seleccione numero de letra">
+                <p:selectOneMenu id="txtletra" value="#{creditoBean.nletras}" required="true" requiredMessage="Seleccione numero de letra">
                     <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                     <f:selectItem itemLabel="2" itemValue='2' />
                     <f:selectItem itemLabel="3" itemValue='3'/>

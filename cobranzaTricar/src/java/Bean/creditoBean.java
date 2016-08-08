@@ -67,8 +67,7 @@ import utiles.precio;
 public class creditoBean implements Serializable {
 
     public Credito credito = new Credito();
-    public Vehiculo vehiculo = new Vehiculo();
-    public Credito crediton = new Credito();
+    public Vehiculo vehiculo = new Vehiculo();    
     public Letras letrasa = new Letras();
     public List<Credito> creditos = new ArrayList();
     LetrasDao letrasdao = new LetrasDaoImplements();
@@ -129,10 +128,14 @@ public class creditoBean implements Serializable {
     private List<Anexo> avalesant = new ArrayList();
     private List<Anexo> avalesmod = new ArrayList();
     private String banderaval;
-    private String[] selectedReqs;    
+    private String[] selectedReqs;
     private String banderareq = new String();
     private List<String> reqs;
-    
+    private Integer nletras;
+    private BigDecimal interes;
+    private BigDecimal montoref;
+    private String codigoref;
+
     @PostConstruct
     public void init() {
         reqs = new ArrayList<String>();
@@ -195,6 +198,7 @@ public class creditoBean implements Serializable {
     public void insertarCredito(Usuario usuario) {
         CreditoDao creditodao = new CreditoDaoImp();
         credavalBean credavalbean = new credavalBean();
+        requisitosBean reqsbean = new requisitosBean();
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
         } else {
@@ -234,6 +238,7 @@ public class creditoBean implements Serializable {
                                 credito.setElaborado(usuario.getAnexo().getIdanexo());
                                 credito.setSwinicial(false);
                                 creditodao.insertarVenta(credito);
+                                reqsbean.insertar(credito, selectedReqs);
                                 if (avales.isEmpty() == false) {
                                     credavalbean.insertarCreditoAval(credito, avales);
                                 }
@@ -258,6 +263,7 @@ public class creditoBean implements Serializable {
                             credito.setElaborado(usuario.getAnexo().getIdanexo());
                             credito.setSwinicial(false);
                             creditodao.insertarVenta(credito);
+                            reqsbean.insertar(credito, selectedReqs);
                             if (avales.isEmpty() == false) {
                                 credavalbean.insertarCreditoAval(credito, avales);
                             }
@@ -523,79 +529,96 @@ public class creditoBean implements Serializable {
     }
 
     public void refinanciar(Usuario usuario) {
+        Credito crednuevo = new Credito();
         CreditoDao credao = new CreditoDaoImp();
         List<Letras> antiguas = new ArrayList();
         Letras nuevas = new Letras();
         try {
             if (btnguardar.equals("Solicitar")) {
                 if (credito.getLiqventa().endsWith("A")) {
-                    crediton.setLiqventa(credito.getLiqventa().concat("A"));
+                    crednuevo.setLiqventa(credito.getLiqventa().concat("A"));
                 } else {
-                    crediton.setLiqventa(credito.getLiqventa().concat("-A"));
-                }
-                crediton.setFechareg(fecha1);
-                crediton.setElaborado(usuario.getIdusuario());
-                crediton.setEstadoref("EM");
-                crediton.setCalificacion("PN");
-                crediton.setRefinanciado(true);
-                crediton.setAnterior(credito.getIdventa());
-                credao.insertarVenta(crediton);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se solicitó la refinanciación."));
+                    crednuevo.setLiqventa(credito.getLiqventa().concat("-A"));
+                }   
+                codigoref = crednuevo.getLiqventa();
+                crednuevo.setTotaldeuda(credito.getDeudactual());
+                crednuevo.setSaldo(credito.getDeudactual());
+                crednuevo.setModelo(credito.getModelo());
+                crednuevo.setVehi(credito.getVehi());
+                crednuevo.setInicial(credito.getInicial());
+                crednuevo.setEmpresa(credito.getEmpresa());
+                crednuevo.setPrecio(precio);
+                crednuevo.setVehiculo(credito.getVehiculo());
+                crednuevo.setCodven(credito.getCodven());
+                crednuevo.setTienda(credito.getTienda());
+                crednuevo.setCondicionpago(credito.getCondicionpago());
+                crednuevo.setInteres(interes);                
+                crednuevo.setAnexo(credito.getAnexo());
+                crednuevo.setFechareg(fecha1);
+                crednuevo.setNletras(nletras);
+                crednuevo.setElaborado(usuario.getIdusuario());
+                crednuevo.setEstadoref("EM");
+                crednuevo.setCalificacion("PN");
+                crednuevo.setRefinanciado(true);
+                crednuevo.setAnterior(credito.getIdventa());
+                credao.insertarVenta(crednuevo);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Toma nota del código refinanciado."));
                 value = true;
             } else {
                 if (usuario.getPerfil().getAbrev().equals("JE") || usuario.getPerfil().getAbrev().equals("AD")) {
-                    credito = credao.veryId(crediton.getAnterior());
-                    antiguas = letrasdao.mostrarLetrasXCred(credito);
+                    Credito credant = new Credito();
+                    credant = credao.veryId(credito.getAnterior());
+                    antiguas = letrasdao.mostrarLetrasXCred(credant);
                     for (int i = 0; i < antiguas.size(); i++) {
                         Letras get = antiguas.get(i);
                         //get.setSaldo(BigDecimal.ZERO);
                         if (get.getSaldo().compareTo(BigDecimal.ZERO) != 0) {
-                            get.setEstado("RF");
-                            get.setDescripcion("Ref. :" + crediton.getLiqventa());
-                            //get.setSaldo(BigDecimal.ZERO);
+                            get.setEstado("RF");                            
+                            get.setDescripcion("Ref. :" + credito.getLiqventa());
+                            get.setSaldo(BigDecimal.ZERO);
                             letrasdao.modificarLetra(get);
                         }
                     }
-                    BigDecimal deuda = credito.getDeudactual();
-                    credito.setDeudactual(BigDecimal.ZERO);
-                    credito.setCalificacion("CN");
-                    credito.setRefinanciado(true);
-                    credao.modificarVenta(credito);
-                    BigDecimal nletras = new BigDecimal(crediton.getNletras());
+                    Date fechaini = credito.getFechareg();
+                    fechas = fechasLetras(fechaini, credito.getNletras());
+                    BigDecimal deuda = credant.getDeudactual();                    
+                    BigDecimal nletras = new BigDecimal(credito.getNletras());
                     BigDecimal montoletras = deuda.divide(nletras, 2);
                     BigDecimal interes = new BigDecimal(0);
-                    crediton.setEstado("DP");
-                    crediton.setEstadoref("AP");
-                    crediton.setTotaldeuda(BigDecimal.ZERO);
+                    credito.setEstado("DP");
+                    credito.setEstadoref("AP");
+                    credito.setTotaldeuda(credant.getDeudactual());
                     BigDecimal cien = new BigDecimal(100);
-                    interes = (crediton.getInteres().multiply(nletras)).divide(cien);
-                    Date fechaini = new Date();
-                    fechaini = crediton.getFechareg();
-                    Date fechafin = new Date();
-                    fechafin = sumaDias(fechaini, 30);
+                    interes = (credito.getInteres().multiply(nletras)).divide(cien);
                     BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
-                    nuevas.setFecreg(crediton.getFechareg());
-                    for (int i = 1; i <= (crediton.getNletras()); i++) {
-                        nuevas.setCredito(crediton);
+                    nuevas.setFecreg(credito.getFechareg());
+                    credito.setTotaldeuda(BigDecimal.ZERO);
+                    for (int i = 1; i <= (credito.getNletras()); i++) {
+                        Date fechaf = fechas.get(i - 1);
+                        nuevas.setCredito(credito);
                         nuevas.setMontoletra(montoletras);
                         nuevas.setInteres(mtointeres);
                         nuevas.setMonto((montoletras.add(mtointeres).setScale(2)).setScale(1, RoundingMode.UP));
                         nuevas.setFecini(fechaini);
-                        nuevas.setFecven(fechafin);
+                        nuevas.setFecven(fechaf);
                         nuevas.setMora(BigDecimal.ZERO);
-                        fechaini = fechafin;
-                        fechafin = sumaDias(fechaini, 30);
+                        fechaini = fechaf;                        
                         nuevas.setSaldo(nuevas.getMonto());
                         nuevas.setEstado("PN");
-                        nuevas.setDescripcion("L" + i + "/L" + crediton.getNletras());
-                        crediton.setTotaldeuda(crediton.getTotaldeuda().add(nuevas.getSaldo()));
-                        crediton.setDeudactual(crediton.getTotaldeuda());
+                        nuevas.setDescripcion("L" + i + "/L" + credito.getNletras());
+                        credito.setTotaldeuda(credito.getTotaldeuda().add(nuevas.getSaldo()));
+                        credito.setDeudactual(credito.getTotaldeuda());
                         letrasdao.insertarLetra(nuevas);
                     }
-                    crediton.setAprobado(usuario.getIdusuario());
+                    credito.setAprobado(usuario.getIdusuario());
                     value = true;
-                    credao.modificarVenta(crediton);
+                    credao.modificarVenta(credito);                    
+                    credant.setDeudactual(BigDecimal.ZERO);
+                    credant.setCalificacion("CN");
+                    credant.setRefinanciado(false);
+                    credao.modificarVenta(credant);
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se aprobó la solicitud."));
+                    letrascredito = letrasdao.mostrarLetrasXCred(credito);
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No tiene permisos para aprobar la solicitud."));
                 }
@@ -605,18 +628,17 @@ public class creditoBean implements Serializable {
 
     }
 
-    public String cargarRefinanciar(int idusuario) {
-        crediton = credito;
+    public String cargarRefinanciar(int idusuario) {        
         fecha1 = null;
         value = false;
         modeloTipo(credito.getVehi());
-        sw = 1;
-        inicial Inicial = new inicial();
-        inicia = crediton.getInicial();
-        precio = crediton.getPrecio();
+        sw = 1;        
+        inicia = credito.getInicial();
+        precio = credito.getPrecio();
         saldo = precio.subtract(inicia);
-        anexo = crediton.getAnexo();
-        if (credito.getEstadoref() != null && credito.getEstadoref().equals("EM")) {
+        anexo = credito.getAnexo();
+        if (credito.getEstadoref() != null && credito.getEstadoref().equals("EM")) {             
+            montoref = credito.getTotaldeuda().add(credito.getTotaldeuda().multiply(credito.getInteres().multiply(BigDecimal.valueOf(credito.getNletras()))));
             btnguardar = "Aprobar";
             return "/refinanciar/formaprobref.xhtml";
         } else {
@@ -654,7 +676,7 @@ public class creditoBean implements Serializable {
                 Date fechaini = new Date();
                 fechaini = credito.getFechareg();
                 //Date fechafin = new Date();
-                fechas = fechasLetras(fechaini);
+                fechas = fechasLetras(fechaini, credito.getNletras());
                 BigDecimal mtointeres = (montoletras.multiply(interes)).setScale(1, RoundingMode.UP);
                 letras.setFecreg(credito.getFechareg());
                 for (int i = 1; i <= (credito.getNletras()); i++) {
@@ -739,7 +761,7 @@ public class creditoBean implements Serializable {
         return cal.getTime();
     }
 
-    public List fechasLetras(Date fecha) {
+    public List fechasLetras(Date fecha, int nletras) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha);
         int sumar = 0;
@@ -747,7 +769,7 @@ public class creditoBean implements Serializable {
         int fin = 0;
         int difdays = 0;
         boolean sw = true;
-        for (int i = 0; i < credito.getNletras(); i++) {
+        for (int i = 0; i < nletras; i++) {
             if (sw) {
                 inicial = cal.get(Calendar.DATE);
                 int j = 1;
@@ -1039,6 +1061,8 @@ public class creditoBean implements Serializable {
     }
 
     public void cargarxCodigo() {
+        interes = null;
+        nletras = null;
         creditos = new ArrayList();
         CreditoDao credao = new CreditoDaoImp();
         Credito modelocredito = new Credito();
@@ -1174,7 +1198,7 @@ public class creditoBean implements Serializable {
         precio = credito.getPrecio();
         saldo = precio.subtract(inicia);
         saldo = saldo.subtract(sinicial);
-        anexo = credito.getAnexo();        
+        anexo = credito.getAnexo();
         ocupsxanexo = ocupbean.cargarxCredito(credito);
         iniciapre = Inicial.inicialCredito(anexo.getDistrito().getAbrev(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
         if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("JE")) {
@@ -1184,7 +1208,7 @@ public class creditoBean implements Serializable {
                 disableaval = false;
                 btnaprobar = "Aprobar";
                 return "/venta/formaprobar.xhtml";
-            } else {                
+            } else {
                 value = false;
                 disableaval = true;
                 btnaprobar = "Desaprobar";
@@ -1437,7 +1461,7 @@ public class creditoBean implements Serializable {
                 //fechaini = credito.getFecaprob();
                 fechaini = credito.getFechareg();
                 //Date fechafin = new Date();
-                fechas = fechasLetras(fechaini);
+                fechas = fechasLetras(fechaini, credito.getNletras());
                 //fechafin = sumaDias(fechaini, 30);                
                 if (credito.getSinicial().compareTo(BigDecimal.ZERO) == 1) {
                     letras.setCredito(credito);
@@ -1932,14 +1956,6 @@ public class creditoBean implements Serializable {
         this.saldo = saldo;
     }
 
-    public Credito getCrediton() {
-        return crediton;
-    }
-
-    public void setCrediton(Credito crediton) {
-        this.crediton = crediton;
-    }
-
     public BigDecimal getIniciapre() {
         return iniciapre;
     }
@@ -2316,5 +2332,37 @@ public class creditoBean implements Serializable {
 
     public void setReqs(List<String> reqs) {
         this.reqs = reqs;
+    }
+
+    public Integer getNletras() {
+        return nletras;
+    }
+
+    public void setNletras(Integer nletras) {
+        this.nletras = nletras;
+    }
+
+    public BigDecimal getInteres() {
+        return interes;
+    }
+
+    public void setInteres(BigDecimal interes) {
+        this.interes = interes;
+    }
+
+    public BigDecimal getMontoref() {
+        return montoref;
+    }
+
+    public void setMontoref(BigDecimal montoref) {
+        this.montoref = montoref;
+    }
+
+    public String getCodigoref() {
+        return codigoref;
+    }
+
+    public void setCodigoref(String codigoref) {
+        this.codigoref = codigoref;
     }
 }

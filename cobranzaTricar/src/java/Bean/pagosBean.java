@@ -94,8 +94,6 @@ public class pagosBean implements Serializable {
         PagosDao pagosdao = new PagosDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
         CreditoDao creditodao = new CreditoDaoImp();
-        Calendar calendario = GregorianCalendar.getInstance();
-        Date fecha = calendario.getTime();
         pago.setLetras(letra);
         if (btnpago.equals("Aplicar") && letra.getCobradonc() == true) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ya se hizo el descuento por pronto pago. O letra vencida no procede descuento."));
@@ -106,12 +104,14 @@ public class pagosBean implements Serializable {
                 letra.setSaldo(letra.getSaldo().subtract(montopago));
                 if (letra.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
                     letra.setEstado("CN");
-                }                
-//                if (letra.getFecven().equals(fecha) && letra.getFecven().after(fecha)){
-//                    pago.setCalificacion("PAGO PUNTUAL");
-//                } else {
-//                    
-//                }
+                }
+                if (letra.getDiffdays() > 0) {
+                    pago.setDiffdays(letra.getDiffdays());
+                    pago.setCalificacion("Pago atrasado");
+                } else {
+                    pago.setCalificacion("Pago puntual");
+                    pago.setDiffdays(new Long(0));
+                }
                 pago.setMonto(montopago);
                 pago.setUsuario(idusuario);
                 String temp = pago.getOperacion();

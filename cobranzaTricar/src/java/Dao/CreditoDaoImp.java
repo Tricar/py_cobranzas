@@ -345,7 +345,7 @@ public class CreditoDaoImp implements CreditoDao{
         Credito credito = new Credito();        
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE liqventa=:w and calificacion!=:v");
+            Query query = session.createQuery("FROM Credito WHERE liqventa=:w and calificacion <> :v");
             query.setParameter("w", codigo);
             query.setParameter("v", calif);
             credito = (Credito) query.uniqueResult();

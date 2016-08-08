@@ -18,32 +18,68 @@
             <p:growl id="msg12" showDetail="true"/>
             <h:panelGrid columns="4">
                 <p:outputLabel value="FECHA DE SOLICITUD:" />
-                <p:calendar value="#{creditoBean.crediton.fechareg}" readonly="true" pattern="dd/MM/yyyy"/>
+                <p:calendar value="#{creditoBean.credito.fechareg}" readonly="true" pattern="dd/MM/yyyy"/>
                 <p:outputLabel value="CODIGO:" />
-                <p:inputText value="#{creditoBean.crediton.liqventa}" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.liqventa}" readonly="true"/>
                 <p:outputLabel value="CLIENTE:"/>                    
-                <p:inputText value="#{creditoBean.crediton.anexo.nombres}" readonly="true"/>                
+                <p:inputText value="#{creditoBean.credito.anexo.nombres}" readonly="true"/>                
                 <p:outputLabel value="MONTO DEUDA:"/>
-                <p:inputText value="#{creditoBean.crediton.totaldeuda}" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.totaldeuda}" readonly="true"/>
                 <p:outputLabel value="MONTO REFINANCIADO:"/>
-                <p:inputText value="#{creditoBean.crediton.deudactual}" readonly="true"/>
+                <p:inputText value="#{creditoBean.montoref}" readonly="true"/>
                 <p:outputLabel value="INTERES:"/>
-                <p:inputText value="#{creditoBean.crediton.interes}" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.interes}" readonly="true"/>
                 <p:outputLabel value="NUMERO DE LETRAS:"/>
-                <p:inputText value="#{creditoBean.crediton.nletras}" readonly="true"/>                
+                <p:inputText value="#{creditoBean.credito.nletras}" readonly="true"/>                
                 <p:outputLabel value="AVAL:" />
-                <p:inputText value="#{creditoBean.crediton.idaval.nombres}" readonly="true"/>                    
+                <p:inputText value="#{creditoBean.credito.idaval.nombres}" readonly="true"/>                    
                 <p:outputLabel value="TIPO VEHICULO:" />
-                <p:inputText value="#{creditoBean.crediton.vehi}" readonly="true" />                    
+                <p:inputText value="#{creditoBean.credito.vehi}" readonly="true" />                    
                 <p:outputLabel value="MODELO:" />
-                <p:inputText value="#{creditoBean.crediton.modelo.modelo}" readonly="true" />                    
+                <p:inputText value="#{creditoBean.credito.modelo.modelo}" readonly="true" />                    
                 <p:outputLabel value="VENDEDOR:" />                    
-                <p:inputText value="#{creditoBean.crediton.codven.nombres}" readonly="true"/>
+                <p:inputText value="#{creditoBean.credito.codven.nombres}" readonly="true"/>
             </h:panelGrid>            
             <p:commandButton value="#{creditoBean.btnguardar}" action="#{creditoBean.refinanciar(loginbean.usuario)}" icon="fa fa-thumbs-o-up white"
                              ajax="false" disabled="#{creditoBean.value}">
             </p:commandButton>
         </h:form>
+        <h:form id="formMostrar">
+                <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
+                <p:dataTable var="letras" value="#{creditoBean.letrascredito}"
+                             emptyMessage="No hay nada para mostrar">
+                    <p:column headerText="Cod venta.">
+                        <h:outputText value="#{letras.credito.liqventa}" />
+                    </p:column>
+                    <p:column headerText="Descripcion">
+                        <h:outputText value="#{letras.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{letras.montoletra}"/>
+                    </p:column>
+                    <p:column headerText="Interes">
+                        <h:outputText value="#{letras.interes}"/>
+                    </p:column>
+                    <p:column headerText="Total Letra">
+                        <h:outputText value="#{letras.monto}"/>
+                    </p:column>
+                    <p:column headerText="Fecha Ven.">
+                        <h:outputText value="#{letras.fecven}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <ui:remove>
+                        <p:column headerText="Saldo">
+                            <h:outputText value="#{letras.saldo}"/>
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{letras.estado}">
+                                <f:converter converterId="letrasconverter"/>
+                            </h:outputText>
+                        </p:column>
+                    </ui:remove>
+                </p:dataTable>
+            </h:form>            
         <ui:remove><h:form>
             <h:commandButton actionListener="#{reportesBean.exportarLiq(creditoBean.credito.liqventa)}" value="Imp. Liquid." />
         </h:form></ui:remove>
