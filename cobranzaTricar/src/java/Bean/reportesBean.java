@@ -44,7 +44,8 @@ public class reportesBean implements Serializable {
 
     private String codigo;
     private List<Anexo> avales = new ArrayList();
-    private Credito credito = new Credito();    
+    private Integer mes;
+    private Integer ano;
 
     /**
      * Creates a new instance of reportesBean
@@ -74,6 +75,29 @@ public class reportesBean implements Serializable {
             FacesContext.getCurrentInstance().responseComplete();
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Crear proforma primero."));
+        }
+        con.close();
+    }
+
+    public void cierreIngreso() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (mes == null || ano == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe ingresar mes y/o año."));
+        } else {
+            parametros.put("mes", mes);
+            parametros.put("ano", ano);
+            File jasper = new File("D:/reporte/proforma.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=Proforma" + mes + "-" + ano + ".pdf");
+            ServletOutputStream stream = response.getOutputStream();
+            JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
         }
         con.close();
     }
@@ -329,12 +353,20 @@ public class reportesBean implements Serializable {
         this.avales = avales;
     }
 
-    public Credito getCredito() {
-        return credito;
+    public Integer getMes() {
+        return mes;
     }
 
-    public void setCredito(Credito credito) {
-        this.credito = credito;
+    public void setMes(Integer mes) {
+        this.mes = mes;
+    }
+
+    public Integer getAno() {
+        return ano;
+    }
+
+    public void setAno(Integer ano) {
+        this.ano = ano;
     }
 
 }

@@ -18,19 +18,19 @@
                 <h:form id="formMostrar">
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                     <p:dataTable var="item" value="#{anexoBean.verCliente()}" emptyMessage="No hay nada para mostrar" 
-                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 50 60 70">
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 50 60 70"> 
                         <p:column headerText="NOMBRE Y APELLIDO" filterBy="#{item.nombres}" filterMatchMode="contains">
                             <h:outputText value="#{item.nombres} " />
                         </p:column>
                         <p:column headerText="NUMERO DOC." filterBy="#{item.numdocumento}" filterMatchMode="contains">
                             <h:outputText value="#{item.numdocumento}" />
-                        </p:column>                        
+                        </p:column>
                         <p:column headerText="DIRECCION">
                             <h:outputText value="#{item.direccion}" />
                         </p:column>
                         <p:column headerText="TELEFONO" >
                             <h:outputText value="#{item.telefono}" />
-                        </p:column>                        
+                        </p:column>
                         <p:column headerText="CELULAR">
                             <h:outputText value="#{item.celular}" />
                         </p:column>

@@ -19,9 +19,9 @@ public class tipodocBean implements Serializable{
     public tipodocBean() {
     }
     
-    public List listaTipoDoc(String tipo){
+    public List listaTipoDoc(String tipo, String tipos){
         TipodocDao tipodao = new TipodocDaoImp();        
-        listafiltrada = tipodao.mostrarxTipo(tipo);
+        listafiltrada = tipodao.mostrarxTipo(tipo, tipos);
         return listafiltrada;
     }
 }
