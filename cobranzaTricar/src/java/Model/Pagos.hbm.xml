@@ -41,5 +41,8 @@
         <property name="usuario" type="java.lang.Integer">
             <column name="usuario" />
         </property>
+        <property name="diffdays" type="java.lang.Long">
+            <column name="diffdays" />
+        </property>
     </class>
 </hibernate-mapping>

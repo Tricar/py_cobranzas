@@ -5,9 +5,12 @@ import Dao.CredavalDaoImp;
 import Model.Anexo;
 import Model.Credito;
 import Model.Creditoaval;
+import Model.Letras;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,6 +43,9 @@ public class reportesBean implements Serializable {
 
     private String codigo;
     private List<Anexo> avales = new ArrayList();
+    private Credito credito = new Credito();
+    private List<Letras> letrasxcredito = new ArrayList();
+    private BigDecimal pendienteV1CA = new BigDecimal(BigInteger.ZERO);
 
     /**
      * Creates a new instance of reportesBean
@@ -50,7 +56,7 @@ public class reportesBean implements Serializable {
     public void calcularConsolidado(){
         
     }
-
+    
     public void exportarProf(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
@@ -281,6 +287,22 @@ public class reportesBean implements Serializable {
 
     public void setAvales(List<Anexo> avales) {
         this.avales = avales;
+    }
+
+    public Credito getCredito() {
+        return credito;
+    }
+
+    public void setCredito(Credito credito) {
+        this.credito = credito;
+    }
+
+    public List<Letras> getLetrasxcredito() {
+        return letrasxcredito;
+    }
+
+    public void setLetrasxcredito(List<Letras> letrasxcredito) {
+        this.letrasxcredito = letrasxcredito;
     }
 
 }
