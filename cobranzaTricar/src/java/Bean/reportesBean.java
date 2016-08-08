@@ -32,6 +32,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import org.apache.commons.lang3.StringUtils;
 import utiles.dbManager;
+import utiles.recorrerCreditos;
 
 /**
  *
@@ -43,20 +44,18 @@ public class reportesBean implements Serializable {
 
     private String codigo;
     private List<Anexo> avales = new ArrayList();
-    private Credito credito = new Credito();
-    private List<Letras> letrasxcredito = new ArrayList();
-    private BigDecimal pendienteV1CA = new BigDecimal(BigInteger.ZERO);
+    private Credito credito = new Credito();    
 
     /**
      * Creates a new instance of reportesBean
      */
     public reportesBean() {
     }
-    
-    public void calcularConsolidado(){
-        
+
+    public void calcularConsolidado() {
+
     }
-    
+
     public void exportarProf(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
@@ -119,9 +118,9 @@ public class reportesBean implements Serializable {
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (StringUtils.isNotBlank(codigo)) {
             parametros.put("liqventa", codigo);
-            parametros.put("nombresaval1", naval1);            
+            parametros.put("nombresaval1", naval1);
             parametros.put("dniaval1", dniaval1);
-            parametros.put("nombresaval2", naval2);            
+            parametros.put("nombresaval2", naval2);
             parametros.put("dniaval2", dniaval2);
             File jasper = new File("D:/reporte/liquicredito.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
@@ -273,6 +272,47 @@ public class reportesBean implements Serializable {
         con.close();
     }
 
+    public void exportarConsolidadoExcel() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        recorrerCreditos recorre = new recorrerCreditos();
+        BigDecimal penv1 = recorre.montosDet("V1", "CA", "PN");
+        BigDecimal venv1 = recorre.montosDet("V1", "CA", "VN");
+        BigDecimal totv1 = recorre.montosTotal("V1", "CA");
+        BigDecimal penv2 = recorre.montosDet("V2", "CA", "PN");
+        BigDecimal venv2 = recorre.montosDet("V2", "CA", "VN");
+        BigDecimal totv2 = recorre.montosTotal("V2", "CA");
+        BigDecimal penv3 = recorre.montosDet("YA", "CA", "PN");
+        BigDecimal venv3 = recorre.montosDet("YA", "CA", "VN");
+        BigDecimal totv3 = recorre.montosTotal("YA", "CA");
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("pendienteV1", penv1);
+        parametros.put("vencidaV1", venv1);
+        parametros.put("totalV1", totv1);
+        parametros.put("pendienteV2", penv2);
+        parametros.put("vencidaV2", venv2);
+        parametros.put("totalV2", totv2);
+        parametros.put("pendienteV3", penv3);
+        parametros.put("vencidaV3", venv3);
+        parametros.put("totalV3", totv3);
+        File jasper = new File("D:/reporte/consolidado/consolidado.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Consolidado.xls");
+        ServletOutputStream stream = response.getOutputStream();
+
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
+
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -295,14 +335,6 @@ public class reportesBean implements Serializable {
 
     public void setCredito(Credito credito) {
         this.credito = credito;
-    }
-
-    public List<Letras> getLetrasxcredito() {
-        return letrasxcredito;
-    }
-
-    public void setLetrasxcredito(List<Letras> letrasxcredito) {
-        this.letrasxcredito = letrasxcredito;
     }
 
 }

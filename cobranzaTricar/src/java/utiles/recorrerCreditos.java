@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 
 public class recorrerCreditos {
 
-    public BigDecimal montosxTienda(String tienda, String empresa, String estado) {
-        BigDecimal totalpendiente = new BigDecimal(0);
+    public BigDecimal montosDet(String tienda, String empresa, String estado) {
+        BigDecimal total = new BigDecimal(0);
         try {
 
             dbManager dbm = new dbManager();
@@ -18,10 +18,10 @@ public class recorrerCreditos {
             PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                totalpendiente = rs.getBigDecimal("sumapendientes");
+                total = rs.getBigDecimal("sumapendientes");
             }
-            if (totalpendiente == null) {
-                totalpendiente = new BigDecimal(0);
+            if (total == null) {
+                total = new BigDecimal(0);
             }
             rs.close();
             st.close();
@@ -31,6 +31,33 @@ public class recorrerCreditos {
             e.getMessage();
             System.out.println(e.getMessage());
         }
-        return totalpendiente;
+        return total;
+    }
+    
+    public BigDecimal montosTotal(String tienda, String empresa) {
+        BigDecimal total = new BigDecimal(0);
+        try {
+
+            dbManager dbm = new dbManager();
+            Connection con = dbm.getConnection();
+            String sql = "";
+            sql = "select sum(credito.deudactual) suma from credito where credito.estado <> 'CN' and credito.tienda = '"+tienda+"' AND credito.empresa = '"+empresa+"' and credito.estado <> 'EM'";
+            PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                total = rs.getBigDecimal("suma");
+            }
+            if (total == null) {
+                total = new BigDecimal(0);
+            }
+            rs.close();
+            st.close();
+            dbm.close(con);
+
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println(e.getMessage());
+        }
+        return total;
     }
 }
