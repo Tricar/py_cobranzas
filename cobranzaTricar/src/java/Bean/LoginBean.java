@@ -145,8 +145,8 @@ public class LoginBean implements Serializable {
         return "/venta/listarv";
     }
 
-    public String deudor() {
-        return "/reportes/vencido";
+    public String mensual() {
+        return "/reportes/mensual";
     }
 
     public String moroso() {

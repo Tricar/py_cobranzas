@@ -176,6 +176,10 @@ public class ventaBean implements Serializable {
             }
             Date d = new Date();
             this.anexo.setFechareg(d);
+            this.anexo.setFechanac(d);
+            this.anexo.setEdad(0);
+            this.anexo.setEstcivil("SO");
+            this.anexo.setCpropia("NO");
             this.anexo.setCodven("");
             daotanexo.registrar(this.session, this.anexo);
             this.transaction.commit();
@@ -216,7 +220,7 @@ public class ventaBean implements Serializable {
                     credito.setElaborado(usuario.getAnexo().getIdanexo());
                     creditodao.insertarVenta(credito);
                     concepto.setMontopago(credito.getInicial());
-                    concepto.setTipo("IN");
+                    concepto.setTipo("CO");
                     concepto.setTotal(credito.getInicial());
                     concepto.setFecreg(credito.getFechareg());
                     concepto.setCredito(credito);

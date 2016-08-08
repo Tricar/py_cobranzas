@@ -1217,7 +1217,7 @@ public class creditoBean implements Serializable {
                     System.err.println("Sinicial");
                     pago = new Pagos();
 //                    pagosBean pagbean = new pagosBean();
-                    listafilttipo = tipobean.listaTipoDoc("IN");
+                    listafilttipo = tipobean.listaTipoDoc("IN", "CO");
                     btnpago = "Pagar";
                     concepto = condao.veryIdCredito(credito);
                     montopago = concepto.getMontopago();

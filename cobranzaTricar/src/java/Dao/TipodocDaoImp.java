@@ -32,13 +32,14 @@ public class TipodocDaoImp implements TipodocDao {
     }
     
     @Override
-    public List<Tipodoc> mostrarxTipo(String tipodoc) {
+    public List<Tipodoc> mostrarxTipo(String tipodoc, String tipos) {
         Session session = null;
         List<Tipodoc> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Tipodoc WHERE tipodoc=:tipo");
+            Query query = session.createQuery("FROM Tipodoc WHERE tipodoc=:tipo or tipodoc=:tipos");
             query.setParameter("tipo", tipodoc);
+            query.setParameter("tipos", tipos);
             lista = (List<Tipodoc>) query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());            
