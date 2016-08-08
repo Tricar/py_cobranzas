@@ -14,7 +14,7 @@ public class recorrerCreditos {
             dbManager dbm = new dbManager();
             Connection con = dbm.getConnection();
             String sql = "";
-            sql = "select sum(letras.saldo) sumapendientes from anexo INNER JOIN (letras INNER JOIN credito ON letras.idventa = credito.idventa and credito.tienda = '"+tienda+"' and credito.empresa='"+empresa+"' AND letras.estado ='"+estado+"' and letras.descripcion <> 'ND') ON anexo.idanexo = credito.idanexo";
+            sql = "select sum(letras.saldo) sumapendientes from anexo INNER JOIN (letras INNER JOIN credito ON letras.idventa = credito.idventa and credito.tienda = '" + tienda + "' and credito.empresa='" + empresa + "' AND letras.estado ='" + estado + "' and letras.descripcion <> 'ND') ON anexo.idanexo = credito.idanexo";
             PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -22,7 +22,7 @@ public class recorrerCreditos {
             }
             if (totalpendiente == null) {
                 totalpendiente = new BigDecimal(0);
-            }            
+            }
             rs.close();
             st.close();
             dbm.close(con);
