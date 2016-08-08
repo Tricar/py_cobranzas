@@ -1754,14 +1754,14 @@ public class creditoBean implements Serializable {
             if (montopago.compareTo(concepto.getMontopago()) != 1) {
                 pago.setConceptos(concepto);
                 pago.setMonto(montopago);
-                pago.setTipo("IN");
+                pago.setTipo(concepto.getTipo());
                 pago.setUsuario(idusuario);
                 pagosdao.insertarPago(pago);
                 caja = pago.getCaja();
                 caja.setTotal(caja.getTotal().add(montopago));
                 cajadao.modificarCaja(caja);
                 mcaja.setCaja(caja);
-                mcaja.setTipomov("IN");
+                mcaja.setTipomov(concepto.getTipo());
                 mcaja.setFechamov(pago.getFecreg());
                 mcaja.setMonto(montopago);
                 mcaja.setConcepto(concepto);
