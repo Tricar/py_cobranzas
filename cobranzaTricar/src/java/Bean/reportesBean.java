@@ -46,6 +46,10 @@ public class reportesBean implements Serializable {
      */
     public reportesBean() {
     }
+    
+    public void calcularConsolidado(){
+        
+    }
 
     public void exportarProf(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
