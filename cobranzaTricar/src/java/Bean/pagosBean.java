@@ -178,7 +178,7 @@ public class pagosBean implements Serializable {
 
     public void cargarLetraDebito(Letras letras) {
         letra = letras;
-        listafiltrada = tipobean.listaTipoDoc("ND", "");
+        listafiltrada = tipobean.listaTipoDoc("ND");
         numletra = letra.getDescripcion();
         montopago = letra.getMora();
         descripcion = letra.getDescripcion();
@@ -190,7 +190,7 @@ public class pagosBean implements Serializable {
 
     public void cargarMora(Letras letras, Usuario usuario) {
         letra = letras;
-        listafiltrada = tipobean.listaTipoDoc("ND", "");
+        listafiltrada = tipobean.listaTipoDoc("ND");
         numletra = letra.getDescripcion();
         montopago = letra.getMora();
         descripcion = letra.getDescripcion();
@@ -287,7 +287,7 @@ public class pagosBean implements Serializable {
     }
 
     public void listaTipoDoc(String tipo) {
-        listafiltrada = tipobean.listaTipoDoc(tipo, "");
+        listafiltrada = tipobean.listaTipoDoc(tipo);
         if (tipo.equals("NC")) {
             montopago = letra.getInteres();
             btnpago = "Aplicar";
