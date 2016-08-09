@@ -57,6 +57,13 @@
                                                 <f:selectItem itemLabel="2019" itemValue="2019" />
                                                 <f:selectItem itemLabel="2020" itemValue="2020" />
                                             </p:selectOneMenu>
+                                            <p:outputLabel value=" / "/>
+                                            <p:selectOneMenu id="empresa" value="#{reportesBean.empresa}">
+                                                <f:selectItem itemLabel="Seleccione Empresa" itemValue="#{null}" />
+                                                <f:selectItem itemLabel="TRICAR" itemValue="TR" />
+                                                <f:selectItem itemLabel="SEDNA" itemValue="SD" />
+                                                <f:selectItem itemLabel="CASCO RED" itemValue="CR" />
+                                            </p:selectOneMenu>
                                             <p:separator/>
                                             <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.cierreIngreso()}" /> 
                                         </div>
