@@ -86,6 +86,7 @@ public class reportesBean implements Serializable {
         Integer tienda2 = null;
         Integer tienda3 = null;
         String tienda = null;
+        String meses = null;
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (mes == null || ano == null || empresa == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe ingresar mes, año y/o empresa."));
@@ -106,12 +107,42 @@ public class reportesBean implements Serializable {
                 tienda3 = 0;
                 tienda = "SEDNA";
             }
+            switch (mes) {
+                case 1:
+                    meses = "ENERO";
+                    break;
+                case 2:
+                    meses = "FEBRERO";
+                    break;
+                case 3:
+                    meses = "MARZO";
+                    break;
+                case 4:
+                    meses = "ABRIL";
+                    break;
+                case 5:
+                    meses = "MAYO";
+                    break;
+                case 6:
+                    meses = "JUNIO";
+                    break;
+                case 7:
+                    meses = "JULIO";
+                    break;
+                case 8:
+                    meses = "AGOSTO";
+                    break;
+                case 9:
+                    meses = "SETIEMBRE";
+                    break;
+            }
             parametros.put("mes", mes);
             parametros.put("ano", ano);
             parametros.put("tienda1", tienda1);
             parametros.put("tienda2", tienda2);
             parametros.put("tienda3", tienda3);
             parametros.put("tienda", tienda);
+            parametros.put("meses", meses);
             File jasper = new File("D:/reporte/cierreingreso.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
