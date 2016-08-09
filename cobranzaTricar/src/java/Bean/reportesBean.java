@@ -11,7 +11,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -299,6 +303,9 @@ public class reportesBean implements Serializable {
         Connection con = null;
         con = conn.getConnection();
         recorrerCreditos recorre = new recorrerCreditos();
+        Date d = new Date();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = format.format(d);
         BigDecimal penv1 = recorre.montosDet("V1", "CA", "PN");
         BigDecimal venv1 = recorre.montosDet("V1", "CA", "VN");
         BigDecimal totv1 = recorre.montosTotal("V1", "CA");
@@ -318,17 +325,37 @@ public class reportesBean implements Serializable {
         parametros.put("pendienteV3", penv3);
         parametros.put("vencidaV3", venv3);
         parametros.put("totalV3", totv3);
+        parametros.put("fecha", fecha);
         File jasper = new File("D:/reporte/consolidado/consolidado.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.addHeader("Content-disposition", "attachment; filename=Consolidado.xls");
         ServletOutputStream stream = response.getOutputStream();
-
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
         exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
         exporter.exportReport();
-
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarTotalExcel() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION,true);
+        File jasper = new File("D:/reporte/varios/filtrar.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Cuentas.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
         stream.flush();
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();

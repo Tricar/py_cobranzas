@@ -150,7 +150,8 @@ public class LoginBean implements Serializable {
     }
 
     public String moroso() {
-        return "/reportes/moroso";
+        //return "/reportes/moroso";
+        return "#";
     }
     
     public String ingreso() {
