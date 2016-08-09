@@ -46,6 +46,7 @@ public class reportesBean implements Serializable {
     private List<Anexo> avales = new ArrayList();
     private Integer mes;
     private Integer ano;
+    private String empresa;
 
     /**
      * Creates a new instance of reportesBean
@@ -83,16 +84,40 @@ public class reportesBean implements Serializable {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
+        Integer tienda1 = null;
+        Integer tienda2 = null;
+        Integer tienda3 = null;
+        String tienda = null;
         Map<String, Object> parametros = new HashMap<String, Object>();
-        if (mes == null || ano == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe ingresar mes y/o año."));
+        if (mes == null || ano == null || empresa == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe ingresar mes, año y/o empresa."));
         } else {
+            if (empresa.equals("CR")) {
+                tienda1 = 4;
+                tienda2 = 5;
+                tienda3 = 10;
+                tienda = "CASCO RED";
+            } else if (empresa.equals("TR")) {
+                tienda1 = 8;
+                tienda2 = 0;
+                tienda3 = 11;
+                tienda = "TRICAR";
+            } else {
+                tienda1 = 0;
+                tienda2 = 9;
+                tienda3 = 0;
+                tienda = "SEDNA";
+            }
             parametros.put("mes", mes);
             parametros.put("ano", ano);
-            File jasper = new File("D:/reporte/proforma.jasper");
+            parametros.put("tienda1", tienda1);
+            parametros.put("tienda2", tienda2);
+            parametros.put("tienda3", tienda3);
+            parametros.put("tienda", tienda);
+            File jasper = new File("D:/reporte/cierreingreso.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-            response.addHeader("Content-disposition", "attachment; filename=Proforma" + mes + "-" + ano + ".pdf");
+            response.addHeader("Content-disposition", "attachment; filename=CierreIngreso-" + mes + "-" + ano + ".pdf");
             ServletOutputStream stream = response.getOutputStream();
             JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
             stream.flush();
@@ -367,6 +392,14 @@ public class reportesBean implements Serializable {
 
     public void setAno(Integer ano) {
         this.ano = ano;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
 
 }
