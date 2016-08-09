@@ -95,9 +95,9 @@
                         <p:menuitem rendered="#{loginbean.usuario.perfil.desVen}" value="Venta" action="#{ventaBean.indexventa()}" icon="fa fa-yen" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.desDes}" value="Despacho" action="#{creditoBean.indexdespacho()}" icon="fa fa-share-alt" />
                     </p:submenu>
-                    <p:submenu label="Reporte" icon="fa fa-line-chart">
-                        <p:menuitem value="Deuda Vencida" action="#{loginbean.deudor()}" icon="ui-icon-bookmark" />
-                        <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="ui-icon-eject" />  
+                    <p:submenu label="Reporte General" icon="fa fa-line-chart">
+                        <p:menuitem value="Reporte Mensual" action="#{loginbean.mensual()}" icon="fa fa-connectdevelop" />
+                        <p:menuitem value="Cientes Morosos" action="#{loginbean.moroso()}" icon="fa fa-reddit" />  
                     </p:submenu>
                     <f:facet name="options">
                         <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>                        
