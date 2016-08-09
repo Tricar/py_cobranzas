@@ -181,8 +181,7 @@ public class pagosBean implements Serializable {
         listafiltrada = tipobean.listaTipoDoc("ND");
         numletra = letra.getDescripcion();
         montopago = letra.getMora();
-        descripcion = letra.getDescripcion();
-        CreditoDao linkdao = new CreditoDaoImp();
+        descripcion = letra.getDescripcion();        
         pago = new Pagos();
         RequestContext.getCurrentInstance().update("formNotadebito");
         RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').show()");
@@ -357,8 +356,7 @@ public class pagosBean implements Serializable {
         return pagosxcredito;
     }
 
-    public void pagovarios(Conceptos concepto) {
-        System.out.println("entre a pagos bean" + concepto.getMontopago());
+    public void pagovarios(Conceptos concepto) {        
         btnpago = "Pagar";
         montopago = concepto.getMontopago();
         disablecaja = true;
