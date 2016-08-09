@@ -1,9 +1,6 @@
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import utiles.recorrerCreditos;
-
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Main {
 
@@ -11,11 +8,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        recorrerCreditos recorre = new recorrerCreditos();
-        BigDecimal pendiente = recorre.montosDet("V2","CA","PN");
-        BigDecimal vencida = recorre.montosDet("V2","CA","VN");
-        BigDecimal suma = recorre.montosTotal("V2", "CA");
-        
-        System.out.println("total: "+suma+" pendiente: "+pendiente+" vencida"+vencida);
+        Date d = new Date();
+        DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        String convertido = fecha.format(d);
+        System.out.println("fecha: "+convertido);
     }
 }
