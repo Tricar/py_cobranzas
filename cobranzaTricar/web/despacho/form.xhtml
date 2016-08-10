@@ -158,7 +158,7 @@
         </div>
 
         <h:form id="formInsertar">
-            <p:dialog header="NUEVO AVAL" widgetVar="dlginsert" modal="true">
+            <p:dialog header="NUEVO CLIENTE" widgetVar="dlginsert" modal="true">
                 <h:panelGrid columns="4">                    
                     <p:outputLabel value="TIPO:" />
                     <p:selectOneMenu id="tipodoc" value="#{ventaBean.anexo.tipodocumento}" required="true" requiredMessage="Debe Seleccionar Tipo Documento">
@@ -197,7 +197,7 @@
                         <f:validator validatorId="validatorLetraNumSig"/>
                     </p:inputText>
                     <p:outputLabel value="DISTRITO:"/>
-                    <p:selectOneMenu value="#{ventaBean.anexo.distrito}" converter="omnifaces.SelectItemsConverter">
+                    <p:selectOneMenu value="#{ventaBean.anexo.distrito}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Debe Seleccionar Distrito">
                         <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                         <f:selectItems value="#{distritoBean.listatdistrito}" var="distrito" itemLabel="#{distrito.distrito}" itemValue="#{distrito}"/>
                     </p:selectOneMenu>
