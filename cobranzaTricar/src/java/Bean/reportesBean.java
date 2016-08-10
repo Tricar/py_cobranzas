@@ -139,6 +139,15 @@ public class reportesBean implements Serializable {
                 case 9:
                     meses = "SETIEMBRE";
                     break;
+                case 10:
+                    meses = "OCTUBRE";
+                    break;
+                case 11:
+                    meses = "NOVIEMBRE";
+                    break;
+                case 12:
+                    meses = "DICIEMBRE";
+                    break;
             }
             parametros.put("mes", mes);
             parametros.put("ano", ano);
