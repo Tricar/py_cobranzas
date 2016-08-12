@@ -73,6 +73,8 @@ public class ventaBean implements Serializable {
     private boolean value;
     private boolean value2;
     private boolean valuei2;
+    private boolean valuesi;
+    private boolean valuesi2;
     private String btnaprobar;
     private String btnguardar;
     private List<Modelo> listafiltrada;
@@ -141,11 +143,12 @@ public class ventaBean implements Serializable {
 
     public String nuevo() {
         credito = new Credito();
-        precio = BigDecimal.ZERO;
         value2 = true;
         sw = 0;
         value = false;
         valuei2 = true;
+        valuesi = false;
+        valuesi2 = false;
         btnaprobar = "Aprobar";
         btnguardar = "Guardar";
         ocupsxanexo = new ArrayList();
@@ -368,6 +371,14 @@ public class ventaBean implements Serializable {
         }
         con.close();
     }
+    
+    public void addMessageini2() {
+        if (valuesi) {
+            valuesi2 = true;
+        } else {
+            valuesi2 = false;
+        }
+    }
 
     public Credito getCredito() {
         return credito;
@@ -565,6 +576,22 @@ public class ventaBean implements Serializable {
 
     public void setAvales(List<Anexo> avales) {
         this.avales = avales;
+    }
+
+    public boolean isValuesi() {
+        return valuesi;
+    }
+
+    public void setValuesi(boolean valuesi) {
+        this.valuesi = valuesi;
+    }
+
+    public boolean isValuesi2() {
+        return valuesi2;
+    }
+
+    public void setValuesi2(boolean valuesi2) {
+        this.valuesi2 = valuesi2;
     }
 
 }
