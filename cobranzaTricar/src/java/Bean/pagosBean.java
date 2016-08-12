@@ -105,7 +105,7 @@ public class pagosBean implements Serializable {
                 if (letra.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
                     letra.setEstado("CN");
                 }
-                if (letra.getDiffdays() > 0) {
+                if (letra.getDiffdays()!=null && letra.getDiffdays() > 0) {
                     pago.setDiffdays(letra.getDiffdays());
                     pago.setCalificacion("Pago atrasado");
                 } else {

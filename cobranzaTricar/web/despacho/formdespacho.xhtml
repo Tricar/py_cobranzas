@@ -91,6 +91,7 @@
                 <p:commandButton value="#{creditoBean.btnaprobar}" action="#{creditoBean.despachar(loginbean.usuario)}" icon="fa fa-recycle white"
                                  ajax="false" disabled="#{creditoBean.disabledespacho}">
                 </p:commandButton>
+                <p:commandButton value="Imprimir Liq." actionListener="#{ventaBean.exportarFormato(creditoBean.codigo, creditoBena.credito.condicionpago, creditoBean.credito.estado)}" icon="fa fa-print white" ajax="false" />
             </h:form>
         </f:view>             
     </ui:define>

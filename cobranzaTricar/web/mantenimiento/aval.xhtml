@@ -84,6 +84,12 @@
                         <f:validator validatorId="validatorVacio"/>
                         <f:validator validatorId="validatorLetraNumSig"/>
                     </p:inputText>
+                    <p:outputLabel value="NACIMIENTO" />
+                    <p:inputMask mask="99-99-9999" value="#{anexoBean.fecnac}" >
+                        <p:ajax event="keypress" listener="#{anexoBean.calcularEdad(anexoBean.fecnac)}" update="txtEdad"/>
+                    </p:inputMask>
+                    <p:outputLabel value="EDAD:" />
+                    <p:inputMask readonly="true" mask="9?9" id="txtEdad" value="#{anexoBean.año}" maxlength="2" />
                     <p:outputLabel value="TELEFONO:" />
                     <p:inputMask mask="9?99999999" value="#{anexoBean.anexo.telefono}" maxlength="9"/>
                     <p:outputLabel value="CELULAR:" for="txtCel"/>

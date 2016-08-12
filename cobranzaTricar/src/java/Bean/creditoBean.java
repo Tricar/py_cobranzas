@@ -297,6 +297,7 @@ public class creditoBean implements Serializable {
     }
 
     public void solicitarDeProf(Integer idusuario) {
+        sinicial = BigDecimal.ZERO;
         CreditoDao credao = new CreditoDaoImp();
         LetrasDao letradao = new LetrasDaoImplements();
         if (credao.veryLiqventa(this.credito.getLiqventa()) != null) {
@@ -320,7 +321,7 @@ public class creditoBean implements Serializable {
                 if (credito.getSaldo().compareTo(BigDecimal.ZERO) == 1 && (sw == 0)) {
                     try {
                         credito.setTotaldeuda(BigDecimal.ZERO);
-                        credito.setEstado("EM");
+                        credito.setEstado("EM");                        
                         credito.setModificado(idusuario);
                         letrascredito = letradao.mostrarLetrasXCred(credito);
                         for (int i = 0; i < letrascredito.size(); i++) {
@@ -398,13 +399,17 @@ public class creditoBean implements Serializable {
         credavalBean credavalbean = new credavalBean();
         CreditoDao credao = new CreditoDaoImp();
         if (btnguardar.equals("Modificar")) {
-            if (inicia.compareTo(credito.getInicial()) == -1) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
-                return;
+            if (!valuei) {
+                if (inicia.compareTo(iniciapre) == -1 ) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Inicial debe ser Mayor."));
+                    return;
+                } else {
+                    credito.setInicial(inicia);
+                }
             } else {
                 credito.setInicial(inicia);
             }
-            if (sinicial.compareTo(credito.getSinicial()) == -1) {
+            if (sinicial.compareTo(BigDecimal.ZERO) == -1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "2DA inicial debe ser Mayor."));
                 return;
             } else {
@@ -533,6 +538,7 @@ public class creditoBean implements Serializable {
         CreditoDao credao = new CreditoDaoImp();
         List<Letras> antiguas = new ArrayList();
         Letras nuevas = new Letras();
+        Date fecaprob = new Date();
         try {
             if (btnguardar.equals("Solicitar")) {
                 if (credito.getLiqventa().endsWith("A")) {
@@ -579,7 +585,8 @@ public class creditoBean implements Serializable {
                             letrasdao.modificarLetra(get);
                         }
                     }
-                    Date fechaini = credito.getFechareg();
+                    credito.setFecaprob(fecaprob);
+                    Date fechaini = credito.getFecaprob();
                     fechas = fechasLetras(fechaini, credito.getNletras());
                     BigDecimal deuda = credant.getDeudactual();                    
                     BigDecimal nletras = new BigDecimal(credito.getNletras());
@@ -1382,6 +1389,10 @@ public class creditoBean implements Serializable {
         iniciapre = BigDecimal.ZERO;
         res = BigDecimal.ZERO;
         saldo = BigDecimal.ZERO;
+        valuei = false;
+        valuei2 = true;
+        valuesi = false;
+        valuesi2 = true;
         return "/cotiza/form.xhtml";
     }
 
@@ -1457,9 +1468,9 @@ public class creditoBean implements Serializable {
                 saldonuevo = credito.getSaldo();
                 interes = (credito.getInteres().multiply(nletras)).divide(cien);
                 Date fechaini = new Date();
-                //credito.setFecaprob(fecaprob);
-                //fechaini = credito.getFecaprob();
-                fechaini = credito.getFechareg();
+                credito.setFecaprob(fecaprob);
+                fechaini = credito.getFecaprob();
+                //fechaini = credito.getFechareg();
                 //Date fechafin = new Date();
                 fechas = fechasLetras(fechaini, credito.getNletras());
                 //fechafin = sumaDias(fechaini, 30);                

@@ -39,6 +39,8 @@
                 <p:inputText value="#{creditoBean.credito.modelo.modelo}" readonly="true" />                    
                 <p:outputLabel value="VENDEDOR:" />                    
                 <p:inputText value="#{creditoBean.credito.codven.nombres}" readonly="true"/>
+                <p:outputLabel value="OBSERVACIONES:" />                    
+                <p:inputText value="#{creditoBean.credito.obsver}" required="true" requiredMessage="Ingrese observaciones"/>
             </h:panelGrid>            
             <p:commandButton value="#{creditoBean.btnguardar}" action="#{creditoBean.refinanciar(loginbean.usuario)}" icon="fa fa-thumbs-o-up white"
                              ajax="false" disabled="#{creditoBean.value}">

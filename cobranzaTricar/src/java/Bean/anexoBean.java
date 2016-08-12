@@ -73,7 +73,7 @@ public class anexoBean implements Serializable {
             }
         }
     }
-    
+
     public List<Anexo> verAval() {
         this.session = null;
         this.transaction = null;
@@ -98,6 +98,8 @@ public class anexoBean implements Serializable {
     }
 
     public void nuevoanexo() {
+        año = 0;
+        fecnac = new String();
         anexo = new Anexo();
         RequestContext.getCurrentInstance().update("formInsertar");
         RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
@@ -253,7 +255,7 @@ public class anexoBean implements Serializable {
             }
         }
     }
-    
+
     public void insertaraval() {
         this.session = null;
         this.transaction = null;
@@ -261,12 +263,16 @@ public class anexoBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            if (año < 25 || año > 65) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser aval por restricción de edad."));
+                this.anexo = new Anexo();
+                return;
+            }
             if (daotanexo.verByDocumento(this.session, this.anexo.getNumdocumento()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Aval ya existe en DB."));
                 this.anexo = new Anexo();
                 return;
             }
-            
             this.anexo.setTipodocumento("DNI");
             this.anexo.setTipoanexo("AV");
             Date d = new Date();
@@ -332,7 +338,7 @@ public class anexoBean implements Serializable {
             }
         }
     }
-    
+
     public void modificarAval() {
         this.session = null;
         this.transaction = null;
@@ -344,7 +350,7 @@ public class anexoBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya Existe."));
                 return;
             }
-            
+
             daotanexo.modificar(this.session, this.anexo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
@@ -403,15 +409,15 @@ public class anexoBean implements Serializable {
             if (this.session != null) {
                 this.session.close();
             }
-        }        
+        }
         DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-        String convertido = fecha.format(anexo.getFechanac());               
-        fecnac = convertido;        
+        String convertido = fecha.format(anexo.getFechanac());
+        fecnac = convertido;
         año = anexo.getEdad();
         RequestContext.getCurrentInstance().update("frmEditarAnexo:panelEditarAnexo");
         RequestContext.getCurrentInstance().execute("PF('dialogoEditarAnexo').show()");
     }
-    
+
     public void cargarAvalEditar(int idanexo) throws ParseException {
         this.session = null;
         this.transaction = null;
@@ -430,7 +436,7 @@ public class anexoBean implements Serializable {
             if (this.session != null) {
                 this.session.close();
             }
-        }        
+        }
         RequestContext.getCurrentInstance().update("frmEditarAnexo:panelEditarAnexo");
         RequestContext.getCurrentInstance().execute("PF('dialogoEditarAnexo').show()");
     }
@@ -486,7 +492,7 @@ public class anexoBean implements Serializable {
     public List<Anexo> filtrarGestor(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
-        List<Anexo> tipos = anexoDao.filtarTipoDos("GE","JE");
+        List<Anexo> tipos = anexoDao.filtarTipoDos("GE", "JE");
         for (Anexo tipo : tipos) {
             if (tipo.getNombre().startsWith(name.toUpperCase())) {
                 query.add(tipo);
@@ -630,7 +636,7 @@ public class anexoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente NO necesitará aval o garante"));
         }
     }
-    
+
     public void handleKeyEvent() {
         text = text.toUpperCase();
     }
