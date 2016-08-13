@@ -207,8 +207,7 @@ public class ventaBean implements Serializable {
         VehiculoDao vehidao = new VehiculoDaoImplements();
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
-        } else {
-            credito.setPrecio(precio);
+        }else {            
             if (sw == 0) {
                 try {
                     credito.setTotaldeuda(BigDecimal.ZERO);

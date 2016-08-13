@@ -44,7 +44,8 @@
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:autoComplete value="#{creditoBean.credito.codven}"
                                                             completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
-                                                            itemLabel="#{vend.nombres}" itemValue="#{vend}">
+                                                            itemLabel="#{vend.nombres}" itemValue="#{vend}"
+                                                            required="true" requiredMessage="Ingrese vendedor">
                                                 <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                                                 <p:ajax event="itemSelect" process="@form" />
                                                 <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
@@ -200,7 +201,7 @@
                                             <h:outputText value="¿Inicial distinta? " />
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectBooleanButton value="#{creditoBean.valuei}" onLabel="Si" offLabel="No" onIcon="ui-icon-check blue" offIcon="ui-icon-close red" style="width:40px">
+                                            <p:selectBooleanButton value="#{creditoBean.valuei}" onLabel="Si" offLabel="No" onIcon="fa fa-check blue" offIcon="fa fa-close red" style="width:40px">
                                                 <p:ajax update="msg12 txtinicial txtinicial2" listener="#{creditoBean.addMessageini}" />
                                             </p:selectBooleanButton>
                                         </div>
@@ -218,7 +219,7 @@
                                             <h:outputText value="¿Segunda inicial? " />
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectBooleanButton value="#{creditoBean.valuesi}" onLabel="Si" offLabel="No" onIcon="ui-icon-check blue" offIcon="ui-icon-close red" style="width:40px">
+                                            <p:selectBooleanButton value="#{creditoBean.valuesi}" onLabel="Si" offLabel="No" onIcon="fa fa-check blue" offIcon="fa fa-close red" style="width:40px">
                                                 <p:ajax update="msg12 txtsinicial txtfecha2" listener="#{creditoBean.addMessageini2}" />
                                             </p:selectBooleanButton>
                                         </div>

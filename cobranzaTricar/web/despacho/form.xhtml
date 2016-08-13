@@ -127,8 +127,7 @@
                                             <p:selectOneMenu id="modeloc" value="#{ventaBean.credito.modelo}" converter="omnifaces.SelectItemsConverter"
                                                              required="true" requiredMessage="Seleccione Modelo">
                                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                                <f:selectItems value="#{ventaBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
-                                                <p:ajax update="precio" listener="#{ventaBean.precioModeloVenta()}" process="@this"/>
+                                                <f:selectItems value="#{ventaBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>                                                
                                             </p:selectOneMenu>
                                         </div>
                                     </div>
