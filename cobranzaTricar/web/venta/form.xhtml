@@ -22,8 +22,7 @@
                     <p:outputLabel value="Código:" for="txtcodigo"/>
                     <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito"/>
                     <p:outputLabel value="Buscar Vendedor:" />
-                    <p:autoComplete value="#{creditoBean.credito.codven}"
-                                    completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
+                    <p:autoComplete value="#{creditoBean.credito.codven}" completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
                                     itemLabel="#{vend.nombres}" itemValue="#{vend}">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                         <p:ajax event="itemSelect" process="@form" />

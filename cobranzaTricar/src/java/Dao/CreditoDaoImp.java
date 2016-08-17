@@ -10,22 +10,20 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-
-public class CreditoDaoImp implements CreditoDao{
+public class CreditoDaoImp implements CreditoDao {
 
     @Override
     public List<Credito> mostrarVentas() {
         Session session = null;
         List<Credito> lista = null;
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Credito");
-            lista = (List<Credito>)query.list();
-        }catch (HibernateException e){
+            lista = (List<Credito>) query.list();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -40,12 +38,11 @@ public class CreditoDaoImp implements CreditoDao{
             session.beginTransaction();
             session.save(credito);
             session.getTransaction().commit();
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -59,12 +56,11 @@ public class CreditoDaoImp implements CreditoDao{
             session.beginTransaction();
             session.update(credito);
             session.getTransaction().commit();
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -78,12 +74,11 @@ public class CreditoDaoImp implements CreditoDao{
             session.beginTransaction();
             session.delete(credito);
             session.getTransaction().commit();
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -93,18 +88,17 @@ public class CreditoDaoImp implements CreditoDao{
     public List<Credito> filtrarFechas(Date date1, Date date2, String estado) {
         Session session = null;
         List<Credito> lista = null;
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE fechareg BETWEEN :start_date AND :end_date and estado=:estado" );
+            Query query = session.createQuery("FROM Credito WHERE fechareg BETWEEN :start_date AND :end_date and estado=:estado");
             query.setParameter("start_date", date1);
             query.setParameter("end_date", date2);
-            query.setParameter("estado",estado );
-            lista = (List<Credito>)query.list();
-        }catch (HibernateException e){
+            query.setParameter("estado", estado);
+            lista = (List<Credito>) query.list();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -130,7 +124,7 @@ public class CreditoDaoImp implements CreditoDao{
             }
         }
         return credito;
-    }    
+    }
 
     @Override
     public Credito cargarCreditoxLetra(Letras letra) {
@@ -157,16 +151,15 @@ public class CreditoDaoImp implements CreditoDao{
     public List<Credito> filtrarDni(String dni) {
         Session session = null;
         List<Credito> lista = null;
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE " );
-            query.setParameter("start_date", dni);            
-            lista = (List<Credito>)query.list();
-        }catch (HibernateException e){
+            Query query = session.createQuery("FROM Credito WHERE ");
+            query.setParameter("start_date", dni);
+            lista = (List<Credito>) query.list();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -195,9 +188,9 @@ public class CreditoDaoImp implements CreditoDao{
     }
 
     @Override
-    public Credito cargarxCodigoEstado(String codigo, String estado) {        
+    public Credito cargarxCodigoEstado(String codigo, String estado) {
         Session session = null;
-        Credito credito = new Credito();        
+        Credito credito = new Credito();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Credito WHERE liqventa=:w and estado=:v");
@@ -213,11 +206,11 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return credito;
     }
-    
+
     @Override
     public Credito cargarxCodigoEstadoDos(String codigo, String estado, String estado1) {
         Session session = null;
-        Credito credito = new Credito();        
+        Credito credito = new Credito();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Credito WHERE liqventa=:w and (estado=:v or estado=:u)");
@@ -254,7 +247,6 @@ public class CreditoDaoImp implements CreditoDao{
 //        }
 //        return lista;
 //    }
-
     @Override
     public boolean registrar(Session session, Credito credito) throws Exception {
         session.save(credito);
@@ -265,36 +257,34 @@ public class CreditoDaoImp implements CreditoDao{
     public Credito veryLiqventa(String liq) {
         Session session = null;
         Credito tcredito = new Credito();
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE liqventa=:liq" );
+            Query query = session.createQuery("FROM Credito WHERE liqventa=:liq");
             query.setParameter("liq", liq);
-            tcredito = (Credito) query.uniqueResult();            
-        }catch (HibernateException e){
+            tcredito = (Credito) query.uniqueResult();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
         return tcredito;
     }
-    
+
     @Override
     public Credito veryId(int idventa) {
         Session session = null;
         Credito tcredito = new Credito();
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE idventa=:id" );
+            Query query = session.createQuery("FROM Credito WHERE idventa=:id");
             query.setParameter("id", idventa);
-            tcredito = (Credito) query.uniqueResult();            
-        }catch (HibernateException e){
+            tcredito = (Credito) query.uniqueResult();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -304,10 +294,10 @@ public class CreditoDaoImp implements CreditoDao{
     @Override
     public List<Credito> cargarxEstado(String estado) {
         Session session = null;
-        List<Credito> lista = null;              
+        List<Credito> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE estado=:v");            
+            Query query = session.createQuery("FROM Credito WHERE estado=:v");
             query.setParameter("v", estado);
             lista = query.list();
         } catch (HibernateException e) {
@@ -319,14 +309,14 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return lista;
     }
-    
+
     @Override
     public List<Credito> cargarTodosxCalif(String calif) {
         Session session = null;
-        List<Credito> lista = null;              
+        List<Credito> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE calificacion=:v");            
+            Query query = session.createQuery("FROM Credito WHERE calificacion=:v");
             query.setParameter("v", calif);
             lista = query.list();
         } catch (HibernateException e) {
@@ -342,7 +332,7 @@ public class CreditoDaoImp implements CreditoDao{
     @Override
     public Credito cargarxCodigoCalif(String codigo, String calif) {
         Session session = null;
-        Credito credito = new Credito();        
+        Credito credito = new Credito();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Credito WHERE liqventa=:w and calificacion <> :v");
@@ -362,10 +352,10 @@ public class CreditoDaoImp implements CreditoDao{
     @Override
     public List<Credito> cargarxEstadoRef(String estado) {
         Session session = null;
-        List<Credito> lista = null;              
+        List<Credito> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE estadoref=:v");            
+            Query query = session.createQuery("FROM Credito WHERE estadoref=:v");
             query.setParameter("v", estado);
             lista = query.list();
         } catch (HibernateException e) {
@@ -381,10 +371,10 @@ public class CreditoDaoImp implements CreditoDao{
     @Override
     public List<Credito> cargarxRef(Boolean valor) {
         Session session = null;
-        List<Credito> lista = null;              
+        List<Credito> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE refinanciado=:v");            
+            Query query = session.createQuery("FROM Credito WHERE refinanciado=:v");
             query.setParameter("v", valor);
             lista = query.list();
         } catch (HibernateException e) {
@@ -400,7 +390,7 @@ public class CreditoDaoImp implements CreditoDao{
     @Override
     public Credito cargarxCodigoEst(String codigo, String condicionpago) {
         Session session = null;
-        Credito credito = new Credito();        
+        Credito credito = new Credito();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Credito WHERE liqventa=:w and condicionpago=:v");
@@ -420,7 +410,7 @@ public class CreditoDaoImp implements CreditoDao{
     @Override
     public Credito cargarxCodigoVenta(String codigo, String estado, String estado1) {
         Session session = null;
-        Credito credito = new Credito();        
+        Credito credito = new Credito();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Credito WHERE liqventa=:w and (condicionpago=:v or condicionpago=:u)");
@@ -437,5 +427,47 @@ public class CreditoDaoImp implements CreditoDao{
         }
         return credito;
     }
+
+    @Override
+    public Integer ventasXdia(Session session) {
+        String hql = "SELECT COUNT(*) FROM Credito WHERE fechareg = getdate()";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
+
+    @Override
+    public Integer ventasXmes(Session session) {
+        String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'DP'";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
     
+    @Override
+    public Integer creditoXaprobar(Session session) {
+        String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'EM'";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
+    
+    @Override
+    public Integer creditoAprobado(Session session) {
+        String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'AP'";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
+
+    @Override
+    public Integer pagosxdia(Session session) {
+        String hql = "SELECT COUNT(*) FROM Pagos WHERE fecreg = getdate()";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
+
+    @Override
+    public Integer pagosxmes(Session session) {
+        String hql = "SELECT COUNT(*) FROM Pagos WHERE DATEPART(month, fecreg) = DATEPART(month, getdate()) AND DATEPART(year, fecreg) = DATEPART(year, GETDATE())";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
+
 }

@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 template="./../views/template.xhtml">
@@ -13,14 +14,14 @@
                         <div class="Container20"><i class="fa fa-user Fs50 red Fleft MarRight10"></i></div>
                         <div class="Container80">
                             <div class="Fright">
-                                <h2 class="black Fs24 FontRalewayMedium">John DOE</h2>
-                                <span class="Fs15 gray FontRalewayRegular DispBlock">Senior Marketing Manager</span>
+                                <h2 class="black Fs24 FontRalewayMedium"><p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/></h2>
+                                <span class="Fs15 gray FontRalewayRegular DispBlock"><p:outputLabel value="#{loginbean.usuario.perfil.descripcion}"/></span>
                             </div>
                         </div>
                     </div>
                     <div class="Seperator"></div>
                     <i class="fa fa-clock-o Fleft Fs15 gray MarRight10"></i>
-                    <span class="Fleft Fs12 softgray">Your last login - 18.08.2015  16:30</span>
+                    <span class="Fleft Fs12 softgray">El último acceso - <h:outputText value="#{now}"><f:convertDateTime pattern="E d, MMM Y HH: m" /></h:outputText></span>
                     <div class="Container100 MarTop20">
                         <a href="#" class="Wid30 Responsive BorderedBox Fleft TexAlCenter HoverEffect">
                             <div class="ContainerIndent">
@@ -61,8 +62,8 @@
                         <div class="Container20"><i class="fa fa-line-chart Fs40 orange Fleft MarRight10"></i></div>
                         <div class="Container80">
                             <div class="Fright">
-                                <h2 class="black Fs24 FontRalewayMedium">Visitors Stats</h2>
-                                <span class="Fs15 gray FontRalewayRegular DispBlock">Today, Overall And Online</span>
+                                <h2 class="black Fs24 FontRalewayMedium">Datos Actuales</h2>
+                                <span class="Fs15 gray FontRalewayRegular DispBlock">Hoy, en general y en línea</span>
                             </div>
                         </div>
                     </div>
@@ -71,54 +72,54 @@
                         <div class="Wid45 BorderedBox Fleft TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Today’s Visits</div>
+                                <div class="Fs14 gray FontRalewayRegular">Ventas del dia</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 blue FontRalewayLight">795</div>
+                                <div class="Fs30 blue FontRalewayLight"><h:outputLabel value="#{loginbean.ventasxdia}"/></div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
                         <div class="Wid45 BorderedBox Fright TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Overall Visits</div>
+                                <div class="Fs14 gray FontRalewayRegular">Ventas del mes</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 blue FontRalewayLight">3.455</div>
+                                <div class="Fs30 blue FontRalewayLight"><h:outputLabel value="#{loginbean.ventasxmes}"/></div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
                         <div class="Wid45 BorderedBox Fleft TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Online Visitors</div>
+                                <div class="Fs14 gray FontRalewayRegular">Creditos para Aprobar</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 red FontRalewayLight animated pulse infinite"><i class="fa fa-desktop Fs24"></i> 795</div>
+                                <div class="Fs30 red FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i> <h:outputLabel value="#{loginbean.creditoxaprobar}"/></div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
                         <div class="Wid45 BorderedBox Fright TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Last Year</div>
+                                <div class="Fs14 gray FontRalewayRegular">Creditos para despachar</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 orange FontRalewayLight">23.189</div>
+                                <div class="Fs30 orange FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i> <h:outputLabel value="#{loginbean.creditoaprobado}"/></div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
                         <div class="Wid45 BorderedBox Fleft TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Last Month</div>
+                                <div class="Fs14 gray FontRalewayRegular">Pagos al Dia</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 orange FontRalewayLight">7.789</div>
+                                <div class="Fs30 green FontRalewayLight"><h:outputLabel value="#{loginbean.pagosxdia}"/></div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
                         <div class="Wid45 BorderedBox Fright TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Last Week</div>
+                                <div class="Fs14 gray FontRalewayRegular">Pagos al mes</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 orange FontRalewayLight">1.517</div>
+                                <div class="Fs30 green FontRalewayLight"><h:outputLabel value="#{loginbean.pagosxmes}"/></div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
@@ -129,45 +130,7 @@
         <div class="Container50 Responsive50">
             <div class="ContainerIndent">
                 <h3 class="BigTopic">
-                    <div class="Wid50 Responsive50 Fleft">Monthly Sales Chart</div>
-                    <div class="Wid50 Fright Responsive50">
-                        <div id="car" class="ui-selectonemenu ui-widget ui-state-default ui-corner-all Fright" style="min-width: 150px;">
-                            <div class="ui-helper-hidden-accessible">
-                                <input id="car_focus" name="car_focus" type="text" autocomplete="off" role="combobox" aria-haspopup="true" aria-expanded="false" />
-                            </div>
-                            <div class="ui-helper-hidden-accessible">
-                                <select id="car_input" name="car_input" tabindex="-1">
-                                    <option value="">Select One</option>
-                                    <option value="BMW">BMW</option>
-                                    <option value="Mercedes">Mercedes</option>
-                                    <option value="Volkswagen">Volkswagen</option>
-                                    <option value="Chrysler">Chrysler</option>
-                                    <option value="GM">GM</option>
-                                    <option value="Ford">Ford</option>
-                                </select>
-                            </div>
-                            <label id="car_label" class="ui-selectonemenu-label ui-inputfield ui-corner-all">&nbsp;</label>
-                            <div class="ui-selectonemenu-trigger ui-state-default ui-corner-right">
-                                <span class="ui-icon ui-icon-triangle-1-s ui-c"></span>
-                            </div>
-                            <div id="car_panel" class="ui-selectonemenu-panel ui-widget ui-widget-content ui-corner-all ui-helper-hidden ui-shadow">
-                                <div class="ui-selectonemenu-items-wrapper" style="height:auto">
-                                    <ul id="car_items" class="ui-selectonemenu-items ui-selectonemenu-list ui-widget-content ui-widget ui-corner-all ui-helper-reset" role="listbox">
-                                        <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="Select One" tabindex="-1" role="option">Select One</li>
-                                        <li class="ui-selectonemenu-item-group ui-corner-all" data-label="German Cars" tabindex="-1" role="option">German Cars</li>
-                                        <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="BMW" tabindex="-1" role="option">BMW</li>
-                                        <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="Mercedes" tabindex="-1" role="option">Mercedes</li>
-                                        <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="Volkswagen" tabindex="-1" role="option">Volkswagen</li>
-                                        <li class="ui-selectonemenu-item-group ui-corner-all" data-label="American Cars" tabindex="-1" role="option">American Cars</li>
-                                        <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="Chrysler" tabindex="-1" role="option">Chrysler</li>
-                                        <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="GM" tabindex="-1" role="option">GM</li>
-                                        <li class="ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all" data-label="Ford" tabindex="-1" role="option">Ford</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <script id="car_s" type="text/javascript">$(function(){PrimeFaces.cw("SelectOneMenu", "widget_car", {id:"car"}); });</script>
-                    </div>
+                    <div class="Wid50 Responsive50 Fleft">Carta de las ventas mensuales</div>
                 </h3>
                 <div class="Wid100">
                     <div id="j_idt104" style="height:300px;margin-top:10px"></div>
