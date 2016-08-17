@@ -73,26 +73,6 @@
                         </h:form>
                     </div>
                     <div class="ContainerIndent">
-                        <h1 class="BigTopic">Consolidado</h1>
-                        <h:form>
-                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-12">
-                                            <p:outputLabel value="Reporte consolidado del mes en curso"/>                                            
-                                        </div>
-                                    </div>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
-                                            <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarConsolidadoExcel()}" /> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </h:form>
-                    </div>
-                    <div class="ContainerIndent">
                         <h1 class="BigTopic">Detallado de Cuentas</h1>
                         <h:form>
                             <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
@@ -113,6 +93,29 @@
                         </h:form>
                     </div>
                 </div>
+                
+                <div class="Container50 Responsive50">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic">Consolidado</h1>
+                        <h:form>
+                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-12">
+                                            <p:outputLabel value="Reporte consolidado del mes en curso"/>                                            
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
+                                            <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarConsolidadoExcel()}" /> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>                    
             </ui:define>
         </ui:composition>
     </h:body>

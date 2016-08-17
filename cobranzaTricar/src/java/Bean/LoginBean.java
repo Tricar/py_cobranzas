@@ -1,6 +1,8 @@
 package Bean;
 
 import Clases.Encrypt;
+import Dao.CreditoDao;
+import Dao.CreditoDaoImp;
 import Dao.UsuarioDaoImpl;
 import Model.Usuario;
 import Persistencia.HibernateUtil;
@@ -25,6 +27,12 @@ public class LoginBean implements Serializable {
     public Usuario usuario;
     private String tusuario;
     private String clave;
+    private Integer ventasxdia;
+    private Integer ventasxmes;
+    private Integer creditoxaprobar;
+    private Integer creditoaprobado;
+    private Integer pagosxdia;
+    private Integer pagosxmes;
 
     public LoginBean() {
         HttpSession miSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
@@ -50,9 +58,16 @@ public class LoginBean implements Serializable {
         String ruta = "";
         try {
             UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl();
+            CreditoDao creditodao = new CreditoDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
             usuario = usuarioDao.verByUsuario(this.session, this.tusuario);
+            ventasxdia = creditodao.ventasXdia(this.session);
+            ventasxmes = creditodao.ventasXmes(this.session);
+            creditoxaprobar = creditodao.creditoXaprobar(this.session);
+            creditoaprobado = creditodao.creditoAprobado(this.session);
+            pagosxdia = creditodao.pagosxdia(this.session);
+            pagosxmes = creditodao.pagosxmes(this.session);
             if (usuario != null) {
                 if (usuario.getClave().equals(Encrypt.sha512(this.clave))) {
                     loggedIn = true;
@@ -92,7 +107,15 @@ public class LoginBean implements Serializable {
         context.addCallbackParam("loggetOut", true);
         context.addCallbackParam("ruta", ruta);
     }
-    
+
+    public String inicio() {
+        this.session = null;
+        this.transaction = null;
+        CreditoDao ventasxdiadao = new CreditoDaoImp();
+        ventasxdia = ventasxdiadao.ventasXdia(this.session);
+        return "/views/index";
+    }
+
     public String empleado() {
         return "/sistema/empleado";
     }
@@ -116,7 +139,7 @@ public class LoginBean implements Serializable {
     public String cliente() {
         return "/mantenimiento/cliente";
     }
-    
+
     public String aval() {
         return "/mantenimiento/aval";
     }
@@ -153,7 +176,7 @@ public class LoginBean implements Serializable {
         //return "/reportes/moroso";
         return "#";
     }
-    
+
     public String ingreso() {
         return "/mantenimiento/ingreso";
     }
@@ -184,6 +207,54 @@ public class LoginBean implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Integer getVentasxdia() {
+        return ventasxdia;
+    }
+
+    public void setVentasxdia(Integer ventasxdia) {
+        this.ventasxdia = ventasxdia;
+    }
+
+    public Integer getVentasxmes() {
+        return ventasxmes;
+    }
+
+    public void setVentasxmes(Integer ventasxmes) {
+        this.ventasxmes = ventasxmes;
+    }
+
+    public Integer getCreditoxaprobar() {
+        return creditoxaprobar;
+    }
+
+    public void setCreditoxaprobar(Integer creditoxaprobar) {
+        this.creditoxaprobar = creditoxaprobar;
+    }
+
+    public Integer getCreditoaprobado() {
+        return creditoaprobado;
+    }
+
+    public void setCreditoaprobado(Integer creditoaprobado) {
+        this.creditoaprobado = creditoaprobado;
+    }
+
+    public Integer getPagosxdia() {
+        return pagosxdia;
+    }
+
+    public void setPagosxdia(Integer pagosxdia) {
+        this.pagosxdia = pagosxdia;
+    }
+
+    public Integer getPagosxmes() {
+        return pagosxmes;
+    }
+
+    public void setPagosxmes(Integer pagosxmes) {
+        this.pagosxmes = pagosxmes;
     }
 
 }
