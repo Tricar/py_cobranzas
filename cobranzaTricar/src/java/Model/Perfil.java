@@ -43,6 +43,7 @@ public class Perfil implements java.io.Serializable {
     private Boolean despacho;
     private Boolean desDes;
     private Boolean desVen;
+    private Boolean manAnt;
     private Set usuarios = new HashSet(0);
 
     public Perfil() {
@@ -52,7 +53,7 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean sisDist, Boolean sisCaja, Boolean mante, Boolean manCli, Boolean manAval, Boolean manArt, Boolean manMod, Boolean manCol, Boolean creco, Boolean creLis, Boolean creReg, Boolean creCon, Boolean creRef, Boolean manIng, Boolean despacho, Boolean desDes, Boolean desVen, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean sisDist, Boolean sisCaja, Boolean mante, Boolean manCli, Boolean manAval, Boolean manArt, Boolean manMod, Boolean manCol, Boolean creco, Boolean creLis, Boolean creReg, Boolean creCon, Boolean creRef, Boolean manIng, Boolean despacho, Boolean desDes, Boolean desVen, Boolean manAnt, Set usuarios) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.abrev = abrev;
@@ -78,6 +79,7 @@ public class Perfil implements java.io.Serializable {
         this.despacho = despacho;
         this.desDes = desDes;
         this.desVen = desVen;
+        this.manAnt = manAnt;
         this.usuarios = usuarios;      
     }
 
@@ -306,6 +308,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setDesVen(Boolean desVen) {
         this.desVen = desVen;
+    }
+    
+    @Column(name = "manAnt")
+    public Boolean getManAnt() {
+        return this.manAnt;
+    }
+
+    public void setManAnt(Boolean manAnt) {
+        this.manAnt = manAnt;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "perfil")

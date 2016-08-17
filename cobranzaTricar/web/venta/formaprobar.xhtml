@@ -26,7 +26,9 @@
                                             <p:outputLabel value="Fecha:" for="txtfecha"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" pattern="dd/MM/yyyy" readonly="true"/>
+                                            <span class="ui-calendar">
+                                                <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" pattern="dd/MM/yyyy" readonly="true"/>
+                                            </span>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Código:" for="txtcodigo"/>

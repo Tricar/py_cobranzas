@@ -14,4 +14,5 @@ public interface MovcajaDao {
     public void modificarMovcaja (Movcaja movcaja);
     public void eliminarMovcaja (Movcaja movcaja);
     public Movcaja getbyId(Integer idmovcaja);
+    public Movcaja devolverxIdcajaIdconceptos(Integer idcaja, Integer idconceptos);
 }

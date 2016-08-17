@@ -72,6 +72,25 @@ public class PagosDaoImp implements PagosDao {
         }
         return lista;
     }
+    
+    @Override
+    public Pagos devolverxIdconcepto(int idconceptos){
+        Session session = null;
+        Pagos pago = new Pagos();        
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Pagos WHERE idconceptos=:v");
+            query.setParameter("v", idconceptos);
+            pago = (Pagos) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return pago;
+    }
 
     @Override
     public void insertarPago(Pagos pago) {

@@ -1,5 +1,7 @@
 package Bean;
 
+import Dao.ConceptosDao;
+import Dao.ConceptosDaoImp;
 import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Dao.HistoDao;
@@ -8,6 +10,7 @@ import Dao.LetrasDao;
 import Dao.LetrasDaoImplements;
 import Dao.PagosDao;
 import Dao.PagosDaoImp;
+import Model.Anexo;
 import Model.Caja;
 import Model.Conceptos;
 import Model.Credito;
@@ -67,6 +70,9 @@ public class pagosBean implements Serializable {
     private letrasBean letbean = new letrasBean();
     private BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
     private Historialmora historial = new Historialmora();
+    private Anexo anexo = new Anexo();
+    private Conceptos concepto = new Conceptos();
+    private List<Conceptos> conceptos = new ArrayList();
 
     /**
      * Creates a new instance of pagosBean
@@ -105,7 +111,7 @@ public class pagosBean implements Serializable {
                 if (letra.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
                     letra.setEstado("CN");
                 }
-                if (letra.getDiffdays()!=null && letra.getDiffdays() > 0) {
+                if (letra.getDiffdays() != null && letra.getDiffdays() > 0) {
                     pago.setDiffdays(letra.getDiffdays());
                     pago.setCalificacion("Pago atrasado");
                 } else {
@@ -157,6 +163,37 @@ public class pagosBean implements Serializable {
 
     }
 
+    public void insertarAnticipo(int idusuario, Anexo anex, Conceptos concep, Pagos pag, BigDecimal monto) {
+        montopago = monto;
+        anexo = anex;
+        concepto = concep;
+        pago = pag;
+        ConceptosDao condao = new ConceptosDaoImp();
+        PagosDao pagosdao = new PagosDaoImp();
+        concepto.setAnexo(anexo);
+        concepto.setFecreg(pago.getFecreg());
+        concepto.setTotal(montopago);
+        concepto.setTipo(pago.getTipo());
+        concepto.setMontopago(montopago);
+        concepto.setCobrado(false);
+        condao.insertarConcepto(concepto);
+        caja = pago.getCaja();
+        caja.setTotal(caja.getTotal().add(montopago));
+        mcaja.setCaja(caja);
+        mcaja.setTipomov(pago.getTipo());
+        mcaja.setFechamov(pago.getFecreg());
+        mcaja.setMonto(montopago);
+        mcaja.setConcepto(concepto);
+        movcbean.insertar(mcaja);
+        cajabean.modificarExt(caja);
+        pago.setConceptos(concepto);
+        pago.setMonto(montopago);
+        pago.setUsuario(idusuario);
+        String temp = pago.getOperacion();
+        pago.setOperacion(pago.getTipodoc().getAbrev().concat(" " + temp));
+        pagosdao.insertarPago(pago);
+    }
+
     public void cargarLetraPagos(Letras letras) {
         letra = letras;
         listafiltrada = new ArrayList();
@@ -181,7 +218,7 @@ public class pagosBean implements Serializable {
         listafiltrada = tipobean.listaTipoDoc("ND");
         numletra = letra.getDescripcion();
         montopago = letra.getMora();
-        descripcion = letra.getDescripcion();        
+        descripcion = letra.getDescripcion();
         pago = new Pagos();
         RequestContext.getCurrentInstance().update("formNotadebito");
         RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').show()");
@@ -356,7 +393,7 @@ public class pagosBean implements Serializable {
         return pagosxcredito;
     }
 
-    public void pagovarios(Conceptos concepto) {        
+    public void pagovarios(Conceptos concepto) {
         btnpago = "Pagar";
         montopago = concepto.getMontopago();
         disablecaja = true;
@@ -578,5 +615,29 @@ public class pagosBean implements Serializable {
 
     public void setHistorial(Historialmora historial) {
         this.historial = historial;
+    }
+
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
+    }
+
+    public Conceptos getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(Conceptos concepto) {
+        this.concepto = concepto;
+    }
+
+    public List<Conceptos> getConceptos() {
+        return conceptos;
+    }
+
+    public void setConceptos(List<Conceptos> conceptos) {
+        this.conceptos = conceptos;
     }
 }

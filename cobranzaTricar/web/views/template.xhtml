@@ -91,9 +91,10 @@
                         <p:menuitem rendered="#{loginbean.usuario.perfil.creRef}" value="Refinanciar" action="#{creditoBean.indexref()}" icon="fa fa-medium" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.creLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="fa fa-pinterest-p" />
                     </p:submenu>
-                    <p:submenu rendered="#{loginbean.usuario.perfil.despacho}" label="Ventas CASH" icon="fa fa-slideshare">
+                    <p:submenu rendered="#{loginbean.usuario.perfil.despacho}" label="Operaciones" icon="fa fa-slideshare">
                         <p:menuitem rendered="#{loginbean.usuario.perfil.desVen}" value="Venta" action="#{ventaBean.indexventa()}" icon="fa fa-yen" />
                         <p:menuitem rendered="#{loginbean.usuario.perfil.desDes}" value="Despacho" action="#{creditoBean.indexdespacho()}" icon="fa fa-share-alt" />
+                        <p:menuitem rendered="#{loginbean.usuario.perfil.manAnt}" value="Anticipos" action="#{conceptosBean.index()}" icon="fa fa-usd" />
                     </p:submenu>
                     <p:submenu label="Reporte General" icon="fa fa-line-chart">
                         <p:menuitem value="Reporte Mensual" action="#{loginbean.mensual()}" icon="fa fa-connectdevelop" />

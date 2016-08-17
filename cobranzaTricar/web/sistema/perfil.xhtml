@@ -58,7 +58,7 @@
                             <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
-                            <p:outputLabel value="Abrebiado:" for="txtAbreviado"/>
+                            <p:outputLabel value="Abreviado:" for="txtAbreviado"/>
                             <p:inputText id="txtAbreviado" label="Abrebiado" value="#{perfilBean.perfil.abrev}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
@@ -86,6 +86,7 @@
                             <p:inputText type="hidden" value="#{perfilBean.perfil.despacho}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.desVen}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.desDes}"/>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.manAnt}"/>
                             <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
@@ -154,6 +155,8 @@
                             <h:outputText value="Venta" />
                             <p:selectBooleanCheckbox  value="#{perfilBean.perfil.desDes}"/>
                             <h:outputText value="Despacho" />
+                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manAnt}"/>
+                            <h:outputText value="Anticipos" />
                         </h:panelGrid>
                         <p:commandButton value="Asignar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>

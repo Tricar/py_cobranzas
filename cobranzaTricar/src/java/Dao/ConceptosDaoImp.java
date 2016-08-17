@@ -4,6 +4,8 @@ import Model.Anexo;
 import Model.Credito;
 import Model.Conceptos;
 import Persistencia.HibernateUtil;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -117,13 +119,11 @@ public class ConceptosDaoImp implements ConceptosDao{
     @Override
     public List<Conceptos> mostrarConceptosxAnexo(Anexo anexo) {
         Session session = null;
-        List<Conceptos> lista = null;
-        Anexo an = new Anexo();        
-        an = anexo;
-        Integer idanexo = an.getIdanexo();
+        List<Conceptos> lista = null;        
+        Integer idanexo = anexo.getIdanexo();
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Conceptos where idvanexo=:v");            
+            Query query = session.createQuery("from Conceptos where idanexo=:v");            
             query.setParameter("v", idanexo);
             lista = (List<Conceptos>)query.list();
         }catch (HibernateException e){
@@ -183,6 +183,33 @@ public class ConceptosDaoImp implements ConceptosDao{
         return concepto;
     }
 
-    
+    @Override
+    public List<Conceptos> filtrarxFechas(Date f1, Date f2, String tipo, Boolean cobrado) {
+        Session session = null;
+        List<Conceptos> lista = null;
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(f1);
+//        cal.add(Calendar.DAY_OF_YEAR, -1);
+//        f1 = cal.getTime();
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Conceptos where fecreg BETWEEN :f1 and :f2 and tipo=:tipo and cobrado=:cobrado");            
+            query.setParameter("f1", f1);
+            query.setParameter("f2", f2);
+            query.setParameter("tipo", tipo);
+            query.setParameter("cobrado", cobrado);
+            lista = query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+   
         
 }

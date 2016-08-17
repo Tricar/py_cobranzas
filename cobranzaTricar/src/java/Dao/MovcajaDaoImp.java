@@ -107,5 +107,26 @@ public class MovcajaDaoImp implements MovcajaDao {
         }
         return caja;
     }
+
+    @Override
+    public Movcaja devolverxIdcajaIdconceptos(Integer idcaja, Integer idconceptos) {
+        Session session = null;
+        Movcaja caja = new Movcaja();
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Movcaja WHERE idcaja=:id and anticipo=:id2" );
+            query.setParameter("id", idcaja);
+            query.setParameter("id2", idconceptos);
+            caja = (Movcaja) query.uniqueResult();            
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return caja;
+    }
        
 }

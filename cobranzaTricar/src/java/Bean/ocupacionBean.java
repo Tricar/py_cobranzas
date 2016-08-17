@@ -275,6 +275,7 @@ public class ocupacionBean implements Serializable {
     public void delete() {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocudao.delete(ocupacion);
+        ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         RequestContext.getCurrentInstance().update("formTabla");
         RequestContext.getCurrentInstance().execute("PF('dlgEliminar').hide()");
 

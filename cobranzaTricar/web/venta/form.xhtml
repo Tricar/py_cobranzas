@@ -110,6 +110,25 @@
                                             <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito.distrito}"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Modalidad:" />
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
+                                                <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
+                                                <f:selectItem itemLabel="Financiado" itemValue="FI"/>
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">  
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <h:outputText value="¿Agregar Aval? " />
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectBooleanButton value="#{creditoBean.valuei}" onLabel="Si" offLabel="No" onIcon="fa fa-check blue" offIcon="fa fa-close red" style="width:40px">
+                                                <p:ajax update="aval" listener="#{creditoBean.addAval}" />
+                                            </p:selectBooleanButton>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Buscar Aval(es):" for="aval"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
@@ -125,15 +144,6 @@
                                     </div>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Modalidad:" />
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectOneMenu value="#{creditoBean.credito.condicionpago}" >                        
-                                                <f:selectItem itemLabel="Cred. Directo" itemValue="CD" />
-                                                <f:selectItem itemLabel="Financiado" itemValue="FI"/>
-                                            </p:selectOneMenu>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Tipo Vehículo:" for="tipo"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
@@ -146,8 +156,6 @@
                                                 <p:ajax update="modeloc" listener="#{creditoBean.modeloTipo(creditoBean.credito.vehi)}" process="@this" />
                                             </p:selectOneMenu>
                                         </div>
-                                    </div>
-                                    <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Modelo:" for="modeloc"/>
                                         </div>
@@ -157,8 +165,10 @@
                                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                                 <f:selectItems value="#{creditoBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                                                 <p:ajax update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
-                                            </p:selectOneMenu> 
+                                            </p:selectOneMenu>
                                         </div>
+                                    </div>
+                                    <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Nro. Letras:" for="nletras"/>
                                         </div>
@@ -177,6 +187,19 @@
                                                 <f:selectItem itemLabel="3" itemValue='3'/>
                                                 <f:selectItem itemLabel="2" itemValue='2' />
                                                 <f:selectItem itemLabel="1" itemValue='1' />                                                                                                                                                                        
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Interés:" for="interes"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" 
+                                                             requiredMessage="Ingrese el interés aplicado">
+                                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                                <f:selectItem itemLabel="7" itemValue='7.00'/> 
+                                                <f:selectItem itemLabel="6" itemValue='6.00'/>
+                                                <f:selectItem itemLabel="5" itemValue='5.00'/>
+                                                <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
                                             </p:selectOneMenu>
                                         </div>
                                     </div>
@@ -249,26 +272,11 @@
                                     </div>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Interés:" for="interes"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectOneMenu id="interes" value="#{creditoBean.credito.interes}" required="true" 
-                                                             requiredMessage="Ingrese el interés aplicado">
-                                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                                <f:selectItem itemLabel="7" itemValue='7.00'/> 
-                                                <f:selectItem itemLabel="6" itemValue='6.00'/>
-                                                <f:selectItem itemLabel="5" itemValue='5.00'/>
-                                                <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
-                                            </p:selectOneMenu>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Reseña: "/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:inputTextarea value="#{creditoBean.credito.resena}" required="true" requiredMessage="Ingrese reseña del crédito"/>
                                         </div>
-                                    </div>
-                                    <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <h:outputLabel for="menu" value="Elija: " />
                                         </div>

@@ -16,7 +16,7 @@
                 <h:panelGrid columns="2">
                     <p:autoComplete id="cliente" value="#{ocupacionBean.anexo}"
                                     completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
-                                    itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
+                                    itemLabel="#{cliente.nombre.concat(' ').concat(cliente.apepat).concat(' ').concat(cliente.apemat)}" itemValue="#{cliente}" 
                                     required="true" requiredMessage="Ingrese cliente">
                         <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                        
                         <p:ajax event="itemSelect" listener="#{ocupacionBean.cargarIngSolo(ocupacionBean.anexo)}" update="@form"/>
@@ -36,8 +36,8 @@
                         <h:outputText value="#{ocups.montoin}" />
                     </p:column>
                     <p:column headerText="Operaciones">                        
-                        <p:commandButton action="#{ocupacionBean.veryIdModify(ocups.idocupacion)}" icon="b-ver" />
-                        <p:commandButton action="#{ocupacionBean.veryIdDelete(ocups.idocupacion)}" icon="b-delete">                                                                    
+                        <p:commandButton action="#{ocupacionBean.veryIdModify(ocups.idocupacion)}" title="Modificar" icon="fa fa-edit white" />
+                        <p:commandButton action="#{ocupacionBean.veryIdDelete(ocups.idocupacion)}" title="Eliminar" icon="fa fa-trash white">                                                                    
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>

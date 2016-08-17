@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:o="http://omnifaces.org/ui"
+                template="./../views/template.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <p:commandButton action="#{conceptosBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>
+        </h:form>
+        <div class="layout-portlets-box">
+            <div class="Container100 ui-fluid">
+                <div class="ContainerIndent">
+                    <h2 class="BigTopic">Anticipos por cliente</h2>
+                    <f:view afterPhase="#{anexoBean.phaseListener}">
+                        <h:form id="formAnti" prependId="false ">
+                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                                    <p:growl id="msg12" showDetail="true"/>
+                                    <div class="ui-grid-row">  
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Buscar cliente:" for="cliente"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:autoComplete id="cliente" value="#{conceptosBean.anexo}"
+                                                            completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
+                                                            itemLabel="#{cliente.nombre.concat(' ').concat(cliente.apepat).concat(' ').concat(cliente.apemat)}" itemValue="#{cliente}" 
+                                                            required="true" requiredMessage="Ingrese cliente">
+                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                        
+                                                <p:ajax event="itemSelect" listener="#{conceptosBean.cargarAnticipos(conceptosBean.anexo)}" update="@form"/>
+                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
+                                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />                                                
+                                            </p:autoComplete>
+                                        </div>                                    
+                                    </div>
+                                    <div class="ui-grid-row">  
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:commandButton value="Agregar" icon="fa fa-plus white" action="#{conceptosBean.limpiarAnticipo(conceptosBean.anexo)}" />                
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p:dataTable id="tablalistarocups" var="concep" value="#{conceptosBean.conceptos}" 
+                                             emptyMessage="No hay nada para mostrar">
+                                    <p:column headerText="Fecha: ">
+                                        <h:outputText value="#{concep.fecreg}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Monto">
+                                        <h:outputText value="#{concep.total}" />
+                                    </p:column>                                    
+                                    <p:column headerText="Operaciones">                                                                
+                                        <p:commandButton action="#{conceptosBean.cargarPorIdDelete(concep.idconceptos)}" title="Eliminar" icon="fa fa-trash white" style="width:40px">                                                                    
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>                                
+                            </div>
+                        </h:form>
+                    </f:view>
+                </div>
+            </div>
+        </div>
+
+        <h:form id="formpagar">
+            <p:dialog id="dlg1" header="Registrar Anticipo" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgpagar" modal="true" resizable="false" minWidth="200">
+                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                <h:panelGrid columns="4">                    
+                    <p:outputLabel value="Fecha:" for="txtfecha"/>
+                    <p:calendar id="txtfecha" navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{conceptosBean.pago.fecreg}" required="true" requiredMessage="Ingrese la fecha"/>                                        
+                    <p:outputLabel value="Comprobante:" for="tipodoc"/>
+                    <p:selectOneMenu id="tipodoc" value="#{conceptosBean.pago.tipodoc}" converter="omnifaces.SelectItemsConverter"
+                                     required="true" requiredMessage="Seleccione Tipo Documento">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>                        
+                        <f:selectItems value="#{conceptosBean.listafiltrada}" var="tipodoc" itemLabel="#{tipodoc.descripcion}" itemValue="#{tipodoc}"/>                                                
+                        <p:ajax update="comp txtope" listener="#{conceptosBean.disableNumOper(conceptosBean.pago.tipodoc.abrev)}" process="@this" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Destino:" for="dest"/>
+                    <p:selectOneMenu id="dest" value="#{conceptosBean.pago.caja}" converter="omnifaces.SelectItemsConverter"
+                                     disabled="#{conceptosBean.disablecaja}" required="true" requiredMessage="Seleccione Caja de destino">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                        <f:selectItems value="#{conceptosBean.todasCajas}" var="caja" itemLabel="#{caja.descripcion}" itemValue="#{caja}"/>                        
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Comprobante: " for="comp"/>
+                    <p:inputMask mask="999-99999" id="comp" value="#{conceptosBean.pago.operacion}" disabled="#{conceptosBean.disablecomp}" required="true" requiredMessage="Ingrese número comprobante"/>
+                    <p:outputLabel value="Num oper: " for="txtope"/>
+                    <p:inputText id="txtope" value="#{conceptosBean.pago.operacion}" disabled="#{conceptosBean.disableoper}" required="true" requiredMessage="Ingrese número comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <p:outputLabel value="Monto:" for="monto"/>
+                    <p:inputText id="monto" value="#{conceptosBean.montopago}" required="true" requiredMessage="Ingrese el monto" class="money" />
+                    <p:outputLabel value="Descripción:" for="txtdescripcion"/>
+                    <p:inputText id="txtdescripcion" value="#{conceptosBean.pago.descripcion}" required="true" requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <h:panelGroup></h:panelGroup>                    
+                    <p:commandButton id="btnpagar" actionListener="#{conceptosBean.insertarAnticipo(loginbean.usuario.idusuario, conceptosBean.anexo)}" value="#{conceptosBean.btnpago}" />
+                </h:panelGrid>
+
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formEliminar">
+            <p:dialog header="Eliminar " widgetVar="dlgEliminar" modal="true">                
+                <h:outputText value="¿Desea eliminar?" />
+                <p:commandButton value="Si" actionListener="#{conceptosBean.eliminar()}" update=":formAnti:tablalistarocups" icon="b-ok" />
+                <p:commandButton value="No" onclick="dlgEliminar.hide();" icon="b-cancel" />
+            </p:dialog>
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>

@@ -94,9 +94,9 @@ public class PerfilBean implements Serializable {
             } else if (perfil.getCreLis() == false && perfil.getCreReg() == false) {
                 perfil.setCreco(false);
             }
-            if (perfil.getDesDes() == true || perfil.getDesVen() == true) {
+            if (perfil.getDesDes() == true || perfil.getDesVen() == true || perfil.getManAnt() == true) {
                 perfil.setDespacho(true);
-            } else if (perfil.getDesDes() == false && perfil.getDesVen() == false) {
+            } else if (perfil.getDesDes() == false && perfil.getDesVen() == false && perfil.getManAnt() == true) {
                 perfil.setDespacho(false);
             }
             PerfilDaoImpl perfilDao = new PerfilDaoImpl();
@@ -227,6 +227,7 @@ public class PerfilBean implements Serializable {
             perfil.setDespacho(false);
             perfil.setDesDes(false);
             perfil.setDesVen(false);
+            perfil.setManAnt(false);
             linkDao.registrar(this.session, this.perfil);
             this.transaction.commit();
             this.perfil = new Perfil();

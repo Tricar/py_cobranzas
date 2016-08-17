@@ -95,7 +95,7 @@ public class CreditoDaoImp implements CreditoDao{
         List<Credito> lista = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE fechareg BETWEEN :start_date AND :end_date and estado=:estado" );
+            Query query = session.createQuery("FROM Credito WHERE fechareg BETWEEN :start_date AND :end_date AND estado=:estado" );
             query.setParameter("start_date", date1);
             query.setParameter("end_date", date2);
             query.setParameter("estado",estado );

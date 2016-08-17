@@ -80,6 +80,9 @@
         <property name="desVen" type="java.lang.Boolean">
             <column name="desVen" />
         </property>
+        <property name="manAnt" type="java.lang.Boolean">
+            <column name="manAnt" />
+        </property>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idperfil" />
