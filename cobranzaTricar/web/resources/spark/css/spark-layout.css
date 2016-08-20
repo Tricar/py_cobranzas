@@ -103,7 +103,7 @@ body{
 /* Layout Top Bar*/
 #layout-topbar{height:100px; width:100%; border-top:solid 6px #71CC8D; background-color:#F6FAFC/*#F1F6F9*/; display:table;}
 #layout-topbar-indent{width:92%; margin:0px auto;}
-#logo{height:150px; width: 200px; margin-top:26px;}
+#logo{height:150px; width: 150px; margin-top:25px;}
 #mobile-menu-button{padding:10px 15px; background-color:#5fcf80; float:right; margin-top:20px; font-size:14px; position:relative; z-index:999;}
 #mobile-menu-button:hover{color:#55AA6D;}
 #mobile-menu-button-gray{background-color:#778D9B; padding:8px 13px; float:right; margin-top:20px; font-size:14px; margin-right:10px; position:relative; z-index:999;}
