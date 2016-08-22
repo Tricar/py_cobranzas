@@ -3,7 +3,16 @@ package Bean;
 import Clases.Encrypt;
 import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
+import Dao.MenuDao;
+import Dao.MenuDaoImpl;
+import Dao.PerfilDao;
+import Dao.PerfilDaoImpl;
+import Dao.SubmenuDao;
+import Dao.SubmenuDaoImpl;
 import Dao.UsuarioDaoImpl;
+import Model.Menu;
+import Model.Perfil;
+import Model.Submenu;
 import Model.Usuario;
 import Persistencia.HibernateUtil;
 import javax.faces.application.FacesMessage;
@@ -13,6 +22,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import Persistencia.MyUtil;
 import java.io.Serializable;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -33,6 +43,9 @@ public class LoginBean implements Serializable {
     private Integer creditoaprobado;
     private Integer pagosxdia;
     private Integer pagosxmes;
+    public List<Perfil> perfiles;
+    public List<Menu> menus;
+    public List<Submenu> submenus;
 
     public LoginBean() {
         HttpSession miSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
@@ -114,6 +127,93 @@ public class LoginBean implements Serializable {
         CreditoDao ventasxdiadao = new CreditoDaoImp();
         ventasxdia = ventasxdiadao.ventasXdia(this.session);
         return "/views/index";
+    }
+
+    public List<Perfil> getPerfiles() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            PerfilDao dao = new PerfilDaoImpl();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.perfiles = dao.verTodo(this.session);
+            this.transaction.commit();
+            return perfiles;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void setPerfiles(List<Perfil> perfiles) {
+        this.perfiles = perfiles;
+    }
+
+    public List<Menu> getMenus() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            MenuDao dao = new MenuDaoImpl();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.menus = dao.verTodo(this.session);
+            this.transaction.commit();
+            return menus;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
+    }
+    
+    public List<Submenu> getSubmenus() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            SubmenuDao dao = new SubmenuDaoImpl();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.submenus = dao.verTodoByMenu(this.session, 1);
+            this.transaction.commit();
+            return submenus;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void setSubmenus(List<Submenu> submenus) {
+        this.submenus = submenus;
     }
 
     public String empleado() {

@@ -44,6 +44,7 @@ public class Perfil implements java.io.Serializable {
     private Boolean desDes;
     private Boolean desVen;
     private Set usuarios = new HashSet(0);
+    private Set menus = new HashSet(0);
 
     public Perfil() {
     }
@@ -52,7 +53,7 @@ public class Perfil implements java.io.Serializable {
         this.idperfil = idperfil;
     }
 
-    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean sisDist, Boolean sisCaja, Boolean mante, Boolean manCli, Boolean manAval, Boolean manArt, Boolean manMod, Boolean manCol, Boolean creco, Boolean creLis, Boolean creReg, Boolean creCon, Boolean creRef, Boolean manIng, Boolean despacho, Boolean desDes, Boolean desVen, Set usuarios) {
+    public Perfil(Integer idperfil, String descripcion, String abrev, Boolean sistema, Boolean sisVende, Boolean sisEmp, Boolean sisUsu, Boolean sisPer, Boolean sisDist, Boolean sisCaja, Boolean mante, Boolean manCli, Boolean manAval, Boolean manArt, Boolean manMod, Boolean manCol, Boolean creco, Boolean creLis, Boolean creReg, Boolean creCon, Boolean creRef, Boolean manIng, Boolean despacho, Boolean desDes, Boolean desVen, Set usuarios, Set menus) {
         this.idperfil = idperfil;
         this.descripcion = descripcion;
         this.abrev = abrev;
@@ -78,7 +79,8 @@ public class Perfil implements java.io.Serializable {
         this.despacho = despacho;
         this.desDes = desDes;
         this.desVen = desVen;
-        this.usuarios = usuarios;      
+        this.usuarios = usuarios;
+        this.menus = menus;
     }
 
     @Id
@@ -315,6 +317,15 @@ public class Perfil implements java.io.Serializable {
 
     public void setUsuarios(Set usuarios) {
         this.usuarios = usuarios;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "perfil")
+    public Set getMenus() {
+        return this.menus;
+    }
+
+    public void setMenus(Set menus) {
+        this.menus = menus;
     }
 
     @Override

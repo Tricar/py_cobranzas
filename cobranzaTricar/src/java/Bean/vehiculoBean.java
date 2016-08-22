@@ -1,7 +1,5 @@
 package Bean;
 
-import Dao.ModeloDao;
-import Dao.ModeloDaoImplements;
 import Dao.VehiculoDao;
 import Dao.VehiculoDaoImplements;
 import Model.Credito;

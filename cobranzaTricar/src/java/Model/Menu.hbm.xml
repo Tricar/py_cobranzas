@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Menu" table="menu" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idmenu" type="int">
+            <column name="idmenu" />
+            <generator class="identity" />
+        </id>
+        <property name="menu" type="string">
+            <column name="menu" length="50" />
+        </property>
+        <many-to-one name="perfil" class="Model.Perfil" fetch="select">
+            <column name="idperfil" />
+        </many-to-one>
+        <set name="submenus" table="submenu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idmenu" />
+            </key>
+            <one-to-many class="Model.Submenu" />
+        </set>
+    </class>
+</hibernate-mapping>

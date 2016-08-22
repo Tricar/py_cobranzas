@@ -63,13 +63,14 @@
                 <div id="layout-topbar-indent">
                     <a href="index.xhtml"><h:graphicImage id="logo" class="Fleft" library="spark" name="img/logoCR.svg"/></a>
                     <a href="#" id="mobile-menu-button" class="BordRad3 white ShowOnMobile"><i class="fa fa-bars"></i> Menu</a>
+                    <a href="#" id="mobile-menu-button-gray" class="BordRad3 white ShowOnMobile"><i class="fa fa-caret-down"></i> Top Menu</a>
 
                     <ul id="layout-topbar-menu">
-                        <h:form>
-                            <li>
+                        <li>
+                            <h:form>
                                 <p:commandLink actionListener="#{loginbean.logout()}" oncomplete="handleLoginRequest(xhr, status, args)" class="Animated05"><i class="fa fa-sign-out"></i> Salir</p:commandLink>
-                            </li>
-                        </h:form>
+                            </h:form>
+                        </li>
                         <li class="fa fa-ellipsis-v menu-separator"></li>
                         <li>
                             <a class="Animated05 CursPointer"><i class="fa fa-user"></i><p:outputLabel value=" #{loginbean.usuario.anexo.nombre}"/>, Bienvenido <i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i></a>
@@ -89,61 +90,23 @@
             </div>
             <h:form>
                 <ul id="layout-menu" class="BordRad3 Unselectable">
-                    <li role="menuitem">
-                        <a href="#" class="Animated05 CursPointer">
-                            <i class="fa fa-rocket"></i> Spark Theme<i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i>
-                        </a>
-                        <ul class="Animated03 submenu" role="menu">
-                            <li role="menuitem">
-                                <a class="Animated05" href="/spark/sample.xhtml">
-                                    <i class="fa fa-columns"></i> Sample Page
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="Animated05" href="/spark/forms.xhtml">
-                                    <i class="fa fa-file-text-o"></i> Forms
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="fa fa-ellipsis-v menu-separator"></li>
-                    <li role="menuitem">
-                        <a href="#" class="Animated05 CursPointer">
-                            <i class="fa fa-newspaper-o"></i> Default Pages
-                            <i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i>
-                        </a>
-                        <ul class="Animated03 submenu" role="menu">
-                            <li role="menuitem">
-                                <a class="Animated05" href="/spark/empty-page.xhtml">
-                                    <i class="fa fa-plus-square"></i> Empty Page
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="Animated05" href="/spark/login.xhtml">
-                                    <i class="fa fa-sign-in"></i> Login Page
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="fa fa-ellipsis-v menu-separator"></li>
-                    <li role="menuitem">
-                        <a href="#" class="Animated05 CursPointer">
-                            <i class="fa fa-dropbox"></i> Links
-                            <i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i>
-                        </a>
-                        <ul class="Animated03 submenu" role="menu">
-                            <li role="menuitem">
-                                <a class="Animated05" href="/spark/documentation.xhtml">
-                                    <i class="fa fa-life-ring"></i> Documentation
-                                </a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="Animated05" href="/spark/font-icons.xhtml">
-                                    <i class="fa fa-paint-brush"></i> Font Icons
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    <ui:repeat var="menu" varStatus="status" value="#{loginbean.menus}">  
+                        <li role="menuitem">
+                            <a href="#" class="Animated05 CursPointer">
+                                <i class="fa fa-rocket"></i> #{menu.menu}<i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i>
+                            </a>
+                            <ul class="Animated03 submenu" role="menu">
+                                <ui:repeat var="item" varStatus="status" value="#{loginbean.submenus}">
+                                    <li role="menuitem">
+                                        <a class="Animated05" href="#{item.url}">
+                                            <i class="fa fa-columns"></i> #{item.submenu}
+                                        </a>
+                                    </li>
+                                </ui:repeat> 
+                            </ul>
+                        </li>
+                        <li class="fa fa-ellipsis-v menu-separator"></li>
+                    </ui:repeat> 
                 </ul>
             </h:form>
         </ui:insert>
