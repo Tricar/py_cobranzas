@@ -14,83 +14,17 @@
         <property name="abrev" type="string">
             <column name="abrev" length="2" />
         </property>
-        <property name="sistema" type="java.lang.Boolean">
-            <column name="sistema" />
-        </property>
-        <property name="sisVende" type="java.lang.Boolean">
-            <column name="sisVende" />
-        </property>
-        <property name="sisEmp" type="java.lang.Boolean">
-            <column name="sisEmp" />
-        </property>
-        <property name="sisUsu" type="java.lang.Boolean">
-            <column name="sisUsu" />
-        </property>
-        <property name="sisDist" type="java.lang.Boolean">
-            <column name="sisDist" />
-        </property>
-        <property name="sisPer" type="java.lang.Boolean">
-            <column name="sisPer" />
-        </property>
-        <property name="sisCaja" type="java.lang.Boolean">
-            <column name="sisCaja" />
-        </property>
-        <property name="mante" type="java.lang.Boolean">
-            <column name="mante" />
-        </property>
-        <property name="manCli" type="java.lang.Boolean">
-            <column name="manCli" />
-        </property>
-        <property name="manIng" type="java.lang.Boolean">
-            <column name="manIng" />
-        </property>
-        <property name="manAval" type="java.lang.Boolean">
-            <column name="manAval" />
-        </property>
-        <property name="manArt" type="java.lang.Boolean">
-            <column name="manArt" />
-        </property>
-        <property name="manMod" type="java.lang.Boolean">
-            <column name="manMod" />
-        </property>
-        <property name="manCol" type="java.lang.Boolean">
-            <column name="manCol" />
-        </property>
-        <property name="creco" type="java.lang.Boolean">
-            <column name="creco" />
-        </property>
-        <property name="creLis" type="java.lang.Boolean">
-            <column name="creLis" />
-        </property>
-        <property name="creReg" type="java.lang.Boolean">
-            <column name="creReg" />
-        </property>
-        <property name="creCon" type="java.lang.Boolean">
-            <column name="creCon" />
-        </property>
-        <property name="creRef" type="java.lang.Boolean">
-            <column name="creRef" />
-        </property>
-        <property name="despacho" type="java.lang.Boolean">
-            <column name="despacho" />
-        </property>
-        <property name="desDes" type="java.lang.Boolean">
-            <column name="desDes" />
-        </property>
-        <property name="desVen" type="java.lang.Boolean">
-            <column name="desVen" />
-        </property>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idperfil" />
             </key>
             <one-to-many class="Model.Usuario" />
         </set>
-        <set name="menus" table="menu" inverse="true" lazy="true" fetch="select">
+        <set name="perfilmenus" table="perfilmenu" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idperfil" />
             </key>
-            <one-to-many class="Model.Menu" />
+            <one-to-many class="Model.Perfilmenu" />
         </set>
     </class>
 </hibernate-mapping>

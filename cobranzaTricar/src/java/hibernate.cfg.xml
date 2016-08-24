@@ -31,5 +31,7 @@
     <mapping resource="Model/Distrito.hbm.xml"/>
     <mapping resource="Model/Menu.hbm.xml"/>
     <mapping resource="Model/Submenu.hbm.xml"/>
+    <mapping resource="Model/Perfilmenu.hbm.xml"/>
+    <mapping resource="Model/Perfilsubmenu.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

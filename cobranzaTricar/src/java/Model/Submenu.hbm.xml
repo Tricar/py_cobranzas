@@ -14,6 +14,9 @@
         <property name="url" type="string">
             <column name="url" length="50" not-null="true" />
         </property>
+        <property name="icon" type="string">
+            <column name="icon" length="50" not-null="true" />
+        </property>
         <many-to-one name="menu" class="Model.Menu" fetch="select">
             <column name="idmenu" />
         </many-to-one>   

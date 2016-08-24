@@ -11,14 +11,20 @@
         <property name="menu" type="string">
             <column name="menu" length="50" />
         </property>
-        <many-to-one name="perfil" class="Model.Perfil" fetch="select">
-            <column name="idperfil" />
-        </many-to-one>
+        <property name="icon" type="string">
+            <column name="icon" length="50" not-null="true" />
+        </property>
         <set name="submenus" table="submenu" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idmenu" />
             </key>
             <one-to-many class="Model.Submenu" />
+        </set>
+        <set name="perfilmenus" table="perfilmenu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idmenu" />
+            </key>
+            <one-to-many class="Model.Perfilmenu" />
         </set>
     </class>
 </hibernate-mapping>

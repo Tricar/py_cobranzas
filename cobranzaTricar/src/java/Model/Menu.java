@@ -22,8 +22,9 @@ public class Menu implements java.io.Serializable {
 
     private Integer idmenu;
     private String menu;
-    private Perfil perfil;
+    private String icon;
     private Set submenus = new HashSet(0);
+    private Set perfilmenus = new HashSet(0);
 
     public Menu() {
     }
@@ -32,11 +33,12 @@ public class Menu implements java.io.Serializable {
         this.idmenu = idmenu;
     }
 
-    public Menu(Integer idmenu, String menu, Perfil perfil, Set submenus) {
+    public Menu(Integer idmenu, String menu, String icon, Set submenus, Set perfilmenus) {
         this.idmenu = idmenu;
         this.menu = menu;
-        this.perfil = perfil;
-        this.submenus = submenus;      
+        this.icon = icon;
+        this.submenus = submenus;
+        this.perfilmenus = perfilmenus;      
     }
 
     @Id
@@ -59,14 +61,13 @@ public class Menu implements java.io.Serializable {
         this.menu = menu;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idperfil")
-    public Perfil getPerfil() {
-        return this.perfil;
+    @Column(name = "icon", nullable = false, length = 50)
+    public String getIcon() {
+        return this.icon;
     }
 
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
@@ -76,6 +77,15 @@ public class Menu implements java.io.Serializable {
 
     public void setSubmenus(Set submenus) {
         this.submenus = submenus;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    public Set getPerfilmenus() {
+        return this.perfilmenus;
+    }
+
+    public void setPerfilmenus(Set perfilmenus) {
+        this.perfilmenus = perfilmenus;
     }
 
     @Override

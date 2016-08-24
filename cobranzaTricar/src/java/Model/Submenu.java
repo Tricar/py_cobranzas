@@ -20,6 +20,7 @@ public class Submenu implements java.io.Serializable {
     private Integer idsubmenu;
     private String submenu;
     private String url;
+    private String icon;
     private Menu menu;
 
     public Submenu() {
@@ -29,15 +30,15 @@ public class Submenu implements java.io.Serializable {
         this.idsubmenu = idsubmenu;
     }
 
-    public Submenu(Integer idsubmenu, String submenu, String url, Menu menu) {
+    public Submenu(Integer idsubmenu, String submenu, String url, String icon, Menu menu) {
         this.idsubmenu = idsubmenu;
         this.submenu = submenu;
         this.url = url;
+        this.icon = icon;
         this.menu = menu;
     }
 
     @Id
-
     @Column(name = "idsubmenu", unique = true, nullable = false)
     public Integer getIdsubmenu() {
         return this.idsubmenu;
@@ -73,6 +74,15 @@ public class Submenu implements java.io.Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Column(name = "icon", nullable = false, length = 50)
+    public String getIcon() {
+        return this.icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     @Override

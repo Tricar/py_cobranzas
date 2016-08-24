@@ -61,7 +61,7 @@
         <ui:insert name="top">
             <div id="layout-topbar" class="ShadowGray">
                 <div id="layout-topbar-indent">
-                    <a href="index.xhtml"><h:graphicImage id="logo" class="Fleft" library="spark" name="img/logoCR.svg"/></a>
+                    <a href="../views/index.xhtml"><h:graphicImage id="logo" class="Fleft" library="spark" name="img/logoCR.svg"/></a>
                     <a href="#" id="mobile-menu-button" class="BordRad3 white ShowOnMobile"><i class="fa fa-bars"></i> Menu</a>
                     <a href="#" id="mobile-menu-button-gray" class="BordRad3 white ShowOnMobile"><i class="fa fa-caret-down"></i> Top Menu</a>
 
@@ -90,16 +90,16 @@
             </div>
             <h:form>
                 <ul id="layout-menu" class="BordRad3 Unselectable">
-                    <ui:repeat var="menu" varStatus="status" value="#{loginbean.menus}">  
+                    <ui:repeat var="p" varStatus="status" value="#{loginbean.cargarPerfilmenus(loginbean.usuario.perfil.idperfil)}">  
                         <li role="menuitem">
                             <a href="#" class="Animated05 CursPointer">
-                                <i class="fa fa-rocket"></i> #{menu.menu}<i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i>
+                                <i class="fa #{p.menu.icon}"></i> #{p.menu.menu}<i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i>
                             </a>
                             <ul class="Animated03 submenu" role="menu">
-                                <ui:repeat var="item" varStatus="status" value="#{loginbean.submenus}">
+                                <ui:repeat var="item" varStatus="status" value="#{loginbean.cargarPerfilsubmenus(p.idperfilmenu)}">
                                     <li role="menuitem">
-                                        <a class="Animated05" href="#{item.url}">
-                                            <i class="fa fa-columns"></i> #{item.submenu}
+                                        <a class="Animated05" href="#{item.submenu.url}" >
+                                            <i class="fa #{item.submenu.icon}"></i> #{item.submenu.submenu}
                                         </a>
                                     </li>
                                 </ui:repeat> 
