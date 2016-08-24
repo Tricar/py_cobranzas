@@ -1,10 +1,8 @@
 package Bean;
 
-import Clases.Encrypt;
-import Dao.MenuDao;
-import Dao.MenuDaoImpl;
-import Dao.UsuarioDaoImpl;
-import Model.Menu;
+import Dao.SubmenuDao;
+import Dao.SubmenuDaoImpl;
+import Model.Submenu;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.util.List;
@@ -19,39 +17,39 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 @RequestScoped
 
-public class menuBean implements Serializable {
+public class SubmenuBean implements Serializable {
 
-   private Session session;
+    private Session session;
     private Transaction transaction;
 
-    private Menu menu;
-    private List<Menu> listamenu;
-    private List<Menu> listamenufiltrado;
+    private Submenu submenu;
+    private List<Submenu> listasubmenu;
+    private List<Submenu> listasubmenufiltrado;
 
-    public Menu getMenu() {
-        return menu;
+    public Submenu getSubmenu() {
+        return submenu;
     }
 
-    public menuBean() {
-        this.menu = new Menu();
+    public SubmenuBean() {
+        this.submenu = new Submenu();
     }
 
-    public List<Menu> verTodo() {
+    public List<Submenu> verTodo() {
 
         this.session = null;
         this.transaction = null;
 
         try {
-            MenuDao daotusuario = new MenuDaoImpl();
+            SubmenuDao daotusuario = new SubmenuDaoImpl();
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
 
-            this.listamenu = daotusuario.verTodo(this.session);
+            this.listasubmenu = daotusuario.verTodo(this.session);
 
             this.transaction.commit();
 
-            return listamenu;
+            return listasubmenu;
 
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -76,26 +74,26 @@ public class menuBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
 
-            MenuDao daotusuario = new MenuDaoImpl();
-            if (daotusuario.verByDescripcion(this.session, this.menu.getMenu()) != null) {
+            SubmenuDao daotusuario = new SubmenuDaoImpl();
+            if (daotusuario.verByDescripcion(this.session, this.submenu.getSubmenu()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya existe en DB."));
-                this.menu = new Menu();
+                this.submenu = new Submenu();
                 return;
             }
             
-            daotusuario.registrar(this.session, this.menu);
+            daotusuario.registrar(this.session, this.submenu);
 
             this.transaction.commit();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
 
-            this.menu = new Menu();
+            this.submenu = new Submenu();
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-            this.menu = new Menu();
+            this.submenu = new Submenu();
         } finally {
             if (this.session != null) {
                 this.session.close();
@@ -112,24 +110,24 @@ public class menuBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
 
-            MenuDao daotusuario = new MenuDaoImpl();
+            SubmenuDao daotusuario = new SubmenuDaoImpl();
 
-            if (daotusuario.verByDifer(this.session, this.menu.getIdmenu(), this.menu.getMenu()) != null) {
+            if (daotusuario.verByDifer(this.session, this.submenu.getIdsubmenu(), this.submenu.getSubmenu()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
                 return;
             }
             
-            daotusuario.modificar(this.session, this.menu);
+            daotusuario.modificar(this.session, this.submenu);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
-            this.menu = new Menu();
+            this.submenu = new Submenu();
             
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-            this.menu = new Menu();
+            this.submenu = new Submenu();
         } finally {
             if (this.session != null) {
                 this.session.close();
@@ -146,14 +144,14 @@ public class menuBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
 
-            MenuDao daotusuario = new MenuDaoImpl();
-            daotusuario.eliminar(this.session, this.menu);
+            SubmenuDao daotusuario = new SubmenuDaoImpl();
+            daotusuario.eliminar(this.session, this.submenu);
 
             this.transaction.commit();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Usuario Correctamente."));
 
-            this.menu = new Menu();
+            this.submenu = new Submenu();
 
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -173,12 +171,12 @@ public class menuBean implements Serializable {
 
         try {
 
-            MenuDao daotusuario = new MenuDaoImpl();
+            SubmenuDao daotusuario = new SubmenuDaoImpl();
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
 
-            this.menu = daotusuario.verByCodigo(this.session, codigoUsuario);
+            this.submenu = daotusuario.verByCodigo(this.session, codigoUsuario);
 
             this.transaction.commit();
 
@@ -203,12 +201,12 @@ public class menuBean implements Serializable {
 
         try {
 
-            MenuDao daotusuario = new MenuDaoImpl();
+            SubmenuDao daotusuario = new SubmenuDaoImpl();
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
 
-            this.menu = daotusuario.verByCodigo(this.session, codigoUsuario);
+            this.submenu = daotusuario.verByCodigo(this.session, codigoUsuario);
 
             this.transaction.commit();
 
@@ -227,25 +225,25 @@ public class menuBean implements Serializable {
         }
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+    public void setTusuario(Submenu submenu) {
+        this.submenu = submenu;
     }
 
-    public List<Menu> getListamenu() {        
+    public List<Submenu> getListatusuario() {        
         this.session = null;
         this.transaction = null;
 
         try {
-            MenuDao daotusuario = new MenuDaoImpl();
+            SubmenuDao daotusuario = new SubmenuDaoImpl();
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
 
-            this.listamenu = daotusuario.verTodo(this.session);
+            this.listasubmenu = daotusuario.verTodo(this.session);
 
             this.transaction.commit();
 
-            return listamenu;
+            return listasubmenu;
 
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -261,16 +259,15 @@ public class menuBean implements Serializable {
         }
     }
 
-    public void setListamenu(List<Menu> listamenu) {
-        this.listamenu = listamenu;
+    public void setListasubmenu(List<Submenu> listasubmenu) {
+        this.listasubmenu = listasubmenu;
     }
 
-    public List<Menu> getListamenufiltrado() {
-        return listamenufiltrado;
+    public List<Submenu> getListasubmenufiltrado() {
+        return listasubmenufiltrado;
     }
 
-    public void setListamenufiltrado(List<Menu> listamenufiltrado) {
-        this.listamenufiltrado = listamenufiltrado;
+    public void setListatusuariofiltrado(List<Submenu> listasubmenufiltrado) {
+        this.listasubmenufiltrado = listasubmenufiltrado;
     }
-    
 }

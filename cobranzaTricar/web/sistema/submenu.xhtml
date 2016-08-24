@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Gestion de Submenu </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./../views/template.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:commandButton value="Nuevo" oncomplete="dlginsertar.show()" icon="fa fa-plus white"/>
+                </h:form>
+
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                        Lista de Submenu
+                    </div>
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                        <h:form id="formMostrar">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <p:dataTable var="item" value="#{submenuBean.verTodo()}" 
+                                         emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
+                                         paginatorPosition="top" rowsPerPageTemplate="10">
+                                <p:column headerText="Submenu">
+                                    <h:outputText value="#{item.submenu}" />
+                                </p:column>
+                                <p:column headerText="Nombre y Apellido">
+                                    <h:outputText value="#{item.icon}" />
+                                </p:column>                        
+                                <p:column headerText="DNI">
+                                    <h:outputText value="#{item.url}" />
+                                </p:column>
+                                <p:column headerText="Perfil">
+                                    <h:outputText value="#{item.menu.menu}" />
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton actionListener="#{submenuBean.cargarUsuarioEditar(item.idsubmenu)}" icon="fa fa-pencil white"/>
+                                    <p:commandButton actionListener="#{submenuBean.cargarUsuarioEliminar(item.idsubmenu)}" icon="fa fa-trash white"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
+
+                <h:form id="formInsertar">
+                    <p:dialog header="Nuevo Usuario" widgetVar="dlginsertar" modal="true">                        
+                        <h:panelGrid id="panelcrearperfil" columns="2">
+                            <p:outputLabel value="Submenu:" for="txtUsuario"/>
+                            <p:inputText id="txtUsuario" label="Submenu" value="#{submenuBean.submenu.submenu}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="Icono:" for="txtClave"/>
+                            <p:inputText id="txtClave" label="Icono" value="#{submenuBean.submenu.icon}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="URL:" for="txtUrl"/>
+                            <p:inputText id="txtUrl" label="URL" value="#{submenuBean.submenu.url}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="Menu:"/>
+                            <p:selectOneMenu value="#{submenuBean.submenu.menu}" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                <f:selectItems value="#{menuBean.verTodo()}" var="menu" itemLabel="#{menu.menu}" itemValue="#{menu}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{submenuBean.registrar()}" />
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="frmEditarUsuario">
+                    <p:dialog header="Datos del usuario" widgetVar="dialogoEditarUsuario" modal="true">
+                        <h:panelGrid id="panelEditarUsuario" columns="2">
+                            <p:inputText type="hidden" value="#{usuarioBean.tusuario.idusuario}"/>
+                            <p:inputText type="hidden" value="#{usuarioBean.tusuario.clave}"/>                            
+                            <p:inputText type="hidden" value="#{usuarioBean.tusuario.fechareg}"/>
+                            <h:panelGroup></h:panelGroup>
+                            <p:outputLabel value="Usuario:" for="txtUsuario"/>
+                            <p:inputText id="txtUsuario" label="Usuario" value="#{usuarioBean.tusuario.usuario}" autocomplete="off">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="Clave:"/>
+                            <p:inputText id="txtClave" label="Clave" value="#{usuarioBean.txtclavevacia}" autocomplete="off"/>
+                            <p:outputLabel value="Anexo:"/>
+                            <p:selectOneMenu value="#{usuarioBean.tusuario.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                <f:selectItems value="#{anexoBean.anexos}" var="anexo" itemLabel="#{anexo.nombres}" itemValue="#{anexo}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Perfil:"/>
+                            <p:selectOneMenu value="#{usuarioBean.tusuario.perfil}" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                                <f:selectItems value="#{perfilBean.perfiles}" var="perfil" itemLabel="#{perfil.descripcion}" itemValue="#{perfil}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{usuarioBean.modificar()}"/>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="frmEliminarUsuario">
+                    <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarUsuario" modal="true">
+                        <p:inputText type="hidden" value="#{usuarioBean.tusuario.idusuario}"/>
+                        <h:outputText value="¿Desea eliminar?" />
+                        <p:separator/>
+                        <p:commandButton value="Si" actionListener="#{usuarioBean.eliminar()}" ajax="false" icon="fa fa-check blue" />
+                        <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

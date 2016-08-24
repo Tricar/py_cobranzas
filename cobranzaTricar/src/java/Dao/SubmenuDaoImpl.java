@@ -29,7 +29,7 @@ public class SubmenuDaoImpl implements SubmenuDao {
 
     @Override
     public List<Submenu> verTodo(Session session) throws Exception {
-        String hql = "FROM Menu";
+        String hql = "FROM Submenu";
         Query query = session.createQuery(hql);
 
         List<Submenu> listaPerfil = (List<Submenu>) query.list();
@@ -45,7 +45,7 @@ public class SubmenuDaoImpl implements SubmenuDao {
 
     @Override
     public Submenu verByDescripcion(Session session, String descripcion) throws Exception {
-        String hql = "FROM Perfil WHERE descripcion=:descripcion";
+        String hql = "FROM Submenu WHERE submenu=:descripcion";
         Query query = session.createQuery(hql);
         query.setParameter("descripcion", descripcion);
 
@@ -55,16 +55,16 @@ public class SubmenuDaoImpl implements SubmenuDao {
     }
 
     @Override
-    public boolean eliminarPerfil(Session session, Submenu perfil) throws Exception {
+    public boolean eliminar(Session session, Submenu perfil) throws Exception {
         session.delete(perfil);
         return true;
     }
 
     @Override
-    public Submenu verByPerfilDifer(Session session, Integer idperfil, String descripcion) throws Exception {
-        String hql = "FROM Perfil WHERE idperfil!=:idperfil and descripcion=:descripcion";
+    public Submenu verByDifer(Session session, Integer idperfil, String descripcion) throws Exception {
+        String hql = "FROM Submenu WHERE idsubmenu!=:idsubmenu and submenu=:descripcion";
         Query query = session.createQuery(hql);
-        query.setParameter("idperfil", idperfil);
+        query.setParameter("idsubmenu", idperfil);
         query.setParameter("descripcion", descripcion);
         
         Submenu perfil = (Submenu) query.uniqueResult();

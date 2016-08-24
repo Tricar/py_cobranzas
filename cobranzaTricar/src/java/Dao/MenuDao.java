@@ -19,8 +19,8 @@ public interface MenuDao {
     public List<Menu> verTodo(Session session) throws Exception;
     public Menu verByCodigo(Session session, Integer idperfil) throws Exception;
     public Menu verByDescripcion(Session session, String descripcion) throws Exception;
-    public Menu verByPerfilDifer(Session session,Integer idperfil, String descripcion) throws Exception;
+    public Menu verByDifer(Session session,Integer idperfil, String descripcion) throws Exception;
     public boolean modificar(Session session, Menu perfil) throws Exception;
-    public boolean eliminarPerfil (Session session, Menu perfil) throws Exception;
+    public boolean eliminar (Session session, Menu perfil) throws Exception;
     
 }

@@ -45,9 +45,9 @@ public class MenuDaoImpl implements MenuDao {
 
     @Override
     public Menu verByDescripcion(Session session, String descripcion) throws Exception {
-        String hql = "FROM Perfil WHERE descripcion=:descripcion";
+        String hql = "FROM Menu WHERE menu=:menu";
         Query query = session.createQuery(hql);
-        query.setParameter("descripcion", descripcion);
+        query.setParameter("menu", descripcion);
 
         Menu perfil = (Menu) query.uniqueResult();
 
@@ -55,16 +55,16 @@ public class MenuDaoImpl implements MenuDao {
     }
 
     @Override
-    public boolean eliminarPerfil(Session session, Menu perfil) throws Exception {
+    public boolean eliminar(Session session, Menu perfil) throws Exception {
         session.delete(perfil);
         return true;
     }
 
     @Override
-    public Menu verByPerfilDifer(Session session, Integer idperfil, String descripcion) throws Exception {
-        String hql = "FROM Perfil WHERE idperfil!=:idperfil and descripcion=:descripcion";
+    public Menu verByDifer(Session session, Integer idmenu, String descripcion) throws Exception {
+        String hql = "FROM Menu WHERE idmenu!=:idmenu and menu=:descripcion";
         Query query = session.createQuery(hql);
-        query.setParameter("idperfil", idperfil);
+        query.setParameter("idmenu", idmenu);
         query.setParameter("descripcion", descripcion);
         
         Menu perfil = (Menu) query.uniqueResult();
