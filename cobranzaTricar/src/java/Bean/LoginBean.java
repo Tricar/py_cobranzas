@@ -97,6 +97,90 @@ public class LoginBean implements Serializable {
         }
 
     }
+    
+    public void actualizarxAprobar (){
+        this.session = null;
+        this.transaction = null;
+        try {
+            CreditoDao creditodao = new CreditoDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();            
+            creditoxaprobar = creditodao.creditoXaprobar(this.session);            
+            this.transaction.commit();            
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public void actualizarxDespachar (){
+        this.session = null;
+        this.transaction = null;
+        try {
+            CreditoDao creditodao = new CreditoDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();            
+            creditoaprobado = creditodao.creditoAprobado(this.session);            
+            this.transaction.commit();            
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public void actualizarVentasxDia (){
+        this.session = null;
+        this.transaction = null;
+        try {
+            CreditoDao creditodao = new CreditoDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();            
+            ventasxdia = creditodao.ventasXdia(this.session);            
+            this.transaction.commit();            
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public void actualizarVentasxMes (){
+        this.session = null;
+        this.transaction = null;
+        try {
+            CreditoDao creditodao = new CreditoDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();            
+            ventasxmes = creditodao.ventasXmes(this.session);            
+            this.transaction.commit();            
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
 
     public void logout() {
         String ruta = MyUtil.basepathlogin() + "login.xhtml";
@@ -175,6 +259,11 @@ public class LoginBean implements Serializable {
     public String moroso() {
         //return "/reportes/moroso";
         return "#";
+    }
+    
+    public String diario() {
+        //return "/reportes/moroso";
+        return "/reportes/diario";
     }
 
     public String ingreso() {

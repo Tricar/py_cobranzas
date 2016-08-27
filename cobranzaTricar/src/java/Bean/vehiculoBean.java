@@ -5,6 +5,7 @@ import Dao.ModeloDaoImplements;
 import Dao.VehiculoDao;
 import Dao.VehiculoDaoImplements;
 import Model.Credito;
+import Model.Modelo;
 import Model.Usuario;
 import Model.Vehiculo;
 import Persistencia.HibernateUtil;
@@ -32,6 +33,7 @@ public class vehiculoBean implements Serializable {
     public List<Vehiculo> vehiculos;
     private List<Vehiculo> query;
     private String idmodelo;
+    public List<Vehiculo> vehiculosfiltrados;
 
     public String getIdmodelo() {
         return idmodelo;
@@ -43,6 +45,14 @@ public class vehiculoBean implements Serializable {
 
     public vehiculoBean() {
         this.vehiculo = new Vehiculo();
+    }
+
+    public List<Vehiculo> getVehiculosfiltrados() {
+        return vehiculosfiltrados;
+    }
+
+    public void setVehiculosfiltrados(List<Vehiculo> vehiculosfiltrados) {
+        this.vehiculosfiltrados = vehiculosfiltrados;
     }
 
     public void nuevo(Usuario usuario) {
@@ -164,6 +174,7 @@ public class vehiculoBean implements Serializable {
                 VehiculoDao dao = new VehiculoDaoImplements();
                 this.session = HibernateUtil.getSessionFactory().openSession();
                 this.transaction = session.beginTransaction();
+                System.out.println("idvehiculo: "+codigoUsuario);
                 this.vehiculo = dao.verByIdvehiculo(this.session, codigoUsuario);
                 this.transaction.commit();
                 RequestContext.getCurrentInstance().update("frmEditarArticulo:panelEditarArticulo");
@@ -268,19 +279,7 @@ public class vehiculoBean implements Serializable {
         this.vehiculos = vehiculos;
     }
 
-    public List<Vehiculo> filtrarDisponible(String name) {
-        this.query = new ArrayList<Vehiculo>();
-        VehiculoDao vehiculodao = new VehiculoDaoImplements();
-        List<Vehiculo> tipos = vehiculodao.filtarDisponible("D");
-        for (Vehiculo tipo : tipos) {
-            if (tipo.getSerie().endsWith(name.toUpperCase())) {
-                query.add(tipo);
-            }
-        }
-        return query;
-    }
-
-    public List<Vehiculo> filtrarDisponibleCotiza(String name) {
+    public List<Vehiculo> filtrarDisponibleModelo(String name) {
         this.query = new ArrayList<Vehiculo>();
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
         List<Vehiculo> tipos = vehiculodao.filtarDisponibleCotiza("D", idmodelo);
@@ -290,10 +289,15 @@ public class vehiculoBean implements Serializable {
             }
         }
         return query;
-    }
+    }    
 
-    public void cargarModeloCotiza(Credito cred) {        
+    public void cargarModelo(Credito cred) {        
         Integer modelo = cred.getModelo().getIdmodelo();
+        idmodelo = Integer.toString(modelo);
+    }
+    
+    public void cargarModeloVehi(Modelo mod) {       
+        Integer modelo = mod.getIdmodelo();
         idmodelo = Integer.toString(modelo);
     }
 }

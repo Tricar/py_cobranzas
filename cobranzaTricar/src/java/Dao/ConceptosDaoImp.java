@@ -210,6 +210,50 @@ public class ConceptosDaoImp implements ConceptosDao{
         return lista;
     }
 
+    @Override
+    public List<Conceptos> mostrarPendXAnexos(Anexo anexo, Boolean cobrado) {
+        Session session = null;
+        List<Conceptos> lista = null;        
+        Integer idanexo = anexo.getIdanexo();
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Conceptos where idanexo=:v and cobrado=:u");
+            query.setParameter("v", idanexo);
+            query.setParameter("u", cobrado);
+            lista = (List<Conceptos>)query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public Conceptos mostrarPendXCredito(Credito credito, Boolean cobrado) {
+        Session session = null;
+        Conceptos concepto = new Conceptos();        
+        Integer idcredito = credito.getIdventa();
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Conceptos where idventa=:v and cobrado=:u");
+            query.setParameter("v", idcredito);
+            query.setParameter("u", cobrado);
+            concepto = (Conceptos)query.uniqueResult();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return concepto;
+    }
+
    
         
 }

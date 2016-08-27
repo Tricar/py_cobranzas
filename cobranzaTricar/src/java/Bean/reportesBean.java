@@ -49,6 +49,8 @@ public class reportesBean implements Serializable {
     private Integer mes;
     private Integer ano;
     private String empresa;
+    private Date fecha1 = new Date();
+    private Date fecha2 = new Date();
 
     /**
      * Creates a new instance of reportesBean
@@ -268,7 +270,7 @@ public class reportesBean implements Serializable {
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             response.addHeader("Content-disposition", "attachment; filename=Formato" + codigo + ".xls");
             ServletOutputStream stream = response.getOutputStream();
-
+            
             JRXlsExporter exporter = new JRXlsExporter();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
             exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
@@ -426,6 +428,96 @@ public class reportesBean implements Serializable {
         FacesContext.getCurrentInstance().responseComplete();
         con.close();
     }
+    
+    public void exportarTotal() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION,true);
+        File jasper = new File("D:/reporte/varios/filtrarosa.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Cuentas.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarCobrosTotal() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha1", fecha1);
+        parametros.put("fecha2", fecha2);
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION,true);
+        File jasper = new File("D:/reporte/diario/pagos.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Totalcobranza.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarIniContado() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha1", fecha1);
+        parametros.put("fecha2", fecha2);
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION,true);
+        File jasper = new File("D:/reporte/diario/inicontado.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=TotalInicialContado.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarAnticipos() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha1", fecha1);
+        parametros.put("fecha2", fecha2);
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION,true);
+        File jasper = new File("D:/reporte/diario/anticipos.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=TotalAnticipos.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
 
     public String getCodigo() {
         return codigo;
@@ -465,6 +557,22 @@ public class reportesBean implements Serializable {
 
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
+    }
+
+    public Date getFecha1() {
+        return fecha1;
+    }
+
+    public void setFecha1(Date fecha1) {
+        this.fecha1 = fecha1;
+    }
+
+    public Date getFecha2() {
+        return fecha2;
+    }
+
+    public void setFecha2(Date fecha2) {
+        this.fecha2 = fecha2;
     }
 
 }

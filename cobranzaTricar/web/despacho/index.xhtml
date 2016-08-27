@@ -106,7 +106,7 @@
             <p:dialog header="Canjear anticipos por pago de inicial " showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgcanjear" modal="true" resizable="false" minWidth="200">
                 <p:messages id="mesagges" autoUpdate="true" closable="true"/>
-                <p:outputLabel value="Monto de inicial: #{creditoBean.inicia}" />
+                <p:outputLabel value="Monto de inicial: #{creditoBean.credito.inicial}" />
                 <p:dataTable id="tablalistar" var="concep" value="#{creditoBean.todosconceptos}" 
                              emptyMessage="No hay nada para mostrar" style="width: 600px; text-align: center">
                     <p:column headerText="Fecha: ">
@@ -122,7 +122,7 @@
                     </p:column>                                                        
                     <p:column style="width:50px;text-align: center">                                                                                        
                         <p:commandButton icon="fa fa-usd white" title="canjear" style="width:40px"
-                                         actionListener="#{creditoBean.canjearInicial(concep.total)}">                                                                    
+                                         actionListener="#{creditoBean.canjearInicial(concep)}">                                                                    
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>            

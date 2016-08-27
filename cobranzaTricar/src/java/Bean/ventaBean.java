@@ -41,9 +41,11 @@ import javax.naming.NamingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -207,7 +209,7 @@ public class ventaBean implements Serializable {
         VehiculoDao vehidao = new VehiculoDaoImplements();
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
-        }else {            
+        } else {
             if (sw == 0) {
                 try {
                     credito.setTotaldeuda(BigDecimal.ZERO);
@@ -225,6 +227,7 @@ public class ventaBean implements Serializable {
                     concepto.setTipo("CO");
                     concepto.setTotal(credito.getInicial());
                     concepto.setFecreg(credito.getFechareg());
+                    concepto.setCobrado(false);
                     concepto.setCredito(credito);
                     condao.insertarConcepto(concepto);
                     vehiculo = credito.getVehiculo();
@@ -313,7 +316,11 @@ public class ventaBean implements Serializable {
                 HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
                 response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".pdf");
                 ServletOutputStream stream = response.getOutputStream();
-                JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                //JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                JRXlsExporter exporter = new JRXlsExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+                exporter.exportReport();
                 stream.flush();
                 stream.close();
                 FacesContext.getCurrentInstance().responseComplete();
@@ -327,9 +334,14 @@ public class ventaBean implements Serializable {
                 File jasper = new File("D:/reporte/liquicredito.jasper");
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
                 HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".pdf");
+                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".xls");
                 ServletOutputStream stream = response.getOutputStream();
-                JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                //JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                JRXlsExporter exporter = new JRXlsExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+                exporter.exportReport();
+
                 stream.flush();
                 stream.close();
                 FacesContext.getCurrentInstance().responseComplete();
@@ -370,7 +382,7 @@ public class ventaBean implements Serializable {
         }
         con.close();
     }
-    
+
     public void addMessageini2() {
         if (valuesi) {
             valuesi2 = true;

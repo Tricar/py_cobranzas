@@ -117,7 +117,7 @@
                                                 <f:selectItem itemLabel="ML" itemValue="ML" />
                                                 <f:selectItem itemLabel="MTF" itemValue="MF" />
                                                 <f:selectItem itemLabel="MTC" itemValue="MC" />
-                                                <p:ajax update="modeloc" listener="#{ventaBean.modeloTipo(ventaBean.credito.vehi)}" process="@this" />
+                                                <p:ajax update="modeloc" listener="#{ventaBean.modeloTipo(ventaBean.credito.vehi)}" process="@this" />                                                
                                             </p:selectOneMenu>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
@@ -127,7 +127,8 @@
                                             <p:selectOneMenu id="modeloc" value="#{ventaBean.credito.modelo}" converter="omnifaces.SelectItemsConverter"
                                                              required="true" requiredMessage="Seleccione Modelo">
                                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                                <f:selectItems value="#{ventaBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>                                                
+                                                <f:selectItems value="#{ventaBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
+                                                <p:ajax update="vehi" listener="#{vehiculoBean.cargarModeloVehi(ventaBean.credito.modelo)}" process="@this" />
                                             </p:selectOneMenu>
                                         </div>
                                     </div>
@@ -142,7 +143,7 @@
                                             <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:autoComplete id="vehi" value="#{ventaBean.credito.vehiculo}" completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
+                                            <p:autoComplete id="vehi" value="#{ventaBean.credito.vehiculo}" completeMethod="#{vehiculoBean.filtrarDisponibleModelo}" var="v"
                                                             itemLabel="#{v.serie}" itemValue="#{v}" required="true" requiredMessage="Elija un vehículo">
                                                 <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
                                                 <p:ajax event="mousemove" listener="#{ventaBean.precioModeloVenta()}"/>

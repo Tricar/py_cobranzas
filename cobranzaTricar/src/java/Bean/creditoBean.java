@@ -467,7 +467,7 @@ public class creditoBean implements Serializable {
     }
 
     public void insertarCreditoEspecial() {
-        CreditoDao creditodao = new CreditoDaoImp();        
+        CreditoDao creditodao = new CreditoDaoImp();
         Vehiculo vehiculo = new Vehiculo();
         if (creditodao.veryLiqventa(this.credito.getLiqventa()) != null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El código de venta ya existe."));
@@ -1092,6 +1092,14 @@ public class creditoBean implements Serializable {
         }
     }
 
+    public void cargarPendAprobar() {
+        CreditoDao credao = new CreditoDaoImp();
+        try {
+            creditos = credao.cargarxEstado("EM");
+        } catch (Exception e) {
+        }
+    }
+
     public void cargarRefinanciados() {
         CreditoDao credao = new CreditoDaoImp();
         try {
@@ -1233,6 +1241,12 @@ public class creditoBean implements Serializable {
     public String cargardespacho(Usuario usuario) {
         tipodocBean tipobean = new tipodocBean();
         ConceptosDao condao = new ConceptosDaoImp();
+        credavalBean credavalbean = new credavalBean();
+        List<Anexo> rec = new ArrayList();
+        rec = credavalbean.avalesxCredito(credito);
+        if (!rec.isEmpty()) {
+            avales = rec;
+        }
         try {
             concepto = new Conceptos();
             modeloTipo(credito.getVehi());
@@ -1246,10 +1260,9 @@ public class creditoBean implements Serializable {
             ocupsxanexo = ocupbean.cargarxCredito(credito);
 //            concepto = condao.v
             if (usuario.getPerfil().getAbrev().equals("AS") || usuario.getPerfil().getAbrev().equals("AD")) {
-                conceptos = condao.mostrarConceptosxAnexo(anexo);
-                if (!conceptos.isEmpty()) {
+                todosconceptos = condao.mostrarPendXAnexos(anexo, Boolean.FALSE);
+                if (!todosconceptos.isEmpty()) {
                     inicia = credito.getInicial();
-                    todosconceptos = condao.mostrarConceptosxAnexo(anexo);
                     btnpago = "Cerrar";
                     RequestContext.getCurrentInstance().update("formcanjear");
                     RequestContext.getCurrentInstance().execute("PF('dlgcanjear').show()");
@@ -1259,7 +1272,7 @@ public class creditoBean implements Serializable {
 //                    pagosBean pagbean = new pagosBean();
                         listafilttipo = tipobean.listaTipoDocs("IN", "CO");
                         btnpago = "Pagar";
-                        concepto = condao.veryIdCredito(credito);
+                        concepto = condao.mostrarPendXCredito(credito, Boolean.FALSE);
                         montopago = concepto.getMontopago();
                         RequestContext.getCurrentInstance().update("formpagar");
                         RequestContext.getCurrentInstance().execute("PF('dlgpagarini').show()");
@@ -1277,6 +1290,55 @@ public class creditoBean implements Serializable {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public void canjearInicial(Conceptos concep) {
+        CreditoDao credao = new CreditoDaoImp();
+        ConceptosDao condao = new ConceptosDaoImp();
+        PagosDao pagodao = new PagosDaoImp();
+//        Conceptos inicial = new Conceptos();
+        Conceptos inicred = new Conceptos();
+        concepto = concep;
+        inicred = condao.mostrarPendXCredito(credito, Boolean.FALSE);
+        pago = pagodao.devolverxIdconcepto(concepto.getIdconceptos());
+        BigDecimal saldon = credito.getInicial().subtract(concepto.getMontopago());
+        if (saldon.compareTo(BigDecimal.ZERO) == 0 || saldon.compareTo(BigDecimal.ZERO) == 1) {
+            concepto.setCobrado(true);
+            concepto.setMontopago(BigDecimal.ZERO);
+            condao.modificarConcepto(concepto);
+//            inicial.setCredito(credito);
+//            inicial.setAnexo(null);
+//            inicial.setMontopago(BigDecimal.ZERO);
+//            inicial.setCobrado(true);
+//            inicial.setTipo("IN");
+//            condao.insertarConcepto(inicial);            
+            inicred.setMontopago(inicred.getMontopago().subtract(concepto.getTotal()));
+            if (inicred.getMontopago().compareTo(BigDecimal.ZERO) == 0) {
+                credito.setSwinicial(true);
+                inicred.setCobrado(true);
+            }
+            condao.modificarConcepto(inicred);
+            fecha1 = new Date();
+            pago.setConceptos(inicred);
+            pago.setFecreg(fecha1);
+            if (credito.getCondicionpago().equals("CD")) {
+                pago.setTipo("IN");
+                pago.setDescripcion("CANJE ANTICIPO" + credito.getLiqventa());
+            } else {
+                pago.setTipo("CO");
+                pago.setDescripcion("CANJE VENTA CONTADO" + credito.getLiqventa());
+            }
+            pagodao.modificarPago(pago);
+            credito.setInicial(credito.getInicial().subtract(concepto.getTotal()));
+            credao.modificarVenta(credito);
+            RequestContext.getCurrentInstance().update("formcanjear");
+            RequestContext.getCurrentInstance().execute("PF('dlgcanjear').show()");
+        } else {
+            RequestContext.getCurrentInstance().update("formcanjear");
+            RequestContext.getCurrentInstance().execute("PF('dlgcanjear').show()");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Reformule el crádito, incremente el monto de la inicial"));
+        }
+        todosconceptos = condao.mostrarPendXAnexos(anexo, Boolean.FALSE);
     }
 
     public void despachar(Usuario usuario) {
@@ -1302,10 +1364,6 @@ public class creditoBean implements Serializable {
         letraslista = new ArrayList();
         filtradafecha = new ArrayList();
         return "/venta/listarv.xhtml";
-    }
-    
-    public void canjearInicial(BigDecimal monto){
-        
     }
 
     public String compararListas() {
@@ -1533,6 +1591,7 @@ public class creditoBean implements Serializable {
                 concepto.setTotal(credito.getInicial());
                 concepto.setFecreg(credito.getFechareg());
                 concepto.setCredito(credito);
+                concepto.setCobrado(false);
                 condao.insertarConcepto(concepto);
                 vehiculo = credito.getVehiculo();
                 vehiculo.setEstado("N");
@@ -1785,6 +1844,7 @@ public class creditoBean implements Serializable {
         CajaDao cajadao = new CajaDaoImp();
         ConceptosDao condao = new ConceptosDaoImp();
         MovcajaDao movcajadao = new MovcajaDaoImp();
+        String mensaje;
         try {
             if (montopago.compareTo(concepto.getMontopago()) != 1) {
                 pago.setConceptos(concepto);
@@ -1796,6 +1856,11 @@ public class creditoBean implements Serializable {
                 caja.setTotal(caja.getTotal().add(montopago));
                 cajadao.modificarCaja(caja);
                 mcaja.setCaja(caja);
+                if (concepto.getTipo().equals("CO")){
+                    mensaje = "Se registró el cobro de la venta al contado"; 
+                } else {
+                    mensaje = "Se registró el cobro de la inicial"; 
+                }
                 mcaja.setTipomov(concepto.getTipo());
                 mcaja.setFechamov(pago.getFecreg());
                 mcaja.setMonto(montopago);
@@ -1810,7 +1875,7 @@ public class creditoBean implements Serializable {
                 RequestContext.getCurrentInstance().update("formpagar");
                 RequestContext.getCurrentInstance().execute("PF('dlgpagarini').hide()");
                 RequestContext.getCurrentInstance().update("formpagar");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se registró la inicial."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", mensaje));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Revise el monto", "Monto excede el saldo"));
                 RequestContext.getCurrentInstance().update("formpagar");

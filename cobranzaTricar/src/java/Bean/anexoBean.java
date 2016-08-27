@@ -47,6 +47,7 @@ public class anexoBean implements Serializable {
     private String var;
     private int año;
     private String fecnac;
+    public List<Anexo> anexosfiltrados;
 
     public anexoBean() {
     }
@@ -730,5 +731,13 @@ public class anexoBean implements Serializable {
 
     public void setFecnac(String fecnac) {
         this.fecnac = fecnac;
+    }
+
+    public List<Anexo> getAnexosfiltrados() {
+        return anexosfiltrados;
+    }
+
+    public void setAnexosfiltrados(List<Anexo> anexosfiltrados) {
+        this.anexosfiltrados = anexosfiltrados;
     }
 }

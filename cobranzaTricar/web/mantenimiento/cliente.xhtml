@@ -18,7 +18,8 @@
                 <h:form id="formMostrar">
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                     <p:dataTable var="item" value="#{anexoBean.verCliente()}" emptyMessage="No hay nada para mostrar" 
-                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 50 60 70"> 
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 50 60 70"
+                                 filteredValue="#{anexoBean.anexosfiltrados}"> 
                         <p:column headerText="NOMBRE Y APELLIDO" filterBy="#{item.nombres}" filterMatchMode="contains">
                             <h:outputText value="#{item.nombres} " />
                         </p:column>
@@ -93,7 +94,7 @@
                         <f:selectItem itemLabel="CASADO(A)" itemValue="CA" />
                         <f:selectItem itemLabel="DIVORCIADO(A)" itemValue="DI" />
                         <f:selectItem itemLabel="VIUDO(A)" itemValue="VI" />
-                        <f:ajax render="txtConyuge txtDniCon" />
+                        <f:ajax render="txtConyuge txtDniCon txtDireccionCon txtOcupacion" />
                     </p:selectOneMenu>
                     <p:outputLabel value="CONYUGE:" for="txtConyuge"/>
                     <p:inputText disabled="#{anexoBean.anexo.estcivil != 'CA' and anexoBean.anexo.estcivil != 'CO'}" id="txtConyuge" value="#{anexoBean.anexo.conyuge}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">

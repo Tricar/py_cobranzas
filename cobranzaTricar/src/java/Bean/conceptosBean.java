@@ -102,7 +102,7 @@ public class conceptosBean implements Serializable {
     public void cargarAnticipos(Anexo anex) {
         anexo = anex;
         ConceptosDao condao = new ConceptosDaoImp();
-        conceptos = condao.mostrarConceptosxAnexo(anexo);
+        conceptos = condao.mostrarPendXAnexos(anexo, Boolean.FALSE);
     }
 
     public void insertarAnticipo(Anexo anex) {
@@ -204,7 +204,7 @@ public class conceptosBean implements Serializable {
             btnpago = "Pagar";
             ConceptosDao condao = new ConceptosDaoImp();
             pagbean.insertarAnticipo(idusuario, anex, concepto, pago, montopago);
-            conceptos = condao.mostrarConceptosxAnexo(anexo);
+            conceptos = condao.mostrarPendXAnexos(anexo, Boolean.FALSE);
             RequestContext.getCurrentInstance().update("formAnti");
             RequestContext.getCurrentInstance().update("formpagar");
             RequestContext.getCurrentInstance().execute("PF('dlgpagar').hide()");

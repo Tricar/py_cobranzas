@@ -223,7 +223,7 @@
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:autoComplete id="vehi" value="#{creditoBean.credito.vehiculo}"
-                                                            completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
+                                                            completeMethod="#{vehiculoBean.filtrarDisponibleModelo}" var="v"
                                                             itemLabel="#{v.serie}" itemValue="#{v}" 
                                                             required="true" requiredMessage="Elija un vehículo">
                                                 <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
