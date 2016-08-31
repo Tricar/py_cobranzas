@@ -81,7 +81,7 @@
                             <ui:repeat var="item" varStatus="status" value="#{perfilBean.menus}">
                                 <h:outputText class="blue Fs16" value="#{item.menu}:" /> 
                                 <h:panelGroup></h:panelGroup>
-                                <h:selectManyCheckbox value="#{perfilBean.submenu}">
+                                <h:selectManyCheckbox value="#{perfilBean.selecsubmenus}">
                                     <f:selectItems value="#{perfilBean.cargarSubmenus(item.idmenu)}" var="tutorial" itemValue="#{tutorial.idsubmenu}" itemLabel="#{tutorial.submenu}"/>
                                 </h:selectManyCheckbox>
                             </ui:repeat>

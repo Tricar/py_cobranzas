@@ -41,9 +41,12 @@ import javax.naming.NamingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.DocxExporterConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -328,9 +331,12 @@ public class ventaBean implements Serializable {
                 File jasper = new File("D:/reporte/liquicredito.jasper");
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
                 HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".pdf");
+                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".xlsx");
                 ServletOutputStream stream = response.getOutputStream();
-                JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+                JRXlsxExporter docxExporter = new JRXlsxExporter();
+                docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+                docxExporter.exportReport();
                 stream.flush();
                 stream.close();
                 FacesContext.getCurrentInstance().responseComplete();
@@ -371,7 +377,7 @@ public class ventaBean implements Serializable {
         }
         con.close();
     }
-    
+
     public void addMessageini2() {
         if (valuesi) {
             valuesi2 = true;

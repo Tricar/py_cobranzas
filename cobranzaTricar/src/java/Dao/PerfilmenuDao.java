@@ -17,6 +17,7 @@ public interface PerfilmenuDao {
     
     public boolean registrar(Session session, Perfilmenu perfil)throws Exception;
     public List<Perfilmenu> verTodo(Session session) throws Exception;
+    public Perfilmenu mostrarRequisitosXCred(Integer menu); 
     public List<Perfilmenu> verTodoByPerfilmenu(Session session, Integer menu) throws Exception;
     public Perfilmenu verByCodigo(Session session, Integer idperfil) throws Exception;
     public Perfilmenu verByDescripcion(Session session, String descripcion) throws Exception;

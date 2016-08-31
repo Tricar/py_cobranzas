@@ -72,7 +72,6 @@
                                 <p:commandButton icon="b-delete" oncomplete="dlgeliminar.show()" update=":formEliminar" title="Eliminar">
                                     <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                                 </p:commandButton>
-                                <p:commandButton icon="b-Print" ajax="false" actionListener="#{reportesBean.exportarLiq(cred.liqventa)}" title="Imprimir"/>
                             </ui:remove>
                         </p:column>
                     </p:dataTable>

@@ -6,7 +6,9 @@
 package Dao;
 
 import Model.Perfilmenu;
+import Persistencia.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -81,6 +83,26 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
         List<Perfilmenu> listaPerfil = (List<Perfilmenu>) query.list();
 
         return listaPerfil;
+    }
+
+    @Override
+    public Perfilmenu mostrarRequisitosXCred(Integer menu) {        
+        Session session = null;
+        Perfilmenu req = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Perfilmenu where idmenu=:v");
+            query.setParameter("v", menu);
+            req = (Perfilmenu)query.uniqueResult();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return req;
     }
 
 }
