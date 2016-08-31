@@ -25,7 +25,7 @@
                             <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                             <p:dataTable var="item" value="#{vehiculoBean.vehiculos}" 
                                          emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
-                                         paginatorPosition="top" rowsPerPageTemplate="10">
+                                         paginatorPosition="top" rowsPerPageTemplate="10" filteredValue="#{vehiculoBean.vehiculosfiltrados}">
                                 <p:column headerText="MARCA">
                                     <h:outputText value="#{item.marca}">
                                         <f:converter converterId="marcaconverter"/>
@@ -37,10 +37,10 @@
                                     <h:outputText value="#{item.color.color}" />-
                                     <h:outputText value="#{item.anofabri}" />
                                 </p:column>                        
-                                <p:column headerText="SERIE" filterBy="#{item.serie}" filterMatchMode="contains">
+                                <p:column headerText="SERIE" filterBy="#{item.serie}" filterMatchMode="contains" >
                                     <h:outputText value="#{item.serie}" />
                                 </p:column>
-                                <p:column headerText="ESTADO" filterBy="#{item.estado}" filterMatchMode="contains">
+                                <p:column headerText="ESTADO" >
                                     <h:outputText value="#{item.estado}">
                                         <f:converter converterId="estadoconverter"/>
                                     </h:outputText>

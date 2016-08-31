@@ -17,7 +17,7 @@
                 <div class="ContainerIndent">
                     <h2 class="BigTopic">Venta al Contado</h2>
                     <f:view afterPhase="#{anexoBean.phaseListener}">
-                        <h:form id="mostrar">
+                        <h:form id="mostrar">                            
                             <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
                                 <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
                                     <p:growl id="msg12" showDetail="true"/> 
@@ -117,7 +117,7 @@
                                                 <f:selectItem itemLabel="ML" itemValue="ML" />
                                                 <f:selectItem itemLabel="MTF" itemValue="MF" />
                                                 <f:selectItem itemLabel="MTC" itemValue="MC" />
-                                                <p:ajax update="modeloc" listener="#{ventaBean.modeloTipo(ventaBean.credito.vehi)}" process="@this" />
+                                                <p:ajax update="modeloc" listener="#{ventaBean.modeloTipo(ventaBean.credito.vehi)}" process="@this" />                                                
                                             </p:selectOneMenu>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
@@ -128,7 +128,7 @@
                                                              required="true" requiredMessage="Seleccione Modelo">
                                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                                 <f:selectItems value="#{ventaBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
-                                                <p:ajax update="precio" listener="#{ventaBean.precioModeloVenta()}" process="@this"/>
+                                                <p:ajax update="vehi" listener="#{vehiculoBean.cargarModeloVehi(ventaBean.credito.modelo)}" process="@this" />
                                             </p:selectOneMenu>
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
                                             <p:outputLabel value="Buscar vehiculo x serie:" for="vehi"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:autoComplete id="vehi" value="#{ventaBean.credito.vehiculo}" completeMethod="#{vehiculoBean.filtrarDisponible}" var="v"
+                                            <p:autoComplete id="vehi" value="#{ventaBean.credito.vehiculo}" completeMethod="#{vehiculoBean.filtrarDisponibleModelo}" var="v"
                                                             itemLabel="#{v.serie}" itemValue="#{v}" required="true" requiredMessage="Elija un vehículo">
                                                 <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
                                                 <p:ajax event="mousemove" listener="#{ventaBean.precioModeloVenta()}"/>
@@ -209,17 +209,17 @@
                         <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                         <f:selectItems value="#{distritoBean.listatdistrito}" var="distrito" itemLabel="#{distrito.distrito}" itemValue="#{distrito}"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
-                    <p:inputText value="#{ventaBean.anexo.referencia}" id="txtReferencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                        <f:validator validatorId="validatorVacio"/>
-                        <f:validator validatorId="validatorLetraNumSig"/>
-                    </p:inputText>
+                    <ui:remove><p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
+                        <p:inputText value="#{ventaBean.anexo.referencia}" id="txtReferencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                            <f:validator validatorId="validatorVacio"/>
+                            <f:validator validatorId="validatorLetraNumSig"/>
+                        </p:inputText></ui:remove>                        
                     <p:outputLabel value="TELEFONO:" />
                     <p:inputMask mask="9?99999999" value="#{ventaBean.anexo.telefono}" maxlength="9"/>
-                    <p:outputLabel value="CELULAR:" for="txtCel"/>
-                    <p:inputText value="#{ventaBean.anexo.celular}" id="txtCel" maxlength="10" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                        <f:validator validatorId="validatorNumeroCel"/>
-                    </p:inputText>
+                    <ui:remove><p:outputLabel value="CELULAR:" for="txtCel"/>
+                        <p:inputText value="#{ventaBean.anexo.celular}" id="txtCel" maxlength="10" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                            <f:validator validatorId="validatorNumeroCel"/>
+                        </p:inputText></ui:remove>
                 </h:panelGrid>
                 <p:commandButton value="Registrar Cliente" icon="fa fa-save white" ajax="false" actionListener="#{ventaBean.insertarcliente()}" />
             </p:dialog>

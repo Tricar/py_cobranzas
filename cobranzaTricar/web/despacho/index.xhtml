@@ -60,7 +60,7 @@
                         <p:column headerText="Estado">
                             <h:outputText value="#{cred.estado}" converter="estcredconvert"/>
                         </p:column>                
-                        <p:column headerText="OPERACIONES">
+                        <p:column style="width:45px;text-align: center">
                             <p:commandButton value="V" action="#{creditoBean.cargardespacho(loginbean.usuario)}" >
                                 <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                             </p:commandButton>
@@ -101,6 +101,35 @@
                 <p:commandButton id="btnpagar" actionListener="#{creditoBean.insertarini(loginbean.usuario.idusuario)}" value="#{creditoBean.btnpago}" />              
             </p:dialog>
         </h:form>
+
+        <h:form id="formcanjear">
+            <p:dialog header="Canjear anticipos por pago de inicial " showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgcanjear" modal="true" resizable="false" minWidth="200">
+                <p:messages id="mesagges" autoUpdate="true" closable="true"/>
+                <p:outputLabel value="Monto de inicial: #{creditoBean.credito.inicial}" />
+                <p:dataTable id="tablalistar" var="concep" value="#{creditoBean.todosconceptos}" 
+                             emptyMessage="No hay nada para mostrar" style="width: 600px; text-align: center">
+                    <p:column headerText="Fecha: ">
+                        <h:outputText value="#{concep.fecreg}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Nombres">
+                        <h:outputText value="#{concep.anexo.nombres}" />
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{concep.total}" />
+                    </p:column>                                                        
+                    <p:column style="width:50px;text-align: center">                                                                                        
+                        <p:commandButton icon="fa fa-usd white" title="canjear" style="width:40px"
+                                         actionListener="#{creditoBean.canjearInicial(concep)}">                                                                    
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>            
+                <p:commandButton id="btnpagar" onclick="dlgcanjear.hide();" value="#{creditoBean.btnpago}" />              
+            </p:dialog>
+        </h:form>
+
         <ui:remove>
             <h:form id="formVer">
                 <p:dataTable var="letras" value="#{creditoBean.letraslista}" 

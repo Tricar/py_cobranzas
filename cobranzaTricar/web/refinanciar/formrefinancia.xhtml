@@ -71,6 +71,8 @@
                     <f:selectItem itemLabel="11" itemValue='11'/>
                     <f:selectItem itemLabel="12" itemValue='12'/>
                 </p:selectOneMenu>
+                <p:outputLabel value="OBSERVACIONES:" for="txtobs"/>
+                <p:inputText id="txtobs" value="#{creditoBean.credito.resena}" required="true" requiredMessage="Ingrese Comentario"/>
             </h:panelGrid>
             <p:commandButton value="#{creditoBean.btnguardar}" action="#{creditoBean.refinanciar(loginbean.usuario)}" icon="fa fa-thumbs-o-up white"
                              ajax="false" disabled="#{creditoBean.value}">

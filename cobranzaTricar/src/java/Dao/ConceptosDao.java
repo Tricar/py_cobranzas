@@ -3,6 +3,7 @@ package Dao;
 import Model.Anexo;
 import Model.Conceptos;
 import Model.Credito;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -20,5 +21,8 @@ public interface ConceptosDao{
     public boolean registrar(Session session, Conceptos conceptos)throws Exception;
     public Conceptos veryId(Integer idconcepto);
     public Conceptos veryIdCredito(Credito credito);
+    public List<Conceptos> filtrarxFechas(Date f1, Date f2, String tipo, Boolean cobrado);
+    public List<Conceptos> mostrarPendXAnexos(Anexo anexo, Boolean cobrado);
+    public Conceptos mostrarPendXCredito(Credito credito, Boolean cobrado);
 }
 

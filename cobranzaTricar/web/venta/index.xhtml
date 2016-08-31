@@ -19,6 +19,10 @@
                                  ajax="false"/>
             </h:panelGrid>
         </h:form>
+        
+        <h:form>            
+            <p:commandButton actionListener="#{creditoBean.cargarPendAprobar()}" value="Pendientes" ajax="false" icon="fa fa-line-chart white"/>
+        </h:form>
 
         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
             <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
@@ -60,7 +64,7 @@
                             <h:outputText value="#{cred.estado}" converter="estcredconvert"/>
                         </p:column>                
                         <p:column headerText="OPERACIONES">
-                            <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" >
+                            <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" update="#{vehiculoBean.cargarModelo(cred)}">
                                 <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                             </p:commandButton>
                             <p:commandButton ajax="false" actionListener="#{creditoBean.exportarFormato(cred.liqventa, cred.condicionpago, cred.estado)}" title="Solicitud de Credito" icon="fa fa-print white" />

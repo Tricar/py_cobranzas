@@ -76,7 +76,7 @@
                     </p:selectOneMenu>
                     <p:outputLabel value="Tipo Vehículo:" for="tipo"/>
                     <p:selectOneMenu id="tipo" value="#{creditoBean.credito.vehi}" required="true" 
-                                     requiredMessage="Seleccione Tipo de vehículo" disabled="true">
+                                     requiredMessage="Seleccione Tipo de vehículo" >
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
                         <f:selectItem itemLabel="MTX" itemValue="MX" />
                         <f:selectItem itemLabel="ML" itemValue="ML" />
@@ -86,7 +86,7 @@
                     </p:selectOneMenu>
                     <p:outputLabel value="Modelo:" for="modeloc"/>
                     <p:selectOneMenu id="modeloc" value="#{creditoBean.credito.modelo}" converter="omnifaces.SelectItemsConverter"
-                                     required="true" requiredMessage="Seleccione Modelo" disabled="true">
+                                     required="true" requiredMessage="Seleccione Modelo" >
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                         <f:selectItems value="#{creditoBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
                         <p:ajax update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
@@ -112,11 +112,26 @@
                     <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true"> 
                     </p:inputText>                    
                     <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" for="txtinicial"/>
-                    <p:inputText id="txtinicial" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" >
+                    <p:inputText id="txtinicial" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei}">
                         <p:ajax event="keyup" update="res" listener="#{creditoBean.resSaldo()}"/>
                     </p:inputText>
-                    <p:outputLabel id="lblsinicial" value="Segunda Inicial:" for="txtsinicial"/>
-                    <p:inputText id="txtsinicial" value="#{creditoBean.sinicial}" class="money" required="true" requiredMessage="Ingrese 2DA incial" disabled="#{creditoBean.valuesi}"/> 
+                    <h:outputText value="¿Inicial distinta? " />
+                    <p:selectBooleanButton value="#{creditoBean.valuei}" onLabel="Si" offLabel="No" onIcon="ui-icon-check blue" offIcon="ui-icon-close red" style="width:40px">
+                        <p:ajax update="msg12 txtinicial txtinicial2" listener="#{creditoBean.addMessageini}" />
+                    </p:selectBooleanButton>
+                    <p:outputLabel id="lblinicial2" value="Ingrese inicial:" for="txtinicial2"/>
+                    <p:inputText id="txtinicial2" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei2}">
+                        <p:ajax event="keyup" update="res" listener="#{creditoBean.resSaldo()}"/>
+                    </p:inputText>
+                    <h:outputText value="¿Segunda inicial? " />
+                    <p:selectBooleanButton value="#{creditoBean.valuesi}" onLabel="Si" offLabel="No" onIcon="ui-icon-check blue" offIcon="ui-icon-close red" style="width:40px">
+                        <p:ajax update="msg12 txtsinicial txtfecha2" listener="#{creditoBean.addMessageini2}" />
+                    </p:selectBooleanButton>
+                    <p:outputLabel id="lblsinicial" value="Ingrese 2da inicial:" for="txtsinicial"/>
+                    <p:inputText id="txtsinicial" value="#{creditoBean.sinicial}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuesi2}"/>
+                    <p:outputLabel value="Fecha 2DA inicial:" for="txtfecha2"/>
+                    <p:calendar id="txtfecha2" showOn="button" value="#{creditoBean.fecha2}" navigator="true" pattern="dd/MM/yyyy" 
+                                required="true" requiredMessage="Ingresar Fecha 2da inicial" disabled="#{creditoBean.valuesi2}"/>
                     <p:outputLabel value="Saldo:"/>                                    
                     <p:inputText id="res" value="#{creditoBean.saldo}" readonly="true"/>
                     <p:outputLabel value="Interés:" for="interes"/>

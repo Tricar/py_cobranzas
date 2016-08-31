@@ -13,5 +13,5 @@ public interface CajaDao {
     public void insertarCaja(Caja caja);
     public void modificarCaja (Caja caja);
     public void eliminarCaja (Caja caja);
-    public Caja veryId(Integer idcaja);
+    public Caja veryId(Integer idcaja);    
 }

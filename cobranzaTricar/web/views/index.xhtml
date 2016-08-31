@@ -74,7 +74,12 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs14 gray FontRalewayRegular">Ventas Semanal</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 blue FontRalewayLight"><h:outputLabel value="#{loginbean.ventasxdia}"/></div>
+                                <div class="Fs30 blue FontRalewayLight">
+                                    <h:form>
+                                        <p:poll interval="3" update="ventas" listener="#{loginbean.actualizarVentasxDia()}"/>
+                                        <h:outputLabel id="ventas" value="#{loginbean.ventasxdia}"/>
+                                    </h:form>
+                                </div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
@@ -83,7 +88,12 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs14 gray FontRalewayRegular">Ventas del mes</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 blue FontRalewayLight"><h:outputLabel value="#{loginbean.ventasxmes}"/></div>
+                                <div class="Fs30 blue FontRalewayLight">
+                                    <h:form>
+                                        <p:poll interval="3" update="ventasxmes" listener="#{loginbean.actualizarVentasxMes()}"/>
+                                        <h:outputLabel id="ventasxmes" value="#{loginbean.ventasxmes}"/>
+                                    </h:form>
+                                </div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
@@ -92,16 +102,27 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs14 gray FontRalewayRegular">Creditos para Aprobar</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 red FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i> <h:outputLabel value="#{loginbean.creditoxaprobar}"/></div>
+                                <div class="Fs30 red FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i> 
+                                    <h:form>
+                                        <p:poll interval="3" update="credxapro" listener="#{loginbean.actualizarxAprobar()}"/>
+                                        <h:outputLabel id="credxapro" value="#{loginbean.creditoxaprobar}"/>
+                                    </h:form>                                    
+                                </div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
                         <div class="Wid45 BorderedBox Fright TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Creditos para despachar</div>
+                                <div class="Fs14 gray FontRalewayRegular">Pendientes de despacho</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 orange FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i> <h:outputLabel value="#{loginbean.creditoaprobado}"/></div>
+                                <div class="Fs30 orange FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i>
+                                    <h:form>
+                                        <p:poll interval="3" update="pend" listener="#{loginbean.actualizarxDespachar()}"/>
+                                        <h:outputLabel id="pend" value="#{loginbean.creditoaprobado}"/>
+                                    </h:form>
+                                    
+                                </div>
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>

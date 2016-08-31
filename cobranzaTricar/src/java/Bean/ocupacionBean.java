@@ -155,7 +155,7 @@ public class ocupacionBean implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlghistorial').show()");
     }
 
-    public void actualizar() {
+    public void actualizar() {        
         if ((ocupacion.getTipo().equals("DP") && ocupacion.getClase().equals("FR")) && anexo.getCpropia().equals("SI")) {
             opcbol = false;
             //opccons = false;
@@ -275,6 +275,7 @@ public class ocupacionBean implements Serializable {
     public void delete() {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocudao.delete(ocupacion);
+        ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
         RequestContext.getCurrentInstance().update("formTabla");
         RequestContext.getCurrentInstance().execute("PF('dlgEliminar').hide()");
 

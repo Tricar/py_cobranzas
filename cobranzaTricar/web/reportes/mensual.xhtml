@@ -1,122 +1,134 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-
-    <h:head>
-        <title>Gestion de Usuarios </title>
-    </h:head>
-    <h:body>
-
-        <ui:composition template="./../views/template.xhtml">
-            <ui:define name="content">
-
-                <div class="Container50 Responsive50">
-                    <div class="ContainerIndent">
-                        <h1 class="BigTopic">Reporte Cierre de Ingreso</h1>
-                        <h:form>
-                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-12">
-                                            <p:outputLabel value="Ingrese Mes y Año:"/>                                            
-                                        </div>
-                                    </div>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-12">
-                                            <p:selectOneMenu id="mes" value="#{reportesBean.mes}">
-                                                <f:selectItem itemLabel="Seleccione Mes" itemValue="#{null}" />
-                                                <f:selectItem itemLabel="Enero" itemValue="01" />
-                                                <f:selectItem itemLabel="Febrero" itemValue="02" />
-                                                <f:selectItem itemLabel="Marzo" itemValue="03" />
-                                                <f:selectItem itemLabel="Abril" itemValue="04" />
-                                                <f:selectItem itemLabel="Mayo" itemValue="05" />
-                                                <f:selectItem itemLabel="Junio" itemValue="06" />
-                                                <f:selectItem itemLabel="Julio" itemValue="07" />
-                                                <f:selectItem itemLabel="Agosto" itemValue="08" />
-                                                <f:selectItem itemLabel="Setiembre" itemValue="09" />
-                                                <f:selectItem itemLabel="Octubre" itemValue="10" />
-                                                <f:selectItem itemLabel="Noviembre" itemValue="11" />
-                                                <f:selectItem itemLabel="Diciembre" itemValue="12" />
-                                            </p:selectOneMenu>
-                                            <p:outputLabel value=" / "/>
-                                            <p:selectOneMenu id="ano" value="#{reportesBean.ano}">
-                                                <f:selectItem itemLabel="Seleccione Año" itemValue="#{null}" />
-                                                <f:selectItem itemLabel="2011" itemValue="2011" />
-                                                <f:selectItem itemLabel="2012" itemValue="2012" />
-                                                <f:selectItem itemLabel="2013" itemValue="2013" />
-                                                <f:selectItem itemLabel="2014" itemValue="2014" />
-                                                <f:selectItem itemLabel="2015" itemValue="2015" />
-                                                <f:selectItem itemLabel="2016" itemValue="2016" />
-                                                <f:selectItem itemLabel="2017" itemValue="2017" />
-                                                <f:selectItem itemLabel="2018" itemValue="2018" />
-                                                <f:selectItem itemLabel="2019" itemValue="2019" />
-                                                <f:selectItem itemLabel="2020" itemValue="2020" />
-                                            </p:selectOneMenu>
-                                            <p:outputLabel value=" / "/>
-                                            <p:selectOneMenu id="empresa" value="#{reportesBean.empresa}">
-                                                <f:selectItem itemLabel="Seleccione Empresa" itemValue="#{null}" />
-                                                <f:selectItem itemLabel="TRICAR" itemValue="TR" />
-                                                <f:selectItem itemLabel="SEDNA" itemValue="SD" />
-                                                <f:selectItem itemLabel="CASCO RED" itemValue="CR" />
-                                            </p:selectOneMenu>
-                                            <p:separator/>
-                                            <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.cierreIngreso()}" /> 
-                                        </div>
-                                    </div>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./../views/template.xhtml">
+    <ui:define name="content">
+        <h2>Reportes varios</h2>
+        <div class="Container50 Responsive50">
+            <div class="ContainerIndent">
+                <h1 class="BigTopic">Reporte Cierre de Ingreso</h1>
+                <h:form>
+                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">
+                                    <p:outputLabel value="Ingrese Mes y Año:"/>                                            
                                 </div>
                             </div>
-                        </h:form>
-                    </div>
-                    <div class="ContainerIndent">
-                        <h1 class="BigTopic">Detallado de Cuentas</h1>
-                        <h:form>
-                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-12">
-                                            <p:outputLabel value="Reporte Detallado total"/>                                            
-                                        </div>
-                                    </div>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
-                                            <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarTotalExcel()}" /> 
-                                        </div>
-                                    </div>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">
+                                    <p:selectOneMenu id="mes" value="#{reportesBean.mes}">
+                                        <f:selectItem itemLabel="Seleccione Mes" itemValue="#{null}" />
+                                        <f:selectItem itemLabel="Enero" itemValue="01" />
+                                        <f:selectItem itemLabel="Febrero" itemValue="02" />
+                                        <f:selectItem itemLabel="Marzo" itemValue="03" />
+                                        <f:selectItem itemLabel="Abril" itemValue="04" />
+                                        <f:selectItem itemLabel="Mayo" itemValue="05" />
+                                        <f:selectItem itemLabel="Junio" itemValue="06" />
+                                        <f:selectItem itemLabel="Julio" itemValue="07" />
+                                        <f:selectItem itemLabel="Agosto" itemValue="08" />
+                                        <f:selectItem itemLabel="Setiembre" itemValue="09" />
+                                        <f:selectItem itemLabel="Octubre" itemValue="10" />
+                                        <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                                        <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value=" / "/>
+                                    <p:selectOneMenu id="ano" value="#{reportesBean.ano}">
+                                        <f:selectItem itemLabel="Seleccione Año" itemValue="#{null}" />
+                                        <f:selectItem itemLabel="2011" itemValue="2011" />
+                                        <f:selectItem itemLabel="2012" itemValue="2012" />
+                                        <f:selectItem itemLabel="2013" itemValue="2013" />
+                                        <f:selectItem itemLabel="2014" itemValue="2014" />
+                                        <f:selectItem itemLabel="2015" itemValue="2015" />
+                                        <f:selectItem itemLabel="2016" itemValue="2016" />
+                                        <f:selectItem itemLabel="2017" itemValue="2017" />
+                                        <f:selectItem itemLabel="2018" itemValue="2018" />
+                                        <f:selectItem itemLabel="2019" itemValue="2019" />
+                                        <f:selectItem itemLabel="2020" itemValue="2020" />
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value=" / "/>
+                                    <p:selectOneMenu id="empresa" value="#{reportesBean.empresa}">
+                                        <f:selectItem itemLabel="Seleccione Empresa" itemValue="#{null}" />
+                                        <f:selectItem itemLabel="TRICAR" itemValue="TR" />
+                                        <f:selectItem itemLabel="SEDNA" itemValue="SD" />
+                                        <f:selectItem itemLabel="CASCO RED" itemValue="CR" />
+                                    </p:selectOneMenu>
+                                    <p:separator/>
+                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.cierreIngreso()}" /> 
                                 </div>
                             </div>
-                        </h:form>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="Container50 Responsive50">
-                    <div class="ContainerIndent">
-                        <h1 class="BigTopic">Consolidado</h1>
-                        <h:form>
-                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-12">
-                                            <p:outputLabel value="Reporte consolidado del mes en curso"/>                                            
-                                        </div>
-                                    </div>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
-                                            <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarConsolidadoExcel()}" /> 
-                                        </div>
-                                    </div>
+                </h:form>
+            </div>
+            <div class="ContainerIndent">
+                <h1 class="BigTopic">Detallado de Cuentas</h1>
+                <h:form>
+                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">
+                                    <p:outputLabel value="Reporte Detallado total"/>                                            
                                 </div>
                             </div>
-                        </h:form>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
+                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarTotalExcel()}" /> 
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>                    
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
+                </h:form>
+            </div>
+        </div>
+
+        <div class="Container50 Responsive50">
+            <div class="ContainerIndent">
+                <h1 class="BigTopic">Consolidado</h1>
+                <h:form>
+                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">
+                                    <p:outputLabel value="Reporte consolidado del mes en curso"/>                                            
+                                </div>
+                            </div>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
+                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarConsolidadoExcel()}" /> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+            <div class="ContainerIndent">
+                <h1 class="BigTopic">Detallado de Tiendas</h1>
+                <h:form>
+                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">
+                                    <p:outputLabel value="Reporte Detallado total"/>                                            
+                                </div>
+                            </div>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
+                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarTotal()}" /> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>                    
+    </ui:define>
+</ui:composition>
