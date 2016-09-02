@@ -67,7 +67,7 @@ public class vehiculoBean implements Serializable {
     }
 
     public void registrar(Usuario usuario) {
-        if (usuario.getPerfil().getAbrev().equals("AD")) {
+        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("AS")) {
             this.session = null;
             this.transaction = null;
 

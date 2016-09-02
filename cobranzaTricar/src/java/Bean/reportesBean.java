@@ -365,7 +365,7 @@ public class reportesBean implements Serializable {
         con.close();
     }
 
-    public void exportarConsolidadoExcel() throws JRException, NamingException, SQLException, IOException {
+    public void exportarConsolidadoCasco() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
@@ -396,7 +396,140 @@ public class reportesBean implements Serializable {
         File jasper = new File("D:/reporte/consolidado/consolidado.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=Consolidado.xls");
+        response.addHeader("Content-disposition", "attachment; filename=ConsolidadoCasco.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarConsolidadoTricar() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        recorrerCreditos recorre = new recorrerCreditos();
+        Date d = new Date();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = format.format(d);
+        BigDecimal penv1 = recorre.montosDet("V1", "TR", "PN");
+        BigDecimal venv1 = recorre.montosDet("V1", "TR", "VN");
+        BigDecimal totv1 = recorre.montosTotal("V1", "TR");
+        BigDecimal penv2 = recorre.montosDet("V2", "TR", "PN");
+        BigDecimal venv2 = recorre.montosDet("V2", "TR", "VN");
+        BigDecimal totv2 = recorre.montosTotal("V2", "TR");
+        BigDecimal penv3 = recorre.montosDet("YA", "TR", "PN");
+        BigDecimal venv3 = recorre.montosDet("YA", "TR", "VN");
+        BigDecimal totv3 = recorre.montosTotal("YA", "TR");
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("pendienteV1", penv1);
+        parametros.put("vencidaV1", venv1);
+        parametros.put("totalV1", totv1);
+        parametros.put("pendienteV2", penv2);
+        parametros.put("vencidaV2", venv2);
+        parametros.put("totalV2", totv2);
+        parametros.put("pendienteV3", penv3);
+        parametros.put("vencidaV3", venv3);
+        parametros.put("totalV3", totv3);
+        parametros.put("fecha", fecha);
+        File jasper = new File("D:/reporte/consolidado/consolidado.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=ConsolidadoTricar.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarConsolidadoSedna() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        recorrerCreditos recorre = new recorrerCreditos();
+        Date d = new Date();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = format.format(d);
+        BigDecimal penv1 = recorre.montosDet("V1", "SE", "PN");
+        BigDecimal venv1 = recorre.montosDet("V1", "SE", "VN");
+        BigDecimal totv1 = recorre.montosTotal("V1", "SE");
+        BigDecimal penv2 = recorre.montosDet("V2", "SE", "PN");
+        BigDecimal venv2 = recorre.montosDet("V2", "SE", "VN");
+        BigDecimal totv2 = recorre.montosTotal("V2", "SE");
+        BigDecimal penv3 = recorre.montosDet("T ", "SE", "PN");
+        BigDecimal venv3 = recorre.montosDet("T ", "SE", "VN");
+        BigDecimal totv3 = recorre.montosTotal("T ", "SE");
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("pendienteV1", penv1);
+        parametros.put("vencidaV1", venv1);
+        parametros.put("totalV1", totv1);
+        parametros.put("pendienteV2", penv2);
+        parametros.put("vencidaV2", venv2);
+        parametros.put("totalV2", totv2);
+        parametros.put("pendienteV3", penv3);
+        parametros.put("vencidaV3", venv3);
+        parametros.put("totalV3", totv3);
+        parametros.put("fecha", fecha);
+        File jasper = new File("D:/reporte/consolidado/consolsedna.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=ConsolidadoSedna.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarMorosidad() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        recorrerCreditos recorre = new recorrerCreditos();
+        Date d = new Date();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = format.format(d);
+        BigDecimal penv1 = recorre.montosDet("V1", "CA", "PN");
+        BigDecimal venv1 = recorre.montosDet("V1", "CA", "VN");
+        BigDecimal totv1 = recorre.montosTotal("V1", "CA");
+        BigDecimal penv2 = recorre.montosDet("V2", "CA", "PN");
+        BigDecimal venv2 = recorre.montosDet("V2", "CA", "VN");
+        BigDecimal totv2 = recorre.montosTotal("V2", "CA");
+        BigDecimal penv3 = recorre.montosDet("YA", "CA", "PN");
+        BigDecimal venv3 = recorre.montosDet("YA", "CA", "VN");
+        BigDecimal totv3 = recorre.montosTotal("YA", "CA");
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("pendienteV1", penv1);
+        parametros.put("vencidaV1", venv1);
+        parametros.put("totalV1", totv1);
+        parametros.put("pendienteV2", penv2);
+        parametros.put("vencidaV2", venv2);
+        parametros.put("totalV2", totv2);
+        parametros.put("pendienteV3", penv3);
+        parametros.put("vencidaV3", venv3);
+        parametros.put("totalV3", totv3);
+        parametros.put("fecha", fecha);
+        parametros.put("tienda1", "V1");
+        parametros.put("tienda2", "V2");
+        parametros.put("tienda3", "YA");
+        parametros.put("empresa", "CA");
+        File jasper = new File("D:/reporte/consolidado/morosidad.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=morosidad.xls");
         ServletOutputStream stream = response.getOutputStream();
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
