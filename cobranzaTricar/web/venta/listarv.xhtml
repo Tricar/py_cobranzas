@@ -149,7 +149,7 @@
                             </p:column>
                             <p:column headerText="Operación">
                                 <h:outputText value="#{pagos.operacion}"/>
-                            </p:column>                
+                            </p:column>
                             <p:column headerText="Fecha">
                                 <h:outputText value="#{pagos.fecreg}">
                                     <f:convertDateTime pattern = "dd/MM/yyyy"/>
@@ -159,6 +159,9 @@
                                 <h:outputText value="#{pagos.tipo}">
                                     <f:converter converterId="pagosconverter"/>
                                 </h:outputText>
+                            </p:column>
+                            <p:column headerText="Calificación">
+                                <h:outputText value="#{pagos.calificacion}"/>
                             </p:column>
                             <p:column headerText="Operaciones">
                                 <p:commandButton icon="fa fa-trash while" action="#{creditoBean.cargarPagos(pagos)}" title="Eliminar"/>                                                    

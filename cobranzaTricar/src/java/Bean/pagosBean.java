@@ -273,8 +273,7 @@ public class pagosBean implements Serializable {
         LetrasDao letrasdao = new LetrasDaoImplements();
         PagosDao pagosdao = new PagosDaoImp();
         try {
-            letra.setMora(BigDecimal.ZERO);
-            letra.setDiffdays(Long.valueOf(0));
+            letra.setMora(BigDecimal.ZERO);            
             difdays = letra.getDiffdays();
             letrasdao.modificarLetra(letra);
             letra = new Letras();
@@ -294,8 +293,10 @@ public class pagosBean implements Serializable {
             pago.setLetras(letra);
             pago.setFecreg(letra.getFecreg());
             String temp = pago.getOperacion();
-            pago.setOperacion(pago.getTipodoc().getAbrev().concat(" " + temp));
+            pago.setOperacion(pago.getTipodoc().getAbrev().concat(" " + temp));            
             pago.setMonto(montopago);
+            pago.setCalificacion("Mora");
+            pago.setDiffdays(difdays);
             pago.setTipo("ND");
             pagosdao.insertarPago(pago);
             caja = pago.getCaja();
