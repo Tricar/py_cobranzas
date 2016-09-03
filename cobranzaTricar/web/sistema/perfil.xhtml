@@ -82,7 +82,7 @@
                                 <h:outputText class="blue Fs16" value="#{item.menu}:" /> 
                                 <h:panelGroup></h:panelGroup>
                                 <h:selectManyCheckbox value="#{perfilBean.selecsubmenus}">
-                                    <f:selectItems value="#{perfilBean.cargarSubmenus(item.idmenu)}" var="tutorial" itemValue="#{tutorial.idsubmenu}" itemLabel="#{tutorial.submenu}"/>
+                                    <f:selectItems value="#{perfilBean.submenu}"/>
                                 </h:selectManyCheckbox>
                             </ui:repeat>
                         </h:panelGrid>
