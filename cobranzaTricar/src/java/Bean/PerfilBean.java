@@ -5,19 +5,8 @@
  */
 package Bean;
 
-import Dao.MenuDao;
-import Dao.MenuDaoImpl;
-import Dao.PerfilDao;
-import Dao.PerfilDaoImpl;
-import Dao.PerfilmenuDao;
-import Dao.PerfilmenuDaoImpl;
-import Dao.SubmenuDao;
-import Dao.SubmenuDaoImpl;
-import Model.Menu;
-import Model.Perfil;
-import Model.Perfilmenu;
-import Model.Perfilsubmenu;
-import Model.Submenu;
+import Dao.*;
+import Model.*;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -316,6 +305,8 @@ public class PerfilBean implements Serializable {
         this.transaction = null;
         try {
             MenuDao daoperfil = new MenuDaoImpl();
+            PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
+            PerfilsubmenuDao perfilsubmenuDao = new PerfilsubmenuDaoImpl();
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();

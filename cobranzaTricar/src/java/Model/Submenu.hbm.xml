@@ -17,6 +17,9 @@
         <property name="icon" type="string">
             <column name="icon" length="50" not-null="true" />
         </property>
+        <property name="created" type="timestamp">
+            <column name="created" length="23" not-null="true" />
+        </property>
         <many-to-one name="menu" class="Model.Menu" fetch="select">
             <column name="idmenu" />
         </many-to-one>   

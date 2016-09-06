@@ -72,10 +72,25 @@
 
         <h:form id="frmEditarColor">
             <p:dialog header="Actualizar" widgetVar="dialogoEditarColor" modal="true">
-                <h:panelGrid id="panelEditarColor" columns="2">
+                <h:panelGrid id="panelEditarColor" columns="2">                    
+                    <p:outputLabel value="Codigo:" for="txtCodigo"/>
+                    <p:inputText id="txtCodigo" value="#{repuestoBean.repuesto.codigo}" required="true" requiredMessage="Ingresa Codigo" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{repuestoBean.repuesto.descripcion}" style="text-transform: uppercase" 
-                                 autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                    <p:inputText id="txtDescripcion" value="#{repuestoBean.repuesto.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Precio compra:" for="txtpreciocompra"/>
+                    <p:inputText id="txtpreciocompra" value="#{repuestoBean.repuesto.preciocompra}" required="true" requiredMessage="Ingresa precio compra">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Precio venta:" for="txtprecioventa"/>
+                    <p:inputText id="txtprecioventa" value="#{repuestoBean.repuesto.precioventa}" required="true" requiredMessage="Ingresa precio venta">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>                    
+                    <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
+                    <p:inputText id="txtunidadmedida" value="#{repuestoBean.repuesto.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{repuestoBean.modificar()}"/>

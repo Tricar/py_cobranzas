@@ -88,26 +88,12 @@
                     </ul>
                 </div>
             </div>
-            <h:form>
-                <ul id="layout-menu" class="BordRad3 Unselectable">
-                    <ui:repeat var="p" varStatus="status" value="#{loginbean.cargarPerfilmenus(loginbean.usuario.perfil.idperfil)}">  
-                        <li role="menuitem">
-                            <a href="#" class="Animated05 CursPointer">
-                                <i class="fa #{p.menu.icon}"></i> #{p.menu.menu}<i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i>
-                            </a>
-                            <ul class="Animated03 submenu" role="menu">
-                                <ui:repeat var="item" varStatus="status" value="#{loginbean.cargarPerfilsubmenus(p.idperfilmenu)}">
-                                    <li role="menuitem">
-                                        <a class="Animated05" href="#{item.submenu.url}" >
-                                            <i class="fa #{item.submenu.icon}"></i> #{item.submenu.submenu}
-                                        </a>
-                                    </li>
-                                </ui:repeat> 
-                            </ul>
-                        </li>
-                        <li class="fa fa-ellipsis-v menu-separator"></li>
-                    </ui:repeat> 
-                </ul>
+            <h:form id="layout-menu" class="BordRad3 Unselectable">
+                <p:menubar>
+                    <p:submenu rendered="true" label="Configuracion" icon="ui-icon-suitcase">
+                        <p:menuitem rendered="true" value="Caja" action="#{loginbean.caja()}" icon="ui-icon-copy" />
+                    </p:submenu>
+                </p:menubar>
             </h:form>
         </ui:insert>
         <div id="layout-portlets-cover">

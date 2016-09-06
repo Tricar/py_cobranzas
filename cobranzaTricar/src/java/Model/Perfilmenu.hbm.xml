@@ -13,6 +13,9 @@
         </many-to-one>
         <many-to-one name="menu" class="Model.Menu" fetch="select">
             <column name="idmenu" />
-        </many-to-one> 
+        </many-to-one>
+        <property name="estado" type="java.lang.Boolean">
+            <column name="estado" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -20,6 +20,7 @@ public class Perfilsubmenu implements java.io.Serializable {
     private Integer idperfilsubmenu;
     private Perfilmenu perfilmenu;
     private Submenu submenu;
+    private Boolean estado;
 
     public Perfilsubmenu() {
     }
@@ -28,10 +29,11 @@ public class Perfilsubmenu implements java.io.Serializable {
         this.idperfilsubmenu = idperfilsubmenu;
     }
 
-    public Perfilsubmenu(Integer idperfilsubmenu, Perfilmenu perfilmenu, Submenu submenu) {
+    public Perfilsubmenu(Integer idperfilsubmenu, Perfilmenu perfilmenu, Submenu submenu, Boolean estado) {
         this.idperfilsubmenu = idperfilsubmenu;
         this.perfilmenu = perfilmenu;
         this.submenu = submenu;
+        this.estado = estado;
     }
 
     @Id
@@ -62,6 +64,15 @@ public class Perfilsubmenu implements java.io.Serializable {
 
     public void setSubmenu(Submenu submenu) {
         this.submenu = submenu;
+    }
+
+    @Column(name = "estado")
+    public Boolean getEstado() {
+        return this.estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     @Override

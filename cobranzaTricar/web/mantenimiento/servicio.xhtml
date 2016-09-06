@@ -26,10 +26,7 @@
                         <p:column headerText="DESCRIPCION">
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column headerText="PRECIO COM.">
-                            <h:outputText value="#{item.preciocompra}"/>
-                        </p:column>
-                        <p:column headerText="PRECIO VEN.">
+                        <p:column headerText="PRECIO">
                             <h:outputText value="#{item.precioventa}"/>
                         </p:column>
                         <p:column width="10%" style="text-align: center">
@@ -42,7 +39,7 @@
         </div>
 
         <h:form id="formInsertar">
-            <p:dialog header="Nuevo Servicio" widgetVar="dlginsertar" modal="true">   
+            <p:dialog header="Nuevo" widgetVar="dlginsertar" modal="true">   
                 <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
                 <h:panelGrid columns="2">                    
                     <p:outputLabel value="Codigo:" for="txtCodigo"/>
@@ -53,16 +50,8 @@
                     <p:inputText id="txtDescripcion" value="#{servicioBean.servicio.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
-                    <p:outputLabel value="Precio compra:" for="txtpreciocompra"/>
-                    <p:inputText id="txtpreciocompra" value="#{servicioBean.servicio.preciocompra}" required="true" requiredMessage="Ingresa precio compra">
-                        <f:validator validatorId="validatorVacio"/>
-                    </p:inputText>
-                    <p:outputLabel value="Precio venta:" for="txtprecioventa"/>
-                    <p:inputText id="txtprecioventa" value="#{servicioBean.servicio.precioventa}" required="true" requiredMessage="Ingresa precio venta">
-                        <f:validator validatorId="validatorVacio"/>
-                    </p:inputText>                    
-                    <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
-                    <p:inputText id="txtunidadmedida" value="#{servicioBean.servicio.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
+                    <p:outputLabel value="Precio:" for="txtpreciocompra"/>
+                    <p:inputText id="txtpreciocompra" value="#{servicioBean.servicio.precioventa}" required="true" requiredMessage="Ingresa precio compra">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{servicioBean.registrar()}" />
@@ -71,11 +60,18 @@
         </h:form>
 
         <h:form id="frmEditarColor">
-            <p:dialog header="Datos Servicio" widgetVar="dialogoEditarColor" modal="true">
-                <h:panelGrid id="panelEditarColor" columns="2">
+            <p:dialog header="Actualizar" widgetVar="dialogoEditarColor" modal="true">
+                <h:panelGrid id="panelEditarColor" columns="2">                    
+                    <p:outputLabel value="Codigo:" for="txtCodigo"/>
+                    <p:inputText id="txtCodigo" value="#{servicioBean.servicio.codigo}" required="true" requiredMessage="Ingresa Codigo" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{servicioBean.servicio.descripcion}" style="text-transform: uppercase" 
-                                 autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                    <p:inputText id="txtDescripcion" value="#{servicioBean.servicio.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Precio:" for="txtpreciocompra"/>
+                    <p:inputText id="txtpreciocompra" value="#{servicioBean.servicio.precioventa}" required="true" requiredMessage="Ingresa precio compra">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{servicioBean.modificar()}"/>
