@@ -6,7 +6,9 @@
 package Dao;
 
 import Model.Menu;
+import Persistencia.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -70,6 +72,24 @@ public class MenuDaoImpl implements MenuDao {
         Menu perfil = (Menu) query.uniqueResult();
         
         return perfil;
+    }
+    
+    @Override
+    public List<Menu> verTodos() {
+        Session session = null;
+        List<Menu> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Menu");
+            lista = (List<Menu>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
     }
 
 }

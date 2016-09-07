@@ -259,78 +259,8 @@ public class LoginBean implements Serializable {
         }
     }
 
-    public String empleado() {
-        return "/sistema/empleado";
-    }
-
-    public String vendedor() {
-        return "/sistema/vendedor";
-    }
-
-    public String usuarios() {
-        return "/sistema/usuario";
-    }
-
-    public String perfil() {
-        return "/sistema/perfil";
-    }
-
-    public String distrito() {
-        return "/sistema/distrito";
-    }
-
-    public String cliente() {
-        return "/mantenimiento/cliente";
-    }
-
-    public String aval() {
-        return "/mantenimiento/aval";
-    }
-
-    public String articulo() {
-        return "/mantenimiento/articulo";
-    }
-
-    public String modelo() {
-        return "/mantenimiento/modarticulo";
-    }
-
-    public String color() {
-        return "/mantenimiento/colorart";
-    }
-
-    public String porforma() {
-        return "/cotiza/index";
-    }
-
-    public String credito() {
-        return "/venta/index";
-    }
-
-    public String pago() {
-        return "/venta/listarv";
-    }
-
-    public String mensual() {
-        return "/reportes/mensual";
-    }
-
-    public String moroso() {
-        //return "/reportes/moroso";
-        return "#";
-    }
-    
-    public String diario() {
-        //return "/reportes/moroso";
-        return "/reportes/diario";
-    }
-
-    public String ingreso() {
-        return "/mantenimiento/ingreso";
-    }
-
-    public String caja() {
-        return "/sistema/caja";
+    public String url( String urls ) {
+        return urls;
     }
 
     public String getTusuario() {

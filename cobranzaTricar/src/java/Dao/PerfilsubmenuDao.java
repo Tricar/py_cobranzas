@@ -15,7 +15,7 @@ import org.hibernate.Session;
  */
 public interface PerfilsubmenuDao {
     
-    public boolean registrar(Session session, Perfilsubmenu perfil)throws Exception;
+    public void insertar(Perfilsubmenu perfsubmenu);
     public List<Perfilsubmenu> verTodo(Session session) throws Exception;
     public Perfilsubmenu mostrarRequisitosXCred(Integer menu); 
     public List<Perfilsubmenu> verTodoByPerfilsubmenu(Session session, Integer menu) throws Exception;

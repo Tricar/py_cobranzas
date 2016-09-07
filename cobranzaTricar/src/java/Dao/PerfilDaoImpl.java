@@ -5,6 +5,7 @@
  */
 package Dao;
 
+import Model.Menu;
 import Model.Perfil;
 import java.util.List;
 import org.hibernate.Query;

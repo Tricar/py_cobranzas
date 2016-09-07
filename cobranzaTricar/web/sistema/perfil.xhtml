@@ -70,20 +70,22 @@
                 </h:form>
 
                 <h:form id="frmAsignarMenu">
-                    <p:dialog header="Datos del usuario" widgetVar="dialogoAsignarMenu" modal="true">
+                    <p:dialog header="Asignar Menu" widgetVar="dialogoAsignarMenu" modal="true">
                         <h:panelGrid id="panelEditarPerfil" columns="2">
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/> 
                             <h:panelGroup></h:panelGroup>
                             <h:outputText class="red Fs20" value="#{perfilBean.perfil.descripcion}"/>
-                            <br/>
-                            <ui:repeat var="item" varStatus="status" value="#{perfilBean.menus}">
-                                <h:outputText class="blue Fs16" value="#{item.menu}:" /> 
-                                <h:panelGroup></h:panelGroup>
-                                <h:selectManyCheckbox value="#{perfilBean.selecsubmenus}">
-                                    <f:selectItems value="#{perfilBean.submenu}"/>
-                                </h:selectManyCheckbox>
+                            <br/><br/>
+                            <ui:repeat var="menus" varStatus="status" value="#{perfilBean.cargarPerfilmenus(perfilBean.perfil.idperfil)}">
+                                <h:outputText class="blue Fs16" value="#{menus.menu.menu}:" /> 
+                                <br/>
+                                <ui:repeat var="submenus" varStatus="status" value="#{perfilBean.cargarPerfilsubmenus(menus.idperfilmenu)}">
+                                    <p:selectBooleanCheckbox value="#{submenus.estado}"/>
+                                    <p:outputLabel value="#{submenus.submenu.submenu}" />
+                                </ui:repeat>
+                                <br/><br/>
                             </ui:repeat>
                         </h:panelGrid>
                         <p:commandButton value="Asignar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>

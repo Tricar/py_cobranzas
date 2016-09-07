@@ -10,6 +10,7 @@ import Model.*;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -34,12 +35,13 @@ public class PerfilBean implements Serializable {
 
     private List<Perfil> perfiles;
     private List<Menu> menus;
+    private List<Submenu> submenus;
     private Menu menu;
     private Submenu submenu;
     private Perfilsubmenu perfilsubmenu;
     private Perfilmenu perfilmenu;
-    private String[] selecsubmenus;
-    private List<String> submenus;
+    public List<Perfilmenu> perfilmenus;
+    public List<Perfilsubmenu> perfilsubmenus;
 
     public PerfilBean() {
         this.perfil = new Perfil();
@@ -51,7 +53,7 @@ public class PerfilBean implements Serializable {
         this.transaction = null;
 
         try {
-            
+
             PerfilDaoImpl daoperfil = new PerfilDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
@@ -75,13 +77,13 @@ public class PerfilBean implements Serializable {
 
     public void actualizarPerfil() {
         this.session = null;
-        this.transaction = null;        
+        this.transaction = null;
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             MenuDao menudao = new MenuDaoImpl();
             SubmenuDao submenudao = new SubmenuDaoImpl();
-            menudao.registrar(this.session, this.menu);  
+            menudao.registrar(this.session, this.menu);
             submenudao.registrar(this.session, this.submenu);
             this.transaction.commit();
             this.menu = new Menu();
@@ -176,7 +178,7 @@ public class PerfilBean implements Serializable {
             }
         }
     }
-
+    
     public void insertarPerfil() {
         this.session = null;
         this.transaction = null;
@@ -189,8 +191,11 @@ public class PerfilBean implements Serializable {
                 perfil = new Perfil();
                 return;
             }
+            Date d = new Date();
+            this.perfil.setCreated(d);
             linkDao.registrar(this.session, this.perfil);
             this.transaction.commit();
+            insertarperfilmenu(perfil);
             this.perfil = new Perfil();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
 
@@ -204,6 +209,35 @@ public class PerfilBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public void insertarperfilmenu(Perfil perfil) {
+            MenuDao menuDao = new MenuDaoImpl();
+            PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
+            PerfilsubmenuDao perfsubmendao = new PerfilsubmenuDaoImpl();
+            SubmenuDao submendao = new SubmenuDaoImpl();                        
+            menus = menuDao.verTodos();
+            perfilmenu = new Perfilmenu();
+            perfilsubmenu = new Perfilsubmenu();
+            for (int i = 0; i < menus.size(); i++) {
+                Menu get = menus.get(i);
+                perfilmenu.setMenu(get);
+                perfilmenu.setPerfil(perfil);
+                perfilmenu.setEstado(Boolean.FALSE);
+                perfilmenuDao.insertar(perfilmenu);
+                submenus = submendao.verTodosxId(get);
+                for (int j = 0; j < submenus.size(); j++) {
+                    Submenu get1 = submenus.get(j);
+                    perfilsubmenu.setPerfilmenu(perfilmenu);
+                    perfilsubmenu.setSubmenu(get1);
+                    perfilsubmenu.setEstado(Boolean.FALSE);
+                    perfsubmendao.insertar(perfilsubmenu);
+                    perfilsubmenu = new Perfilsubmenu();                    
+                }
+                submenus = new ArrayList();
+                perfilmenu = new Perfilmenu();
+            }
+        
     }
 
     public void eliminarPerfil() {
@@ -235,28 +269,55 @@ public class PerfilBean implements Serializable {
             }
         }
     }
-    
-    public String[] cargarSubmenus(Integer menu){
-            SubmenuDao dao = new SubmenuDaoImpl();
+
+    public List<Perfilmenu> cargarPerfilmenus(Integer perfil) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            PerfilmenuDao dao = new PerfilmenuDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            selecsubmenus = mostrarReqsParaModificar(menu);
+            this.perfilmenus = dao.verTodoByPerfilmenu(this.session, perfil);
             this.transaction.commit();
-            return selecsubmenus;
-    }
-    
-    public String[] mostrarReqsParaModificar(Integer menu) {
-        List<String> where = new ArrayList<String>();
-        SubmenuDao daosubmenu = new SubmenuDaoImpl();
-        PerfilmenuDao daoperfilsubmenu = new PerfilmenuDaoImpl();
-        submenu = daosubmenu.mostrarRequisitosXCred(menu);
-        perfilmenu = daoperfilsubmenu.mostrarRequisitosXCred(menu);
-        if (submenu.getIdsubmenu()!= null) {
-            where.add(submenu.getSubmenu());
+            return perfilmenus;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
         }
-        String[] selectedReqs = new String[where.size()];
-        where.toArray(selectedReqs);
-        return selectedReqs;
+    }
+
+    public List<Perfilsubmenu> cargarPerfilsubmenus(Integer menu) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            PerfilsubmenuDao dao = new PerfilsubmenuDaoImpl();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.perfilsubmenus = dao.verTodoByPerfilsubmenu(this.session, menu);
+            this.transaction.commit();
+            return perfilsubmenus;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
     }
 
     public Perfil getPerfil() {
@@ -305,8 +366,6 @@ public class PerfilBean implements Serializable {
         this.transaction = null;
         try {
             MenuDao daoperfil = new MenuDaoImpl();
-            PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
-            PerfilsubmenuDao perfilsubmenuDao = new PerfilsubmenuDaoImpl();
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
@@ -351,14 +410,6 @@ public class PerfilBean implements Serializable {
         this.menu = menu;
     }
 
-    public String[] getSelecsubmenus() {
-        return selecsubmenus;
-    }
-
-    public void setSelecsubmenus(String[] selecsubmenus) {
-        this.selecsubmenus = selecsubmenus;
-    }
-
     public Perfilsubmenu getPerfilsubmenu() {
         return perfilsubmenu;
     }
@@ -373,6 +424,14 @@ public class PerfilBean implements Serializable {
 
     public void setPerfilmenu(Perfilmenu perfilmenu) {
         this.perfilmenu = perfilmenu;
+    }
+
+    public List<Submenu> getSubmenus() {
+        return submenus;
+    }
+
+    public void setSubmenus(List<Submenu> submenus) {
+        this.submenus = submenus;
     }
 
 }

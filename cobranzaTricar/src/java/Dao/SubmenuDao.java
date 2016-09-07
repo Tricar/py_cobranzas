@@ -5,7 +5,7 @@
  */
 package Dao;
 
-import Model.Submenu;
+import Model.*;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -17,7 +17,7 @@ public interface SubmenuDao {
     
     public boolean registrar(Session session, Submenu perfil)throws Exception;
     public List<Submenu> verTodo(Session session) throws Exception;
-    public Submenu mostrarRequisitosXCred(Integer menu); 
+    public List<Submenu> verTodosxId(Menu menu);
     public List<Submenu> verTodoByMenu(Session session, Integer menu) throws Exception;
     public Submenu verByCodigo(Session session, Integer idperfil) throws Exception;
     public Submenu verByDescripcion(Session session, String descripcion) throws Exception;

@@ -24,9 +24,22 @@ public class PerfilsubmenuDaoImpl implements PerfilsubmenuDao {
     }
 
     @Override
-    public boolean registrar(Session session, Perfilsubmenu perfil) throws Exception {
-        session.save(perfil);
-        return true;
+    public void insertar(Perfilsubmenu perfsubmenu) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(perfsubmenu);
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        }
+        finally {
+            if(session != null){
+                session.close();
+            }
+        }    
     }
 
     @Override

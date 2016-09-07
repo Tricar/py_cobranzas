@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -90,9 +91,13 @@
             </div>
             <h:form id="layout-menu" class="BordRad3 Unselectable">
                 <p:menubar>
-                    <p:submenu rendered="true" label="Configuracion" icon="ui-icon-suitcase">
-                        <p:menuitem rendered="true" value="Caja" action="#{loginbean.caja()}" icon="ui-icon-copy" />
-                    </p:submenu>
+                    <c:forEach items="#{loginbean.cargarPerfilmenus(loginbean.usuario.perfil.idperfil)}" var="perfilmenu">
+                        <p:submenu rendered="#{perfilmenu.estado}" label="#{perfilmenu.menu.menu}" icon="fa #{perfilmenu.menu.icon}">
+                            <c:forEach items="#{loginbean.cargarPerfilsubmenus(perfilmenu.idperfilmenu)}" var="perfilsubmenu">
+                                <p:menuitem rendered="#{perfilsubmenu.estado}" value="#{perfilsubmenu.submenu.submenu}" action="#{loginbean.url(perfilsubmenu.submenu.url)}" icon="fa #{perfilsubmenu.submenu.icon}" />
+                            </c:forEach>
+                        </p:submenu>
+                    </c:forEach>
                 </p:menubar>
             </h:form>
         </ui:insert>

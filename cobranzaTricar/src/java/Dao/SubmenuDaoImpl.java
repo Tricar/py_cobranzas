@@ -5,7 +5,7 @@
  */
 package Dao;
 
-import Model.Submenu;
+import Model.*;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -86,23 +86,23 @@ public class SubmenuDaoImpl implements SubmenuDao {
     }
 
     @Override
-    public Submenu mostrarRequisitosXCred(Integer menu) {        
+    public List<Submenu> verTodosxId(Menu menu) {
         Session session = null;
-        Submenu req = null;
-        try{
+        List<Submenu> lista = null;
+        Integer id = menu.getIdmenu();
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Submenu where idmenu=:v");
-            query.setParameter("v", menu);
-            req = (Submenu)query.uniqueResult();
-        }catch (HibernateException e){
+            Query query = session.createQuery("FROM Submenu where idmenu =:v");
+            query.setParameter("v", id);
+            lista = (List<Submenu>) query.list();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
-        return req;
+        return lista;
     }
 
 }

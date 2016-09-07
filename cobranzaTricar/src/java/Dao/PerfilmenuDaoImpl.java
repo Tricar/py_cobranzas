@@ -5,7 +5,7 @@
  */
 package Dao;
 
-import Model.Perfilmenu;
+import Model.*;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -24,14 +24,27 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
     }
 
     @Override
-    public boolean registrar(Session session, Perfilmenu perfil) throws Exception {
-        session.save(perfil);
-        return true;
+    public void insertar(Perfilmenu perfilmenu) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(perfilmenu);
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        }
+        finally {
+            if(session != null){
+                session.close();
+            }
+        }
     }
 
     @Override
     public List<Perfilmenu> verTodo(Session session) throws Exception {
-        String hql = "FROM Menu";
+        String hql = "FROM Perfilmenu";
         Query query = session.createQuery(hql);
 
         List<Perfilmenu> listaPerfil = (List<Perfilmenu>) query.list();
@@ -47,7 +60,7 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
 
     @Override
     public Perfilmenu verByDescripcion(Session session, String descripcion) throws Exception {
-        String hql = "FROM Perfil WHERE descripcion=:descripcion";
+        String hql = "FROM Perfilmenu WHERE descripcion=:descripcion";
         Query query = session.createQuery(hql);
         query.setParameter("descripcion", descripcion);
 
@@ -64,7 +77,7 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
 
     @Override
     public Perfilmenu verByPerfilDifer(Session session, Integer idperfil, String descripcion) throws Exception {
-        String hql = "FROM Perfil WHERE idperfil!=:idperfil and descripcion=:descripcion";
+        String hql = "FROM Perfilmenu WHERE idperfil!=:idperfil and descripcion=:descripcion";
         Query query = session.createQuery(hql);
         query.setParameter("idperfil", idperfil);
         query.setParameter("descripcion", descripcion);
@@ -83,26 +96,6 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
         List<Perfilmenu> listaPerfil = (List<Perfilmenu>) query.list();
 
         return listaPerfil;
-    }
-
-    @Override
-    public Perfilmenu mostrarRequisitosXCred(Integer menu) {        
-        Session session = null;
-        Perfilmenu req = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Perfilmenu where idmenu=:v");
-            query.setParameter("v", menu);
-            req = (Perfilmenu)query.uniqueResult();
-        }catch (HibernateException e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
-                session.close();
-            }
-        }
-        return req;
     }
 
 }

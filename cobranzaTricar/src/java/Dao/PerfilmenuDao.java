@@ -5,7 +5,7 @@
  */
 package Dao;
 
-import Model.Perfilmenu;
+import Model.*;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -15,9 +15,8 @@ import org.hibernate.Session;
  */
 public interface PerfilmenuDao {
     
-    public boolean registrar(Session session, Perfilmenu perfil)throws Exception;
+    public void insertar(Perfilmenu perfilmenu);
     public List<Perfilmenu> verTodo(Session session) throws Exception;
-    public Perfilmenu mostrarRequisitosXCred(Integer menu); 
     public List<Perfilmenu> verTodoByPerfilmenu(Session session, Integer menu) throws Exception;
     public Perfilmenu verByCodigo(Session session, Integer idperfil) throws Exception;
     public Perfilmenu verByDescripcion(Session session, String descripcion) throws Exception;
