@@ -64,99 +64,29 @@
                             </p:inputText>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.sistema}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisEmp}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisVende}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisUsu}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisDist}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisPer}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.sisCaja}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.mante}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manArt}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manAval}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manCli}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manIng}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manMod}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manCol}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.creco}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.creLis}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.creReg}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.creCon}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.creRef}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.despacho}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.desVen}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.desDes}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.manAnt}"/>
                             <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                         </h:panelGrid>
                     </p:dialog>
                 </h:form>
 
                 <h:form id="frmAsignarMenu">
-                    <p:dialog header="Datos del usuario" widgetVar="dialogoAsignarMenu" modal="true">
-                        <h:panelGrid id="panelEditarPerfil" columns="4">
+                    <p:dialog header="Asignar Menu" widgetVar="dialogoAsignarMenu" modal="true">
+                        <h:panelGrid id="panelEditarPerfil" columns="2">
                             <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
                             <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
-                            <h:panelGroup></h:panelGroup>
+                            <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/> 
                             <h:panelGroup></h:panelGroup>
                             <h:outputText class="red Fs20" value="#{perfilBean.perfil.descripcion}"/>
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
-                            <h:outputText class="blue Fs16" value="Sistema:" />
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
-                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisEmp}"/>
-                            <p:outputLabel value="Empleados" />
-                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisUsu}"/>
-                            <p:outputLabel value="Usuarios" />
-                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisVende}"/>
-                            <p:outputLabel value="Vendedor" />
-                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.sisDist}"/>
-                            <p:outputLabel value="Distrito" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisPer}"/>
-                            <p:outputLabel value="Perfiles" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.sisCaja}"/>
-                            <p:outputLabel value="Caja" />
-                            <h:outputText class="blue Fs16" value="Mantenimiento:" />
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCli}"/>
-                            <h:outputText value="Clientes" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manAval}"/>
-                            <h:outputText value="Avales" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manArt}"/>
-                            <h:outputText value="Artículos" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manIng}"/>
-                            <h:outputText value="Ingresos" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manMod}"/>
-                            <h:outputText value="Modelos" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manCol}"/>
-                            <h:outputText value="Colores" />   
-                            <h:outputText class="blue Fs16" value="Venta:" />
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.creLis}"/>
-                            <h:outputText value="Pagos" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.creReg}"/>
-                            <h:outputText value="Credito" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.creRef}"/>
-                            <h:outputText value="Refinanciar" />
-                            <p:selectBooleanCheckbox value="#{perfilBean.perfil.creCon}"/>
-                            <p:outputLabel value="Proforma" />
-                            <h:outputText class="blue Fs16" value="Despacho:" />                            
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
-                            <h:panelGroup></h:panelGroup>
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.desVen}"/>
-                            <h:outputText value="Venta" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.desDes}"/>
-                            <h:outputText value="Despacho" />
-                            <p:selectBooleanCheckbox  value="#{perfilBean.perfil.manAnt}"/>
-                            <h:outputText value="Anticipos" />
+                            <br/><br/>
+                            <ui:repeat var="menus" varStatus="status" value="#{perfilBean.cargarPerfilmenus(perfilBean.perfil.idperfil)}">
+                                <h:outputText class="blue Fs16" value="#{menus.menu.menu}:" /> 
+                                <br/>
+                                <ui:repeat var="submenus" varStatus="status" value="#{perfilBean.cargarPerfilsubmenus(menus.idperfilmenu)}">
+                                    <p:selectBooleanCheckbox value="#{submenus.estado}"/>
+                                    <p:outputLabel value="#{submenus.submenu.submenu}" />
+                                </ui:repeat>
+                                <br/><br/>
+                            </ui:repeat>
                         </h:panelGrid>
                         <p:commandButton value="Asignar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
                     </p:dialog>

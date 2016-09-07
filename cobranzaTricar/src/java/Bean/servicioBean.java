@@ -1,65 +1,136 @@
 package Bean;
 
-import Clases.Encrypt;
-import Dao.MenuDao;
-import Dao.MenuDaoImpl;
-import Dao.UsuarioDaoImpl;
-import Model.Menu;
+import Dao.*;
+import Model.Servicio;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
 
+/**
+ *
+ * @author master
+ */
 @ManagedBean
-@RequestScoped
-
-public class menuBean implements Serializable {
-
-   private Session session;
+@SessionScoped
+public class servicioBean implements Serializable{
+    
+    private Servicio servicio;
+    private List<Servicio> servicios;
+    
+    private Session session;
     private Transaction transaction;
+    
+    private List<SelectItem> SelectItemsColor;
 
-    private Menu menu;
-    private List<Menu> listamenu;
-    private List<Menu> listamenufiltrado;
-
-    public Menu getMenu() {
-        return menu;
+    public servicioBean() {
+        this.servicio = new Servicio();
     }
-
-    public menuBean() {
-        this.menu = new Menu();
-    }
-
-    public List<Menu> verTodo() {
-
+    
+    public List<Servicio> verTodo() {
         this.session = null;
         this.transaction = null;
-
         try {
-            MenuDao daotusuario = new MenuDaoImpl();
-
+            servicioDao daocolor = new servicioDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-
-            this.listamenu = daotusuario.verTodo(this.session);
-
+            this.servicios = daocolor.verTodo(this.session);
             this.transaction.commit();
-
-            return listamenu;
-
+            return servicios;
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-
             return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public void nuevo() {
+        servicio = new Servicio();
+        RequestContext.getCurrentInstance().update("formInsertar");
+        RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
+    }
+
+    public void modificar() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            servicioDao linkDao = new servicioDaoImp();
+            if (linkDao.verByDescripcionDifer(this.session, this.servicio.getIdservicio(), this.servicio.getDescripcion()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya existe en DB."));
+                servicio = new Servicio();
+                return;
+            }
+            servicioDao daocolor = new servicioDaoImp();
+            daocolor.modificar(this.session, this.servicio);
+            this.transaction.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void cargarColorEditar(Integer idcolor) {
+        this.session = null;
+        this.transaction = null;
+        try {
+            servicioDao daocolor = new servicioDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            this.servicio = daocolor.verByCodigo(this.session, idcolor);
+            this.transaction.commit();
+            RequestContext.getCurrentInstance().update("frmEditarColor:panelEditarColor");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEditarColor').show()");
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void cargarColorEliminar(Integer idcolor) {
+        this.session = null;
+        this.transaction = null;
+        try {
+            servicioDao daocolor = new servicioDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            this.servicio = daocolor.verByCodigo(this.session, idcolor);
+            this.transaction.commit();
+            RequestContext.getCurrentInstance().update("frmEliminarColor");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarColor').show()");
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
         } finally {
             if (this.session != null) {
                 this.session.close();
@@ -70,91 +141,46 @@ public class menuBean implements Serializable {
     public void registrar() {
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
-            MenuDao daotusuario = new MenuDaoImpl();
-            if (daotusuario.verByDescripcion(this.session, this.menu.getMenu()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya existe en DB."));
-                this.menu = new Menu();
+            servicioDao linkDao = new servicioDaoImp();
+            if (linkDao.verByDescripcion(this.session, this.servicio.getDescripcion()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya esta registrado."));
+                servicio = new Servicio();
                 return;
             }
-            
-            daotusuario.registrar(this.session, this.menu);
-
+            Date d = new Date();
+            this.servicio.setCreated(d);
+            this.servicio.setCantidad(0);
+            linkDao.registrar(this.session, this.servicio);
             this.transaction.commit();
-
+            this.servicio = new Servicio();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-
-            this.menu = new Menu();
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-            this.menu = new Menu();
         } finally {
             if (this.session != null) {
                 this.session.close();
             }
         }
-    }
 
-    public void modificar() {
-        this.session = null;
-        this.transaction = null;
-
-        try {
-
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-
-            MenuDao daotusuario = new MenuDaoImpl();
-
-            if (daotusuario.verByDifer(this.session, this.menu.getIdmenu(), this.menu.getMenu()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
-                return;
-            }
-            
-            daotusuario.modificar(this.session, this.menu);
-            this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
-            this.menu = new Menu();
-            
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-            this.menu = new Menu();
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
-        }
     }
 
     public void eliminar() {
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
-            MenuDao daotusuario = new MenuDaoImpl();
-            daotusuario.eliminar(this.session, this.menu);
-
+            servicioDao daocolor = new servicioDaoImp();
+            daocolor.eliminar(this.session, this.servicio);
             this.transaction.commit();
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Usuario Correctamente."));
-
-            this.menu = new Menu();
-
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Color Correctamente."));
+            this.servicio = new Servicio();
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -166,93 +192,29 @@ public class menuBean implements Serializable {
             }
         }
     }
-
-    public void cargarUsuarioEditar(int codigoUsuario) {
-        this.session = null;
-        this.transaction = null;
-
-        try {
-
-            MenuDao daotusuario = new MenuDaoImpl();
-
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-
-            this.menu = daotusuario.verByCodigo(this.session, codigoUsuario);
-
-            this.transaction.commit();
-
-            RequestContext.getCurrentInstance().update("frmEditarUsuario:panelEditarUsuario");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEditarUsuario').show()");
-
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
-        }
+    
+    public Servicio getServicio() {
+        return servicio;
     }
 
-    public void cargarUsuarioEliminar(int codigoUsuario) {
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
+    }
+    
+    public List<Servicio> getServicios() {
         this.session = null;
         this.transaction = null;
-
         try {
-
-            MenuDao daotusuario = new MenuDaoImpl();
-
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-
-            this.menu = daotusuario.verByCodigo(this.session, codigoUsuario);
-
-            this.transaction.commit();
-
-            RequestContext.getCurrentInstance().update("frmEliminarUsuario");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarUsuario').show()");
-
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
-        }
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public List<Menu> getListamenu() {        
-        this.session = null;
-        this.transaction = null;
-
-        try {
-            MenuDao daotusuario = new MenuDaoImpl();
-
+            servicioDao daocolor = new servicioDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-
-            this.listamenu = daotusuario.verTodo(this.session);
-
-            this.transaction.commit();
-
-            return listamenu;
-
+            servicios = daocolor.verTodo(session);            
+            return servicios;
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-
             return null;
         } finally {
             if (this.session != null) {
@@ -261,16 +223,11 @@ public class menuBean implements Serializable {
         }
     }
 
-    public void setListamenu(List<Menu> listamenu) {
-        this.listamenu = listamenu;
+    public void setServicios(List<Servicio> servicios) {
+        this.servicios = servicios;
     }
 
-    public List<Menu> getListamenufiltrado() {
-        return listamenufiltrado;
+    public void setSelectItemsColor(List<SelectItem> SelectItemsColor) {
+        this.SelectItemsColor = SelectItemsColor;
     }
-
-    public void setListamenufiltrado(List<Menu> listamenufiltrado) {
-        this.listamenufiltrado = listamenufiltrado;
-    }
-    
 }

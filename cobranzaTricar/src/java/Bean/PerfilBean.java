@@ -5,10 +5,12 @@
  */
 package Bean;
 
-import Dao.PerfilDaoImpl;
-import Model.Perfil;
+import Dao.*;
+import Model.*;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +34,14 @@ public class PerfilBean implements Serializable {
     private Perfil perfil;
 
     private List<Perfil> perfiles;
+    private List<Menu> menus;
+    private List<Submenu> submenus;
+    private Menu menu;
+    private Submenu submenu;
+    private Perfilsubmenu perfilsubmenu;
+    private Perfilmenu perfilmenu;
+    public List<Perfilmenu> perfilmenus;
+    public List<Perfilsubmenu> perfilsubmenus;
 
     public PerfilBean() {
         this.perfil = new Perfil();
@@ -43,7 +53,7 @@ public class PerfilBean implements Serializable {
         this.transaction = null;
 
         try {
-            
+
             PerfilDaoImpl daoperfil = new PerfilDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
@@ -71,37 +81,13 @@ public class PerfilBean implements Serializable {
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            PerfilDaoImpl linkDao = new PerfilDaoImpl();
-            if (linkDao.verByPerfilDifer(this.session, this.perfil.getIdperfil(), this.perfil.getDescripcion()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Perfil ya existe en DB."));
-                perfil = new Perfil();
-                return;
-            }
-            if (perfil.getSisPer() == true || perfil.getSisUsu() == true || perfil.getSisVende() == true || perfil.getSisDist()== true || perfil.getSisEmp() == true) {
-                perfil.setSistema(true);
-            } else if (perfil.getSisPer() == false && perfil.getSisUsu() == false && perfil.getSisVende() == false && perfil.getSisDist() == false && perfil.getSisEmp() == false) {
-                perfil.setSistema(false);
-            }
-            if (perfil.getManArt() == true || perfil.getManAval() == true || perfil.getManCli() == true || perfil.getManCol() == true
-                    || perfil.getManMod() == true || perfil.getManIng() == true) {
-                perfil.setMante(true);
-            } else if (perfil.getManArt() == false && perfil.getManAval() == false && perfil.getManCli() == false && perfil.getManCol() == false
-                    && perfil.getManMod() == false && perfil.getManIng() == false) {
-                perfil.setMante(false);
-            }
-            if (perfil.getCreLis() == true || perfil.getCreReg() == true) {
-                perfil.setCreco(true);
-            } else if (perfil.getCreLis() == false && perfil.getCreReg() == false) {
-                perfil.setCreco(false);
-            }
-            if (perfil.getDesDes() == true || perfil.getDesVen() == true || perfil.getManAnt() == true) {
-                perfil.setDespacho(true);
-            } else if (perfil.getDesDes() == false && perfil.getDesVen() == false && perfil.getManAnt() == true) {
-                perfil.setDespacho(false);
-            }
-            PerfilDaoImpl perfilDao = new PerfilDaoImpl();
-            perfilDao.modificar(this.session, this.perfil);
+            MenuDao menudao = new MenuDaoImpl();
+            SubmenuDao submenudao = new SubmenuDaoImpl();
+            menudao.registrar(this.session, this.menu);
+            submenudao.registrar(this.session, this.submenu);
             this.transaction.commit();
+            this.menu = new Menu();
+            this.submenu = new Submenu();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -169,7 +155,7 @@ public class PerfilBean implements Serializable {
 
         try {
 
-            PerfilDaoImpl perfilDao = new PerfilDaoImpl();
+            PerfilDao perfilDao = new PerfilDaoImpl();
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
@@ -192,44 +178,24 @@ public class PerfilBean implements Serializable {
             }
         }
     }
-
+    
     public void insertarPerfil() {
         this.session = null;
         this.transaction = null;
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            PerfilDaoImpl linkDao = new PerfilDaoImpl();
+            PerfilDao linkDao = new PerfilDaoImpl();
             if (linkDao.verByDescripcion(this.session, this.perfil.getDescripcion()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Perfil ya esta registrado."));
                 perfil = new Perfil();
                 return;
             }
-            perfil.setSistema(false);
-            perfil.setSisPer(false);
-            perfil.setSisEmp(false);
-            perfil.setSisVende(false);
-            perfil.setSisUsu(false);
-            perfil.setSisDist(false);
-            perfil.setSisCaja(false);
-            perfil.setMante(false);
-            perfil.setManCli(false);
-            perfil.setManIng(false);
-            perfil.setManArt(false);
-            perfil.setManAval(false);
-            perfil.setManCol(false);
-            perfil.setManMod(false);
-            perfil.setCreco(false);
-            perfil.setCreLis(false);
-            perfil.setCreReg(false);
-            perfil.setCreCon(false);
-            perfil.setCreRef(false);
-            perfil.setDespacho(false);
-            perfil.setDesDes(false);
-            perfil.setDesVen(false);
-            perfil.setManAnt(false);
+            Date d = new Date();
+            this.perfil.setCreated(d);
             linkDao.registrar(this.session, this.perfil);
             this.transaction.commit();
+            insertarperfilmenu(perfil);
             this.perfil = new Perfil();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
 
@@ -243,6 +209,35 @@ public class PerfilBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public void insertarperfilmenu(Perfil perfil) {
+            MenuDao menuDao = new MenuDaoImpl();
+            PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
+            PerfilsubmenuDao perfsubmendao = new PerfilsubmenuDaoImpl();
+            SubmenuDao submendao = new SubmenuDaoImpl();                        
+            menus = menuDao.verTodos();
+            perfilmenu = new Perfilmenu();
+            perfilsubmenu = new Perfilsubmenu();
+            for (int i = 0; i < menus.size(); i++) {
+                Menu get = menus.get(i);
+                perfilmenu.setMenu(get);
+                perfilmenu.setPerfil(perfil);
+                perfilmenu.setEstado(Boolean.FALSE);
+                perfilmenuDao.insertar(perfilmenu);
+                submenus = submendao.verTodosxId(get);
+                for (int j = 0; j < submenus.size(); j++) {
+                    Submenu get1 = submenus.get(j);
+                    perfilsubmenu.setPerfilmenu(perfilmenu);
+                    perfilsubmenu.setSubmenu(get1);
+                    perfilsubmenu.setEstado(Boolean.FALSE);
+                    perfsubmendao.insertar(perfilsubmenu);
+                    perfilsubmenu = new Perfilsubmenu();                    
+                }
+                submenus = new ArrayList();
+                perfilmenu = new Perfilmenu();
+            }
+        
     }
 
     public void eliminarPerfil() {
@@ -268,6 +263,56 @@ public class PerfilBean implements Serializable {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public List<Perfilmenu> cargarPerfilmenus(Integer perfil) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            PerfilmenuDao dao = new PerfilmenuDaoImpl();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.perfilmenus = dao.verTodoByPerfilmenu(this.session, perfil);
+            this.transaction.commit();
+            return perfilmenus;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public List<Perfilsubmenu> cargarPerfilsubmenus(Integer menu) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            PerfilsubmenuDao dao = new PerfilsubmenuDaoImpl();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.perfilsubmenus = dao.verTodoByPerfilsubmenu(this.session, menu);
+            this.transaction.commit();
+            return perfilsubmenus;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
         } finally {
             if (this.session != null) {
                 this.session.close();
@@ -314,6 +359,79 @@ public class PerfilBean implements Serializable {
 
     public void setPerfiles(List<Perfil> perfiles) {
         this.perfiles = perfiles;
+    }
+
+    public List<Menu> getMenus() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            MenuDao daoperfil = new MenuDaoImpl();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+
+            this.menus = daoperfil.verTodo(this.session);
+
+            this.transaction.commit();
+
+            return menus;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
+    }
+
+    public Submenu getSubmenu() {
+        return submenu;
+    }
+
+    public void setSubmenu(Submenu submenu) {
+        this.submenu = submenu;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public Perfilsubmenu getPerfilsubmenu() {
+        return perfilsubmenu;
+    }
+
+    public void setPerfilsubmenu(Perfilsubmenu perfilsubmenu) {
+        this.perfilsubmenu = perfilsubmenu;
+    }
+
+    public Perfilmenu getPerfilmenu() {
+        return perfilmenu;
+    }
+
+    public void setPerfilmenu(Perfilmenu perfilmenu) {
+        this.perfilmenu = perfilmenu;
+    }
+
+    public List<Submenu> getSubmenus() {
+        return submenus;
+    }
+
+    public void setSubmenus(List<Submenu> submenus) {
+        this.submenus = submenus;
     }
 
 }

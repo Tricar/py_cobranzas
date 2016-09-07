@@ -4,7 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,7 +13,7 @@
         <h:outputStylesheet library="spark" name="css/core-layout.css"/>
         <h:outputStylesheet library="spark" name="css/font-awesome.css"/>
         <h:outputStylesheet library="spark" name="css/spark-layout.css"/>
-        <h:outputScript library="js" name="maskmoney.js" />
+        <h:outputScript library="spark" name="js/maskmoney.js" />
         <h:outputScript library="spark" name="js/charts.js" />
         <h:outputScript library="spark" name="js/layout.js" />
         <h:outputScript library="spark" name="js/moment.js" />
@@ -62,50 +62,42 @@
         <ui:insert name="top">
             <div id="layout-topbar" class="ShadowGray">
                 <div id="layout-topbar-indent">
-                    <a href="index.xhtml"><h:graphicImage id="logo" class="Fleft" library="spark" name="img/logotricar.png"/></a>
+                    <a href="../views/index.xhtml"><h:graphicImage id="logo" class="Fleft" library="spark" name="img/logoCR.svg"/></a>
                     <a href="#" id="mobile-menu-button" class="BordRad3 white ShowOnMobile"><i class="fa fa-bars"></i> Menu</a>
+                    <a href="#" id="mobile-menu-button-gray" class="BordRad3 white ShowOnMobile"><i class="fa fa-caret-down"></i> Top Menu</a>
+
+                    <ul id="layout-topbar-menu">
+                        <li>
+                            <h:form>
+                                <p:commandLink actionListener="#{loginbean.logout()}" oncomplete="handleLoginRequest(xhr, status, args)" class="Animated05"><i class="fa fa-sign-out"></i> Salir</p:commandLink>
+                            </h:form>
+                        </li>
+                        <li class="fa fa-ellipsis-v menu-separator"></li>
+                        <li>
+                            <a class="Animated05 CursPointer"><i class="fa fa-user"></i><p:outputLabel value=" #{loginbean.usuario.anexo.nombre}"/>, Bienvenido <i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i></a>
+                            <ul style="width:175px; margin-left:-10px;" class="Animated03 submenu">
+                                <li>
+                                    <a class="Animated05">
+                                        <i class="fa fa-user Fs30 Fleft"></i> 
+                                        <span class="Fright Fs20 TexAlRight"><p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>
+                                            <span class="Fs10 DispBlock">Last login 18:50</span></span>
+                                    </a>
+                                </li>
+                                <li><a href="#" class="Animated05"><i class="fa fa-dashboard"></i> Mi Perfil</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <h:form id="layout-menu" class="BordRad3 Unselectable">
-                <p:menubar >
-                    <p:menuitem value="Inicio" icon="fa fa-home" outcome="/views/index" />
-                    <p:submenu rendered="#{loginbean.usuario.perfil.sistema}" label="Configuracion" icon="fa fa-briefcase">
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisEmp}" value="Empleado" action="#{loginbean.empleado()}" icon="fa fa-street-view" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisUsu}" value="Usuario" action="#{loginbean.usuarios()}" icon="fa fa-user-plus" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisPer}" value="Perfil" action="#{loginbean.perfil()}" icon="fa fa-drupal" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisDist}" value="Distrito" action="#{loginbean.distrito()}" icon="fa fa-subway" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisVende}" value="Vendedor" action="#{loginbean.vendedor()}" icon="fa fa-user-secret" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.sisCaja}" value="Caja" action="#{loginbean.caja()}" icon="fa fa-dropbox" />
-                    </p:submenu>
-                    <p:submenu rendered="#{loginbean.usuario.perfil.mante}" label="Mantenimiento" icon="fa fa-archive">
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCli}" value="Cliente" action="#{loginbean.cliente()}" icon="fa fa-male" />                        
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manAval}" value="Aval" action="#{loginbean.aval()}" icon="fa fa-smile-o" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manIng}" value="Ingresos" action="#{loginbean.ingreso()}" icon="fa fa-money" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manArt}" value="Articulo" action="#{loginbean.articulo()}" icon="fa fa-motorcycle" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manMod}" value="Modelo" action="#{loginbean.modelo()}" icon="fa fa-tablet" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manCol}" value="Color" action="#{loginbean.color()}" icon="fa fa-tint" />
-                    </p:submenu>
-                    <p:submenu rendered="#{loginbean.usuario.perfil.creco}" label="Creditos CRECO" icon="fa fa-calculator">
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.creCon}" value="Proforma" action="#{creditoBean.indexcotiza()}" icon="fa fa-file" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.creReg}" value="Crédito" action="#{creditoBean.index()}" icon="fa fa-shirtsinbulk" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.creRef}" value="Refinanciar" action="#{creditoBean.indexref()}" icon="fa fa-medium" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.creLis}" value="Pagos" action="#{creditoBean.pagos()}" icon="fa fa-pinterest-p" />
-                    </p:submenu>
-                    <p:submenu rendered="#{loginbean.usuario.perfil.despacho}" label="Operaciones" icon="fa fa-slideshare">
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.desVen}" value="Venta" action="#{ventaBean.indexventa()}" icon="fa fa-yen" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.desDes}" value="Despacho" action="#{creditoBean.indexdespacho()}" icon="fa fa-share-alt" />
-                        <p:menuitem rendered="#{loginbean.usuario.perfil.manAnt}" value="Anticipos" action="#{conceptosBean.index()}" icon="fa fa-usd" />
-                    </p:submenu>
-                    <p:submenu label="Reporte General" icon="fa fa-line-chart">
-                        <p:menuitem value="Reporte Mensual" action="#{loginbean.mensual()}" icon="fa fa-connectdevelop" />
-                        <p:menuitem value="Reportes Diarios" action="#{loginbean.diario()}" icon="fa fa-reddit" />  
-                    </p:submenu>
-                    <f:facet name="options">
-                        <p:outputLabel value="#{loginbean.usuario.anexo.nombre}"/>                        
-                        <p:commandButton icon="fa fa-power-off white" style="margin-left:50px" actionListener="#{loginbean.logout()}"
-                                         title="Cerrar Session" oncomplete="handleLoginRequest(xhr, status, args)"/>
-                        <p:commandButton icon="fa fa-unlock-alt white" title="Cambiar Clave"/>
-                    </f:facet>
+                <p:menubar>
+                    <c:forEach items="#{loginbean.cargarPerfilmenus(loginbean.usuario.perfil.idperfil)}" var="perfilmenu">
+                        <p:submenu rendered="#{perfilmenu.estado}" label="#{perfilmenu.menu.menu}" icon="fa #{perfilmenu.menu.icon}">
+                            <c:forEach items="#{loginbean.cargarPerfilsubmenus(perfilmenu.idperfilmenu)}" var="perfilsubmenu">
+                                <p:menuitem rendered="#{perfilsubmenu.estado}" value="#{perfilsubmenu.submenu.submenu}" action="#{loginbean.url(perfilsubmenu.submenu.url)}" icon="fa #{perfilsubmenu.submenu.icon}" />
+                            </c:forEach>
+                        </p:submenu>
+                    </c:forEach>
                 </p:menubar>
             </h:form>
         </ui:insert>
@@ -129,7 +121,7 @@
                 <div class="EmptyBox10"></div>
 
                 <div class="Container50 Responsive100">
-                    <h:graphicImage style="height:20px;" class="" library="images" name="logo_tricar.sbg"/>
+                    <h:graphicImage style="height:20px;" class="" library="spark" name="img/logoCR.svg"/>
                     <div class="EmptyBox10"></div>
                     <span class="DispBlock Wid100 FontSourceSansLight gray Fs12 ">
                         (061)578425 <br /> jlopez@tricar.com.pe / soportetecnico@tricar.com.pe

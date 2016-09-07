@@ -8,8 +8,12 @@
   <table-filter match-name="numeracion"/>
   <table-filter match-name="historialmora"/>
   <table-filter match-name="modelo"/>
+  <table-filter match-name="menu"/>
+  <table-filter match-name="submenu"/>
   <table-filter match-name="distrito"/>
   <table-filter match-name="perfil"/>
+  <table-filter match-name="perfilmenu"/>
+  <table-filter match-name="perfilsubmenu"/>
   <table-filter match-name="conceptos"/>
   <table-filter match-name="creditoaval"/>
   <table-filter match-name="tipocambio"/>
@@ -22,5 +26,8 @@
   <table-filter match-name="credito"/>
   <table-filter match-name="tipodoc"/>
   <table-filter match-name="letras"/>
+  <table-filter match-name="detalleventa"/>
+  <table-filter match-name="servicio"/>
+  <table-filter match-name="repuesto"/>
   <table-filter match-name="sysdiagrams"/>
 </hibernate-reverse-engineering>

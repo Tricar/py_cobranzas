@@ -3,7 +3,13 @@ package Bean;
 import Clases.Encrypt;
 import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
+import Dao.PerfilmenuDao;
+import Dao.PerfilmenuDaoImpl;
+import Dao.PerfilsubmenuDao;
+import Dao.PerfilsubmenuDaoImpl;
 import Dao.UsuarioDaoImpl;
+import Model.Perfilmenu;
+import Model.Perfilsubmenu;
 import Model.Usuario;
 import Persistencia.HibernateUtil;
 import javax.faces.application.FacesMessage;
@@ -13,6 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import Persistencia.MyUtil;
 import java.io.Serializable;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -33,6 +40,8 @@ public class LoginBean implements Serializable {
     private Integer creditoaprobado;
     private Integer pagosxdia;
     private Integer pagosxmes;
+    public List<Perfilsubmenu> perfilsubmenus;
+    public List<Perfilmenu> perfilmenus;
 
     public LoginBean() {
         HttpSession miSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
@@ -72,7 +81,7 @@ public class LoginBean implements Serializable {
                 if (usuario.getClave().equals(Encrypt.sha512(this.clave))) {
                     loggedIn = true;
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.tusuario);
-                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.tusuario);
+                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", this.tusuario);
                     ruta = MyUtil.basepathlogin() + "views/index.xhtml";
                 }
             } else {
@@ -199,79 +208,59 @@ public class LoginBean implements Serializable {
         ventasxdia = ventasxdiadao.ventasXdia(this.session);
         return "/views/index";
     }
+    
+    public List<Perfilmenu> cargarPerfilmenus(Integer perfil){
+        this.session = null;
+        this.transaction = null;
 
-    public String empleado() {
-        return "/sistema/empleado";
-    }
+        try {
+            PerfilmenuDao dao = new PerfilmenuDaoImpl();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.perfilmenus = dao.verTodoByPerfilmenu(this.session, perfil);
+            this.transaction.commit();
+            return perfilmenus;
 
-    public String vendedor() {
-        return "/sistema/vendedor";
-    }
-
-    public String usuarios() {
-        return "/sistema/usuario";
-    }
-
-    public String perfil() {
-        return "/sistema/perfil";
-    }
-
-    public String distrito() {
-        return "/sistema/distrito";
-    }
-
-    public String cliente() {
-        return "/mantenimiento/cliente";
-    }
-
-    public String aval() {
-        return "/mantenimiento/aval";
-    }
-
-    public String articulo() {
-        return "/mantenimiento/articulo";
-    }
-
-    public String modelo() {
-        return "/mantenimiento/modarticulo";
-    }
-
-    public String color() {
-        return "/mantenimiento/colorart";
-    }
-
-    public String porforma() {
-        return "/cotiza/index";
-    }
-
-    public String credito() {
-        return "/venta/index";
-    }
-
-    public String pago() {
-        return "/venta/listarv";
-    }
-
-    public String mensual() {
-        return "/reportes/mensual";
-    }
-
-    public String moroso() {
-        //return "/reportes/moroso";
-        return "#";
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
     }
     
-    public String diario() {
-        //return "/reportes/moroso";
-        return "/reportes/diario";
+    public List<Perfilsubmenu> cargarPerfilsubmenus(Integer menu){
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            PerfilsubmenuDao dao = new PerfilsubmenuDaoImpl();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.perfilsubmenus = dao.verTodoByPerfilsubmenu(this.session, menu);
+            this.transaction.commit();
+            return perfilsubmenus;
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
     }
 
-    public String ingreso() {
-        return "/mantenimiento/ingreso";
-    }
-
-    public String caja() {
-        return "/sistema/caja";
+    public String url( String urls ) {
+        return urls;
     }
 
     public String getTusuario() {

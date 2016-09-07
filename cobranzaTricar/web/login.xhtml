@@ -6,28 +6,39 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Sistema de créditos y cobranzas Casco Red</title>
-        <h:outputStylesheet library="css" name="login.css"/>
-        <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/favicont.png" />
+        <h:outputStylesheet library="spark" name="css/animate.css"/>
+        <h:outputStylesheet library="spark" name="css/charts.css"/>
+        <h:outputStylesheet library="spark" name="css/core-layout.css"/>
+        <h:outputStylesheet library="spark" name="css/font-awesome.css"/>
+        <h:outputStylesheet library="spark" name="css/spark-layout.css"/>
+        <h:outputStylesheet library="spark" name="css/login.css"/>
+        <h:outputScript library="spark" name="js/layout.js" />
+        <h:outputScript library="spark" name="js/moment.js" />
+        <h:outputScript library="spark" name="js/primefaces.js" />
+        <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/spark/img/favicont.png" />
     </h:head>
     <h:body>
-        <div class="conteiner">
-            <p:growl id="growl" showDetail="true" life="3000" />  
-            <h:form>  
-                <p:panel header="Acceso al Sistema">
-                    <h:panelGrid columns="2" cellpadding="5">  
-                        <h:outputLabel for="username" value="Usuario:" />  
+        <p:growl id="growl" life="3000" />  
+        <h:form>  
+            <div id="layout-portlets-cover">
+                <div class="other-pages-box Container40 Responsive50 MarAuto Fnone TexAlCenter ShadowGray MarTop10" style="margin-top:5%; background-image:url(#{request.contextPath}/resources/spark/img/loginpageillust.svg); background-repeat:no-repeat; background-position:center; background-size:cover;">
+                    <div class="Container90 Fnone MarAuto TexAlCenter">
+                        <div class="EmptyBox50"></div>
+                        <img style="width: 220px; height: 100px" src="#{request.contextPath}/resources/spark/img/logoCR.svg" class="MarAuto MarTop20 MarBot10" />
+                        <div class="EmptyBox20"></div>
                         <p:inputText value="#{loginbean.tusuario}" autocomplete="off" id="usuario" required="true" label="usuario" />  
-                        <h:outputLabel for="password" value="Clave:" />  
+                        <div class="EmptyBox10"></div>
                         <p:password value="#{loginbean.clave}" autocomplete="off" id="clave" required="true" label="clave" />
+                        <div class="EmptyBox20"></div>
                         <div id="cargando" style="width: 50px; height: 50px" class="precarga"/>
-                        <f:facet name="footer">  
-                            <p:commandButton id="loginButton" value="Ingresar" update=":growl" actionListener="#{loginbean.login(actionEvent)}" icon="icon-login"   
-                                             oncomplete="handleLoginRequest(xhr, status, args)" onclick="ActivarCampoOtroTema();"/>  
-                        </f:facet>  
-                    </h:panelGrid>  
-                </p:panel>
-            </h:form>
-        </div>
+                        <div class="EmptyBox30"></div>
+                        <p:commandButton id="loginButton" value="Ingresar" update=":growl" actionListener="#{loginbean.login(actionEvent)}"   
+                                         class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only Fs16" oncomplete="handleLoginRequest(xhr, status, args)" onclick="ActivarCampoOtroTema();"/>  
+                        <div class="EmptyBox50"></div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
                 if (args.validationFailed || !args.loggedIn) {

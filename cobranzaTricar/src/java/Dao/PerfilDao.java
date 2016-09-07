@@ -5,7 +5,7 @@
  */
 package Dao;
 
-import Model.Perfil;
+import Model.*;
 import java.util.List;
 import org.hibernate.Session;
 

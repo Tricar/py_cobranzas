@@ -430,7 +430,7 @@ public class CreditoDaoImp implements CreditoDao {
 
     @Override
     public Integer ventasXdia(Session session) {
-        String hql = "SELECT COUNT(*) FROM Credito WHERE fechareg = getdate()";
+        String hql = "SELECT COUNT(*) FROM Credito WHERE datepart(wk, fechareg) = datepart(wk, getdate()) and datepart(year, fechareg) = datepart(year, getdate())";
         int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
         return (int) consulta;
     }
@@ -458,7 +458,7 @@ public class CreditoDaoImp implements CreditoDao {
 
     @Override
     public Integer pagosxdia(Session session) {
-        String hql = "SELECT COUNT(*) FROM Pagos WHERE fecreg = getdate()";
+        String hql = "SELECT COUNT(*) FROM Pagos WHERE datepart(wk, fecreg) = datepart(wk, getdate()) and datepart(year, fecreg) = datepart(year, getdate())";
         int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
         return (int) consulta;
     }
