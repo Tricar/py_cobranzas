@@ -56,13 +56,7 @@
 
                 <h:form id="formInsertar">
                     <p:dialog header="Nuevo Articulo" widgetVar="dlginsert" modal="true">                        
-                        <h:panelGrid id="panelcrearperfil" columns="2">
-                            <p:outputLabel value="Marca:" for="txtMarca"/>
-                            <p:selectOneMenu id="txtMarca" label="Marca" value="#{vehiculoBean.vehiculo.marca}" required="true" requiredMessage="Debe Seleccionar Marca">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="VELOREX" itemValue="V" />
-                                <f:selectItem itemLabel="TRICAR" itemValue="T" />                                                              
-                            </p:selectOneMenu>
+                        <h:panelGrid id="panelcrearperfil" columns="2">                            
                             <p:outputLabel value="Modelo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
@@ -74,7 +68,7 @@
                                 <f:selectItems value="#{colorBean.colores}" var="color" itemLabel="#{color.color}" itemValue="#{color}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Año" for="txtAno"/>
-                            <p:inputText id="txtAno" label="Ano" value="#{vehiculoBean.vehiculo.anofabri}" autocomplete="off" />
+                            <p:inputMask mask="9999" id="txtAno" label="Año" value="#{vehiculoBean.vehiculo.anofabri}" required="true" requiredMessage="Ingrese año" />
                             <p:outputLabel value="Serie:" for="txtSerie"/>
                             <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
@@ -96,13 +90,7 @@
 
                 <h:form id="frmEditarArticulo">
                     <p:dialog header="Datos del Articulo" widgetVar="dialogoEditarArticulo" modal="true">
-                        <h:panelGrid id="panelEditarArticulo" columns="2">  
-                            <p:outputLabel value="Marca:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.marca}"  required="true" requiredMessage="Debe Seleccionar Marca">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="VELOREX" itemValue="V" />
-                                <f:selectItem itemLabel="TRICAR" itemValue="T" />                                                              
-                            </p:selectOneMenu>
+                        <h:panelGrid id="panelEditarArticulo" columns="2">                              
                             <p:outputLabel value="Modelo:" />
                             <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
@@ -114,9 +102,7 @@
                                 <f:selectItems value="#{colorBean.colores}" var="color" itemLabel="#{color.color}" itemValue="#{color}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Año" for="txtAno"/>
-                            <p:inputText id="txtAno" label="Año" value="#{vehiculoBean.vehiculo.anofabri}" autocomplete="off">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
+                            <p:inputMask mask="9999" id="txtAno" label="Año" value="#{vehiculoBean.vehiculo.anofabri}" required="true" requiredMessage="Ingrese año" />
                             <p:outputLabel value="Serie:" for="txtSerie"/>
                             <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>

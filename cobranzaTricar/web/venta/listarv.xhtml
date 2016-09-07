@@ -177,8 +177,6 @@
                       widgetVar="dlgpagar" modal="true" resizable="false" minWidth="200">
                 <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
                 <h:panelGrid columns="4">                    
-                    <p:outputLabel value="Fecha:" for="txtfecha"/>
-                    <p:calendar id="txtfecha" navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{pagosBean.pago.fecreg}" required="true" requiredMessage="Ingrese la fecha"/>                    
                     <p:outputLabel value="Tipo Doc:" for="tipo"/>
                     <p:selectOneMenu id="tipo" value="#{pagosBean.pago.tipo}" required="true" requiredMessage="Seleccione Tipo">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
@@ -217,11 +215,7 @@
         <h:form id="formNotadebito">
             <p:dialog header="Intereses moratorios de letra: #{pagosBean.descripcion}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgnotadebito" modal="true" resizable="true" minWidth="200">
-                <h:panelGrid columns="2">
-                    <p:outputLabel value="Fecha:" for="txtfechai"/>
-                    <p:calendar id="txtfechai" navigator="true" showOn="button" value="#{pagosBean.pago.fecreg}" 
-                                pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese Fecha">                        
-                    </p:calendar>
+                <h:panelGrid columns="2">                    
                     <p:outputLabel value="Comprobante:" for="tipodoc"/>
                     <p:selectOneMenu id="tipodoc" value="#{pagosBean.pago.tipodoc}" converter="omnifaces.SelectItemsConverter"
                                      required="true" requiredMessage="Seleccione Tipo Documento">

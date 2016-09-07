@@ -70,24 +70,20 @@ public class vehiculoBean implements Serializable {
         if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("AS")) {
             this.session = null;
             this.transaction = null;
-
             try {
-
                 this.session = HibernateUtil.getSessionFactory().openSession();
                 this.transaction = session.beginTransaction();
-
                 VehiculoDao dao = new VehiculoDaoImplements();
                 if (dao.verBySerie(this.session, this.vehiculo.getSerie()) != null) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Articulo ya existe en DB."));
                     this.vehiculo = new Vehiculo();
                     return;
                 }
-
                 Date d = new Date();
                 vehiculo.setFechareg(d);
                 vehiculo.setTipovehiculo(vehiculo.getModelo().getTipo());
+                vehiculo.setMarca(obtenerMarca(vehiculo.getModelo().getModelo()));
                 dao.registrar(this.session, this.vehiculo);
-
                 this.transaction.commit();
 
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
@@ -123,6 +119,7 @@ public class vehiculoBean implements Serializable {
                 return;
             }
             vehiculo.setTipovehiculo(vehiculo.getModelo().getTipo());
+            vehiculo.setMarca(obtenerMarca(vehiculo.getModelo().getModelo()));
             dao.modificar(this.session, this.vehiculo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
@@ -174,7 +171,7 @@ public class vehiculoBean implements Serializable {
                 VehiculoDao dao = new VehiculoDaoImplements();
                 this.session = HibernateUtil.getSessionFactory().openSession();
                 this.transaction = session.beginTransaction();
-                System.out.println("idvehiculo: "+codigoUsuario);
+                System.out.println("idvehiculo: " + codigoUsuario);
                 this.vehiculo = dao.verByIdvehiculo(this.session, codigoUsuario);
                 this.transaction.commit();
                 RequestContext.getCurrentInstance().update("frmEditarArticulo:panelEditarArticulo");
@@ -230,6 +227,28 @@ public class vehiculoBean implements Serializable {
             vehiculo = new Vehiculo();
         }
         return vehiculo;
+    }
+
+    public String obtenerMarca(String modelo) {
+        String marca = new String();
+        char ab = modelo.charAt(0);
+        System.out.println("ab: " + ab);
+        switch (ab) {
+            case 'V':
+                marca = "V";
+                break;
+            case 'M':
+                marca = "V";
+                break;
+            case 'T':
+                marca = "T";
+                break;
+            case 'G':
+                marca = "T";
+                break;
+        }
+        System.out.println("ab: " + ab);
+        return marca;
     }
 
     public void setVehiculo(Vehiculo vehiculo) {
@@ -289,14 +308,14 @@ public class vehiculoBean implements Serializable {
             }
         }
         return query;
-    }    
+    }
 
-    public void cargarModelo(Credito cred) {        
+    public void cargarModelo(Credito cred) {
         Integer modelo = cred.getModelo().getIdmodelo();
         idmodelo = Integer.toString(modelo);
     }
-    
-    public void cargarModeloVehi(Modelo mod) {       
+
+    public void cargarModeloVehi(Modelo mod) {
         Integer modelo = mod.getIdmodelo();
         idmodelo = Integer.toString(modelo);
     }

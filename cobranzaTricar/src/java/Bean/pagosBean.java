@@ -100,6 +100,7 @@ public class pagosBean implements Serializable {
         PagosDao pagosdao = new PagosDaoImp();
         LetrasDao letrasdao = new LetrasDaoImplements();
         CreditoDao creditodao = new CreditoDaoImp();
+        Date fecha = new Date();
         pago.setLetras(letra);
         if (btnpago.equals("Aplicar") && letra.getCobradonc() == true) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ya se hizo el descuento por pronto pago. O letra vencida no procede descuento."));
@@ -118,6 +119,7 @@ public class pagosBean implements Serializable {
                     pago.setCalificacion("Pago puntual");
                     pago.setDiffdays(new Long(0));
                 }
+                pago.setFecreg(fecha);
                 pago.setMonto(montopago);
                 pago.setUsuario(idusuario);
                 String temp = pago.getOperacion();
@@ -272,6 +274,7 @@ public class pagosBean implements Serializable {
     public void insertarNotaDebito(Usuario usuario) {
         LetrasDao letrasdao = new LetrasDaoImplements();
         PagosDao pagosdao = new PagosDaoImp();
+        Date fecha = new Date();
         try {
             letra.setMora(BigDecimal.ZERO);            
             difdays = letra.getDiffdays();
@@ -280,7 +283,7 @@ public class pagosBean implements Serializable {
             //ago = new Pagos();           
             letra.setCredito(credito);
             letra.setDescripcion("ND");
-            letra.setFecreg(pago.getFecreg());
+            letra.setFecreg(fecha);
             letra.setFecven(letra.getFecreg()/*fechafin*/);
             letra.setMontoletra(montopago);
             letra.setInteres(BigDecimal.ZERO);
@@ -289,6 +292,7 @@ public class pagosBean implements Serializable {
             letra.setEstado("CN");
             letra.setDiffdays(difdays);
             letrasdao.insertarLetra(letra);
+            pago.setFecreg(fecha);
             pago.setUsuario(usuario.getIdusuario());
             pago.setLetras(letra);
             pago.setFecreg(letra.getFecreg());

@@ -48,6 +48,10 @@ public class anexoBean implements Serializable {
     private int año;
     private String fecnac;
     public List<Anexo> anexosfiltrados;
+    private String numdigitos;
+    private Boolean empresa;
+    private Boolean persona;
+    private Boolean conyuge;
 
     public anexoBean() {
     }
@@ -102,6 +106,9 @@ public class anexoBean implements Serializable {
         año = 0;
         fecnac = new String();
         anexo = new Anexo();
+        empresa = true;
+        persona = true;
+        conyuge = true;
         RequestContext.getCurrentInstance().update("formInsertar");
         RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
     }
@@ -237,8 +244,10 @@ public class anexoBean implements Serializable {
             this.anexo.setFechareg(d);
             this.anexo.setCodven("");
             Date fechaNac = null;
+            System.out.println("nombre: "+anexo.getNombre());
             fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
             this.anexo.setFechanac(fechaNac);
+            calcularEdad(fecnac);
             this.anexo.setEdad(año);
             daotanexo.registrar(this.session, this.anexo);
             this.transaction.commit();
@@ -399,7 +408,11 @@ public class anexoBean implements Serializable {
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
+            System.out.println("ID anexo: "+idanexo);
             anexo = daotanexo.verByIdanexo(this.session, idanexo);
+            actualizarCampos(anexo.getTipodocumento());
+            datosConyu(anexo.getEstcivil());
+            año = anexo.getEdad();
             this.transaction.commit();
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -413,8 +426,7 @@ public class anexoBean implements Serializable {
         }
         DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
         String convertido = fecha.format(anexo.getFechanac());
-        fecnac = convertido;
-        año = anexo.getEdad();
+        fecnac = convertido;        
         RequestContext.getCurrentInstance().update("frmEditarAnexo:panelEditarAnexo");
         RequestContext.getCurrentInstance().execute("PF('dialogoEditarAnexo').show()");
     }
@@ -637,6 +649,28 @@ public class anexoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente NO necesitará aval o garante"));
         }
     }
+    
+    public void actualizarCampos(String tipodoc){
+        if (tipodoc.equals("DNI")){
+            numdigitos = "99999999";
+            empresa = true;
+            persona = false;
+        } else {
+            numdigitos = "99999999999";
+            empresa = false;
+            persona = true;
+        }
+        System.out.println("ejecuté campos");
+    }
+    
+    public void datosConyu(String estcivil){
+        if (estcivil.equals("CO") || estcivil.equals("CA")){
+            conyuge = false;
+        } else {
+            conyuge = true;
+        }        
+        System.out.println("ejecuté conyuge");
+    }
 
     public void handleKeyEvent() {
         text = text.toUpperCase();
@@ -739,5 +773,37 @@ public class anexoBean implements Serializable {
 
     public void setAnexosfiltrados(List<Anexo> anexosfiltrados) {
         this.anexosfiltrados = anexosfiltrados;
+    }
+
+    public String getNumdigitos() {
+        return numdigitos;
+    }
+
+    public void setNumdigitos(String numdigitos) {
+        this.numdigitos = numdigitos;
+    }
+
+    public Boolean getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Boolean empresa) {
+        this.empresa = empresa;
+    }
+
+    public Boolean getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Boolean persona) {
+        this.persona = persona;
+    }
+
+    public Boolean getConyuge() {
+        return conyuge;
+    }
+
+    public void setConyuge(Boolean conyuge) {
+        this.conyuge = conyuge;
     }
 }
