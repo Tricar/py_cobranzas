@@ -260,6 +260,7 @@ public class LoginBean implements Serializable {
     }
 
     public String url( String urls ) {
+        System.out.println("url"+urls);
         return urls;
     }
 

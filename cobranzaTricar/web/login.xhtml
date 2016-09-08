@@ -2,8 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Sistema de créditos y cobranzas Casco Red</title>
         <h:outputStylesheet library="spark" name="css/animate.css"/>
@@ -30,7 +29,7 @@
                         <div class="EmptyBox10"></div>
                         <p:password value="#{loginbean.clave}" autocomplete="off" id="clave" required="true" label="clave" />
                         <div class="EmptyBox20"></div>
-                        <div id="cargando" style="width: 50px; height: 50px" class="precarga"/>
+                        <div id="cargando" style="width: 50px; height: 50px; background-position: center" class="precarga" />
                         <div class="EmptyBox30"></div>
                         <p:commandButton id="loginButton" value="Ingresar" update=":growl" actionListener="#{loginbean.login(actionEvent)}"   
                                          class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only Fs16" oncomplete="handleLoginRequest(xhr, status, args)" onclick="ActivarCampoOtroTema();"/>  

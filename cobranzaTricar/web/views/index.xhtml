@@ -76,7 +76,7 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs30 blue FontRalewayLight">
                                     <h:form>
-                                        <p:poll interval="3" update="ventas" listener="#{loginbean.actualizarVentasxDia()}"/>
+                                        <ui:remove><p:poll interval="3" update="ventas" listener="#{loginbean.actualizarVentasxDia()}"/></ui:remove>
                                         <h:outputLabel id="ventas" value="#{loginbean.ventasxdia}"/>
                                     </h:form>
                                 </div>
@@ -90,7 +90,7 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs30 blue FontRalewayLight">
                                     <h:form>
-                                        <p:poll interval="3" update="ventasxmes" listener="#{loginbean.actualizarVentasxMes()}"/>
+                                        <ui:remove><p:poll interval="3" update="ventasxmes" listener="#{loginbean.actualizarVentasxMes()}"/></ui:remove>
                                         <h:outputLabel id="ventasxmes" value="#{loginbean.ventasxmes}"/>
                                     </h:form>
                                 </div>
@@ -104,7 +104,7 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs30 red FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i> 
                                     <h:form>
-                                        <p:poll interval="3" update="credxapro" listener="#{loginbean.actualizarxAprobar()}"/>
+                                        <ui:remove><p:poll interval="3" update="credxapro" listener="#{loginbean.actualizarxAprobar()}"/></ui:remove>
                                         <h:outputLabel id="credxapro" value="#{loginbean.creditoxaprobar}"/>
                                     </h:form>                                    
                                 </div>
@@ -118,7 +118,7 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs30 orange FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i>
                                     <h:form>
-                                        <p:poll interval="3" update="pend" listener="#{loginbean.actualizarxDespachar()}"/>
+                                        <ui:remove><p:poll interval="3" update="pend" listener="#{loginbean.actualizarxDespachar()}"/></ui:remove>
                                         <h:outputLabel id="pend" value="#{loginbean.creditoaprobado}"/>
                                     </h:form>
                                     
