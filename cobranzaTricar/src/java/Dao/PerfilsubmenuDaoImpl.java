@@ -31,15 +31,14 @@ public class PerfilsubmenuDaoImpl implements PerfilsubmenuDao {
             session.beginTransaction();
             session.save(perfsubmenu);
             session.getTransaction().commit();
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
-        }    
+        }
     }
 
     @Override
@@ -81,9 +80,9 @@ public class PerfilsubmenuDaoImpl implements PerfilsubmenuDao {
         Query query = session.createQuery(hql);
         query.setParameter("idperfil", idperfil);
         query.setParameter("descripcion", descripcion);
-        
+
         Perfilsubmenu perfil = (Perfilsubmenu) query.uniqueResult();
-        
+
         return perfil;
     }
 
@@ -96,26 +95,6 @@ public class PerfilsubmenuDaoImpl implements PerfilsubmenuDao {
         List<Perfilsubmenu> listaPerfil = (List<Perfilsubmenu>) query.list();
 
         return listaPerfil;
-    }
-
-    @Override
-    public Perfilsubmenu mostrarRequisitosXCred(Integer menu) {       
-        Session session = null;
-        Perfilsubmenu req = null;
-        try{
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("from Perfilsubmenu where idperfilmenu=:v");
-            query.setParameter("v", menu);
-            req = (Perfilsubmenu)query.uniqueResult();
-        }catch (HibernateException e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
-                session.close();
-            }
-        }
-        return req;
     }
 
 }

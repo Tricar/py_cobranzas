@@ -16,6 +16,7 @@ import org.hibernate.Session;
 public interface PerfilmenuDao {
     
     public void insertar(Perfilmenu perfilmenu);
+    public Perfilmenu verTodos(Perfil perfil, Menu menu);
     public List<Perfilmenu> verTodo(Session session) throws Exception;
     public List<Perfilmenu> verTodoByPerfilmenu(Session session, Integer menu) throws Exception;
     public Perfilmenu verByCodigo(Session session, Integer idperfil) throws Exception;

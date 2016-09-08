@@ -31,12 +31,11 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
             session.beginTransaction();
             session.save(perfilmenu);
             session.getTransaction().commit();
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -81,9 +80,9 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
         Query query = session.createQuery(hql);
         query.setParameter("idperfil", idperfil);
         query.setParameter("descripcion", descripcion);
-        
+
         Perfilmenu perfil = (Perfilmenu) query.uniqueResult();
-        
+
         return perfil;
     }
 
@@ -96,6 +95,31 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
         List<Perfilmenu> listaPerfil = (List<Perfilmenu>) query.list();
 
         return listaPerfil;
+    }
+
+    @Override
+    public Perfilmenu verTodos(Perfil perfil, Menu menu) {
+        Session session = null;
+        Perfilmenu perfilmenu = new Perfilmenu();
+        try{
+        Integer idperfil = perfil.getIdperfil();
+        Integer idmenu = menu.getIdmenu();
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("FROM Perfilmenu where idperfil=:perfil and idmenu=:menu");
+        query.setParameter("perfil", idperfil);
+        query.setParameter("menu", idmenu);
+        perfilmenu = (Perfilmenu)query.uniqueResult();
+        System.out.println("idperfil: "+idperfil);
+        System.out.println("idmenu: "+idmenu);
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return perfilmenu;
     }
 
 }

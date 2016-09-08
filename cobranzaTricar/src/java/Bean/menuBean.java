@@ -1,12 +1,17 @@
 package Bean;
 
-import Clases.Encrypt;
 import Dao.MenuDao;
 import Dao.MenuDaoImpl;
-import Dao.UsuarioDaoImpl;
+import Dao.PerfilDao;
+import Dao.PerfilDaoImpl;
+import Dao.PerfilmenuDao;
+import Dao.PerfilmenuDaoImpl;
 import Model.Menu;
+import Model.Perfil;
+import Model.Perfilmenu;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,11 +26,13 @@ import org.primefaces.context.RequestContext;
 
 public class menuBean implements Serializable {
 
-   private Session session;
+    private Session session;
     private Transaction transaction;
 
     private Menu menu;
+    private Perfilmenu perfilmenu;
     private List<Menu> listamenu;
+    private List<Perfil> listaperfil;
     private List<Menu> listamenufiltrado;
 
     public Menu getMenu() {
@@ -82,11 +89,13 @@ public class menuBean implements Serializable {
                 this.menu = new Menu();
                 return;
             }
-            
+            Date d = new Date();
+            this.menu.setCreated(d);
             daotusuario.registrar(this.session, this.menu);
 
             this.transaction.commit();
-
+            insertarMenuPerfil(menu);
+            this.menu = new Menu();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
 
             this.menu = new Menu();
@@ -101,6 +110,22 @@ public class menuBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public void insertarMenuPerfil(Menu menu) {
+        PerfilDao perfilDao = new PerfilDaoImpl();
+        PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
+        listaperfil = perfilDao.verTodos();
+        perfilmenu = new Perfilmenu();
+        for (int i = 0; i < listaperfil.size(); i++) {
+            Perfil get = listaperfil.get(i);
+            perfilmenu.setPerfil(get);
+            perfilmenu.setMenu(menu);
+            perfilmenu.setEstado(Boolean.FALSE);
+            perfilmenuDao.insertar(perfilmenu);
+            perfilmenu = new Perfilmenu();
+        }
+
     }
 
     public void modificar() {
@@ -118,12 +143,12 @@ public class menuBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
                 return;
             }
-            
+
             daotusuario.modificar(this.session, this.menu);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
             this.menu = new Menu();
-            
+
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -231,7 +256,7 @@ public class menuBean implements Serializable {
         this.menu = menu;
     }
 
-    public List<Menu> getListamenu() {        
+    public List<Menu> getListamenu() {
         this.session = null;
         this.transaction = null;
 
@@ -272,5 +297,13 @@ public class menuBean implements Serializable {
     public void setListamenufiltrado(List<Menu> listamenufiltrado) {
         this.listamenufiltrado = listamenufiltrado;
     }
-    
+
+    public List<Perfil> getListaperfil() {
+        return listaperfil;
+    }
+
+    public void setListaperfil(List<Perfil> listaperfil) {
+        this.listaperfil = listaperfil;
+    }
+
 }

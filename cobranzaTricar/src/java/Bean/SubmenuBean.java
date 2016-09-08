@@ -1,10 +1,20 @@
 package Bean;
 
+import Dao.PerfilDao;
+import Dao.PerfilDaoImpl;
+import Dao.PerfilmenuDao;
+import Dao.PerfilmenuDaoImpl;
+import Dao.PerfilsubmenuDao;
+import Dao.PerfilsubmenuDaoImpl;
 import Dao.SubmenuDao;
 import Dao.SubmenuDaoImpl;
+import Model.Perfil;
+import Model.Perfilmenu;
+import Model.Perfilsubmenu;
 import Model.Submenu;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -23,7 +33,12 @@ public class SubmenuBean implements Serializable {
     private Transaction transaction;
 
     private Submenu submenu;
+    private Perfil perfil;
+    private Perfilmenu perfilmenu;
+    private Perfilsubmenu perfilsubmenu;
+    private List<Perfilmenu> listaperfilmenu;
     private List<Submenu> listasubmenu;
+    private List<Perfil> listaperfil;
     private List<Submenu> listasubmenufiltrado;
 
     public Submenu getSubmenu() {
@@ -68,25 +83,21 @@ public class SubmenuBean implements Serializable {
     public void registrar() {
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             SubmenuDao daotusuario = new SubmenuDaoImpl();
             if (daotusuario.verByDescripcion(this.session, this.submenu.getSubmenu()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya existe en DB."));
                 this.submenu = new Submenu();
                 return;
             }
-            
+            Date d = new Date();
+            this.submenu.setCreated(d);
             daotusuario.registrar(this.session, this.submenu);
-
             this.transaction.commit();
-
+            insertarSubmenuMenu(submenu);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-
             this.submenu = new Submenu();
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -99,6 +110,24 @@ public class SubmenuBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public void insertarSubmenuMenu(Submenu submenu) {
+        PerfilDao perfilDao = new PerfilDaoImpl();
+        PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
+        PerfilsubmenuDao perfilsubmenuDao = new PerfilsubmenuDaoImpl();
+        listaperfil = perfilDao.verTodos();
+        perfilsubmenu = new Perfilsubmenu();
+        for (int i = 0; i < listaperfil.size(); i++) {
+            Perfil get = listaperfil.get(i);
+            perfilmenu = perfilmenuDao.verTodos(get, submenu.getMenu());
+            perfilsubmenu.setPerfilmenu(perfilmenu);
+            perfilsubmenu.setSubmenu(submenu);
+            perfilsubmenu.setEstado(Boolean.FALSE);
+            perfilsubmenuDao.insertar(perfilsubmenu);
+            perfilmenu = new Perfilmenu();
+        }
+
     }
 
     public void modificar() {
@@ -116,12 +145,12 @@ public class SubmenuBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
                 return;
             }
-            
+
             daotusuario.modificar(this.session, this.submenu);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
             this.submenu = new Submenu();
-            
+
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -229,7 +258,7 @@ public class SubmenuBean implements Serializable {
         this.submenu = submenu;
     }
 
-    public List<Submenu> getListatusuario() {        
+    public List<Submenu> getListatusuario() {
         this.session = null;
         this.transaction = null;
 
@@ -270,4 +299,45 @@ public class SubmenuBean implements Serializable {
     public void setListatusuariofiltrado(List<Submenu> listasubmenufiltrado) {
         this.listasubmenufiltrado = listasubmenufiltrado;
     }
+
+    public Perfilsubmenu getPerfilsubmenu() {
+        return perfilsubmenu;
+    }
+
+    public void setPerfilsubmenu(Perfilsubmenu perfilsubmenu) {
+        this.perfilsubmenu = perfilsubmenu;
+    }
+
+    public Perfilmenu getPerfilmenu() {
+        return perfilmenu;
+    }
+
+    public void setPerfilmenu(Perfilmenu perfilmenu) {
+        this.perfilmenu = perfilmenu;
+    }
+
+    public List<Perfilmenu> getListaperfilmenu() {
+        return listaperfilmenu;
+    }
+
+    public void setListaperfilmenu(List<Perfilmenu> listaperfilmenu) {
+        this.listaperfilmenu = listaperfilmenu;
+    }
+
+    public List<Perfil> getListaperfil() {
+        return listaperfil;
+    }
+
+    public void setListaperfil(List<Perfil> listaperfil) {
+        this.listaperfil = listaperfil;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+
 }

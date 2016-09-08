@@ -17,7 +17,6 @@ public interface PerfilsubmenuDao {
     
     public void insertar(Perfilsubmenu perfsubmenu);
     public List<Perfilsubmenu> verTodo(Session session) throws Exception;
-    public Perfilsubmenu mostrarRequisitosXCred(Integer menu); 
     public List<Perfilsubmenu> verTodoByPerfilsubmenu(Session session, Integer menu) throws Exception;
     public Perfilsubmenu verByCodigo(Session session, Integer idperfil) throws Exception;
     public Perfilsubmenu verByDescripcion(Session session, String descripcion) throws Exception;

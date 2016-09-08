@@ -7,7 +7,9 @@ package Dao;
 
 import Model.Menu;
 import Model.Perfil;
+import Persistencia.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -71,6 +73,24 @@ public class PerfilDaoImpl implements PerfilDao {
         Perfil perfil = (Perfil) query.uniqueResult();
         
         return perfil;
+    }
+
+    @Override
+    public List<Perfil> verTodos() {
+        Session session = null;
+        List<Perfil> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Perfil");
+            lista = (List<Perfil>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
     }
 
 }
