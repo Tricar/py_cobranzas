@@ -178,7 +178,7 @@ public class PerfilBean implements Serializable {
             }
         }
     }
-    
+
     public void insertarPerfil() {
         this.session = null;
         this.transaction = null;
@@ -212,32 +212,32 @@ public class PerfilBean implements Serializable {
     }
 
     public void insertarperfilmenu(Perfil perfil) {
-            MenuDao menuDao = new MenuDaoImpl();
-            PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
-            PerfilsubmenuDao perfsubmendao = new PerfilsubmenuDaoImpl();
-            SubmenuDao submendao = new SubmenuDaoImpl();                        
-            menus = menuDao.verTodos();
-            perfilmenu = new Perfilmenu();
-            perfilsubmenu = new Perfilsubmenu();
-            for (int i = 0; i < menus.size(); i++) {
-                Menu get = menus.get(i);
-                perfilmenu.setMenu(get);
-                perfilmenu.setPerfil(perfil);
-                perfilmenu.setEstado(Boolean.FALSE);
-                perfilmenuDao.insertar(perfilmenu);
-                submenus = submendao.verTodosxId(get);
-                for (int j = 0; j < submenus.size(); j++) {
-                    Submenu get1 = submenus.get(j);
-                    perfilsubmenu.setPerfilmenu(perfilmenu);
-                    perfilsubmenu.setSubmenu(get1);
-                    perfilsubmenu.setEstado(Boolean.FALSE);
-                    perfsubmendao.insertar(perfilsubmenu);
-                    perfilsubmenu = new Perfilsubmenu();                    
-                }
-                submenus = new ArrayList();
-                perfilmenu = new Perfilmenu();
+        MenuDao menuDao = new MenuDaoImpl();
+        PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
+        PerfilsubmenuDao perfsubmendao = new PerfilsubmenuDaoImpl();
+        SubmenuDao submendao = new SubmenuDaoImpl();
+        menus = menuDao.verTodos();
+        perfilmenu = new Perfilmenu();
+        perfilsubmenu = new Perfilsubmenu();
+        for (int i = 0; i < menus.size(); i++) {
+            Menu get = menus.get(i);
+            perfilmenu.setMenu(get);
+            perfilmenu.setPerfil(perfil);
+            perfilmenu.setEstado(Boolean.FALSE);
+            perfilmenuDao.insertar(perfilmenu);
+            submenus = submendao.verTodosxId(get);
+            for (int j = 0; j < submenus.size(); j++) {
+                Submenu get1 = submenus.get(j);
+                perfilsubmenu.setPerfilmenu(perfilmenu);
+                perfilsubmenu.setSubmenu(get1);
+                perfilsubmenu.setEstado(Boolean.FALSE);
+                perfsubmendao.insertar(perfilsubmenu);
+                perfilsubmenu = new Perfilsubmenu();
             }
-        
+            submenus = new ArrayList();
+            perfilmenu = new Perfilmenu();
+        }
+
     }
 
     public void eliminarPerfil() {

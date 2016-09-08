@@ -1,138 +1,111 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
-        <title>Gestion de Vehiculos </title>
-    </h:head>
-    <h:body>
-        <ui:composition template="./../views/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../views/template.xhtml">
 
-            <ui:define name="content">
-                <h:form>
-                    <p:commandButton value="Nuevo" action="#{vehiculoBean.nuevo(loginbean.usuario)}" icon="fa fa-plus white"/>
+    <ui:define name="content">
+        <h:form id="frmNuevo">
+            <p:commandButton value="Nuevo" action="#{servicioBean.nuevo()}" icon="fa fa-plus white"/>
+        </h:form>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                Lista de Repuestos
+            </div>
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="frmlistar">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable id="tablalistarcolor" var="item" value="#{repuestoBean.verTodo()}" emptyMessage="No hay nada para mostrar"
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
+                        <p:column headerText="CODIGO">
+                            <h:outputText value="#{item.codigo}"/>
+                        </p:column>
+                        <p:column headerText="DESCRIPCION">
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        <p:column headerText="PRECIO COM.">
+                            <h:outputText value="#{item.preciocompra}"/>
+                        </p:column>
+                        <p:column headerText="PRECIO VEN.">
+                            <h:outputText value="#{item.precioventa}"/>
+                        </p:column>
+                        <p:column width="10%" style="text-align: center">
+                            <p:commandButton actionListener="#{repuestoBean.cargarColorEditar(item.idrepuesto)}" icon="fa fa-pencil white"/>
+                            <p:commandButton actionListener="#{repuestoBean.cargarColorEliminar(item.idrepuesto)}" icon="fa fa-trash white"/>
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
+            </div>
+        </div>
 
-                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-                    <div class="ui-datatable-header ui-widget-header ui-corner-top">
-                        Lista de Vehiculo
-                    </div>
-                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                        <h:form id="formMostrar">
-                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                            <p:dataTable var="item" value="#{vehiculoBean.vehiculos}" 
-                                         emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
-                                         paginatorPosition="top" rowsPerPageTemplate="10" filteredValue="#{vehiculoBean.vehiculosfiltrados}">
-                                <p:column headerText="MARCA">
-                                    <h:outputText value="#{item.marca}">
-                                        <f:converter converterId="marcaconverter"/>
-                                    </h:outputText>
-                                </p:column>
-                                <p:column headerText="ARTICULO">
-                                    <h:outputText value="#{item.tipovehiculo}" />-
-                                    <h:outputText value="#{item.modelo.modelo}" />-
-                                    <h:outputText value="#{item.color.color}" />-
-                                    <h:outputText value="#{item.anofabri}" />
-                                </p:column>                        
-                                <p:column headerText="SERIE" filterBy="#{item.serie}" filterMatchMode="contains" >
-                                    <h:outputText value="#{item.serie}" />
-                                </p:column>
-                                <p:column headerText="ESTADO" >
-                                    <h:outputText value="#{item.estado}">
-                                        <f:converter converterId="estadoconverter"/>
-                                    </h:outputText>
-                                </p:column>
-                                <p:column>
-                                    <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEditar(item.idvehiculo , loginbean.usuario)}" icon="fa fa-pencil white"/>
-                                    <p:commandButton actionListener="#{vehiculoBean.cargarArticuloEliminar(item.idvehiculo , loginbean.usuario)}" icon="fa fa-trash white"/>
-                                </p:column>
-                            </p:dataTable>
-                        </h:form>
-                    </div>
-                </div>
+        <h:form id="formInsertar">
+            <p:dialog header="Nuevo" widgetVar="dlginsertar" modal="true">   
+                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                <h:panelGrid columns="2">                    
+                    <p:outputLabel value="Codigo:" for="txtCodigo"/>
+                    <p:inputText id="txtCodigo" value="#{repuestoBean.repuesto.codigo}" required="true" requiredMessage="Ingresa Codigo" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                    <p:inputText id="txtDescripcion" value="#{repuestoBean.repuesto.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Precio compra:" for="txtpreciocompra"/>
+                    <p:inputText id="txtpreciocompra" value="#{repuestoBean.repuesto.preciocompra}" required="true" requiredMessage="Ingresa precio compra">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Precio venta:" for="txtprecioventa"/>
+                    <p:inputText id="txtprecioventa" value="#{repuestoBean.repuesto.precioventa}" required="true" requiredMessage="Ingresa precio venta">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>                    
+                    <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
+                    <p:inputText id="txtunidadmedida" value="#{repuestoBean.repuesto.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{repuestoBean.registrar()}" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
 
-                <h:form id="formInsertar">
-                    <p:dialog header="Nuevo Articulo" widgetVar="dlginsert" modal="true">                        
-                        <h:panelGrid id="panelcrearperfil" columns="2">                            
-                            <p:outputLabel value="Modelo:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{modeloBean.modelos}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Color:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.color}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{colorBean.colores}" var="color" itemLabel="#{color.color}" itemValue="#{color}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Año" for="txtAno"/>
-                            <p:inputMask mask="9999" id="txtAno" label="Año" value="#{vehiculoBean.vehiculo.anofabri}" required="true" requiredMessage="Ingrese año" />
-                            <p:outputLabel value="Serie:" for="txtSerie"/>
-                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="Motor:" for="txtMotor"/>
-                            <p:inputText id="txtMotor" value="#{vehiculoBean.vehiculo.motor}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="Estado:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.estado}" required="true" requiredMessage="Debe Seleccionar Estado">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="DISPONIBLE" itemValue="D" />
-                                <f:selectItem itemLabel="NO DISPONIBLE" itemValue="N" />             
-                            </p:selectOneMenu>
-                            <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{vehiculoBean.registrar(loginbean.usuario)}" />
-                        </h:panelGrid>
-                    </p:dialog>
-                </h:form>
+        <h:form id="frmEditarColor">
+            <p:dialog header="Actualizar" widgetVar="dialogoEditarColor" modal="true">
+                <h:panelGrid id="panelEditarColor" columns="2">                    
+                    <p:outputLabel value="Codigo:" for="txtCodigo"/>
+                    <p:inputText id="txtCodigo" value="#{repuestoBean.repuesto.codigo}" required="true" requiredMessage="Ingresa Codigo" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                    <p:inputText id="txtDescripcion" value="#{repuestoBean.repuesto.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Precio compra:" for="txtpreciocompra"/>
+                    <p:inputText id="txtpreciocompra" value="#{repuestoBean.repuesto.preciocompra}" required="true" requiredMessage="Ingresa precio compra">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Precio venta:" for="txtprecioventa"/>
+                    <p:inputText id="txtprecioventa" value="#{repuestoBean.repuesto.precioventa}" required="true" requiredMessage="Ingresa precio venta">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>                    
+                    <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
+                    <p:inputText id="txtunidadmedida" value="#{repuestoBean.repuesto.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{repuestoBean.modificar()}"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
 
-                <h:form id="frmEditarArticulo">
-                    <p:dialog header="Datos del Articulo" widgetVar="dialogoEditarArticulo" modal="true">
-                        <h:panelGrid id="panelEditarArticulo" columns="2">                              
-                            <p:outputLabel value="Modelo:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{modeloBean.modelos}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Color:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.color}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue=""/>
-                                <f:selectItems value="#{colorBean.colores}" var="color" itemLabel="#{color.color}" itemValue="#{color}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="Año" for="txtAno"/>
-                            <p:inputMask mask="9999" id="txtAno" label="Año" value="#{vehiculoBean.vehiculo.anofabri}" required="true" requiredMessage="Ingrese año" />
-                            <p:outputLabel value="Serie:" for="txtSerie"/>
-                            <p:inputText id="txtSerie" label="Serie" value="#{vehiculoBean.vehiculo.serie}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="Motor:" for="txtMotor"/>
-                            <p:inputText id="txtMotor" label="Motor" value="#{vehiculoBean.vehiculo.motor}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="Estado:" />
-                            <p:selectOneMenu value="#{vehiculoBean.vehiculo.estado}">
-                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
-                                <f:selectItem itemLabel="DISPONIBLE" itemValue="D" />
-                                <f:selectItem itemLabel="NO DISPONIBLE" itemValue="N" />                     
-                            </p:selectOneMenu>
-                            <p:commandButton value="Guardar cambios" icon="fa fa-save white" ajax="false" actionListener="#{vehiculoBean.modificar()}"/>
-                        </h:panelGrid>
-                    </p:dialog>
-                </h:form>
-
-                <h:form id="frmEliminarArticulo">
-                    <p:dialog header="Datos del Articulo" widgetVar="dialogoEliminarArticulo" modal="true">
-                        <p:inputText type="hidden" value="#{vehiculoBean.vehiculo.idvehiculo}"/>
-                        <h:outputText value="¿Desea eliminar?" />
-                        <p:separator/>
-                        <p:commandButton value="Si" actionListener="#{vehiculoBean.eliminar()}" ajax="false" icon="fa fa-check blue" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
-                    </p:dialog>
-                </h:form>
-
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
+        <h:form id="frmEliminarColor">
+            <p:dialog header="Datos Color" widgetVar="dialogoEliminarColor" modal="true">
+                <p:inputText type="hidden" value="#{repuestoBean.repuesto.idrepuesto}"/>
+                <h:outputText value="¿Desea eliminar?" />
+                <p:separator/>
+                <p:commandButton value="Si" actionListener="#{repuestoBean.eliminar()}" ajax="false" icon="fa fa-check blue" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
