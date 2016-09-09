@@ -10,10 +10,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseEvent;
 import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 /**
  *
@@ -222,5 +225,21 @@ public class colorBean implements Serializable{
 
     public void setSelectItemsColor(List<SelectItem> SelectItemsColor) {
         this.SelectItemsColor = SelectItemsColor;
+    }      
+
+    public void handleSelect(SelectEvent e) {
+        Color p = (Color) e.getObject();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Color agregado :: " + p.getColor(), ""));
     }
+
+    public void handleUnSelect(UnselectEvent e) {
+        Color p = (Color) e.getObject();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Color removido :: " + p.getColor(), ""));
+    }   
+
+    public void phaseListener(PhaseEvent e) {
+        List<FacesMessage> messages = e.getFacesContext().getMessageList();
+        System.out.println(messages.size());
+    }
+    
 }

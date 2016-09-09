@@ -4,6 +4,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../views/template.xhtml">
 
@@ -41,42 +42,57 @@
             </div>
         </div>
 
-        <h:form id="formInsertar">
-            <p:dialog header="Nuevo" widgetVar="dlginsertar" modal="true">   
-                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                <h:panelGrid columns="2">                    
-                    <p:outputLabel value="Codigo:" for="txtCodigo"/>
-                    <p:inputText id="txtCodigo" value="#{articuloBean.articulo.codigo}" required="true" requiredMessage="Ingresa Codigo" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                        <f:validator validatorId="validatorVacio"/>
-                    </p:inputText>
-                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                        <f:validator validatorId="validatorVacio"/>
-                    </p:inputText>
-                    <p:outputLabel value="Precio compra:" for="txtpreciocompra"/>
-                    <p:inputText id="txtpreciocompra" value="#{articuloBean.articulo.preciocompra}" required="true" requiredMessage="Ingresa precio compra">
-                        <f:validator validatorId="validatorVacio"/>
-                    </p:inputText>
-                    <p:outputLabel value="Precio venta:" for="txtprecioventa"/>
-                    <p:inputText id="txtprecioventa" value="#{articuloBean.articulo.precioventa}" required="true" requiredMessage="Ingresa precio venta">
-                        <f:validator validatorId="validatorVacio"/>
-                    </p:inputText>                    
-                    <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
-                    <p:inputText id="txtunidadmedida" value="#{articuloBean.articulo.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
-                        <f:validator validatorId="validatorVacio"/>
-                    </p:inputText>
-                    <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{articuloBean.registrar()}" />
-                </h:panelGrid>
-            </p:dialog>
-        </h:form>
+        <f:view afterPhase="#{colorBean.phaseListener}">
+            <h:form id="formInsertar">
+                <p:dialog header="Nuevo" widgetVar="dlginsertar" modal="true">   
+                    <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Tipo Articulo:"/>
+                        <p:selectOneMenu value="#{articuloBean.articulo.tipoarticulo}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                            <f:selectItems value="#{articuloBean.verTodo()}" var="articulo" itemLabel="#{articulo.descripcion}" itemValue="#{articulo}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Color:" for="txtCodigo"/>
+                        <p:autoComplete id="txtCodigo" value="#{articuloBean.articulo.color}" completeMethod="#{articuloBean.filtrarCliente}" 
+                                        var="colores" itemLabel="#{colores.color}" itemValue="#{cliente}" required="true" requiredMessage="Ingrese Color">
+                            <o:converter converterId="omnifaces.ListConverter" list="#{articuloBean.articulos}"/>
+                            <p:ajax event="itemSelect" listener="#{colorBean.handleSelect}" />
+                            <p:ajax event="itemUnselect" listener="#{colorBean.handleUnSelect}" />
+                        </p:autoComplete>
+                        <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                        <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                            <f:validator validatorId="validatorVacio"/>
+                        </p:inputText>
+                        <p:outputLabel value="Precio compra:" for="txtpreciocompra"/>
+                        <p:inputText id="txtpreciocompra" value="#{articuloBean.articulo.preciocompra}" required="true" requiredMessage="Ingresa precio compra">
+                            <f:validator validatorId="validatorVacio"/>
+                        </p:inputText>
+                        <p:outputLabel value="Precio venta:" for="txtprecioventa"/>
+                        <p:inputText id="txtprecioventa" value="#{articuloBean.articulo.precioventa}" required="true" requiredMessage="Ingresa precio venta">
+                            <f:validator validatorId="validatorVacio"/>
+                        </p:inputText>                    
+                        <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
+                        <p:inputText id="txtunidadmedida" value="#{articuloBean.articulo.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
+                            <f:validator validatorId="validatorVacio"/>
+                        </p:inputText>
+                        <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{articuloBean.registrar()}" />
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+        </f:view>
 
         <h:form id="frmEditarColor">
             <p:dialog header="Actualizar" widgetVar="dialogoEditarColor" modal="true">
                 <h:panelGrid id="panelEditarColor" columns="2">                    
-                    <p:outputLabel value="Codigo:" for="txtCodigo"/>
-                    <p:inputText id="txtCodigo" value="#{articuloBean.articulo.codigo}" required="true" requiredMessage="Ingresa Codigo" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                        <f:validator validatorId="validatorVacio"/>
-                    </p:inputText>
+                    <p:outputLabel value="Color:" for="txtCodigo"/>
+                    <p:autoComplete id="txtCodigo" value="#{articuloBean.articulo.color}" completeMethod="#{articuloBean.filtrarCliente}" 
+                                    var="cliente" itemLabel="#{cliente.color}" itemValue="#{cliente}" required="true" 
+                                    requiredMessage="Ingrese cliente">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{articuloBean.articulos}"/>
+                        <p:ajax event="itemSelect" process="@form" />
+                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
+                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
+                    </p:autoComplete>
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                     <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                         <f:validator validatorId="validatorVacio"/>

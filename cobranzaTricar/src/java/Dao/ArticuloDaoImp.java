@@ -6,7 +6,10 @@
 package Dao;
 
 import Model.Articulo;
+import Model.Color;
+import Persistencia.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -66,6 +69,24 @@ public class ArticuloDaoImp implements ArticuloDao{
     public boolean eliminar(Session session, Articulo articulo) throws Exception {
         session.delete(articulo);
         return true;
+    }
+
+    @Override
+    public List<Color> filtarTipoDos() {
+        Session session = null;
+        List<Color> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Color");           
+            lista = (List<Color>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
     }
     
 }

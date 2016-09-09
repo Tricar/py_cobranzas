@@ -11,6 +11,12 @@
         <many-to-one name="tipoarticulo" class="Model.Tipoarticulo" fetch="select">
             <column name="idtipoarticulo" not-null="true" />
         </many-to-one>
+        <many-to-one name="color" class="Model.Color" fetch="select">
+            <column name="idcolor" not-null="true" />
+        </many-to-one>
+        <many-to-one name="modelo" class="Model.Modelo" fetch="select">
+            <column name="idmodelo" not-null="true" />
+        </many-to-one>
         <property name="consecutivo" type="java.lang.Integer">
             <column name="consecutivo"  />
         </property>

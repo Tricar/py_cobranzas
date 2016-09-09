@@ -26,6 +26,8 @@ public class Articulo implements java.io.Serializable {
 
     private Integer idarticulo;
     private Tipoarticulo tipoarticulo;
+    private Color color;
+    private Modelo modelo;
     private Integer consecutivo;
     private String codigo;
     private String descripcion;
@@ -44,9 +46,11 @@ public class Articulo implements java.io.Serializable {
         this.idarticulo = idarticulo;
     }
 
-    public Articulo(Integer idarticulo, Tipoarticulo tipoarticulo, String codigo, Integer consecutivo, String descripcion, BigDecimal precioventa, BigDecimal preciocompra, BigDecimal costopromedio, String unidadmedida, Integer cantidad, Date created, Set ventadetalles) {
+    public Articulo(Integer idarticulo, Tipoarticulo tipoarticulo, Color color, Modelo modelo, String codigo, Integer consecutivo, String descripcion, BigDecimal precioventa, BigDecimal preciocompra, BigDecimal costopromedio, String unidadmedida, Integer cantidad, Date created, Set ventadetalles) {
         this.idarticulo = idarticulo;
         this.tipoarticulo = tipoarticulo;
+        this.color = color;
+        this.modelo = modelo;
         this.consecutivo = consecutivo;
         this.codigo = codigo;
         this.descripcion = descripcion;
@@ -68,6 +72,26 @@ public class Articulo implements java.io.Serializable {
 
     public void setIdarticulo(Integer idarticulo) {
         this.idarticulo = idarticulo;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idcolor", nullable = false)
+    public Color getColor() {
+        return this.color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idmodelo", nullable = false)
+    public Modelo getModelo() {
+        return this.modelo;
+    }
+
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

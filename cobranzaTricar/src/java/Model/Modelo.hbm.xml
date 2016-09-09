@@ -23,5 +23,11 @@
             </key>
             <one-to-many class="Model.Vehiculo" />
         </set>
+        <set name="articulos" table="articulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idmodelo" not-null="true" />
+            </key>
+            <one-to-many class="Model.Articulo" />
+        </set>
     </class>
 </hibernate-mapping>

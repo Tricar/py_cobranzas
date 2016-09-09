@@ -1,9 +1,11 @@
 package Bean;
 
 import Dao.*;
+import Model.Color;
 import Model.Articulo;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -25,6 +27,7 @@ public class ArticuloBean implements Serializable{
     
     private Articulo articulo;
     private List<Articulo> articulos;
+    private List<Color> query;
     
     private Session session;
     private Transaction transaction;
@@ -136,6 +139,20 @@ public class ArticuloBean implements Serializable{
                 this.session.close();
             }
         }
+    }
+    
+    
+
+    public List<Color> filtrarCliente(String name) {
+        this.query = new ArrayList<Color>();
+        ArticuloDao anexoDao = new ArticuloDaoImp();
+        List<Color> tipos = anexoDao.filtarTipoDos();
+        for (Color tipo : tipos) {
+            if (tipo.getColor().startsWith(name.toUpperCase())) {
+                query.add(tipo);
+            }
+        }
+        return query;
     }
 
     public void registrar() {
