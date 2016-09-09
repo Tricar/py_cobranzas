@@ -40,19 +40,13 @@ public class usuarioBean implements Serializable {
 
         this.session = null;
         this.transaction = null;
-
         try {
             UsuarioDaoImpl daotusuario = new UsuarioDaoImpl();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-
             this.listatusuario = daotusuario.verTodo(this.session);
-
             this.transaction.commit();
-
             return listatusuario;
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -70,12 +64,9 @@ public class usuarioBean implements Serializable {
     public void registrar() {
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             UsuarioDaoImpl daotusuario = new UsuarioDaoImpl();
             if (daotusuario.verByUsuario(this.session, this.tusuario.getUsuario()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya existe en DB."));
@@ -84,11 +75,8 @@ public class usuarioBean implements Serializable {
             }
             this.tusuario.setClave(Encrypt.sha512(this.tusuario.getClave()));
             daotusuario.registrar(this.session, this.tusuario);
-
             this.transaction.commit();
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-
             this.tusuario = new Usuario();
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -106,23 +94,17 @@ public class usuarioBean implements Serializable {
     public void modificar() {
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             UsuarioDaoImpl daotusuario = new UsuarioDaoImpl();
-
             if (daotusuario.verByUsuarioDifer(this.session, this.tusuario.getIdusuario(), this.tusuario.getUsuario()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
                 return;
-            }
-            
+            }            
             if(!this.txtclavevacia.equals("")){
                 this.tusuario.setClave(Encrypt.sha512(this.txtclavevacia));
-            }
-            
+            }            
             daotusuario.modificar(this.session, this.tusuario);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
@@ -144,21 +126,14 @@ public class usuarioBean implements Serializable {
     public void eliminar() {
         this.session = null;
         this.transaction = null;
-
         try {
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             UsuarioDaoImpl daotusuario = new UsuarioDaoImpl();
             daotusuario.eliminar(this.session, this.tusuario);
-
             this.transaction.commit();
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Usuario Correctamente."));
-
             this.tusuario = new Usuario();
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -174,21 +149,14 @@ public class usuarioBean implements Serializable {
     public void cargarUsuarioEditar(int codigoUsuario) {
         this.session = null;
         this.transaction = null;
-
         try {
-
             UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             this.tusuario = usuarioDao.verByIdusuario(this.session, codigoUsuario);
-
             this.transaction.commit();
-
             RequestContext.getCurrentInstance().update("frmEditarUsuario:panelEditarUsuario");
             RequestContext.getCurrentInstance().execute("PF('dialogoEditarUsuario').show()");
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -204,18 +172,12 @@ public class usuarioBean implements Serializable {
     public void cargarUsuarioEliminar(int codigoUsuario) {
         this.session = null;
         this.transaction = null;
-
         try {
-
             UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             this.tusuario = usuarioDao.verByIdusuario(this.session, codigoUsuario);
-
             this.transaction.commit();
-
             RequestContext.getCurrentInstance().update("frmEliminarUsuario");
             RequestContext.getCurrentInstance().execute("PF('dialogoEliminarUsuario').show()");
 
@@ -238,19 +200,13 @@ public class usuarioBean implements Serializable {
     public List<Usuario> getListatusuario() {        
         this.session = null;
         this.transaction = null;
-
         try {
             UsuarioDaoImpl daotusuario = new UsuarioDaoImpl();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-
             this.listatusuario = daotusuario.verTodo(this.session);
-
             this.transaction.commit();
-
             return listatusuario;
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();

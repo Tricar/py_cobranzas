@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletOutputStream;
@@ -47,7 +47,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.export.DocxExporterConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -56,7 +55,7 @@ import utiles.dbManager;
 import utiles.precio;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ventaBean implements Serializable {
 
     private Session session;
@@ -316,7 +315,7 @@ public class ventaBean implements Serializable {
                 File jasper = new File("D:/reporte/liquicontado.jasper");
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
                 HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".xlsx");
+                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".xls");
                 ServletOutputStream stream = response.getOutputStream();
                 JRXlsExporter docxExporter = new JRXlsExporter();
                 docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -335,7 +334,7 @@ public class ventaBean implements Serializable {
                 File jasper = new File("D:/reporte/liquicredito.jasper");
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
                 HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".xlsx");
+                response.addHeader("Content-disposition", "attachment; filename=LIQUIDACION-" + codigo + ".xls");
                 ServletOutputStream stream = response.getOutputStream();
                 JRXlsxExporter docxExporter = new JRXlsxExporter();
                 docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
