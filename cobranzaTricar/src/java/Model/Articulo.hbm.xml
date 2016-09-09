@@ -3,11 +3,17 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="Model.Servicio" table="servicio" schema="dbo" catalog="cobranzas" optimistic-lock="version">
-        <id name="idservicio" type="int">
-            <column name="idservicio" />
+    <class name="Model.Articulo" table="articulo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idarticulo" type="int">
+            <column name="idarticulo" />
             <generator class="identity" />
         </id>
+        <many-to-one name="tipoarticulo" class="Model.Tipoarticulo" fetch="select">
+            <column name="idtipoarticulo" not-null="true" />
+        </many-to-one>
+        <property name="consecutivo" type="java.lang.Integer">
+            <column name="consecutivo"  />
+        </property>
         <property name="codigo" type="string">
             <column name="codigo" length="10" not-null="true" />
         </property>
@@ -32,14 +38,11 @@
         <property name="created" type="timestamp">
             <column name="created" length="23" not-null="true" />
         </property>
-        <property name="updated" type="timestamp">
-            <column name="updated" length="23" not-null="true" />
-        </property>
-        <set name="detalleventas" table="detalleventa" inverse="true" lazy="true" fetch="select">
+        <set name="ventadetalles" table="ventadetalle" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idservicio" not-null="true" />
+                <column name="idarticulo" not-null="true" />
             </key>
-            <one-to-many class="Model.Detalleventa" />
+            <one-to-many class="Model.Ventadetalle" />
         </set>
     </class>
 </hibernate-mapping>

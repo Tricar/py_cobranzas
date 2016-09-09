@@ -6,7 +6,7 @@
     <property name="hibernate.connection.url">jdbc:sqlserver://servertricar3:1433;databaseName=cobranzas</property>
     <property name="hibernate.connection.username">sa</property>
     <property name="hibernate.connection.password">tricar2012</property>
-    <property name="hibernate.show_sql">true</property>    
+    <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <mapping resource="Model/Color.hbm.xml"/>
@@ -33,8 +33,8 @@
     <mapping resource="Model/Submenu.hbm.xml"/>
     <mapping resource="Model/Perfilmenu.hbm.xml"/>
     <mapping resource="Model/Perfilsubmenu.hbm.xml"/>
-    <mapping resource="Model/Detalleventa.hbm.xml"/>
-    <mapping resource="Model/Servicio.hbm.xml"/>
-    <mapping resource="Model/Repuesto.hbm.xml"/>
+    <mapping resource="Model/Tipoarticulo.hbm.xml"/>
+    <mapping resource="Model/Articulo.hbm.xml"/>
+    <mapping resource="Model/Ventadetalle.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
