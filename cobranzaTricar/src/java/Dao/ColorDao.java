@@ -10,7 +10,8 @@ import org.hibernate.Session;
  */
 public interface ColorDao {    
     public boolean registrar(Session session, Color colo)throws Exception;
-    public List<Color> verTodo(Session session) throws Exception;
+    public List<Color> verTodo(Session session) throws Exception;    
+    public List<Color> filtarTipoDos();
     public Color verByCodigo(Session session, Integer idcolor) throws Exception;
     public Color verByColor(Session session, String color) throws Exception;
     public Color verByColorDifer(Session session,Integer idcolor, String color) throws Exception;

@@ -8,8 +8,26 @@
             <column name="idventadetalle" />
             <generator class="identity" />
         </id>
+        <many-to-one name="venta" class="Model.Venta" fetch="select">
+            <column name="idventa" not-null="true" />
+        </many-to-one>
         <many-to-one name="articulo" class="Model.Articulo" fetch="select">
             <column name="idarticulo" not-null="true" />
         </many-to-one>
+        <property name="codigoproducto" type="string">
+            <column name="codigoproducto" length="10" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="100" not-null="true" />
+        </property>
+        <property name="cantidad" type="java.lang.Integer">
+            <column name="cantidad"  />
+        </property>
+        <property name="precio" type="big_decimal">
+            <column name="precio" precision="18" not-null="true" />
+        </property>
+        <property name="preciototal" type="big_decimal">
+            <column name="preciototal" precision="18" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

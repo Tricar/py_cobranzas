@@ -3,8 +3,14 @@ package Bean;
 import Dao.*;
 import Model.Color;
 import Model.Articulo;
+import Model.Modelo;
+import Model.Tipoarticulo;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +22,7 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
+import utiles.dbManager;
 
 /**
  *
@@ -23,21 +30,20 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @SessionScoped
-public class ArticuloBean implements Serializable{
-    
+public class ArticuloBean implements Serializable {
+
     private Articulo articulo;
     private List<Articulo> articulos;
-    private List<Color> query;
-    
+
     private Session session;
     private Transaction transaction;
-    
+
     private List<SelectItem> SelectItemsColor;
 
     public ArticuloBean() {
         this.articulo = new Articulo();
     }
-    
+
     public List<Articulo> verTodo() {
         this.session = null;
         this.transaction = null;
@@ -60,7 +66,7 @@ public class ArticuloBean implements Serializable{
             }
         }
     }
-    
+
     public void nuevo() {
         articulo = new Articulo();
         RequestContext.getCurrentInstance().update("formInsertar");
@@ -140,20 +146,6 @@ public class ArticuloBean implements Serializable{
             }
         }
     }
-    
-    
-
-    public List<Color> filtrarCliente(String name) {
-        this.query = new ArrayList<Color>();
-        ArticuloDao anexoDao = new ArticuloDaoImp();
-        List<Color> tipos = anexoDao.filtarTipoDos();
-        for (Color tipo : tipos) {
-            if (tipo.getColor().startsWith(name.toUpperCase())) {
-                query.add(tipo);
-            }
-        }
-        return query;
-    }
 
     public void registrar() {
         this.session = null;
@@ -167,8 +159,35 @@ public class ArticuloBean implements Serializable{
                 articulo = new Articulo();
                 return;
             }
+            String codigo = generar_codigo_Articulo(this.articulo.getTipoarticulo());
+            Integer numero = generar_consecutivo(this.articulo.getTipoarticulo());
+            if (codigo == null) {
+                this.articulo.setConsecutivo(1);
+                this.articulo.setCodigo(this.articulo.getTipoarticulo().getAbreviado() + "0001");
+            } else {
+                this.articulo.setConsecutivo(numero);
+                this.articulo.setCodigo(codigo);
+            }
+            if (this.articulo.getModelo() == null || this.articulo.getColor() == null) {
+                if (this.articulo.getModelo() == null) {
+                    System.out.printf("Color: ", this.articulo.getColor().getColor());
+                    this.articulo.setDescripcion(this.articulo.getDescripcion() + " " + this.articulo.getColor().getColor());
+                } else if (this.articulo.getColor() == null) {
+                    System.out.printf("Modelo: ", this.articulo.getModelo().getModelo());
+                    this.articulo.setDescripcion(this.articulo.getDescripcion() + " " + this.articulo.getModelo().getModelo());
+                }
+            } else if (this.articulo.getModelo() == null && this.articulo.getColor() == null) {
+                this.articulo.setModelo(null);
+                this.articulo.setColor(null);
+                System.out.printf("Descripcion: ", this.articulo.getDescripcion());
+            } else {
+                System.out.printf("Descripcion Total: ", this.articulo.getDescripcion() + " " + this.articulo.getModelo().getModelo() + " " + this.articulo.getColor().getColor());
+                this.articulo.setDescripcion(this.articulo.getDescripcion() + " " + this.articulo.getModelo().getModelo() + " " + this.articulo.getColor().getColor());
+            }
             Date d = new Date();
             this.articulo.setCreated(d);
+            this.articulo.setCostopromedio(BigDecimal.ZERO);
+            this.articulo.setPreciocompra(BigDecimal.ZERO);
             this.articulo.setCantidad(0);
             linkDao.registrar(this.session, this.articulo);
             this.transaction.commit();
@@ -185,6 +204,76 @@ public class ArticuloBean implements Serializable{
             }
         }
 
+    }
+
+    public Integer generar_consecutivo(Tipoarticulo objtipoarticulo) {
+        int vcorre = 1;
+        String sql = "";
+
+        try {
+            dbManager dbm = new dbManager();
+            Connection con = dbm.getConnection();
+            if (con == null) {
+                throw new NullPointerException(dbm.geterror());
+            }
+            sql = "SELECT consecutivo FROM articulo where idtipoarticulo='" + objtipoarticulo.getIdtipoarticulo() + "'";
+            PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
+            ResultSet rs = st.executeQuery();
+            rs.afterLast();
+            if (rs.previous()) {
+                vcorre = Integer.parseInt(rs.getString("consecutivo"));
+                vcorre++;
+            }
+            rs.close();
+            st.close();
+            con.close();
+            System.out.println(vcorre);
+
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println(e.getMessage());
+        }
+        return (vcorre);
+    }
+
+    public String generar_codigo_Articulo(Tipoarticulo objtipoarticulo) {
+        int vcorre = 1;
+        String sql = "";
+        String vcodigoart = "";
+        String vcerosart = "";
+        String vcodigofinalarticulo = "";
+
+        try {
+            dbManager dbm = new dbManager();
+            Connection con = dbm.getConnection();
+            if (con == null) {
+                throw new NullPointerException(dbm.geterror());
+            }
+            sql = "SELECT consecutivo FROM articulo where idtipoarticulo='" + objtipoarticulo.getIdtipoarticulo() + "'";
+            PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
+            ResultSet rs = st.executeQuery();
+            rs.afterLast();
+            if (rs.previous()) {
+                vcorre = Integer.parseInt(rs.getString("consecutivo"));
+                vcorre++;
+            }
+            for (int i = 1; i < 4 - String.valueOf(vcorre).length(); i++) {
+                vcerosart = vcerosart + "0";
+            }
+
+            vcodigoart = vcerosart + vcorre;
+            rs.close();
+            st.close();
+            con.close();
+            System.out.println(vcerosart + vcorre);
+
+            vcodigofinalarticulo = objtipoarticulo.getAbreviado() + vcodigoart;
+
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println(e.getMessage());
+        }
+        return (vcodigofinalarticulo);
     }
 
     public void eliminar() {
@@ -209,7 +298,7 @@ public class ArticuloBean implements Serializable{
             }
         }
     }
-    
+
     public Articulo getArticulo() {
         return articulo;
     }
@@ -217,7 +306,7 @@ public class ArticuloBean implements Serializable{
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
     }
-    
+
     public List<Articulo> getArticulos() {
         this.session = null;
         this.transaction = null;
@@ -225,7 +314,7 @@ public class ArticuloBean implements Serializable{
             ArticuloDao daocolor = new ArticuloDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            articulos = daocolor.verTodo(session);            
+            articulos = daocolor.verTodo(session);
             return articulos;
         } catch (Exception e) {
             if (this.transaction != null) {

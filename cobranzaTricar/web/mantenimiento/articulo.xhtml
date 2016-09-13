@@ -27,11 +27,14 @@
                         <p:column headerText="DESCRIPCION">
                             <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column headerText="PRECIO COM.">
-                            <h:outputText value="#{item.preciocompra}"/>
-                        </p:column>
-                        <p:column headerText="PRECIO VEN.">
+                        <p:column headerText="PRECIO">
                             <h:outputText value="#{item.precioventa}"/>
+                        </p:column>
+                        <p:column headerText="COSTO PROM.">
+                            <h:outputText value="#{item.costopromedio}"/>
+                        </p:column>
+                        <p:column headerText="STOCK">
+                            <h:outputText value="#{item.cantidad}"/>
                         </p:column>
                         <p:column width="10%" style="text-align: center">
                             <p:commandButton actionListener="#{articuloBean.cargarColorEditar(item.idarticulo)}" icon="fa fa-pencil white"/>
@@ -42,66 +45,65 @@
             </div>
         </div>
 
-        <f:view afterPhase="#{colorBean.phaseListener}">
-            <h:form id="formInsertar">
-                <p:dialog header="Nuevo" widgetVar="dlginsertar" modal="true">   
-                    <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                    <h:panelGrid columns="2">
-                        <p:outputLabel value="Tipo Articulo:"/>
-                        <p:selectOneMenu value="#{articuloBean.articulo.tipoarticulo}" converter="omnifaces.SelectItemsConverter">
-                            <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                            <f:selectItems value="#{articuloBean.verTodo()}" var="articulo" itemLabel="#{articulo.descripcion}" itemValue="#{articulo}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Color:" for="txtCodigo"/>
-                        <p:autoComplete id="txtCodigo" value="#{articuloBean.articulo.color}" completeMethod="#{articuloBean.filtrarCliente}" 
-                                        var="colores" itemLabel="#{colores.color}" itemValue="#{cliente}" required="true" requiredMessage="Ingrese Color">
-                            <o:converter converterId="omnifaces.ListConverter" list="#{articuloBean.articulos}"/>
-                            <p:ajax event="itemSelect" listener="#{colorBean.handleSelect}" />
-                            <p:ajax event="itemUnselect" listener="#{colorBean.handleUnSelect}" />
-                        </p:autoComplete>
-                        <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                        <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                            <f:validator validatorId="validatorVacio"/>
-                        </p:inputText>
-                        <p:outputLabel value="Precio compra:" for="txtpreciocompra"/>
-                        <p:inputText id="txtpreciocompra" value="#{articuloBean.articulo.preciocompra}" required="true" requiredMessage="Ingresa precio compra">
-                            <f:validator validatorId="validatorVacio"/>
-                        </p:inputText>
-                        <p:outputLabel value="Precio venta:" for="txtprecioventa"/>
-                        <p:inputText id="txtprecioventa" value="#{articuloBean.articulo.precioventa}" required="true" requiredMessage="Ingresa precio venta">
-                            <f:validator validatorId="validatorVacio"/>
-                        </p:inputText>                    
-                        <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
-                        <p:inputText id="txtunidadmedida" value="#{articuloBean.articulo.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
-                            <f:validator validatorId="validatorVacio"/>
-                        </p:inputText>
-                        <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{articuloBean.registrar()}" />
-                    </h:panelGrid>
-                </p:dialog>
-            </h:form>
-        </f:view>
-
-        <h:form id="frmEditarColor">
-            <p:dialog header="Actualizar" widgetVar="dialogoEditarColor" modal="true">
-                <h:panelGrid id="panelEditarColor" columns="2">                    
-                    <p:outputLabel value="Color:" for="txtCodigo"/>
-                    <p:autoComplete id="txtCodigo" value="#{articuloBean.articulo.color}" completeMethod="#{articuloBean.filtrarCliente}" 
-                                    var="cliente" itemLabel="#{cliente.color}" itemValue="#{cliente}" required="true" 
-                                    requiredMessage="Ingrese cliente">
-                        <o:converter converterId="omnifaces.ListConverter" list="#{articuloBean.articulos}"/>
+        <h:form id="formInsertar">
+            <p:dialog header="Nuevo" widgetVar="dlginsertar" modal="true">   
+                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Tipo Articulo:"/>
+                    <p:selectOneMenu value="#{articuloBean.articulo.tipoarticulo}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Seleccionar Tipo Articulo">
+                        <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                        <f:selectItems value="#{tipoarticuloBean.verTodo()}" var="tipoarticulo" itemLabel="#{tipoarticulo.descripcion}" itemValue="#{articulo}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Color:" for="txtColor"/>
+                    <p:autoComplete id="txtColor" value="#{articuloBean.articulo.color}" completeMethod="#{colorBean.filtrarColor}" var="coloreas" itemLabel="#{coloreas.color}" itemValue="#{coloreas}">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{colorBean.colores}"/>
                         <p:ajax event="itemSelect" process="@form" />
-                        <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
-                        <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
+                    </p:autoComplete>                    
+                    <p:outputLabel value="Modelo:" for="txtCodigo"/>
+                    <p:autoComplete id="txtCodigo" value="#{articuloBean.articulo.modelo}" completeMethod="#{modeloBean.filtrarModelo}" var="modeloas" itemLabel="#{modeloas.modelo}" itemValue="#{modeloas}">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{modeloBean.modelos}"/>
+                        <p:ajax event="itemSelect" process="@form" />
                     </p:autoComplete>
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                     <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
-                    <p:outputLabel value="Precio compra:" for="txtpreciocompra"/>
-                    <p:inputText id="txtpreciocompra" value="#{articuloBean.articulo.preciocompra}" required="true" requiredMessage="Ingresa precio compra">
+                    <p:outputLabel value="Precio:" for="txtprecio"/>
+                    <p:inputText onkeypress="return justNumbers(event);" id="txtprecio" value="#{articuloBean.articulo.precioventa}" required="true" requiredMessage="Ingresa precio venta">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>                    
+                    <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
+                    <p:inputText id="txtunidadmedida" value="#{articuloBean.articulo.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
-                    <p:outputLabel value="Precio venta:" for="txtprecioventa"/>
+                    <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{articuloBean.registrar()}" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="frmEditarColor">
+            <p:dialog header="Actualizar" widgetVar="dialogoEditarColor" modal="true">
+                <h:panelGrid id="panelEditarColor" columns="2">                    
+                    <p:outputLabel value="Tipo Articulo:"/>
+                    <p:selectOneMenu value="#{articuloBean.articulo.tipoarticulo}" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                        <f:selectItems value="#{tipoarticuloBean.verTodo()}" var="tipoarticulo" itemLabel="#{tipoarticulo.descripcion}" itemValue="#{articulo}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Color:" for="txtColor"/>
+                    <p:autoComplete id="txtColor" value="#{articuloBean.articulo.color}" completeMethod="#{colorBean.filtrarColor}" var="coloreas" itemLabel="#{coloreas.color}" itemValue="#{coloreas}">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{colorBean.colores}"/>
+                        <p:ajax event="itemSelect" process="@form" />
+                    </p:autoComplete>                    
+                    <p:outputLabel value="Modelo:" for="txtCodigo"/>
+                    <p:autoComplete id="txtCodigo" value="#{articuloBean.articulo.modelo}" completeMethod="#{modeloBean.filtrarModelo}" var="modeloas" itemLabel="#{modeloas.modelo}" itemValue="#{modeloas}">
+                        <o:converter converterId="omnifaces.ListConverter" list="#{modeloBean.modelos}"/>
+                        <p:ajax event="itemSelect" process="@form" />
+                    </p:autoComplete>
+                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Precio:" for="txtprecioventa"/>
                     <p:inputText id="txtprecioventa" value="#{articuloBean.articulo.precioventa}" required="true" requiredMessage="Ingresa precio venta">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>                    

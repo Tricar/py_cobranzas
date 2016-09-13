@@ -8,6 +8,12 @@ import java.sql.*;
  */
 public class dbManager {
 
+    private String error;
+
+    public String geterror() {
+        return error;
+    }
+
     public static Connection getConnection() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -19,7 +25,7 @@ public class dbManager {
             return null;
         }
     }
- 
+
     public static void close(Connection con) {
         try {
             con.close();

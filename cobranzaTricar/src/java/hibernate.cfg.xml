@@ -36,5 +36,7 @@
     <mapping resource="Model/Tipoarticulo.hbm.xml"/>
     <mapping resource="Model/Articulo.hbm.xml"/>
     <mapping resource="Model/Ventadetalle.hbm.xml"/>
+    <mapping resource="Model/Tipoventa.hbm.xml"/>
+    <mapping resource="Model/Venta.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

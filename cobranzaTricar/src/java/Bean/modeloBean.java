@@ -199,6 +199,18 @@ public class modeloBean implements Serializable {
         }
     }
 
+    public List<Modelo> filtrarModelo(String name) {
+        this.query = new ArrayList<Modelo>();
+        ModeloDao modeloDao = new ModeloDaoImplements();
+        List<Modelo> tipos = modeloDao.filtarTipoDos();
+        for (Modelo tipo : tipos) {
+            if (tipo.getModelo().startsWith(name.toUpperCase())) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
+
     public void setSelectItemsmodelo(List<SelectItem> SelectItemsmodelo) {
         this.SelectItemsmodelo = SelectItemsmodelo;
     }

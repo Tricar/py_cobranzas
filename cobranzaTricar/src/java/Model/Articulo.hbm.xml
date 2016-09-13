@@ -12,7 +12,7 @@
             <column name="idtipoarticulo" not-null="true" />
         </many-to-one>
         <many-to-one name="color" class="Model.Color" fetch="select">
-            <column name="idcolor" not-null="true" />
+            <column name="idcolor" />
         </many-to-one>
         <many-to-one name="modelo" class="Model.Modelo" fetch="select">
             <column name="idmodelo" not-null="true" />

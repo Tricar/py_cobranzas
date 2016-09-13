@@ -75,7 +75,7 @@ public class Articulo implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idcolor", nullable = false)
+    @JoinColumn(name = "idcolor")
     public Color getColor() {
         return this.color;
     }

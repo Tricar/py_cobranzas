@@ -9,74 +9,74 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <div class="layout-portlets-box">
-            <div class="Container100 ui-fluid">
-                <div class="ContainerIndent">
-                    <h2 class="BigTopic">Venta de servicio y repuesto</h2>
-                    <f:view afterPhase="#{anexoBean.phaseListener}">
-                        <h:form prependId="false">
-                            <p:growl id="msg12" showDetail="true"/>
-                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                                    <p:growl id="msg" showDetail="true"/>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Fecha:" for="txtfecha"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <span class="ui-calendar">
-                                                <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingrese fecha"/>
-                                            </span>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Código:" for="txtcodigo"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito"/>
-                                        </div>                                        
-                                    </div>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">                                            
-                                            <p:commandButton value="Generar" actionListener="#{creditoBean.insertarCotiza(loginbean.usuario.idusuario)}" icon="fa fa-floppy-o white" ajax="false"/>  
-                                        </div>
-                                    </div>
+        <h:form id="frmRealizarVentas">
+            <p:growl id="mensajeGeneral" showDetail="true"/>
+            <div class="layout-portlets-box">
+                <div class="Container100 ui-fluid">
+                    <div class="ContainerIndent">
+                        <h2 class="BigTopic">Venta de servicio y repuesto</h2>
+                            Agregar por codigo de barra
+                            <p:inputText id="txtAgregarPorCodigoBarras" value="#{ventaMBBean.valorCodigoBarras}">
+                                <p:ajax event="keyup" listener="#{ventaMBBean.agegarListaVentaDetallePorCodigoBarras()}"/>
+                            </p:inputText>
+                            <br/><br/>
+                            <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                                <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                                    <p:dataTable value="#{ventaMBBean.allProducto}" var="item" scrollable="true" scrollHeight="100">
+                                        <p:column headerText="CODIGO DE BARRA" width="10%" style="text-align: center">
+                                            <h:outputText value="#{item.codigo}"/>
+                                        </p:column>
+                                        <p:column headerText="SERVICIO Y REPUESTO" filterBy="descripcion">
+                                            <h:outputText value="#{item.descripcion}"/>
+                                        </p:column>
+                                        <p:column headerText="PRECIO UNITARIO">
+                                            <h:outputText value="#{item.precioventa}"/>
+                                        </p:column>
+                                        <p:column headerText="STOCK">
+                                            <h:outputText value="#{item.cantidad}"/>
+                                        </p:column>
+                                        <p:column width="10%" style="text-align: center">
+                                            <p:commandButton icon="fa fa-check-square-o white" ajax="true" actionListener="#{ventaMBBean.agegarListaVentaDetalle(item.idarticulo)}"/>
+                                        </p:column>
+                                    </p:dataTable>                    
                                 </div>
                             </div>
-                        </h:form>
-                    </f:view>
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr/>
-        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                <h:form id="formMostrar">
-                    <p:growl sticky="false" showDetail="true" id="mensajeGeneral"/>
-                    <p:dataTable var="letras" value="#{creditoBean.letrascredito}" 
-                                 emptyMessage="No hay nada para mostrar">
-                        <p:column headerText="Cod venta.">
-                            <h:outputText value="#{letras.credito.liqventa}" />
+            <hr/>
+            <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                    <p:dataTable id="tablaListaProductosVenta" value="#{ventaMBBean.listaventadetalle}" var="item">
+                        <p:column headerText="CODIGO DE BARRA" width="10%" style="text-align: center">
+                            <h:outputText value="#{item.codigoproducto}"/>
                         </p:column>
-                        <p:column headerText="Descripcion">
-                            <h:outputText value="#{letras.descripcion}"/>
+                        <p:column headerText="SERVICIO Y REPUESTO">
+                            <h:outputText value="#{item.descripcion}"/>
                         </p:column>
-                        <p:column headerText="Monto">
-                            <h:outputText value="#{letras.montoletra}"/>
+                        <p:column headerText="PRECIO UNITARIO">
+                            <h:outputText value="#{item.precio}"/>
                         </p:column>
-                        <p:column headerText="Interes">
-                            <h:outputText value="#{letras.interes}"/>
+                        <p:column headerText="CANTIDAD" width="10%" style="text-align: center;">
+                            <p:inputText value="#{item.cantidad}" onkeypress="return justNumbers(event);" size="8"/>
                         </p:column>
-                        <p:column headerText="Total Letra">
-                            <h:outputText value="#{letras.monto}"/>
+                        <p:column headerText="TOTAL">
+                            S/. <h:outputText value="#{item.preciototal}"/>
                         </p:column>
-                        <p:column headerText="Fecha Ven.">
-                            <h:outputText value="#{letras.fecven}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputText>
-                        </p:column>                
-                    </p:dataTable>          
-                </h:form>
+                        <p:column width="10%" style="text-align: center;">
+                            <p:commandButton icon="fa fa-times-circle white" ajax="true" actionListener="#{ventaMBBean.retirarListaVentaDetalle(item.codigoproducto)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
             </div>
-        </div>
+            <p:panelGrid id="panelFinalVenta" columns="1" style="text-align: right; width: 100%;">
+                <h:panelGroup>
+                    <p:commandButton value="Actualizar monto de compra" actionListener="#{ventaMBBean.calcularcostos()}" />
+                    S/. <h:outputText value="#{ventaMBBean.venta.montototal}" style="box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);padding: 7px;" />
+                    ----------------
+                    <p:commandButton value="Realizar venta" ajax="false" actionListener="#{ventaMBBean.realizarVenta()}"/>
+                </h:panelGroup>
+            </p:panelGrid>
+        </h:form>    
     </ui:define>
 </ui:composition>

@@ -1,6 +1,7 @@
 package Model;
 // Generated 21/04/2016 10:03:10 AM by Hibernate Tools 4.3.1
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +19,13 @@ import javax.persistence.Table;
 public class Ventadetalle implements java.io.Serializable {
 
     private Integer idventadetalle;
+    private Venta venta;
     private Articulo articulo;
+    private String codigoproducto;
+    private String descripcion;
+    private Integer cantidad;
+    private BigDecimal precio;
+    private BigDecimal preciototal;
 
     public Ventadetalle() {
     }
@@ -27,9 +34,15 @@ public class Ventadetalle implements java.io.Serializable {
         this.idventadetalle = idventadetalle;
     }
 
-    public Ventadetalle(Integer idventadetalle, Articulo articulo) {
+    public Ventadetalle(Integer idventadetalle, Venta venta, Articulo articulo, String codigoproducto, String descripcion, Integer cantidad, BigDecimal precio, BigDecimal preciototal) {
         this.idventadetalle = idventadetalle;
+        this.venta = venta;
         this.articulo = articulo;
+        this.codigoproducto = codigoproducto;
+        this.descripcion = descripcion;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.preciototal = preciototal;
     }
 
     @Id
@@ -44,6 +57,16 @@ public class Ventadetalle implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idventa", nullable = false)
+    public Venta getVenta() {
+        return this.venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idarticulo", nullable = false)
     public Articulo getArticulo() {
         return this.articulo;
@@ -51,6 +74,51 @@ public class Ventadetalle implements java.io.Serializable {
 
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
+    }
+
+    @Column(name = "codigoproducto", nullable = false, length = 10)
+    public String getCodigoproducto() {
+        return this.codigoproducto;
+    }
+
+    public void setCodigoproducto(String codigoproducto) {
+        this.codigoproducto = codigoproducto;
+    }
+
+    @Column(name = "descripcion", nullable = false, length = 100)
+    public String getDescripcion() {
+        return this.descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    @Column(name = "cantidad")
+    public Integer getCantidad() {
+        return this.cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    @Column(name = "precio", nullable = false, precision = 18)
+    public BigDecimal getPrecio() {
+        return this.precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
+
+    @Column(name = "preciototal", nullable = false, precision = 18)
+    public BigDecimal getPreciototal() {
+        return this.preciototal;
+    }
+
+    public void setPreciototal(BigDecimal preciototal) {
+        this.preciototal = preciototal;
     }
 
     @Override
