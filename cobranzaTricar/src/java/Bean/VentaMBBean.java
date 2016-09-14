@@ -35,6 +35,7 @@ public class VentaMBBean implements Serializable {
     private List<Articulo> listaproducto;
     private Venta venta;
     private List<Ventadetalle> listaventadetalle;
+    public Anexo anexo = new Anexo();
 
     private String valorCodigoBarras;
 
@@ -177,6 +178,12 @@ public class VentaMBBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public void nuevoanexo() {
+        anexo = new Anexo();
+        RequestContext.getCurrentInstance().update("formInsertar");
+        RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
     }
 
     public Articulo getProducto() {
