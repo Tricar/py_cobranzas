@@ -297,7 +297,7 @@ public class CreditoDaoImp implements CreditoDao {
         List<Credito> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Credito WHERE estado=:v");
+            Query query = session.createQuery("FROM Credito WHERE estado=:v order by fechareg desc");
             query.setParameter("v", estado);
             lista = query.list();
         } catch (HibernateException e) {

@@ -6,12 +6,8 @@
 package Bean;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import utiles.dbManager;
 
 /**
  *

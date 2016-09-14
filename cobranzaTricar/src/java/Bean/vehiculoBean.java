@@ -13,14 +13,14 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 
 public class vehiculoBean implements Serializable {
 
@@ -298,7 +298,7 @@ public class vehiculoBean implements Serializable {
 
     public List<Vehiculo> filtrarDisponibleModelo(String name) {
         this.query = new ArrayList<Vehiculo>();
-        VehiculoDao vehiculodao = new VehiculoDaoImplements();
+        VehiculoDao vehiculodao = new VehiculoDaoImplements();        
         List<Vehiculo> tipos = vehiculodao.filtarDisponibleCotiza("D", idmodelo);
         for (Vehiculo tipo : tipos) {
             if (tipo.getSerie().endsWith(name.toUpperCase())) {

@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.model.SelectItem;
@@ -28,7 +28,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class anexoBean implements Serializable {
 
     private Session session;

@@ -5,6 +5,7 @@ import Dao.CredavalDaoImp;
 import Model.Anexo;
 import Model.Credito;
 import Model.Creditoaval;
+import Model.Creditogestor;
 import Model.Usuario;
 import java.io.File;
 import java.io.IOException;
