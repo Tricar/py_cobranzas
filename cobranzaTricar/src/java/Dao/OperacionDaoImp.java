@@ -5,7 +5,7 @@
  */
 package Dao;
 
-import Model.Venta;
+import Model.Operacion;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -13,19 +13,19 @@ import org.hibernate.Session;
  *
  * @author Ricardo
  */
-public class VentaDaoImp implements VentaDao{
+public class OperacionDaoImp implements OperacionDao{
 
     @Override
-    public boolean insertar(Session session, Venta tventa) throws Exception {
-        session.save(tventa);
+    public boolean insertar(Session session, Operacion operacion) throws Exception {
+        session.save(operacion);
         return true;
     }
 
     @Override
-    public Venta getUltimoRegistro(Session session) throws Exception {
-        String hql = "from Venta order by idventa desc";
+    public Operacion getUltimoRegistro(Session session) throws Exception {
+        String hql = "from Operacion order by idoperacion desc";
         Query query = session.createQuery(hql).setMaxResults(1);        
-        return (Venta) query.uniqueResult();
+        return (Operacion) query.uniqueResult();
     }
     
 }

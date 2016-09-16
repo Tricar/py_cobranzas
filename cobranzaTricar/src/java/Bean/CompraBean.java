@@ -26,7 +26,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @ViewScoped
-public class VentaMBBean implements Serializable {
+public class CompraBean implements Serializable {
 
     private Session session;
     private Transaction transaction;
@@ -39,7 +39,7 @@ public class VentaMBBean implements Serializable {
 
     private String valorCodigoBarras;
 
-    public VentaMBBean() {
+    public CompraBean() {
         this.venta = new Operacion();
         this.listaventadetalle = new ArrayList<>();
     }

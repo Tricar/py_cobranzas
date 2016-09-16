@@ -1,9 +1,7 @@
 package Bean;
 
 import Dao.*;
-import Model.Color;
 import Model.Articulo;
-import Model.Modelo;
 import Model.Tipoarticulo;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
@@ -11,7 +9,6 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -76,18 +73,31 @@ public class ArticuloBean implements Serializable {
     public void modificar() {
         this.session = null;
         this.transaction = null;
+        String descripcionarticulo = "";
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             ArticuloDao linkDao = new ArticuloDaoImp();
-            if (linkDao.verByDescripcionDifer(this.session, this.articulo.getIdarticulo(), this.articulo.getDescripcion()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya existe en DB."));
+            if (this.articulo.getModelo() == null || this.articulo.getColor() == null) {
+                if (this.articulo.getModelo() == null) {
+                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getColor().getColor();
+                } else if (this.articulo.getColor() == null) {
+                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
+                }
+            } else if (this.articulo.getModelo() == null && this.articulo.getColor() == null) {
+                descripcionarticulo = this.articulo.getDescripcion2();
+            } else {
+                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo() + " " + this.articulo.getColor().getColor();
+            }
+            if (linkDao.verByDescripcionDifer(this.session, this.articulo.getIdarticulo(), descripcionarticulo) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Repuesto/Servicio ya esta registrado."));
                 articulo = new Articulo();
                 return;
             }
-            ArticuloDao daocolor = new ArticuloDaoImp();
-            daocolor.modificar(this.session, this.articulo);
+            this.articulo.setDescripcion1(descripcionarticulo);
+            linkDao.modificar(this.session, this.articulo);
             this.transaction.commit();
+            this.articulo = new Articulo();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -150,12 +160,24 @@ public class ArticuloBean implements Serializable {
     public void registrar() {
         this.session = null;
         this.transaction = null;
+        String descripcionarticulo = "";
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             ArticuloDao linkDao = new ArticuloDaoImp();
-            if (linkDao.verByDescripcion(this.session, this.articulo.getDescripcion()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya esta registrado."));
+            if (this.articulo.getModelo() == null || this.articulo.getColor() == null) {
+                if (this.articulo.getModelo() == null) {
+                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getColor().getColor();
+                } else if (this.articulo.getColor() == null) {
+                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
+                }
+            } else if (this.articulo.getModelo() == null && this.articulo.getColor() == null) {
+                descripcionarticulo = this.articulo.getDescripcion2();
+            } else {
+                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo() + " " + this.articulo.getColor().getColor();
+            }
+            if (linkDao.verByDescripcion(this.session, descripcionarticulo) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Repuesto/Servicio ya esta registrado."));
                 articulo = new Articulo();
                 return;
             }
@@ -168,24 +190,9 @@ public class ArticuloBean implements Serializable {
                 this.articulo.setConsecutivo(numero);
                 this.articulo.setCodigo(codigo);
             }
-            if (this.articulo.getModelo() == null || this.articulo.getColor() == null) {
-                if (this.articulo.getModelo() == null) {
-                    System.out.printf("Color: ", this.articulo.getColor().getColor());
-                    this.articulo.setDescripcion(this.articulo.getDescripcion() + " " + this.articulo.getColor().getColor());
-                } else if (this.articulo.getColor() == null) {
-                    System.out.printf("Modelo: ", this.articulo.getModelo().getModelo());
-                    this.articulo.setDescripcion(this.articulo.getDescripcion() + " " + this.articulo.getModelo().getModelo());
-                }
-            } else if (this.articulo.getModelo() == null && this.articulo.getColor() == null) {
-                this.articulo.setModelo(null);
-                this.articulo.setColor(null);
-                System.out.printf("Descripcion: ", this.articulo.getDescripcion());
-            } else {
-                System.out.printf("Descripcion Total: ", this.articulo.getDescripcion() + " " + this.articulo.getModelo().getModelo() + " " + this.articulo.getColor().getColor());
-                this.articulo.setDescripcion(this.articulo.getDescripcion() + " " + this.articulo.getModelo().getModelo() + " " + this.articulo.getColor().getColor());
-            }
             Date d = new Date();
             this.articulo.setCreated(d);
+            this.articulo.setDescripcion1(descripcionarticulo);
             this.articulo.setCostopromedio(BigDecimal.ZERO);
             this.articulo.setPreciocompra(BigDecimal.ZERO);
             this.articulo.setCantidad(0);

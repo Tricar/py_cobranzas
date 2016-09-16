@@ -25,7 +25,7 @@
                             <h:outputText value="#{item.codigo}"/>
                         </p:column>
                         <p:column headerText="DESCRIPCION">
-                            <h:outputText value="#{item.descripcion}"/>
+                            <h:outputText value="#{item.descripcion1}"/>
                         </p:column>
                         <p:column headerText="PRECIO">
                             <h:outputText value="#{item.precioventa}"/>
@@ -65,7 +65,7 @@
                         <p:ajax event="itemSelect" process="@form" />
                     </p:autoComplete>
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion2}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:outputLabel value="Precio:" for="txtprecio"/>
@@ -100,7 +100,7 @@
                         <p:ajax event="itemSelect" process="@form" />
                     </p:autoComplete>
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion2}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:outputLabel value="Precio:" for="txtprecioventa"/>

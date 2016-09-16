@@ -5,16 +5,17 @@
  */
 package Dao;
 
-import Model.Venta;
+import Model.Operaciondetalle;
+import java.util.List;
 import org.hibernate.Session;
 
 /**
  *
  * @author Ricardo
  */
-public interface VentaDao {
+public interface OperaciondetalleDao {
     
-    public boolean insertar(Session session, Venta tventa) throws Exception;
-    public Venta getUltimoRegistro(Session session) throws Exception;
+    public boolean insertar(Session session, Operaciondetalle operaciondetalle) throws Exception;
+    public List<Operaciondetalle> getAll(Session session) throws Exception;
     
 }

@@ -35,8 +35,8 @@
     <mapping resource="Model/Perfilsubmenu.hbm.xml"/>
     <mapping resource="Model/Tipoarticulo.hbm.xml"/>
     <mapping resource="Model/Articulo.hbm.xml"/>
-    <mapping resource="Model/Ventadetalle.hbm.xml"/>
     <mapping resource="Model/Tipoventa.hbm.xml"/>
-    <mapping resource="Model/Venta.hbm.xml"/>
+    <mapping resource="Model/Operacion.hbm.xml"/>
+    <mapping resource="Model/Operaciondetalle.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

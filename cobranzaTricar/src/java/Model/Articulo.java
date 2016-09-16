@@ -30,14 +30,15 @@ public class Articulo implements java.io.Serializable {
     private Modelo modelo;
     private Integer consecutivo;
     private String codigo;
-    private String descripcion;
+    private String descripcion1;
+    private String descripcion2;
     private BigDecimal precioventa;
     private BigDecimal preciocompra;
     private BigDecimal costopromedio;
     private String unidadmedida;
     private Integer cantidad;
     private Date created;
-    private Set ventadetalles = new HashSet(0);
+    private Set operaciondetalles = new HashSet(0);
 
     public Articulo() {
     }
@@ -46,21 +47,22 @@ public class Articulo implements java.io.Serializable {
         this.idarticulo = idarticulo;
     }
 
-    public Articulo(Integer idarticulo, Tipoarticulo tipoarticulo, Color color, Modelo modelo, String codigo, Integer consecutivo, String descripcion, BigDecimal precioventa, BigDecimal preciocompra, BigDecimal costopromedio, String unidadmedida, Integer cantidad, Date created, Set ventadetalles) {
+    public Articulo(Integer idarticulo, Tipoarticulo tipoarticulo, Color color, Modelo modelo, String codigo, Integer consecutivo, String descripcion1, String descripcion2, BigDecimal precioventa, BigDecimal preciocompra, BigDecimal costopromedio, String unidadmedida, Integer cantidad, Date created, Set operaciondetalles) {
         this.idarticulo = idarticulo;
         this.tipoarticulo = tipoarticulo;
         this.color = color;
         this.modelo = modelo;
         this.consecutivo = consecutivo;
         this.codigo = codigo;
-        this.descripcion = descripcion;
+        this.descripcion1 = descripcion1;
+        this.descripcion2 = descripcion2;
         this.preciocompra = preciocompra;
         this.precioventa = precioventa;
         this.costopromedio = costopromedio;
         this.unidadmedida = unidadmedida;
         this.cantidad = cantidad;
         this.created = created;
-        this.ventadetalles = ventadetalles;
+        this.operaciondetalles = operaciondetalles;
     }
 
     @Id
@@ -122,13 +124,22 @@ public class Articulo implements java.io.Serializable {
         this.codigo = codigo;
     }
 
-    @Column(name = "descripcion", nullable = false, length = 100)
-    public String getDescripcion() {
-        return this.descripcion;
+    @Column(name = "descripcion1", nullable = false, length = 100)
+    public String getDescripcion1() {
+        return this.descripcion1;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescripcion1(String descripcion1) {
+        this.descripcion1 = descripcion1;
+    }
+
+    @Column(name = "descripcion2", nullable = false, length = 100)
+    public String getDescripcion2() {
+        return this.descripcion2;
+    }
+
+    public void setDescripcion2(String descripcion2) {
+        this.descripcion2 = descripcion2;
     }
 
     @Column(name = "precioventa", nullable = false, precision = 18)
@@ -187,12 +198,12 @@ public class Articulo implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Articulo")
-    public Set getVentadetalles() {
-        return this.ventadetalles;
+    public Set getOperaciondetalles() {
+        return this.operaciondetalles;
     }
 
-    public void setVentadetalles(Set ventadetalles) {
-        this.ventadetalles = ventadetalles;
+    public void setOperaciondetalles(Set operaciondetalles) {
+        this.operaciondetalles = operaciondetalles;
     }
 
     @Override

@@ -38,20 +38,20 @@ public class ArticuloDaoImp implements ArticuloDao{
     }
 
     @Override
-    public Articulo verByDescripcion(Session session, String descripcion) throws Exception {
-        String hql = "FROM Articulo WHERE descripcion=:descripcion";
+    public Articulo verByDescripcion(Session session, String descripcion1) throws Exception {
+        String hql = "FROM Articulo WHERE descripcion1=:descripcion1";
         Query query = session.createQuery(hql);
-        query.setParameter("descripcion", descripcion);
+        query.setParameter("descripcion1", descripcion1);
         Articulo repuesto = (Articulo) query.uniqueResult();
         return repuesto;
     }
 
     @Override
-    public Articulo verByDescripcionDifer(Session session, Integer idarticulo, String descripcion) throws Exception {
-        String hql = "FROM Articulo WHERE idarticulo!=:idarticulo and descripcion=:descripcion";
+    public Articulo verByDescripcionDifer(Session session, Integer idarticulo, String descripcion1) throws Exception {
+        String hql = "FROM Articulo WHERE idarticulo!=:idarticulo and descripcion1=:descripcion1";
         Query query = session.createQuery(hql);
         query.setParameter("idarticulo", idarticulo);
-        query.setParameter("descripcion", descripcion);        
+        query.setParameter("descripcion1", descripcion1);   
         Articulo repuesto = (Articulo) query.uniqueResult();
         return repuesto;
     }

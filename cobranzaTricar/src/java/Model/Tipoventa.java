@@ -24,7 +24,7 @@ public class Tipoventa implements java.io.Serializable {
     private Integer idtipoventa;
     private String descripcion;
     private Date created;
-    private Set ventas = new HashSet(0);
+    private Set operacions = new HashSet(0);
 
     public Tipoventa() {
     }
@@ -33,11 +33,11 @@ public class Tipoventa implements java.io.Serializable {
         this.idtipoventa = idtipoventa;
     }
 
-    public Tipoventa(Integer idtipoventa, String descripcion, Date created, Set ventas) {
+    public Tipoventa(Integer idtipoventa, String descripcion, Date created, Set operacions) {
         this.idtipoventa = idtipoventa;
         this.descripcion = descripcion;
         this.created = created;
-        this.ventas = ventas;
+        this.operacions = operacions;
     }
 
     @Id
@@ -71,12 +71,12 @@ public class Tipoventa implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Tipoventa")
-    public Set getVentas() {
-        return this.ventas;
+    public Set getOperacions() {
+        return this.operacions;
     }
 
-    public void setVentas(Set ventas) {
-        this.ventas = ventas;
+    public void setOperacions(Set operacions) {
+        this.operacions = operacions;
     }
 
     @Override
