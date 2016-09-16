@@ -38,5 +38,6 @@
     <mapping resource="Model/Tipoventa.hbm.xml"/>
     <mapping resource="Model/Operacion.hbm.xml"/>
     <mapping resource="Model/Operaciondetalle.hbm.xml"/>
+    <mapping resource="Model/Tipodocument.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

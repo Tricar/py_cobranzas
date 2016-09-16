@@ -26,8 +26,10 @@ public class Operacion implements java.io.Serializable {
 
     private Integer idoperacion;
     private Anexo anexo;
-    private Tipoventa tipoventa;
-    private String codigoventa;    
+    private Tipoventa tipoventa;    
+    private Tipodocument tipodocument;
+    private Integer idtipooperacioncontable;
+    private String codigo;    
     private BigDecimal montototal;
     private Date created;
     private Set operaciondetalles = new HashSet(0);
@@ -39,10 +41,14 @@ public class Operacion implements java.io.Serializable {
         this.idoperacion = idoperacion;
     }
 
-    public Operacion(Integer idoperacion, Anexo anexo, Tipoventa tipoventa, String codigoventa, BigDecimal montototal, Date created, Set operaciondetalles) {
+    public Operacion(Integer idoperacion, Anexo anexo, Tipoventa tipoventa, Tipodocument tipodocument, Integer idtipooperacioncontable, String codigo, BigDecimal montototal, Date created, Set operaciondetalles) {
         this.idoperacion = idoperacion;
         this.anexo = anexo;
         this.tipoventa = tipoventa;
+        this.tipodocument = tipodocument;
+        this.idtipooperacioncontable = idtipooperacioncontable;
+        this.codigo = codigo;
+        this.montototal = montototal;
         this.created = created;
         this.operaciondetalles = operaciondetalles;
     }
@@ -78,13 +84,32 @@ public class Operacion implements java.io.Serializable {
         this.tipoventa = tipoventa;
     }
 
-    @Column(name = "codigoventa", nullable = false, length = 10)
-    public String getCodigoventa() {
-        return this.codigoventa;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idtipodocument", nullable = false)
+    public Tipodocument getTipodocument() {
+        return this.tipodocument;
     }
 
-    public void setCodigoventa(String codigoventa) {
-        this.codigoventa = codigoventa;
+    public void setTipodocument(Tipodocument tipodocument) {
+        this.tipodocument = tipodocument;
+    }
+
+    @Column(name = "idtipooperacioncontable")
+    public Integer getIdtipooperacioncontable() {
+        return this.idtipooperacioncontable;
+    }
+
+    public void setIdtipooperacioncontable(Integer idtipooperacioncontable) {
+        this.idtipooperacioncontable = idtipooperacioncontable;
+    }
+
+    @Column(name = "codigo", nullable = false, length = 10)
+    public String getCodigo() {
+        return this.codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     @Column(name = "montototal", nullable = false, precision = 18)

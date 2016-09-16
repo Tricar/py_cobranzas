@@ -12,9 +12,15 @@
     </many-to-one>
     <many-to-one class="Model.Tipoventa" fetch="select" name="tipoventa">
       <column name="idtipoventa" not-null="true"/>
+    </many-to-one>    
+    <many-to-one class="Model.Tipodocument" fetch="select" name="tipodocument">
+      <column name="idtipodocument" not-null="true"/>
     </many-to-one>
-    <property name="codigoventa" type="string">
-      <column length="10" name="codigoventa" not-null="true"/>
+    <property name="idtipooperacioncontable" type="java.lang.Integer">
+      <column name="idtipooperacioncontable"/>
+    </property>
+    <property name="codigo" type="string">
+      <column length="10" name="codigo" not-null="true"/>
     </property>
     <property name="montototal" type="big_decimal">
       <column name="montototal" not-null="true" precision="18"/>

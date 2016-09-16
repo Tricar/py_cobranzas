@@ -28,7 +28,8 @@
   <table-filter match-name="letras"/>
   <table-filter match-name="articulo"/>
   <table-filter match-name="tipoarticulo"/>
-  <table-filter match-name="tipoventa"/>  
+  <table-filter match-name="tipoventa"/>
+  <table-filter match-name="tipodocument"/> 
   <table-filter match-name="operacion"/>
   <table-filter match-name="operaciondetalle"/>
   <table-filter match-name="sysdiagrams"/>

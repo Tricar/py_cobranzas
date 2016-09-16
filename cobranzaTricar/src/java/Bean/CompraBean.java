@@ -11,6 +11,7 @@ import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -75,11 +76,6 @@ public class CompraBean implements Serializable {
             ArticuloDao productodao = new ArticuloDaoImp();
             this.transaction = this.session.beginTransaction();
             this.producto = productodao.getByIdProducto(this.session, idProducto);
-            if (this.producto.getCantidad() == 0) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No hay Stock para el articulo."));
-                RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
-                return;
-            }
             for (int i = 0; i < listaventadetalle.size(); i++) {
                 Operaciondetalle get = listaventadetalle.get(i);
                 if (this.producto.getCodigo().equals(get.getCodigoproducto())) {
@@ -88,7 +84,7 @@ public class CompraBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 1, this.producto.getPrecioventa(), new BigDecimal("0")));
+            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, new BigDecimal("0"), new BigDecimal("0")));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -186,6 +182,46 @@ public class CompraBean implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
     }
 
+    public void insertarproveedor() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            if (daotanexo.verByDocumento(this.session, this.anexo.getNumdocumento()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Proveedor ya existe en DB."));
+                this.anexo = new Anexo();
+                return;
+            }
+            this.anexo.setTipodocumento("RUC");
+            this.anexo.setTipoanexo("PO");
+            this.anexo.setApemat("");
+            this.anexo.setApepat("");
+            Date d = new Date();
+            this.anexo.setFechareg(d);
+            this.anexo.setFechanac(d);
+            this.anexo.setEdad(0);
+            this.anexo.setEstcivil("SO");
+            this.anexo.setCpropia("NO");
+            this.anexo.setCodven("");
+            daotanexo.registrar(this.session, this.anexo);
+            this.transaction.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+            this.anexo = new Anexo();
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            this.anexo = new Anexo();
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
     public Articulo getProducto() {
         return producto;
     }
@@ -224,6 +260,14 @@ public class CompraBean implements Serializable {
 
     public void setValorCodigoBarras(String valorCodigoBarras) {
         this.valorCodigoBarras = valorCodigoBarras;
+    }
+
+    public Anexo getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(Anexo anexo) {
+        this.anexo = anexo;
     }
 
 }
