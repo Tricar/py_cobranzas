@@ -32,6 +32,7 @@ public class Operacion implements java.io.Serializable {
     private String codigo;    
     private BigDecimal montototal;
     private Date created;
+    private Integer idusuario;
     private Set operaciondetalles = new HashSet(0);
 
     public Operacion() {
@@ -41,7 +42,7 @@ public class Operacion implements java.io.Serializable {
         this.idoperacion = idoperacion;
     }
 
-    public Operacion(Integer idoperacion, Anexo anexo, Tipoventa tipoventa, Tipodocument tipodocument, Integer idtipooperacioncontable, String codigo, BigDecimal montototal, Date created, Set operaciondetalles) {
+    public Operacion(Integer idoperacion, Anexo anexo, Tipoventa tipoventa, Tipodocument tipodocument, Integer idtipooperacioncontable, String codigo, BigDecimal montototal, Date created, Set operaciondetalles, Integer idusuario) {
         this.idoperacion = idoperacion;
         this.anexo = anexo;
         this.tipoventa = tipoventa;
@@ -50,6 +51,7 @@ public class Operacion implements java.io.Serializable {
         this.codigo = codigo;
         this.montototal = montototal;
         this.created = created;
+        this.idusuario = idusuario;
         this.operaciondetalles = operaciondetalles;
     }
 
@@ -103,7 +105,7 @@ public class Operacion implements java.io.Serializable {
         this.idtipooperacioncontable = idtipooperacioncontable;
     }
 
-    @Column(name = "codigo", nullable = false, length = 10)
+    @Column(name = "codigo", nullable = false, length = 20)
     public String getCodigo() {
         return this.codigo;
     }
@@ -129,6 +131,15 @@ public class Operacion implements java.io.Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    @Column(name = "idusuario")
+    public Integer getIdusuario() {
+        return this.idusuario;
+    }
+
+    public void setIdusuario(Integer idusuario) {
+        this.idusuario = idusuario;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Operacion")

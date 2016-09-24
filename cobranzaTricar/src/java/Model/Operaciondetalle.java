@@ -23,9 +23,11 @@ public class Operaciondetalle implements java.io.Serializable {
     private Articulo articulo;
     private String codigoproducto;
     private String descripcion;
+    private Integer cantidadanterior;
     private Integer cantidad;
     private BigDecimal precio;
     private BigDecimal preciototal;
+    private BigDecimal costopromedio;
 
     public Operaciondetalle() {
     }
@@ -34,15 +36,17 @@ public class Operaciondetalle implements java.io.Serializable {
         this.idoperaciondetalle = idoperaciondetalle;
     }
 
-    public Operaciondetalle(Integer idoperaciondetalle, Operacion operacion, Articulo articulo, String codigoproducto, String descripcion, Integer cantidad, BigDecimal precio, BigDecimal preciototal) {
+    public Operaciondetalle(Integer idoperaciondetalle, Operacion operacion, Articulo articulo, String codigoproducto, String descripcion, Integer cantidadanterior, Integer cantidad, BigDecimal precio, BigDecimal preciototal, BigDecimal costopromedio) {
         this.idoperaciondetalle = idoperaciondetalle;
         this.operacion = operacion;
         this.articulo = articulo;
         this.codigoproducto = codigoproducto;
         this.descripcion = descripcion;
+        this.cantidadanterior = cantidadanterior;
         this.cantidad = cantidad;
         this.precio = precio;
         this.preciototal = preciototal;
+        this.costopromedio = costopromedio;
     }
 
     @Id
@@ -94,6 +98,15 @@ public class Operaciondetalle implements java.io.Serializable {
         this.descripcion = descripcion;
     }
 
+    @Column(name = "cantidadanterior")
+    public Integer getCantidadanterior() {
+        return this.cantidadanterior;
+    }
+
+    public void setCantidadanterior(Integer cantidadanterior) {
+        this.cantidadanterior = cantidadanterior;
+    }
+
     @Column(name = "cantidad")
     public Integer getCantidad() {
         return this.cantidad;
@@ -119,6 +132,15 @@ public class Operaciondetalle implements java.io.Serializable {
 
     public void setPreciototal(BigDecimal preciototal) {
         this.preciototal = preciototal;
+    }
+
+    @Column(name = "costopromedio", nullable = false, precision = 18)
+    public BigDecimal getCostopromedio() {
+        return this.costopromedio;
+    }
+
+    public void setCostopromedio(BigDecimal costopromedio) {
+        this.costopromedio = costopromedio;
     }
 
     @Override

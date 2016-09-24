@@ -5,7 +5,6 @@
   <class catalog="cobranzas" name="Model.Tipodocument" optimistic-lock="version" schema="dbo" table="tipodocument">
     <id name="idtipodocument" type="int">
       <column name="idtipodocument"/>
-      <generator class="identity"/>
     </id>
     <property name="descripcion" type="string">
       <column length="50" name="descripcion" not-null="true"/>

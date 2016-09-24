@@ -63,7 +63,7 @@ public class Tipodocument implements java.io.Serializable {
     }
 
     public void setCodigocontable(String codigocontable) {
-        this.descripcion = codigocontable;
+        this.codigocontable = codigocontable;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Tipodocument")

@@ -35,8 +35,12 @@ public class CompraBean implements Serializable {
     private Articulo producto;
     private List<Articulo> listaproducto;
     private Operacion venta;
+    private Operaciondetalle ventadetalle;
+    private List<Operacion> listaventa;
     private List<Operaciondetalle> listaventadetalle;
     public Anexo anexo = new Anexo();
+    private Date fecha1 = new Date();
+    private Date fecha2 = new Date();
 
     private String valorCodigoBarras;
 
@@ -84,7 +88,7 @@ public class CompraBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, new BigDecimal("0"), new BigDecimal("0")));
+            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 0, new BigDecimal("0"), new BigDecimal("0"), null));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -143,7 +147,7 @@ public class CompraBean implements Serializable {
         }
     }
 
-    public void realizarVenta() {
+    public void realizarCompra(Usuario usuario) {
         this.session = null;
         this.transaction = null;
         try {
@@ -152,13 +156,29 @@ public class CompraBean implements Serializable {
             OperacionDao ventadao = new OperacionDaoImp();
             OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
             this.transaction = this.session.beginTransaction();
+            if (this.listaventadetalle.size() == 0) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No ha ingresado ningun articulo."));
+                RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
+                return;
+            }
+            Date d = new Date();
+            this.venta.setCreated(d);
+            this.venta.setIdtipooperacioncontable(2);
+            this.venta.setIdusuario(usuario.getAnexo().getIdanexo());
             ventadao.insertar(this.session, this.venta);
             this.venta = ventadao.getUltimoRegistro(this.session);
             for (Operaciondetalle item : this.listaventadetalle) {
                 this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
+                BigDecimal costopromedio = ((item.getPrecio().multiply(new BigDecimal(item.getCantidad()))).add(this.producto.getPreciocompra().multiply(new BigDecimal(this.producto.getCantidad())))).divide((new BigDecimal(item.getCantidad())).add(new BigDecimal(this.producto.getCantidad()))) ;
+                item.setCostopromedio(costopromedio);
                 item.setOperacion(this.venta);
                 item.setArticulo(this.producto);
+                item.setCantidadanterior(this.producto.getCantidad());
                 ventadetalledao.insertar(this.session, item);
+                this.producto.setPreciocompra(item.getPrecio());
+                this.producto.setCantidad(this.producto.getCantidad() + item.getCantidad());
+                this.producto.setCostopromedio(costopromedio);
+                productodao.modificar(session, this.producto);
             }
             this.transaction.commit();
             this.listaventadetalle = new ArrayList<>();
@@ -174,6 +194,16 @@ public class CompraBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public String index() {
+        listaventa = new ArrayList();
+        listaventadetalle = new ArrayList();
+        return "/venta/compra";
+    }
+
+    public String nuevo() {
+        return "/venta/fromcompra";
     }
 
     public void nuevoanexo() {
@@ -215,6 +245,150 @@ public class CompraBean implements Serializable {
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
             this.anexo = new Anexo();
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void filtrarFechas() {
+        OperacionDao ventadao = new OperacionDaoImp();
+        listaventa = ventadao.filtrarFechas(fecha1, fecha2, 2);
+        listaventadetalle = new ArrayList();
+    }
+
+    public List<Operaciondetalle> cargarDetalleArray(Operacion compra) {
+        OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
+        listaventadetalle = ventadetalledao.mostrarSoloDetallexCompra(compra);
+        return listaventadetalle;
+    }
+
+    public void cargarEliminar(int codigo) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            OperacionDao ventadao = new OperacionDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            this.venta = ventadao.verByCodigo(this.session, codigo);
+
+            this.transaction.commit();
+
+            RequestContext.getCurrentInstance().update("frmEliminarCompra");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarCompra').show()");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void cargarEliminarDetalle(int codigo, Usuario usuario) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            if (!usuario.getPerfil().getAbrev().equals("AD")) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos."));
+                RequestContext.getCurrentInstance().update("formMostrar");
+                RequestContext.getCurrentInstance().update("formModificar");
+                return;
+            }
+
+            this.ventadetalle = detalledao.verByCodigo(this.session, codigo);
+
+            this.transaction.commit();
+
+            RequestContext.getCurrentInstance().update("frmEliminarDetalle");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarDetalle').show()");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void eliminar() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            OperacionDao ventadao = new OperacionDaoImp();
+            ventadao.eliminar(this.session, this.venta);
+
+            this.transaction.commit();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino Correctamente."));
+            this.venta = new Operacion();
+            RequestContext.getCurrentInstance().update("formMostrar");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void eliminarDetalle() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
+            ArticuloDao productodao = new ArticuloDaoImp();
+            OperacionDao ventadao = new OperacionDaoImp();
+            this.producto = productodao.getByCodigoBarras(this.session, this.ventadetalle.getCodigoproducto());
+            this.producto.setCantidad(this.producto.getCantidad() - this.ventadetalle.getCantidad());
+            productodao.modificar(session, this.producto);
+            this.venta = ventadao.verByCodigo(this.session, this.ventadetalle.getOperacion().getIdoperacion());
+            this.venta.setMontototal(this.venta.getMontototal().subtract(this.ventadetalle.getPreciototal()));
+            ventadao.modificar(session, this.venta);
+
+            detalledao.eliminar(this.session, this.ventadetalle);
+
+            this.transaction.commit();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino Correctamente."));
+            this.ventadetalle = new Operaciondetalle();
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
         } finally {
             if (this.session != null) {
                 this.session.close();
@@ -268,6 +442,38 @@ public class CompraBean implements Serializable {
 
     public void setAnexo(Anexo anexo) {
         this.anexo = anexo;
+    }
+
+    public List<Operacion> getListaventa() {
+        return listaventa;
+    }
+
+    public void setListaventa(List<Operacion> listaventa) {
+        this.listaventa = listaventa;
+    }
+
+    public Date getFecha1() {
+        return fecha1;
+    }
+
+    public void setFecha1(Date fecha1) {
+        this.fecha1 = fecha1;
+    }
+
+    public Date getFecha2() {
+        return fecha2;
+    }
+
+    public void setFecha2(Date fecha2) {
+        this.fecha2 = fecha2;
+    }
+
+    public Operaciondetalle getVentadetalle() {
+        return ventadetalle;
+    }
+
+    public void setVentadetalle(Operaciondetalle ventadetalle) {
+        this.ventadetalle = ventadetalle;
     }
 
 }

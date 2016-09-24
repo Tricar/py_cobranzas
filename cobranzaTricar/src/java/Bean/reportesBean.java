@@ -50,6 +50,7 @@ public class reportesBean implements Serializable {
     private Integer mes;
     private Integer ano;
     private String empresa;
+    private Date fecha = new Date();
     private Date fecha1 = new Date();
     private Date fecha2 = new Date();
 
@@ -82,6 +83,24 @@ public class reportesBean implements Serializable {
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Crear proforma primero."));
         }
+        con.close();
+    }
+
+    public void exportarVenta() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha", fecha);
+        File jasper = new File("D:/reporte/venta.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Venta-" + fecha + ".pdf");
+        ServletOutputStream stream = response.getOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
         con.close();
     }
 
@@ -716,7 +735,7 @@ public class reportesBean implements Serializable {
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("fecha1", fecha1);
         parametros.put("fecha2", fecha2);
-        parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);        
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
         File jasper = new File("D:/reporte/diario/pagos.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -832,6 +851,14 @@ public class reportesBean implements Serializable {
 
     public void setFecha2(Date fecha2) {
         this.fecha2 = fecha2;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
 }
