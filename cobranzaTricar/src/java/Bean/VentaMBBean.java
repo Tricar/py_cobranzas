@@ -137,7 +137,7 @@ public class VentaMBBean implements Serializable {
             }
             BigDecimal totalventa = new BigDecimal(0);
             for (Operaciondetalle item : this.listaventadetalle) {
-                BigDecimal totalVentaPorProducto = item.getPreciocompra().multiply(new BigDecimal(item.getCantidad()));
+                BigDecimal totalVentaPorProducto = item.getPrecioventa().multiply(new BigDecimal(item.getCantidad()));
                 item.setPreciototal(totalVentaPorProducto);
                 totalventa = totalventa.add(totalVentaPorProducto);
             }
@@ -195,7 +195,7 @@ public class VentaMBBean implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Antes de realizar la venta debe actualizar el monto de la venta."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
-                } else if (item.getPreciototal().multiply(new BigDecimal(item.getCantidad())) != item.getPreciototal()) {
+                } else if (!item.getPrecioventa().multiply(new BigDecimal(item.getCantidad())).equals(item.getPreciototal())) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Actualize el monto primero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;

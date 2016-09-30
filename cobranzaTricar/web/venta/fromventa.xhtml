@@ -108,24 +108,24 @@
                         <hr/>
                         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                             <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                                <p:dataTable id="tablaListaProductosVenta" value="#{ventaMBBean.listaventadetalle}" var="item">
+                                <p:dataTable id="tablaListaProductosVenta" value="#{ventaMBBean.listaventadetalle}" var="detalle">
                                     <p:column headerText="CODIGO DE BARRA" width="10%" style="text-align: center">
-                                        <h:outputText value="#{item.codigoproducto}"/>
+                                        <h:outputText value="#{detalle.codigoproducto}"/>
                                     </p:column>
                                     <p:column headerText="SERVICIO Y REPUESTO">
-                                        <h:outputText value="#{item.descripcion}"/>
+                                        <h:outputText value="#{detalle.descripcion}"/>
                                     </p:column>
                                     <p:column headerText="PRECIO UNITARIO">
-                                        <h:outputText value="#{item.precioventa}"/>
+                                        <h:outputText value="#{detalle.precioventa}"/>
                                     </p:column>
                                     <p:column headerText="CANTIDAD" width="10%" style="text-align: center;">
-                                        <p:inputText value="#{item.cantidad}" onkeypress="return justNumbers(event);" size="8"/>
+                                        <p:inputText value="#{detalle.cantidad}" onkeypress="return justNumbers(event);" size="8"/>
                                     </p:column>
                                     <p:column headerText="TOTAL">
-                                        S/. <h:outputText value="#{item.preciototal}"/>
+                                        S/. <h:outputText value="#{detalle.preciototal}"/>
                                     </p:column>
                                     <p:column width="10%" style="text-align: center;">
-                                        <p:commandButton icon="fa fa-times-circle white" ajax="true" actionListener="#{ventaMBBean.retirarListaVentaDetalle(item.codigoproducto)}"/>
+                                        <p:commandButton icon="fa fa-times-circle white" ajax="true" actionListener="#{ventaMBBean.retirarListaVentaDetalle(detalle.codigoproducto)}"/>
                                     </p:column>
                                 </p:dataTable>
                             </div>

@@ -10,6 +10,7 @@ import Model.*;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -88,7 +89,7 @@ public class CompraBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 0, null, new BigDecimal("0"), null, null, new BigDecimal("0"), null, null));
+            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 1, null, new BigDecimal("0"), null, null, new BigDecimal("0"), null, null));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -163,19 +164,17 @@ public class CompraBean implements Serializable {
             }
             for (Operaciondetalle item : this.listaventadetalle) {
                 this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
-                if (item.getCantidad() > this.producto.getCantidad()) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock de uno de los articulo no es suficiente."));
-                    RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
-                    return;
-                } else if (item.getCantidad() == 0) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock debe ser mayor a cero."));
+                if (item.getPreciocompra().equals(new BigDecimal("0"))) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Precio de compra debe ser mayor a cero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
                 } else if (item.getPreciototal().equals(new BigDecimal("0"))) {
+                    System.out.println("primer comparacion");
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Actualize el monto primero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
-                } else if (item.getPreciototal().multiply(new BigDecimal(item.getCantidad())) != item.getPreciototal()) {
+                } else if (!item.getPreciocompra().multiply(new BigDecimal(item.getCantidad())).equals(item.getPreciototal())) {
+                    System.out.println("segunda comparacion");
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Actualize el monto primero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
