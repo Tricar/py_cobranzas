@@ -103,12 +103,13 @@ public class ArticuloDaoImp implements ArticuloDao {
     }
 
     @Override
-    public Articulo verByCodigos(Integer idarticulo) {
+    public Articulo verByCodigos(int idarticulo) {
         Session session = null;
         Articulo producto = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Articulo WHERE idarticulo=:idarticulo");
+            String hql = "from Articulo where idarticulo=:idarticulo";
+            Query query = session.createQuery(hql);
             query.setParameter("idarticulo", idarticulo);
             producto = (Articulo) query.uniqueResult();
         } catch (HibernateException e) {

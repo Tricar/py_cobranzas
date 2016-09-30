@@ -94,9 +94,10 @@ public class OperacionDaoImp implements OperacionDao {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "UPDATE Operacion set montototal = :montototal WHERE idoperacion = :idoperacion";
+            String hql = "UPDATE Operacion set montototal = :montototal, estado = :estado WHERE idoperacion = :idoperacion";
             Query query = session.createQuery(hql);
             query.setParameter("montototal", operacion.getMontototal());
+            query.setParameter("estado", operacion.getEstado());
             query.setParameter("idoperacion", operacion.getIdoperacion());
             query.executeUpdate();
         } catch (HibernateException e) {

@@ -9,16 +9,29 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <h:form id="principal">
-            <h:panelGrid columns="2">
-                <p:outputLabel value="Fecha Inicio:"/>
-                <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha1}"/>
-                <p:outputLabel value="Fecha Fin:"/>
-                <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha2}"/>
-                <p:commandButton value="Buscar"  actionListener="#{ventaMBBean.filtrarFechas()}" ajax="false"/>
-                <p:commandButton action="#{ventaMBBean.nuevo()}" value="Nueva venta" immediate="true" icon="fa fa-plus white"/>
-            </h:panelGrid>
-        </h:form>
+        <div class="Container100 Responsive100">
+            <div class="ContainerIndent">
+                <h:form id="principal">
+                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-6">
+                                    <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha1}"/>
+                                </div>
+                                <hr/>
+                                <div class="ui-panelgrid-cell ui-grid-col-6">  
+                                    <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha2}"/>
+                                </div>
+                                <div class="ui-panelgrid-cell ui-grid-col-12"> 
+                                    <p:commandButton value="Buscar"  actionListener="#{ventaMBBean.filtrarFechas()}" ajax="false"/>
+                                    <p:commandButton action="#{ventaMBBean.nuevo()}" value="Nueva venta" immediate="true" icon="fa fa-plus white"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
         <hr/>
         <h:form id="formMostrar">
             <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
@@ -52,7 +65,7 @@
                             <p:commandButton update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{ventaMBBean.cargarDetalleArray(venta)}"/>
                             <p:commandButton class="BlueButton" update=":formModificar" icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminar(venta.idoperacion)}" />
                             <p:commandButton class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Boleta(venta.codigo)}" />
-                            <p:commandButton class="RedButton" update=":formModificar" icon="fa fa-times-circle white" title="Anular" actionListener="#{ventaMBBean.cargarAnular(venta.idoperacion)}" />
+                            <p:commandButton disabled="#{venta.estado == 0 ? true : false}" class="RedButton" update=":formModificar" icon="fa fa-times-circle white" title="Anular" actionListener="#{ventaMBBean.cargarAnular(venta.idoperacion)}" />
                         </p:column>
                     </p:dataTable>
                 </div>

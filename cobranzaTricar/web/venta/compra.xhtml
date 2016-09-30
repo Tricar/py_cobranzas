@@ -51,7 +51,7 @@
                         <p:column headerText="Mostrar">                            
                             <p:commandButton update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{compraBean.cargarDetalleArray(compra)}"/>
                             <p:commandButton class="BlueButton" icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{compraBean.cargarEliminar(compra.idoperacion)}" />
-                            <p:commandButton class="RedButton" update=":formModificar" icon="fa fa-times-circle white" title="Anular" actionListener="#{compraBean.cargarAnular(compra.idoperacion)}" />
+                            <p:commandButton disabled="#{compra.estado == 0 ? true : false}" class="RedButton" update=":formModificar" icon="fa fa-times-circle white" title="Anular" actionListener="#{compraBean.cargarAnular(compra.idoperacion)}" />
                         </p:column>
                     </p:dataTable>
                 </div>
