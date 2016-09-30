@@ -14,6 +14,9 @@ public interface ArticuloDao {
     public Articulo verByCodigo(Session session, Integer idarticulo) throws Exception;
     public Articulo getByIdProducto(Session session, Integer idArticulo) throws Exception;
     public Articulo getByCodigoBarras(Session session, String codigo) throws Exception;
+    public List<Articulo> filtarTipo(Integer tipo);
+    public Articulo verByCodigos(Integer idarticulo);    
+    public boolean modificarOD(Articulo articulo);
     public Articulo verByDescripcion(Session session, String descripcion1) throws Exception;
     public Articulo verByDescripcionDifer(Session session,Integer idarticulo, String descripcion1) throws Exception;
     public boolean modificar(Session session, Articulo articulo) throws Exception;

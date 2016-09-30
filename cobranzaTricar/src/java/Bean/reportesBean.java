@@ -3,8 +3,10 @@ package Bean;
 import Dao.CredavalDao;
 import Dao.CredavalDaoImp;
 import Model.Anexo;
+import Model.Articulo;
 import Model.Credito;
 import Model.Creditoaval;
+import Model.Operaciondetalle;
 import Model.Usuario;
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +35,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import org.apache.commons.lang3.StringUtils;
 import utiles.dbManager;
 import utiles.recorrerCreditos;
@@ -47,10 +50,11 @@ public class reportesBean implements Serializable {
 
     private String codigo;
     private List<Anexo> avales = new ArrayList();
+    public Operaciondetalle operaciondetalle = new Operaciondetalle();
+    public Articulo articulo = new Articulo();
     private Integer mes;
     private Integer ano;
     private String empresa;
-    private Date fecha = new Date();
     private Date fecha1 = new Date();
     private Date fecha2 = new Date();
 
@@ -86,18 +90,74 @@ public class reportesBean implements Serializable {
         con.close();
     }
 
-    public void exportarVenta() throws JRException, NamingException, SQLException, IOException {
+    public void exportarDetallado() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("fecha", fecha);
-        File jasper = new File("D:/reporte/venta.jasper");
+//        SimpleDateFormat dateFormatA = new SimpleDateFormat("yyyy");
+//        SimpleDateFormat dateFormatM = new SimpleDateFormat("MM");
+//        SimpleDateFormat dateFormatD = new SimpleDateFormat("dd");
+//        System.out.println("Año: "+ dateFormatA.format(fecha));
+//        System.out.println("Mes: "+ dateFormatM.format(fecha));
+//        System.out.println("Dia: "+ dateFormatD.format(fecha));
+        parametros.put("fecha1", fecha1);
+        parametros.put("fecha2", fecha2);
+//        parametros.put("dia", dateFormatD.format(fecha));
+        File jasper = new File("D:/reporte/detalle.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=Venta-" + fecha + ".pdf");
+        response.addHeader("Content-disposition", "attachment; filename=Detalle.xls");
         ServletOutputStream stream = response.getOutputStream();
-        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarEspecifico() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha1", fecha1);
+        parametros.put("fecha2", fecha2);
+        File jasper = new File("D:/reporte/especifico.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Especificacion.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarArticulo() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha1", fecha1);
+        parametros.put("fecha2", fecha2);
+//        parametros.put("producto", operaciondetalle.getArticulo().getIdarticulo());
+        File jasper = new File("D:/reporte/articulo.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Articulo.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
         stream.flush();
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
@@ -853,12 +913,20 @@ public class reportesBean implements Serializable {
         this.fecha2 = fecha2;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Articulo getArticulo() {
+        return articulo;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setArticulo(Articulo articulo) {
+        this.articulo = articulo;
+    }
+
+    public Operaciondetalle getOperaciondetalle() {
+        return operaciondetalle;
+    }
+
+    public void setOperaciondetalle(Operaciondetalle operaciondetalle) {
+        this.operaciondetalle = operaciondetalle;
     }
 
 }

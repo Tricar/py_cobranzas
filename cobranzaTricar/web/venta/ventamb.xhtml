@@ -12,9 +12,9 @@
         <h:form id="principal">
             <h:panelGrid columns="2">
                 <p:outputLabel value="Fecha Inicio:"/>
-                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha1}"/>
+                <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha1}"/>
                 <p:outputLabel value="Fecha Fin:"/>
-                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha2}"/>
+                <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha2}"/>
                 <p:commandButton value="Buscar"  actionListener="#{ventaMBBean.filtrarFechas()}" ajax="false"/>
                 <p:commandButton action="#{ventaMBBean.nuevo()}" value="Nueva venta" immediate="true" icon="fa fa-plus white"/>
             </h:panelGrid>
@@ -47,8 +47,9 @@
                         </p:column>
                         <p:column headerText="Mostrar">                            
                             <p:commandButton update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{ventaMBBean.cargarDetalleArray(venta)}"/>
-                            <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminar(venta.idoperacion)}" />
-                            <p:commandButton ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Boleta(venta.codigo)}" />
+                            <p:commandButton class="BlueButton" update=":formModificar" icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminar(venta.idoperacion)}" />
+                            <p:commandButton class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Boleta(venta.codigo)}" />
+                            <p:commandButton class="RedButton" update=":formModificar" icon="fa fa-times-circle white" title="Anular" actionListener="#{ventaMBBean.cargarAnular(venta.idoperacion)}" />
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -76,7 +77,6 @@
                             <h:outputText value="#{detalle.preciototal}"/>
                         </p:column>
                         <p:column headerText="Pagar">
-                            <p:commandButton icon="fa fa-credit-card white" title="Modificar" actionListener="#{ventaMBBean.cargarLetraPagos(letras)}" />
                             <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminarDetalle(detalle.idoperaciondetalle, loginbean.usuario)}" />
                         </p:column>                    
                     </p:dataTable> 
@@ -90,6 +90,16 @@
                 <h:outputText class="ui-confirm-dialog-message" value="¿Desea eliminar?" />
                 <p:separator/>
                 <p:commandButton value="Si" actionListener="#{ventaMBBean.eliminar()}" icon="fa fa-check blue" ajax="false" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
+            </p:dialog>     
+        </h:form>        
+
+        <h:form id="frmAnularCompra">
+            <p:dialog header="Anular" widgetVar="dialogoAnularCompra" modal="true">
+                <p:inputText type="hidden" value="#{ventaMBBean.venta.idoperacion}"/>
+                <h:outputText class="ui-confirm-dialog-message" value="¿Desea Anular?" />
+                <p:separator/>
+                <p:commandButton value="Si" actionListener="#{ventaMBBean.anular()}" icon="fa fa-check blue" ajax="false" />
                 <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
             </p:dialog>     
         </h:form>

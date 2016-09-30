@@ -12,9 +12,9 @@
         <h:form id="principal">
             <h:panelGrid columns="2">
                 <p:outputLabel value="Fecha Inicio:"/>
-                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{compraBean.fecha1}"/>
+                <p:calendar pattern="dd/MM/yyyy" value="#{compraBean.fecha1}"/>
                 <p:outputLabel value="Fecha Fin:"/>
-                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{compraBean.fecha2}"/>
+                <p:calendar pattern="dd/MM/yyyy" value="#{compraBean.fecha2}"/>
                 <p:commandButton value="Buscar"  actionListener="#{compraBean.filtrarFechas()}" ajax="false"/>
                 <p:commandButton action="#{compraBean.nuevo()}" value="Nueva compra" immediate="true" icon="fa fa-plus white"/>
             </h:panelGrid>

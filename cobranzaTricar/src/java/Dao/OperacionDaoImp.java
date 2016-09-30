@@ -38,7 +38,7 @@ public class OperacionDaoImp implements OperacionDao {
         List<Operacion> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Operacion WHERE created>=:start_date and created<=:end_date and idtipooperacioncontable=:tipo");
+            Query query = session.createQuery("FROM Operacion WHERE created BETWEEN :start_date AND :end_date and idtipooperacioncontable=:tipo");
             query.setParameter("start_date", date1);
             query.setParameter("end_date", date2);
             query.setParameter("tipo", tipo);
@@ -67,6 +67,45 @@ public class OperacionDaoImp implements OperacionDao {
     @Override
     public boolean modificar(Session session, Operacion articulo) throws Exception {
         session.update(articulo);
+        return true;
+    }
+
+    @Override
+    public Operacion verByCodigos(Integer idoperacion) {
+        Session session = null;
+        Operacion operacion = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Operacion WHERE idoperacion=:u");
+            query.setParameter("u", idoperacion);            
+            operacion = (Operacion) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return operacion;
+    }
+
+    @Override
+    public boolean modificarOD(Operacion operacion) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "UPDATE Operacion set montototal = :montototal WHERE idoperacion = :idoperacion";
+            Query query = session.createQuery(hql);
+            query.setParameter("montototal", operacion.getMontototal());
+            query.setParameter("idoperacion", operacion.getIdoperacion());
+            query.executeUpdate();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
         return true;
     }
 

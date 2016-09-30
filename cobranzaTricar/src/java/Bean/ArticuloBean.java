@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -19,6 +20,8 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import utiles.dbManager;
 
 /**
@@ -155,6 +158,28 @@ public class ArticuloBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+    
+    public List<Articulo> filtrarArticulo(String name) {
+        List<Articulo> query = new ArrayList<Articulo>();
+        ArticuloDao anexoDao = new ArticuloDaoImp();
+        List<Articulo> tipos = anexoDao.filtarTipo(1);
+        for (Articulo tipo : tipos) {
+            if (tipo.getDescripcion1().startsWith(name.toUpperCase())) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
+
+    public void handleSelect(SelectEvent e) {
+        Articulo p = (Articulo) e.getObject();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Articulo agregado :: " + p.getDescripcion1(), ""));
+    }
+
+    public void handleUnSelect(UnselectEvent e) {
+        Articulo p = (Articulo) e.getObject();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Articulo removido :: " + p.getDescripcion1(), ""));
     }
 
     public void registrar() {
