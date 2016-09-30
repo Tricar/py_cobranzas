@@ -91,7 +91,10 @@
                                     <p:column headerText="SERVICIO Y REPUESTO" filterBy="descripcion1">
                                         <h:outputText value="#{item.descripcion1}"/>
                                     </p:column>
-                                    <p:column headerText="PRECIO UNITARIO">
+                                    <p:column headerText="PRECIO COMPRA">
+                                        <h:outputText value="#{item.preciocompra}"/>
+                                    </p:column>
+                                    <p:column headerText="PRECIO VENTA">
                                         <h:outputText value="#{item.precioventa}"/>
                                     </p:column>
                                     <p:column headerText="STOCK">
@@ -114,7 +117,7 @@
                                         <h:outputText value="#{detalle.descripcion}"/>
                                     </p:column>
                                     <p:column headerText="PRECIO UNITARIO" width="10%" style="text-align: center;">
-                                        <p:inputText value="#{detalle.precio}" onkeypress="return justNumbers(event);" size="8"/>
+                                        <p:inputText value="#{detalle.preciocompra}" onkeypress="return justNumbers(event);" size="8"/>
                                     </p:column>
                                     <p:column headerText="CANTIDAD" width="10%" style="text-align: center;">
                                         <p:inputText value="#{detalle.cantidad}" onkeypress="return justNumbers(event);" size="8"/>

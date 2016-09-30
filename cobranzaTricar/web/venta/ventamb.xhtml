@@ -16,7 +16,7 @@
                 <p:outputLabel value="Fecha Fin:"/>
                 <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha2}"/>
                 <p:commandButton value="Buscar"  actionListener="#{ventaMBBean.filtrarFechas()}" ajax="false"/>
-                <p:commandButton action="#{ventaMBBean.nuevo()}" value="Nueva compra" immediate="true" icon="fa fa-plus white"/>
+                <p:commandButton action="#{ventaMBBean.nuevo()}" value="Nueva venta" immediate="true" icon="fa fa-plus white"/>
             </h:panelGrid>
         </h:form>
         <hr/>
@@ -48,9 +48,9 @@
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Mostrar">                            
-                            <p:commandButton update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{ventaMBBean.cargarDetalleArray(venta)}"/>
+                            <p:commandButton disabled="#{venta.estado == 0 ? true : false}" update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{ventaMBBean.cargarDetalleArray(venta)}"/>
                             <p:commandButton class="BlueButton" update=":formModificar" icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminar(venta.idoperacion)}" />
-                            <p:commandButton class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Boleta(venta.codigo)}" />
+                            <p:commandButton disabled="#{venta.estado == 0 ? true : false}" class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Boleta(venta.codigo)}" />
                             <p:commandButton disabled="#{venta.estado == 0 ? true : false}" class="RedButton" update=":formModificar" icon="fa fa-times-circle white" title="Anular" actionListener="#{ventaMBBean.cargarAnular(venta.idoperacion)}" />
                         </p:column>
                     </p:dataTable>

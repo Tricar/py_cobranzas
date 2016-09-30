@@ -23,8 +23,7 @@
         <h:form id="formMostrar">
             <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                 <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                    <p:dataTable var="compra" value="#{compraBean.listaventa}" 
-                                 emptyMessage="Ningún cliente coincide con su búsqueda" >
+                    <p:dataTable var="compra" value="#{compraBean.listaventa}" scrollable="true" emptyMessage="Ningún cliente coincide con su búsqueda" >
                         <p:column headerText="CODIGO">
                             <h:outputText value="#{compra.codigo}" />
                         </p:column>
