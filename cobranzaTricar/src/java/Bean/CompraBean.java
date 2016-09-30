@@ -187,6 +187,10 @@ public class CompraBean implements Serializable {
             for (Operaciondetalle item : this.listaventadetalle) {
                 this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
                 BigDecimal costopromedio = ((item.getPreciocompra().multiply(new BigDecimal(item.getCantidad()))).add(this.producto.getPreciocompra().multiply(new BigDecimal(this.producto.getCantidad())))).divide((new BigDecimal(item.getCantidad())).add(new BigDecimal(this.producto.getCantidad())));
+                item.setPreciocompraanterior(this.producto.getPreciocompra());
+                item.setPrecioventaanterior(this.producto.getPrecioventa());
+                item.setPrecioventa(this.producto.getPrecioventa());
+                item.setCostopromedioanterior(this.producto.getCostopromedio());
                 item.setCostopromedio(costopromedio);
                 item.setOperacion(this.venta);
                 item.setArticulo(this.producto);
@@ -442,6 +446,9 @@ public class CompraBean implements Serializable {
             OperacionDao ventadao = new OperacionDaoImp();
             this.producto = productodao.verByCodigos(get.getArticulo().getIdarticulo());
             this.producto.setCantidad(get.getCantidadanterior());
+            this.producto.setPreciocompra(get.getPreciocompraanterior());
+            this.producto.setPrecioventa(get.getPrecioventaanterior());
+            this.producto.setCostopromedio(get.getCostopromedioanterior());
             productodao.modificarOD(this.producto);
             this.venta = ventadao.verByCodigos(get.getOperacion().getIdoperacion());
             this.venta.setEstado(0);
@@ -468,6 +475,9 @@ public class CompraBean implements Serializable {
             OperacionDao ventadao = new OperacionDaoImp();
             this.producto = productodao.getByCodigoBarras(this.session, this.ventadetalle.getCodigoproducto());
             this.producto.setCantidad(this.ventadetalle.getCantidadanterior());
+            this.producto.setPreciocompra(this.ventadetalle.getPreciocompraanterior());
+            this.producto.setPrecioventa(this.ventadetalle.getPrecioventaanterior());
+            this.producto.setCostopromedio(this.ventadetalle.getCostopromedioanterior());
             productodao.modificar(session, this.producto);
             this.venta = ventadao.verByCodigo(this.session, this.ventadetalle.getOperacion().getIdoperacion());
             this.venta.setMontototal(this.venta.getMontototal().subtract(this.ventadetalle.getPreciototal()));

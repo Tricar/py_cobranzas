@@ -127,9 +127,12 @@ public class ArticuloDaoImp implements ArticuloDao {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "UPDATE Articulo set cantidad = :cantidad WHERE idarticulo = :idarticulo";
+            String hql = "UPDATE Articulo set cantidad = :cantidad, preciocompra = :preciocompra, precioventa = :precioventa, costopromedio = :costopromedio WHERE idarticulo = :idarticulo";
             Query query = session.createQuery(hql);
             query.setParameter("cantidad", articulo.getCantidad());
+            query.setParameter("preciocompra", articulo.getPreciocompra());
+            query.setParameter("precioventa", articulo.getPrecioventa());
+            query.setParameter("costopromedio", articulo.getCostopromedio());
             query.setParameter("idarticulo", articulo.getIdarticulo());
             query.executeUpdate();
         } catch (HibernateException e) {

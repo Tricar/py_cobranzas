@@ -9,35 +9,21 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <div class="Container100 Responsive100">
-            <div class="ContainerIndent">
-                <h:form id="principal">
-                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                            <div class="ui-grid-row">
-                                <div class="ui-panelgrid-cell ui-grid-col-6">
-                                    <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha1}"/>
-                                </div>
-                                <hr/>
-                                <div class="ui-panelgrid-cell ui-grid-col-6">  
-                                    <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha2}"/>
-                                </div>
-                                <div class="ui-panelgrid-cell ui-grid-col-12"> 
-                                    <p:commandButton value="Buscar"  actionListener="#{ventaMBBean.filtrarFechas()}" ajax="false"/>
-                                    <p:commandButton action="#{ventaMBBean.nuevo()}" value="Nueva venta" immediate="true" icon="fa fa-plus white"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </h:form>
-            </div>
-        </div>
+        <h:form id="principal">
+            <h:panelGrid columns="2">
+                <p:outputLabel value="Fecha Inicio:"/>
+                <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha1}"/>
+                <p:outputLabel value="Fecha Fin:"/>
+                <p:calendar pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha2}"/>
+                <p:commandButton value="Buscar"  actionListener="#{ventaMBBean.filtrarFechas()}" ajax="false"/>
+                <p:commandButton action="#{ventaMBBean.nuevo()}" value="Nueva compra" immediate="true" icon="fa fa-plus white"/>
+            </h:panelGrid>
+        </h:form>
         <hr/>
         <h:form id="formMostrar">
             <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                 <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                    <p:dataTable var="venta" value="#{ventaMBBean.listaventa}" 
-                                 emptyMessage="Ningún cliente coincide con su búsqueda" >
+                    <p:dataTable var="venta" value="#{ventaMBBean.listaventa}" scrollable="true" emptyMessage="Ningún cliente coincide con su búsqueda" >
                         <p:column headerText="CODIGO">
                             <h:outputText value="#{venta.codigo}" />
                         </p:column>
@@ -87,7 +73,7 @@
                             <h:outputText value="#{detalle.cantidad}"/>
                         </p:column>
                         <p:column headerText="PRECIO UNI.">
-                            <h:outputText value="#{detalle.precio}"/>
+                            <h:outputText value="#{detalle.preciocompra}"/>
                         </p:column>
                         <p:column headerText="PRECIO TOTAL">
                             <h:outputText value="#{detalle.preciototal}"/>

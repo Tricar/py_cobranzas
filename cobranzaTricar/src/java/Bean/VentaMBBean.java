@@ -108,7 +108,7 @@ public class VentaMBBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, 1, null, this.producto.getPrecioventa(), null, null, new BigDecimal("0"), null, null));
+            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, 1, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -155,7 +155,7 @@ public class VentaMBBean implements Serializable {
         try {
             BigDecimal totalventa = new BigDecimal(0);
             for (Operaciondetalle item : this.listaventadetalle) {
-                BigDecimal totalVentaPorProducto = item.getPreciocompra().multiply(new BigDecimal(item.getCantidad()));
+                BigDecimal totalVentaPorProducto = item.getPrecioventa().multiply(new BigDecimal(item.getCantidad()));
                 item.setPreciototal(totalVentaPorProducto);
                 totalventa = totalventa.add(totalVentaPorProducto);
             }
@@ -206,6 +206,11 @@ public class VentaMBBean implements Serializable {
             this.venta = ventadao.getUltimoRegistro(this.session);
             for (Operaciondetalle item : this.listaventadetalle) {
                 this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
+                item.setPrecioventaanterior(this.producto.getPrecioventa());
+                item.setPreciocompraanterior(this.producto.getPreciocompra());
+                item.setPreciocompra(this.producto.getPreciocompra());
+                item.setCostopromedioanterior(this.producto.getCostopromedio());
+                item.setCostopromedio(this.producto.getCostopromedio());
                 item.setOperacion(this.venta);
                 item.setArticulo(this.producto);
                 item.setCantidadanterior(this.producto.getCantidad());
@@ -418,6 +423,9 @@ public class VentaMBBean implements Serializable {
             OperacionDao ventadao = new OperacionDaoImp();
             this.producto = productodao.verByCodigos(get.getArticulo().getIdarticulo());
             this.producto.setCantidad(get.getCantidadanterior());
+            this.producto.setPreciocompra(get.getPreciocompraanterior());
+            this.producto.setPrecioventa(get.getPrecioventaanterior());
+            this.producto.setCostopromedio(get.getCostopromedioanterior());
             productodao.modificarOD(this.producto);
             this.venta = ventadao.verByCodigos(get.getOperacion().getIdoperacion());
             this.venta.setEstado(0);
@@ -444,6 +452,9 @@ public class VentaMBBean implements Serializable {
             OperacionDao ventadao = new OperacionDaoImp();
             this.producto = productodao.getByCodigoBarras(this.session, this.ventadetalle.getCodigoproducto());
             this.producto.setCantidad(this.ventadetalle.getCantidadanterior());
+            this.producto.setPreciocompra(this.ventadetalle.getPreciocompraanterior());
+            this.producto.setPrecioventa(this.ventadetalle.getPrecioventaanterior());
+            this.producto.setCostopromedio(this.ventadetalle.getCostopromedioanterior());
             productodao.modificar(session, this.producto);
             this.venta = ventadao.verByCodigo(this.session, this.ventadetalle.getOperacion().getIdoperacion());
             this.venta.setMontototal(this.venta.getMontototal().subtract(this.ventadetalle.getPreciototal()));
