@@ -40,6 +40,9 @@
                         <p:column headerText="MONTO">
                             <h:outputText value="#{venta.montototal}" />
                         </p:column>
+                        <p:column headerText="ESTADO">
+                            <h:outputText value="#{venta.estado == 1 ? 'VENDIDO' : 'ANULADO'}" />
+                        </p:column>
                         <p:column headerText="FECHA">
                             <h:outputText value="#{venta.created}">
                                 <f:convertDateTime pattern = "dd/MM/yyyy"/>

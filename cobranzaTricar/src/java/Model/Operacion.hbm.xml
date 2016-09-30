@@ -31,6 +31,9 @@
         <property name="idusuario" type="java.lang.Integer">
             <column name="idusuario"/>
         </property>
+        <property name="estado" type="java.lang.Integer">
+            <column name="estado"/>
+        </property>
         <set fetch="select" inverse="true" lazy="true" name="operaciondetalles" table="operaciondetalle">
             <key>
                 <column name="idoperacion" not-null="true"/>

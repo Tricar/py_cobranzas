@@ -108,8 +108,8 @@ public class ArticuloDaoImp implements ArticuloDao {
         Articulo producto = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Articulo WHERE idarticulo=:u");
-            query.setParameter("u", idarticulo);
+            Query query = session.createQuery("FROM Articulo WHERE idarticulo=:idarticulo");
+            query.setParameter("idarticulo", idarticulo);
             producto = (Articulo) query.uniqueResult();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -130,8 +130,7 @@ public class ArticuloDaoImp implements ArticuloDao {
             Query query = session.createQuery(hql);
             query.setParameter("cantidad", articulo.getCantidad());
             query.setParameter("idarticulo", articulo.getIdarticulo());
-            int result = query.executeUpdate();
-            System.out.println("Rows affected: " + result);
+            query.executeUpdate();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         } finally {

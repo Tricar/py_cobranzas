@@ -164,6 +164,7 @@ public class CompraBean implements Serializable {
             Date d = new Date();
             this.venta.setCreated(d);
             this.venta.setIdtipooperacioncontable(2);
+            this.venta.setEstado(1);
             this.venta.setIdusuario(usuario.getAnexo().getIdanexo());
             ventadao.insertar(this.session, this.venta);
             this.venta = ventadao.getUltimoRegistro(this.session);
@@ -329,6 +330,34 @@ public class CompraBean implements Serializable {
         }
     }
 
+    public void cargarAnular(int codigo) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            OperacionDao ventadao = new OperacionDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            this.venta = ventadao.verByCodigo(this.session, codigo);
+
+            this.transaction.commit();
+
+            RequestContext.getCurrentInstance().update("frmAnularCompra");
+            RequestContext.getCurrentInstance().execute("PF('dialogoAnularCompra').show()");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
     public void eliminar() {
         this.session = null;
         this.transaction = null;
@@ -357,6 +386,57 @@ public class CompraBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public void anular() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            OperacionDao ventadao = new OperacionDaoImp();
+            eliminarOperaciondetalle(this.venta.getIdoperacion());
+            ventadao.eliminar(this.session, this.venta);
+
+            this.transaction.commit();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Anulo Correctamente."));
+            this.venta = new Operacion();
+            RequestContext.getCurrentInstance().update("formMostrar");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void eliminarOperaciondetalle(Integer idoperacion) {
+        OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
+        listaventadetalle = detalledao.verTodosxId(idoperacion);
+        for (int i = 0; i < listaventadetalle.size(); i++) {
+            Operaciondetalle get = listaventadetalle.get(i);
+            ArticuloDao productodao = new ArticuloDaoImp();
+            OperacionDao ventadao = new OperacionDaoImp();
+            this.producto = productodao.verByCodigos(get.getArticulo().getIdarticulo());
+            this.producto.setCantidad(get.getCantidadanterior());
+            productodao.modificarOD(this.producto);
+            this.venta = ventadao.verByCodigos(get.getOperacion().getIdoperacion());
+            this.venta.setEstado(0);
+            this.venta.setMontototal(this.venta.getMontototal().subtract(get.getPreciototal()));
+            ventadao.modificarOD(this.venta);
+
+            detalledao.eliminarOD(get.getIdoperaciondetalle());
+            producto = new Articulo();
+            venta = new Operacion();
+        }
+
     }
 
     public void eliminarDetalle() {

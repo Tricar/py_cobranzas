@@ -96,6 +96,22 @@
                 </h:form>
             </div>
 
+            <div class="ContainerIndent">
+                <h1 class="BigTopic"><p:outputLabel value="Reporte de Stock total"/></h1>
+                <h:form>
+                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
+                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarStock()}" /> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+
         </div>           
 
     </ui:define>

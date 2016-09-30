@@ -40,6 +40,9 @@
                         <p:column headerText="MONTO">
                             <h:outputText value="#{compra.montototal}" />
                         </p:column>
+                        <p:column headerText="ESTADO">
+                            <h:outputText value="#{compra.estado == 1 ? 'COMPRADO' : 'ANULADO'}" />
+                        </p:column>
                         <p:column headerText="FECHA">
                             <h:outputText value="#{compra.created}">
                                 <f:convertDateTime pattern = "dd/MM/yyyy"/>
@@ -47,7 +50,8 @@
                         </p:column>
                         <p:column headerText="Mostrar">                            
                             <p:commandButton update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{compraBean.cargarDetalleArray(compra)}"/>
-                            <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{compraBean.cargarEliminar(compra.idoperacion)}" />
+                            <p:commandButton class="BlueButton" icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{compraBean.cargarEliminar(compra.idoperacion)}" />
+                            <p:commandButton class="RedButton" update=":formModificar" icon="fa fa-times-circle white" title="Anular" actionListener="#{compraBean.cargarAnular(compra.idoperacion)}" />
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -92,6 +96,16 @@
                 <h:outputText class="ui-confirm-dialog-message" value="¿Desea eliminar?" />
                 <p:separator/>
                 <p:commandButton value="Si" actionListener="#{compraBean.eliminar()}" icon="fa fa-check blue" ajax="false" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
+            </p:dialog>     
+        </h:form>        
+
+        <h:form id="frmAnularCompra">
+            <p:dialog header="Anular" widgetVar="dialogoAnularCompra" modal="true">
+                <p:inputText type="hidden" value="#{compraBean.venta.idoperacion}"/>
+                <h:outputText class="ui-confirm-dialog-message" value="¿Desea Anular?" />
+                <p:separator/>
+                <p:commandButton value="Si" actionListener="#{compraBean.anular()}" icon="fa fa-check blue" ajax="false" />
                 <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
             </p:dialog>     
         </h:form>

@@ -200,6 +200,7 @@ public class VentaMBBean implements Serializable {
             Date d = new Date();
             this.venta.setCreated(d);
             this.venta.setIdtipooperacioncontable(1);
+            this.venta.setEstado(1);
             this.venta.setIdusuario(usuario.getAnexo().getIdanexo());
             ventadao.insertar(this.session, this.venta);
             this.venta = ventadao.getUltimoRegistro(this.session);
@@ -419,6 +420,7 @@ public class VentaMBBean implements Serializable {
             this.producto.setCantidad(get.getCantidadanterior());
             productodao.modificarOD(this.producto);
             this.venta = ventadao.verByCodigos(get.getOperacion().getIdoperacion());
+            this.venta.setEstado(0);
             this.venta.setMontototal(this.venta.getMontototal().subtract(get.getPreciototal()));
             ventadao.modificarOD(this.venta);
 
