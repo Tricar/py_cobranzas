@@ -4,7 +4,7 @@
 <!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Usuario" table="usuario" schema="dbo" catalog="cobranzas" optimistic-lock="version">
-        <id name="idusuario" type="int">
+        <id name="idusuario" type="java.lang.Integer">
             <column name="idusuario" />
             <generator class="identity" />
         </id>
