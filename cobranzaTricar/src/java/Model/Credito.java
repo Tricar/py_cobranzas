@@ -4,6 +4,7 @@ package Model;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -528,17 +529,27 @@ public class Credito implements java.io.Serializable {
     }
 
     @Override
-    public boolean equals(Object other) {
-        return (other != null && getClass() == other.getClass() && idventa != null)
-                ? idventa.equals(((Credito) other).idventa)
-                : (other == this);
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.idventa);
+        return hash;
     }
 
     @Override
-    public int hashCode() {
-        return (idventa != null)
-                ? (getClass().hashCode() + idventa.hashCode())
-                : super.hashCode();
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Credito other = (Credito) obj;
+        if (!Objects.equals(this.idventa, other.idventa)) {
+            return false;
+        }
+        return true;
     }
+
+    
 
 }

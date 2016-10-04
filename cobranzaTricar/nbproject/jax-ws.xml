@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="serviceSunat">
+      <implementation-class>sunat.serviceSunat</implementation-class>
+      <wsdl-url>https://www.sunat.gob.pe:443/ol-ti-itcpgem-sqa/billService?wsdl</wsdl-url>
+      <local-wsdl-file>www.sunat.gob.pe_443/ol-ti-itcpgem-sqa/billService.wsdl</local-wsdl-file>
+      <service-name>billService</service-name>
+      <port-name>BillServicePort</port-name>
+      <package-name>pe.gob.sunat.servicio.registro.comppago.factura.gem.service</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <use-provider>true</use-provider>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>fork</wsimport-option-name>
+          <wsimport-option-value>false</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xendorsed</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </service>
+  </services>
+  <clients/>
+  <jsr109>true</jsr109>
+</jax-ws>

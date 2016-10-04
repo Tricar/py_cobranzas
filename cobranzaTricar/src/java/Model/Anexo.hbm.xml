@@ -31,6 +31,9 @@
     <property name="sector" type="string">
       <column length="50" name="sector"/>
     </property>
+    <property name="zona" type="string">
+      <column length="50" name="zona"/>
+    </property>
     <property name="referencia" type="string">
       <column length="200" name="referencia"/>
     </property>

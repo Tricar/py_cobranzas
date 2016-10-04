@@ -18,4 +18,5 @@ public interface CredgestorDao {
     public void eliminarCreditogestor (Creditogestor credgestor);
     public Creditogestor getbyId(Integer idcredgestor);
     public Creditogestor getbyAnexoCredito(Anexo anexo, Credito credito);
+    public List<Creditogestor> getbyAnexo(Anexo anexo);
 }

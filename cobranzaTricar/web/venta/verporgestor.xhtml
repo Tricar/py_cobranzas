@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../views/template.xhtml">
+    <ui:define name="content">
+
+        <div class="layout-portlets-box">
+            <div class="Container100 ui-fluid">
+                <div class="ContainerIndent">
+                    <h2 class="BigTopic">Ver Asignaciones del gestor #{credgestorBean.anexo.nombres}</h2>
+                    <f:view afterPhase="#{anexoBean.phaseListener}">
+                        <h:form id="form" prependId="false ">
+                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                                    <p:growl id="msg12" showDetail="true"/>
+                                    <div class="ui-grid-row">  
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:commandButton action="#{credgestorBean.asignar()}" value="Asignar" immediate="true" icon="fa fa-child white" style="width: 180px"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                    </f:view>
+                </div>
+            </div>
+        </div>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                Lista de Créditos asignados a #{credgestorBean.anexo.nombres}
+            </div>
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formMostrar">
+                    <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                        <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                            <p:dataTable var="cred" value="#{credgestorBean.selectedcreditosmostrar}" >                                
+                                <p:column headerText="Cod.">
+                                    <h:outputText value="#{cred.liqventa}" />
+                                </p:column>
+                                <p:column headerText="Nombres">
+                                    <h:outputText value="#{cred.anexo.nombres}" />
+                                </p:column>
+                                <p:column headerText="Dirección">
+                                    <h:outputText value="#{cred.anexo.direccion}" />
+                                </p:column>
+                                <p:column headerText="Distrito">
+                                    <h:outputText value="#{cred.anexo.distrito.distrito}"/>
+                                </p:column>
+                                <p:column headerText="Num. Doc.">
+                                    <h:outputText value="#{cred.anexo.numdocumento}" />
+                                </p:column>
+                                <p:column filterBy="#{cred.tienda}" headerText="Tienda" filterMatchMode="exact" 
+                                          filterOptions="#{credgestorBean.tiendas}" >                            
+                                    <h:outputText value="#{cred.tienda}" >
+                                        <f:converter converterId="tiendaconverter"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column filterBy="#{cred.empresa}" headerText="Empresa" filterMatchMode="exact" 
+                                          filterOptions="#{credgestorBean.empresas}" >
+                                    <h:outputText value="#{cred.empresa}">
+                                        <f:converter converterId="empresaconverter"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Estado">
+                                    <h:outputText value="#{cred.calificacion}">
+                                        <f:converter converterId="califconverter"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Deuda">
+                                    <h:outputText value="#{cred.deudactual}" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                    <div class="ui-grid-row">
+                    </div>
+                </h:form>
+            </div>
+        </div>
+        <h:form>
+            <p:commandButton action="#{credgestorBean.verGestores(loginbean.usuario)}" value="Regresar" icon="fa fa-undo white" style="width: 180px"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

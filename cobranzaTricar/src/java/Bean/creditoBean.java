@@ -123,7 +123,9 @@ public class creditoBean implements Serializable {
     private List<Date> fechas = new ArrayList();
     private BigDecimal sinicial = new BigDecimal(BigInteger.ZERO);
     private boolean valuesi;
+    private boolean valuesiaval;
     private boolean valuesi2;
+    private boolean valuesi2aval;
     private List<Anexo> avales = new ArrayList();
     private List<Anexo> avalesant = new ArrayList();
     private List<Anexo> avalesmod = new ArrayList();
@@ -351,10 +353,12 @@ public class creditoBean implements Serializable {
     }
 
     public void lanzarDlgModificar() {
+        System.out.println("a ver modificaré");
         if (credito.getEstado().equals("AP")) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error, este crédito ya ha sido aprobado. No se puede modificar", "Crédito Aprobado, no se puede modificar."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Crédito Aprobado, no se puede modificar."));
             return;
         } else {
+            System.out.println("Entro");
             avalesmod = new ArrayList();
             if (avalesant.isEmpty() == false && avales.isEmpty() == false) {
                 if (avalesant.size() > avales.size()) {
@@ -781,7 +785,6 @@ public class creditoBean implements Serializable {
                 inicial = cal.get(Calendar.DATE);
                 int j = 1;
                 cal.add(Calendar.MONTH, j);
-                System.out.println(cal.getTime());
                 fechas.add(cal.getTime());
                 fin = cal.get(Calendar.DATE);
             }
@@ -790,7 +793,6 @@ public class creditoBean implements Serializable {
                 difdays = inicial - fin;
                 sumar = fin + difdays;
                 cal.add(Calendar.DATE, sumar);
-                System.out.println(cal.getTime());
                 fechas.add(cal.getTime());
                 inicial = 0;
                 fin = 0;
@@ -798,6 +800,12 @@ public class creditoBean implements Serializable {
             }
         }
         return fechas;
+    }
+
+    public static int esDomingo(Date d) {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(d);
+        return cal.get(Calendar.DAY_OF_WEEK);
     }
 
     public long Diffdays(Date fechavenc) {
@@ -1205,9 +1213,14 @@ public class creditoBean implements Serializable {
         if (!rec.isEmpty()) {
             avales = rec;
         }
+        valuesi = false;
+        valuesi2 = true;
+        fecha2 = null;
         if (credito.getSinicial().compareTo(BigDecimal.ZERO) == 1) {
             sinicial = credito.getSinicial();
-            valuesi = false;
+            valuesi = true;
+            valuesi2 = false;
+            fecha2 = credito.getFecsinicial();
         }
         inicia = credito.getInicial();
         precio = credito.getPrecio();
@@ -1230,6 +1243,8 @@ public class creditoBean implements Serializable {
             }
             return "/venta/formaprobar.xhtml";
         } else {
+            valuesiaval = false;
+            valuesi2aval = true;
             valuei = false;
             valuei2 = true;
             mensaje = compararListas();
@@ -1700,19 +1715,26 @@ public class creditoBean implements Serializable {
     }
 
     public void addMessageini() {
-        // String summary = valuei ? "SI" : "NO";
-        // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
+        String summary = valuei ? "SI" : "NO";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
         if (valuei) {
             valuei2 = false;
         } else {
             valuei2 = true;
         }
-        System.out.println("values: " + valuei2);
+    }
+
+    public void addMessageiniaval() {
+        if (valuesiaval) {
+            valuesi2aval = false;
+        } else {
+            valuesi2aval = true;
+        }
     }
 
     public void addAval() {
-        // String summary = valuei ? "SI" : "NO";
-        // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
+        String summary = valuei ? "SI" : "NO";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
         if (valuei) {
             value2 = false;
         } else {
@@ -1721,8 +1743,8 @@ public class creditoBean implements Serializable {
     }
 
     public void addMessageini2() {
-        // String summary = valuei ? "SI" : "NO";
-        // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
+//        String summary = valuei ? "SI" : "NO";
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
         if (valuesi) {
             valuesi2 = false;
         } else {
@@ -1856,10 +1878,10 @@ public class creditoBean implements Serializable {
                 caja.setTotal(caja.getTotal().add(montopago));
                 cajadao.modificarCaja(caja);
                 mcaja.setCaja(caja);
-                if (concepto.getTipo().equals("CO")){
-                    mensaje = "Se registró el cobro de la venta al contado"; 
+                if (concepto.getTipo().equals("CO")) {
+                    mensaje = "Se registró el cobro de la venta al contado";
                 } else {
-                    mensaje = "Se registró el cobro de la inicial"; 
+                    mensaje = "Se registró el cobro de la inicial";
                 }
                 mcaja.setTipomov(concepto.getTipo());
                 mcaja.setFechamov(pago.getFecreg());
@@ -2471,5 +2493,21 @@ public class creditoBean implements Serializable {
 
     public void setTodosconceptos(List<Conceptos> todosconceptos) {
         this.todosconceptos = todosconceptos;
+    }
+
+    public boolean isValuesiaval() {
+        return valuesiaval;
+    }
+
+    public void setValuesiaval(boolean valuesiaval) {
+        this.valuesiaval = valuesiaval;
+    }
+
+    public boolean isValuesi2aval() {
+        return valuesi2aval;
+    }
+
+    public void setValuesi2aval(boolean valuesi2aval) {
+        this.valuesi2aval = valuesi2aval;
     }
 }

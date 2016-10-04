@@ -54,7 +54,7 @@ public class CredgestorDaoImp implements CredgestorDao {
     }
 
     @Override
-    public void insertarCreditogestor(Creditogestor credgestor) {
+    public void insertarCreditogestor(Creditogestor credgestor) {        
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -149,6 +149,26 @@ public class CredgestorDaoImp implements CredgestorDao {
             }
         }
         return credgestor;
+    }
+    
+    @Override
+    public List<Creditogestor> getbyAnexo(Anexo anexo) {
+        Session session = null;
+        List<Creditogestor> lista = null;          
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Creditogestor WHERE idanexo=:idan");
+            query.setParameter("idan", anexo);            
+            lista = query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
     }
        
 }

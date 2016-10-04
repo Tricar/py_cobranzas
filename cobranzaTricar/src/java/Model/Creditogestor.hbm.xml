@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Jul 25, 2016 12:39:13 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class catalog="cobranzas" name="Model.Creditogestor" optimistic-lock="version" schema="dbo" table="creditoaval">
+    <class catalog="cobranzas" name="Model.Creditogestor" optimistic-lock="version" schema="dbo" table="creditogestor">
         <id name="idcreditogestor" type="int">
             <column name="idcreditogestor"/>
             <generator class="identity"/>

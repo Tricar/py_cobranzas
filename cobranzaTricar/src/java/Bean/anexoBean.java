@@ -52,6 +52,7 @@ public class anexoBean implements Serializable {
     private Boolean empresa;
     private Boolean persona;
     private Boolean conyuge;
+    private String dir;
 
     public anexoBean() {
     }
@@ -111,6 +112,10 @@ public class anexoBean implements Serializable {
         conyuge = true;
         RequestContext.getCurrentInstance().update("formInsertar");
         RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
+    }
+    
+    public void dir (String dir){
+        this.dir = dir;
     }
 
     public void calcularEdad(String fecha) throws ParseException {
@@ -249,6 +254,9 @@ public class anexoBean implements Serializable {
             this.anexo.setFechanac(fechaNac);
             calcularEdad(fecnac);
             this.anexo.setEdad(año);
+            if (anexo.getEstcivil().equals("CA") || anexo.getEstcivil().equals("CO")){
+                anexo.setDireccionconyu(dir);
+            }
             daotanexo.registrar(this.session, this.anexo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
@@ -500,7 +508,7 @@ public class anexoBean implements Serializable {
             }
         }
         return query;
-    }
+    } 
 
     public List<Anexo> filtrarGestor(String name) {
         this.query = new ArrayList<Anexo>();
@@ -512,6 +520,13 @@ public class anexoBean implements Serializable {
             }
         }
         return query;
+    }
+    
+    public List<Anexo> getGestor() {
+        List<Anexo> gestors = new ArrayList();
+        AnexoDao andao = new AnexoDaoImplements();
+        gestors = andao.filtarTipo("GE");
+        return gestors;
     }
 
     public List<Anexo> filtrarJefe(String name) {
@@ -805,5 +820,13 @@ public class anexoBean implements Serializable {
 
     public void setConyuge(Boolean conyuge) {
         this.conyuge = conyuge;
+    }
+
+    public String getDir() {
+        return dir;
+    }
+
+    public void setDir(String dir) {
+        this.dir = dir;
     }
 }

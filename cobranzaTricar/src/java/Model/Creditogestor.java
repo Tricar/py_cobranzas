@@ -42,11 +42,11 @@ public class Creditogestor implements java.io.Serializable {
     @Id
 
     @Column(name = "idcreditogestor", unique = true, nullable = false)
-    public int getIdcreditoaval() {
+    public int getIdcreditogestor() {
         return this.idcreditogestor;
     }
 
-    public void setIdcreditoaval(int idcreditogestor) {
+    public void setIdcreditogestor(int idcreditogestor) {
         this.idcreditogestor = idcreditogestor;
     }
 
@@ -72,11 +72,11 @@ public class Creditogestor implements java.io.Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "fecreg", nullable = false, length = 23)
-    public Date getFechareg() {
+    public Date getFecreg() {
         return this.fecreg;
     }
 
-    public void setFechareg(Date fecreg) {
+    public void setFecreg(Date fecreg) {
         this.fecreg = fecreg;
     }
 
