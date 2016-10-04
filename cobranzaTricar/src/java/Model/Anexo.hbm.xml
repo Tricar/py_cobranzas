@@ -1,130 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
-<hibernate-mapping>
-  <class catalog="cobranzas" name="Model.Anexo" optimistic-lock="version" schema="dbo" table="anexo">
-    <id name="idanexo" type="int">
-      <column name="idanexo"/>
-      <generator class="identity"/>
-    </id>
-    <property name="nombre" type="string">
-      <column length="50" name="nombre"/>
-    </property>
-    <property name="tipodocumento" type="string">
-      <column length="3" name="tipodocumento"/>
-    </property>
-    <property name="numdocumento" type="string">
-      <column length="11" name="numdocumento"/>
-    </property>
-    <property name="direccion" type="string">
-      <column length="100" name="direccion"/>
-    </property>
-    <property name="aahh" type="string">
-      <column length="50" name="aahh"/>
-    </property>
-    <property name="cpm" type="string">
-      <column length="50" name="cpm"/>
-    </property>
-    <many-to-one class="Model.Distrito" fetch="select" name="distrito">
-      <column name="iddistrito"/>
-    </many-to-one>
-    <property name="sector" type="string">
-      <column length="50" name="sector"/>
-    </property>
-    <property name="zona" type="string">
-      <column length="50" name="zona"/>
-    </property>
-    <property name="referencia" type="string">
-      <column length="200" name="referencia"/>
-    </property>
-    <property name="telefono" type="string">
-      <column length="10" name="telefono"/>
-    </property>
-    <property name="celular" type="string">
-      <column length="10" name="celular"/>
-    </property>
-    <property name="edad" type="java.lang.Integer">
-      <column name="edad"/>
-    </property>
-    <property name="fechanac" type="timestamp">
-      <column length="23" name="fechanac"/>
-    </property>
-    <property name="fechareg" type="timestamp">
-      <column length="23" name="fechareg"/>
-    </property>
-    <property name="sexo" type="java.lang.Character">
-      <column length="1" name="sexo"/>
-    </property>
-    <property name="apepat" type="string">
-      <column length="30" name="apepat"/>
-    </property>
-    <property name="apemat" type="string">
-      <column length="30" name="apemat"/>
-    </property>
-    <property name="email" type="string">
-      <column length="50" name="email"/>
-    </property>
-    <property name="tipoanexo" type="string">
-      <column length="2" name="tipoanexo"/>
-    </property>
-    <property name="codven" type="string">
-      <column length="10" name="codven"/>
-    </property>
-    <property name="estcivil" type="string">
-      <column length="2" name="estcivil"/>
-    </property>
-    <property name="conyuge" type="string">
-      <column length="120" name="conyuge"/>
-    </property>
-    <property name="dniconyu" type="string">
-      <column length="8" name="dniconyu"/>
-    </property>
-    <property name="direccionconyu" type="string">
-      <column length="100" name="direccionconyu"/>
-    </property>
-    <property name="ocupacionconyu" type="string">
-      <column length="50" name="ocupacionconyu"/>
-    </property>
-    <property name="cpropia" type="string">
-      <column length="2" name="cpropia"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="creditos" table="credito">
-      <key>
-        <column name="idanexo" not-null="true"/>
-      </key>
-      <one-to-many class="Model.Credito"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="usuarios" table="usuario">
-      <key>
-        <column name="idanexo"/>
-      </key>
-      <one-to-many class="Model.Usuario"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="ocupacions" table="ocupacion">
-      <key>
-        <column name="idanexo" not-null="true"/>
-      </key>
-      <one-to-many class="Model.Ocupacion"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="cajas" table="caja">
-      <key>
-        <column name="idanexo" not-null="true"/>
-      </key>
-      <one-to-many class="Model.Caja"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="conceptoses" table="conceptos">
-      <key>
-        <column name="idanexo" not-null="true"/>
-      </key>
-      <one-to-many class="Model.Conceptos"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="creditoavals" table="creditoaval">
-      <key>
-        <column name="idanexo"/>
-      </key>
-      <one-to-many class="Model.Creditogestor"/>
-    </set>
-  </class>
+<hibernate-mapping>  
     <class name="Model.Anexo" table="anexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idanexo" type="int">
             <column name="idanexo" />
@@ -153,6 +30,9 @@
         </many-to-one>
         <property name="sector" type="string">
             <column name="sector" length="50" />
+        </property>
+        <property name="zona" type="string">
+            <column length="50" name="zona"/>
         </property>
         <property name="referencia" type="string">
             <column name="referencia" length="200" />
