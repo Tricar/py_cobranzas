@@ -57,6 +57,7 @@ public class Anexo implements java.io.Serializable {
     private Set cajas = new HashSet(0);
     private Set creditoavals = new HashSet(0);
     private Set conceptoses = new HashSet(0);
+    private Set operaciones = new HashSet(0);
     private String nombres;
 
     public Anexo() {
@@ -101,6 +102,7 @@ public class Anexo implements java.io.Serializable {
         this.cajas = cajas;
         this.conceptoses = conceptoses;
         this.creditoavals = creditoavals;
+        this.operaciones = operaciones;
     }
 
     @Id
@@ -412,6 +414,15 @@ public class Anexo implements java.io.Serializable {
     
     public void setCreditoavals(Set creditoavals) {
         this.creditoavals = creditoavals;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Anexo")
+    public Set getOperaciones() {
+        return this.operaciones;
+    }
+
+    public void setOperaciones(Set operaciones) {
+        this.operaciones = operaciones;
     }
 
     public String getNombres() {

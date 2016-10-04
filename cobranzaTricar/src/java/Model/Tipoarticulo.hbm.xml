@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Tipoarticulo" table="tipoarticulo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idtipoarticulo" type="int">
+            <column name="idtipoarticulo" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="100" not-null="true" />
+        </property>
+        <property name="abreviado" type="string">
+            <column name="abreviado" length="50" not-null="true" />
+        </property>
+        <property name="created" type="timestamp">
+            <column name="created" length="23" not-null="true" />
+        </property>
+        <set name="articulos" table="articulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idtipoarticulo" not-null="true" />
+            </key>
+            <one-to-many class="Model.Articulo" />
+        </set>
+    </class>
+</hibernate-mapping>

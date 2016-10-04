@@ -10,7 +10,8 @@ import org.hibernate.Session;
  */
 public interface ModeloDao {    
     public boolean registrar(Session session, Modelo model)throws Exception;
-    public List<Modelo> verTodo(Session session) throws Exception;
+    public List<Modelo> verTodo(Session session) throws Exception;    
+    public List<Modelo> filtarTipoDos();
     public Modelo verByCodigo(Session session, Integer idmodelo) throws Exception;
     public Modelo verByModelo(Session session, String modelo) throws Exception;
     public Modelo verByModeloDifer(Session session,Integer idmodelo, String modelo) throws Exception;

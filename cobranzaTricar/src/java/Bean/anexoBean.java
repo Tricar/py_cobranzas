@@ -79,6 +79,29 @@ public class anexoBean implements Serializable {
             }
         }
     }
+    
+    public List<Anexo> verProveedor() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            AnexoDao anexoDao = new AnexoDaoImplements();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.anexos = anexoDao.verProveedor(this.session);
+            this.transaction.commit();
+            return anexos;
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
 
     public List<Anexo> verAval() {
         this.session = null;
@@ -356,6 +379,35 @@ public class anexoBean implements Serializable {
             }
         }
     }
+    
+    public void modificarProveedor() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
+            if (daotanexo.verByDocumentoDifer(this.session, this.anexo.getIdanexo(), this.anexo.getNumdocumento()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Proveedor ya Existe."));
+                return;
+            }
+
+            daotanexo.modificar(this.session, this.anexo);
+            this.transaction.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
+            this.anexo = new Anexo();
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            this.anexo = new Anexo();
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
 
     public void modificarAval() {
         this.session = null;
@@ -489,6 +541,19 @@ public class anexoBean implements Serializable {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
         List<Anexo> tipos = anexoDao.filtarTipoDos("CN", "CJ");
+        for (Anexo tipo : tipos) {
+//            var = tipo.getNombre()+" "+tipo.getApepat()+""+tipo.getApemat();
+            if (tipo.getNombre().startsWith(name.toUpperCase())) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
+    
+    public List<Anexo> filtrarProveedor(String name) {
+        this.query = new ArrayList<Anexo>();
+        AnexoDao anexoDao = new AnexoDaoImplements();
+        List<Anexo> tipos = anexoDao.filtarTipo("PO");
         for (Anexo tipo : tipos) {
 //            var = tipo.getNombre()+" "+tipo.getApepat()+""+tipo.getApemat();
             if (tipo.getNombre().startsWith(name.toUpperCase())) {

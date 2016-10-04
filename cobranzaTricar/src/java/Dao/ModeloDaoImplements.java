@@ -126,4 +126,22 @@ public class ModeloDaoImplements implements ModeloDao {
         return idmodelo;
     }
 
+    @Override
+    public List<Modelo> filtarTipoDos() {
+        Session session = null;
+        List<Modelo> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Modelo");           
+            lista = (List<Modelo>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
 }

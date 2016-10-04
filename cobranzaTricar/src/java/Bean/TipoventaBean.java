@@ -1,55 +1,62 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Bean;
 
 import Dao.*;
-import Model.Servicio;
+import Model.Tipoventa;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
 
 /**
  *
- * @author master
+ * @author Ricardo
  */
 @ManagedBean
-@SessionScoped
-public class servicioBean implements Serializable{
-    
-    private Servicio servicio;
-    private List<Servicio> servicios;
-    
+@RequestScoped
+public class TipoventaBean implements Serializable {
+
     private Session session;
     private Transaction transaction;
-    
-    private List<SelectItem> SelectItemsColor;
 
-    public servicioBean() {
-        this.servicio = new Servicio();
+    private Tipoventa tipoventa;
+    private List<Tipoventa> tipoventas;
+
+    public TipoventaBean() {
+        this.tipoventa = new Tipoventa();
     }
-    
-    public List<Servicio> verTodo() {
+
+    public List<Tipoventa> verTodo() {
+
         this.session = null;
         this.transaction = null;
+
         try {
-            servicioDao daocolor = new servicioDaoImp();
+
+            TipoventaDaoImpl daoperfil = new TipoventaDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            this.servicios = daocolor.verTodo(this.session);
+            this.tipoventas = daoperfil.verTodo(this.session);
             this.transaction.commit();
-            return servicios;
+            return tipoventas;
+
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
             return null;
         } finally {
             if (this.session != null) {
@@ -57,28 +64,17 @@ public class servicioBean implements Serializable{
             }
         }
     }
-    
-    public void nuevo() {
-        servicio = new Servicio();
-        RequestContext.getCurrentInstance().update("formInsertar");
-        RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
-    }
 
-    public void modificar() {
+    public void actualizarPerfil() {
         this.session = null;
         this.transaction = null;
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            servicioDao linkDao = new servicioDaoImp();
-            if (linkDao.verByDescripcionDifer(this.session, this.servicio.getIdservicio(), this.servicio.getDescripcion()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya existe en DB."));
-                servicio = new Servicio();
-                return;
-            }
-            servicioDao daocolor = new servicioDaoImp();
-            daocolor.modificar(this.session, this.servicio);
+            TipoventaDaoImpl daoperfil = new TipoventaDaoImpl();
+            daoperfil.registrar(this.session, this.tipoventa);
             this.transaction.commit();
+            this.tipoventa = new Tipoventa();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -92,17 +88,18 @@ public class servicioBean implements Serializable{
         }
     }
 
-    public void cargarColorEditar(Integer idcolor) {
+    public void cargarPerfilEditar(Integer codigoUsuario) {
         this.session = null;
         this.transaction = null;
+
         try {
-            servicioDao daocolor = new servicioDaoImp();
+            TipoventaDaoImpl daoperfil = new TipoventaDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            this.servicio = daocolor.verByCodigo(this.session, idcolor);
+            this.tipoventa = daoperfil.verByCodigo(this.session, codigoUsuario);
             this.transaction.commit();
-            RequestContext.getCurrentInstance().update("frmEditarColor:panelEditarColor");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEditarColor').show()");
+            RequestContext.getCurrentInstance().update("frmEditarPerfil:panelEditarPerfil");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEditarPerfil').show()");
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -115,17 +112,18 @@ public class servicioBean implements Serializable{
         }
     }
 
-    public void cargarColorEliminar(Integer idcolor) {
+    public void cargarPerfilEliminar(Integer codigoUsuario) {
         this.session = null;
         this.transaction = null;
+
         try {
-            servicioDao daocolor = new servicioDaoImp();
+            TipoventaDaoImpl daoperfil = new TipoventaDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            this.servicio = daocolor.verByCodigo(this.session, idcolor);
+            this.tipoventa = daoperfil.verByCodigo(this.session, codigoUsuario);
             this.transaction.commit();
-            RequestContext.getCurrentInstance().update("frmEliminarColor");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarColor').show()");
+            RequestContext.getCurrentInstance().update("frmEliminarPerfil");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarPerfil').show()");
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -138,25 +136,25 @@ public class servicioBean implements Serializable{
         }
     }
 
-    public void registrar() {
+    public void insertarPerfil() {
         this.session = null;
         this.transaction = null;
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            servicioDao linkDao = new servicioDaoImp();
-            if (linkDao.verByDescripcion(this.session, this.servicio.getDescripcion()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya esta registrado."));
-                servicio = new Servicio();
+            TipoventaDaoImpl daoperfil = new TipoventaDaoImpl();
+            if (daoperfil.verByDescripcion(this.session, this.tipoventa.getDescripcion()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Perfil ya esta registrado."));
+                tipoventa = new Tipoventa();
                 return;
             }
             Date d = new Date();
-            this.servicio.setCreated(d);
-            this.servicio.setCantidad(0);
-            linkDao.registrar(this.session, this.servicio);
+            this.tipoventa.setCreated(d);
+            daoperfil.registrar(this.session, this.tipoventa);
             this.transaction.commit();
-            this.servicio = new Servicio();
+            this.tipoventa = new Tipoventa();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
+
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -167,20 +165,26 @@ public class servicioBean implements Serializable{
                 this.session.close();
             }
         }
-
     }
 
-    public void eliminar() {
+    public void eliminarPerfil() {
         this.session = null;
         this.transaction = null;
+
         try {
+
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            servicioDao daocolor = new servicioDaoImp();
-            daocolor.eliminar(this.session, this.servicio);
+
+            TipoventaDaoImpl daoperfil = new TipoventaDaoImpl();
+            daoperfil.eliminar(this.session, this.tipoventa);
+
             this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Color Correctamente."));
-            this.servicio = new Servicio();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Perfil Correctamente."));
+
+            this.tipoventa = new Tipoventa();
+
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -192,29 +196,36 @@ public class servicioBean implements Serializable{
             }
         }
     }
-    
-    public Servicio getServicio() {
-        return servicio;
+
+    public Tipoventa getTipoventa() {
+        return tipoventa;
     }
 
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
+    public void setTipoventa(Tipoventa tipoventa) {
+        this.tipoventa = tipoventa;
     }
-    
-    public List<Servicio> getServicios() {
+
+    public List<Tipoventa> getTipoventas() {
         this.session = null;
         this.transaction = null;
         try {
-            servicioDao daocolor = new servicioDaoImp();
+            TipoventaDaoImpl daoperfil = new TipoventaDaoImpl();
+
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            servicios = daocolor.verTodo(session);            
-            return servicios;
+
+            this.tipoventas = daoperfil.verTodo(this.session);
+
+            this.transaction.commit();
+
+            return tipoventas;
+
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+
             return null;
         } finally {
             if (this.session != null) {
@@ -223,11 +234,8 @@ public class servicioBean implements Serializable{
         }
     }
 
-    public void setServicios(List<Servicio> servicios) {
-        this.servicios = servicios;
+    public void setTipoventas(List<Tipoventa> tipoventas) {
+        this.tipoventas = tipoventas;
     }
 
-    public void setSelectItemsColor(List<SelectItem> SelectItemsColor) {
-        this.SelectItemsColor = SelectItemsColor;
-    }
 }

@@ -1,7 +1,7 @@
 package Bean;
 
 import Dao.*;
-import Model.Repuesto;
+import Model.Tipoarticulo;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.util.Date;
@@ -21,30 +21,30 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @SessionScoped
-public class repuestoBean implements Serializable{
+public class TipoarticuloBean implements Serializable{
     
-    private Repuesto repuesto;
-    private List<Repuesto> repuestos;
+    private Tipoarticulo tipoarticulo;
+    private List<Tipoarticulo> tipoarticulos;
     
     private Session session;
     private Transaction transaction;
     
     private List<SelectItem> SelectItemsColor;
 
-    public repuestoBean() {
-        this.repuesto = new Repuesto();
+    public TipoarticuloBean() {
+        this.tipoarticulo = new Tipoarticulo();
     }
     
-    public List<Repuesto> verTodo() {
+    public List<Tipoarticulo> verTodo() {
         this.session = null;
         this.transaction = null;
         try {
-            repuestoDao daocolor = new repuestoDaoImp();
+            TipoarticuloDao daocolor = new TipoarticuloDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            this.repuestos = daocolor.verTodo(this.session);
+            this.tipoarticulos = daocolor.verTodo(this.session);
             this.transaction.commit();
-            return repuestos;
+            return tipoarticulos;
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -59,7 +59,7 @@ public class repuestoBean implements Serializable{
     }
     
     public void nuevo() {
-        repuesto = new Repuesto();
+        tipoarticulo = new Tipoarticulo();
         RequestContext.getCurrentInstance().update("formInsertar");
         RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
     }
@@ -70,14 +70,14 @@ public class repuestoBean implements Serializable{
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            repuestoDao linkDao = new repuestoDaoImp();
-            if (linkDao.verByDescripcionDifer(this.session, this.repuesto.getIdrepuesto(), this.repuesto.getDescripcion()) != null) {
+            TipoarticuloDao linkDao = new TipoarticuloDaoImp();
+            if (linkDao.verByDescripcionDifer(this.session, this.tipoarticulo.getIdtipoarticulo(), this.tipoarticulo.getDescripcion()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya existe en DB."));
-                repuesto = new Repuesto();
+                tipoarticulo = new Tipoarticulo();
                 return;
             }
-            repuestoDao daocolor = new repuestoDaoImp();
-            daocolor.modificar(this.session, this.repuesto);
+            TipoarticuloDao daocolor = new TipoarticuloDaoImp();
+            daocolor.modificar(this.session, this.tipoarticulo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
         } catch (Exception e) {
@@ -92,17 +92,17 @@ public class repuestoBean implements Serializable{
         }
     }
 
-    public void cargarColorEditar(Integer idcolor) {
+    public void cargarEditar(Integer idcolor) {
         this.session = null;
         this.transaction = null;
         try {
-            repuestoDao daocolor = new repuestoDaoImp();
+            TipoarticuloDao daocolor = new TipoarticuloDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            this.repuesto = daocolor.verByCodigo(this.session, idcolor);
+            this.tipoarticulo = daocolor.verByCodigo(this.session, idcolor);
             this.transaction.commit();
-            RequestContext.getCurrentInstance().update("frmEditarColor:panelEditarColor");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEditarColor').show()");
+            RequestContext.getCurrentInstance().update("frmEditar:panelEditar");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEditar').show()");
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -115,14 +115,14 @@ public class repuestoBean implements Serializable{
         }
     }
 
-    public void cargarColorEliminar(Integer idcolor) {
+    public void cargarEliminar(Integer idcolor) {
         this.session = null;
         this.transaction = null;
         try {
-            repuestoDao daocolor = new repuestoDaoImp();
+            TipoarticuloDao daocolor = new TipoarticuloDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            this.repuesto = daocolor.verByCodigo(this.session, idcolor);
+            this.tipoarticulo = daocolor.verByCodigo(this.session, idcolor);
             this.transaction.commit();
             RequestContext.getCurrentInstance().update("frmEliminarColor");
             RequestContext.getCurrentInstance().execute("PF('dialogoEliminarColor').show()");
@@ -144,18 +144,17 @@ public class repuestoBean implements Serializable{
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            repuestoDao linkDao = new repuestoDaoImp();
-            if (linkDao.verByDescripcion(this.session, this.repuesto.getDescripcion()) != null) {
+            TipoarticuloDao linkDao = new TipoarticuloDaoImp();
+            if (linkDao.verByDescripcion(this.session, this.tipoarticulo.getDescripcion()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Color ya esta registrado."));
-                repuesto = new Repuesto();
+                tipoarticulo = new Tipoarticulo();
                 return;
             }
             Date d = new Date();
-            this.repuesto.setCreated(d);
-            this.repuesto.setCantidad(0);
-            linkDao.registrar(this.session, this.repuesto);
+            this.tipoarticulo.setCreated(d);
+            linkDao.registrar(this.session, this.tipoarticulo);
             this.transaction.commit();
-            this.repuesto = new Repuesto();
+            this.tipoarticulo = new Tipoarticulo();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -176,11 +175,11 @@ public class repuestoBean implements Serializable{
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            repuestoDao daocolor = new repuestoDaoImp();
-            daocolor.eliminar(this.session, this.repuesto);
+            TipoarticuloDao daocolor = new TipoarticuloDaoImp();
+            daocolor.eliminar(this.session, this.tipoarticulo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Color Correctamente."));
-            this.repuesto = new Repuesto();
+            this.tipoarticulo = new Tipoarticulo();
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -193,23 +192,23 @@ public class repuestoBean implements Serializable{
         }
     }
     
-    public Repuesto getRepuesto() {
-        return repuesto;
+    public Tipoarticulo getTipoarticulo() {
+        return tipoarticulo;
     }
 
-    public void setRepuesto(Repuesto repuesto) {
-        this.repuesto = repuesto;
+    public void setTipoarticulo(Tipoarticulo tipoarticulo) {
+        this.tipoarticulo = tipoarticulo;
     }
     
-    public List<Repuesto> getRepuestos() {
+    public List<Tipoarticulo> getTiposervicios() {
         this.session = null;
         this.transaction = null;
         try {
-            repuestoDao daocolor = new repuestoDaoImp();
+            TipoarticuloDao daocolor = new TipoarticuloDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            repuestos = daocolor.verTodo(session);            
-            return repuestos;
+            tipoarticulos = daocolor.verTodo(session);            
+            return tipoarticulos;
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -223,8 +222,8 @@ public class repuestoBean implements Serializable{
         }
     }
 
-    public void setRepuestos(List<Repuesto> repuestos) {
-        this.repuestos = repuestos;
+    public void setTiposervicios(List<Tipoarticulo> tipoarticulos) {
+        this.tipoarticulos = tipoarticulos;
     }
 
     public void setSelectItemsColor(List<SelectItem> SelectItemsColor) {

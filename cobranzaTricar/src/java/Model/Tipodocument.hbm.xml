@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="cobranzas" name="Model.Tipodocument" optimistic-lock="version" schema="dbo" table="tipodocument">
+    <id name="idtipodocument" type="int">
+      <column name="idtipodocument"/>
+    </id>
+    <property name="descripcion" type="string">
+      <column length="50" name="descripcion" not-null="true"/>
+    </property>    
+    <property name="codigocontable" type="string">
+      <column length="50" name="codigocontable" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="operacions" table="operacion">
+      <key>
+        <column name="idtipodocument" not-null="true"/>
+      </key>
+      <one-to-many class="Model.Operacion"/>
+    </set>
+  </class>
+</hibernate-mapping>

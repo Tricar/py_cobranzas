@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class catalog="cobranzas" name="Model.Operaciondetalle" optimistic-lock="version" schema="dbo" table="operaciondetalle">
+        <id name="idoperaciondetalle" type="int">
+            <column name="idoperaciondetalle"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="Model.Operacion" fetch="select" name="operacion">
+            <column name="idoperacion" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="Model.Articulo" fetch="select" name="articulo">
+            <column name="idarticulo" not-null="true"/>
+        </many-to-one>
+        <property name="codigoproducto" type="string">
+            <column length="10" name="codigoproducto" not-null="true"/>
+        </property>
+        <property name="descripcion" type="string">
+            <column length="100" name="descripcion" not-null="true"/>
+        </property>
+        <property name="cantidadanterior" type="java.lang.Integer">
+            <column name="cantidadanterior"/>
+        </property>
+        <property name="cantidad" type="java.lang.Integer">
+            <column name="cantidad"/>
+        </property>
+        <property name="precio" type="big_decimal">
+            <column name="precio" not-null="true" precision="18"/>
+        </property>
+        <property name="preciototal" type="big_decimal">
+            <column name="preciototal" not-null="true" precision="18"/>
+        </property>        
+        <property name="costopromedio" type="big_decimal">
+            <column name="costopromedio" not-null="true" precision="18"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,9 +1,11 @@
 package Bean;
 
+import Dao.ColorDao;
 import Dao.ColorDaoImplements;
 import Model.Color;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -25,6 +27,7 @@ public class colorBean implements Serializable{
     
     private Color colo;
     private List<Color> colores;
+    private List<Color> query;
     
     private Session session;
     private Transaction transaction;
@@ -223,4 +226,17 @@ public class colorBean implements Serializable{
     public void setSelectItemsColor(List<SelectItem> SelectItemsColor) {
         this.SelectItemsColor = SelectItemsColor;
     }
+
+    public List<Color> filtrarColor(String name) {
+        this.query = new ArrayList<Color>();
+        ColorDao colorDao = new ColorDaoImplements();
+        List<Color> tipos = colorDao.filtarTipoDos();
+        for (Color tipo : tipos) {
+            if (tipo.getColor().startsWith(name.toUpperCase())) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
+    
 }

@@ -12,43 +12,42 @@
         <h:form id="principal">
             <h:panelGrid columns="2">
                 <p:outputLabel value="Fecha Inicio:"/>
-                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha1}"/>
+                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{compraBean.fecha1}"/>
                 <p:outputLabel value="Fecha Fin:"/>
-                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{ventaMBBean.fecha2}"/>
-                <p:commandButton value="Buscar"  actionListener="#{ventaMBBean.filtrarFechas()}" ajax="false"/>
-                <p:commandButton action="#{ventaMBBean.nuevo()}" value="Nueva venta" immediate="true" icon="fa fa-plus white"/>
+                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{compraBean.fecha2}"/>
+                <p:commandButton value="Buscar"  actionListener="#{compraBean.filtrarFechas()}" ajax="false"/>
+                <p:commandButton action="#{compraBean.nuevo()}" value="Nueva compra" immediate="true" icon="fa fa-plus white"/>
             </h:panelGrid>
         </h:form>
         <hr/>
         <h:form id="formMostrar">
             <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                 <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                    <p:dataTable var="venta" value="#{ventaMBBean.listaventa}" 
+                    <p:dataTable var="compra" value="#{compraBean.listaventa}" 
                                  emptyMessage="Ningún cliente coincide con su búsqueda" >
                         <p:column headerText="CODIGO">
-                            <h:outputText value="#{venta.codigo}" />
+                            <h:outputText value="#{compra.codigo}" />
                         </p:column>
-                        <p:column headerText="TIPO">
-                            <h:outputText value="#{venta.tipoventa.descripcion}" />
+                        <p:column headerText="RAZON SOCIAL">
+                            <h:outputText value="#{compra.anexo.nombres}" />
                         </p:column>
-                        <p:column headerText="NOMBRE Y APELLIDO">
-                            <h:outputText value="#{venta.anexo.nombres}" />
+                        <p:column headerText="RUC">
+                            <h:outputText value="#{compra.anexo.numdocumento}" />
                         </p:column>
-                        <p:column headerText="RUC / DNI">
-                            <h:outputText value="#{venta.anexo.numdocumento}" />
+                        <p:column headerText="DOCUMENTO" >
+                            <h:outputText value="#{compra.tipodocument.descripcion}" />
                         </p:column>
                         <p:column headerText="MONTO">
-                            <h:outputText value="#{venta.montototal}" />
+                            <h:outputText value="#{compra.montototal}" />
                         </p:column>
                         <p:column headerText="FECHA">
-                            <h:outputText value="#{venta.created}">
+                            <h:outputText value="#{compra.created}">
                                 <f:convertDateTime pattern = "dd/MM/yyyy"/>
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Mostrar">                            
-                            <p:commandButton update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{ventaMBBean.cargarDetalleArray(venta)}"/>
-                            <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminar(venta.idoperacion)}" />
-                            <p:commandButton ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Boleta(venta.codigo)}" />
+                            <p:commandButton update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{compraBean.cargarDetalleArray(compra)}"/>
+                            <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{compraBean.cargarEliminar(compra.idoperacion)}" />
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -59,14 +58,17 @@
             <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                 <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                     <p:growl id="mensajeGeneral" showDetail="true" life="2000" />
-                    <p:dataTable id="tablaletras" var="detalle" value="#{ventaMBBean.listaventadetalle}" emptyMessage="No hay nada para mostrar" > 
+                    <p:dataTable id="tablaletras" var="detalle" value="#{compraBean.listaventadetalle}" emptyMessage="No hay nada para mostrar" > 
                         <p:column headerText="CODIGO">
                             <h:outputText value="#{detalle.codigoproducto}"/>
                         </p:column>
                         <p:column headerText="ARTICULO">
                             <h:outputText value="#{detalle.descripcion}"/>
                         </p:column>
-                        <p:column headerText="CANTIDAD">
+                        <p:column headerText="STOCK ANT.">
+                            <h:outputText value="#{detalle.cantidadanterior}"/>
+                        </p:column>
+                        <p:column headerText="STOCK ACT.">
                             <h:outputText value="#{detalle.cantidad}"/>
                         </p:column>
                         <p:column headerText="PRECIO UNI.">
@@ -76,8 +78,8 @@
                             <h:outputText value="#{detalle.preciototal}"/>
                         </p:column>
                         <p:column headerText="Pagar">
-                            <p:commandButton icon="fa fa-credit-card white" title="Modificar" actionListener="#{ventaMBBean.cargarLetraPagos(letras)}" />
-                            <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminarDetalle(detalle.idoperaciondetalle, loginbean.usuario)}" />
+                            <p:commandButton icon="fa fa-credit-card white" title="Modificar" actionListener="#{pagosBean.cargarLetraPagos(letras)}" />
+                            <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{compraBean.cargarEliminarDetalle(detalle.idoperaciondetalle, loginbean.usuario)}" />
                         </p:column>                    
                     </p:dataTable> 
                 </div>
@@ -86,25 +88,24 @@
 
         <h:form id="frmEliminarCompra">
             <p:dialog header="Eliminar" widgetVar="dialogoEliminarCompra" modal="true">
-                <p:inputText type="hidden" value="#{ventaMBBean.venta.idoperacion}"/>
+                <p:inputText type="hidden" value="#{compraBean.venta.idoperacion}"/>
                 <h:outputText class="ui-confirm-dialog-message" value="¿Desea eliminar?" />
                 <p:separator/>
-                <p:commandButton value="Si" actionListener="#{ventaMBBean.eliminar()}" icon="fa fa-check blue" ajax="false" />
+                <p:commandButton value="Si" actionListener="#{compraBean.eliminar()}" icon="fa fa-check blue" ajax="false" />
                 <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
             </p:dialog>     
         </h:form>
-
+        
         <h:form id="frmEliminarDetalle">
             <p:dialog header="Eliminar" widgetVar="dialogoEliminarDetalle" modal="true">
-                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.idoperaciondetalle}"/>
-                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.operacion.idoperacion}"/>
-                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.codigoproducto}"/>
-                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.cantidad}"/>
-                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.cantidadanterior}"/>
-                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.preciototal}"/>
+                <p:inputText type="hidden" value="#{compraBean.ventadetalle.idoperaciondetalle}"/>
+                <p:inputText type="hidden" value="#{compraBean.ventadetalle.operacion.idoperacion}"/>
+                <p:inputText type="hidden" value="#{compraBean.ventadetalle.codigoproducto}"/>
+                <p:inputText type="hidden" value="#{compraBean.ventadetalle.cantidad}"/>
+                <p:inputText type="hidden" value="#{compraBean.ventadetalle.preciototal}"/>
                 <h:outputText class="ui-confirm-dialog-message" value="¿Desea eliminar?" />
                 <p:separator/>
-                <p:commandButton value="Si" actionListener="#{ventaMBBean.eliminarDetalle()}" icon="fa fa-check blue" ajax="false" />
+                <p:commandButton value="Si" actionListener="#{compraBean.eliminarDetalle()}" icon="fa fa-check blue" ajax="false" />
                 <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
             </p:dialog>     
         </h:form>

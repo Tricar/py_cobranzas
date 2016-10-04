@@ -125,4 +125,130 @@
       <one-to-many class="Model.Creditogestor"/>
     </set>
   </class>
+    <class name="Model.Anexo" table="anexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idanexo" type="int">
+            <column name="idanexo" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" />
+        </property>
+        <property name="tipodocumento" type="string">
+            <column name="tipodocumento" length="3" />
+        </property>
+        <property name="numdocumento" type="string">
+            <column name="numdocumento" length="11" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="100" />
+        </property>
+        <property name="aahh" type="string">
+            <column name="aahh" length="50" />
+        </property>
+        <property name="cpm" type="string">
+            <column name="cpm" length="50" />
+        </property>       
+        <many-to-one name="distrito" class="Model.Distrito" fetch="select">
+            <column name="iddistrito" />
+        </many-to-one>
+        <property name="sector" type="string">
+            <column name="sector" length="50" />
+        </property>
+        <property name="referencia" type="string">
+            <column name="referencia" length="200" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="10" />
+        </property>
+        <property name="celular" type="string">
+            <column name="celular" length="10" />
+        </property>
+        <property name="edad" type="java.lang.Integer">
+            <column name="edad" />
+        </property>
+        <property name="fechanac" type="timestamp">
+            <column name="fechanac" length="23" />
+        </property>
+        <property name="fechareg" type="timestamp">
+            <column name="fechareg" length="23" />
+        </property>
+        <property name="sexo" type="java.lang.Character">
+            <column name="sexo" length="1" />
+        </property>
+        <property name="apepat" type="string">
+            <column name="apepat" length="30" />
+        </property>
+        <property name="apemat" type="string">
+            <column name="apemat" length="30" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="50" />
+        </property>
+        <property name="tipoanexo" type="string">
+            <column name="tipoanexo" length="2" />
+        </property>
+        <property name="codven" type="string">
+            <column name="codven" length="10" />
+        </property>
+        <property name="estcivil" type="string">
+            <column name="estcivil" length="2" />
+        </property>
+        <property name="conyuge" type="string">
+            <column name="conyuge" length="120" />
+        </property>
+        <property name="dniconyu" type="string">
+            <column name="dniconyu" length="8" />
+        </property>
+        <property name="direccionconyu" type="string">
+            <column name="direccionconyu" length="100" />
+        </property>
+        <property name="ocupacionconyu" type="string">
+            <column name="ocupacionconyu" length="50" />
+        </property>
+        <property name="cpropia" type="string">
+            <column name="cpropia" length="2" />
+        </property>
+        <set name="creditos" table="credito" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" not-null="true" />
+            </key>
+            <one-to-many class="Model.Credito" />
+        </set>
+        <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" />
+            </key>
+            <one-to-many class="Model.Usuario" />
+        </set>        
+        <set name="ocupacions" table="ocupacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" not-null="true" />
+            </key>
+            <one-to-many class="Model.Ocupacion" />
+        </set>
+        <set name="cajas" table="caja" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" not-null="true" />
+            </key>
+            <one-to-many class="Model.Caja" />
+        </set>
+        <set name="conceptoses" table="conceptos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" not-null="true" />
+            </key>
+            <one-to-many class="Model.Conceptos" />
+        </set>
+        <set name="creditoavals" table="creditoaval" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" />
+            </key>
+            <one-to-many class="Model.Creditoaval" />
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="operaciones" table="operacion">
+            <key>
+                <column name="idanexo" not-null="true"/>
+            </key>
+            <one-to-many class="Model.Operacion"/>
+        </set>
+    </class>
 </hibernate-mapping>

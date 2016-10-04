@@ -224,6 +224,16 @@ public class AnexoDaoImplements implements AnexoDao {
         
         return listaanexo;
     }
+
+    @Override
+    public List<Anexo> verProveedor(Session session) throws Exception {
+        String hql = "FROM Anexo WHERE tipoanexo IN ('PO')";
+        Query query = session.createQuery(hql);
+        
+        List<Anexo> listaanexo = (List<Anexo>)query.list();
+        
+        return listaanexo;
+    }
     
     @Override
     public List<Anexo> verAval(Session session) throws Exception {
