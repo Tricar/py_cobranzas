@@ -204,7 +204,7 @@ public class VentaMBBean implements Serializable {
             Date d = new Date();
             this.venta.setCreated(d);
             this.venta.setIdtipooperacioncontable(1);
-            this.venta.setEstado(1);
+            this.venta.setEstado(2);
             this.venta.setIdusuario(usuario.getAnexo().getIdanexo());
             ventadao.insertar(this.session, this.venta);
             this.venta = ventadao.getUltimoRegistro(this.session);
@@ -235,6 +235,14 @@ public class VentaMBBean implements Serializable {
             if (this.session != null) {
                 this.session.close();
             }
+        }
+    }
+
+    public void cargarVentaAtendida() {
+        OperacionDao operaciondao = new OperacionDaoImp();
+        try {
+            listaventa = operaciondao.cargarxEstado(2);
+        } catch (Exception e) {
         }
     }
 
@@ -491,6 +499,7 @@ public class VentaMBBean implements Serializable {
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("numeroorden", codigo);
+        parametros.put("letra", " Y 00/100 SOLES");
         File jasper = new File("D:/reporte/boleta.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -504,6 +513,47 @@ public class VentaMBBean implements Serializable {
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
         con.close();
+    }
+
+    public void Pago(String codigo, Integer tipoventa) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        OperacionDao ventadao = new OperacionDaoImp();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("numeroorden", codigo);
+        if (tipoventa == 2) {
+            File jasper = new File("D:/reporte/boleta.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=BOLETA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
+        } else {
+            File jasper = new File("D:/reporte/factura.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=FACTURA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
+        }
+        this.venta = ventadao.verByCodigoVenta(codigo);
+        this.venta.setEstado(1);
+        ventadao.modificarOD(this.venta);
     }
 
     public Articulo getProducto() {

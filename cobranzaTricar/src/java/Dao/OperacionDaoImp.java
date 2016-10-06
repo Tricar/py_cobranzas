@@ -38,10 +38,12 @@ public class OperacionDaoImp implements OperacionDao {
         List<Operacion> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Operacion WHERE created BETWEEN :start_date AND :end_date and idtipooperacioncontable=:tipo");
+            Query query = session.createQuery("FROM Operacion WHERE created BETWEEN :start_date AND :end_date and idtipooperacioncontable=:tipo and (estado=:estado1 or estado=:estado2)");
             query.setParameter("start_date", date1);
             query.setParameter("end_date", date2);
             query.setParameter("tipo", tipo);
+            query.setParameter("estado1", 1);
+            query.setParameter("estado2", 0);
             lista = (List<Operacion>) query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -108,6 +110,44 @@ public class OperacionDaoImp implements OperacionDao {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<Operacion> cargarxEstado(Integer estado) {
+        Session session = null;
+        List<Operacion> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Operacion WHERE estado=:v");
+            query.setParameter("v", estado);
+            lista = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public Operacion verByCodigoVenta(String codigo) {
+        Session session = null;
+        Operacion operacion = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Operacion WHERE codigo=:codigo");
+            query.setParameter("codigo", codigo);            
+            operacion = (Operacion) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return operacion;
     }
 
 }

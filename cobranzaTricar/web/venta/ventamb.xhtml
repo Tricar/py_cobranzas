@@ -28,7 +28,7 @@
                             <h:outputText value="#{venta.codigo}" />
                         </p:column>
                         <p:column headerText="TIPO">
-                            <h:outputText value="#{venta.tipoventa.descripcion}" />
+                            <h:outputText value="#{venta.tipoventa.descripcion == null ? 'COMPRA' : venta.tipoventa.descripcion}" />
                         </p:column>
                         <p:column headerText="NOMBRE Y APELLIDO">
                             <h:outputText value="#{venta.anexo.nombres}" />
