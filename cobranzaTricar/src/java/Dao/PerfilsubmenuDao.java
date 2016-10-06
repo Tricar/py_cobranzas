@@ -22,6 +22,8 @@ public interface PerfilsubmenuDao {
     public Perfilsubmenu verByDescripcion(Session session, String descripcion) throws Exception;
     public Perfilsubmenu verByPerfilDifer(Session session,Integer idperfil, String descripcion) throws Exception;
     public boolean modificar(Session session, Perfilsubmenu perfil) throws Exception;
+    public void modificarSolo(Perfilsubmenu perfsubmenu);
     public boolean eliminarPerfil (Session session, Perfilsubmenu perfil) throws Exception;
-    
+    public List<Perfilsubmenu> submenus(int idperfil);
+    public List<Perfilsubmenu> verPorMenu(int idperfilmenu);
 }

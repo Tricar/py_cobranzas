@@ -87,10 +87,11 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
     }
 
     @Override
-    public List<Perfilmenu> verTodoByPerfilmenu(Session session, Integer menu) throws Exception {
-        String hql = "from Perfilmenu where idperfil=:perfil";
+    public List<Perfilmenu> verTodoByPerfilmenu(Session session, Integer menu, Boolean estado) throws Exception {
+        String hql = "from Perfilmenu where idperfil=:perfil AND estado=:v";
         Query query = session.createQuery(hql);
         query.setParameter("perfil", menu);
+        query.setParameter("v", estado);
 
         List<Perfilmenu> listaPerfil = (List<Perfilmenu>) query.list();
 
@@ -101,16 +102,16 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
     public Perfilmenu verTodos(Perfil perfil, Menu menu) {
         Session session = null;
         Perfilmenu perfilmenu = new Perfilmenu();
-        try{
-        Integer idperfil = perfil.getIdperfil();
-        Integer idmenu = menu.getIdmenu();
-        session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("FROM Perfilmenu where idperfil=:perfil and idmenu=:menu");
-        query.setParameter("perfil", idperfil);
-        query.setParameter("menu", idmenu);
-        perfilmenu = (Perfilmenu)query.uniqueResult();
-        System.out.println("idperfil: "+idperfil);
-        System.out.println("idmenu: "+idmenu);
+        try {
+            Integer idperfil = perfil.getIdperfil();
+            Integer idmenu = menu.getIdmenu();
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Perfilmenu where idperfil=:perfil and idmenu=:menu");
+            query.setParameter("perfil", idperfil);
+            query.setParameter("menu", idmenu);
+            perfilmenu = (Perfilmenu) query.uniqueResult();
+            System.out.println("idperfil: " + idperfil);
+            System.out.println("idmenu: " + idmenu);
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
@@ -120,6 +121,44 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
             }
         }
         return perfilmenu;
+    }
+
+    @Override
+    public List<Perfilmenu> verTodoByPerfil(int idperfil) {
+        Session session = null;
+        //int idperfil = perfil.getIdperfil();
+        List<Perfilmenu> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Perfilmenu where idperfil=:u");
+            query.setParameter("u", idperfil);
+            lista = (List<Perfilmenu>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+    
+    @Override
+    public void modificarSolo(Perfilmenu perfmenu) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.update(perfmenu);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
 }

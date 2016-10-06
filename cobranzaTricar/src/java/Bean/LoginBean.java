@@ -68,6 +68,7 @@ public class LoginBean implements Serializable {
         try {
             UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl();
             CreditoDao creditodao = new CreditoDaoImp();
+            PerfilmenuDao pdao = new PerfilmenuDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
             usuario = usuarioDao.verByUsuario(this.session, this.tusuario);
@@ -83,6 +84,7 @@ public class LoginBean implements Serializable {
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.tusuario);
                     msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", this.tusuario);
                     ruta = MyUtil.basepathlogin() + "views/index.xhtml";
+                    this.perfilmenus = pdao.verTodoByPerfilmenu(this.session, usuario.getPerfil().getIdperfil(), Boolean.TRUE);
                 }
             } else {
                 loggedIn = false;
@@ -217,7 +219,7 @@ public class LoginBean implements Serializable {
             PerfilmenuDao dao = new PerfilmenuDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            this.perfilmenus = dao.verTodoByPerfilmenu(this.session, perfil);
+            this.perfilmenus = dao.verTodoByPerfilmenu(this.session, perfil, Boolean.TRUE);
             this.transaction.commit();
             return perfilmenus;
 
@@ -334,6 +336,14 @@ public class LoginBean implements Serializable {
 
     public void setPagosxmes(Integer pagosxmes) {
         this.pagosxmes = pagosxmes;
+    }
+
+    public List<Perfilmenu> getPerfilmenus() {
+        return perfilmenus;
+    }
+
+    public void setPerfilmenus(List<Perfilmenu> perfilmenus) {
+        this.perfilmenus = perfilmenus;
     }
 
 }
