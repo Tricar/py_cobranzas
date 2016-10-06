@@ -91,7 +91,7 @@
             </div>
             <h:form id="layout-menu" class="BordRad3 Unselectable">
                 <p:menubar>
-                    <c:forEach items="#{loginbean.cargarPerfilmenus(loginbean.usuario.perfil.idperfil)}" var="perfilmenu">
+                    <c:forEach items="#{loginbean.perfilmenus}" var="perfilmenu">
                         <p:submenu rendered="#{perfilmenu.estado}" label="#{perfilmenu.menu.menu}" icon="fa #{perfilmenu.menu.icon}">
                             <c:forEach items="#{loginbean.cargarPerfilsubmenus(perfilmenu.idperfilmenu)}" var="perfilsubmenu">
                                 <p:menuitem rendered="#{perfilsubmenu.estado}" value="#{perfilsubmenu.submenu.submenu}" action="#{loginbean.url(perfilsubmenu.submenu.url)}" icon="fa #{perfilsubmenu.submenu.icon}" />

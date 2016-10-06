@@ -19,7 +19,7 @@
                     <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                         <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                             <p:dataTable var="cred" value="#{credgestorBean.creditos}" selection="#{credgestorBean.selectedcreditos}"
-                                         rowKey="#{cred.idventa}" widgetVar="tablacreds" >
+                                         rowKey="#{cred.idventa}" widgetVar="tablacreds" scrollable="true" scrollHeight="500">
                                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                                 <p:column headerText="Cod.">
                                     <h:outputText value="#{cred.liqventa}" />

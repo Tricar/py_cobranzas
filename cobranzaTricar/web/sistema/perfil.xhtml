@@ -1,108 +1,122 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="./../views/template.xhtml">
+    <ui:define name="content">
+        <h:form id="frmNuevo">
+            <p:commandButton value="Nuevo" update=":formInsertar:panelcrearperfil" oncomplete="dlginsertar.show()" icon="fa fa-plus white"/>
+        </h:form>
 
-    <body>
-        <ui:composition template="./../views/template.xhtml">
-            <ui:define name="content">
-                <h:form id="frmNuevo">
-                    <p:commandButton value="Nuevo" update=":formInsertar:panelcrearperfil" oncomplete="dlginsertar.show()" icon="fa fa-plus white"/>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                Lista de Perfiles
+            </div>
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="frmlistarperfil">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable id="tablalistarperfil" var="item" value="#{perfilBean.verTodo()}" emptyMessage="No hay nada para mostrar"
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
+                        <p:column headerText="DESCRIPCION">
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton actionListener="#{perfilBean.cargarPerfilEditar(item.idperfil)}" icon="fa fa-pencil white"/>
+                            <p:commandButton actionListener="#{perfilBean.cargarPerfilEliminar(item.idperfil)}" icon="fa fa-trash white"/>
+                            <p:commandButton actionListener="#{perfilBean.cargarAsignar(item)}" icon="fa fa-flask white"/>
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
+            </div>
+        </div>
 
-                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-                    <div class="ui-datatable-header ui-widget-header ui-corner-top">
-                        Lista de Perfiles
-                    </div>
-                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                        <h:form id="frmlistarperfil">
-                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                            <p:dataTable id="tablalistarperfil" var="item" value="#{perfilBean.verTodo()}" emptyMessage="No hay nada para mostrar"
-                                         paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
-                                <p:column headerText="DESCRIPCION">
-                                    <h:outputText value="#{item.descripcion}"/>
-                                </p:column>
-                                <p:column>
-                                    <p:commandButton actionListener="#{perfilBean.cargarPerfilEditar(item.idperfil)}" icon="fa fa-pencil white"/>
-                                    <p:commandButton actionListener="#{perfilBean.cargarPerfilEliminar(item.idperfil)}" icon="fa fa-trash white"/>
-                                    <p:commandButton actionListener="#{perfilBean.cargarMenuAsignar(item.idperfil)}" icon="fa fa-flask white"/>
-                                </p:column>
-                            </p:dataTable>
-                        </h:form>
-                    </div>
-                </div>
+        <h:form id="formInsertar">
+            <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
+                <h:panelGrid id="panelcrearperfil" columns="2">
+                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Abrebiado:" for="txtAbreviado"/>
+                    <p:inputText id="txtAbreviado" label="Abrebiado" value="#{perfilBean.perfil.abrev}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
 
-                <h:form id="formInsertar">
-                    <p:dialog header="Nuevo Perfil" widgetVar="dlginsertar" modal="true">                        
-                        <h:panelGrid id="panelcrearperfil" columns="2">
-                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="Abrebiado:" for="txtAbreviado"/>
-                            <p:inputText id="txtAbreviado" label="Abrebiado" value="#{perfilBean.perfil.abrev}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.insertarPerfil()}" />
-                        </h:panelGrid>
-                    </p:dialog>
-                </h:form>
-
-                <h:form id="frmEditarPerfil">
-                    <p:dialog header="Datos del Perfil" widgetVar="dialogoEditarPerfil" modal="true">
-                        <h:panelGrid id="panelEditarPerfil" columns="2">
-                            <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                            <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:outputLabel value="Abreviado:" for="txtAbreviado"/>
-                            <p:inputText id="txtAbreviado" label="Abrebiado" value="#{perfilBean.perfil.abrev}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
-                            <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
-                        </h:panelGrid>
-                    </p:dialog>
-                </h:form>
-
-                <h:form id="frmAsignarMenu">
-                    <p:dialog header="Asignar Menu" widgetVar="dialogoAsignarMenu" modal="true">
-                        <h:panelGrid id="panelEditarPerfil" columns="2">
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
-                            <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/> 
-                            <h:panelGroup></h:panelGroup>
-                            <h:outputText class="red Fs20" value="#{perfilBean.perfil.descripcion}"/>
-                            <br/><br/>
-                            <ui:repeat var="menus" varStatus="status" value="#{perfilBean.cargarPerfilmenus(perfilBean.perfil.idperfil)}">
-                                <h:outputText class="blue Fs16" value="#{menus.menu.menu}:" /> 
-                                <br/>
-                                <ui:repeat var="submenus" varStatus="status" value="#{perfilBean.cargarPerfilsubmenus(menus.idperfilmenu)}">
-                                    <p:selectBooleanCheckbox value="#{submenus.estado}"/>
-                                    <p:outputLabel value="#{submenus.submenu.submenu}" />
-                                </ui:repeat>
-                                <br/><br/>
-                            </ui:repeat>
-                        </h:panelGrid>
-                        <p:commandButton value="Asignar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
-                    </p:dialog>
-                </h:form>
-
-                <h:form id="frmEliminarPerfil">
-                    <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarPerfil" modal="true">
+        <h:form id="frmEditarPerfil">
+            <p:dialog header="Datos del Perfil" widgetVar="dialogoEditarPerfil" modal="true">
+                <h:panelGrid id="panelEditarPerfil" columns="2">
+                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{perfilBean.perfil.descripcion}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Abreviado:" for="txtAbreviado"/>
+                    <p:inputText id="txtAbreviado" label="Abrebiado" value="#{perfilBean.perfil.abrev}" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
+                    <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/>
+                    <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        <h:form id="frmAsignarMenu">
+            <p:dialog header="Asignar Menu a: #{perfilBean.perfil.descripcion}" widgetVar="dialogoAsignarMenu" modal="true">                
+                <p:pickList value="#{perfilBean.submenuses}" var="submenu"
+                            itemLabel="#{submenu.submenu.submenu}" itemValue="#{submenu}"
+                            addLabel="Añadir" addAllLabel="Añadir todos" removeLabel="Quitar" removeAllLabel="Quitar todos">
+                    <f:facet name="sourceCaption">
+			<h:outputLabel value="Sin asignar" />
+		</f:facet>
+		<f:facet name="targetCaption">
+			<h:outputLabel value="Asignados" />
+		</f:facet>
+                    <o:converter converterId="omnifaces.ListConverter" list="#{perfilBean.todas}"/>
+                    <p:ajax event="transfer" listener="#{perfilBean.aplicar}" />
+                </p:pickList>
+            </p:dialog>
+        </h:form>
+        <ui:remove><h:form id="frmAsignarMenu">
+                <p:dialog header="Asignar Menu" widgetVar="dialogoAsignarMenu" modal="true">
+                    <h:panelGrid id="panelEditarPerfil" columns="2">
                         <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
-                        <h:outputText value="¿Desea eliminar?" />
-                        <p:separator/>
-                        <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" icon="fa fa-check blue" />
-                        <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
-                    </p:dialog>
-                </h:form>
+                        <p:inputText type="hidden" value="#{perfilBean.perfil.descripcion}"/>
+                        <p:inputText type="hidden" value="#{perfilBean.perfil.abrev}"/> 
+                        <h:panelGroup></h:panelGroup>
+                        <h:outputText class="red Fs20" value="#{perfilBean.perfil.descripcion}"/>
+                        <br/><br/>
+                        <ui:repeat var="menus" varStatus="status" value="#{perfilBean.cargarPerfilmenus(perfilBean.perfil.idperfil)}">
+                            <h:outputText class="blue Fs16" value="#{menus.menu.menu}:" /> 
+                            <br/>
+                            <ui:repeat var="submenus" varStatus="status" value="#{perfilBean.cargarPerfilsubmenus(menus.idperfilmenu)}">
+                                <p:selectBooleanCheckbox value="#{submenus.estado}"/>
+                                <p:outputLabel value="#{submenus.submenu.submenu}" />
+                            </ui:repeat>
+                            <br/><br/>
+                        </ui:repeat>
+                    </h:panelGrid>
+                    <p:commandButton value="Asignar" icon="fa fa-save white" ajax="false" actionListener="#{perfilBean.actualizarPerfil()}"/>
+                </p:dialog>
+            </h:form></ui:remove>
 
-            </ui:define>
-        </ui:composition>
-    </body>
-</html>
+        <h:form id="frmEliminarPerfil">
+            <p:dialog header="Datos del usuario" widgetVar="dialogoEliminarPerfil" modal="true">
+                <p:inputText type="hidden" value="#{perfilBean.perfil.idperfil}"/>
+                <h:outputText value="¿Desea eliminar?" />
+                <p:separator/>
+                <p:commandButton value="Si" actionListener="#{perfilBean.eliminarPerfil()}" ajax="false" icon="fa fa-check blue" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+

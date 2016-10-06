@@ -56,6 +56,24 @@ public class PerfilsubmenuDaoImpl implements PerfilsubmenuDao {
         session.update(perfil);
         return true;
     }
+    
+    @Override
+    public void modificarSolo(Perfilsubmenu perfsubmenu) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.update(perfsubmenu);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 
     @Override
     public Perfilsubmenu verByDescripcion(Session session, String descripcion) throws Exception {
@@ -95,6 +113,46 @@ public class PerfilsubmenuDaoImpl implements PerfilsubmenuDao {
         List<Perfilsubmenu> listaPerfil = (List<Perfilsubmenu>) query.list();
 
         return listaPerfil;
+    }
+    
+    @Override
+    public List<Perfilsubmenu> submenus(int idperfil) {
+        Session session = null;
+        //int idperfil = perfil.getIdperfil();
+        List<Perfilsubmenu> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Perfilsubmenu where perfilmenu.perfil.idperfil=:u");
+            query.setParameter("u", idperfil);
+            lista = (List<Perfilsubmenu>)query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Perfilsubmenu> verPorMenu(int idperfilmenu) {
+        Session session = null;
+        //int idperfil = perfil.getIdperfil();
+        List<Perfilsubmenu> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Perfilsubmenu where idperfilmenu=:u");
+            query.setParameter("u", idperfilmenu);
+            lista = (List<Perfilsubmenu>)query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
     }
 
 }

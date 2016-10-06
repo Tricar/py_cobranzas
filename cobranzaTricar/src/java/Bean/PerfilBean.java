@@ -19,6 +19,8 @@ import javax.faces.context.FacesContext;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -42,6 +44,12 @@ public class PerfilBean implements Serializable {
     private Perfilmenu perfilmenu;
     public List<Perfilmenu> perfilmenus;
     public List<Perfilsubmenu> perfilsubmenus;
+
+    private DualListModel<Perfilsubmenu> submenuses = new DualListModel<Perfilsubmenu>();
+    List<Perfilsubmenu> source = new ArrayList<Perfilsubmenu>();
+    List<Perfilsubmenu> target = new ArrayList<Perfilsubmenu>();
+    List<Perfilsubmenu> todas = new ArrayList<Perfilsubmenu>();
+    int idperfil;
 
     public PerfilBean() {
         this.perfil = new Perfil();
@@ -149,35 +157,98 @@ public class PerfilBean implements Serializable {
         }
     }
 
-    public void cargarMenuAsignar(Integer codigoUsuario) {
-        this.session = null;
-        this.transaction = null;
-
-        try {
-
-            PerfilDao perfilDao = new PerfilDaoImpl();
-
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-
-            this.perfil = perfilDao.verByCodigo(this.session, codigoUsuario);
-
-            this.transaction.commit();
-
-            RequestContext.getCurrentInstance().update("frmAsignarMenu");
-            RequestContext.getCurrentInstance().execute("PF('dialogoAsignarMenu').show()");
-
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
+    public void cargarAsignar(Perfil perfil) {
+        this.perfil = perfil;
+        idperfil = perfil.getIdperfil();
+        PerfilsubmenuDao perdao = new PerfilsubmenuDaoImpl();
+        submenuses = new DualListModel<Perfilsubmenu>();
+        source = new ArrayList<Perfilsubmenu>();
+        target = new ArrayList<Perfilsubmenu>();
+        todas = perdao.submenus(idperfil);
+        for (int i = 0; i < todas.size(); i++) {
+            Perfilsubmenu get = (Perfilsubmenu) todas.get(i);
+            if (get.getEstado().equals(true)) {
+                target.add(get);
+            } else {
+                source.add(get);
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-        } finally {
-            if (this.session != null) {
-                this.session.close();
+        }
+        submenuses = new DualListModel<Perfilsubmenu>(source, target);
+        RequestContext.getCurrentInstance().update("frmAsignarMenu");
+        RequestContext.getCurrentInstance().execute("PF('dialogoAsignarMenu').show()");
+    }
+    
+    public void aplicar(TransferEvent event) {
+        PerfilsubmenuDao perdao = new PerfilsubmenuDaoImpl();
+        PerfilmenuDao pdao = new PerfilmenuDaoImpl();
+        List<Perfilsubmenu> cambiados = new ArrayList<Perfilsubmenu>();
+        cambiados = (List<Perfilsubmenu>) event.getItems();
+        for (int i = 0; i < todas.size(); i++) {
+            Perfilsubmenu get = todas.get(i);
+            for (int j = 0; j < cambiados.size(); j++) {
+                Perfilsubmenu get1 = cambiados.get(j);
+                if (get.equals(get1)) {
+                    if (get.getEstado()) {
+                        get.setEstado(Boolean.FALSE);
+                        perdao.modificarSolo(get);
+                    } else {
+                        get.setEstado(Boolean.TRUE);
+                        perdao.modificarSolo(get);
+                    }                    
+                }
+            }
+        }
+        List<Perfilmenu> perfilmenus = pdao.verTodoByPerfil(idperfil);
+        
+        for (int i = 0; i < perfilmenus.size(); i++) {
+            int sw = 0;
+            Perfilmenu get = perfilmenus.get(i);
+            List<Perfilsubmenu> perfilessubmenu = perdao.verPorMenu(get.getIdperfilmenu());            
+            for (int j = 0; j < perfilessubmenu.size(); j++) {
+                Perfilsubmenu get1 = perfilessubmenu.get(j);                
+                if (get1.getEstado()){
+                    sw++;                    
+                }
+            }
+            if(sw == 0){
+                get.setEstado(Boolean.FALSE);
+                pdao.modificarSolo(get);                
+            } else {
+                get.setEstado(Boolean.TRUE);
+                pdao.modificarSolo(get);                
             }
         }
     }
+
+//    public void cargarMenuAsignar(Integer codigoUsuario) {
+//        this.session = null;
+//        this.transaction = null;
+//
+//        try {
+//
+//            PerfilDao perfilDao = new PerfilDaoImpl();
+//
+//            this.session = HibernateUtil.getSessionFactory().openSession();
+//            this.transaction = session.beginTransaction();
+//
+//            this.perfil = perfilDao.verByCodigo(this.session, codigoUsuario);
+//
+//            this.transaction.commit();
+//
+//            RequestContext.getCurrentInstance().update("frmAsignarMenu");
+//            RequestContext.getCurrentInstance().execute("PF('dialogoAsignarMenu').show()");
+//
+//        } catch (Exception e) {
+//            if (this.transaction != null) {
+//                this.transaction.rollback();
+//            }
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+//        } finally {
+//            if (this.session != null) {
+//                this.session.close();
+//            }
+//        }
+//    }
 
     public void insertarPerfil() {
         this.session = null;
@@ -278,7 +349,7 @@ public class PerfilBean implements Serializable {
             PerfilmenuDao dao = new PerfilmenuDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
-            this.perfilmenus = dao.verTodoByPerfilmenu(this.session, perfil);
+            this.perfilmenus = dao.verTodoByPerfilmenu(this.session, perfil, Boolean.TRUE);
             this.transaction.commit();
             return perfilmenus;
 
@@ -432,6 +503,46 @@ public class PerfilBean implements Serializable {
 
     public void setSubmenus(List<Submenu> submenus) {
         this.submenus = submenus;
+    }
+
+    public DualListModel<Perfilsubmenu> getSubmenuses() {
+        return submenuses;
+    }
+
+    public void setSubmenuses(DualListModel<Perfilsubmenu> submenuses) {
+        this.submenuses = submenuses;
+    }
+
+    public List<Perfilsubmenu> getSource() {
+        return source;
+    }
+
+    public void setSource(List<Perfilsubmenu> source) {
+        this.source = source;
+    }
+
+    public List<Perfilsubmenu> getTarget() {
+        return target;
+    }
+
+    public void setTarget(List<Perfilsubmenu> target) {
+        this.target = target;
+    }
+
+    public List<Perfilsubmenu> getTodas() {
+        return todas;
+    }
+
+    public void setTodas(List<Perfilsubmenu> todas) {
+        this.todas = todas;
+    }
+
+    public int getIdperfil() {
+        return idperfil;
+    }
+
+    public void setIdperfil(int idperfil) {
+        this.idperfil = idperfil;
     }
 
 }
