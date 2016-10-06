@@ -32,6 +32,7 @@ public class Anexo implements java.io.Serializable {
     private String cpm;
     private Distrito distrito;
     private String sector;
+    private String zona;
     private String referencia;
     private String telefono;
     private String celular;
@@ -66,7 +67,7 @@ public class Anexo implements java.io.Serializable {
         this.idanexo = idanexo;
     }
 
-    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, Distrito distrito, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String direccionconyu, String ocupacionconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas, Set conceptoses, Set creditoavals, Set operaciones) {
+    public Anexo(Integer idanexo, String nombre, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, Distrito distrito, String sector, String zona, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String apepat, String apemat, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String direccionconyu, String ocupacionconyu, String cpropia, Set creditos, Set usuarios, Set ocupacions, Set cajas, Set conceptoses, Set creditoavals) {
         this.idanexo = idanexo;
         this.nombre = nombre;
         this.tipodocumento = tipodocumento;
@@ -76,6 +77,7 @@ public class Anexo implements java.io.Serializable {
         this.cpm = cpm;
         this.distrito = distrito;
         this.sector = sector;
+        this.zona = zona;
         this.referencia = referencia;
         this.telefono = telefono;
         this.celular = celular;
@@ -185,6 +187,15 @@ public class Anexo implements java.io.Serializable {
 
     public void setSector(String sector) {
         this.sector = sector;
+    }
+    
+    @Column(name = "zona", length = 50)
+    public String getZona() {
+        return this.zona;
+    }
+
+    public void setZona(String zona) {
+        this.zona = zona;
     }
 
     @Column(name = "referencia", length = 200)

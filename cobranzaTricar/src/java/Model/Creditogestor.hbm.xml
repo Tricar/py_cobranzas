@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 25, 2016 12:39:13 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class catalog="cobranzas" name="Model.Creditogestor" optimistic-lock="version" schema="dbo" table="creditogestor">
+        <id name="idcreditogestor" type="int">
+            <column name="idcreditogestor"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="Model.Anexo" fetch="select" name="anexo">
+            <column name="idanexo"/>
+        </many-to-one>
+        <many-to-one class="Model.Credito" fetch="select" name="credito">
+            <column name="idventa"/>
+        </many-to-one>
+        <property name="fecreg" type="timestamp">
+            <column name="fecreg" length="23" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

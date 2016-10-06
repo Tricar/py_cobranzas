@@ -23,6 +23,8 @@ public class calificacionConverter implements Converter{
         if (value != null){
             estado = (String) value;
             switch (estado) {
+                case "PN": estado = "PENDIENTE";
+                    break;
                 case "CN": estado = "CANCELADO";
                     break;
                 case "VN": estado = "VENCIDO";

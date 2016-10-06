@@ -19,7 +19,7 @@
                                  ajax="false"/>
             </h:panelGrid>
         </h:form>
-        
+
         <h:form>            
             <p:commandButton actionListener="#{creditoBean.cargarPendAprobar()}" value="Pendientes" ajax="false" icon="fa fa-line-chart white"/>
         </h:form>
@@ -64,7 +64,7 @@
                             <h:outputText value="#{cred.estado}" converter="estcredconvert"/>
                         </p:column>                
                         <p:column headerText="OPERACIONES">
-                            <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" update="#{vehiculoBean.cargarModelo(cred)}">
+                            <p:commandButton value="V" action="#{creditoBean.cargar(loginbean.usuario)}" actionListener="#{vehiculoBean.cargarModelo(cred)}">
                                 <f:setPropertyActionListener target="#{creditoBean.credito}" value="#{cred}" />
                             </p:commandButton>
                             <p:commandButton ajax="false" actionListener="#{creditoBean.exportarFormato(cred.liqventa, cred.condicionpago, cred.estado)}" title="Solicitud de Credito" icon="fa fa-print white" />

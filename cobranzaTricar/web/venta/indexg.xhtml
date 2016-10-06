@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:o="http://omnifaces.org/ui"
+                template="./../views/template.xhtml">
+
+    <ui:define name="content">
+        <div class="layout-portlets-box">
+            <div class="Container100 ui-fluid">
+                <div class="ContainerIndent">
+                    <h2 class="BigTopic">Mantenimiento de Gestión por Gestores de cobranza</h2>
+                    <f:view afterPhase="#{anexoBean.phaseListener}">
+                        <h:form id="form" prependId="false ">
+                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                                    <p:growl id="msg12" showDetail="true"/>
+                                    <div class="ui-grid-row">  
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Fecha Inicio:"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <span class="ui-calendar">
+                                                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{credgestorBean.fecha1}"/>
+                                            </span>                                            
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:commandButton action="#{credgestorBean.verGestores(loginbean.usuario)}" value="Ver gestores" immediate="true" icon="fa fa-child white" style="width: 180px"/>
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">  
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Fecha Fin:"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <span class="ui-calendar">
+                                                <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{credgestorBean.fecha2}"/>
+                                            </span>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:commandButton value="Historial visitas"  icon="fa fa-search white" actionListener="#{credgestorBean.verHistorial(loginbean.usuario)}" ajax="false" />
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:commandButton action="#{credgestorBean.ingresar(loginbean.usuario.anexo)}" value="Ingresar Gestión" immediate="true" icon="fa fa-user-plus white" actionListener="#{ocupacionBean.limpiarlista()}" style="width: 180px"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p:dataTable id="tablalistar" var="visi" value="#{credgestorBean.visitashistorial}" 
+                                         emptyMessage="No hay nada para mostrar">
+                                <p:column headerText="Fecha: ">
+                                    <h:outputText value="#{visi.fecreg}" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Descripción">
+                                    <h:outputText value="#{visi.descripcion}" />
+                                </p:column>                                
+                                <p:column headerText="Fecha compromiso">
+                                    <h:outputText value="#{visi.feccomp}" />
+                                </p:column>
+                                <p:column headerText="Monto comp.">
+                                    <h:outputText value="#{visi.montocomp}" />
+                                </p:column>
+                                <p:column headerText="Cliente">
+                                    <h:outputText value="#{visi.creditogestor.credito.anexo.nombres}" />
+                                </p:column>
+                                <p:column headerText="Dirección">
+                                    <h:outputText value="#{visi.creditogestor.credito.anexo.direccion}" />
+                                </p:column>
+                                <p:column headerText="Distrito">
+                                    <h:outputText value="#{visi.creditogestor.credito.anexo.distrito.distrito}" />
+                                </p:column>                                
+                                <p:column headerText="Operaciones">                                                                
+                                    <ui:remove><p:commandButton action="#{conceptosBean.cargarPorIdDelete(concep.idconceptos)}" title="Eliminar" icon="fa fa-trash white" style="width:40px">                                                                    
+                                        </p:commandButton></ui:remove>
+                                    <p:commandButton action="#{conceptosBean.cargarPorIdModify(concep.idconceptos)}" title="Ver" icon="fa fa-search white" style="width:40px">                                                                    
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </f:view>
+                </div>
+            </div>
+        </div>        
+        <h:form>            
+
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>

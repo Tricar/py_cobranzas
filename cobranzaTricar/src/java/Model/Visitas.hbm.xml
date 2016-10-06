@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Visitas" table="visitas" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idvisitas" type="int">
+            <column name="idvisitas" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="creditogestor" class="Model.Creditogestor" fetch="select">
+            <column name="idcreditogestor" not-null="true" />
+        </many-to-one>
+        <property name="fecreg" type="timestamp">
+            <column name="fecreg" length="23" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="50" />
+        </property>
+        <property name="compromiso" type="java.lang.Boolean">
+            <column name="compromiso" />
+        </property>
+        <property name="feccomp" type="timestamp">
+            <column name="feccomp" length="23" not-null="true" />
+        </property>
+        <property name="montocomp" type="big_decimal">
+            <column name="montocomp" precision="17" />
+        </property>
+        <property name="comprobante" type="string">
+            <column name="comprobante" length="20" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="observaciones" length="800" />
+        </property>
+        <property name="abrev" type="string">
+            <column name="abrev" length="2" />
+        </property>
+        <property name="usuario" type="java.lang.Integer">
+            <column name="usuario" />
+        </property>
+    </class>
+</hibernate-mapping>

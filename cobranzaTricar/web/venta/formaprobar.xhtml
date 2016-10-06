@@ -226,8 +226,7 @@
                                                             completeMethod="#{vehiculoBean.filtrarDisponibleModelo}" var="v"
                                                             itemLabel="#{v.serie}" itemValue="#{v}" 
                                                             required="true" requiredMessage="Elija un vehículo">
-                                                <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>
-                                                <p:ajax event="mousemove" listener="#{creditoBean.precioModeloCredito()}"/>
+                                                <o:converter converterId="omnifaces.ListConverter" list="#{vehiculoBean.vehiculos}"/>                                                
                                                 <p:ajax event="itemSelect" process="@form" />                       
                                             </p:autoComplete>
                                         </div>

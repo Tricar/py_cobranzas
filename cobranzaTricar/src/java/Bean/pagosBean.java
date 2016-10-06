@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
@@ -37,7 +37,7 @@ import org.primefaces.context.RequestContext;
  * @author master
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class pagosBean implements Serializable {
 
     private Pagos pago = new Pagos();

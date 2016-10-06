@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="https://www.sunat.gob.pe:443/ol-ti-itcpgem-sqa/billService?wsdl" uri="src/conf/xml-resources/web-services/serviceSunat/wsdl/www.sunat.gob.pe_443/ol-ti-itcpgem-sqa/billService.wsdl"/>
+    <system systemId="https://www.sunat.gob.pe:443/ol-ti-itcpgem-sqa/billService?wsdl=1" uri="src/conf/xml-resources/web-services/serviceSunat/wsdl/www.sunat.gob.pe_443/ol-ti-itcpgem-sqa/billService.wsdl_1.wsdl"/>
+    <system systemId="https://www.sunat.gob.pe:443/ol-ti-itcpgem-sqa/billService?xsd=1" uri="src/conf/xml-resources/web-services/serviceSunat/wsdl/www.sunat.gob.pe_443/ol-ti-itcpgem-sqa/billService.xsd_1.xsd"/>
+</catalog>

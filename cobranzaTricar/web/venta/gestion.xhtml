@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../views/template.xhtml">
+    <ui:define name="content">
+        <h:form id="principal">
+            <p:outputLabel value="Ingrese DNI o RUC:"/>
+            <p:inputMask mask="9?9999999999" maxlength="11" value="#{credgestorBean.dni}"/>
+            <p:commandButton value="Buscar" icon="fa fa-search white" actionListener="#{credgestorBean.cargarAnexoDNI()}" ajax="false"/> 
+            <p:outputLabel value="Ingrese Nombre:"/>
+            <p:inputText value="#{credgestorBean.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();"/>
+            <p:commandButton value="Buscar" icon="fa fa-search white" action="#{credgestorBean.cargarCreditoNombre()}" />
+            <p:outputLabel value="         "/>
+            <p:commandButton value="Ver todos" icon="fa fa-search white" action="#{credgestorBean.verTodos(loginbean.usuario.anexo)}" ajax="false"/>
+        </h:form>
+        <h:form id="formMostrar">
+            <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                    <p:dataTable var="credgestor" value="#{credgestorBean.credgestores}" 
+                                 emptyMessage="Ningún cliente coincide con su búsqueda" >
+                        <p:column headerText="Cod.">
+                            <h:outputText value="#{credgestor.credito.liqventa}" />
+                        </p:column>
+                        <p:column headerText="Nombres" >
+                            <h:outputText value="#{credgestor.credito.anexo.nombres}" />
+                        </p:column>
+                        <p:column headerText="Num. Doc.">
+                            <h:outputText value="#{credgestor.credito.anexo.numdocumento}" />
+                        </p:column>
+                        <p:column headerText="Tienda" >
+                            <h:outputText value="#{credgestor.credito.tienda}">
+                                <f:converter converterId="tiendaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Empresa" >
+                            <h:outputText value="#{credgestor.credito.empresa}">
+                                <f:converter converterId="empresaconverter"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Deuda">
+                            <h:outputText value="#{credgestor.credito.deudactual}" />
+                        </p:column>
+                        <p:column headerText="Mostrar">                            
+                            <p:commandButton icon="fa fa-expand white" title="Mostrar"
+                                             actionListener="#{creditoBean.cargarLetrasArray(cred)}"/>
+                            <p:commandButton icon="fa fa-user-plus white" title="Ingresar"
+                                             actionListener="#{credgestorBean.visitas(credgestor)}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+        </h:form>
+
+        <h:form id="formvisita">
+            <p:dialog id="dlg1" header="Visita a cliente #{credgestorBean.credgestor.credito.anexo.nombres}" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgvisita" modal="true" resizable="false" minWidth="200">
+                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                <h:panelGrid columns="4">                    
+                    <p:outputLabel value="Tipo:" for="tipo"/>
+                    <p:selectOneMenu id="tipo" value="#{credgestorBean.visita.abrev}" required="true" requiredMessage="Seleccione Tipo">
+                        <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
+                        <f:selectItem itemLabel="Contacto con Titular" itemValue="CT" />
+                        <f:selectItem itemLabel="Contacto con Cónyuge" itemValue="CC" />
+                        <f:selectItem itemLabel="Contacto con Familiar" itemValue="CF" />
+                        <f:selectItem itemLabel="Contacto con Terceros" itemValue="C3" />
+                        <f:selectItem itemLabel="Fallecido" itemValue="FA" />
+                        <f:selectItem itemLabel="Bajo puerta" itemValue="BP" />
+                        <f:selectItem itemLabel="Inubicable" itemValue="IN" />
+                        <p:ajax update="txtfecha comp monto" listener="#{credgestorBean.compromiso(credgestorBean.visita.abrev)}" process="@this" />                        
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Fecha compromiso:" for="txtfecha"/>
+                    <p:calendar id="txtfecha" showOn="button" value="#{credgestorBean.visita.feccomp}" navigator="true" 
+                                pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha" disabled="#{credgestorBean.value}"/>
+                    <p:outputLabel value="Comprobante:" for="comp"/>
+                    <p:inputMask  mask="999-9999" id="comp" value="#{credgestorBean.visita.comprobante}"
+                                     required="true" requiredMessage="Ingrese comprobante" disabled="#{credgestorBean.value}">
+                    </p:inputMask>
+                    <p:outputLabel value="Monto:" for="monto"/>
+                    <p:inputText id="monto" value="#{credgestorBean.visita.montocomp}" disabled="#{credgestorBean.value}"
+                                 required="true" requiredMessage="Ingrese el monto" class="money" />                    
+                    <p:outputLabel value="Observaciones:" for="obsver"/>
+                    <p:inputTextarea id="obsver" value="#{credgestorBean.visita.observaciones}" required="true" 
+                                     requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>
+                    <h:panelGroup></h:panelGroup>
+                    <p:commandButton id="btnpagar" actionListener="#{credgestorBean.ingresarVisita(loginbean.usuario)}" value="#{credgestorBean.btnpago}" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formAlerta">
+            <p:dialog id="dlg3" header="Alerta #{pagosBean.pago.descripcion}" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlgalerta" modal="true" resizable="false" minWidth="200">
+                <h:outputText value="Es necesario pagar primero los intereses por la mora. Gracias" />
+                <br></br>
+                <p:commandButton value="Aceptar" onclick="dlg3.hide();"/>                
+            </p:dialog>     
+        </h:form>
+
+        <h:form id="formCliente">
+            <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                    <p:dialog header="Seleccionar cliente" showEffect="explode" hideEffect="explode" widgetVar="dlgcargar" modal="true" >
+                        <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                        <p:dataTable var="cred" value="#{credgestorBean.filtrada}" emptyMessage="Ningún cliente coincide con su búsqueda">
+                            <p:column headerText="Cod.">
+                                <h:outputText value="#{cred.credito.liqventa}" />
+                            </p:column>
+                            <p:column headerText="Nombres">
+                                <h:outputText value="#{cred.credito.anexo.nombres}" />
+                            </p:column>
+                            <p:column headerText="Num. Doc.">
+                                <h:outputText value="#{cred.credito.anexo.numdocumento}" />
+                            </p:column>
+                            <p:column headerText="Tienda" >
+                                <h:outputText value="#{cred.credito.tienda}">
+                                    <f:converter converterId="tiendaconverter"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Empresa" >
+                                <h:outputText value="#{cred.credito.empresa}">
+                                    <f:converter converterId="empresaconverter"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Deuda">
+                                <h:outputText value="#{cred.credito.deudactual}" />
+                            </p:column>
+                            <p:column>
+                                <p:commandButton actionListener="#{credgestorBean.pasarCliente(cred)}" oncomplete="dlgcargar.hide()"
+                                                 value="Seleccionar" ajax="false">                                    
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

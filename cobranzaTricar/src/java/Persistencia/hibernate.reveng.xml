@@ -32,5 +32,10 @@
   <table-filter match-name="tipodocument"/> 
   <table-filter match-name="operacion"/>
   <table-filter match-name="operaciondetalle"/>
+  <table-filter match-name="detalleventa"/>
+  <table-filter match-name="servicio"/>
+  <table-filter match-name="repuesto"/>
+  <table-filter match-name="creditogestor"/>
+  <table-filter match-name="visitas"/>
   <table-filter match-name="sysdiagrams"/>
 </hibernate-reverse-engineering>

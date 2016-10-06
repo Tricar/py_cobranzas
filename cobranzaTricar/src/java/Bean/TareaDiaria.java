@@ -55,12 +55,12 @@ public class TareaDiaria {
 //                        letras.setEstado("CN");
 //                        contcn++;
 //                    } else {
-                        if (!letras.getDescripcion().equals("ND")) {
-                            if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
-                                if (letras.getFecven().after(fecha)) {
-                                    if (Diffdays(letras.getFecven()) >= 1) {
+                        if (!letras.getDescripcion().equals("ND")) {                            
+                            if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 1) {                                
+                                if (letras.getFecven().before(fecha)) {                                    
+                                    if (Diffdays(letras.getFecven()) >= 1) {                                        
                                         letras.setEstado("VN");
-                                        letras.setDiffdays(Diffdays(letras.getFecven()));
+                                        letras.setDiffdays(Diffdays(letras.getFecven()));                                        
                                         letras.setCobradonc(true);
                                         contvn++;
                                     } else {
@@ -70,10 +70,10 @@ public class TareaDiaria {
                             }
 //                        moraant = letras.getMora();
 //                        moraact = (letras.getSaldo().multiply(interes)).setScale(1, RoundingMode.UP);
-                            if (letras.getEstado().equals("VN")) {
-                                if (letras.getDiffdays() > 8) {
+                            if (letras.getEstado().equals("VN")) {                                
+                                if (letras.getDiffdays() > 8) {                                    
                                     interes = factormora.multiply(BigDecimal.valueOf(letras.getDiffdays())).setScale(5, RoundingMode.HALF_DOWN);
-                                    letras.setMora(letras.getSaldo().multiply(interes).setScale(0, RoundingMode.UP));
+                                    letras.setMora(letras.getSaldo().multiply(interes).setScale(0, RoundingMode.UP));                                    
                                 } else {
                                     letras.setMora(BigDecimal.ZERO);
                                 }

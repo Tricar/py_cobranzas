@@ -15,6 +15,7 @@ import Model.Anexo;
 import Model.Conceptos;
 import Model.Credito;
 import Model.Creditoaval;
+import Model.Creditogestor;
 import Model.Letras;
 import Model.Modelo;
 import Model.Ocupacion;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletOutputStream;
@@ -55,7 +56,7 @@ import utiles.dbManager;
 import utiles.precio;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class ventaBean implements Serializable {
 
     private Session session;
@@ -356,7 +357,7 @@ public class ventaBean implements Serializable {
         Connection con = null;
         con = conn.getConnection();
         CredavalDao linkdao = new CredavalDaoImp();
-        List<Creditoaval> listafiltrada = new ArrayList();
+        List<Creditogestor> listafiltrada = new ArrayList();
         avales = new ArrayList();
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (estado.equals("DP")) {

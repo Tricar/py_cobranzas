@@ -32,7 +32,9 @@
     <mapping resource="Model/Menu.hbm.xml"/>
     <mapping resource="Model/Submenu.hbm.xml"/>
     <mapping resource="Model/Perfilmenu.hbm.xml"/>
-    <mapping resource="Model/Perfilsubmenu.hbm.xml"/>
+    <mapping resource="Model/Perfilsubmenu.hbm.xml"/>            
+    <mapping resource="Model/Creditogestor.hbm.xml"/>
+    <mapping resource="Model/Visitas.hbm.xml"/>    
     <mapping resource="Model/Tipoarticulo.hbm.xml"/>
     <mapping resource="Model/Articulo.hbm.xml"/>
     <mapping resource="Model/Tipoventa.hbm.xml"/>

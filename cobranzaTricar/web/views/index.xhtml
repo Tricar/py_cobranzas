@@ -72,11 +72,10 @@
                         <div class="Wid45 BorderedBox Fleft TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Ventas Semanal</div>
+                                <div class="Fs14 gray FontRalewayRegular">Ventas mes VX1</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 blue FontRalewayLight">
-                                    <h:form>
-                                        <ui:remove><p:poll interval="3" update="ventas" listener="#{loginbean.actualizarVentasxDia()}"/></ui:remove>
+                                <div class="Fs30 red FontRalewayLight">
+                                    <h:form>                                        
                                         <h:outputLabel id="ventas" value="#{loginbean.ventasxdia}"/>
                                     </h:form>
                                 </div>
@@ -86,11 +85,10 @@
                         <div class="Wid45 BorderedBox Fright TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Ventas del mes</div>
+                                <div class="Fs14 gray FontRalewayRegular">Ventas mes VX2</div>
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs30 blue FontRalewayLight">
-                                    <h:form>
-                                        <ui:remove><p:poll interval="3" update="ventasxmes" listener="#{loginbean.actualizarVentasxMes()}"/></ui:remove>
+                                    <h:form>                                        
                                         <h:outputLabel id="ventasxmes" value="#{loginbean.ventasxmes}"/>
                                     </h:form>
                                 </div>
@@ -100,11 +98,10 @@
                         <div class="Wid45 BorderedBox Fleft TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Creditos para Aprobar</div>
+                                <div class="Fs14 gray FontRalewayRegular">Creditos x Aprobar VX1</div>
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs30 red FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i> 
-                                    <h:form>
-                                        <ui:remove><p:poll interval="3" update="credxapro" listener="#{loginbean.actualizarxAprobar()}"/></ui:remove>
+                                    <h:form>                                        
                                         <h:outputLabel id="credxapro" value="#{loginbean.creditoxaprobar}"/>
                                     </h:form>                                    
                                 </div>
@@ -114,11 +111,10 @@
                         <div class="Wid45 BorderedBox Fright TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs14 gray FontRalewayRegular">Pendientes de despacho</div>
+                                <div class="Fs14 gray FontRalewayRegular">Creditos x Aprobar VX2</div>
                                 <div class="EmptyBox10"></div>
-                                <div class="Fs30 orange FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i>
-                                    <h:form>
-                                        <ui:remove><p:poll interval="3" update="pend" listener="#{loginbean.actualizarxDespachar()}"/></ui:remove>
+                                <div class="Fs30 blue FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i>
+                                    <h:form>                                        
                                         <h:outputLabel id="pend" value="#{loginbean.creditoaprobado}"/>
                                     </h:form>
                                     
@@ -151,7 +147,7 @@
         <div class="Container50 Responsive50">
             <div class="ContainerIndent">
                 <h3 class="BigTopic">
-                    <div class="Wid50 Responsive50 Fleft">Carta de las ventas mensuales</div>
+                    <div class="Wid50 Responsive50 Fleft">Estadística de ventas mensuales</div>
                 </h3>
                 <div class="Wid100">
                     <div id="j_idt104"></div>

@@ -142,6 +142,10 @@ public class VehiculoDaoImplements implements VehiculoDao{
             query.setParameter("v", tipo);
             query.setParameter("u", idmodelo);
             lista = (List<Vehiculo>) query.list();
+            for (int i = 0; i < lista.size(); i++) {
+                Vehiculo get = lista.get(i);
+                System.out.println("Estoy imprimiendo desde aca: "+get.getSerie());
+            }            
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         } finally {
