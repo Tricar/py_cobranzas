@@ -23,7 +23,7 @@
         <h:form id="formMostrar">
             <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                 <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                    <p:dataTable var="venta" value="#{ventaMBBean.listaventa}" scrollable="true" emptyMessage="Ningún cliente coincide con su búsqueda" >
+                    <p:dataTable var="venta" value="#{ventaMBBean.listaventa}" scrollable="true" scrollHeight="200" emptyMessage="Ningún cliente coincide con su búsqueda" >
                         <p:column headerText="CODIGO">
                             <h:outputText value="#{venta.codigo}" />
                         </p:column>
@@ -49,9 +49,7 @@
                         </p:column>
                         <p:column headerText="Mostrar">                            
                             <p:commandButton disabled="#{venta.estado == 0 ? true : false}" update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{ventaMBBean.cargarDetalleArray(venta)}"/>
-                            <p:commandButton class="BlueButton" update=":formModificar" icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminar(venta.idoperacion)}" />
                             <p:commandButton disabled="#{venta.estado == 0 ? true : false}" class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Boleta(venta.codigo)}" />
-                            <p:commandButton disabled="#{venta.estado == 0 ? true : false}" class="RedButton" update=":formModificar" icon="fa fa-times-circle white" title="Anular" actionListener="#{ventaMBBean.cargarAnular(venta.idoperacion)}" />
                         </p:column>
                     </p:dataTable>
                 </div>
@@ -78,23 +76,13 @@
                         <p:column headerText="PRECIO TOTAL">
                             <h:outputText value="#{detalle.preciototal}"/>
                         </p:column>
-                        <p:column headerText="Pagar">
+                        <p:column>
                             <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminarDetalle(detalle.idoperaciondetalle, loginbean.usuario)}" />
                         </p:column>                    
                     </p:dataTable> 
                 </div>
             </div>                       
-        </h:form>
-
-        <h:form id="frmEliminarCompra">
-            <p:dialog header="Eliminar" widgetVar="dialogoEliminarCompra" modal="true">
-                <p:inputText type="hidden" value="#{ventaMBBean.venta.idoperacion}"/>
-                <h:outputText class="ui-confirm-dialog-message" value="¿Desea eliminar?" />
-                <p:separator/>
-                <p:commandButton value="Si" actionListener="#{ventaMBBean.eliminar()}" icon="fa fa-check blue" ajax="false" />
-                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
-            </p:dialog>     
-        </h:form>        
+        </h:form>     
 
         <h:form id="frmAnularCompra">
             <p:dialog header="Anular" widgetVar="dialogoAnularCompra" modal="true">

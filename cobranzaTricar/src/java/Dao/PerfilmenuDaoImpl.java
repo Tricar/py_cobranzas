@@ -161,4 +161,25 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
         }
     }
 
+    @Override
+    public List<Perfilmenu> verMenus(Menu menu) {
+        Session session = null;
+        List<Perfilmenu> lista = null;
+        try {
+            Integer idmenu = menu.getIdmenu();
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Perfilmenu where idmenu=:menu");
+            query.setParameter("menu", idmenu);
+            lista = (List<Perfilmenu>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
 }

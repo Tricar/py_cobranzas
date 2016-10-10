@@ -7,7 +7,6 @@ import Model.Articulo;
 import Model.Credito;
 import Model.Creditoaval;
 import Model.Operaciondetalle;
-import Model.Creditogestor;
 import Model.Usuario;
 import java.io.File;
 import java.io.IOException;
@@ -59,6 +58,9 @@ public class reportesBean implements Serializable {
     private String empresa;
     private Date fecha1 = new Date();
     private Date fecha2 = new Date();
+    private Date fecha3 = new Date();
+    private Date fecha4 = new Date();
+    private Date fecha5 = new Date();
 
     /**
      * Creates a new instance of reportesBean
@@ -944,6 +946,42 @@ public class reportesBean implements Serializable {
 
     public void setFecha2(Date fecha2) {
         this.fecha2 = fecha2;
+    }
+
+    public Date getFecha3() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha2);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        fecha3 = cal.getTime();
+        return fecha3;
+    }
+
+    public void setFecha3(Date fecha3) {
+        this.fecha3 = fecha3;
+    }
+
+    public Date getFecha4() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha2);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        fecha4 = cal.getTime();
+        return fecha4;
+    }
+
+    public void setFecha4(Date fecha4) {
+        this.fecha4 = fecha4;
+    }
+
+    public Date getFecha5() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha2);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        fecha5 = cal.getTime();
+        return fecha5;
+    }
+
+    public void setFecha5(Date fecha5) {
+        this.fecha5 = fecha5;
     }
 
     public Articulo getArticulo() {

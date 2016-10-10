@@ -35,6 +35,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
 import utiles.dbManager;
+import Clases.*;
+import java.math.RoundingMode;
+import java.util.Calendar;
 
 /**
  *
@@ -272,6 +275,7 @@ public class VentaMBBean implements Serializable {
         OperacionDao ventadao = new OperacionDaoImp();
         listaventa = ventadao.filtrarFechas(fecha1, fecha2, 1);
         listaventadetalle = new ArrayList();
+        this.fecha2 = new Date();
     }
 
     public void cargarEliminar(int codigo) {
@@ -495,11 +499,14 @@ public class VentaMBBean implements Serializable {
 
     public void Boleta(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
+        OperacionDao ventadao = new OperacionDaoImp();
         Connection con = null;
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
+        this.venta = ventadao.verByCodigoVenta(codigo);
+        String pagoletra = dimeElNumeroEnLetras4ceros(this.venta.getMontototal());
         parametros.put("numeroorden", codigo);
-        parametros.put("letra", " Y 00/100 SOLES");
+        parametros.put("letra", pagoletra);
         File jasper = new File("D:/reporte/boleta.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -515,15 +522,38 @@ public class VentaMBBean implements Serializable {
         con.close();
     }
 
+    public String dimeElNumeroEnLetras4ceros(BigDecimal numero) {
+        String numeroletras = "";
+        int partentera = numero.intValue();
+        BigDecimal parteenterabig = new BigDecimal(partentera);
+        BigDecimal partedecimalbig = numero.subtract(parteenterabig);
+        BigDecimal cien = new BigDecimal(100);
+        n2t obj = new n2t();
+        System.out.println("partentera: "+partentera);
+        System.out.println("parteenterabig: "+parteenterabig);
+        System.out.println("partedecimalbig: "+partedecimalbig);
+
+        if (partedecimalbig.setScale(1, RoundingMode.DOWN).compareTo(BigDecimal.ZERO) == 0) {
+            numeroletras = obj.convertirLetras(partentera) + "  CON  " + "00/100 SOLES";
+            return numeroletras;
+        }
+        numeroletras = obj.convertirLetras(partentera) + "  CON  " + partedecimalbig.multiply(cien).setScale(0) + "/100 SOLES";
+        return numeroletras;
+    }
+
     public void Pago(String codigo, Integer tipoventa) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         OperacionDao ventadao = new OperacionDaoImp();
+        n2t convertir = new n2t();
         Connection con = null;
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("numeroorden", codigo);
         if (tipoventa == 2) {
+            this.venta = ventadao.verByCodigoVenta(codigo);
+            String pagoletra = convertir.convertirLetras(this.venta.getMontototal().intValue());
             File jasper = new File("D:/reporte/boleta.jasper");
+            parametros.put("letra", pagoletra);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             response.addHeader("Content-disposition", "attachment; filename=BOLETA-" + codigo + ".xls");
@@ -554,6 +584,7 @@ public class VentaMBBean implements Serializable {
         this.venta = ventadao.verByCodigoVenta(codigo);
         this.venta.setEstado(1);
         ventadao.modificarOD(this.venta);
+        this.listaventa = new ArrayList<>();
     }
 
     public Articulo getProducto() {
@@ -613,6 +644,10 @@ public class VentaMBBean implements Serializable {
     }
 
     public Date getFecha2() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha2);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        fecha2 = cal.getTime();
         return fecha2;
     }
 

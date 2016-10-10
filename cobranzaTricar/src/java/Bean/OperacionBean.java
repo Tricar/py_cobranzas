@@ -8,20 +8,36 @@ package Bean;
 import Dao.*;
 import Model.*;
 import Persistencia.HibernateUtil;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.naming.NamingException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
+import utiles.dbManager;
+import Clases.*;
+import java.math.RoundingMode;
+import java.util.Calendar;
 
 /**
  *
@@ -29,7 +45,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @ViewScoped
-public class CompraBean implements Serializable {
+public class OperacionBean implements Serializable {
 
     private Session session;
     private Transaction transaction;
@@ -37,8 +53,8 @@ public class CompraBean implements Serializable {
     private Articulo producto;
     private List<Articulo> listaproducto;
     private Operacion venta;
-    private Operaciondetalle ventadetalle;
     private List<Operacion> listaventa;
+    private Operaciondetalle ventadetalle;
     private List<Operaciondetalle> listaventadetalle;
     public Anexo anexo = new Anexo();
     private Date fecha1 = new Date();
@@ -46,7 +62,7 @@ public class CompraBean implements Serializable {
 
     private String valorCodigoBarras;
 
-    public CompraBean() {
+    public OperacionBean() {
         this.venta = new Operacion();
         this.listaventadetalle = new ArrayList<>();
     }
@@ -82,6 +98,11 @@ public class CompraBean implements Serializable {
             ArticuloDao productodao = new ArticuloDaoImp();
             this.transaction = this.session.beginTransaction();
             this.producto = productodao.getByIdProducto(this.session, idProducto);
+            if (this.producto.getCantidad() == 0) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No hay Stock para el articulo."));
+                RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
+                return;
+            }
             for (int i = 0; i < listaventadetalle.size(); i++) {
                 Operaciondetalle get = listaventadetalle.get(i);
                 if (this.producto.getCodigo().equals(get.getCodigoproducto())) {
@@ -90,7 +111,7 @@ public class CompraBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 1, null, new BigDecimal("0"), null, null, new BigDecimal("0"), null, null));
+            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, 1, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -119,7 +140,7 @@ public class CompraBean implements Serializable {
             }
             BigDecimal totalventa = new BigDecimal(0);
             for (Operaciondetalle item : this.listaventadetalle) {
-                BigDecimal totalVentaPorProducto = item.getPreciocompra().multiply(new BigDecimal(item.getCantidad()));
+                BigDecimal totalVentaPorProducto = item.getPrecioventa().multiply(new BigDecimal(item.getCantidad()));
                 item.setPreciototal(totalVentaPorProducto);
                 totalventa = totalventa.add(totalVentaPorProducto);
             }
@@ -137,7 +158,7 @@ public class CompraBean implements Serializable {
         try {
             BigDecimal totalventa = new BigDecimal(0);
             for (Operaciondetalle item : this.listaventadetalle) {
-                BigDecimal totalVentaPorProducto = item.getPreciocompra().multiply(new BigDecimal(item.getCantidad()));
+                BigDecimal totalVentaPorProducto = item.getPrecioventa().multiply(new BigDecimal(item.getCantidad()));
                 item.setPreciototal(totalVentaPorProducto);
                 totalventa = totalventa.add(totalVentaPorProducto);
             }
@@ -149,7 +170,7 @@ public class CompraBean implements Serializable {
         }
     }
 
-    public void realizarCompra(Usuario usuario) {
+    public void realizarVenta(Usuario usuario) {
         this.session = null;
         this.transaction = null;
         try {
@@ -165,17 +186,19 @@ public class CompraBean implements Serializable {
             }
             for (Operaciondetalle item : this.listaventadetalle) {
                 this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
-                if (item.getPreciocompra().equals(new BigDecimal("0"))) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Precio de compra debe ser mayor a cero."));
+                if (item.getCantidad() > this.producto.getCantidad()) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock de uno de los articulo no es suficiente."));
+                    RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
+                    return;
+                } else if (item.getCantidad() == 0) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock debe ser mayor a cero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
                 } else if (item.getPreciototal().equals(new BigDecimal("0"))) {
-                    System.out.println("primer comparacion");
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Actualize el monto primero."));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Antes de realizar la venta debe actualizar el monto de la venta."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
-                } else if (!item.getPreciocompra().multiply(new BigDecimal(item.getCantidad())).equals(item.getPreciototal())) {
-                    System.out.println("segunda comparacion");
+                } else if (!item.getPrecioventa().multiply(new BigDecimal(item.getCantidad())).equals(item.getPreciototal())) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Actualize el monto primero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
@@ -183,26 +206,23 @@ public class CompraBean implements Serializable {
             }
             Date d = new Date();
             this.venta.setCreated(d);
-            this.venta.setIdtipooperacioncontable(2);
-            this.venta.setEstado(1);
+            this.venta.setIdtipooperacioncontable(1);
+            this.venta.setEstado(2);
             this.venta.setIdusuario(usuario.getAnexo().getIdanexo());
             ventadao.insertar(this.session, this.venta);
             this.venta = ventadao.getUltimoRegistro(this.session);
             for (Operaciondetalle item : this.listaventadetalle) {
                 this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
-                BigDecimal costopromedio = ((item.getPreciocompra().multiply(new BigDecimal(item.getCantidad()))).add(this.producto.getPreciocompra().multiply(new BigDecimal(this.producto.getCantidad())))).divide((new BigDecimal(item.getCantidad())).add(new BigDecimal(this.producto.getCantidad())));
-                item.setPreciocompraanterior(this.producto.getPreciocompra());
                 item.setPrecioventaanterior(this.producto.getPrecioventa());
-                item.setPrecioventa(this.producto.getPrecioventa());
+                item.setPreciocompraanterior(this.producto.getPreciocompra());
+                item.setPreciocompra(this.producto.getPreciocompra());
                 item.setCostopromedioanterior(this.producto.getCostopromedio());
-                item.setCostopromedio(costopromedio);
+                item.setCostopromedio(this.producto.getCostopromedio());
                 item.setOperacion(this.venta);
                 item.setArticulo(this.producto);
                 item.setCantidadanterior(this.producto.getCantidad());
                 ventadetalledao.insertar(this.session, item);
-                this.producto.setPreciocompra(item.getPreciocompra());
-                this.producto.setCantidad(this.producto.getCantidad() + item.getCantidad());
-                this.producto.setCostopromedio(costopromedio);
+                this.producto.setCantidad(this.producto.getCantidad() - item.getCantidad());
                 productodao.modificar(session, this.producto);
             }
             this.transaction.commit();
@@ -221,14 +241,18 @@ public class CompraBean implements Serializable {
         }
     }
 
+    public void cargarVentaAtendida() {
+        OperacionDao operaciondao = new OperacionDaoImp();
+        try {
+            listaventa = operaciondao.cargarxEstado(2);
+        } catch (Exception e) {
+        }
+    }
+
     public String index() {
         listaventa = new ArrayList();
         listaventadetalle = new ArrayList();
-        return "/venta/compra";
-    }
-
-    public String nuevo() {
-        return "/venta/fromcompra";
+        return "/venta/ventamb";
     }
 
     public void nuevoanexo() {
@@ -237,57 +261,21 @@ public class CompraBean implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
     }
 
-    public void insertarproveedor() {
-        this.session = null;
-        this.transaction = null;
-        try {
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
-            if (daotanexo.verByDocumento(this.session, this.anexo.getNumdocumento()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Proveedor ya existe en DB."));
-                this.anexo = new Anexo();
-                return;
-            }
-            this.anexo.setTipodocumento("RUC");
-            this.anexo.setTipoanexo("PO");
-            this.anexo.setApemat("");
-            this.anexo.setApepat("");
-            Date d = new Date();
-            this.anexo.setFechareg(d);
-            this.anexo.setFechanac(d);
-            this.anexo.setEdad(0);
-            this.anexo.setEstcivil("SO");
-            this.anexo.setCpropia("NO");
-            this.anexo.setCodven("");
-            daotanexo.registrar(this.session, this.anexo);
-            this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-            this.anexo = new Anexo();
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-            this.anexo = new Anexo();
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
-        }
-    }
-
-    public void filtrarFechas() {
-        OperacionDao ventadao = new OperacionDaoImp();
-        listaventa = ventadao.filtrarFechas(fecha1, fecha2, 2);
-        listaventadetalle = new ArrayList();
-        this.fecha2 = new Date();
+    public String nuevo() {
+        return "/venta/fromventa";
     }
 
     public List<Operaciondetalle> cargarDetalleArray(Operacion compra) {
         OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
         listaventadetalle = ventadetalledao.mostrarSoloDetallexCompra(compra);
         return listaventadetalle;
+    }
+
+    public void filtrarFechas() {
+        OperacionDao ventadao = new OperacionDaoImp();
+        listaventa = ventadao.filtrarFechasTipo(fecha1, fecha2);
+        listaventadetalle = new ArrayList();
+        this.fecha2 = new Date();
     }
 
     public void cargarEliminar(int codigo) {
@@ -305,6 +293,38 @@ public class CompraBean implements Serializable {
 
             RequestContext.getCurrentInstance().update("frmEliminarCompra");
             RequestContext.getCurrentInstance().execute("PF('dialogoEliminarCompra').show()");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void cargarAnular(int codigo) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            OperacionDao ventadao = new OperacionDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+            this.venta = ventadao.verByCodigo(this.session, codigo);
+
+            this.transaction.commit();
+            if (this.venta.getIdtipooperacioncontable() == 1) {
+                RequestContext.getCurrentInstance().update("frmAnularVenta");
+                RequestContext.getCurrentInstance().execute("PF('dialogoAnularVenta').show()");
+            } else {
+                RequestContext.getCurrentInstance().update("frmAnularCompra");
+                RequestContext.getCurrentInstance().execute("PF('dialogoAnularCompra').show()");
+            }
 
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -355,34 +375,6 @@ public class CompraBean implements Serializable {
         }
     }
 
-    public void cargarAnular(int codigo) {
-        this.session = null;
-        this.transaction = null;
-
-        try {
-
-            OperacionDao ventadao = new OperacionDaoImp();
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-            this.venta = ventadao.verByCodigo(this.session, codigo);
-
-            this.transaction.commit();
-
-            RequestContext.getCurrentInstance().update("frmAnularCompra");
-            RequestContext.getCurrentInstance().execute("PF('dialogoAnularCompra').show()");
-
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
-        }
-    }
-
     public void eliminar() {
         this.session = null;
         this.transaction = null;
@@ -413,7 +405,7 @@ public class CompraBean implements Serializable {
         }
     }
 
-    public void anular() {
+    public void anularVenta() {
         this.session = null;
         this.transaction = null;
         try {
@@ -421,7 +413,7 @@ public class CompraBean implements Serializable {
             this.transaction = session.beginTransaction();
 
             OperacionDao ventadao = new OperacionDaoImp();
-            eliminarOperaciondetalle(this.venta.getIdoperacion());
+            eliminarOperaciondetalleVenta(this.venta.getIdoperacion());
             ventadao.eliminar(this.session, this.venta);
 
             this.transaction.commit();
@@ -442,7 +434,61 @@ public class CompraBean implements Serializable {
         }
     }
 
-    public void eliminarOperaciondetalle(Integer idoperacion) {
+    public void eliminarOperaciondetalleVenta(Integer idoperacion) {
+        OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
+        listaventadetalle = detalledao.verTodosxId(idoperacion);
+        for (int i = 0; i < listaventadetalle.size(); i++) {
+            Operaciondetalle get = listaventadetalle.get(i);
+            ArticuloDao productodao = new ArticuloDaoImp();
+            OperacionDao ventadao = new OperacionDaoImp();
+            this.producto = productodao.verByCodigos(get.getArticulo().getIdarticulo());
+            this.producto.setCantidad(get.getCantidadanterior());
+            this.producto.setPreciocompra(get.getPreciocompraanterior());
+            this.producto.setPrecioventa(get.getPrecioventaanterior());
+            this.producto.setCostopromedio(get.getCostopromedioanterior());
+            productodao.modificarOD(this.producto);
+            this.venta = ventadao.verByCodigos(get.getOperacion().getIdoperacion());
+            this.venta.setEstado(0);
+            this.venta.setMontototal(this.venta.getMontototal().subtract(get.getPreciototal()));
+            ventadao.modificarOD(this.venta);
+
+            detalledao.eliminarOD(get.getIdoperaciondetalle());
+            producto = new Articulo();
+            venta = new Operacion();
+        }
+
+    }
+    
+    public void anularCompra() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            OperacionDao ventadao = new OperacionDaoImp();
+            eliminarOperaciondetalleCompra(this.venta.getIdoperacion());
+            ventadao.eliminar(this.session, this.venta);
+
+            this.transaction.commit();
+            filtrarFechas();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Anulo Correctamente."));
+            RequestContext.getCurrentInstance().update("formMostrar");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void eliminarOperaciondetalleCompra(Integer idoperacion) {
         OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
         listaventadetalle = detalledao.verTodosxId(idoperacion);
         for (int i = 0; i < listaventadetalle.size(); i++) {
@@ -492,6 +538,8 @@ public class CompraBean implements Serializable {
 
             this.transaction.commit();
 
+            cargarDetalleArray(this.venta);
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino Correctamente."));
             this.ventadetalle = new Operaciondetalle();
 
@@ -505,6 +553,112 @@ public class CompraBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public void Imprimir(String codigo) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        OperacionDao ventadao = new OperacionDaoImp();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        this.venta = ventadao.verByCodigoVenta(codigo);
+        String pagoletra = dimeElNumeroEnLetras4ceros(this.venta.getMontototal());
+        parametros.put("numeroorden", codigo);
+        parametros.put("letra", pagoletra);
+        if (this.venta.getTipoventa().getIdtipoventa() == 2) {
+            File jasper = new File("D:/reporte/boleta.jasper");
+            parametros.put("letra", pagoletra);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=BOLETA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
+        } else {
+            File jasper = new File("D:/reporte/factura.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=FACTURA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
+        }
+    }
+
+    public String dimeElNumeroEnLetras4ceros(BigDecimal numero) {
+        String numeroletras = "";
+        int partentera = numero.intValue();
+        BigDecimal parteenterabig = new BigDecimal(partentera);
+        BigDecimal partedecimalbig = numero.subtract(parteenterabig);
+        BigDecimal cien = new BigDecimal(100);
+        n2t obj = new n2t();
+        System.out.println("partentera: " + partentera);
+        System.out.println("parteenterabig: " + parteenterabig);
+        System.out.println("partedecimalbig: " + partedecimalbig);
+
+        if (partedecimalbig.setScale(1, RoundingMode.DOWN).compareTo(BigDecimal.ZERO) == 0) {
+            numeroletras = obj.convertirLetras(partentera) + "  CON  " + "00/100 SOLES";
+            return numeroletras;
+        }
+        numeroletras = obj.convertirLetras(partentera) + "  CON  " + partedecimalbig.multiply(cien).setScale(0) + "/100 SOLES";
+        return numeroletras;
+    }
+
+    public void Pago(String codigo, Integer tipoventa) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        OperacionDao ventadao = new OperacionDaoImp();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        this.venta = ventadao.verByCodigoVenta(codigo);
+        String pagoletra = dimeElNumeroEnLetras4ceros(this.venta.getMontototal());
+        parametros.put("numeroorden", codigo);
+        if (tipoventa == 2) {
+            File jasper = new File("D:/reporte/boleta.jasper");
+            parametros.put("letra", pagoletra);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=BOLETA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
+        } else {
+            File jasper = new File("D:/reporte/factura.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=FACTURA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
+        }
+        this.venta = ventadao.verByCodigoVenta(codigo);
+        this.venta.setEstado(1);
+        ventadao.modificarOD(this.venta);
+        List<Operacion> listaventa = new ArrayList<>();
     }
 
     public Articulo getProducto() {
@@ -545,14 +699,6 @@ public class CompraBean implements Serializable {
 
     public void setValorCodigoBarras(String valorCodigoBarras) {
         this.valorCodigoBarras = valorCodigoBarras;
-    }
-
-    public Anexo getAnexo() {
-        return anexo;
-    }
-
-    public void setAnexo(Anexo anexo) {
-        this.anexo = anexo;
     }
 
     public List<Operacion> getListaventa() {

@@ -3,7 +3,7 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-    <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=cobranzas</property>
+    <property name="hibernate.connection.url">jdbc:sqlserver://servertricar3:1433;databaseName=cobranzas</property>
     <property name="hibernate.connection.username">sa</property>
     <property name="hibernate.connection.password">tricar2012</property>
     <property name="hibernate.current_session_context_class">tricar2012</property>
@@ -32,9 +32,9 @@
     <mapping resource="Model/Menu.hbm.xml"/>
     <mapping resource="Model/Submenu.hbm.xml"/>
     <mapping resource="Model/Perfilmenu.hbm.xml"/>
-    <mapping resource="Model/Perfilsubmenu.hbm.xml"/>            
+    <mapping resource="Model/Perfilsubmenu.hbm.xml"/>
     <mapping resource="Model/Creditogestor.hbm.xml"/>
-    <mapping resource="Model/Visitas.hbm.xml"/>    
+    <mapping resource="Model/Visitas.hbm.xml"/>
     <mapping resource="Model/Tipoarticulo.hbm.xml"/>
     <mapping resource="Model/Articulo.hbm.xml"/>
     <mapping resource="Model/Tipoventa.hbm.xml"/>

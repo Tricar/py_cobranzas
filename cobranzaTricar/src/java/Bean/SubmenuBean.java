@@ -140,13 +140,15 @@ public class SubmenuBean implements Serializable {
             this.transaction = session.beginTransaction();
 
             SubmenuDao daotusuario = new SubmenuDaoImpl();
+            
 
             if (daotusuario.verByDifer(this.session, this.submenu.getIdsubmenu(), this.submenu.getSubmenu()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Submenu ya Existe."));
                 return;
             }
-
+            
             daotusuario.modificar(this.session, this.submenu);
+            modificarSubmenuMenu(this.submenu);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
             this.submenu = new Submenu();
@@ -162,6 +164,20 @@ public class SubmenuBean implements Serializable {
                 this.session.close();
             }
         }
+    }   
+
+    public void modificarSubmenuMenu(Submenu submenu) {
+        PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
+        PerfilsubmenuDao perfilsubmenuDao = new PerfilsubmenuDaoImpl();
+        listaperfilmenu = perfilmenuDao.verMenus(submenu.getMenu());
+        perfilsubmenu = new Perfilsubmenu();
+        for (int i = 0; i < listaperfilmenu.size(); i++) {
+            Perfilmenu get = listaperfilmenu.get(i);
+            perfilsubmenu.setPerfilmenu(get);
+            perfilsubmenuDao.modificarSolo(perfilsubmenu);
+            perfilmenu = new Perfilmenu();
+        }
+
     }
 
     public void eliminar() {

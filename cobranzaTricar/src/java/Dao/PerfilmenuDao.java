@@ -17,6 +17,7 @@ public interface PerfilmenuDao {
     
     public void insertar(Perfilmenu perfilmenu);
     public Perfilmenu verTodos(Perfil perfil, Menu menu);
+    public List<Perfilmenu> verMenus(Menu menu);
     public List<Perfilmenu> verTodo(Session session) throws Exception;
     public List<Perfilmenu> verTodoByPerfilmenu(Session session, Integer menu, Boolean estado) throws Exception;
     public Perfilmenu verByCodigo(Session session, Integer idperfil) throws Exception;
