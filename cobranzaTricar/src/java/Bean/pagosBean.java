@@ -32,10 +32,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
-/**
- *
- * @author master
- */
 @ManagedBean
 @SessionScoped
 public class pagosBean implements Serializable {
@@ -72,9 +68,6 @@ public class pagosBean implements Serializable {
     private Conceptos concepto = new Conceptos();
     private List<Conceptos> conceptos = new ArrayList();
 
-    /**
-     * Creates a new instance of pagosBean
-     */
     public pagosBean() {
     }
 
@@ -272,13 +265,15 @@ public class pagosBean implements Serializable {
     public void insertarNotaDebito(Usuario usuario) {
         LetrasDao letrasdao = new LetrasDaoImplements();
         PagosDao pagosdao = new PagosDaoImp();
+        CreditoDao credao = new CreditoDaoImp();
         Date fecha = new Date();
         try {
+            credito = credao.cargarCreditoxLetra(letra);
             letra.setMora(BigDecimal.ZERO);            
             difdays = letra.getDiffdays();
             letrasdao.modificarLetra(letra);
             letra = new Letras();
-            //ago = new Pagos();           
+            //ago = new Pagos();            
             letra.setCredito(credito);
             letra.setDescripcion("ND");
             letra.setFecreg(fecha);
@@ -289,7 +284,7 @@ public class pagosBean implements Serializable {
             letra.setMora(BigDecimal.ZERO);
             letra.setEstado("CN");
             letra.setDiffdays(difdays);
-            letrasdao.insertarLetra(letra);
+            letrasdao.insertarLetra(letra);            
             pago.setFecreg(fecha);
             pago.setUsuario(usuario.getIdusuario());
             pago.setLetras(letra);

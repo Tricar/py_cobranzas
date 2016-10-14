@@ -1,8 +1,11 @@
+import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import utiles.generadorCodigos;
 import utiles.recorrerCreditos;
 
 public class Main {
@@ -10,7 +13,7 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         //        List<Date> fechas = new ArrayList();
         //        Date fecha = new Date();
         //        int nletras = 10;
@@ -50,24 +53,13 @@ public class Main {
         //            }
         //            System.out.println("fecha :"+i+" "+fechas.get(i).toString());
         //        }
-
-        // create an empty array list   
-        ArrayList<String> color_list = new ArrayList<String>();
-
-        // use add() method to add values in the list  
-        color_list.add("White");
-        color_list.add("Black");
-        color_list.add("Red");
-        // create an empty array sample with an initial capacity   
-        ArrayList<String> sample = new ArrayList<String>();
-        // use add() method to add values in the list   
-        sample.add("Green");
-        sample.add("Red");
-        sample.add("White");
-        // remove all elements from second list if it exists in first list  
-        sample.removeAll(color_list);
-        System.out.println("First List :" + color_list);
-        System.out.println("Second List :" + sample);
+        recorrerCreditos rec = new recorrerCreditos();
+        BigDecimal suma = rec.totalxMes("V1", "2016", "09");
+        System.out.println("suma :"+suma);
+        suma = rec.calculoBonos("V1", "2016", "09");
+        System.out.println("Bono :"+suma);
+        suma = rec.calculoBonosW("V1", "2016", "09");
+        System.out.println("Bono :"+suma);
     }
 
     public static int esDomingo(Calendar d) {

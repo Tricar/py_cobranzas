@@ -17,8 +17,7 @@ public class dbManager {
     public static Connection getConnection() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=cobranzas",
-                    "sa", "tricar2012");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://servertricar3:1433;databaseName=cobranzas", "sa", "tricar2012");
             return con;
         } catch (Exception ex) {
             System.out.println("Database.getConnection() Error -->" + ex.getMessage());

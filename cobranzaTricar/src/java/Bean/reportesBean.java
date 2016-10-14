@@ -5,7 +5,6 @@ import Dao.CredavalDaoImp;
 import Model.Anexo;
 import Model.Credito;
 import Model.Creditoaval;
-import Model.Creditogestor;
 import Model.Usuario;
 import java.io.File;
 import java.io.IOException;
@@ -193,7 +192,156 @@ public class reportesBean implements Serializable {
         con.close();
     }
 
-    public void comisiones(Usuario usuario) throws JRException, NamingException, SQLException, IOException {
+    public void detalleVentas() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();        
+        String meses = null;
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (mes == null || ano == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe ingresar mes, año y/o empresa."));
+        } else {
+            switch (mes) {
+                case 1:
+                    meses = "ENERO";
+                    break;
+                case 2:
+                    meses = "FEBRERO";
+                    break;
+                case 3:
+                    meses = "MARZO";
+                    break;
+                case 4:
+                    meses = "ABRIL";
+                    break;
+                case 5:
+                    meses = "MAYO";
+                    break;
+                case 6:
+                    meses = "JUNIO";
+                    break;
+                case 7:
+                    meses = "JULIO";
+                    break;
+                case 8:
+                    meses = "AGOSTO";
+                    break;
+                case 9:
+                    meses = "SETIEMBRE";
+                    break;
+                case 10:
+                    meses = "OCTUBRE";
+                    break;
+                case 11:
+                    meses = "NOVIEMBRE";
+                    break;
+                case 12:
+                    meses = "DICIEMBRE";
+                    break;
+            }
+            parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
+            parametros.put("nombremes", meses);
+            parametros.put("anio", ano);            
+            parametros.put("mese", mes);
+            File jasper = new File("D:/reporte/ventas/detalle_ventas.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=Detallexvendedor-" + mes + "-" + ano + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+
+            JRXlsExporter exporter = new JRXlsExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            exporter.exportReport();
+
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        }
+        con.close();
+    }
+    
+    public void comisionVentas() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        recorrerCreditos rec = new recorrerCreditos();
+        Connection con = null;
+        con = conn.getConnection();        
+        String meses = null;
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (mes == null || ano == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe ingresar mes, año y/o empresa."));
+        } else {
+            switch (mes) {
+                case 1:
+                    meses = "ENERO";
+                    break;
+                case 2:
+                    meses = "FEBRERO";
+                    break;
+                case 3:
+                    meses = "MARZO";
+                    break;
+                case 4:
+                    meses = "ABRIL";
+                    break;
+                case 5:
+                    meses = "MAYO";
+                    break;
+                case 6:
+                    meses = "JUNIO";
+                    break;
+                case 7:
+                    meses = "JULIO";
+                    break;
+                case 8:
+                    meses = "AGOSTO";
+                    break;
+                case 9:
+                    meses = "SETIEMBRE";
+                    break;
+                case 10:
+                    meses = "OCTUBRE";
+                    break;
+                case 11:
+                    meses = "NOVIEMBRE";
+                    break;
+                case 12:
+                    meses = "DICIEMBRE";
+                    break;
+            }
+            String tienda1 = "V1";
+            String tienda2 = "V2";
+            BigDecimal bonov1 = rec.calculoBonos(tienda1, ano.toString(), mes.toString());
+            BigDecimal bonov2 = rec.calculoBonos(tienda2, ano.toString(), mes.toString());
+            BigDecimal bonow = rec.calculoBonos(tienda1, ano.toString(), mes.toString());
+            parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
+            parametros.put("nombremes", meses);
+            parametros.put("anio", ano.toString());            
+            parametros.put("mes", mes.toString());
+            parametros.put("tienda1", tienda1);
+            parametros.put("tienda2", tienda2);
+            parametros.put("bonov1", bonov1);
+            parametros.put("bonov2", bonov2);
+            parametros.put("bonow", bonow);
+            File jasper = new File("D:/reporte/ventas/comision.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=Comisionxventas-" + mes + "-" + ano + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+
+            JRXlsExporter exporter = new JRXlsExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            exporter.exportReport();
+
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        }
+        con.close();
+    }
+
+    public void comisionesGestor(Usuario usuario) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
@@ -279,6 +427,7 @@ public class reportesBean implements Serializable {
                 parametros.put("comiter", comiter);
                 parametros.put("comicua", comicua);
                 parametros.put("meses", meses);
+                parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
                 if (empresa.equals("CR")) {
                     File jasper = new File("D:/reporte/consolidado/comisionescasco.jasper");
                     JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
@@ -736,12 +885,12 @@ public class reportesBean implements Serializable {
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
         Calendar cal = Calendar.getInstance();
-        parametros.put("fecha1", fecha1);        
+        parametros.put("fecha1", fecha1);
         cal.setTime(fecha2);
         cal.add(cal.DATE, 1);
         fecha2 = cal.getTime();
-        parametros.put("fecha2", fecha2);        
-        parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);        
+        parametros.put("fecha2", fecha2);
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
         File jasper = new File("D:/reporte/diario/pagos.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -766,7 +915,7 @@ public class reportesBean implements Serializable {
         Calendar cal = Calendar.getInstance();
         cal.setTime(fecha2);
         cal.add(cal.DATE, 1);
-        fecha2 = cal.getTime();        
+        fecha2 = cal.getTime();
         parametros.put("fecha2", fecha2);
         parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
         File jasper = new File("D:/reporte/diario/inicontado.jasper");
@@ -800,6 +949,30 @@ public class reportesBean implements Serializable {
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.addHeader("Content-disposition", "attachment; filename=TotalAnticipos.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsExporter exporter = new JRXlsExporter();
+        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        exporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+
+    public void exportarCartera() throws JRException, IOException, SQLException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        String uno = new String();
+        uno = "uno";
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("uno", uno);
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
+        File jasper = new File("D:/reporte/vencida/cabecera.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=TotalCartera.xls");
         ServletOutputStream stream = response.getOutputStream();
         JRXlsExporter exporter = new JRXlsExporter();
         exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);

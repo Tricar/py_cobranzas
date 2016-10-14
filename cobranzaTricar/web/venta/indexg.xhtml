@@ -28,7 +28,7 @@
                                             </span>                                            
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-
+                                            
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:commandButton action="#{credgestorBean.verGestores(loginbean.usuario)}" value="Ver gestores" immediate="true" icon="fa fa-child white" style="width: 180px"/>
@@ -49,7 +49,7 @@
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:commandButton action="#{credgestorBean.ingresar(loginbean.usuario.anexo)}" value="Ingresar Gestión" immediate="true" icon="fa fa-user-plus white" actionListener="#{ocupacionBean.limpiarlista()}" style="width: 180px"/>
                                         </div>
-                                    </div>
+                                    </div>                                    
                                 </div>
                             </div>
                             <p:dataTable id="tablalistar" var="visi" value="#{credgestorBean.visitashistorial}" 

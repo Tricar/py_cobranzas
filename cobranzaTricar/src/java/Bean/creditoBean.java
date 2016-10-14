@@ -59,6 +59,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.primefaces.context.RequestContext;
 import utiles.dbManager;
+import utiles.generadorCodigos;
 import utiles.inicial;
 import utiles.precio;
 
@@ -138,6 +139,7 @@ public class creditoBean implements Serializable {
     private BigDecimal montoref;
     private String codigoref;
     private List<Conceptos> todosconceptos = new ArrayList();
+    private generadorCodigos gencod = new generadorCodigos();
 
     @PostConstruct
     public void init() {
@@ -905,11 +907,12 @@ public class creditoBean implements Serializable {
     }
 
     public List<Letras> cargarLetrasArray(Credito cred) {
+        credito = cred;
         letrasBean letbean = new letrasBean();
         letraslista = new ArrayList();
 //        CreditoDao creditodao = new CreditoDaoImp();
 //        List<Letras> letritas = new ArrayList();
-        Calendar calendario = GregorianCalendar.getInstance();
+        //Calendar calendario = GregorianCalendar.getInstance();
 //        Date fecha = calendario.getTime();
 //        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
 //        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
@@ -944,7 +947,7 @@ public class creditoBean implements Serializable {
 //            }
 //            letrasdao.modificarLetra(get);
 //        }
-        return letraslista = letbean.mostrarSoloLetrasxCred(cred);
+        return letraslista = letbean.mostrarSoloLetrasxCred(credito);
     }
 
     public void cargarLetrasCotiza(Credito cred) {
@@ -1293,6 +1296,7 @@ public class creditoBean implements Serializable {
                         RequestContext.getCurrentInstance().execute("PF('dlgpagarini').show()");
 //                    pagbean.pagovarios(concepto);
                     } else {
+                        codigo = gencod.genCodigoLiquid(credito.getTienda());
                         btnaprobar = "Despachar";
                         return "/despacho/formdespacho.xhtml";
                     }
@@ -1357,14 +1361,13 @@ public class creditoBean implements Serializable {
     }
 
     public void despachar(Usuario usuario) {
-        CreditoDao credao = new CreditoDaoImp();
-        VehiculoDao vehiculodao = new VehiculoDaoImplements();
+        CreditoDao credao = new CreditoDaoImp();        
         Vehiculo vehiculo = new Vehiculo();
         try {
-            disabledespacho = true;
-            vehiculo = credito.getVehiculo();
-            vehiculo.setEstado("N");
-            vehiculodao.modificarVehiculo(vehiculo);
+            disabledespacho = true;            
+            String ultimo = codigo.substring(codigo.length()-1);
+            int corre = Integer.parseInt(ultimo);
+            credito.setCorrelativo(corre);
             credito.setLiqventa(codigo);
             credito.setEstado("DP");
             credito.setDespachado(usuario.getIdusuario());
@@ -2509,5 +2512,13 @@ public class creditoBean implements Serializable {
 
     public void setValuesi2aval(boolean valuesi2aval) {
         this.valuesi2aval = valuesi2aval;
+    }
+
+    public generadorCodigos getGencod() {
+        return gencod;
+    }
+
+    public void setGencod(generadorCodigos gencod) {
+        this.gencod = gencod;
     }
 }

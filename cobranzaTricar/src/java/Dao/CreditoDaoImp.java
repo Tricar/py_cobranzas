@@ -465,7 +465,7 @@ public class CreditoDaoImp implements CreditoDao {
     @Override
     public Integer creditoXaprobar(Session session) {
         String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'EM' and tienda = 'V1'";
-        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();        
         return (int) consulta;
     }
     
