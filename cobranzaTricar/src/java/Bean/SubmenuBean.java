@@ -33,10 +33,13 @@ public class SubmenuBean implements Serializable {
     private Transaction transaction;
 
     private Submenu submenu;
+    private Submenu submenus;
     private Perfil perfil;
     private Perfilmenu perfilmenu;
+    private Perfilmenu perfilmenus;
     private Perfilsubmenu perfilsubmenu;
     private List<Perfilmenu> listaperfilmenu;
+    private List<Perfilsubmenu> listaperfilsubmenu;
     private List<Submenu> listasubmenu;
     private List<Perfil> listaperfil;
     private List<Submenu> listasubmenufiltrado;
@@ -127,7 +130,6 @@ public class SubmenuBean implements Serializable {
             perfilsubmenuDao.insertar(perfilsubmenu);
             perfilmenu = new Perfilmenu();
         }
-
     }
 
     public void modificar() {
@@ -140,16 +142,15 @@ public class SubmenuBean implements Serializable {
             this.transaction = session.beginTransaction();
 
             SubmenuDao daotusuario = new SubmenuDaoImpl();
-            
 
             if (daotusuario.verByDifer(this.session, this.submenu.getIdsubmenu(), this.submenu.getSubmenu()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Submenu ya Existe."));
                 return;
             }
-            
+
             daotusuario.modificar(this.session, this.submenu);
-            modificarSubmenuMenu(this.submenu);
             this.transaction.commit();
+            modificarSubmenuMenu(submenu);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
             this.submenu = new Submenu();
 
@@ -164,20 +165,28 @@ public class SubmenuBean implements Serializable {
                 this.session.close();
             }
         }
-    }   
+    }
 
     public void modificarSubmenuMenu(Submenu submenu) {
+        PerfilDao perfilDao = new PerfilDaoImpl();
         PerfilmenuDao perfilmenuDao = new PerfilmenuDaoImpl();
         PerfilsubmenuDao perfilsubmenuDao = new PerfilsubmenuDaoImpl();
-        listaperfilmenu = perfilmenuDao.verMenus(submenu.getMenu());
+        SubmenuDao submenudao = new SubmenuDaoImpl();
+        listaperfil = perfilDao.verTodos();
         perfilsubmenu = new Perfilsubmenu();
-        for (int i = 0; i < listaperfilmenu.size(); i++) {
-            Perfilmenu get = listaperfilmenu.get(i);
-            perfilsubmenu.setPerfilmenu(get);
+        for (int i = 0; i < listaperfil.size(); i++) {
+            Perfil get = listaperfil.get(i);
+            perfilmenu = perfilmenuDao.verTodos(get, submenu.getMenu());
+            perfilmenus = perfilmenuDao.verPerfilMenu(get, submenu.getIdmenuanterior());
+            perfilsubmenu = perfilsubmenuDao.verTodos(perfilmenus, submenu);
+            perfilsubmenu.setPerfilmenu(perfilmenu);
             perfilsubmenuDao.modificarSolo(perfilsubmenu);
             perfilmenu = new Perfilmenu();
+            perfilmenus = new Perfilmenu();
+            perfilsubmenu = new Perfilsubmenu();
         }
-
+        submenu.setIdmenuanterior(submenu.getMenu().getIdmenu());
+        submenudao.modificarSolo(submenu);
     }
 
     public void eliminar() {
@@ -354,6 +363,30 @@ public class SubmenuBean implements Serializable {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
+    }
+
+    public List<Perfilsubmenu> getListaperfilsubmenu() {
+        return listaperfilsubmenu;
+    }
+
+    public void setListaperfilsubmenu(List<Perfilsubmenu> listaperfilsubmenu) {
+        this.listaperfilsubmenu = listaperfilsubmenu;
+    }
+
+    public Submenu getSubmenus() {
+        return submenus;
+    }
+
+    public void setSubmenus(Submenu submenus) {
+        this.submenus = submenus;
+    }
+
+    public Perfilmenu getPerfilmenus() {
+        return perfilmenus;
+    }
+
+    public void setPerfilmenus(Perfilmenu perfilmenus) {
+        this.perfilmenus = perfilmenus;
     }
 
 }

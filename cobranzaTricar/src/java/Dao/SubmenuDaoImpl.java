@@ -19,8 +19,8 @@ import org.hibernate.Session;
 public class SubmenuDaoImpl implements SubmenuDao {
 
     @Override
-    public Submenu verByCodigo(Session session, Integer codigoUsuario) throws Exception {
-        return (Submenu) session.get(Submenu.class, codigoUsuario);
+    public Submenu verByCodigo(Session session, Integer idsubmenu) throws Exception {
+        return (Submenu) session.get(Submenu.class, idsubmenu);
     }
 
     @Override
@@ -103,6 +103,33 @@ public class SubmenuDaoImpl implements SubmenuDao {
             }
         }
         return lista;
+    }
+
+    @Override
+    public Submenu verByID(Session session, Integer idsubmenu) throws Exception {
+        String hql = "FROM Submenu WHERE idsubmenu=:idsubmenu";
+        Query query = session.createQuery(hql);
+        query.setParameter("idsubmenu", idsubmenu);
+        Submenu submenu = (Submenu) query.uniqueResult();
+        return submenu;
+    }
+
+    @Override
+    public void modificarSolo(Submenu submenu) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.update(submenu);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
 }

@@ -20,6 +20,9 @@
         <property name="created" type="timestamp">
             <column name="created" length="23" not-null="true" />
         </property>
+        <property name="idmenuanterior" type="java.lang.Integer">
+            <column name="idmenuanterior"/>
+        </property>
         <many-to-one name="menu" class="Model.Menu" fetch="select">
             <column name="idmenu" />
         </many-to-one>   

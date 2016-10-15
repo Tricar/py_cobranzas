@@ -25,6 +25,7 @@ public class Submenu implements java.io.Serializable {
     private String url;
     private String icon;
     private Date created;
+    private Integer idmenuanterior;
     private Menu menu;
 
     public Submenu() {
@@ -34,12 +35,13 @@ public class Submenu implements java.io.Serializable {
         this.idsubmenu = idsubmenu;
     }
 
-    public Submenu(Integer idsubmenu, String submenu, String url, String icon, Date created, Menu menu) {
+    public Submenu(Integer idsubmenu, String submenu, String url, String icon, Date created, Integer idmenuanterior, Menu menu) {
         this.idsubmenu = idsubmenu;
         this.submenu = submenu;
         this.url = url;
         this.icon = icon;
         this.created = created;
+        this.idmenuanterior = idmenuanterior;
         this.menu = menu;
     }
 
@@ -61,6 +63,15 @@ public class Submenu implements java.io.Serializable {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    @Column(name = "idmenuanterior")
+    public Integer getIdmenuanterior() {
+        return this.idmenuanterior;
+    }
+
+    public void setIdmenuanterior(Integer idmenuanterior) {
+        this.idmenuanterior = idmenuanterior;
     }
 
     @Column(name = "submenu", nullable = false, length = 50)

@@ -21,8 +21,9 @@ public interface SubmenuDao {
     public List<Submenu> verTodoByMenu(Session session, Integer menu) throws Exception;
     public Submenu verByCodigo(Session session, Integer idperfil) throws Exception;
     public Submenu verByDescripcion(Session session, String descripcion) throws Exception;
+    public Submenu verByID(Session session, Integer idsubmenu) throws Exception;
     public Submenu verByDifer(Session session,Integer idperfil, String descripcion) throws Exception;
     public boolean modificar(Session session, Submenu perfil) throws Exception;
     public boolean eliminar (Session session, Submenu perfil) throws Exception;
-    
+    public void modificarSolo(Submenu submenu);
 }

@@ -110,8 +110,6 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
             query.setParameter("perfil", idperfil);
             query.setParameter("menu", idmenu);
             perfilmenu = (Perfilmenu) query.uniqueResult();
-            System.out.println("idperfil: " + idperfil);
-            System.out.println("idmenu: " + idmenu);
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
@@ -180,6 +178,28 @@ public class PerfilmenuDaoImpl implements PerfilmenuDao {
             }
         }
         return lista;
+    }
+
+    @Override
+    public Perfilmenu verPerfilMenu(Perfil perfil, Integer idmenu) {
+        Session session = null;
+        Perfilmenu perfilmenu = new Perfilmenu();
+        try {
+            Integer idperfil = perfil.getIdperfil();
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Perfilmenu where idperfil=:perfil and idmenu=:menu");
+            query.setParameter("perfil", idperfil);
+            query.setParameter("menu", idmenu);
+            perfilmenu = (Perfilmenu) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return perfilmenu;
     }
 
 }
