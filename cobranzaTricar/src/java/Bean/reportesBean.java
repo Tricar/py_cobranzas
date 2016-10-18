@@ -689,6 +689,7 @@ public class reportesBean implements Serializable {
         parametros.put("vencidaV3", venv3);
         parametros.put("totalV3", totv3);
         parametros.put("fecha", fecha);
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
         File jasper = new File("D:/reporte/consolidado/consolidado.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -732,6 +733,7 @@ public class reportesBean implements Serializable {
         parametros.put("vencidaV3", venv3);
         parametros.put("totalV3", totv3);
         parametros.put("fecha", fecha);
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
         File jasper = new File("D:/reporte/consolidado/consolidado.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -775,6 +777,7 @@ public class reportesBean implements Serializable {
         parametros.put("vencidaV3", venv3);
         parametros.put("totalV3", totv3);
         parametros.put("fecha", fecha);
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
         File jasper = new File("D:/reporte/consolidado/consolsedna.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -822,6 +825,7 @@ public class reportesBean implements Serializable {
         parametros.put("tienda2", "V2");
         parametros.put("tienda3", "YA");
         parametros.put("empresa", "CA");
+        parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
         File jasper = new File("D:/reporte/consolidado/morosidad.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();

@@ -1361,15 +1361,18 @@ public class creditoBean implements Serializable {
     }
 
     public void despachar(Usuario usuario) {
-        CreditoDao credao = new CreditoDaoImp();        
-        Vehiculo vehiculo = new Vehiculo();
+        CreditoDao credao = new CreditoDaoImp();                
         try {
             disabledespacho = true;            
-            String ultimo = codigo.substring(codigo.length()-1);
+            String ultimo = codigo.substring(codigo.length()-2);            
             int corre = Integer.parseInt(ultimo);
             credito.setCorrelativo(corre);
+            if (credito.getCondicionpago().equals("CO")){
+                credito.setFecaprob(credito.getFechareg());
+                credito.setCalificacion("CN");
+            }
             credito.setLiqventa(codigo);
-            credito.setEstado("DP");
+            credito.setEstado("DP");            
             credito.setDespachado(usuario.getIdusuario());
             credao.modificarVenta(credito);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se despachó la unidad"));

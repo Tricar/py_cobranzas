@@ -53,13 +53,13 @@ public class Main {
         //            }
         //            System.out.println("fecha :"+i+" "+fechas.get(i).toString());
         //        }
-        recorrerCreditos rec = new recorrerCreditos();
-        BigDecimal suma = rec.totalxMes("V1", "2016", "09");
-        System.out.println("suma :"+suma);
-        suma = rec.calculoBonos("V1", "2016", "09");
-        System.out.println("Bono :"+suma);
-        suma = rec.calculoBonosW("V1", "2016", "09");
-        System.out.println("Bono :"+suma);
+        generadorCodigos gen = new generadorCodigos();
+        String codigo = gen.genCodigoLiquid("V2");
+        System.out.println("codigo: "+codigo);
+        String ultimo = codigo.substring(codigo.length()-2);
+        System.out.println("ultimo: "+ultimo);
+        int corre = Integer.parseInt(ultimo);
+        System.err.println("entero corre: "+corre);
     }
 
     public static int esDomingo(Calendar d) {

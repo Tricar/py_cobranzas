@@ -43,7 +43,7 @@ public class TareaDiaria {
             System.out.println("credito " + cred.getLiqventa() + " anexo" + cred.getAnexo().getNombres());
             int contvn = 0;
             int contpend = 0;
-            if (!cred.getEstado().equals("EM") && !cred.getEstado().equals("AP")) {
+            if (cred.getEstado().equals("DP") && cred.getCondicionpago().equals("CD")) {
                 if (!cred.getCalificacion().equals("CN")) {
                     letritas = letrasdao.mostrarLetrasXCred(cred);
                     for (int j = 0; j < letritas.size(); j++) {
