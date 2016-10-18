@@ -6,6 +6,7 @@ import Model.Anexo;
 import Model.Articulo;
 import Model.Credito;
 import Model.Creditoaval;
+import Model.Operaciondetalle;
 import Model.Usuario;
 import java.io.File;
 import java.io.IOException;
