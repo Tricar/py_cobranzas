@@ -122,6 +122,9 @@
         <property name="anterior" type="java.lang.Integer">
             <column name="anterior"  />
         </property>
+        <property name="correlativo" type="java.lang.Integer">
+            <column name="correlativo"  />
+        </property>
         <property name="resena" type="string">
             <column name="resena" length="400" />
         </property>

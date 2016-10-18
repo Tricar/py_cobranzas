@@ -65,6 +65,9 @@ public class precio {
                 case "VX150GY-11A":
                     precio = BigDecimal.valueOf(4890.00);
                     break;
+                case "VX150GY-11":
+                    precio = BigDecimal.valueOf(3890.00);
+                    break;
                 case "VX200GY-V2":
                     precio = BigDecimal.valueOf(4590.00);
                     break;

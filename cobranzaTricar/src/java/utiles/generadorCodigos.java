@@ -4,17 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 public class generadorCodigos {
 
-    private String vcerosart = "";
-    private String vcodigoart = "";
-    private String vcodigofinalarticulo = "";
-
-    public String genCodProf() throws SQLException {
+    public String genCodigoLiquid(String tienda) throws SQLException {
         int vcorre = 1;
         String sql = "";
-        vcodigoart = "";
+        String correlativo = "";
+        String ceros = "";
+        String codigo="";
 
         try {
             dbManager dbm = new dbManager();
@@ -22,7 +21,7 @@ public class generadorCodigos {
             if (con == null) {
                 throw new NullPointerException();
             }
-         //   sql = "SELECT correlativo FROM articulo where codtipart='" + objtipoarticulo.getCodtipart() + "' ORDER BY correlativo";
+            sql = "SELECT correlativo FROM credito where DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND tienda = '" + tienda + "' ORDER BY correlativo";
             PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
             ResultSet rs = st.executeQuery();
             rs.afterLast();
@@ -31,30 +30,31 @@ public class generadorCodigos {
                 vcorre++;
             }
             for (int i = 1; i < 4 - String.valueOf(vcorre).length(); i++) {
-                vcerosart = vcerosart + "0";
+                ceros = ceros + "0";
             }
-
-            vcodigoart = vcerosart + vcorre;
+            correlativo = ceros + vcorre;
             rs.close();
             st.close();
             con.close();
-            System.out.println(vcerosart + vcorre);
-
-           // vcodigofinalarticulo = objtipoarticulo.getAbreviatura() + vcodigoart;
-
+            // vcodigofinalarticulo = objtipoarticulo.getAbreviatura() + vcodigoart;
         } catch (Exception e) {
             e.getMessage();
             System.out.println(e.getMessage());
         }
-        return (vcodigofinalarticulo);
-    }
-
-
-    public String getVcodigoart() {
-        return vcodigoart;
-    }
-
-    public void setVcodigoart(String vcodigoart) {
-        this.vcodigoart = vcodigoart;
+        Calendar fecha = Calendar.getInstance();
+        int variable= fecha.get(Calendar.YEAR);
+        String añoletras= Integer.toString(variable);
+        añoletras = añoletras.substring(2);
+        if(tienda.equals("V1")){
+            codigo = "VA";
+        } else {
+            codigo = "S";
+        }
+        codigo = codigo.concat(añoletras);
+        variable = fecha.get(Calendar.MONTH)+1;
+        String mesletras = Integer.toString(variable);
+        codigo = codigo.concat(mesletras).concat(correlativo);        
+        System.out.println("Codigo final: "+codigo);
+        return (codigo);
     }
 }

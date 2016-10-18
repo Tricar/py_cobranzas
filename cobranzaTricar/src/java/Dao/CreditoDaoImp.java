@@ -450,14 +450,14 @@ public class CreditoDaoImp implements CreditoDao {
     @Override
     public Integer ventasXdia(Session session) {
         //String hql = "SELECT COUNT(*) FROM Credito WHERE datepart(wk, fechareg) = datepart(wk, getdate()) and datepart(year, fechareg) = datepart(year, getdate() and tienda = 'V1')";
-        String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'DP' AND tienda = 'V1'";
+        String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fecaprob) = DATEPART(month, getdate()) AND DATEPART(year, fecaprob) = DATEPART(year, GETDATE()) AND estado = 'DP' AND tienda = 'V1' AND estadoref is NULL";
         int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
         return (int) consulta;
     }
 
     @Override
     public Integer ventasXmes(Session session) {
-        String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'DP' AND tienda = 'V2'";
+        String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fecaprob) = DATEPART(month, getdate()) AND DATEPART(year, fecaprob) = DATEPART(year, GETDATE()) AND estado = 'DP' AND tienda = 'V2' AND estadoref is NULL";
         int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
         return (int) consulta;
     }
@@ -465,7 +465,7 @@ public class CreditoDaoImp implements CreditoDao {
     @Override
     public Integer creditoXaprobar(Session session) {
         String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'EM' and tienda = 'V1'";
-        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();        
         return (int) consulta;
     }
     

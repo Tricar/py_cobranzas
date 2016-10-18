@@ -36,26 +36,25 @@
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:inputText id="txtcodigo" value="#{ventaBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" 
-                                                         style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito"/>
+                                                         style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de venta"/>
                                         </div>
                                     </div>
                                     <div class="ui-grid-row">                                        
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <ui:remove><div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Venta Libre:" />
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:selectBooleanButton value="#{ventaBean.valuesi}" onLabel="Si" offLabel="No" onIcon="fa fa-check blue" offIcon="fa fa-close red">
                                                 <p:ajax update="msg12 txtfecha2" listener="#{ventaBean.addMessageini2}" />
                                             </p:selectBooleanButton>
-                                        </div>
+                                        </div></ui:remove>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Buscar Vendedor:" for="txtfecha2" />
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:autoComplete disabled="#{ventaBean.valuesi2}" id="txtfecha2" value="#{ventaBean.credito.codven}" completeMethod="#{anexoBean.filtrarVendedor}" 
                                                             var="vend" itemLabel="#{vend.nombres}" itemValue="#{vend}" required="true" requiredMessage="Ingrese vendedor">
-                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                <p:ajax event="itemSelect" process="@form" />
+                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                                                
                                                 <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
                                                 <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
                                             </p:autoComplete>

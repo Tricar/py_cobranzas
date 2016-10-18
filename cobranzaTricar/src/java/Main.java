@@ -1,26 +1,65 @@
-
-import Clases.n2t;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import utiles.generadorCodigos;
+import utiles.recorrerCreditos;
 
 public class Main {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException{
-        n2t numero;
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        int num;
-        String res;
-        System.out.print("Ingrese numero : ");
-        num = Integer.parseInt(in.readLine());
-        numero = new n2t(num);
-        res = numero.convertirLetras(num);
-        System.out.print(res);
-        System.out.println("\n");
+    public static void main(String[] args) throws SQLException {
+        //        List<Date> fechas = new ArrayList();
+        //        Date fecha = new Date();
+        //        int nletras = 10;
+        //        Calendar cal = Calendar.getInstance();
+        //        cal.setTime(fecha);
+        //        cal.add(cal.DATE, 14);
+        //        int sumar = 0;
+        //        int inicial = 0;
+        //        int fin = 0;
+        //        int difdays = 0;
+        //        boolean sw = true;
+        //        for (int i = 0; i < nletras; i++) {
+        //            if (sw) {
+        //                inicial = cal.get(cal.DATE);
+        //                int j = 1;
+        //                cal.add(cal.MONTH, j);
+        //                if (esDomingo(cal) == 1){
+        //                    Calendar temp = Calendar.getInstance();
+        //                    temp = cal;
+        //                    temp.add(temp.DATE,1);
+        //                    fechas.add(temp.getTime());                    
+        //                    cal.add(cal.DATE, -1);
+        //                } else {
+        //                    fechas.add(cal.getTime());                    
+        //                }                
+        //                fin = cal.get(cal.DATE);                
+        //            }
+        //            sw = true;
+        //            if (inicial - fin != 0) {                
+        //                difdays = inicial - fin;
+        //                sumar = fin + difdays;
+        //                cal.add(cal.DATE, sumar);
+        //                fechas.add(cal.getTime());
+        //                inicial = 0;
+        //                fin = 0;
+        //                sw = false;
+        //            }
+        //            System.out.println("fecha :"+i+" "+fechas.get(i).toString());
+        //        }
+        generadorCodigos gen = new generadorCodigos();
+        String codigo = gen.genCodigoLiquid("V2");
+        System.out.println("codigo: "+codigo);
+        String ultimo = codigo.substring(codigo.length()-2);
+        System.out.println("ultimo: "+ultimo);
+        int corre = Integer.parseInt(ultimo);
+        System.err.println("entero corre: "+corre);
     }
 
     public static int esDomingo(Calendar d) {

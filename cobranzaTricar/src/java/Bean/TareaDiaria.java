@@ -26,7 +26,7 @@ public class TareaDiaria {
     private List<Letras> letraslista = new ArrayList();
     private List<Credito> creditos = new ArrayList();
 
-//    @Schedule(hour = "*", minute = "*/1", second = "0", persistent = false) //correr cada minuto
+    //@Schedule(hour = "*", minute = "*/1", second = "0", persistent = false) //correr cada minuto
     @Schedule(hour = "01", minute = "00", second = "0", persistent = false)
     public void someDailyJob() {
         letraslista = new ArrayList();
@@ -35,32 +35,26 @@ public class TareaDiaria {
         creditos = credao.mostrarVentas();
         Calendar calendario = GregorianCalendar.getInstance();
         Date fecha = calendario.getTime();
-//        BigDecimal moraant = new BigDecimal(BigInteger.ZERO);
-//        BigDecimal moraact = new BigDecimal(BigInteger.ZERO);
         BigDecimal interes = new BigDecimal(BigInteger.ZERO);
         BigDecimal factormora = new BigDecimal(0.002);
-        //BigDecimal cien = new BigDecimal(100);
-        //cinco = cinco.divide(cien);
         LetrasDao letrasdao = new LetrasDaoImplements();
         for (int i = 0; i < creditos.size(); i++) {
             Credito cred = creditos.get(i);
             System.out.println("credito " + cred.getLiqventa() + " anexo" + cred.getAnexo().getNombres());
             int contvn = 0;
-            if (!cred.getEstado().equals("EM")) {
+            int contpend = 0;
+            if (cred.getEstado().equals("DP") && cred.getCondicionpago().equals("CD")) {
                 if (!cred.getCalificacion().equals("CN")) {
                     letritas = letrasdao.mostrarLetrasXCred(cred);
                     for (int j = 0; j < letritas.size(); j++) {
                         Letras letras = letritas.get(j);
-//                    if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 0) {
-//                        letras.setEstado("CN");
-//                        contcn++;
-//                    } else {
-                        if (!letras.getDescripcion().equals("ND")) {                            
-                            if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 1) {                                
+                        if (!letras.getDescripcion().equals("ND")) {
+                            if (letras.getSaldo().compareTo(BigDecimal.ZERO) == 1) {
+                                contpend++;
                                 if (letras.getFecven().before(fecha)) {                                    
-                                    if (Diffdays(letras.getFecven()) >= 1) {                                        
+                                    if (Diffdays(letras.getFecven()) >= 1) {
                                         letras.setEstado("VN");
-                                        letras.setDiffdays(Diffdays(letras.getFecven()));                                        
+                                        letras.setDiffdays(Diffdays(letras.getFecven()));
                                         letras.setCobradonc(true);
                                         contvn++;
                                     } else {
@@ -68,26 +62,18 @@ public class TareaDiaria {
                                     }
                                 }
                             }
-//                        moraant = letras.getMora();
-//                        moraact = (letras.getSaldo().multiply(interes)).setScale(1, RoundingMode.UP);
-                            if (letras.getEstado().equals("VN")) {                                
-                                if (letras.getDiffdays() > 8) {                                    
+                            if (letras.getEstado().equals("VN")) {
+                                if (letras.getDiffdays() > 8) {
                                     interes = factormora.multiply(BigDecimal.valueOf(letras.getDiffdays())).setScale(5, RoundingMode.HALF_DOWN);
-                                    letras.setMora(letras.getSaldo().multiply(interes).setScale(0, RoundingMode.UP));                                    
+                                    letras.setMora(letras.getSaldo().multiply(interes).setScale(0, RoundingMode.UP));
                                 } else {
                                     letras.setMora(BigDecimal.ZERO);
                                 }
-//                            if (moraact.compareTo(moraant) == -1) {
-//                                letras.setMora(moraant);
-//                            } else {
-//                                letras.setMora(moraact);
-//                            }
                             }
                             letrasdao.modificarLetra(letras);
                         }
-//                    }
                     }
-                    if (contvn == letritas.size()) {                        
+                    if (contvn == contpend) {
                         cred.setCalificacion("VN");
                     } else {
                         cred.setCalificacion("PN");
@@ -98,12 +84,7 @@ public class TareaDiaria {
         }
         System.out.println("ejecuté toda la linea de actualizar los creditos");
     }
-
-//    @Schedule(hour = "*", minute = "*/1", second = "0", persistent = false)
-//    public void someMinuteJob() {
-//        // Do your job here which should run every 15 minute of hour.
-//        System.out.println("Imprimir cada 1 mins");
-//    }
+    
     public long Diffdays(Date fechavenc) {
         long mili = fechavenc.getTime();
         long mili2 = new Date().getTime();

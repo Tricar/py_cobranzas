@@ -65,6 +65,7 @@ public class Credito implements java.io.Serializable {
     private Boolean refinanciado;
     private String estadoref;
     private Integer anterior;
+    private Integer correlativo;
     private String resena;
     private String obsver;
     private Set letrases = new HashSet(0);
@@ -85,7 +86,7 @@ public class Credito implements java.io.Serializable {
         this.interes = interes;
     }
 
-    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Date fecaprob, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, Date fecsinicial, BigDecimal sinicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, String resena, String obsver, Set letrases, Set conceptoses) {
+    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Date fecaprob, Integer aprobado, Integer elaborado, Integer despachado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, Date fecsinicial, BigDecimal sinicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, Integer correlativo, String resena, String obsver, Set letrases, Set conceptoses) {
         this.idventa = idventa;
         this.anexo = anexo;
         this.vehiculo = vehiculo;
@@ -124,6 +125,7 @@ public class Credito implements java.io.Serializable {
         this.refinanciado = refinanciado;
         this.estadoref = estadoref;
         this.anterior = anterior;
+        this.correlativo = correlativo;
         this.resena = resena;
         this.obsver = obsver;
         this.letrases = letrases;
@@ -490,6 +492,15 @@ public class Credito implements java.io.Serializable {
 
     public void setAnterior(Integer anterior) {
         this.anterior = anterior;
+    }
+    
+    @Column(name = "correlativo")
+    public Integer getCorrelativo() {
+        return this.correlativo;
+    }
+
+    public void setCorrelativo(Integer correlativo) {
+        this.correlativo = correlativo;
     }
     
     @Column(name = "resena", length = 400)
