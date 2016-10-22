@@ -17,5 +17,11 @@
         <property name="descripcion" type="string">
             <column name="descripcion" length="50" />
         </property>
+        <property name="correlativo" type="int">
+            <column name="correlativo" />
+        </property>
+        <property name="tienda" type="string">
+            <column name="tienda" length="2" />
+        </property>        
     </class>
 </hibernate-mapping>
