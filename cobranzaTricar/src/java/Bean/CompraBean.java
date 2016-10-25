@@ -58,7 +58,7 @@ public class CompraBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             ArticuloDao productodao = new ArticuloDaoImp();
             this.transaction = this.session.beginTransaction();
-            this.listaproducto = productodao.verTodo(this.session);
+            this.listaproducto = productodao.verTodos(this.session);
             this.transaction.commit();
             return listaproducto;
         } catch (Exception e) {
@@ -90,7 +90,7 @@ public class CompraBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 1, null, new BigDecimal("0"), null, null, new BigDecimal("0"), null, null));
+            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 0, null, new BigDecimal("0"), null, null, new BigDecimal("0"), null, null));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -224,11 +224,11 @@ public class CompraBean implements Serializable {
     public String index() {
         listaventa = new ArrayList();
         listaventadetalle = new ArrayList();
-        return "/venta/compra";
+        return "/operacion/compra";
     }
 
     public String nuevo() {
-        return "/venta/fromcompra";
+        return "/operacion/fromcompra";
     }
 
     public void nuevoanexo() {
@@ -263,7 +263,9 @@ public class CompraBean implements Serializable {
             daotanexo.registrar(this.session, this.anexo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-            this.anexo = new Anexo();
+            this.anexo = new Anexo();            
+            RequestContext.getCurrentInstance().update("frmRealizarVentas");
+            RequestContext.getCurrentInstance().execute("PF('dlginsert').hide()");
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();

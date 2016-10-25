@@ -96,6 +96,11 @@ public class ArticuloBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Repuesto/Servicio ya esta registrado."));
                 articulo = new Articulo();
                 return;
+            } 
+            if (this.articulo.getPrecioventa().equals(new BigDecimal("0")) || this.articulo.getPrecioventa().equals(new BigDecimal("0.00")) || this.articulo.getPrecioventa().equals(new BigDecimal("0.0"))) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El precio debe ser mayor a cero."));
+                articulo = new Articulo();
+                return;
             }
             this.articulo.setDescripcion1(descripcionarticulo);
             linkDao.modificar(this.session, this.articulo);
@@ -159,7 +164,7 @@ public class ArticuloBean implements Serializable {
             }
         }
     }
-    
+
     public List<Articulo> filtrarArticulo(String name) {
         List<Articulo> query = new ArrayList<Articulo>();
         ArticuloDao anexoDao = new ArticuloDaoImp();
@@ -190,14 +195,18 @@ public class ArticuloBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             ArticuloDao linkDao = new ArticuloDaoImp();
-            if (this.articulo.getModelo() == null || this.articulo.getColor() == null) {
-                if (this.articulo.getModelo() == null) {
+            if (this.articulo.getModelo() == null) {
+                if (this.articulo.getColor() == null) {
+                    descripcionarticulo = this.articulo.getDescripcion2();
+                } else {
                     descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getColor().getColor();
-                } else if (this.articulo.getColor() == null) {
-                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
                 }
-            } else if (this.articulo.getModelo() == null && this.articulo.getColor() == null) {
-                descripcionarticulo = this.articulo.getDescripcion2();
+            } else if (this.articulo.getColor() == null) {
+                if (this.articulo.getModelo() == null) {
+                    descripcionarticulo = this.articulo.getDescripcion2();
+                } else {
+                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
+                }                
             } else {
                 descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo() + " " + this.articulo.getColor().getColor();
             }

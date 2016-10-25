@@ -145,4 +145,14 @@ public class ArticuloDaoImp implements ArticuloDao {
         return true;
     }
 
+    @Override
+    public List<Articulo> verTodos(Session session) throws Exception {
+        String hql = "FROM Articulo where idtipoarticulo = 1";
+        Query query = session.createQuery(hql);
+
+        List<Articulo> lista = (List<Articulo>) query.list();
+
+        return lista;
+    }
+
 }

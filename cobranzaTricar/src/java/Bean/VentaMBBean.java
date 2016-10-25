@@ -98,7 +98,7 @@ public class VentaMBBean implements Serializable {
             ArticuloDao productodao = new ArticuloDaoImp();
             this.transaction = this.session.beginTransaction();
             this.producto = productodao.getByIdProducto(this.session, idProducto);
-            if (this.producto.getCantidad() == 0) {
+            if (this.producto.getCantidad() == 0 && this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No hay Stock para el articulo."));
                 RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                 return;
@@ -111,7 +111,7 @@ public class VentaMBBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, 1, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
+            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, 0, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -186,7 +186,7 @@ public class VentaMBBean implements Serializable {
             }
             for (Operaciondetalle item : this.listaventadetalle) {
                 this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
-                if (item.getCantidad() > this.producto.getCantidad()) {
+                if (item.getCantidad() > this.producto.getCantidad() && this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock de uno de los articulo no es suficiente."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
@@ -222,8 +222,10 @@ public class VentaMBBean implements Serializable {
                 item.setArticulo(this.producto);
                 item.setCantidadanterior(this.producto.getCantidad());
                 ventadetalledao.insertar(this.session, item);
-                this.producto.setCantidad(this.producto.getCantidad() - item.getCantidad());
-                productodao.modificar(session, this.producto);
+                if (this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
+                    this.producto.setCantidad(this.producto.getCantidad() - item.getCantidad());
+                    productodao.modificar(session, this.producto);
+                }
             }
             this.transaction.commit();
             this.listaventadetalle = new ArrayList<>();
@@ -252,7 +254,7 @@ public class VentaMBBean implements Serializable {
     public String index() {
         listaventa = new ArrayList();
         listaventadetalle = new ArrayList();
-        return "/venta/ventamb";
+        return "/operacion/venta";
     }
 
     public void nuevoanexo() {
@@ -262,7 +264,7 @@ public class VentaMBBean implements Serializable {
     }
 
     public String nuevo() {
-        return "/venta/fromventa";
+        return "/operacion/fromventa";
     }
 
     public List<Operaciondetalle> cargarDetalleArray(Operacion compra) {
@@ -467,11 +469,13 @@ public class VentaMBBean implements Serializable {
             ArticuloDao productodao = new ArticuloDaoImp();
             OperacionDao ventadao = new OperacionDaoImp();
             this.producto = productodao.getByCodigoBarras(this.session, this.ventadetalle.getCodigoproducto());
-            this.producto.setCantidad(this.ventadetalle.getCantidadanterior());
-            this.producto.setPreciocompra(this.ventadetalle.getPreciocompraanterior());
-            this.producto.setPrecioventa(this.ventadetalle.getPrecioventaanterior());
-            this.producto.setCostopromedio(this.ventadetalle.getCostopromedioanterior());
-            productodao.modificar(session, this.producto);
+            if (this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
+                this.producto.setCantidad(this.ventadetalle.getCantidadanterior());
+                this.producto.setPreciocompra(this.ventadetalle.getPreciocompraanterior());
+                this.producto.setPrecioventa(this.ventadetalle.getPrecioventaanterior());
+                this.producto.setCostopromedio(this.ventadetalle.getCostopromedioanterior());
+                productodao.modificar(session, this.producto);
+            }
             this.venta = ventadao.verByCodigo(this.session, this.ventadetalle.getOperacion().getIdoperacion());
             this.venta.setMontototal(this.venta.getMontototal().subtract(this.ventadetalle.getPreciototal()));
             ventadao.modificar(session, this.venta);
@@ -529,9 +533,9 @@ public class VentaMBBean implements Serializable {
         BigDecimal partedecimalbig = numero.subtract(parteenterabig);
         BigDecimal cien = new BigDecimal(100);
         n2t obj = new n2t();
-        System.out.println("partentera: "+partentera);
-        System.out.println("parteenterabig: "+parteenterabig);
-        System.out.println("partedecimalbig: "+partedecimalbig);
+        System.out.println("partentera: " + partentera);
+        System.out.println("parteenterabig: " + parteenterabig);
+        System.out.println("partedecimalbig: " + partedecimalbig);
 
         if (partedecimalbig.setScale(1, RoundingMode.DOWN).compareTo(BigDecimal.ZERO) == 0) {
             numeroletras = obj.convertirLetras(partentera) + "  CON  " + "00/100 SOLES";
@@ -539,6 +543,92 @@ public class VentaMBBean implements Serializable {
         }
         numeroletras = obj.convertirLetras(partentera) + "  CON  " + partedecimalbig.multiply(cien).setScale(0) + "/100 SOLES";
         return numeroletras;
+    }
+
+    public void cargarPago(int codigoUsuario) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            OperacionDao ventadao = new OperacionDaoImp();
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            this.venta = ventadao.verByCodigos(codigoUsuario);
+
+            this.transaction.commit();
+
+            RequestContext.getCurrentInstance().update("frmEditar:panelEditar");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEditar').show()");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void Pagar(Usuario usuario) {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            OperacionDao ventadao = new OperacionDaoImp();
+            Caja caja = new Caja();
+            Pagos pago = new Pagos();
+            PagosDao pagosdao = new PagosDaoImp();
+            CajaDao cajadao = new CajaDaoImp();
+            String codigo = this.venta.getCodigo();
+
+            if (ventadao.verByCodigoVenta(this.venta.getCodigo()) != null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Codigo ya Existe."));
+                return;
+            }
+            this.venta = ventadao.verByCodigos(this.venta.getIdoperacion());
+
+            caja = cajadao.veryId(12);
+            caja.setTotal(caja.getTotal().add(this.venta.getMontototal()));
+            cajadao.modificarCaja(caja);
+
+            Date d = new Date();
+            pago.setOperacion(codigo);
+            pago.setMonto(this.venta.getMontototal());
+            pago.setTipo("VE");
+            pago.setUsuario(usuario.getIdusuario());
+            pago.setFecreg(d);
+            pago.setCaja(caja);
+            pagosdao.insertarPago(pago);
+
+            this.venta.setCodigo(codigo);
+            ventadao.modificar(this.session, this.venta);
+            this.transaction.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satifactorio."));
+            this.venta = new Operacion();
+            this.cargarVentaAtendida();
+            RequestContext.getCurrentInstance().update("formMostrar");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEditar').hide()");
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            this.venta = new Operacion();
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
     }
 
     public void Pago(String codigo, Integer tipoventa) throws JRException, NamingException, SQLException, IOException {
@@ -549,8 +639,8 @@ public class VentaMBBean implements Serializable {
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("numeroorden", codigo);
+        this.venta = ventadao.verByCodigoVenta(codigo);
         if (tipoventa == 2) {
-            this.venta = ventadao.verByCodigoVenta(codigo);
             String pagoletra = convertir.convertirLetras(this.venta.getMontototal().intValue());
             File jasper = new File("D:/reporte/boleta.jasper");
             parametros.put("letra", pagoletra);
@@ -581,10 +671,11 @@ public class VentaMBBean implements Serializable {
             FacesContext.getCurrentInstance().responseComplete();
             con.close();
         }
-        this.venta = ventadao.verByCodigoVenta(codigo);
         this.venta.setEstado(1);
         ventadao.modificarOD(this.venta);
-        this.listaventa = new ArrayList<>();
+        this.venta = new Operacion();
+        this.cargarVentaAtendida();
+        RequestContext.getCurrentInstance().update("formMostrar");
     }
 
     public Articulo getProducto() {

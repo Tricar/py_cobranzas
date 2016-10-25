@@ -16,7 +16,6 @@
             <h:form id="frmRealizarVentas">
                 <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
                     <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                        <p:growl id="mensajeGeneral" showDetail="true"/>
                         <div class="layout-portlets-box">
                             <div class="Container100 ui-fluid">
                                 <div class="ContainerIndent">
@@ -108,12 +107,13 @@
                         </div>
                         <hr/>
                         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                            <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
                             <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                                 <p:dataTable id="tablaListaProductosVenta" value="#{compraBean.listaventadetalle}" var="detalle">
-                                    <p:column headerText="CODIGO DE BARRA" width="10%" style="text-align: center">
+                                    <p:column headerText="CODIGO" width="10%" style="text-align: center">
                                         <h:outputText value="#{detalle.codigoproducto}"/>
                                     </p:column>
-                                    <p:column headerText="SERVICIO Y REPUESTO">
+                                    <p:column headerText="REPUESTO">
                                         <h:outputText value="#{detalle.descripcion}"/>
                                     </p:column>
                                     <p:column headerText="PRECIO UNITARIO" width="10%" style="text-align: center;">
@@ -126,17 +126,17 @@
                                         S/. <h:outputText value="#{detalle.preciototal}"/>
                                     </p:column>
                                     <p:column width="10%" style="text-align: center;">
-                                        <p:commandButton icon="fa fa-times-circle white" ajax="true" actionListener="#{compraBean.retirarListaVentaDetalle(detalle.codigoproducto)}"/>
+                                        <p:commandButton icon="fa fa-times-circle white" actionListener="#{compraBean.retirarListaVentaDetalle(detalle.codigoproducto)}"/>
                                     </p:column>
                                 </p:dataTable>
                             </div>
                         </div>
                         <p:panelGrid id="panelFinalVenta" columns="1" style="text-align: right; width: 100%;">
                             <h:panelGroup>
-                                <p:commandButton value="Actualizar monto" actionListener="#{compraBean.calcularcostos()}" />
+                                <p:commandButton value="Actualizar monto de compra" actionListener="#{compraBean.calcularcostos()}" />
                                 S/. <h:outputText value="#{compraBean.venta.montototal}" style="box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);padding: 7px;" />
                                 ----------------
-                                <p:commandButton value="Comprar" ajax="false" actionListener="#{compraBean.realizarCompra(loginbean.usuario)}"/>
+                                <p:commandButton value="Comprar" actionListener="#{compraBean.realizarCompra(loginbean.usuario)}"/>
                             </h:panelGroup>
                         </p:panelGrid>
                     </div>
@@ -146,7 +146,8 @@
 
         <h:form id="formInsertar">
             <p:dialog header="NUEVO PROVEEDOR" widgetVar="dlginsert" modal="true">
-                <h:panelGrid columns="4">
+                <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
+                <h:panelGrid columns="2">
                     <p:outputLabel value="RUC:" for="txtDocumento"/>
                     <p:inputMask mask="9?9999999999" id="txtDocumento" value="#{compraBean.anexo.numdocumento}" maxlength="11">
                         <f:validator validatorId="validatorVacio"/>
@@ -161,32 +162,17 @@
                         <f:validator validatorId="validatorVacio"/>
                         <f:validator validatorId="validatorLetraNumSig"/>
                     </p:inputText>
-                    <p:outputLabel value="AAHH:" for="txtAAHH"/>
-                    <p:inputText value="#{anexoBean.anexo.aahh}" id="txtAAHH" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                    <p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
+                    <p:inputText value="#{compraBean.anexo.referencia}" id="txtReferencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                        <f:validator validatorId="validatorVacio"/>
                         <f:validator validatorId="validatorLetraNumSig"/>
-                    </p:inputText>
-                    <p:outputLabel value="DISTRITO:"/>
-                    <p:selectOneMenu value="#{compraBean.anexo.distrito}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Debe Seleccionar Distrito">
-                        <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                        <f:selectItems value="#{distritoBean.listatdistrito}" var="distrito" itemLabel="#{distrito.distrito}" itemValue="#{distrito}"/>
-                    </p:selectOneMenu>
-                    <ui:remove><p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
-                        <p:inputText value="#{compraBean.anexo.referencia}" id="txtReferencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                            <f:validator validatorId="validatorVacio"/>
-                            <f:validator validatorId="validatorLetraNumSig"/>
-                        </p:inputText></ui:remove>                        
+                    </p:inputText>                       
                     <p:outputLabel value="TELEFONO:" />
-                    <p:inputMask mask="9?99999999" value="#{compraBean.anexo.telefono}" maxlength="9"/>
-                    <p:outputLabel value="CELULAR:" for="txtCel"/>
-                    <p:inputText value="#{compraBean.anexo.celular}" id="txtCel" maxlength="10" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                        <f:validator validatorId="validatorNumeroCel"/>
-                    </p:inputText>
-                    <p:outputLabel value="EMAIL:" for="txtEmail"/>
-                    <p:inputText value="#{anexoBean.anexo.email}" id="txtEmail" autocomplete="off">
-                        <f:validator validatorId="validatorEmail"/>
-                    </p:inputText>
+                    <p:inputText value="#{compraBean.anexo.telefono}" maxlength="10" autocomplete="off"/>
+                    <p:outputLabel value="CELULAR:"/>
+                    <p:inputText value="#{compraBean.anexo.celular}" maxlength="10" autocomplete="off"/>
+                    <p:commandButton value="GUARDAR" icon="fa fa-save white" actionListener="#{compraBean.insertarproveedor()}" />
                 </h:panelGrid>
-                <p:commandButton value="GUARDAR" icon="fa fa-save white" ajax="false" actionListener="#{compraBean.insertarproveedor()}" />
             </p:dialog>
         </h:form>
     </ui:define>

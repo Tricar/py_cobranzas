@@ -15,10 +15,7 @@
         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
             <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                 <h:form id="formMostrar">
-                    <p:dataTable var="venta" value="#{ventaMBBean.listaventa}" scrollable="true" emptyMessage="Ningún cliente coincide con su búsqueda" >
-                        <p:column headerText="CODIGO">
-                            <h:outputText value="#{venta.codigo}" />
-                        </p:column>
+                    <p:dataTable id="tablamostrar" var="venta" value="#{ventaMBBean.listaventa}" scrollable="true" emptyMessage="Ningún cliente coincide con su búsqueda" >
                         <p:column headerText="TIPO">
                             <h:outputText value="#{venta.tipoventa.descripcion}" />
                         </p:column>
@@ -39,12 +36,28 @@
                                 <f:convertDateTime pattern = "dd/MM/yyyy"/>
                             </h:outputText>
                         </p:column>
-                        <p:column>                            
-                            <p:commandButton class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Pago(venta.codigo, venta.tipoventa.idtipoventa)}" />
+                        <p:column>
+                            <p:commandButton disabled="#{venta.codigo == '' ? false : true}" class="GrayButton" actionListener="#{ventaMBBean.cargarPago(venta.idoperacion)}" icon="fa fa-money"/>
+                            <p:commandButton disabled="#{venta.codigo == '' ? true : false}" class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Pago(venta.codigo, venta.tipoventa.idtipoventa)}" />
                         </p:column>
                     </p:dataTable>
                 </h:form>
             </div>
         </div>
+
+        <h:form id="frmEditar">
+            <p:dialog header="Generar Pago" widgetVar="dialogoEditar" modal="true">
+                <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
+                <h:panelGrid id="panelEditar" columns="2">
+                    <p:inputText type="hidden" value="#{ventaMBBean.venta.idoperacion}"/>               
+                    <h:panelGroup></h:panelGroup>
+                    <p:outputLabel value="Codigo:" for="txtNumero"/>
+                    <p:inputText id="txtNumero" value="#{ventaMBBean.venta.codigo}" autocomplete="off" required="true" requiredMessage="Ingrese el codigo"/>
+                    <p:outputLabel value="Precio:" for="txtPrecio"/>
+                    <p:inputText id="txtPrecio" value="#{ventaMBBean.venta.montototal}" disabled="true"/>
+                    <p:commandButton value="Actualizar" icon="fa fa-save white" actionListener="#{ventaMBBean.Pagar(loginbean.usuario)}"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
     </ui:define>
 </ui:composition>

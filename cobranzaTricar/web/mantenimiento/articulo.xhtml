@@ -104,7 +104,7 @@
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:outputLabel value="Precio:" for="txtprecioventa"/>
-                    <p:inputText id="txtprecioventa" value="#{articuloBean.articulo.precioventa}" required="true" requiredMessage="Ingresa precio venta">
+                    <p:inputText id="txtprecioventa" value="#{articuloBean.articulo.precioventa}" onkeypress="return justNumbers(event);" required="true" requiredMessage="Ingresa precio venta">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>                    
                     <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>

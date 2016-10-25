@@ -87,6 +87,7 @@ public class ventaBean implements Serializable {
     private modeloBean modbean = new modeloBean();
     private Conceptos concepto = new Conceptos();
     public Vehiculo vehiculo = new Vehiculo();
+    private String numdigitos;
 
     public ventaBean() {
 
@@ -144,6 +145,15 @@ public class ventaBean implements Serializable {
         filtradafecha = new ArrayList();
         return "/despacho/venta.xhtml";
     }
+    
+    public void actualizarCampos(String tipodoc){
+        if (tipodoc.equals("DNI")){
+            numdigitos = "99999999";
+        } else {
+            numdigitos = "99999999999";
+        }
+        System.out.println("ejecuté campos");
+    }
 
     public String nuevo() {
         credito = new Credito();
@@ -192,6 +202,8 @@ public class ventaBean implements Serializable {
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
             this.anexo = new Anexo();
+            RequestContext.getCurrentInstance().update("frmRealizarVentas");
+            RequestContext.getCurrentInstance().execute("PF('dlginsert').hide()");
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -602,6 +614,14 @@ public class ventaBean implements Serializable {
 
     public void setValuesi2(boolean valuesi2) {
         this.valuesi2 = valuesi2;
+    }
+
+    public String getNumdigitos() {
+        return numdigitos;
+    }
+
+    public void setNumdigitos(String numdigitos) {
+        this.numdigitos = numdigitos;
     }
 
 }
