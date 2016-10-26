@@ -23,6 +23,7 @@ public interface OperacionDao {
     public boolean modificarOD(Operacion operacion);
     public List<Operacion> cargarxEstado (Integer estado);
     public List<Operacion> filtrarFechas (Date date1, Date date2, Integer tipo);
+    public List<Operacion> filtrarFechasEstado (Date date1, Date date2, Integer estado);
     public List<Operacion> filtrarFechasTipo (Date date1, Date date2);
     public Operacion verByCodigo(Session session, Integer codigo) throws Exception;
     public boolean eliminar (Session session, Operacion perfil) throws Exception;

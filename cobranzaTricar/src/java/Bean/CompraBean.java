@@ -10,7 +10,6 @@ import Model.*;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -276,6 +275,20 @@ public class CompraBean implements Serializable {
             if (this.session != null) {
                 this.session.close();
             }
+        }
+    }
+
+    public void CargarDetalle(Operacion cred) {
+        OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
+        List<Operaciondetalle> lista = new ArrayList();
+        lista = ventadetalledao.mostrarSoloDetallexCompra(cred);
+        if (lista.isEmpty() == false) {
+            listaventadetalle = lista;
+            RequestContext.getCurrentInstance().update("formModificar");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarVenta').show()");
+        } else {
+            RequestContext.getCurrentInstance().update("formMostrar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "No existen Detalle de la compra."));
         }
     }
 

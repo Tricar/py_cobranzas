@@ -2,10 +2,13 @@ package Bean;
 
 import Dao.CredavalDao;
 import Dao.CredavalDaoImp;
+import Dao.OperacionDao;
+import Dao.OperacionDaoImp;
 import Model.Anexo;
 import Model.Articulo;
 import Model.Credito;
 import Model.Creditoaval;
+import Model.Operacion;
 import Model.Operaciondetalle;
 import Model.Usuario;
 import java.io.File;
@@ -38,6 +41,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.context.RequestContext;
 import utiles.dbManager;
 import utiles.recorrerCreditos;
 
@@ -61,6 +65,7 @@ public class reportesBean implements Serializable {
     private Date fecha3 = new Date();
     private Date fecha4 = new Date();
     private Date fecha5 = new Date();
+    private List<Operacion> listaventa;
 
     /**
      * Creates a new instance of reportesBean
@@ -108,6 +113,13 @@ public class reportesBean implements Serializable {
         parametros.put("fecha1", fecha1);
         parametros.put("fecha2", fecha2);
 //        parametros.put("dia", dateFormatD.format(fecha));
+        OperacionDao ventadao = new OperacionDaoImp();
+        listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
+        if (this.listaventa.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe compra o venta."));
+            RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
+            return;
+        }
         File jasper = new File("D:/reporte/detalle.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -122,7 +134,7 @@ public class reportesBean implements Serializable {
         FacesContext.getCurrentInstance().responseComplete();
         con.close();
     }
-    
+
     public void exportarEspecifico() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
@@ -144,7 +156,7 @@ public class reportesBean implements Serializable {
         FacesContext.getCurrentInstance().responseComplete();
         con.close();
     }
-    
+
     public void exportarStock() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
@@ -163,7 +175,7 @@ public class reportesBean implements Serializable {
         FacesContext.getCurrentInstance().responseComplete();
         con.close();
     }
-    
+
     public void exportarArticulo() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
@@ -277,7 +289,7 @@ public class reportesBean implements Serializable {
     public void detalleVentas() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
-        con = conn.getConnection();        
+        con = conn.getConnection();
         String meses = null;
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (mes == null || ano == null) {
@@ -323,7 +335,7 @@ public class reportesBean implements Serializable {
             }
             parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
             parametros.put("nombremes", meses);
-            parametros.put("anio", ano);            
+            parametros.put("anio", ano);
             parametros.put("mese", mes);
             File jasper = new File("D:/reporte/ventas/detalle_ventas.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
@@ -342,12 +354,12 @@ public class reportesBean implements Serializable {
         }
         con.close();
     }
-    
+
     public void comisionVentas() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         recorrerCreditos rec = new recorrerCreditos();
         Connection con = null;
-        con = conn.getConnection();        
+        con = conn.getConnection();
         String meses = null;
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (mes == null || ano == null) {
@@ -398,7 +410,7 @@ public class reportesBean implements Serializable {
             BigDecimal bonow = rec.calculoBonos(tienda1, ano.toString(), mes.toString());
             parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
             parametros.put("nombremes", meses);
-            parametros.put("anio", ano.toString());            
+            parametros.put("anio", ano.toString());
             parametros.put("mes", mes.toString());
             parametros.put("tienda1", tienda1);
             parametros.put("tienda2", tienda2);
@@ -1176,6 +1188,14 @@ public class reportesBean implements Serializable {
 
     public void setOperaciondetalle(Operaciondetalle operaciondetalle) {
         this.operaciondetalle = operaciondetalle;
+    }
+
+    public List<Operacion> getListaventa() {
+        return listaventa;
+    }
+
+    public void setListaventa(List<Operacion> listaventa) {
+        this.listaventa = listaventa;
     }
 
 }

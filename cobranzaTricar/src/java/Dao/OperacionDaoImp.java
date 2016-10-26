@@ -170,4 +170,25 @@ public class OperacionDaoImp implements OperacionDao {
         return lista;
     }
 
+    @Override
+    public List<Operacion> filtrarFechasEstado(Date date1, Date date2, Integer estado) {
+        Session session = null;
+        List<Operacion> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Operacion WHERE created BETWEEN :start_date AND :end_date and estado=:estado");
+            query.setParameter("start_date", date1);
+            query.setParameter("end_date", date2);
+            query.setParameter("estado", estado);
+            lista = (List<Operacion>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
 }

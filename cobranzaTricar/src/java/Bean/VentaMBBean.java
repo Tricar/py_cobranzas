@@ -501,6 +501,20 @@ public class VentaMBBean implements Serializable {
         }
     }
 
+    public void CargarDetalle(Operacion cred) {
+        OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
+        List<Operaciondetalle> lista = new ArrayList();
+        lista = ventadetalledao.mostrarSoloDetallexCompra(cred);
+        if (lista.isEmpty() == false) {
+            listaventadetalle = lista;
+            RequestContext.getCurrentInstance().update("formModificar");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarVenta').show()");
+        } else {
+            RequestContext.getCurrentInstance().update("formMostrar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "No existen Detalle de la venta."));
+        }
+    }
+
     public void Boleta(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         OperacionDao ventadao = new OperacionDaoImp();

@@ -10,7 +10,8 @@
 
     <ui:define name="content">
         <h:form>
-            <p:commandButton action="#{ventaMBBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>
+            <p:commandButton action="#{ventaMBBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>            
+            <p:commandButton action="#{ventaMBBean.nuevo()}" ajax="false" value="Nueva venta" immediate="true" icon="fa fa-plus white"/>
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form id="frmRealizarVentas">
