@@ -67,8 +67,8 @@ public class OperacionDaoImp implements OperacionDao {
     }
 
     @Override
-    public boolean modificar(Session session, Operacion articulo) throws Exception {
-        session.update(articulo);
+    public boolean modificar(Session session, Operacion operacion) throws Exception {
+        session.update(operacion);
         return true;
     }
 

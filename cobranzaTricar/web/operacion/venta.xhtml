@@ -47,7 +47,7 @@
                                 <f:convertDateTime pattern = "dd/MM/yyyy"/>
                             </h:outputText>
                         </p:column>
-                        <p:column headerText="Mostrar">                            
+                        <p:column headerText="Mostrar">                       
                             <p:commandButton disabled="#{venta.estado == 0 ? true : false}" update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{ventaMBBean.CargarDetalle(venta)}"/>
                             <p:commandButton disabled="#{venta.estado == 0 ? true : false}" class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Boleta(venta.codigo)}" />
                         </p:column>

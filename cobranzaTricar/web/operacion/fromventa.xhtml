@@ -105,8 +105,8 @@
                                         <h:outputText value="#{detalle.precioventa}"/>
                                     </p:column>
                                     <p:column headerText="CANTIDAD" width="10%" style="text-align: center;">
-                                        <p:inputText value="#{detalle.cantidad}" onkeypress="return justNumbers(event);" size="8">
-                                            <f:ajax event="keyup" listener="#{ventaMBBean.calcularcostos()}"/>
+                                        <p:inputText value="#{detalle.cantidad}" onkeyup="format(this)" onchange="format(this)" size="8">
+                                            <p:ajax event="keyup" listener="#{ventaMBBean.calcularcostos()}"/>
                                         </p:inputText>
                                     </p:column>
                                     <p:column headerText="TOTAL">
@@ -162,10 +162,7 @@
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:outputLabel value="APELLIDO 2:" for="txtApellido2"/>
-                    <p:inputText disabled="#{ventaBean.anexo.tipodocumento != 'DNI'}" id="txtApellido2" value="#{ventaBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
-                        <f:validator validatorId="validatorLetra"/>
-                        <f:validator validatorId="validatorVacio"/>
-                    </p:inputText>
+                    <p:inputText disabled="#{ventaBean.anexo.tipodocumento != 'DNI'}" id="txtApellido2" value="#{ventaBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off"/>
                     <p:outputLabel value="DIRECCION:" for="txtDireccion" />
                     <p:inputText value="#{ventaBean.anexo.direccion}" id="txtDireccion" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off"/>
                     <p:commandButton value="Registrar Cliente" icon="fa fa-save white" actionListener="#{ventaBean.insertarcliente()}" />

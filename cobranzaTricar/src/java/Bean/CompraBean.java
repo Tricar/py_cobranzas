@@ -136,6 +136,17 @@ public class CompraBean implements Serializable {
         try {
             BigDecimal totalventa = new BigDecimal(0);
             for (Operaciondetalle item : this.listaventadetalle) {
+                if (item.getPreciocompra().equals(new BigDecimal("0"))) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Precio del articulo "+item.getDescripcion()+" debe ser mayor a cero."));
+                    RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
+                    return;
+                } else if (item.getCantidad() == 0) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La cantidad del articulo "+item.getDescripcion()+" debe ser mayor a cero."));
+                    RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
+                    return;
+                }
+            }
+            for (Operaciondetalle item : this.listaventadetalle) {
                 BigDecimal totalVentaPorProducto = item.getPreciocompra().multiply(new BigDecimal(item.getCantidad()));
                 item.setPreciototal(totalVentaPorProducto);
                 totalventa = totalventa.add(totalVentaPorProducto);
@@ -207,7 +218,7 @@ public class CompraBean implements Serializable {
             this.transaction.commit();
             this.listaventadetalle = new ArrayList<>();
             this.venta = new Operacion();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se registro la venta."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se registro la Ingreso de la compra."));
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -262,7 +273,7 @@ public class CompraBean implements Serializable {
             daotanexo.registrar(this.session, this.anexo);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-            this.anexo = new Anexo();            
+            this.anexo = new Anexo();
             RequestContext.getCurrentInstance().update("frmRealizarVentas");
             RequestContext.getCurrentInstance().execute("PF('dlginsert').hide()");
         } catch (Exception e) {

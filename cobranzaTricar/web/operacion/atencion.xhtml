@@ -37,6 +37,7 @@
                             </h:outputText>
                         </p:column>
                         <p:column>
+                            <p:commandButton disabled="#{venta.codigo == null ? false : true}" update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{ventaMBBean.CargarDetalle(venta)}"/>
                             <p:commandButton disabled="#{venta.codigo == null ? false : true}" class="GrayButton" actionListener="#{ventaMBBean.cargarPago(venta.idoperacion)}" icon="fa fa-money"/>
                             <p:commandButton disabled="#{venta.codigo == null ? true : false}" class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Pago(venta.codigo, venta.tipoventa.idtipoventa)}" />
                         </p:column>
@@ -44,6 +45,36 @@
                 </h:form>
             </div>
         </div>
+
+        <h:form id="formModificar">
+            <p:dialog header="Detalle Venta" widgetVar="dialogoEliminarVenta" modal="true">
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                        <p:growl id="mensajeGeneral" showDetail="true" life="2000" />
+                        <p:dataTable id="tablaletras" var="detalle" value="#{ventaMBBean.listaventadetalle}" emptyMessage="No hay nada para mostrar" > 
+                            <p:column headerText="CODIGO">
+                                <h:outputText value="#{detalle.codigoproducto}"/>
+                            </p:column>
+                            <p:column headerText="ARTICULO">
+                                <h:outputText value="#{detalle.descripcion}"/>
+                            </p:column>
+                            <p:column headerText="CANTIDAD">
+                                <h:outputText value="#{detalle.cantidad}"/>
+                            </p:column>
+                            <p:column headerText="PRECIO UNI.">
+                                <h:outputText value="#{detalle.preciocompra}"/>
+                            </p:column>
+                            <p:column headerText="PRECIO TOTAL">
+                                <h:outputText value="#{detalle.preciototal}"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminarDetalle(detalle.idoperaciondetalle, loginbean.usuario)}" />
+                            </p:column>                    
+                        </p:dataTable> 
+                    </div>
+                </div>
+            </p:dialog>
+        </h:form>
 
         <h:form id="frmEditar">
             <p:dialog header="Generar Pago" widgetVar="dialogoEditar" modal="true">
@@ -58,6 +89,21 @@
                     <p:commandButton value="Actualizar" icon="fa fa-save white" actionListener="#{ventaMBBean.Pagar(loginbean.usuario)}"/>
                 </h:panelGrid>
             </p:dialog>
+        </h:form>
+
+        <h:form id="frmEliminarDetalle">
+            <p:dialog header="Eliminar" widgetVar="dialogoEliminarDetalle" modal="true">
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.idoperaciondetalle}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.operacion.idoperacion}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.codigoproducto}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.cantidad}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.cantidadanterior}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.preciototal}"/>
+                <h:outputText class="ui-confirm-dialog-message" value="¿Desea eliminar?" />
+                <p:separator/>
+                <p:commandButton value="Si" actionListener="#{ventaMBBean.eliminarDetalle()}" icon="fa fa-check blue" oncomplete="dialogoEliminarDetalle.hide();" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
+            </p:dialog>     
         </h:form>
     </ui:define>
 </ui:composition>

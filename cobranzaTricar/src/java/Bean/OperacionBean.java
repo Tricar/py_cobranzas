@@ -336,7 +336,7 @@ public class OperacionBean implements Serializable {
                 this.session.close();
             }
         }
-    }    
+    }
 
     public void CargarDetalle(Operacion cred) {
         OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
@@ -429,13 +429,15 @@ public class OperacionBean implements Serializable {
 
             OperacionDao ventadao = new OperacionDaoImp();
             eliminarOperaciondetalleVenta(this.venta.getIdoperacion());
-            ventadao.eliminar(this.session, this.venta);
+            this.venta.setEstado(0);
+            ventadao.modificar(this.session, this.venta);
 
             this.transaction.commit();
-            filtrarFechas();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Anulo Correctamente."));
+            
             RequestContext.getCurrentInstance().update("formMostrar");
+            RequestContext.getCurrentInstance().execute("PF('dialogoAnularVenta').hide()");
 
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -451,11 +453,14 @@ public class OperacionBean implements Serializable {
 
     public void eliminarOperaciondetalleVenta(Integer idoperacion) {
         OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
+        OperacionDao ventadao = new OperacionDaoImp();
+        Caja caja = new Caja();
+        PagosDao pagosdao = new PagosDaoImp();
+        CajaDao cajadao = new CajaDaoImp();
         listaventadetalle = detalledao.verTodosxId(idoperacion);
         for (int i = 0; i < listaventadetalle.size(); i++) {
             Operaciondetalle get = listaventadetalle.get(i);
             ArticuloDao productodao = new ArticuloDaoImp();
-            OperacionDao ventadao = new OperacionDaoImp();
             this.producto = productodao.verByCodigos(get.getArticulo().getIdarticulo());
             this.producto.setCantidad(get.getCantidadanterior());
             this.producto.setPreciocompra(get.getPreciocompraanterior());
@@ -463,17 +468,19 @@ public class OperacionBean implements Serializable {
             this.producto.setCostopromedio(get.getCostopromedioanterior());
             productodao.modificarOD(this.producto);
             this.venta = ventadao.verByCodigos(get.getOperacion().getIdoperacion());
-            this.venta.setEstado(0);
             this.venta.setMontototal(this.venta.getMontototal().subtract(get.getPreciototal()));
             ventadao.modificarOD(this.venta);
-
+            caja = cajadao.veryId(12);
+            caja.setTotal(caja.getTotal().subtract(get.getPreciototal()));
+            cajadao.modificar(caja);
             detalledao.eliminarOD(get.getIdoperaciondetalle());
             producto = new Articulo();
             venta = new Operacion();
         }
-
+        venta = ventadao.verByCodigos(idoperacion);
+        pagosdao.eliminar(venta.getCodigo());
     }
-    
+
     public void anularCompra() {
         this.session = null;
         this.transaction = null;
@@ -619,9 +626,6 @@ public class OperacionBean implements Serializable {
         BigDecimal partedecimalbig = numero.subtract(parteenterabig);
         BigDecimal cien = new BigDecimal(100);
         n2t obj = new n2t();
-        System.out.println("partentera: " + partentera);
-        System.out.println("parteenterabig: " + parteenterabig);
-        System.out.println("partedecimalbig: " + partedecimalbig);
 
         if (partedecimalbig.setScale(1, RoundingMode.DOWN).compareTo(BigDecimal.ZERO) == 0) {
             numeroletras = obj.convertirLetras(partentera) + "  CON  " + "00/100 SOLES";

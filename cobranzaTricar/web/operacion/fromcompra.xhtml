@@ -11,6 +11,7 @@
     <ui:define name="content">
         <h:form>
             <p:commandButton action="#{compraBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>
+            <p:commandButton action="#{compraBean.nuevo()}" ajax="false" value="Nueva compra" immediate="true" icon="fa fa-plus white"/>
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form id="frmRealizarVentas">
@@ -19,7 +20,7 @@
                         <div class="layout-portlets-box">
                             <div class="Container100 ui-fluid">
                                 <div class="ContainerIndent">
-                                    <h2 class="BigTopic">Ingreso por Compra</h2>
+                                    <h2 class="BigTopic">Ingreso de Repuestos</h2>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="TIPO DOCUMENTO:" for="txtTipoDocumento"/>                        
@@ -119,8 +120,8 @@
                                     <p:column headerText="PRECIO UNITARIO" width="10%" style="text-align: center;">
                                         <p:inputText value="#{detalle.preciocompra}" onkeypress="return justNumbers(event);" size="8"/>
                                     </p:column>
-                                    <p:column headerText="CANTIDAD" width="10%" style="text-align: center;">
-                                        <p:inputText value="#{detalle.cantidad}" onkeypress="return justNumbers(event);" size="8"/>
+                                    <p:column headerText="CANTIDAD" style="text-align: center;">
+                                        <p:inputText value="#{detalle.cantidad}" onkeyup="format(this)" onchange="format(this)" size="8"/>
                                     </p:column>
                                     <p:column headerText="TOTAL">
                                         S/. <h:outputText value="#{detalle.preciototal}"/>

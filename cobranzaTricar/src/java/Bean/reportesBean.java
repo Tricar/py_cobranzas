@@ -104,15 +104,8 @@ public class reportesBean implements Serializable {
         Connection con = null;
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
-//        SimpleDateFormat dateFormatA = new SimpleDateFormat("yyyy");
-//        SimpleDateFormat dateFormatM = new SimpleDateFormat("MM");
-//        SimpleDateFormat dateFormatD = new SimpleDateFormat("dd");
-//        System.out.println("Año: "+ dateFormatA.format(fecha));
-//        System.out.println("Mes: "+ dateFormatM.format(fecha));
-//        System.out.println("Dia: "+ dateFormatD.format(fecha));
         parametros.put("fecha1", fecha1);
-        parametros.put("fecha2", fecha2);
-//        parametros.put("dia", dateFormatD.format(fecha));
+        parametros.put("fecha2", fecha3);
         OperacionDao ventadao = new OperacionDaoImp();
         listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
         if (this.listaventa.isEmpty()) {
@@ -141,7 +134,14 @@ public class reportesBean implements Serializable {
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("fecha1", fecha1);
-        parametros.put("fecha2", fecha2);
+        parametros.put("fecha2", fecha4);        
+        OperacionDao ventadao = new OperacionDaoImp();
+        listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
+        if (this.listaventa.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe compra o venta."));
+            RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
+            return;
+        }
         File jasper = new File("D:/reporte/especifico.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -182,12 +182,39 @@ public class reportesBean implements Serializable {
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("fecha1", fecha1);
-        parametros.put("fecha2", fecha2);
-//        parametros.put("producto", operaciondetalle.getArticulo().getIdarticulo());
+        parametros.put("fecha2", fecha5);
+        OperacionDao ventadao = new OperacionDaoImp();
+        listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
+        if (this.listaventa.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe Movimientos."));
+            RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
+            return;
+        }
         File jasper = new File("D:/reporte/articulo.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.addHeader("Content-disposition", "attachment; filename=Articulo.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarCaja() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha", fecha1);
+        File jasper = new File("D:/reporte/caja.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Caja.xls");
         ServletOutputStream stream = response.getOutputStream();
         JRXlsxExporter docxExporter = new JRXlsxExporter();
         docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
