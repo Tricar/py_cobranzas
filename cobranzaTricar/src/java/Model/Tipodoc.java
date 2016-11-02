@@ -18,6 +18,8 @@ public class Tipodoc implements java.io.Serializable {
     private String tipodoc;
     private String abrev;
     private String descripcion;
+    private Integer correlativo;
+    private String tienda;
 
     public Tipodoc() {
     }
@@ -26,11 +28,13 @@ public class Tipodoc implements java.io.Serializable {
         this.idtipodoc = idtipodoc;
     }
 
-    public Tipodoc(Integer idtipodoc, String tipodoc, String abrev, String descripcion) {
+    public Tipodoc(Integer idtipodoc, String tipodoc, String abrev, String descripcion, Integer correlativo, String tienda) {
         this.idtipodoc = idtipodoc;        
         this.tipodoc = tipodoc;
         this.abrev = abrev;
         this.descripcion = descripcion;
+        this.correlativo = correlativo;
+        this.tienda = tienda;
     }
 
     @Id
@@ -69,6 +73,24 @@ public class Tipodoc implements java.io.Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+    @Column(name = "correlativo")
+    public Integer getCorrelativo() {
+        return this.correlativo;
+    }
+
+    public void setCorrelativo(Integer correlativo) {
+        this.correlativo = correlativo;
+    }
+    
+    @Column(name = "tienda", length = 2)
+    public String getTienda() {
+        return this.tienda;
+    }
+
+    public void setTienda(String tienda) {
+        this.tienda = tienda;
     }
 
     @Override

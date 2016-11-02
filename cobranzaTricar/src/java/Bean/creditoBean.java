@@ -1878,6 +1878,7 @@ public class creditoBean implements Serializable {
                 pago.setConceptos(concepto);
                 pago.setMonto(montopago);
                 pago.setTipo(concepto.getTipo());
+                pago.setOperacion(pago.getTipodoc().getAbrev().concat(" ").concat(pago.getOperacion()));
                 pago.setUsuario(idusuario);
                 pagosdao.insertarPago(pago);
                 caja = pago.getCaja();
