@@ -26,6 +26,7 @@ public class Caja implements java.io.Serializable {
     private Anexo encargado;
     private BigDecimal total;
     private String tienda;
+    private String empresa;
     private Set movcajas = new HashSet(0);
 
     public Caja() {
@@ -35,12 +36,13 @@ public class Caja implements java.io.Serializable {
         this.idcaja = idcaja;
     }
 
-    public Caja(Integer idcaja, String descripcion, Anexo encargado, BigDecimal total, String tienda, Set movcajas) {
+    public Caja(Integer idcaja, String descripcion, Anexo encargado, BigDecimal total, String tienda, String empresa, Set movcajas) {
         this.idcaja = idcaja;        
         this.descripcion = descripcion;
         this.encargado = encargado;
         this.total = total;
         this.tienda = tienda;
+        this.empresa = empresa;
         this.movcajas = movcajas;
     }
 
@@ -90,6 +92,15 @@ public class Caja implements java.io.Serializable {
 
     public void setTienda(String tienda) {
         this.tienda = tienda;
+    }
+    
+    @Column(name = "empresa", length = 2)
+    public String getEmpresa() {
+        return this.empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "caja")

@@ -478,14 +478,14 @@ public class CreditoDaoImp implements CreditoDao {
 
     @Override
     public Integer pagosxdia(Session session) {
-        String hql = "SELECT COUNT(*) FROM Pagos WHERE datepart(wk, fecreg) = datepart(wk, getdate()) and datepart(year, fecreg) = datepart(year, getdate())";
+        String hql = "SELECT COUNT(*) FROM Pagos WHERE datepart(wk, fecreg) = datepart(wk, getdate()) and datepart(year, fecreg) = datepart(year, getdate()) and (tipo = 'LE' or tipo ='ND')";
         int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
         return (int) consulta;
     }
 
     @Override
     public Integer pagosxmes(Session session) {
-        String hql = "SELECT COUNT(*) FROM Pagos WHERE DATEPART(month, fecreg) = DATEPART(month, getdate()) AND DATEPART(year, fecreg) = DATEPART(year, GETDATE())";
+        String hql = "SELECT COUNT(*) FROM Pagos WHERE DATEPART(month, fecreg) = DATEPART(month, getdate()) AND DATEPART(year, fecreg) = DATEPART(year, GETDATE()) and (tipo = 'LE' or tipo ='ND') ";
         int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
         return (int) consulta;
     }

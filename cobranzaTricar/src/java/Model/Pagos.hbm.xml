@@ -44,5 +44,8 @@
         <property name="diffdays" type="java.lang.Long">
             <column name="diffdays" />
         </property>
+        <property name="mora" type="big_decimal">
+            <column name="mora" precision="17" />
+        </property>
     </class>
 </hibernate-mapping>

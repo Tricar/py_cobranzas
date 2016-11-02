@@ -38,6 +38,9 @@ public class tiendaConverter implements Converter {
                 case "V3":
                     tienda = "VX3";
                     break;
+                case "MB":
+                    tienda = "MAYA BRITO";
+                    break;
             }
         }
         return tienda;

@@ -20,6 +20,9 @@
         <property name="tienda" type="string">
             <column name="tienda" length="2" />
         </property>
+        <property name="empresa" type="string">
+            <column name="empresa" length="2" />
+        </property>
         <set name="movcajas" table="movcaja" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idcaja" />

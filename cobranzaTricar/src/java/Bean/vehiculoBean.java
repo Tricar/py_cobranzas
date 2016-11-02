@@ -60,7 +60,8 @@ public class vehiculoBean implements Serializable {
             RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
         } else {
             RequestContext.getCurrentInstance().update("formMostrar");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 
@@ -73,7 +74,8 @@ public class vehiculoBean implements Serializable {
                 this.transaction = session.beginTransaction();
                 VehiculoDao dao = new VehiculoDaoImplements();
                 if (dao.verBySerie(this.session, this.vehiculo.getSerie()) != null) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Articulo ya existe en DB."));
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El Articulo ya existe en DB.");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
                     this.vehiculo = new Vehiculo();
                     return;
                 }
@@ -83,9 +85,8 @@ public class vehiculoBean implements Serializable {
                 vehiculo.setMarca(obtenerMarca(vehiculo.getModelo().getModelo()));
                 dao.registrar(this.session, this.vehiculo);
                 this.transaction.commit();
-
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio.");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
                 this.vehiculo = new Vehiculo();
             } catch (Exception e) {
                 if (this.transaction != null) {
@@ -100,7 +101,8 @@ public class vehiculoBean implements Serializable {
             }
         } else {
             RequestContext.getCurrentInstance().update("formMostrar");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 
@@ -113,14 +115,16 @@ public class vehiculoBean implements Serializable {
             this.transaction = session.beginTransaction();
             VehiculoDao dao = new VehiculoDaoImplements();
             if (dao.verBySerieDifer(this.session, this.vehiculo.getIdvehiculo(), this.vehiculo.getSerie()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Articulo ya Existe."));
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Articulo ya Existe.");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
                 return;
             }
             vehiculo.setTipovehiculo(vehiculo.getModelo().getTipo());
             vehiculo.setMarca(obtenerMarca(vehiculo.getModelo().getModelo()));
             dao.modificar(this.session, this.vehiculo);
             this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             this.vehiculo = new Vehiculo();
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -145,7 +149,8 @@ public class vehiculoBean implements Serializable {
             VehiculoDao dao = new VehiculoDaoImplements();
             dao.eliminar(this.session, this.vehiculo);
             this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Articulo Correctamente."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             this.vehiculo = new Vehiculo();
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -216,7 +221,8 @@ public class vehiculoBean implements Serializable {
             }
         } else {
             RequestContext.getCurrentInstance().update("formMostrar");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No cuenta con permisos para Editar.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 
@@ -298,7 +304,7 @@ public class vehiculoBean implements Serializable {
 
     public List<Vehiculo> filtrarDisponibleModelo(String name) {
         this.query = new ArrayList<Vehiculo>();
-        VehiculoDao vehiculodao = new VehiculoDaoImplements();        
+        VehiculoDao vehiculodao = new VehiculoDaoImplements();
         List<Vehiculo> tipos = vehiculodao.filtarDisponibleCotiza("D", idmodelo);
         for (Vehiculo tipo : tipos) {
             if (tipo.getSerie().endsWith(name.toUpperCase())) {

@@ -34,6 +34,7 @@ public class Pagos implements java.io.Serializable {
     private String tipo;
     private Integer usuario;
     private Long diffdays;
+    private BigDecimal mora;
 
     public Pagos() {
     }
@@ -42,7 +43,7 @@ public class Pagos implements java.io.Serializable {
         this.idpagos = idpagos;
     }
 
-    public Pagos(Integer idpagos, Letras letras, Conceptos conceptos, String operacion, Tipodoc tipodoc, Caja caja, String clasificacion, BigDecimal monto, Date fecreg, String descripcion, String tipo, Integer usuario, long diffdays) {
+    public Pagos(Integer idpagos, Letras letras, Conceptos conceptos, String operacion, Tipodoc tipodoc, Caja caja, String clasificacion, BigDecimal monto, Date fecreg, String descripcion, String tipo, Integer usuario, long diffdays, BigDecimal mora) {
         this.idpagos = idpagos;
         this.letras = letras;
         this.conceptos = conceptos;
@@ -56,6 +57,7 @@ public class Pagos implements java.io.Serializable {
         this.tipo = tipo;
         this.usuario = usuario;
         this.diffdays = diffdays;
+        this.mora = mora;
     }
 
     @Id
@@ -180,6 +182,15 @@ public class Pagos implements java.io.Serializable {
 
     public void setDiffdays(Long diffdays) {
         this.diffdays = diffdays;
+    }
+    
+    @Column(name = "mora", precision = 17)
+    public BigDecimal getMora() {
+        return this.mora;
+    }
+
+    public void setMora(BigDecimal mora) {
+        this.mora = mora;
     }
 
     @Override

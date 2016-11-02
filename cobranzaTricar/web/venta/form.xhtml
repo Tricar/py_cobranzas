@@ -48,8 +48,8 @@
                                                             required="true" requiredMessage="Ingrese vendedor">
                                                 <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                                                 <p:ajax event="itemSelect" process="@form" />
-                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
-                                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
+                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
+                                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                                             </p:autoComplete>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
@@ -62,14 +62,14 @@
                                                             required="true" requiredMessage="Ingrese cliente">
                                                 <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
                                                 <p:ajax event="mousemove" update="aval dir dist precio lblinicial res txtinicial"  listener="#{creditoBean.precioModeloCredito()}"/>
-                                                <p:ajax event="itemSelect" listener="#{creditoBean.cargarIngreso(creditoBean.credito.anexo)}" update="@form"/>
-                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
+                                                <p:ajax event="itemSelect" listener="#{creditoBean.cargarIngreso(creditoBean.credito.anexo)}" />
+                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg12 dir dist"/>
                                                 <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                                             </p:autoComplete>
                                         </div>
                                     </div>                          
                                     <p:accordionPanel>
-                                        <p:tab title="Ingresos">
+                                        <p:tab title="Ingresos" >
                                             <p:dataTable var="ocups" value="#{creditoBean.ocupsxanexo}" 
                                                          emptyMessage="No hay nada para mostrar">
                                                 <p:column headerText="Descripción">
@@ -93,6 +93,7 @@
                                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                                 <f:selectItem itemLabel="VX1" itemValue="V1" />
                                                 <f:selectItem itemLabel="VX2" itemValue="V2" />                            
+                                                <f:selectItem itemLabel="VX3" itemValue="V3" />
                                             </p:selectOneMenu>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
@@ -136,9 +137,8 @@
                                                             itemLabel="#{aval.nombres}" itemValue="#{aval}" required="true" requiredMessage="Ingrese aval" 
                                                             disabled="#{creditoBean.value2}">
                                                 <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
-                                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
-                                                <p:ajax event="itemSelect" process="@form" />                        
+                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg12"/>
+                                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="msg12"/>                                                
                                             </p:autoComplete>
                                         </div>
                                     </div>

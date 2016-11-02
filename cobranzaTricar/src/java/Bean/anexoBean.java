@@ -739,8 +739,7 @@ public class anexoBean implements Serializable {
             numdigitos = "99999999999";
             empresa = false;
             persona = true;
-        }
-        System.out.println("ejecuté campos");
+        }        
     }
     
     public void datosConyu(String estcivil){

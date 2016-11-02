@@ -54,12 +54,12 @@ public class Main {
         //            System.out.println("fecha :"+i+" "+fechas.get(i).toString());
         //        }
         generadorCodigos gen = new generadorCodigos();
-        String codigo = gen.genCodigoLiquid("V2");
+        String codigo = gen.genCodigoLiquid("V3");
         System.out.println("codigo: "+codigo);
         String ultimo = codigo.substring(codigo.length()-2);
         System.out.println("ultimo: "+ultimo);
         int corre = Integer.parseInt(ultimo);
-        System.err.println("entero corre: "+corre);
+        System.out.println("entero corre: "+corre);
     }
 
     public static int esDomingo(Calendar d) {

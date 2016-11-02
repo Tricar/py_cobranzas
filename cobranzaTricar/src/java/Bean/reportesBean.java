@@ -112,6 +112,7 @@ public class reportesBean implements Serializable {
         Integer tienda1 = null;
         Integer tienda2 = null;
         Integer tienda3 = null;
+        Integer tienda4 = null;
         String tienda = null;
         String meses = null;
         Map<String, Object> parametros = new HashMap<String, Object>();
@@ -122,16 +123,19 @@ public class reportesBean implements Serializable {
                 tienda1 = 4;
                 tienda2 = 5;
                 tienda3 = 10;
+                tienda4 = 12;
                 tienda = "CASCO RED";
             } else if (empresa.equals("TR")) {
                 tienda1 = 8;
                 tienda2 = 0;
                 tienda3 = 11;
+                tienda4 = 0;
                 tienda = "TRICAR";
             } else {
                 tienda1 = 0;
                 tienda2 = 9;
                 tienda3 = 0;
+                tienda4 = 0;
                 tienda = "SEDNA";
             }
             switch (mes) {
@@ -313,7 +317,7 @@ public class reportesBean implements Serializable {
             String tienda2 = "V2";
             BigDecimal bonov1 = rec.calculoBonos(tienda1, ano.toString(), mes.toString());
             BigDecimal bonov2 = rec.calculoBonos(tienda2, ano.toString(), mes.toString());
-            BigDecimal bonow = rec.calculoBonos(tienda1, ano.toString(), mes.toString());
+            BigDecimal bonow = rec.calculoBonosW(tienda1, ano.toString(), mes.toString());
             parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
             parametros.put("nombremes", meses);
             parametros.put("anio", ano.toString());            
@@ -348,6 +352,7 @@ public class reportesBean implements Serializable {
         Integer tienda1 = null;
         Integer tienda2 = null;
         Integer tienda3 = null;
+        Integer tienda4 = null;
         BigDecimal comiprimer;
         BigDecimal comiseg;
         BigDecimal comiter;
@@ -363,6 +368,7 @@ public class reportesBean implements Serializable {
                     tienda1 = 4;
                     tienda2 = 5;
                     tienda3 = 10;
+                    tienda4 = 12;
                     comiprimer = BigDecimal.valueOf(0.035);
                     comiseg = BigDecimal.valueOf(0.062);
                     comiter = BigDecimal.valueOf(0.078);
@@ -372,6 +378,7 @@ public class reportesBean implements Serializable {
                     tienda1 = 8;
                     tienda2 = 9;
                     tienda3 = 11;
+                    tienda4 = 0;
                     comiprimer = BigDecimal.valueOf(0.02);
                     comiseg = BigDecimal.valueOf(0.05);
                     comiter = BigDecimal.valueOf(0.08);

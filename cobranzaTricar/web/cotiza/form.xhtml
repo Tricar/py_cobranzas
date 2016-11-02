@@ -55,7 +55,8 @@
                                             <p:selectOneMenu id="tienda" value="#{creditoBean.credito.tienda}" required="true" requiredMessage="Seleccione la Tienda">
                                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                                 <f:selectItem itemLabel="VX1" itemValue="V1" />
-                                                <f:selectItem itemLabel="VX2" itemValue="V2" />                            
+                                                <f:selectItem itemLabel="VX2" itemValue="V2" />
+                                                <f:selectItem itemLabel="VX3" itemValue="V3" />
                                             </p:selectOneMenu>
                                         </div>                                        
                                     </div>
@@ -64,16 +65,20 @@
                                             <p:outputLabel value="Buscar cliente:" for="cliente"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
-                                                            completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
-                                                            itemLabel="#{cliente.nombres}" itemValue="#{cliente}"
-                                                            required="true" requiredMessage="Ingrese cliente">
-                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                                                                        
-                                                <p:ajax event="mousemove" update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}"/>
-                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
-                                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
-                                                <p:ajax event="itemSelect" process="@form" />
-                                            </p:autoComplete>
+                                            <div class="ui-grid-col-9">
+                                                <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
+                                                                completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
+                                                                itemLabel="#{cliente.nombres}" itemValue="#{cliente}"
+                                                                required="true" requiredMessage="Ingrese cliente">
+                                                    <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                                                                        
+                                                    <p:ajax event="mousemove" update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}"/>
+                                                    <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg12"/>
+                                                    <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />                                                
+                                                </p:autoComplete>
+                                            </div>
+                                            <div class="ui-grid-col-1">
+                                                <p:commandButton icon="fa fa-plus white" action="#{ventaBean.nuevoanexo()}" immediate="true" />
+                                            </div>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Buscar vendedor:" for="vendedor"/>
@@ -83,7 +88,9 @@
                                                             completeMethod="#{anexoBean.filtrarVendedor}" var="anexo"
                                                             itemLabel="#{anexo.nombres}" itemValue="#{anexo}"
                                                             required="true" requiredMessage="Ingrese vendedor">
-                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                        
+                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
+                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg12"/>
+                                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
                                             </p:autoComplete>
                                         </div>
                                     </div>
@@ -233,5 +240,65 @@
                 </h:form>
             </div>
         </div>
+
+        <h:form id="formInsertar">
+            <p:dialog header="NUEVO CLIENTE" widgetVar="dlginsert" modal="true">
+                <h:panelGrid columns="4">                    
+                    <p:outputLabel value="TIPO:" />
+                    <p:selectOneMenu id="tipodoc" value="#{anexoBean.anexo.tipodocumento}" required="true" requiredMessage="Debe Seleccionar Tipo Documento">
+                        <f:selectItem itemLabel="-- SELECCIONE --" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="DNI" itemValue="DNI" />
+                        <f:selectItem itemLabel="RUC" itemValue="RUC" />
+                        <p:ajax listener="#{anexoBean.actualizarCampos(anexoBean.anexo.tipodocumento)}" 
+                                update="txtRazon txtNombre txtApellido1 txtApellido2 txtDocumento" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="DOCUMENTO:" for="txtDocumento"/>
+                    <p:inputMask mask="#{anexoBean.numdigitos}" id="txtDocumento" value="#{anexoBean.anexo.numdocumento}" maxlength="11">                        
+                    </p:inputMask>
+                    <p:outputLabel value="RAZON SOCIAL" for="txtRazon"/>
+                    <p:inputText disabled="#{anexoBean.empresa}" id="txtRazon" value="#{anexoBean.razonsocial}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                        <f:validator validatorId="validatorLetra"/>
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>                                
+                    <p:outputLabel  value="NOMBRE:" for="txtNombre"/>
+                    <p:inputText disabled="#{anexoBean.persona}" id="txtNombre" value="#{anexoBean.anexo.nombre}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                        <f:validator validatorId="validatorLetra"/>
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="APELLIDO 1:" for="txtApellido1"/>
+                    <p:inputText disabled="#{anexoBean.persona}" id="txtApellido1" value="#{ventaBean.anexo.apepat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                        <f:validator validatorId="validatorLetra"/>
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="APELLIDO 2:" for="txtApellido2"/>
+                    <p:inputText disabled="#{anexoBean.persona}" id="txtApellido2" value="#{ventaBean.anexo.apemat}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                        <f:validator validatorId="validatorLetra"/>
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="DIRECCION:" for="txtDireccion" />
+                    <p:inputText value="#{anexoBean.anexo.direccion}" id="txtDireccion" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                        <f:validator validatorId="validatorVacio"/>
+                        <f:validator validatorId="validatorLetraNumSig"/>
+                    </p:inputText>
+                    <p:outputLabel value="DISTRITO:"/>
+                    <p:selectOneMenu value="#{anexoBean.anexo.distrito}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Debe Seleccionar Distrito">
+                        <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
+                        <f:selectItems value="#{distritoBean.listatdistrito}" var="distrito" itemLabel="#{distrito.distrito}" itemValue="#{distrito}"/>
+                    </p:selectOneMenu>
+                    <ui:remove><p:outputLabel value="REFERENCIA:" for="txtReferencia"/>
+                        <p:inputText value="#{anexoBean.anexo.referencia}" id="txtReferencia" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                            <f:validator validatorId="validatorVacio"/>
+                            <f:validator validatorId="validatorLetraNumSig"/>
+                        </p:inputText></ui:remove>                        
+                    <p:outputLabel value="TELEFONO:" />
+                    <p:inputMask mask="9?99999999" value="#{anexoBean.anexo.telefono}" maxlength="9"/>
+                    <ui:remove><p:outputLabel value="CELULAR:" for="txtCel"/>
+                        <p:inputText value="#{anexoBean.anexo.celular}" id="txtCel" maxlength="10" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" autocomplete="off">
+                            <f:validator validatorId="validatorNumeroCel"/>
+                        </p:inputText></ui:remove>
+                </h:panelGrid>
+                <p:commandButton value="Registrar Cliente" icon="fa fa-save white" ajax="false" actionListener="#{anexoBean.insertar()}" />
+            </p:dialog>
+        </h:form>
     </ui:define>
 </ui:composition>

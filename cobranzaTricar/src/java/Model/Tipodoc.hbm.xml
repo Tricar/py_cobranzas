@@ -14,6 +14,9 @@
         <property name="abrev" type="string">
             <column name="abrev" length="2" />
         </property>
+        <property name="serie" type="string">
+            <column name="serie" length="5" />
+        </property>
         <property name="descripcion" type="string">
             <column name="descripcion" length="50" />
         </property>
@@ -23,5 +26,8 @@
         <property name="tienda" type="string">
             <column name="tienda" length="2" />
         </property>        
+        <property name="empresa" type="string">
+            <column name="empresa" length="2" />
+        </property>
     </class>
 </hibernate-mapping>
