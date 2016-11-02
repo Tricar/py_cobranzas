@@ -33,6 +33,7 @@ public class Operacion implements java.io.Serializable {
     private BigDecimal montototal;
     private Date created;
     private Integer idusuario;
+    private Integer estado;
     private Set operaciondetalles = new HashSet(0);
 
     public Operacion() {
@@ -42,7 +43,7 @@ public class Operacion implements java.io.Serializable {
         this.idoperacion = idoperacion;
     }
 
-    public Operacion(Integer idoperacion, Anexo anexo, Tipoventa tipoventa, Tipodocument tipodocument, Integer idtipooperacioncontable, String codigo, BigDecimal montototal, Date created, Set operaciondetalles, Integer idusuario) {
+    public Operacion(Integer idoperacion, Anexo anexo, Tipoventa tipoventa, Tipodocument tipodocument, Integer idtipooperacioncontable, String codigo, BigDecimal montototal, Date created, Set operaciondetalles, Integer idusuario, Integer estado) {
         this.idoperacion = idoperacion;
         this.anexo = anexo;
         this.tipoventa = tipoventa;
@@ -52,6 +53,7 @@ public class Operacion implements java.io.Serializable {
         this.montototal = montototal;
         this.created = created;
         this.idusuario = idusuario;
+        this.estado = estado;
         this.operaciondetalles = operaciondetalles;
     }
 
@@ -140,6 +142,15 @@ public class Operacion implements java.io.Serializable {
 
     public void setIdusuario(Integer idusuario) {
         this.idusuario = idusuario;
+    }
+
+    @Column(name = "estado")
+    public Integer getEstado() {
+        return this.estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Operacion")

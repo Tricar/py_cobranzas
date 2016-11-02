@@ -5,7 +5,9 @@
  */
 package Dao;
 
+import Model.Perfilmenu;
 import Model.Perfilsubmenu;
+import Model.Submenu;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -16,6 +18,7 @@ import org.hibernate.Session;
 public interface PerfilsubmenuDao {
     
     public void insertar(Perfilsubmenu perfsubmenu);
+    public Perfilsubmenu verTodos(Perfilmenu perfilmenu, Submenu submenu);
     public List<Perfilsubmenu> verTodo(Session session) throws Exception;
     public List<Perfilsubmenu> verTodoByPerfilsubmenu(Session session, Integer menu) throws Exception;
     public Perfilsubmenu verByCodigo(Session session, Integer idperfil) throws Exception;
@@ -26,4 +29,5 @@ public interface PerfilsubmenuDao {
     public boolean eliminarPerfil (Session session, Perfilsubmenu perfil) throws Exception;
     public List<Perfilsubmenu> submenus(int idperfil);
     public List<Perfilsubmenu> verPorMenu(int idperfilmenu);
+    public List<Perfilsubmenu> verSubMenu(int idsubmenu);
 }

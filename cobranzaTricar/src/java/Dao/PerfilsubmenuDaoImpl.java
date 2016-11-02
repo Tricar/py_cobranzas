@@ -5,7 +5,9 @@
  */
 package Dao;
 
+import Model.Perfilmenu;
 import Model.Perfilsubmenu;
+import Model.Submenu;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -43,7 +45,7 @@ public class PerfilsubmenuDaoImpl implements PerfilsubmenuDao {
 
     @Override
     public List<Perfilsubmenu> verTodo(Session session) throws Exception {
-        String hql = "FROM Menu";
+        String hql = "FROM Perfilsubmenu";
         Query query = session.createQuery(hql);
 
         List<Perfilsubmenu> listaPerfil = (List<Perfilsubmenu>) query.list();
@@ -153,6 +155,48 @@ public class PerfilsubmenuDaoImpl implements PerfilsubmenuDao {
             }
         }
         return lista;
+    }
+    
+    @Override
+    public List<Perfilsubmenu> verSubMenu(int idsubmenu) {
+        Session session = null;
+        List<Perfilsubmenu> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Perfilsubmenu where idsubmenu=:u");
+            query.setParameter("u", idsubmenu);
+            lista = (List<Perfilsubmenu>)query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public Perfilsubmenu verTodos(Perfilmenu perfilmenu, Submenu submenu) {
+        Session session = null;
+        Perfilsubmenu perfilsubmenu = new Perfilsubmenu();
+        try {
+            Integer idperfilmenu = perfilmenu.getIdperfilmenu();
+            Integer idsubmenu = submenu.getIdsubmenu();
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Perfilsubmenu where idperfilmenu=:idperfilmenu and idsubmenu=:idsubmenu");
+            query.setParameter("idperfilmenu", idperfilmenu);
+            query.setParameter("idsubmenu", idsubmenu);
+            perfilsubmenu = (Perfilsubmenu) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            session.getTransaction().rollback();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return perfilsubmenu;
     }
 
 }

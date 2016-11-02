@@ -72,11 +72,11 @@ public class PagosDaoImp implements PagosDao {
         }
         return lista;
     }
-    
+
     @Override
-    public Pagos devolverxIdconcepto(int idconceptos){
+    public Pagos devolverxIdconcepto(int idconceptos) {
         Session session = null;
-        Pagos pago = new Pagos();        
+        Pagos pago = new Pagos();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Pagos WHERE idconceptos=:v");
@@ -144,5 +144,43 @@ public class PagosDaoImp implements PagosDao {
                 session.close();
             }
         }
+    }
+
+    @Override
+    public Pagos mostrarPagosxVenta(String codigo) {
+        Session session = null;
+        Pagos pago = new Pagos();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Pagos WHERE operacion=:v");
+            query.setParameter("v", codigo);
+            pago = (Pagos) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return pago;
+    }
+
+    @Override
+    public boolean eliminar(String codigo) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "delete from Pagos where operacion= :operacion";
+            Query query = session.createQuery(hql);
+            query.setParameter("operacion", codigo);
+            query.executeUpdate();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return true;
     }
 }

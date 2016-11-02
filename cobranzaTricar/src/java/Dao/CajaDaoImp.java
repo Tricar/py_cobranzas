@@ -126,5 +126,25 @@ public class CajaDaoImp implements CajaDao {
         }
         return caja;
     }   
+
+    @Override
+    public boolean modificar(Caja caja) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "UPDATE Caja set total = :total WHERE idcaja = :idcaja";
+            Query query = session.createQuery(hql);
+            query.setParameter("total", caja.getTotal());
+            query.setParameter("idcaja", caja.getIdcaja());
+            query.executeUpdate();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return true;
+    }
        
 }

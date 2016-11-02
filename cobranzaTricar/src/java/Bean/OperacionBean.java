@@ -45,7 +45,7 @@ import java.util.Calendar;
  */
 @ManagedBean
 @ViewScoped
-public class VentaMBBean implements Serializable {
+public class OperacionBean implements Serializable {
 
     private Session session;
     private Transaction transaction;
@@ -62,7 +62,7 @@ public class VentaMBBean implements Serializable {
 
     private String valorCodigoBarras;
 
-    public VentaMBBean() {
+    public OperacionBean() {
         this.venta = new Operacion();
         this.listaventadetalle = new ArrayList<>();
     }
@@ -98,7 +98,7 @@ public class VentaMBBean implements Serializable {
             ArticuloDao productodao = new ArticuloDaoImp();
             this.transaction = this.session.beginTransaction();
             this.producto = productodao.getByIdProducto(this.session, idProducto);
-            if (this.producto.getCantidad() == 0 && this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
+            if (this.producto.getCantidad() == 0) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No hay Stock para el articulo."));
                 RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                 return;
@@ -111,7 +111,7 @@ public class VentaMBBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, 0, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
+            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, 1, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -186,12 +186,12 @@ public class VentaMBBean implements Serializable {
             }
             for (Operaciondetalle item : this.listaventadetalle) {
                 this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
-                if (item.getCantidad() > this.producto.getCantidad() && this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock del articulo "+item.getDescripcion()+" no es suficiente."));
+                if (item.getCantidad() > this.producto.getCantidad()) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock de uno de los articulo no es suficiente."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
                 } else if (item.getCantidad() == 0) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La cantidad del articulo "+item.getDescripcion()+" debe ser mayor a cero."));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock debe ser mayor a cero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
                 } else if (item.getPreciototal().equals(new BigDecimal("0"))) {
@@ -222,6 +222,8 @@ public class VentaMBBean implements Serializable {
                 item.setArticulo(this.producto);
                 item.setCantidadanterior(this.producto.getCantidad());
                 ventadetalledao.insertar(this.session, item);
+                this.producto.setCantidad(this.producto.getCantidad() - item.getCantidad());
+                productodao.modificar(session, this.producto);
             }
             this.transaction.commit();
             this.listaventadetalle = new ArrayList<>();
@@ -250,7 +252,7 @@ public class VentaMBBean implements Serializable {
     public String index() {
         listaventa = new ArrayList();
         listaventadetalle = new ArrayList();
-        return "/operacion/venta";
+        return "/venta/ventamb";
     }
 
     public void nuevoanexo() {
@@ -260,7 +262,7 @@ public class VentaMBBean implements Serializable {
     }
 
     public String nuevo() {
-        return "/operacion/fromventa";
+        return "/venta/fromventa";
     }
 
     public List<Operaciondetalle> cargarDetalleArray(Operacion compra) {
@@ -271,7 +273,7 @@ public class VentaMBBean implements Serializable {
 
     public void filtrarFechas() {
         OperacionDao ventadao = new OperacionDaoImp();
-        listaventa = ventadao.filtrarFechas(fecha1, fecha2, 1);
+        listaventa = ventadao.filtrarFechasTipo(fecha1, fecha2);
         listaventadetalle = new ArrayList();
         this.fecha2 = new Date();
     }
@@ -316,9 +318,13 @@ public class VentaMBBean implements Serializable {
             this.venta = ventadao.verByCodigo(this.session, codigo);
 
             this.transaction.commit();
-
-            RequestContext.getCurrentInstance().update("frmAnularCompra");
-            RequestContext.getCurrentInstance().execute("PF('dialogoAnularCompra').show()");
+            if (this.venta.getIdtipooperacioncontable() == 1) {
+                RequestContext.getCurrentInstance().update("frmAnularVenta");
+                RequestContext.getCurrentInstance().execute("PF('dialogoAnularVenta').show()");
+            } else {
+                RequestContext.getCurrentInstance().update("frmAnularCompra");
+                RequestContext.getCurrentInstance().execute("PF('dialogoAnularCompra').show()");
+            }
 
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -330,6 +336,21 @@ public class VentaMBBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public void CargarDetalle(Operacion cred) {
+        OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
+        List<Operaciondetalle> lista = new ArrayList();
+        lista = ventadetalledao.mostrarSoloDetallexCompra(cred);
+        if (lista.isEmpty() == false) {
+            listaventadetalle = lista;
+            RequestContext.getCurrentInstance().update("formModificar");
+            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarVenta').show()");
+        } else {
+            RequestContext.getCurrentInstance().update("formMostrar");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "No existen Detalle de la venta."));
+        }
+
     }
 
     public void cargarEliminarDetalle(int codigo, Usuario usuario) {
@@ -399,7 +420,7 @@ public class VentaMBBean implements Serializable {
         }
     }
 
-    public void anular() {
+    public void anularVenta() {
         this.session = null;
         this.transaction = null;
         try {
@@ -407,13 +428,74 @@ public class VentaMBBean implements Serializable {
             this.transaction = session.beginTransaction();
 
             OperacionDao ventadao = new OperacionDaoImp();
-            eliminarOperaciondetalle(this.venta.getIdoperacion());
-            ventadao.eliminar(this.session, this.venta);
+            eliminarOperaciondetalleVenta(this.venta.getIdoperacion());
+            this.venta.setEstado(0);
+            ventadao.modificar(this.session, this.venta);
 
             this.transaction.commit();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Anulo Correctamente."));
-            this.venta = new Operacion();
+            
+            RequestContext.getCurrentInstance().update("formMostrar");
+            RequestContext.getCurrentInstance().execute("PF('dialogoAnularVenta').hide()");
+
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
+    public void eliminarOperaciondetalleVenta(Integer idoperacion) {
+        OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
+        OperacionDao ventadao = new OperacionDaoImp();
+        Caja caja = new Caja();
+        PagosDao pagosdao = new PagosDaoImp();
+        CajaDao cajadao = new CajaDaoImp();
+        listaventadetalle = detalledao.verTodosxId(idoperacion);
+        for (int i = 0; i < listaventadetalle.size(); i++) {
+            Operaciondetalle get = listaventadetalle.get(i);
+            ArticuloDao productodao = new ArticuloDaoImp();
+            this.producto = productodao.verByCodigos(get.getArticulo().getIdarticulo());
+            this.producto.setCantidad(get.getCantidadanterior());
+            this.producto.setPreciocompra(get.getPreciocompraanterior());
+            this.producto.setPrecioventa(get.getPrecioventaanterior());
+            this.producto.setCostopromedio(get.getCostopromedioanterior());
+            productodao.modificarOD(this.producto);
+            this.venta = ventadao.verByCodigos(get.getOperacion().getIdoperacion());
+            this.venta.setMontototal(this.venta.getMontototal().subtract(get.getPreciototal()));
+            ventadao.modificarOD(this.venta);
+            caja = cajadao.veryId(12);
+            caja.setTotal(caja.getTotal().subtract(get.getPreciototal()));
+            cajadao.modificar(caja);
+            detalledao.eliminarOD(get.getIdoperaciondetalle());
+            producto = new Articulo();
+            venta = new Operacion();
+        }
+        venta = ventadao.verByCodigos(idoperacion);
+        pagosdao.eliminar(venta.getCodigo());
+    }
+
+    public void anularCompra() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = session.beginTransaction();
+
+            OperacionDao ventadao = new OperacionDaoImp();
+            eliminarOperaciondetalleCompra(this.venta.getIdoperacion());
+            ventadao.eliminar(this.session, this.venta);
+
+            this.transaction.commit();
+            filtrarFechas();
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Anulo Correctamente."));
             RequestContext.getCurrentInstance().update("formMostrar");
 
         } catch (Exception e) {
@@ -428,7 +510,7 @@ public class VentaMBBean implements Serializable {
         }
     }
 
-    public void eliminarOperaciondetalle(Integer idoperacion) {
+    public void eliminarOperaciondetalleCompra(Integer idoperacion) {
         OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
         listaventadetalle = detalledao.verTodosxId(idoperacion);
         for (int i = 0; i < listaventadetalle.size(); i++) {
@@ -465,13 +547,11 @@ public class VentaMBBean implements Serializable {
             ArticuloDao productodao = new ArticuloDaoImp();
             OperacionDao ventadao = new OperacionDaoImp();
             this.producto = productodao.getByCodigoBarras(this.session, this.ventadetalle.getCodigoproducto());
-            if (this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
-                this.producto.setCantidad(this.ventadetalle.getCantidadanterior());
-                this.producto.setPreciocompra(this.ventadetalle.getPreciocompraanterior());
-                this.producto.setPrecioventa(this.ventadetalle.getPrecioventaanterior());
-                this.producto.setCostopromedio(this.ventadetalle.getCostopromedioanterior());
-                productodao.modificar(session, this.producto);
-            }
+            this.producto.setCantidad(this.ventadetalle.getCantidadanterior());
+            this.producto.setPreciocompra(this.ventadetalle.getPreciocompraanterior());
+            this.producto.setPrecioventa(this.ventadetalle.getPrecioventaanterior());
+            this.producto.setCostopromedio(this.ventadetalle.getCostopromedioanterior());
+            productodao.modificar(session, this.producto);
             this.venta = ventadao.verByCodigo(this.session, this.ventadetalle.getOperacion().getIdoperacion());
             this.venta.setMontototal(this.venta.getMontototal().subtract(this.ventadetalle.getPreciototal()));
             ventadao.modificar(session, this.venta);
@@ -497,21 +577,7 @@ public class VentaMBBean implements Serializable {
         }
     }
 
-    public void CargarDetalle(Operacion cred) {
-        OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
-        List<Operaciondetalle> lista = new ArrayList();
-        lista = ventadetalledao.mostrarSoloDetallexCompra(cred);
-        if (lista.isEmpty() == false) {
-            listaventadetalle = lista;
-            RequestContext.getCurrentInstance().update("formModificar");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEliminarVenta').show()");
-        } else {
-            RequestContext.getCurrentInstance().update("formMostrar");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "No existen Detalle de la venta."));
-        }
-    }
-
-    public void Boleta(String codigo) throws JRException, NamingException, SQLException, IOException {
+    public void Imprimir(String codigo) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         OperacionDao ventadao = new OperacionDaoImp();
         Connection con = null;
@@ -521,157 +587,7 @@ public class VentaMBBean implements Serializable {
         String pagoletra = dimeElNumeroEnLetras4ceros(this.venta.getMontototal());
         parametros.put("numeroorden", codigo);
         parametros.put("letra", pagoletra);
-        File jasper = new File("D:/reporte/boleta.jasper");
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=BOLETA-" + codigo + ".xls");
-        ServletOutputStream stream = response.getOutputStream();
-        JRXlsxExporter docxExporter = new JRXlsxExporter();
-        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
-        docxExporter.exportReport();
-        stream.flush();
-        stream.close();
-        FacesContext.getCurrentInstance().responseComplete();
-        con.close();
-    }
-
-    public String dimeElNumeroEnLetras4ceros(BigDecimal numero) {
-        String numeroletras = "";
-        int partentera = numero.intValue();
-        BigDecimal parteenterabig = new BigDecimal(partentera);
-        BigDecimal partedecimalbig = numero.subtract(parteenterabig);
-        BigDecimal cien = new BigDecimal(100);
-        n2t obj = new n2t();
-
-        if (partedecimalbig.setScale(1, RoundingMode.DOWN).compareTo(BigDecimal.ZERO) == 0) {
-            numeroletras = obj.convertirLetras(partentera) + "  CON  " + "00/100 SOLES";
-            return numeroletras;
-        }
-        numeroletras = obj.convertirLetras(partentera) + "  CON  " + partedecimalbig.multiply(cien).setScale(0) + "/100 SOLES";
-        return numeroletras;
-    }
-
-    public void cargarPago(int codigoUsuario) {
-        this.session = null;
-        this.transaction = null;
-
-        try {
-
-            OperacionDao ventadao = new OperacionDaoImp();
-
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-
-            this.venta = ventadao.verByCodigos(codigoUsuario);
-
-            this.transaction.commit();
-
-            RequestContext.getCurrentInstance().update("frmEditar:panelEditar");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEditar').show()");
-
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
-        }
-    }
-
-    public void Pagar(Usuario usuario) {
-        this.session = null;
-        this.transaction = null;
-
-        try {
-
-            this.session = HibernateUtil.getSessionFactory().openSession();
-            this.transaction = session.beginTransaction();
-
-            ArticuloDao productodao = new ArticuloDaoImp();
-            OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
-
-            OperacionDao ventadao = new OperacionDaoImp();
-            Caja caja = new Caja();
-            Pagos pago = new Pagos();
-            PagosDao pagosdao = new PagosDaoImp();
-            CajaDao cajadao = new CajaDaoImp();
-            String codigo = this.venta.getCodigo();
-
-            if (ventadao.verByCodigoVenta(this.venta.getCodigo()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Codigo ya Existe."));
-                return;
-            }
-            this.venta = ventadao.verByCodigos(this.venta.getIdoperacion());
-
-            listaventadetalle = ventadetalledao.mostrarSoloDetallexCompra(venta);
-            for (Operaciondetalle item : this.listaventadetalle) {
-                this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
-                if (item.getCantidad() > this.producto.getCantidad() && this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock del articulo "+this.producto.getDescripcion1()+" no es suficiente."));
-                    RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
-                    return;
-                } else if (item.getCantidad() == 0) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Stock debe ser mayor a cero."));
-                    RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
-                    return;
-                }
-            }
-            for (Operaciondetalle item : this.listaventadetalle) {
-                this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
-                if (this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
-                    this.producto.setCantidad(this.producto.getCantidad() - item.getCantidad());
-                    productodao.modificar(session, this.producto);
-                }
-            }
-
-            caja = cajadao.veryId(12);
-            caja.setTotal(caja.getTotal().add(this.venta.getMontototal()));
-            cajadao.modificarCaja(caja);
-
-            Date d = new Date();
-            pago.setOperacion(codigo);
-            pago.setMonto(this.venta.getMontototal());
-            pago.setTipo("VE");
-            pago.setUsuario(usuario.getIdusuario());
-            pago.setFecreg(d);
-            pago.setCaja(caja);
-            pagosdao.insertarPago(pago);
-
-            this.venta.setCodigo(codigo);
-            ventadao.modificar(this.session, this.venta);
-            this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satifactorio."));
-            this.venta = new Operacion();
-            this.cargarVentaAtendida();
-            RequestContext.getCurrentInstance().update("formMostrar");
-            RequestContext.getCurrentInstance().execute("PF('dialogoEditar').hide()");
-        } catch (Exception e) {
-            if (this.transaction != null) {
-                this.transaction.rollback();
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-            this.venta = new Operacion();
-        } finally {
-            if (this.session != null) {
-                this.session.close();
-            }
-        }
-    }
-
-    public void Pago(String codigo, Integer tipoventa) throws JRException, NamingException, SQLException, IOException {
-        dbManager conn = new dbManager();
-        OperacionDao ventadao = new OperacionDaoImp();
-        Connection con = null;
-        con = conn.getConnection();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("numeroorden", codigo);
-        this.venta = ventadao.verByCodigoVenta(codigo);
-        if (tipoventa == 2) {
-            String pagoletra = dimeElNumeroEnLetras4ceros(this.venta.getMontototal());
+        if (this.venta.getTipoventa().getIdtipoventa() == 2) {
             File jasper = new File("D:/reporte/boleta.jasper");
             parametros.put("letra", pagoletra);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
@@ -701,9 +617,67 @@ public class VentaMBBean implements Serializable {
             FacesContext.getCurrentInstance().responseComplete();
             con.close();
         }
+    }
+
+    public String dimeElNumeroEnLetras4ceros(BigDecimal numero) {
+        String numeroletras = "";
+        int partentera = numero.intValue();
+        BigDecimal parteenterabig = new BigDecimal(partentera);
+        BigDecimal partedecimalbig = numero.subtract(parteenterabig);
+        BigDecimal cien = new BigDecimal(100);
+        n2t obj = new n2t();
+
+        if (partedecimalbig.setScale(1, RoundingMode.DOWN).compareTo(BigDecimal.ZERO) == 0) {
+            numeroletras = obj.convertirLetras(partentera) + "  CON  " + "00/100 SOLES";
+            return numeroletras;
+        }
+        numeroletras = obj.convertirLetras(partentera) + "  CON  " + partedecimalbig.multiply(cien).setScale(0) + "/100 SOLES";
+        return numeroletras;
+    }
+
+    public void Pago(String codigo, Integer tipoventa) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        OperacionDao ventadao = new OperacionDaoImp();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        this.venta = ventadao.verByCodigoVenta(codigo);
+        String pagoletra = dimeElNumeroEnLetras4ceros(this.venta.getMontototal());
+        parametros.put("numeroorden", codigo);
+        if (tipoventa == 2) {
+            File jasper = new File("D:/reporte/boleta.jasper");
+            parametros.put("letra", pagoletra);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=BOLETA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
+        } else {
+            File jasper = new File("D:/reporte/factura.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=FACTURA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
+        }
+        this.venta = ventadao.verByCodigoVenta(codigo);
         this.venta.setEstado(1);
         ventadao.modificarOD(this.venta);
-        this.venta = new Operacion();
+        List<Operacion> listaventa = new ArrayList<>();
     }
 
     public Articulo getProducto() {

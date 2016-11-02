@@ -2,9 +2,14 @@ package Bean;
 
 import Dao.CredavalDao;
 import Dao.CredavalDaoImp;
+import Dao.OperacionDao;
+import Dao.OperacionDaoImp;
 import Model.Anexo;
+import Model.Articulo;
 import Model.Credito;
 import Model.Creditoaval;
+import Model.Operacion;
+import Model.Operaciondetalle;
 import Model.Usuario;
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +39,9 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.context.RequestContext;
 import utiles.dbManager;
 import utiles.recorrerCreditos;
 
@@ -48,12 +55,17 @@ public class reportesBean implements Serializable {
 
     private String codigo;
     private List<Anexo> avales = new ArrayList();
+    public Operaciondetalle operaciondetalle = new Operaciondetalle();
+    public Articulo articulo = new Articulo();
     private Integer mes;
     private Integer ano;
     private String empresa;
-    private Date fecha = new Date();
     private Date fecha1 = new Date();
     private Date fecha2 = new Date();
+    private Date fecha3 = new Date();
+    private Date fecha4 = new Date();
+    private Date fecha5 = new Date();
+    private List<Operacion> listaventa;
 
     /**
      * Creates a new instance of reportesBean
@@ -87,18 +99,127 @@ public class reportesBean implements Serializable {
         con.close();
     }
 
-    public void exportarVenta() throws JRException, NamingException, SQLException, IOException {
+    public void exportarDetallado() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("fecha", fecha);
-        File jasper = new File("D:/reporte/venta.jasper");
+        parametros.put("fecha1", fecha1);
+        parametros.put("fecha2", fecha3);
+        OperacionDao ventadao = new OperacionDaoImp();
+        listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
+        if (this.listaventa.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe compra o venta."));
+            RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
+            return;
+        }
+        File jasper = new File("D:/reporte/detalle.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=Venta-" + fecha + ".pdf");
+        response.addHeader("Content-disposition", "attachment; filename=Detalle.xls");
         ServletOutputStream stream = response.getOutputStream();
-        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+
+    public void exportarEspecifico() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha1", fecha1);
+        parametros.put("fecha2", fecha4);        
+        OperacionDao ventadao = new OperacionDaoImp();
+        listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
+        if (this.listaventa.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe compra o venta."));
+            RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
+            return;
+        }
+        File jasper = new File("D:/reporte/especifico.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Especificacion.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+
+    public void exportarStock() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        File jasper = new File("D:/reporte/stock.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), null, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Stock.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+
+    public void exportarArticulo() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha1", fecha1);
+        parametros.put("fecha2", fecha5);
+        OperacionDao ventadao = new OperacionDaoImp();
+        listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
+        if (this.listaventa.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe Movimientos."));
+            RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
+            return;
+        }
+        File jasper = new File("D:/reporte/articulo.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Articulo.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarCaja() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha", fecha1);
+        File jasper = new File("D:/reporte/caja.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Caja.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
         stream.flush();
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
@@ -199,7 +320,7 @@ public class reportesBean implements Serializable {
     public void detalleVentas() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
-        con = conn.getConnection();        
+        con = conn.getConnection();
         String meses = null;
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (mes == null || ano == null) {
@@ -245,7 +366,7 @@ public class reportesBean implements Serializable {
             }
             parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
             parametros.put("nombremes", meses);
-            parametros.put("anio", ano);            
+            parametros.put("anio", ano);
             parametros.put("mese", mes);
             File jasper = new File("D:/reporte/ventas/detalle_ventas.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
@@ -264,12 +385,12 @@ public class reportesBean implements Serializable {
         }
         con.close();
     }
-    
+
     public void comisionVentas() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         recorrerCreditos rec = new recorrerCreditos();
         Connection con = null;
-        con = conn.getConnection();        
+        con = conn.getConnection();
         String meses = null;
         Map<String, Object> parametros = new HashMap<String, Object>();
         if (mes == null || ano == null) {
@@ -320,7 +441,7 @@ public class reportesBean implements Serializable {
             BigDecimal bonow = rec.calculoBonosW(tienda1, ano.toString(), mes.toString());
             parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
             parametros.put("nombremes", meses);
-            parametros.put("anio", ano.toString());            
+            parametros.put("anio", ano.toString());
             parametros.put("mes", mes.toString());
             parametros.put("tienda1", tienda1);
             parametros.put("tienda2", tienda2);
@@ -1051,12 +1172,64 @@ public class reportesBean implements Serializable {
         this.fecha2 = fecha2;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getFecha3() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha2);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        fecha3 = cal.getTime();
+        return fecha3;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFecha3(Date fecha3) {
+        this.fecha3 = fecha3;
+    }
+
+    public Date getFecha4() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha2);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        fecha4 = cal.getTime();
+        return fecha4;
+    }
+
+    public void setFecha4(Date fecha4) {
+        this.fecha4 = fecha4;
+    }
+
+    public Date getFecha5() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(fecha2);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+        fecha5 = cal.getTime();
+        return fecha5;
+    }
+
+    public void setFecha5(Date fecha5) {
+        this.fecha5 = fecha5;
+    }
+
+    public Articulo getArticulo() {
+        return articulo;
+    }
+
+    public void setArticulo(Articulo articulo) {
+        this.articulo = articulo;
+    }
+
+    public Operaciondetalle getOperaciondetalle() {
+        return operaciondetalle;
+    }
+
+    public void setOperaciondetalle(Operaciondetalle operaciondetalle) {
+        this.operaciondetalle = operaciondetalle;
+    }
+
+    public List<Operacion> getListaventa() {
+        return listaventa;
+    }
+
+    public void setListaventa(List<Operacion> listaventa) {
+        this.listaventa = listaventa;
     }
 
 }

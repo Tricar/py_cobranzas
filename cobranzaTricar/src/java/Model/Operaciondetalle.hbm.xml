@@ -25,12 +25,24 @@
         <property name="cantidad" type="java.lang.Integer">
             <column name="cantidad"/>
         </property>
-        <property name="precio" type="big_decimal">
-            <column name="precio" not-null="true" precision="18"/>
+        <property name="preciocompraanterior" type="big_decimal">
+            <column name="preciocompraanterior" not-null="true" precision="18"/>
+        </property>
+        <property name="preciocompra" type="big_decimal">
+            <column name="preciocompra" not-null="true" precision="18"/>
+        </property>
+        <property name="precioventaanterior" type="big_decimal">
+            <column name="precioventaanterior" not-null="true" precision="18"/>
+        </property>
+        <property name="precioventa" type="big_decimal">
+            <column name="precioventa" not-null="true" precision="18"/>
         </property>
         <property name="preciototal" type="big_decimal">
             <column name="preciototal" not-null="true" precision="18"/>
-        </property>        
+        </property>
+        <property name="costopromedioanterior" type="big_decimal">
+            <column name="costopromedioanterior" not-null="true" precision="18"/>
+        </property>
         <property name="costopromedio" type="big_decimal">
             <column name="costopromedio" not-null="true" precision="18"/>
         </property>

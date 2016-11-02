@@ -148,14 +148,30 @@
             });
         </script>
         <script type="text/javascript">
-            function justNumbers(e)
-            {
+            function justNumbers(e) {
                 var keynum = window.event ? window.event.keyCode : e.which;
                 if ((keynum == 8) || (keynum == 46))
                     return true;
                 return /\d/.test(String.fromCharCode(keynum));
             }
-        </script>
+            ;
+            function format(input)
+            {
+                var num = input.value.replace(/\./g, '');
+                if (!isNaN(num)) {
+                    if (num.length > 2)
+                    {
+                        num = num.substring(0, num.length - 2) + '.' + num.substring(num.length - 2);
+                    }
+                    input.value = num;
+                }
+
+                else {
+                    alert('Solo se permiten numeros');
+                    input.value = input.value.replace(/[^\d\.]*/g, '');
+                }
+            }
+        </script>        
         <script language="Javascript">
             document.oncontextmenu = function () {
                 return false

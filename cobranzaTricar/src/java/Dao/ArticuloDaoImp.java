@@ -6,7 +6,9 @@
 package Dao;
 
 import Model.Articulo;
+import Persistencia.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -14,7 +16,7 @@ import org.hibernate.Session;
  *
  * @author master
  */
-public class ArticuloDaoImp implements ArticuloDao{    
+public class ArticuloDaoImp implements ArticuloDao {
 
     @Override
     public boolean registrar(Session session, Articulo articulo) throws Exception {
@@ -51,7 +53,7 @@ public class ArticuloDaoImp implements ArticuloDao{
         String hql = "FROM Articulo WHERE idarticulo!=:idarticulo and descripcion1=:descripcion1";
         Query query = session.createQuery(hql);
         query.setParameter("idarticulo", idarticulo);
-        query.setParameter("descripcion1", descripcion1);   
+        query.setParameter("descripcion1", descripcion1);
         Articulo repuesto = (Articulo) query.uniqueResult();
         return repuesto;
     }
@@ -80,5 +82,77 @@ public class ArticuloDaoImp implements ArticuloDao{
         query.setParameter("codigo", codigo);
         return (Articulo) query.uniqueResult();
     }
-    
+
+    @Override
+    public List<Articulo> filtarTipo(Integer tipo) {
+        Session session = null;
+        List<Articulo> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Articulo WHERE idtipoarticulo=:u");
+            query.setParameter("u", tipo);
+            lista = (List<Articulo>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public Articulo verByCodigos(int idarticulo) {
+        Session session = null;
+        Articulo producto = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "from Articulo where idarticulo=:idarticulo";
+            Query query = session.createQuery(hql);
+            query.setParameter("idarticulo", idarticulo);
+            producto = (Articulo) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return producto;
+    }
+
+    @Override
+    public boolean modificarOD(Articulo articulo) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "UPDATE Articulo set cantidad = :cantidad, preciocompra = :preciocompra, precioventa = :precioventa, costopromedio = :costopromedio WHERE idarticulo = :idarticulo";
+            Query query = session.createQuery(hql);
+            query.setParameter("cantidad", articulo.getCantidad());
+            query.setParameter("preciocompra", articulo.getPreciocompra());
+            query.setParameter("precioventa", articulo.getPrecioventa());
+            query.setParameter("costopromedio", articulo.getCostopromedio());
+            query.setParameter("idarticulo", articulo.getIdarticulo());
+            query.executeUpdate();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public List<Articulo> verTodos(Session session) throws Exception {
+        String hql = "FROM Articulo where idtipoarticulo = 1";
+        Query query = session.createQuery(hql);
+
+        List<Articulo> lista = (List<Articulo>) query.list();
+
+        return lista;
+    }
+
 }

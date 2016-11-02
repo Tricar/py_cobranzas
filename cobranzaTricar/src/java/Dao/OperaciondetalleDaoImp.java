@@ -17,7 +17,7 @@ import org.hibernate.Session;
  *
  * @author Ricardo
  */
-public class OperaciondetalleDaoImp implements OperaciondetalleDao{
+public class OperaciondetalleDaoImp implements OperaciondetalleDao {
 
     @Override
     public boolean insertar(Session session, Operaciondetalle operaciondetalle) throws Exception {
@@ -33,18 +33,17 @@ public class OperaciondetalleDaoImp implements OperaciondetalleDao{
     @Override
     public List<Operaciondetalle> mostrarSoloDetallexCompra(Operacion compra) {
         Session session = null;
-        List<Operaciondetalle> lista = null;       
+        List<Operaciondetalle> lista = null;
         Integer idcred = compra.getIdoperacion();
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Operaciondetalle where idoperacion=:v ");
             query.setParameter("v", idcred);
-            lista = (List<Operaciondetalle>)query.list();
-        }catch (HibernateException e){
+            lista = (List<Operaciondetalle>) query.list();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -56,10 +55,48 @@ public class OperaciondetalleDaoImp implements OperaciondetalleDao{
         session.delete(perfil);
         return true;
     }
-    
+
     @Override
     public Operaciondetalle verByCodigo(Session session, Integer codigo) throws Exception {
         return (Operaciondetalle) session.get(Operaciondetalle.class, codigo);
     }
-    
+
+    @Override
+    public List<Operaciondetalle> verTodosxId(Integer idoperacion) {
+        Session session = null;
+        List<Operaciondetalle> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Operaciondetalle where idoperacion =:idoperacion");
+            query.setParameter("idoperacion", idoperacion);
+            lista = (List<Operaciondetalle>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public boolean eliminarOD(Integer codigo) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "delete from Operaciondetalle where idoperaciondetalle= :idoperaciondetalle";
+            Query query = session.createQuery(hql);
+            query.setParameter("idoperaciondetalle", codigo);
+            query.executeUpdate();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return true;
+    }
+
 }

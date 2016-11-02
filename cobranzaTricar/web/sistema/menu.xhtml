@@ -45,11 +45,11 @@
                     <p:dialog header="Nuevo Usuario" widgetVar="dlginsertar" modal="true">                        
                         <h:panelGrid id="panelcrearperfil" columns="2">
                             <p:outputLabel value="Menu:" for="txtUsuario"/>
-                            <p:inputText id="txtUsuario" label="Menu" value="#{menuBean.menu.menu}" style="text-transform: uppercase" onkeyup="javascript:this.value = this.value.toUpperCase();" autocomplete="off">
+                            <p:inputText id="txtUsuario" label="Menu" value="#{menuBean.menu.menu}" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:outputLabel value="Icono:" for="txtClave"/>
-                            <p:inputText id="txtClave" label="Icono" value="#{menuBean.menu.icon}" style="text-transform: uppercase" onkeyup="javascript:this.value = this.value.toUpperCase();" autocomplete="off">
+                            <p:inputText id="txtClave" label="Icono" value="#{menuBean.menu.icon}" autocomplete="off">
                                 <f:validator validatorId="validatorVacio"/>
                             </p:inputText>
                             <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{menuBean.registrar()}" />

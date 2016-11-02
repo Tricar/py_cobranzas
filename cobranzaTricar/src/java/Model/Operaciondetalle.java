@@ -25,8 +25,12 @@ public class Operaciondetalle implements java.io.Serializable {
     private String descripcion;
     private Integer cantidadanterior;
     private Integer cantidad;
-    private BigDecimal precio;
+    private BigDecimal preciocompraanterior;
+    private BigDecimal preciocompra;
+    private BigDecimal precioventaanterior;
+    private BigDecimal precioventa;
     private BigDecimal preciototal;
+    private BigDecimal costopromedioanterior;
     private BigDecimal costopromedio;
 
     public Operaciondetalle() {
@@ -36,7 +40,7 @@ public class Operaciondetalle implements java.io.Serializable {
         this.idoperaciondetalle = idoperaciondetalle;
     }
 
-    public Operaciondetalle(Integer idoperaciondetalle, Operacion operacion, Articulo articulo, String codigoproducto, String descripcion, Integer cantidadanterior, Integer cantidad, BigDecimal precio, BigDecimal preciototal, BigDecimal costopromedio) {
+    public Operaciondetalle(Integer idoperaciondetalle, Operacion operacion, Articulo articulo, String codigoproducto, String descripcion, Integer cantidadanterior, Integer cantidad, BigDecimal preciocompraanterior, BigDecimal preciocompra, BigDecimal precioventaanterior, BigDecimal precioventa, BigDecimal preciototal, BigDecimal costopromedioanterior, BigDecimal costopromedio) {
         this.idoperaciondetalle = idoperaciondetalle;
         this.operacion = operacion;
         this.articulo = articulo;
@@ -44,8 +48,12 @@ public class Operaciondetalle implements java.io.Serializable {
         this.descripcion = descripcion;
         this.cantidadanterior = cantidadanterior;
         this.cantidad = cantidad;
-        this.precio = precio;
+        this.preciocompraanterior = preciocompraanterior;
+        this.preciocompra = preciocompra;
+        this.precioventaanterior = precioventaanterior;
+        this.precioventa = precioventa;
         this.preciototal = preciototal;
+        this.costopromedioanterior = costopromedioanterior;
         this.costopromedio = costopromedio;
     }
 
@@ -116,13 +124,40 @@ public class Operaciondetalle implements java.io.Serializable {
         this.cantidad = cantidad;
     }
 
-    @Column(name = "precio", nullable = false, precision = 18)
-    public BigDecimal getPrecio() {
-        return this.precio;
+    @Column(name = "preciocompraanterior", nullable = false, precision = 18)
+    public BigDecimal getPreciocompraanterior() {
+        return this.preciocompraanterior;
     }
 
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
+    public void setPreciocompraanterior(BigDecimal preciocompraanterior) {
+        this.preciocompraanterior = preciocompraanterior;
+    }
+
+    @Column(name = "preciocompra", nullable = false, precision = 18)
+    public BigDecimal getPreciocompra() {
+        return this.preciocompra;
+    }
+
+    public void setPreciocompra(BigDecimal preciocompra) {
+        this.preciocompra = preciocompra;
+    }
+
+    @Column(name = "precioventaanterior", nullable = false, precision = 18)
+    public BigDecimal getPrecioventaanterior() {
+        return this.precioventaanterior;
+    }
+
+    public void setPrecioventaanterior(BigDecimal precioventaanterior) {
+        this.precioventaanterior = precioventaanterior;
+    }
+
+    @Column(name = "precioventa", nullable = false, precision = 18)
+    public BigDecimal getPrecioventa() {
+        return this.precioventa;
+    }
+
+    public void setPrecioventa(BigDecimal precioventa) {
+        this.precioventa = precioventa;
     }
 
     @Column(name = "preciototal", nullable = false, precision = 18)
@@ -132,6 +167,15 @@ public class Operaciondetalle implements java.io.Serializable {
 
     public void setPreciototal(BigDecimal preciototal) {
         this.preciototal = preciototal;
+    }
+
+    @Column(name = "costopromedioanterior", nullable = false, precision = 18)
+    public BigDecimal getCostopromedioanterior() {
+        return this.costopromedioanterior;
+    }
+
+    public void setCostopromedioanterior(BigDecimal costopromedioanterior) {
+        this.costopromedioanterior = costopromedioanterior;
     }
 
     @Column(name = "costopromedio", nullable = false, precision = 18)

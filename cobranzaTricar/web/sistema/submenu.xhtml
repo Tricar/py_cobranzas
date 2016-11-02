@@ -48,7 +48,7 @@
                 </div>
 
                 <h:form id="formInsertar">
-                    <p:dialog header="Nuevo Usuario" widgetVar="dlginsertar" modal="true">                        
+                    <p:dialog header="Registrar" widgetVar="dlginsertar" modal="true">                        
                         <h:panelGrid id="panelcrearperfil" columns="2">
                             <p:outputLabel value="Submenu:" for="txtUsuario"/>
                             <p:inputText id="txtUsuario" label="Submenu" value="#{submenuBean.submenu.submenu}" autocomplete="off">
@@ -73,7 +73,7 @@
                 </h:form>
 
                 <h:form id="frmEditarUsuario">
-                    <p:dialog header="Datos del usuario" widgetVar="dialogoEditarUsuario" modal="true">
+                    <p:dialog header="Actualiza" widgetVar="dialogoEditarUsuario" modal="true">
                         <h:panelGrid id="panelEditarUsuario" columns="2">
                             <p:inputText type="hidden" value="#{submenuBean.submenu.idsubmenu}"/>
                             <h:panelGroup></h:panelGroup>
