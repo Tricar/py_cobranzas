@@ -49,7 +49,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
  */
 @ManagedBean
 @ViewScoped
-public class VentaMBBean implements Serializable {
+public class ServicioBean implements Serializable {
 
     private Session session;
     private Transaction transaction;
@@ -66,7 +66,7 @@ public class VentaMBBean implements Serializable {
 
     private String valorCodigoBarras;
 
-    public VentaMBBean() {
+    public ServicioBean() {
         this.venta = new Operacion();
         this.listaventadetalle = new ArrayList<>();
     }
@@ -254,7 +254,7 @@ public class VentaMBBean implements Serializable {
     public String index() {
         listaventa = new ArrayList();
         listaventadetalle = new ArrayList();
-        return "/operacion/venta";
+        return "/operacion/lista";
     }
 
     public void nuevoanexo() {
@@ -263,8 +263,20 @@ public class VentaMBBean implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
     }
 
-    public String nuevo() {
-        return "/operacion/fromventa";
+    public String garantia() {
+        return "/operacion/formgarantia";
+    }
+
+    public String reclamo() {
+        return "/operacion/formreclamo";
+    }
+
+    public String mantenimiento() {
+        return "/operacion/formmantenimiento";
+    }
+
+    public String reparacion() {
+        return "/operacion/formreparacion";
     }
 
     public List<Operaciondetalle> cargarDetalleArray(Operacion compra) {
