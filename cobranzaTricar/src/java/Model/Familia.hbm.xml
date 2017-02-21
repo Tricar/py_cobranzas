@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Familia" table="familia" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idfamilia" type="int">
+            <column name="idfamilia" />
+            <generator class="identity" />
+        </id>
+        <property name="familia" type="string">
+            <column name="familia" length="50" />
+        </property>
+        <property name="created" type="timestamp">
+            <column name="created" length="23" not-null="true" />
+        </property>
+        <set name="subfamilias" table="subfamilia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idfamilia" />
+            </key>
+            <one-to-many class="Model.Familia" />
+        </set>
+    </class>
+</hibernate-mapping>
