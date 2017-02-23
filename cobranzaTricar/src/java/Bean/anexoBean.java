@@ -271,7 +271,8 @@ public class anexoBean implements Serializable {
             Date d = new Date();
             this.anexo.setFechareg(d);
             this.anexo.setCodven("");
-            Date fechaNac = null;            
+            Date fechaNac = null;
+            System.out.println("nombre: "+anexo.getNombre());
             fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
             this.anexo.setFechanac(fechaNac);
             calcularEdad(fecnac);
@@ -548,6 +549,18 @@ public class anexoBean implements Serializable {
         }
         return query;
     }
+
+    public List<Anexo> filtrarClienteUnidad(String name) {
+        this.query = new ArrayList<Anexo>();
+        AnexoDao anexoDao = new AnexoDaoImplements();
+        List<Anexo> tipos = anexoDao.filtarTipoDos("CN", "CJ");
+        for (Anexo tipo : tipos) {
+            if (tipo.getNombre().startsWith(name.toUpperCase())) {
+                query.add(tipo);
+            }
+        }
+        return query;
+    }
     
     public List<Anexo> filtrarProveedor(String name) {
         this.query = new ArrayList<Anexo>();
@@ -738,7 +751,8 @@ public class anexoBean implements Serializable {
             numdigitos = "99999999999";
             empresa = false;
             persona = true;
-        }        
+        }
+        System.out.println("ejecuté campos");
     }
     
     public void datosConyu(String estcivil){

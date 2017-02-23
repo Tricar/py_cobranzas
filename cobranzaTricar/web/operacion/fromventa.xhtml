@@ -40,7 +40,7 @@
                                                                 var="cliente" itemLabel="#{cliente.nombres}" itemValue="#{cliente}" required="true" 
                                                                 requiredMessage="Ingrese cliente">
                                                     <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                    <p:ajax event="itemSelect" update="txtRUC txtDireccion"/>
+                                                    <p:ajax event="mousemove" update="txtRUC txtDireccion"/>
                                                     <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="frmRealizarVentas:mensajeGeneral"/>
                                                     <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="frmRealizarVentas:mensajeGeneral"/>
                                                     <p:ajax event="itemSelect" process="frmRealizarVentas:mensajeGeneral" />
@@ -101,13 +101,11 @@
                                     <p:column headerText="SERVICIO Y REPUESTO">
                                         <h:outputText value="#{detalle.descripcion}"/>
                                     </p:column>
-                                    <p:column headerText="PRECIO UNITARIO">
-                                        <h:outputText value="#{detalle.precioventa}"/>
+                                    <p:column headerText="PRECIO UNITARIO" width="10%" style="text-align: center;">
+                                        <p:inputText value="#{detalle.precioventa}" onkeypress="return justNumbers(event);" size="8"/>
                                     </p:column>
                                     <p:column headerText="CANTIDAD" width="10%" style="text-align: center;">
-                                        <p:inputText value="#{detalle.cantidad}" onkeyup="format(this)" onchange="format(this)" size="8">
-                                            <p:ajax event="keyup" listener="#{ventaMBBean.calcularcostos()}"/>
-                                        </p:inputText>
+                                        <p:inputText value="#{detalle.cantidad}" onkeyup="format(this)" onchange="format(this)" size="8"/>
                                     </p:column>
                                     <p:column headerText="TOTAL">
                                         S/. <h:outputText value="#{detalle.preciototal}"/>
@@ -120,9 +118,10 @@
                         </div>
                         <p:panelGrid id="panelFinalVenta" columns="1" style="text-align: right; width: 100%;">
                             <h:panelGroup>
+                                <p:commandButton value="Actualizar monto" actionListener="#{ventaMBBean.calcularcostos()}" />
                                 S/. <h:outputText value="#{ventaMBBean.venta.montototal}" style="box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);padding: 7px;" />
                                 ----------------
-                                <p:commandButton value="Realizar venta" actionListener="#{ventaMBBean.realizarVenta(loginbean.usuario)}"/>
+                                <p:commandButton value="Realizar venta" disabled="#{ventaMBBean.boton}" actionListener="#{ventaMBBean.realizarVenta(loginbean.usuario)}"/>
                             </h:panelGroup>
                         </p:panelGrid>
                     </div>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Subfamilia" table="subfamilia" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idsubfamilia" type="int">
+            <column name="idsubfamilia" />
+            <generator class="identity" />
+        </id>
+        <property name="subfamilia" type="string">
+            <column name="subfamilia" length="50" not-null="true" />
+        </property>        
+        <many-to-one name="familia" class="Model.Familia" fetch="select">
+            <column name="idfamilia" not-null="true" />
+        </many-to-one>
+        <property name="created" type="timestamp">
+            <column name="created" length="23" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
