@@ -215,6 +215,7 @@ public class ventaBean implements Serializable {
                 this.session.close();
             }
         }
+        razonsocial = null;
     }
 
     public void insertarVenta(Usuario usuario) {
@@ -245,7 +246,7 @@ public class ventaBean implements Serializable {
                     concepto.setCredito(credito);
                     condao.insertarConcepto(concepto);
                     vehiculo = credito.getVehiculo();
-                    vehiculo.setEstado("N");
+                    vehiculo.setEstado('N');
                     vehidao.modificarVehiculo(vehiculo);
                     sw = 1;
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La venta se registró correctamente."));

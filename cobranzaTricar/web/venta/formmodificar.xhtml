@@ -82,7 +82,8 @@
                                                              requiredMessage="Seleccione la Tienda" disabled="true">
                                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                                 <f:selectItem itemLabel="VX1" itemValue="V1" />
-                                                <f:selectItem itemLabel="VX2" itemValue="V2" />                            
+                                                <f:selectItem itemLabel="VX2" itemValue="V2" />
+                                                <f:selectItem itemLabel="VX3" itemValue="V3" />
                                             </p:selectOneMenu>
                                         </div>
                                     </div>
@@ -157,7 +158,7 @@
                                                              required="true" requiredMessage="Seleccione Modelo" >
                                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                                 <f:selectItems value="#{creditoBean.listafiltrada}" var="modelo" itemLabel="#{modelo.modelo}" itemValue="#{modelo}"/>
-                                                <p:ajax update="precio lblinicial res txtinicial" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
+                                                <p:ajax update="precio res" listener="#{creditoBean.precioModeloCotiza()}" process="@this"/>
                                             </p:selectOneMenu> 
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
@@ -190,12 +191,16 @@
                                             <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true"/> 
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" for="txtinicial"/>
+                                            <ui:remove>
+                                                <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" />
+                                            </ui:remove>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="txtinicial" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei}">
-                                                <p:ajax event="keyup" update="res" listener="#{creditoBean.resSaldo()}"/>
-                                            </p:inputText>
+                                            <ui:remove>
+                                                <p:inputText id="txtinicial" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei}">
+                                                    <p:ajax event="keyup" update="res" listener="#{creditoBean.resSaldo()}"/>
+                                                </p:inputText>
+                                            </ui:remove>
                                         </div>
                                     </div>
                                     <div class="ui-grid-row">  
@@ -204,11 +209,11 @@
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:selectBooleanButton id="btninidist" value="#{creditoBean.valuei}" onLabel="Si" offLabel="No" onIcon="fa fa-check blue" offIcon="fa fa-close red" style="width:40px">
-                                                <p:ajax update="msg12 txtinicial txtinicial2" listener="#{creditoBean.addMessageini}" />
+                                                <p:ajax update="msg12 txtinicial2" listener="#{creditoBean.addMessageini}" />
                                             </p:selectBooleanButton>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel id="lblinicial2" value="Ingrese inicial:" for="txtinicial2"/>
+                                            <p:outputLabel id="lblinicial2" value="Ingrese inicial ----- sugerida: #{creditoBean.iniciapre}" for="txtinicial2"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:inputText id="txtinicial2" value="#{creditoBean.inicia}" class="money" required="true" requiredMessage="Ingrese incial" disabled="#{creditoBean.valuei2}">
@@ -260,6 +265,8 @@
                                                 <f:selectItem itemLabel="7" itemValue='7.00'/> 
                                                 <f:selectItem itemLabel="6" itemValue='6.00'/>
                                                 <f:selectItem itemLabel="5" itemValue='5.00'/>
+                                                <f:selectItem itemLabel="4" itemValue='4.00'/>
+                                                <f:selectItem itemLabel="3" itemValue='3.00'/>
                                                 <f:selectItem itemLabel="0" itemValue='0.00'/>                                                                                                
                                             </p:selectOneMenu>
                                         </div>

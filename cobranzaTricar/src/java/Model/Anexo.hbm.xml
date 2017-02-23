@@ -1,14 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
-<hibernate-mapping>  
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
     <class name="Model.Anexo" table="anexo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idanexo" type="int">
             <column name="idanexo" />
             <generator class="identity" />
         </id>
+        <many-to-one name="distrito" class="Model.Distrito" fetch="select">
+            <column name="iddistrito" />
+        </many-to-one>
         <property name="nombre" type="string">
             <column name="nombre" length="50" />
+        </property>
+        <property name="apepat" type="string">
+            <column name="apepat" length="30" />
+        </property>
+        <property name="apemat" type="string">
+            <column name="apemat" length="30" />
         </property>
         <property name="tipodocumento" type="string">
             <column name="tipodocumento" length="3" />
@@ -24,15 +34,9 @@
         </property>
         <property name="cpm" type="string">
             <column name="cpm" length="50" />
-        </property>       
-        <many-to-one name="distrito" class="Model.Distrito" fetch="select">
-            <column name="iddistrito" />
-        </many-to-one>
+        </property>
         <property name="sector" type="string">
             <column name="sector" length="50" />
-        </property>
-        <property name="zona" type="string">
-            <column length="50" name="zona"/>
         </property>
         <property name="referencia" type="string">
             <column name="referencia" length="200" />
@@ -54,12 +58,6 @@
         </property>
         <property name="sexo" type="java.lang.Character">
             <column name="sexo" length="1" />
-        </property>
-        <property name="apepat" type="string">
-            <column name="apepat" length="30" />
-        </property>
-        <property name="apemat" type="string">
-            <column name="apemat" length="30" />
         </property>
         <property name="email" type="string">
             <column name="email" length="50" />
@@ -88,6 +86,15 @@
         <property name="cpropia" type="string">
             <column name="cpropia" length="2" />
         </property>
+        <property name="zona" type="string">
+            <column name="zona" length="50" />
+        </property>
+        <property name="sueldo" type="java.lang.Integer">
+            <column name="sueldo" />
+        </property>
+        <property name="tienda" type="string">
+            <column name="tienda" length="2" />
+        </property>
         <set name="creditos" table="credito" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idanexo" not-null="true" />
@@ -99,22 +106,16 @@
                 <column name="idanexo" />
             </key>
             <one-to-many class="Model.Usuario" />
-        </set>        
-        <set name="ocupacions" table="ocupacion" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="idanexo" not-null="true" />
-            </key>
-            <one-to-many class="Model.Ocupacion" />
         </set>
-        <set name="cajas" table="caja" inverse="true" lazy="true" fetch="select">
+        <set name="operacions" table="operacion" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idanexo" not-null="true" />
+                <column name="idanexo" />
             </key>
-            <one-to-many class="Model.Caja" />
+            <one-to-many class="Model.Operacion" />
         </set>
         <set name="conceptoses" table="conceptos" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idanexo" not-null="true" />
+                <column name="idanexo" />
             </key>
             <one-to-many class="Model.Conceptos" />
         </set>
@@ -124,11 +125,11 @@
             </key>
             <one-to-many class="Model.Creditoaval" />
         </set>
-        <set fetch="select" inverse="true" lazy="true" name="operaciones" table="operacion">
+        <set name="ocupacions" table="ocupacion" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idanexo" not-null="true"/>
+                <column name="idanexo" />
             </key>
-            <one-to-many class="Model.Operacion"/>
+            <one-to-many class="Model.Ocupacion" />
         </set>
     </class>
 </hibernate-mapping>

@@ -54,13 +54,14 @@ public class vehiculoBean implements Serializable {
     }
 
     public void nuevo(Usuario usuario) {
-        if (usuario.getPerfil().getAbrev().equals("AD")) {
+        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("AS")) {
             vehiculo = new Vehiculo();
             RequestContext.getCurrentInstance().update("formInsertar");
             RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
         } else {
             RequestContext.getCurrentInstance().update("formMostrar");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 
@@ -73,7 +74,8 @@ public class vehiculoBean implements Serializable {
                 this.transaction = session.beginTransaction();
                 VehiculoDao dao = new VehiculoDaoImplements();
                 if (dao.verBySerie(this.session, this.vehiculo.getSerie()) != null) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Articulo ya existe en DB."));
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El Articulo ya existe en DB.");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message);
                     this.vehiculo = new Vehiculo();
                     return;
                 }
@@ -83,9 +85,8 @@ public class vehiculoBean implements Serializable {
                 vehiculo.setMarca(obtenerMarca(vehiculo.getModelo().getModelo()));
                 dao.registrar(this.session, this.vehiculo);
                 this.transaction.commit();
-
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio.");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
                 this.vehiculo = new Vehiculo();
             } catch (Exception e) {
                 if (this.transaction != null) {
@@ -100,7 +101,8 @@ public class vehiculoBean implements Serializable {
             }
         } else {
             RequestContext.getCurrentInstance().update("formMostrar");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 
@@ -113,14 +115,16 @@ public class vehiculoBean implements Serializable {
             this.transaction = session.beginTransaction();
             VehiculoDao dao = new VehiculoDaoImplements();
             if (dao.verBySerieDifer(this.session, this.vehiculo.getIdvehiculo(), this.vehiculo.getSerie()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Articulo ya Existe."));
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Articulo ya Existe.");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
                 return;
             }
             vehiculo.setTipovehiculo(vehiculo.getModelo().getTipo());
             vehiculo.setMarca(obtenerMarca(vehiculo.getModelo().getModelo()));
             dao.modificar(this.session, this.vehiculo);
             this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             this.vehiculo = new Vehiculo();
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -145,7 +149,8 @@ public class vehiculoBean implements Serializable {
             VehiculoDao dao = new VehiculoDaoImplements();
             dao.eliminar(this.session, this.vehiculo);
             this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino el Articulo Correctamente."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
             this.vehiculo = new Vehiculo();
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -160,7 +165,7 @@ public class vehiculoBean implements Serializable {
     }
 
     public void cargarArticuloEditar(Integer codigoUsuario, Usuario usuario) {
-        if (usuario.getPerfil().getAbrev().equals("AD")) {
+        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("AS")) {
             this.session = null;
             this.transaction = null;
 
@@ -191,7 +196,7 @@ public class vehiculoBean implements Serializable {
     }
 
     public void cargarArticuloEliminar(Integer codigoUsuario, Usuario usuario) {
-        if (usuario.getPerfil().getAbrev().equals("AD")) {
+        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("AS")) {
             this.session = null;
             this.transaction = null;
 
@@ -216,7 +221,8 @@ public class vehiculoBean implements Serializable {
             }
         } else {
             RequestContext.getCurrentInstance().update("formMostrar");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para Editar."));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No cuenta con permisos para Editar.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
     }
 
@@ -227,25 +233,23 @@ public class vehiculoBean implements Serializable {
         return vehiculo;
     }
 
-    public String obtenerMarca(String modelo) {
-        String marca = new String();
-        char ab = modelo.charAt(0);
-        System.out.println("ab: " + ab);
+    public char obtenerMarca(String modelo) {
+        char marca = 'v';
+        char ab = modelo.charAt(0);        
         switch (ab) {
             case 'V':
-                marca = "V";
+                marca = 'V';
                 break;
             case 'M':
-                marca = "V";
+                marca = 'V';
                 break;
             case 'T':
-                marca = "T";
+                marca = 'T';
                 break;
             case 'G':
-                marca = "T";
+                marca = 'T';
                 break;
-        }
-        System.out.println("ab: " + ab);
+        }        
         return marca;
     }
 
@@ -298,8 +302,8 @@ public class vehiculoBean implements Serializable {
 
     public List<Vehiculo> filtrarDisponibleModelo(String name) {
         this.query = new ArrayList<Vehiculo>();
-        VehiculoDao vehiculodao = new VehiculoDaoImplements();        
-        List<Vehiculo> tipos = vehiculodao.filtarDisponibleCotiza("D", idmodelo);
+        VehiculoDao vehiculodao = new VehiculoDaoImplements();
+        List<Vehiculo> tipos = vehiculodao.filtarDisponibleCotiza('D', idmodelo);
         for (Vehiculo tipo : tipos) {
             if (tipo.getSerie().endsWith(name.toUpperCase())) {
                 query.add(tipo);

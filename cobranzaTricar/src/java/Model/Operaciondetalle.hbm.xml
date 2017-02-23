@@ -1,50 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class catalog="cobranzas" name="Model.Operaciondetalle" optimistic-lock="version" schema="dbo" table="operaciondetalle">
+    <class name="Model.Operaciondetalle" table="operaciondetalle" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idoperaciondetalle" type="int">
             <column name="idoperaciondetalle"/>
             <generator class="identity"/>
         </id>
-        <many-to-one class="Model.Operacion" fetch="select" name="operacion">
-            <column name="idoperacion" not-null="true"/>
+        <many-to-one name="articulo" class="Model.Articulo" fetch="select">
+            <column name="idarticulo" />
         </many-to-one>
-        <many-to-one class="Model.Articulo" fetch="select" name="articulo">
-            <column name="idarticulo" not-null="true"/>
+        <many-to-one name="operacion" class="Model.Operacion" fetch="select">
+            <column name="idoperacion" />
         </many-to-one>
         <property name="codigoproducto" type="string">
-            <column length="10" name="codigoproducto" not-null="true"/>
+            <column name="codigoproducto" length="10" />
         </property>
         <property name="descripcion" type="string">
-            <column length="100" name="descripcion" not-null="true"/>
+            <column name="descripcion" length="100" />
         </property>
         <property name="cantidadanterior" type="java.lang.Integer">
-            <column name="cantidadanterior"/>
+            <column name="cantidadanterior" />
         </property>
         <property name="cantidad" type="java.lang.Integer">
-            <column name="cantidad"/>
+            <column name="cantidad" />
         </property>
         <property name="preciocompraanterior" type="big_decimal">
-            <column name="preciocompraanterior" not-null="true" precision="18"/>
+            <column name="preciocompraanterior" precision="18" />
         </property>
         <property name="preciocompra" type="big_decimal">
-            <column name="preciocompra" not-null="true" precision="18"/>
+            <column name="preciocompra" precision="18" />
         </property>
         <property name="precioventaanterior" type="big_decimal">
-            <column name="precioventaanterior" not-null="true" precision="18"/>
+            <column name="precioventaanterior" precision="18" />
         </property>
         <property name="precioventa" type="big_decimal">
-            <column name="precioventa" not-null="true" precision="18"/>
-        </property>
-        <property name="preciototal" type="big_decimal">
-            <column name="preciototal" not-null="true" precision="18"/>
+            <column name="precioventa" precision="18" />
         </property>
         <property name="costopromedioanterior" type="big_decimal">
-            <column name="costopromedioanterior" not-null="true" precision="18"/>
+            <column name="costopromedioanterior" precision="18" />
         </property>
         <property name="costopromedio" type="big_decimal">
-            <column name="costopromedio" not-null="true" precision="18"/>
+            <column name="costopromedio" precision="18" />
+        </property>
+        <property name="preciototal" type="big_decimal">
+            <column name="preciototal" precision="18" />
         </property>
     </class>
 </hibernate-mapping>

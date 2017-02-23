@@ -233,6 +233,7 @@ public class reportesBean implements Serializable {
         Integer tienda1 = null;
         Integer tienda2 = null;
         Integer tienda3 = null;
+        Integer tienda4 = null;
         String tienda = null;
         String meses = null;
         Map<String, Object> parametros = new HashMap<String, Object>();
@@ -243,16 +244,19 @@ public class reportesBean implements Serializable {
                 tienda1 = 4;
                 tienda2 = 5;
                 tienda3 = 10;
+                tienda4 = 12;
                 tienda = "CASCO RED";
             } else if (empresa.equals("TR")) {
                 tienda1 = 8;
                 tienda2 = 0;
                 tienda3 = 11;
+                tienda4 = 0;
                 tienda = "TRICAR";
             } else {
                 tienda1 = 0;
                 tienda2 = 9;
                 tienda3 = 0;
+                tienda4 = 0;
                 tienda = "SEDNA";
             }
             switch (mes) {
@@ -298,6 +302,7 @@ public class reportesBean implements Serializable {
             parametros.put("tienda1", tienda1);
             parametros.put("tienda2", tienda2);
             parametros.put("tienda3", tienda3);
+            parametros.put("tienda4", tienda4);
             parametros.put("tienda", tienda);
             parametros.put("meses", meses);
             File jasper = new File("D:/reporte/cierreingreso.jasper");
@@ -432,22 +437,101 @@ public class reportesBean implements Serializable {
             }
             String tienda1 = "V1";
             String tienda2 = "V2";
+            String tienda3 = "V3";
             BigDecimal bonov1 = rec.calculoBonos(tienda1, ano.toString(), mes.toString());
             BigDecimal bonov2 = rec.calculoBonos(tienda2, ano.toString(), mes.toString());
-            BigDecimal bonow = rec.calculoBonos(tienda1, ano.toString(), mes.toString());
+            BigDecimal bonov3 = rec.calculoBonos(tienda3, ano.toString(), mes.toString());
+            BigDecimal bonow = rec.calculoBonosW(tienda1, ano.toString(), mes.toString());
             parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
             parametros.put("nombremes", meses);
             parametros.put("anio", ano.toString());
             parametros.put("mes", mes.toString());
             parametros.put("tienda1", tienda1);
             parametros.put("tienda2", tienda2);
+            parametros.put("tienda3", tienda3);
             parametros.put("bonov1", bonov1);
             parametros.put("bonov2", bonov2);
+            parametros.put("bonov3", bonov3);
             parametros.put("bonow", bonow);
             File jasper = new File("D:/reporte/ventas/comision.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             response.addHeader("Content-disposition", "attachment; filename=Comisionxventas-" + mes + "-" + ano + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+
+            JRXlsExporter exporter = new JRXlsExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);            
+            exporter.exportReport();
+
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        }
+        con.close();
+    }
+    
+    public void nivelVentas() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();        
+        Connection con = null;
+        con = conn.getConnection();
+        String meses = null;
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (mes == null || ano == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe ingresar mes, año y/o empresa."));
+        } else {
+            switch (mes) {
+                case 1:
+                    meses = "ENERO";
+                    break;
+                case 2:
+                    meses = "FEBRERO";
+                    break;
+                case 3:
+                    meses = "MARZO";
+                    break;
+                case 4:
+                    meses = "ABRIL";
+                    break;
+                case 5:
+                    meses = "MAYO";
+                    break;
+                case 6:
+                    meses = "JUNIO";
+                    break;
+                case 7:
+                    meses = "JULIO";
+                    break;
+                case 8:
+                    meses = "AGOSTO";
+                    break;
+                case 9:
+                    meses = "SETIEMBRE";
+                    break;
+                case 10:
+                    meses = "OCTUBRE";
+                    break;
+                case 11:
+                    meses = "NOVIEMBRE";
+                    break;
+                case 12:
+                    meses = "DICIEMBRE";
+                    break;
+            }
+            String tienda1 = "V1";
+            String tienda2 = "V2";
+            String tienda3 = "V3";            
+            parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
+            parametros.put("nombremes", meses);
+            parametros.put("anio", ano.toString());
+            parametros.put("mes", mes.toString());
+            parametros.put("tienda1", tienda1);
+            parametros.put("tienda2", tienda2);
+            parametros.put("tienda3", tienda3);            
+            File jasper = new File("D:/reporte/ventas/nivelventas.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=Nivelventas-" + mes + "-" + ano + ".xls");
             ServletOutputStream stream = response.getOutputStream();
 
             JRXlsExporter exporter = new JRXlsExporter();
@@ -461,7 +545,157 @@ public class reportesBean implements Serializable {
         }
         con.close();
     }
+    
+    public void totalVentas() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();        
+        Connection con = null;
+        con = conn.getConnection();
+        String meses = null;
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (mes == null || ano == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe ingresar mes, año y/o empresa."));
+        } else {
+            switch (mes) {
+                case 1:
+                    meses = "ENERO";
+                    break;
+                case 2:
+                    meses = "FEBRERO";
+                    break;
+                case 3:
+                    meses = "MARZO";
+                    break;
+                case 4:
+                    meses = "ABRIL";
+                    break;
+                case 5:
+                    meses = "MAYO";
+                    break;
+                case 6:
+                    meses = "JUNIO";
+                    break;
+                case 7:
+                    meses = "JULIO";
+                    break;
+                case 8:
+                    meses = "AGOSTO";
+                    break;
+                case 9:
+                    meses = "SETIEMBRE";
+                    break;
+                case 10:
+                    meses = "OCTUBRE";
+                    break;
+                case 11:
+                    meses = "NOVIEMBRE";
+                    break;
+                case 12:
+                    meses = "DICIEMBRE";
+                    break;
+            }
+            String tienda1 = "V1";
+            String tienda2 = "V2";
+            String tienda3 = "V3";            
+            parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
+            parametros.put("nombremes", meses);
+            parametros.put("anio", ano.toString());
+            parametros.put("mes", mes.toString());
+            parametros.put("tienda1", tienda1);
+            parametros.put("tienda2", tienda2);
+            parametros.put("tienda3", tienda3);            
+            File jasper = new File("D:/reporte/ventas/totalizado.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=Totalventas-" + mes + "-" + ano + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
 
+            JRXlsExporter exporter = new JRXlsExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            exporter.exportReport();
+
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        }
+        con.close();
+    }
+    
+    public void ventasModelo() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();        
+        Connection con = null;
+        con = conn.getConnection();
+        String meses = null;
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        if (mes == null || ano == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Debe ingresar mes, año y/o empresa."));
+        } else {
+            switch (mes) {
+                case 1:
+                    meses = "ENERO";
+                    break;
+                case 2:
+                    meses = "FEBRERO";
+                    break;
+                case 3:
+                    meses = "MARZO";
+                    break;
+                case 4:
+                    meses = "ABRIL";
+                    break;
+                case 5:
+                    meses = "MAYO";
+                    break;
+                case 6:
+                    meses = "JUNIO";
+                    break;
+                case 7:
+                    meses = "JULIO";
+                    break;
+                case 8:
+                    meses = "AGOSTO";
+                    break;
+                case 9:
+                    meses = "SETIEMBRE";
+                    break;
+                case 10:
+                    meses = "OCTUBRE";
+                    break;
+                case 11:
+                    meses = "NOVIEMBRE";
+                    break;
+                case 12:
+                    meses = "DICIEMBRE";
+                    break;
+            }
+            String tienda1 = "V1";
+            String tienda2 = "V2";
+            String tienda3 = "V3";            
+            parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
+            parametros.put("nombremes", meses);
+            parametros.put("anio", ano.toString());
+            parametros.put("mes", mes.toString());
+            parametros.put("tienda1", tienda1);
+            parametros.put("tienda2", tienda2);
+            parametros.put("tienda3", tienda3);            
+            File jasper = new File("D:/reporte/ventas/ventasmodelo.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=Ventasmodelo-" + mes + "-" + ano + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+
+            JRXlsExporter exporter = new JRXlsExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            exporter.exportReport();
+
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        }
+        con.close();
+    }
+    
     public void comisionesGestor(Usuario usuario) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
@@ -469,6 +703,7 @@ public class reportesBean implements Serializable {
         Integer tienda1 = null;
         Integer tienda2 = null;
         Integer tienda3 = null;
+        Integer tienda4 = null;
         BigDecimal comiprimer;
         BigDecimal comiseg;
         BigDecimal comiter;
@@ -484,6 +719,7 @@ public class reportesBean implements Serializable {
                     tienda1 = 4;
                     tienda2 = 5;
                     tienda3 = 10;
+                    tienda4 = 12;
                     comiprimer = BigDecimal.valueOf(0.035);
                     comiseg = BigDecimal.valueOf(0.062);
                     comiter = BigDecimal.valueOf(0.078);
@@ -493,6 +729,7 @@ public class reportesBean implements Serializable {
                     tienda1 = 8;
                     tienda2 = 9;
                     tienda3 = 11;
+                    tienda4 = 0;
                     comiprimer = BigDecimal.valueOf(0.02);
                     comiseg = BigDecimal.valueOf(0.05);
                     comiter = BigDecimal.valueOf(0.08);
@@ -796,9 +1033,12 @@ public class reportesBean implements Serializable {
         BigDecimal penv2 = recorre.montosDet("V2", "CA", "PN");
         BigDecimal venv2 = recorre.montosDet("V2", "CA", "VN");
         BigDecimal totv2 = recorre.montosTotal("V2", "CA");
-        BigDecimal penv3 = recorre.montosDet("YA", "CA", "PN");
-        BigDecimal venv3 = recorre.montosDet("YA", "CA", "VN");
-        BigDecimal totv3 = recorre.montosTotal("YA", "CA");
+        BigDecimal penv3 = recorre.montosDet("V3", "CA", "PN");
+        BigDecimal venv3 = recorre.montosDet("V3", "CA", "VN");
+        BigDecimal totv3 = recorre.montosTotal("V3", "CA");
+        BigDecimal penYA = recorre.montosDet("YA", "CA", "PN");
+        BigDecimal venYA = recorre.montosDet("YA", "CA", "VN");
+        BigDecimal totYA = recorre.montosTotal("YA", "CA");
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("pendienteV1", penv1);
         parametros.put("vencidaV1", venv1);
@@ -809,6 +1049,9 @@ public class reportesBean implements Serializable {
         parametros.put("pendienteV3", penv3);
         parametros.put("vencidaV3", venv3);
         parametros.put("totalV3", totv3);
+        parametros.put("pendienteYA", penYA);
+        parametros.put("vencidaYA", venYA);
+        parametros.put("totalYA", totYA);
         parametros.put("fecha", fecha);
         parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
         File jasper = new File("D:/reporte/consolidado/consolidado.jasper");

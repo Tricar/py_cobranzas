@@ -39,7 +39,7 @@
                                                 <p:autoComplete id="txtproveedor" value="#{compraBean.venta.anexo}" completeMethod="#{anexoBean.filtrarProveedor}" 
                                                                 var="proveedor" itemLabel="#{proveedor.nombres}" itemValue="#{proveedor}" required="true" requiredMessage="Ingrese Proveedor">
                                                     <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                    <p:ajax event="mousemove" update="txtRUC txtDireccion"/>
+                                                    <p:ajax event="itemSelect" update="txtRUC txtDireccion"/>
                                                     <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="frmRealizarVentas:mensajeGeneral"/>
                                                     <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="frmRealizarVentas:mensajeGeneral"/>
                                                     <p:ajax event="itemSelect" process="frmRealizarVentas:mensajeGeneral" />

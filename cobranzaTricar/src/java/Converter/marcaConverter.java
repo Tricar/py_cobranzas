@@ -19,10 +19,9 @@ public class marcaConverter implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        String marca ="";
-        if (value != null){
-            marca = (String) value;
-            switch (marca) {
+        String marca = "";        
+        if (value != null){            
+            switch (value.toString()) {
                 case "T": marca = "TRICAR";
                     break;
                 case "V": marca = "VELOREX";

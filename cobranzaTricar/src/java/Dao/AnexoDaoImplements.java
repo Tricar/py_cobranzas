@@ -12,10 +12,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
-/**
- *
- * @author Dajoh
- */
 public class AnexoDaoImplements implements AnexoDao {
 
     @Override
@@ -86,13 +82,15 @@ public class AnexoDaoImplements implements AnexoDao {
         List<Anexo> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Anexo WHERE (tipoanexo=:t OR tipoanexo=:t1) and (nombre LIKE :n OR apepat LIKE :m OR apemat LIKE :l)");
+            Query query = session.createQuery("FROM Anexo WHERE (tipoanexo=:t OR tipoanexo=:t1) and nombre LIKE :n ");
             query.setParameter("t", tipo);
             query.setParameter("t1", tipo1);
-            query.setParameter("n", "%" + nombre+"%");
-            query.setParameter("m", nombre+"%");
-            query.setParameter("l", nombre+"%");
+            query.setParameter("n", "%"+nombre+"%");
+                     
+            //query.setParameter("m", "%"+nombre+"%");
+            //query.setParameter("l", "%"+nombre+"%");
             lista = (List<Anexo>) query.list();
+            System.out.println("lista: "+lista);
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         } finally {

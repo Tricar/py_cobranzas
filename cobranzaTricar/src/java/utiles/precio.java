@@ -11,13 +11,13 @@ public class precio {
     public BigDecimal precioModelo(String modelo) {
         String model = modelo;
         BigDecimal precio = new BigDecimal(0);
-        if (model != null) { 
+        if (model != null) {
 
             switch (model) {
                 case "VX150":
                     precio = BigDecimal.valueOf(5790.00);
                     break;
-                case "MTXC VX150":
+                case "MTC VX150":
                     precio = BigDecimal.valueOf(6390.00);
                     break;
                 case "TX200-C":
@@ -82,6 +82,18 @@ public class precio {
                     break;
                 case "VX200ZH-1":
                     precio = BigDecimal.valueOf(6890.00);
+                    break;
+                case "TX150N":
+                    precio = BigDecimal.valueOf(5790.00);
+                    break;
+                case "TX125":
+                    precio = BigDecimal.valueOf(2890.00);
+                    break;
+                case "TX110":
+                    precio = BigDecimal.valueOf(2890.00);
+                    break;
+                case "TX150GY-11B":
+                    precio = BigDecimal.valueOf(2890.00);
                     break;
             }
         }

@@ -25,6 +25,8 @@ public class usuarioBean implements Serializable {
     private Usuario tusuario;
     private List<Usuario> listatusuario;
     private List<Usuario> listatusuariofiltrado;
+    private String clave;
+    private String clave2;
 
     private String txtclavevacia;
 
@@ -73,11 +75,25 @@ public class usuarioBean implements Serializable {
                 this.tusuario = new Usuario();
                 return;
             }
-            this.tusuario.setClave(Encrypt.sha512(this.tusuario.getClave()));
-            daotusuario.registrar(this.session, this.tusuario);
-            this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
-            this.tusuario = new Usuario();
+            if (this.clave.equals("") || this.clave2.equals("")) {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Clave no puede ser vacío");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                return;
+            }
+            if (clave.equals(clave2)) {
+                this.tusuario.setClave(Encrypt.sha512(clave));
+                daotusuario.registrar(this.session, this.tusuario);
+                this.transaction.commit();
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se registró al usuario.");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                this.tusuario = new Usuario();
+                RequestContext.getCurrentInstance().update("formMostrar");
+                RequestContext.getCurrentInstance().execute("PF('dlginsertar').hide()");
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las contraseñas no coinciden.");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+            }
+
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -101,15 +117,26 @@ public class usuarioBean implements Serializable {
             if (daotusuario.verByUsuarioDifer(this.session, this.tusuario.getIdusuario(), this.tusuario.getUsuario()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya Existe."));
                 return;
-            }            
-            if(!this.txtclavevacia.equals("")){
-                this.tusuario.setClave(Encrypt.sha512(this.txtclavevacia));
-            }            
-            daotusuario.modificar(this.session, this.tusuario);
-            this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satisfactorio."));
-            this.tusuario = new Usuario();
-            
+            }
+            if (this.clave.equals("") || this.clave2.equals("")) {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Clave no puede ser vacío");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                return;
+            }
+            if (clave.equals(clave2)) {
+                this.tusuario.setClave(Encrypt.sha512(clave));
+                daotusuario.modificar(this.session, this.tusuario);
+                this.transaction.commit();
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se modificaron los datos del usuario");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+                this.tusuario = new Usuario();
+                RequestContext.getCurrentInstance().update("formMostrar");
+                RequestContext.getCurrentInstance().execute("PF('dialogoEditarUsuario').hide()");
+            }else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las contraseñas no coinciden.");
+                RequestContext.getCurrentInstance().showMessageInDialog(message);
+            }
+
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -197,7 +224,7 @@ public class usuarioBean implements Serializable {
         this.tusuario = tusuario;
     }
 
-    public List<Usuario> getListatusuario() {        
+    public List<Usuario> getListatusuario() {
         this.session = null;
         this.transaction = null;
         try {
@@ -239,5 +266,21 @@ public class usuarioBean implements Serializable {
 
     public void setTxtclavevacia(String txtclavevacia) {
         this.txtclavevacia = txtclavevacia;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public String getClave2() {
+        return clave2;
+    }
+
+    public void setClave2(String clave2) {
+        this.clave2 = clave2;
     }
 }

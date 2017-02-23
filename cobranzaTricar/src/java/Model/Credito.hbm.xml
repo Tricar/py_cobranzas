@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Credito" table="credito" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idventa" type="int">
@@ -14,9 +14,9 @@
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" />
         </many-to-one>
-        <many-to-one name="idaval" class="Model.Anexo" fetch="select">
-            <column name="idaval" not-null="true" />
-        </many-to-one>
+        <property name="idaval" type="java.lang.Integer">
+            <column name="idaval" />
+        </property>
         <property name="liqventa" type="string">
             <column name="liqventa" length="15" unique="true" />
         </property>
@@ -33,16 +33,10 @@
             <column name="fechareg" length="23" not-null="true" />
         </property>
         <property name="fecaprob" type="timestamp">
-            <column name="fecaprob" length="23" not-null="true" />
+            <column name="fecaprob" length="23" />
         </property>
         <property name="aprobado" type="java.lang.Integer">
             <column name="aprobado" />
-        </property>
-        <property name="elaborado" type="java.lang.Integer">
-            <column name="elaborado" />
-        </property>
-        <property name="modificado" type="java.lang.Integer">
-            <column name="modificado" />
         </property>
         <property name="tienda" type="string">
             <column name="tienda" length="2" not-null="true" />
@@ -56,17 +50,17 @@
         <property name="inicial" type="big_decimal">
             <column name="inicial" precision="17" not-null="true" />
         </property>
-        <property name="sinicial" type="big_decimal">
-            <column name="sinicial" precision="17" not-null="true" />
-        </property>
         <property name="fecsinicial" type="timestamp">
-            <column name="fecsinicial" length="23" not-null="true" />
+            <column name="fecsinicial" length="23" />
+        </property>
+        <property name="sinicial" type="big_decimal">
+            <column name="sinicial" precision="17" />
         </property>
         <property name="saldo" type="big_decimal">
             <column name="saldo" precision="17" />
         </property>
         <property name="interes" type="big_decimal">
-            <column name="interes" precision="17" not-null="true" />
+            <column name="interes" precision="17" />
         </property>
         <many-to-one name="verificado" class="Model.Anexo" fetch="select">
             <column name="verificado" not-null="true" />
@@ -104,11 +98,17 @@
         <property name="comprobante2" type="string">
             <column name="comprobante2" length="50" />
         </property>
-        <property name="calificacion" type="string">
-            <column name="calificacion" length="2" not-null="true" />
+        <property name="elaborado" type="java.lang.Integer">
+            <column name="elaborado" />
+        </property>
+        <property name="modificado" type="java.lang.Integer">
+            <column name="modificado" />
         </property>
         <property name="despachado" type="java.lang.Integer">
             <column name="despachado" />
+        </property>
+        <property name="calificacion" type="string">
+            <column name="calificacion" length="2" />
         </property>
         <property name="swinicial" type="java.lang.Boolean">
             <column name="swinicial" />
@@ -117,31 +117,43 @@
             <column name="refinanciado" />
         </property>
         <property name="estadoref" type="string">
-            <column name="estadoref" length="2"/>
+            <column name="estadoref" length="2" />
         </property>
         <property name="anterior" type="java.lang.Integer">
-            <column name="anterior"  />
-        </property>
-        <property name="correlativo" type="java.lang.Integer">
-            <column name="correlativo"  />
+            <column name="anterior" />
         </property>
         <property name="resena" type="string">
-            <column name="resena" length="400" />
+            <column name="resena" length="1000" />
         </property>
         <property name="obsver" type="string">
-            <column name="obsver" length="400" />
+            <column name="obsver" length="1000" />
         </property>
-        <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
+        <property name="correlativo" type="java.lang.Integer">
+            <column name="correlativo" />
+        </property>
+        <set name="creditoavals" table="creditoaval" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idventa" />
             </key>
-            <one-to-many class="Model.Letras" />
+            <one-to-many class="Model.Creditoaval" />
+        </set>
+        <set name="ocupacions" table="ocupacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idventa" />
+            </key>
+            <one-to-many class="Model.Ocupacion" />
         </set>
         <set name="conceptoses" table="conceptos" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idventa" />
             </key>
             <one-to-many class="Model.Conceptos" />
+        </set>
+        <set name="letrases" table="letras" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idventa" />
+            </key>
+            <one-to-many class="Model.Letras" />
         </set>
     </class>
 </hibernate-mapping>

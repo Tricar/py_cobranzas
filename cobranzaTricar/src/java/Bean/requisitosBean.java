@@ -130,9 +130,7 @@ public class requisitosBean implements Serializable {
         requisito.setCredito(credito);
         for (int i = 0; i < requis.length; i++) {
             String requi = requis[i];
-            char letra = requi.charAt(0);
-            System.out.println("letra inicial: " + letra);
-            System.out.println("Objeto requisito: " + requi);
+            char letra = requi.charAt(0);            
             switch (letra) {
                 case '1':
                     requisito.setCopdni(requi);

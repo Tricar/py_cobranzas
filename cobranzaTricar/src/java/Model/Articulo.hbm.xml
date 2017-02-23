@@ -1,56 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class catalog="cobranzas" name="Model.Articulo" optimistic-lock="version" schema="dbo" table="articulo">
+    <class name="Model.Articulo" table="articulo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idarticulo" type="int">
             <column name="idarticulo"/>
             <generator class="identity"/>
         </id>
-        <many-to-one class="Model.Tipoarticulo" fetch="select" name="tipoarticulo">
-            <column name="idtipoarticulo" not-null="true"/>
+        <many-to-one name="color" class="Model.Color" fetch="select">
+            <column name="idcolor" />
         </many-to-one>
-        <many-to-one class="Model.Color" fetch="select" name="color">
-            <column name="idcolor"/>
+        <many-to-one name="modelo" class="Model.Modelo" fetch="select">
+            <column name="idmodelo" />
         </many-to-one>
-        <many-to-one class="Model.Modelo" fetch="select" name="modelo">
-            <column name="idmodelo" not-null="true"/>
+        <many-to-one name="tipoarticulo" class="Model.Tipoarticulo" fetch="select">
+            <column name="idtipoarticulo" />
         </many-to-one>
         <property name="consecutivo" type="java.lang.Integer">
-            <column name="consecutivo"/>
+            <column name="consecutivo" />
         </property>
         <property name="codigo" type="string">
-            <column length="10" name="codigo" not-null="true"/>
+            <column name="codigo" length="10" />
         </property>
         <property name="descripcion1" type="string">
-            <column length="100" name="descripcion1" not-null="true"/>
+            <column name="descripcion1" length="100" />
         </property>
         <property name="descripcion2" type="string">
-            <column length="100" name="descripcion2" not-null="true"/>
-        </property>
-        <property name="precioventa" type="big_decimal">
-            <column name="precioventa" not-null="true" precision="18"/>
+            <column name="descripcion2" length="100" />
         </property>
         <property name="preciocompra" type="big_decimal">
-            <column name="preciocompra" not-null="true" precision="18"/>
+            <column name="preciocompra" precision="18" />
+        </property>
+        <property name="precioventa" type="big_decimal">
+            <column name="precioventa" precision="18" />
         </property>
         <property name="costopromedio" type="big_decimal">
-            <column name="costopromedio" not-null="true" precision="18"/>
+            <column name="costopromedio" precision="18" />
         </property>
         <property name="unidadmedida" type="string">
-            <column length="50" name="unidadmedida" not-null="true"/>
+            <column name="unidadmedida" length="50" />
         </property>
         <property name="cantidad" type="java.lang.Integer">
-            <column name="cantidad"/>
+            <column name="cantidad" />
         </property>
         <property name="created" type="timestamp">
-            <column length="23" name="created" not-null="true"/>
+            <column name="created" length="23" />
         </property>
-        <set fetch="select" inverse="true" lazy="true" name="operaciondetalles" table="operaciondetalle">
+        <set name="operaciondetalles" table="operaciondetalle" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="idarticulo" not-null="true"/>
+                <column name="idarticulo" />
             </key>
-            <one-to-many class="Model.Operaciondetalle"/>
+            <one-to-many class="Model.Operaciondetalle" />
         </set>
     </class>
 </hibernate-mapping>

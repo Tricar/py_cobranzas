@@ -1,0 +1,297 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:o="http://omnifaces.org/ui"
+                template="./../views/template.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+            <p:commandButton action="#{pagosBean.pagosLetras()}" value="Anterior" immediate="true" icon="fa fa-fast-backward white"/>            
+        </h:form>
+        <div class="layout-portlets-box">
+            <div class="Container100 ui-fluid">
+                <div class="ContainerIndent">
+                    <h2 class="BigTopic" align="center">Nuevo Pago</h2>
+                    <f:view afterPhase="#{anexoBean.phaseListener}">
+                        <h:form prependId="false">                            
+                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                                    <p:messages id="msg" closable="true" />
+                                    <div class="ui-grid-row">
+                                        <ui:remove><div class="ui-panelgrid-cell ui-grid-col-2">
+                                                <p:outputLabel value="Tipo Doc:" for="tipo"/>
+                                            </div>
+                                            <div class="ui-panelgrid-cell ui-grid-col-4">
+                                                <p:selectOneMenu id="tipo" value="#{pagosBean.pago.tipo}" required="true" requiredMessage="Seleccione Tipo">
+                                                    <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
+                                                    <f:selectItem itemLabel="Letra" itemValue="LE" />
+                                                    <f:selectItem itemLabel="Nota de Credito" itemValue="NC" />
+                                                    <p:ajax update="monto btnpagar" listener="#{pagosBean.listaTipoDoc(pagosBean.pago.tipo)}" process="@this" />                        
+                                                </p:selectOneMenu>
+                                            </div></ui:remove>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Destino:" for="dest"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:selectOneMenu id="dest" value="#{pagosBean.pago.caja}" converter="omnifaces.SelectItemsConverter"
+                                                             required="true" requiredMessage="Seleccione Caja de destino">
+                                                <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
+                                                <f:selectItems value="#{pagosBean.todasCajas}" var="caja" itemLabel="#{caja.descripcion}" itemValue="#{caja}"/>
+                                                <p:ajax update="comp" listener="#{pagosBean.disableNumOper('LE', pagosBean.pago.caja)}" process="@this" />
+                                            </p:selectOneMenu>
+                                        </div>                                        
+                                    </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Comprobante: " for="comp"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="comp" value="#{pagosBean.texto}" readonly="true" />
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Monto:" for="monto"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="monto" value="#{pagosBean.montopago}" required="true" requiredMessage="Ingrese el monto" class="money" />
+                                        </div>                                        
+                                    </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Descripción:" for="txtdescripcion"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="txtdescripcion" value="#{pagosBean.pago.descripcion}" required="true" requiredMessage="Agregue descripción" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase"/>                                        
+                                        </div>                                    
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Ingresar cliente:" for="cliente"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <div class="ui-grid-col-8">
+                                                <p:autoComplete id="cliente" value="#{pagosBean.pago.anexo}"
+                                                                completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
+                                                                itemLabel="#{cliente.nombres}" itemValue="#{cliente}"
+                                                                required="true" requiredMessage="Ingrese cliente">
+                                                    <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                                                
+                                                    <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg"/>
+                                                    <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />                                                
+                                                </p:autoComplete>
+                                            </div>
+                                            <div class="ui-grid-col-2">
+                                                <p:commandButton action="#{pagosBean.creditosxNombre()}" immediate="true" value="Ver"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">                                            
+                                            <p:commandButton id="btnpagar" actionListener="#{pagosBean.insertar(loginbean.usuario.idusuario)}" 
+                                                             icon="fa fa-save" value="#{pagosBean.btnpago}" ajax="false" disabled="#{pagosBean.disableoper}"/>                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:form>
+                    </f:view>
+                </div>
+
+                <h:form id="formCliente">
+                    <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                        <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                            <p:dialog header="Seleccionar cliente" showEffect="explode" hideEffect="explode" widgetVar="dlgcargar" modal="true" >
+                                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                                <p:dataTable var="cred" value="#{pagosBean.creditos}" 
+                                             emptyMessage="Ningún cliente coincide con su búsqueda" scrollable="true" scrollHeight="300">
+                                    <p:column headerText="Cod.">
+                                        <h:outputText value="#{cred.liqventa}" />
+                                    </p:column>
+                                    <p:column headerText="Nombres">
+                                        <h:outputText value="#{cred.anexo.nombres}" />
+                                    </p:column>
+                                    <p:column headerText="Num. Doc.">
+                                        <h:outputText value="#{cred.anexo.numdocumento}" />
+                                    </p:column>
+                                    <p:column headerText="Tienda" >
+                                        <h:outputText value="#{cred.tienda}">
+                                            <f:converter converterId="tiendaconverter"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Empresa" >
+                                        <h:outputText value="#{cred.empresa}">
+                                            <f:converter converterId="empresaconverter"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Vehículo">
+                                        <h:outputText value="#{cred.vehiculo.tipovehiculo}">
+                                            <f:converter converterId="tvehiculo"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Deuda">
+                                        <h:outputText value="#{cred.deudactual}" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:commandButton actionListener="#{pagosBean.pasarCliente(cred)}" oncomplete="dlgcargar.hide()"
+                                                         value="Seleccionar" >                                            
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:dialog>
+                        </div>
+                    </div>
+                </h:form>
+
+                <h:form id="formMostrar">                    
+                    <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                        <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                                <p:messages id="msg1" closable="true" autoUpdate="true"/>
+                                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">                                    
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:commandButton id="btnagregar" action="#{pagosBean.lanzarAgregar(pagosBean.pago.anexo)}" 
+                                                             icon="fa fa-plus blue" value="Agregar"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p:dataTable var="letpagos" value="#{pagosBean.letpagos}" 
+                                         emptyMessage="No hay nada para mostrar">
+                                <p:column headerText="FECHA">
+                                    <h:outputText value="#{letpagos.fecreg}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="DESCRIPCION">
+                                    <h:outputText value="#{letpagos.descripcion}"/>
+                                </p:column>
+                                <p:column headerText="MONTO">
+                                    <h:outputText value="#{letpagos.monto}"/>
+                                </p:column>                     
+                                <p:column headerText="LETRA">
+                                    <h:outputText value="#{letpagos.letras.descripcion}"/>
+                                </p:column>
+                            </p:dataTable> 
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+        <hr/>
+
+
+        <h:form id="formMostrarletras">
+            <p:dialog header="CONSULTA RAPIDA DEL CLIENTE : #{pagosBean.pago.anexo.nombres} LIQUIDACIÓN: #{pagosBean.credito.liqventa}     TOTAL DEUDA: #{pagosBean.credito.deudactual} " widgetVar="dlgver" modal="true">
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation" >                        
+                        <p:dataTable var="letras" value="#{pagosBean.letrasxCredito}" 
+                                     emptyMessage="No hay nada para mostrar" >                            
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{letras.descripcion}"/>
+                            </p:column>
+                            <p:column headerText="Monto Letra">
+                                <h:outputText value="#{letras.saldo}"/>
+                            </p:column>
+                            <p:column headerText="Mora">
+                                <h:outputText value="#{letras.mora}"/>
+                            </p:column>
+                            <p:column headerText="TOTAL">
+                                <h:outputText value="#{letras.saldo}"/>
+                            </p:column>
+                            <p:column headerText="Fecha Ven.">
+                                <h:outputText value="#{letras.fecven}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Días vencidos.">
+                                <h:outputText value="#{letras.diffdays}"/>                                
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{letras.estado}">
+                                    <f:converter converterId="califconverter"/>
+                                </h:outputText>
+                            </p:column>                                            
+                        </p:dataTable> 
+                    </div>
+                </div>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formCanjearPago">
+            <p:dialog header="CLIENTE : #{pagosBean.pago.anexo.nombres} -- LIQUIDACIÓN: #{pagosBean.credito.liqventa}  -- TOTAL DEUDA: #{pagosBean.credito.deudactual} " 
+                      widgetVar="dlgcanjear" modal="true">
+                <p:outputLabel value="Saldo: #{pagosBean.pago.saldo} " />
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <p:outputLabel value="Letras" />
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation" >                        
+                        <p:dataTable var="letra" value="#{pagosBean.letrasxCredito}"
+                                     emptyMessage="No tiene letras" scrollable="true" scrollHeight="150">                            
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{letra.descripcion}"/>
+                            </p:column>
+                            <p:column headerText="Monto Letra">
+                                <h:outputText value="#{letra.saldo}"/>
+                            </p:column>
+                            <p:column headerText="Mora">
+                                <h:outputText value="#{letra.mora}"/>
+                            </p:column>
+                            <p:column headerText="TOTAL">
+                                <h:outputText value="#{letra.saldo}"/>
+                            </p:column>
+                            <p:column headerText="Fecha Ven.">
+                                <h:outputText value="#{letra.fecven}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Días vencidos.">
+                                <h:outputText value="#{letra.diffdays}"/>                                
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{letra.estado}">
+                                    <f:converter converterId="califconverter"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Operaciones">                            
+                                <p:commandButton icon="fa fa-check" title="Aplicar"
+                                                 action="#{pagosBean.agregar(letra)}" style="width: 40px" />                                
+                            </p:column>
+                        </p:dataTable> 
+                    </div>
+                </div>
+                <p:separator/>
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <p:outputLabel value="Moras" />
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation" >                        
+                        <p:dataTable var="mora" value="#{pagosBean.letraslista}"
+                                     emptyMessage="No tiene moras" scrollable="true" scrollHeight="150">                            
+                            <p:column headerText="Descripcion">
+                                <h:outputText value="#{mora.descripcion}"/>
+                            </p:column>
+                            <p:column headerText="Monto Letra">
+                                <h:outputText value="#{mora.saldo}"/>
+                            </p:column>                            
+                            <p:column headerText="TOTAL">
+                                <h:outputText value="#{mora.saldo}"/>
+                            </p:column>
+                            <p:column headerText="Días vencidos.">
+                                <h:outputText value="#{mora.diffdays}"/>                                
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="#{mora.estado}">
+                                    <f:converter converterId="califconverter"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Operaciones">                            
+                                <p:commandButton icon="fa fa-check" title="Aplicar"
+                                                 action="#{pagosBean.agregar(mora)}" style="width: 40px" />                                
+                            </p:column>
+                        </p:dataTable> 
+                    </div>
+                </div>
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

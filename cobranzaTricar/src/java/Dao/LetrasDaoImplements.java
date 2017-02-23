@@ -70,6 +70,57 @@ public class LetrasDaoImplements implements LetrasDao{
             }
         }
     }
+    
+    @Override
+    public List<Letras> mostrarDebitosxCred(Credito credito){
+        Session session = null;
+        List<Letras> lista = null;
+        Credito cred = new Credito();
+        cred = credito;
+        String tipo = "M";
+        Integer idcred = cred.getIdventa();
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Letras where idventa=:v and tipo =:tipo");
+            query.setParameter("tipo", tipo);
+            query.setParameter("v", idcred);
+            lista = (List<Letras>)query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Letras> mostrarDebitosxCredEstado(Credito credito, String estado){
+        Session session = null;
+        List<Letras> lista = null;
+        Credito cred = new Credito();
+        cred = credito;
+        String tipo = "M";
+        Integer idcred = cred.getIdventa();
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Letras where idventa=:v and tipo=:tipo and estado!=:estado");
+            query.setParameter("tipo", tipo);
+            query.setParameter("estado", estado);
+            query.setParameter("v", idcred);
+            lista = (List<Letras>)query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
+    }
 
     @Override
     public void eliminarLetra(Letras letras) {
@@ -123,6 +174,31 @@ public class LetrasDaoImplements implements LetrasDao{
         try{
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("from Letras where idventa=:v and descripcion!=:u");
+            query.setParameter("u", let);
+            query.setParameter("v", idcred);
+            lista = (List<Letras>)query.list();
+        }catch (HibernateException e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            if (session != null){
+                session.close();
+            }
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Letras> mostrarLetrasxCredEstado(Credito credito, String let, String estado){
+        Session session = null;
+        List<Letras> lista = null;
+        Credito cred = new Credito();        
+        cred = credito;
+        Integer idcred = cred.getIdventa();
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Letras where idventa=:v and tipo!=:u and estado!=:x");
+            query.setParameter("x", estado);
             query.setParameter("u", let);
             query.setParameter("v", idcred);
             lista = (List<Letras>)query.list();

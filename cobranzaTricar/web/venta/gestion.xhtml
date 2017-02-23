@@ -63,13 +63,10 @@
                     <p:outputLabel value="Tipo:" for="tipo"/>
                     <p:selectOneMenu id="tipo" value="#{credgestorBean.visita.abrev}" required="true" requiredMessage="Seleccione Tipo">
                         <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" />
-                        <f:selectItem itemLabel="Contacto con Titular" itemValue="CT" />
-                        <f:selectItem itemLabel="Contacto con Cónyuge" itemValue="CC" />
-                        <f:selectItem itemLabel="Contacto con Familiar" itemValue="CF" />
-                        <f:selectItem itemLabel="Contacto con Terceros" itemValue="C3" />
-                        <f:selectItem itemLabel="Fallecido" itemValue="FA" />
-                        <f:selectItem itemLabel="Bajo puerta" itemValue="BP" />
+                        <f:selectItem itemLabel="Re-visita" itemValue="RV" />
+                        <f:selectItem itemLabel="Compromiso" itemValue="CO" />                        
                         <f:selectItem itemLabel="Inubicable" itemValue="IN" />
+                        <f:selectItem itemLabel="Pendiente" itemValue="PN" />
                         <p:ajax update="txtfecha comp monto" listener="#{credgestorBean.compromiso(credgestorBean.visita.abrev)}" process="@this" />                        
                     </p:selectOneMenu>
                     <p:outputLabel value="Fecha compromiso:" for="txtfecha"/>

@@ -19,8 +19,10 @@ public interface CreditoDao {
     public List<Credito> filtrarDni (String dni);
     public Integer ventasXdia(Session session);
     public Integer ventasXmes(Session session);
+    public Integer ventasvx3(Session session);
     public Integer creditoXaprobar(Session session);
     public Integer creditoAprobado(Session session);
+    public Integer creditoxaprobvx3(Session session);
     public Integer pagosxdia(Session session);
     public Integer pagosxmes(Session session);
     public List<Credito> filtrarCreditoxAnexo(Anexo anexo);
@@ -28,6 +30,7 @@ public interface CreditoDao {
     public List<Credito> cargarxEstado (String estado);
     public List<Credito> cargarxEstadoDistinto (String estado);
     public List<Credito> cargarTodosxCalif (String calif);
+    public List<Credito> cargarxAnexoEstadoCalif(Anexo anexo, String estado, String calif);
     public Credito cargarxCodigoCalif (String codigo, String calif);
     public Credito cargarxCodigoEstadoDos (String codigo, String estado, String estado1);    
     public Credito cargarxCodigoEst (String codigo, String condicionpago);
