@@ -14,9 +14,9 @@
         <many-to-one name="tipodocument" class="Model.Tipodocument" fetch="select">
             <column name="idtipodocument" />
         </many-to-one>
-        <many-to-one name="idtipooperacioncontable" class="Model.Tipooperacioncontable" fetch="select">
+        <property name="idtipooperacioncontable" type="java.lang.Integer">
             <column name="idtipooperacioncontable" />
-        </many-to-one>
+        </property>
         <many-to-one name="tipoventa" class="Model.Tipoventa" fetch="select">
             <column name="idtipoventa" />
         </many-to-one>
