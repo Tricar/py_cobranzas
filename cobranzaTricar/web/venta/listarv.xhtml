@@ -175,7 +175,7 @@
         <h:form id="formpagar">
             <p:dialog id="dlg1" header="Pagar letra #{pagosBean.numletra}" showEffect="explode" hideEffect="explode" 
                       widgetVar="dlgpagar" modal="true" resizable="false" minWidth="200">
-                <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
+                <p:messages id="mesagges" showDetail="true" closable="true"/>
                 <h:panelGrid columns="4">                    
                     <p:outputLabel value="Tipo Doc:" for="tipo"/>
                     <p:selectOneMenu id="tipo" value="#{pagosBean.pago.tipo}" required="true" requiredMessage="Seleccione Tipo">
@@ -293,8 +293,9 @@
             <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
                 <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                     <p:dialog header="Seleccionar cliente" showEffect="explode" hideEffect="explode" widgetVar="dlgcargar" modal="true" >
-                        <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
-                        <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" emptyMessage="Ningún cliente coincide con su búsqueda">
+                        <p:messages id="mesagges" showDetail="true" closable="true"/>
+                        <p:dataTable var="cred" value="#{creditoBean.filtradafecha}" scrollable="true" scrollHeight="400"
+                                     emptyMessage="Ningún cliente coincide con su búsqueda">
                             <p:column headerText="Cod.">
                                 <h:outputText value="#{cred.liqventa}" />
                             </p:column>

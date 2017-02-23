@@ -1,9 +1,9 @@
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import utiles.generadorCodigos;
-
-
 
 public class Main {
 
@@ -50,17 +50,23 @@ public class Main {
         //            }
         //            System.out.println("fecha :"+i+" "+fechas.get(i).toString());
         //        }
-        generadorCodigos gen = new generadorCodigos();
-        String codigo = gen.genCodigoLiquid("V1");
-        System.out.println("codigo: "+codigo);
-        String ultimo = codigo.substring(codigo.length()-2);
-        System.out.println("ultimo: "+ultimo);
-        int corre = Integer.parseInt(ultimo);
-        System.out.println("entero corre: "+corre);
+//        generadorCodigos gen = new generadorCodigos();
+//        String codigo = gen.genCodigoLiquid("V1");
+//        System.out.println("codigo: "+codigo);
+//        String ultimo = codigo.substring(codigo.length()-2);
+//        System.out.println("ultimo: "+ultimo);
+//        int corre = Integer.parseInt(ultimo);
+//        System.out.println("entero corre: "+corre);
+
+        Date fecha = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.add(cal.DATE, -22);
+        fecha = cal.getTime();
+        System.out.println("fecha :"+fecha);
+
     }
 
 //    public static int esDomingo(Calendar d) {
 //        return d.get(Calendar.DAY_OF_WEEK);
 //    }
-
 }

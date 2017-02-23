@@ -1827,11 +1827,11 @@ public class creditoBean implements Serializable {
         String summary = valuetemp ? "SI" : "NO";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
         if (valuetemp) {
-            valueaval = false;
-            value2 = false;
-        } else {
             valueaval = true;
-            value2 = true;
+            value2 = false;            
+        } else {
+            valueaval = false;
+            value2 = true;            
         }
     }
 

@@ -23,21 +23,11 @@
                                     <p:growl id="msg12" showDetail="true"/>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Fecha:" for="txtfecha"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <span class="ui-calendar">
-                                                <p:calendar id="txtfecha" showOn="button" value="#{creditoBean.credito.fechareg}" navigator="true" pattern="dd/MM/yyyy" required="true" requiredMessage="Ingresar Fecha"/>
-                                            </span>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Código:" for="txtcodigo"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:inputText id="txtcodigo" value="#{creditoBean.credito.liqventa}" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" required="true" requiredMessage="Ingrese un código de credito"/>
                                         </div>
-                                    </div>
-                                    <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Buscar Vendedor:" />
                                         </div>
@@ -46,11 +36,17 @@
                                                             completeMethod="#{anexoBean.filtrarVendedor}" var="vend"
                                                             itemLabel="#{vend.nombres}" itemValue="#{vend}"
                                                             required="true" requiredMessage="Ingrese vendedor">
-                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                <p:ajax event="itemSelect" process="@form" />
-                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="@form"/>
-                                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="@form"/>
+                                                <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>                                                
+                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg12"/>                                                
                                             </p:autoComplete>
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">  
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Buscar cliente:" for="cliente"/>
@@ -58,20 +54,19 @@
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:autoComplete id="cliente" value="#{creditoBean.credito.anexo}"
                                                             completeMethod="#{anexoBean.filtrarCliente}" var="cliente"
-                                                            itemLabel="#{cliente.nombres}" itemValue="#{cliente}" 
+                                                            itemLabel="#{cliente.nombres}" itemValue="#{cliente}"
                                                             required="true" requiredMessage="Ingrese cliente">
                                                 <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                <p:ajax event="mousemove" update="aval dir dist precio lblinicial res txtinicial"  listener="#{creditoBean.precioModeloCredito()}"/>
-                                                <p:ajax event="itemSelect" listener="#{creditoBean.cargarIngreso(creditoBean.credito.anexo)}" update="@form"/>
-                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" />
-                                                <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" />
+                                                <ui:remove><p:ajax event="itemSelect" listener="#{creditoBean.precioModeloCredito()}" update="aval dir dist precio lblinicial res txtinicial"/></ui:remove>
+                                                <p:ajax event="itemSelect" listener="#{creditoBean.cargarIngreso(creditoBean.credito.anexo)}" update="tablaocups aval dir dist btnaval"/>
+                                                <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="msg12" />
                                             </p:autoComplete>
                                         </div>
-                                    </div>                          
-                                    <p:accordionPanel>
+                                    </div>
+                                    <p:accordionPanel dynamic="true" id="tablaocups">
                                         <p:tab title="Ingresos">
-                                            <p:dataTable var="ocups" value="#{creditoBean.ocupsxanexo}" 
-                                                         emptyMessage="No hay nada para mostrar">
+                                            <p:dataTable  var="ocups" value="#{creditoBean.ocupsxanexo}"
+                                                          emptyMessage="No hay nada para mostrar">
                                                 <p:column headerText="Descripción">
                                                     <h:outputText value="#{ocups.descripcion}" />
                                                 </p:column>
@@ -86,28 +81,29 @@
                                     </p:accordionPanel>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Dirección:" for="dir"/>                                            
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="dir" readonly="true" value="#{creditoBean.credito.anexo.direccion}"/>                                            
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Distrito:" for="dist"/>                                            
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito.distrito}"/>
+                                        </div>
+                                    </div>
+                                    <div class="ui-grid-row">  
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Tienda:" for="txttienda"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:selectOneMenu id="txttienda" value="#{creditoBean.credito.tienda}" required="true" requiredMessage="Seleccione la Tienda">
                                                 <f:selectItem itemLabel="-Seleccione-" itemValue="#{null}"/>
                                                 <f:selectItem itemLabel="VX1" itemValue="V1" />
-                                                <f:selectItem itemLabel="VX2" itemValue="V2" />                            
-                                            </p:selectOneMenu>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Dirección:" for="dir"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="dir" readonly="true" value="#{creditoBean.credito.anexo.direccion}"/>
-                                        </div>
-                                    </div>
-                                    <div class="ui-grid-row">  
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Distrito:" for="dist"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="dist" readonly="true" value="#{creditoBean.credito.anexo.distrito.distrito}"/>
+                                                <f:selectItem itemLabel="VX2" itemValue="V2" />
+                                                <f:selectItem itemLabel="VX3" itemValue="V3" />
+                                            </p:selectOneMenu>                                            
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="Modalidad:" />
@@ -124,7 +120,7 @@
                                             <h:outputText value="¿Agregar Aval? " />
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectBooleanButton value="#{creditoBean.valuei}" onLabel="Si" offLabel="No" onIcon="fa fa-check blue" offIcon="fa fa-close red" style="width:40px">
+                                            <p:selectBooleanButton id="btnaval" value="#{creditoBean.valueaval}" onLabel="Si" offLabel="No" onIcon="fa fa-check blue" offIcon="fa fa-close red" style="width:40px">
                                                 <p:ajax update="aval" listener="#{creditoBean.addAval}" />
                                             </p:selectBooleanButton>
                                         </div>

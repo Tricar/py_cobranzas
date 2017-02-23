@@ -348,10 +348,13 @@ public class pagosBean implements Serializable {
     }
 
     public void disableNumOper(String tipo) {
+        System.out.println("a ver: "+tipo);
         if (tipo.equals("DB")) {
+            System.out.println("pregunta si");
             disableoper = false;
             disablecomp = true;
         } else {
+            System.out.println("pregunta else");
             disableoper = true;
             disablecomp = false;
         }

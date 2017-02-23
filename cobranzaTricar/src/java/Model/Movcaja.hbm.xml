@@ -2,28 +2,28 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="cobranzas" name="Model.Movcaja" optimistic-lock="version" schema="dbo" table="movcaja">
-    <id name="idmovcaja" type="int">
+    <class catalog="cobranzas" name="Model.Movcaja" optimistic-lock="version" schema="dbo" table="movcaja">
+        <id name="idmovcaja" type="int">
             <column name="idmovcaja" />
             <generator class="identity" />
-    </id>
-    <many-to-one class="Model.Caja" fetch="select" name="caja">
-      <column name="idcaja"/>
-    </many-to-one>
-    <property name="monto" type="big_decimal">
-      <column name="monto" precision="17"/>
-    </property>
-    <property name="tipomov" type="string">
-      <column length="2" name="tipomov"/>
-    </property>
-    <property name="fechamov" type="timestamp">
-      <column length="16" name="fechamov"/>
-    </property>
-    <property name="concepto" type="java.lang.Integer">
-      <column name="anticipo"/>
-    </property>
-    <property name="origen" type="java.lang.Integer">
-      <column name="origen"/>
-    </property>
-  </class>
+        </id>
+        <many-to-one class="Model.Caja" fetch="select" name="caja">
+            <column name="idcaja"/>
+        </many-to-one>
+        <property name="monto" type="big_decimal">
+            <column name="monto" precision="17"/>
+        </property>
+        <property name="tipomov" type="string">
+            <column length="2" name="tipomov"/>
+        </property>
+        <property name="fechamov" type="timestamp">
+            <column length="16" name="fechamov"/>
+        </property>
+        <many-to-one name="concepto" class="Model.Conceptos" fetch="select">
+            <column name="anticipo" />
+        </many-to-one>
+        <many-to-one name="origen" class="Model.Letras" fetch="select">
+            <column name="origen" />
+        </many-to-one>        
+    </class>
 </hibernate-mapping>
