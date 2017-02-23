@@ -54,7 +54,7 @@ public class vehiculoBean implements Serializable {
     }
 
     public void nuevo(Usuario usuario) {
-        if (usuario.getPerfil().getAbrev().equals("AD")) {
+        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("AS")) {
             vehiculo = new Vehiculo();
             RequestContext.getCurrentInstance().update("formInsertar");
             RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
@@ -165,7 +165,7 @@ public class vehiculoBean implements Serializable {
     }
 
     public void cargarArticuloEditar(Integer codigoUsuario, Usuario usuario) {
-        if (usuario.getPerfil().getAbrev().equals("AD")) {
+        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("AS")) {
             this.session = null;
             this.transaction = null;
 
@@ -196,7 +196,7 @@ public class vehiculoBean implements Serializable {
     }
 
     public void cargarArticuloEliminar(Integer codigoUsuario, Usuario usuario) {
-        if (usuario.getPerfil().getAbrev().equals("AD")) {
+        if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("AS")) {
             this.session = null;
             this.transaction = null;
 
@@ -233,25 +233,23 @@ public class vehiculoBean implements Serializable {
         return vehiculo;
     }
 
-    public String obtenerMarca(String modelo) {
-        String marca = new String();
-        char ab = modelo.charAt(0);
-        System.out.println("ab: " + ab);
+    public char obtenerMarca(String modelo) {
+        char marca = 'v';
+        char ab = modelo.charAt(0);        
         switch (ab) {
             case 'V':
-                marca = "V";
+                marca = 'V';
                 break;
             case 'M':
-                marca = "V";
+                marca = 'V';
                 break;
             case 'T':
-                marca = "T";
+                marca = 'T';
                 break;
             case 'G':
-                marca = "T";
+                marca = 'T';
                 break;
-        }
-        System.out.println("ab: " + ab);
+        }        
         return marca;
     }
 
@@ -305,7 +303,7 @@ public class vehiculoBean implements Serializable {
     public List<Vehiculo> filtrarDisponibleModelo(String name) {
         this.query = new ArrayList<Vehiculo>();
         VehiculoDao vehiculodao = new VehiculoDaoImplements();
-        List<Vehiculo> tipos = vehiculodao.filtarDisponibleCotiza("D", idmodelo);
+        List<Vehiculo> tipos = vehiculodao.filtarDisponibleCotiza('D', idmodelo);
         for (Vehiculo tipo : tipos) {
             if (tipo.getSerie().endsWith(name.toUpperCase())) {
                 query.add(tipo);

@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jul 25, 2016 12:39:13 PM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class catalog="cobranzas" name="Model.Creditogestor" optimistic-lock="version" schema="dbo" table="creditogestor">
+    <class name="Model.Creditogestor" table="creditogestor" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idcreditogestor" type="int">
             <column name="idcreditogestor"/>
             <generator class="identity"/>
@@ -14,7 +15,7 @@
             <column name="idventa"/>
         </many-to-one>
         <property name="fecreg" type="timestamp">
-            <column name="fecreg" length="23" not-null="true" />
+            <column name="fecreg" length="23" />
         </property>
     </class>
 </hibernate-mapping>

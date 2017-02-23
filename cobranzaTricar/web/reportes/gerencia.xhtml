@@ -64,6 +64,64 @@
         </div>
 
         <div class="Container50 Responsive50">
+            
+            <div class="ContainerIndent">
+                <h1 class="BigTopic">Reporte de comisiones de Gestor por Mes</h1>
+                <h:form>
+                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">
+                                    <p:outputLabel value="Ingrese Mes y Año:"/>                                            
+                                </div>
+                            </div>
+                            <div class="ui-grid-row">
+                                <div class="ui-panelgrid-cell ui-grid-col-12">
+                                    <p:selectOneMenu id="mes" value="#{reportesBean.mes}">
+                                        <f:selectItem itemLabel="Seleccione Mes" itemValue="#{null}" />
+                                        <f:selectItem itemLabel="Enero" itemValue="01" />
+                                        <f:selectItem itemLabel="Febrero" itemValue="02" />
+                                        <f:selectItem itemLabel="Marzo" itemValue="03" />
+                                        <f:selectItem itemLabel="Abril" itemValue="04" />
+                                        <f:selectItem itemLabel="Mayo" itemValue="05" />
+                                        <f:selectItem itemLabel="Junio" itemValue="06" />
+                                        <f:selectItem itemLabel="Julio" itemValue="07" />
+                                        <f:selectItem itemLabel="Agosto" itemValue="08" />
+                                        <f:selectItem itemLabel="Setiembre" itemValue="09" />
+                                        <f:selectItem itemLabel="Octubre" itemValue="10" />
+                                        <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                                        <f:selectItem itemLabel="Diciembre" itemValue="12" />
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value=" / "/>
+                                    <p:selectOneMenu id="ano" value="#{reportesBean.ano}">
+                                        <f:selectItem itemLabel="Seleccione Año" itemValue="#{null}" />
+                                        <f:selectItem itemLabel="2011" itemValue="2011" />
+                                        <f:selectItem itemLabel="2012" itemValue="2012" />
+                                        <f:selectItem itemLabel="2013" itemValue="2013" />
+                                        <f:selectItem itemLabel="2014" itemValue="2014" />
+                                        <f:selectItem itemLabel="2015" itemValue="2015" />
+                                        <f:selectItem itemLabel="2016" itemValue="2016" />
+                                        <f:selectItem itemLabel="2017" itemValue="2017" />
+                                        <f:selectItem itemLabel="2018" itemValue="2018" />
+                                        <f:selectItem itemLabel="2019" itemValue="2019" />
+                                        <f:selectItem itemLabel="2020" itemValue="2020" />
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value=" / "/>
+                                    <p:selectOneMenu id="empresa" value="#{reportesBean.empresa}">
+                                        <f:selectItem itemLabel="Seleccione Empresa" itemValue="#{null}" />
+                                        <f:selectItem itemLabel="CASCO RED" itemValue="CR" />
+                                        <f:selectItem itemLabel="TRICAR/SEDNA" itemValue="TS" />                                        
+                                    </p:selectOneMenu>
+                                    <p:separator/>
+                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.comisionesGestor(loginbean.usuario)}" /> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+            
             <div class="ContainerIndent">
                 <h1 class="BigTopic">Cuadro de comisiones por Mes</h1>
                 <h:form>

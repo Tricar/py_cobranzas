@@ -77,7 +77,7 @@ public class ocupacionBean implements Serializable {
         try {
             if (btnGuardar.equals("Registrar")) {
                 ocupacion.setAnexo(anexo);
-                ocupacion.setIdventa(null);
+                ocupacion.setCredito(null);
                 ocudao.insertarOcupacion(ocupacion);
             }
             ocupsxanexo = ocudao.ocupacionesxIdanexo(anexo);
@@ -89,10 +89,10 @@ public class ocupacionBean implements Serializable {
         }
     }
 
-    public void insertarCredito(Integer idventa, Ocupacion ocup) {
+    public void insertarCredito(Credito cred, Ocupacion ocup) {
         OcupacionDao ocudao = new OcupacionDaoImpl();
         ocupacion = ocup;
-        ocupacion.setIdventa(idventa);
+        ocupacion.setCredito(cred);
         ocupacion.setAnexo(null);
         ocudao.insertarOcupacion(ocupacion);
     }

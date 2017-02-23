@@ -271,8 +271,7 @@ public class anexoBean implements Serializable {
             Date d = new Date();
             this.anexo.setFechareg(d);
             this.anexo.setCodven("");
-            Date fechaNac = null;
-            System.out.println("nombre: "+anexo.getNombre());
+            Date fechaNac = null;            
             fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
             this.anexo.setFechanac(fechaNac);
             calcularEdad(fecnac);

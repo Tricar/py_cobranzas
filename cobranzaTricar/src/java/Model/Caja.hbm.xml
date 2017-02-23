@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Caja" table="caja" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idcaja" type="int">
@@ -10,6 +10,9 @@
         </id>
         <property name="descripcion" type="string">
             <column name="descripcion" length="50" />
+        </property>
+        <property name="empresa" type="string">
+            <column name="empresa" length="2" />
         </property>
         <many-to-one name="encargado" class="Model.Anexo" fetch="select">
             <column name="encargado" not-null="true" />
@@ -20,9 +23,12 @@
         <property name="tienda" type="string">
             <column name="tienda" length="2" />
         </property>
-        <property name="empresa" type="string">
-            <column name="empresa" length="2" />
-        </property>
+        <set name="pagoses" table="pagos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idcaja" />
+            </key>
+            <one-to-many class="Model.Pagos" />
+        </set>
         <set name="movcajas" table="movcaja" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idcaja" />

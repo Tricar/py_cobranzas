@@ -348,6 +348,28 @@ public class CreditoDaoImp implements CreditoDao {
         }
         return credito;
     }
+    
+    @Override
+    public List<Credito> cargarxAnexoEstadoCalif(Anexo anexo, String estado, String calif) {
+        Session session = null;
+        int idanexo= anexo.getIdanexo();
+        List<Credito> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Credito WHERE idanexo=:x and estado=:w and calificacion <> :v");
+            query.setParameter("x", idanexo);
+            query.setParameter("w", estado);
+            query.setParameter("v", calif);
+            lista = query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
 
     @Override
     public List<Credito> cargarxEstadoRef(String estado) {
@@ -463,6 +485,13 @@ public class CreditoDaoImp implements CreditoDao {
     }
     
     @Override
+    public Integer ventasvx3(Session session) {
+        String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fecaprob) = DATEPART(month, getdate()) AND DATEPART(year, fecaprob) = DATEPART(year, GETDATE()) AND estado = 'DP' AND tienda = 'V3' AND estadoref is NULL";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
+    
+    @Override
     public Integer creditoXaprobar(Session session) {
         String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'EM' and tienda = 'V1'";
         int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();        
@@ -472,6 +501,13 @@ public class CreditoDaoImp implements CreditoDao {
     @Override
     public Integer creditoAprobado(Session session) {
         String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'EM' and tienda = 'V2'";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
+    
+    @Override
+    public Integer creditoxaprobvx3(Session session) {
+        String hql = "SELECT COUNT(*) FROM Credito WHERE DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND estado = 'EM' and tienda = 'V3'";
         int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
         return (int) consulta;
     }

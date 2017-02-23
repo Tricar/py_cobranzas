@@ -1,21 +1,27 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Perfilmenu" table="perfilmenu" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idperfilmenu" type="int">
             <column name="idperfilmenu" />
             <generator class="identity" />
         </id>
-        <many-to-one name="perfil" class="Model.Perfil" fetch="select">
-            <column name="idperfil" />
-        </many-to-one>
         <many-to-one name="menu" class="Model.Menu" fetch="select">
             <column name="idmenu" />
+        </many-to-one>
+        <many-to-one name="perfil" class="Model.Perfil" fetch="select">
+            <column name="idperfil" />
         </many-to-one>
         <property name="estado" type="java.lang.Boolean">
             <column name="estado" />
         </property>
+        <set name="perfilsubmenus" table="perfilsubmenu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idperfilmenu" />
+            </key>
+            <one-to-many class="Model.Perfilsubmenu" />
+        </set>
     </class>
 </hibernate-mapping>

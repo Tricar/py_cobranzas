@@ -1,12 +1,9 @@
+
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 import utiles.generadorCodigos;
-import utiles.recorrerCreditos;
+
+
 
 public class Main {
 
@@ -54,7 +51,7 @@ public class Main {
         //            System.out.println("fecha :"+i+" "+fechas.get(i).toString());
         //        }
         generadorCodigos gen = new generadorCodigos();
-        String codigo = gen.genCodigoLiquid("V3");
+        String codigo = gen.genCodigoLiquid("V1");
         System.out.println("codigo: "+codigo);
         String ultimo = codigo.substring(codigo.length()-2);
         System.out.println("ultimo: "+ultimo);
@@ -62,8 +59,8 @@ public class Main {
         System.out.println("entero corre: "+corre);
     }
 
-    public static int esDomingo(Calendar d) {
-        return d.get(Calendar.DAY_OF_WEEK);
-    }
+//    public static int esDomingo(Calendar d) {
+//        return d.get(Calendar.DAY_OF_WEEK);
+//    }
 
 }

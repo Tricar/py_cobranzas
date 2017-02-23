@@ -340,12 +340,9 @@ public class credgestorBean implements Serializable {
 
     public void compromiso(String abrev) {
         switch (abrev) {
-            case "CT":
+            case "CO":
                 value = false;
-                break;
-            case "CC":
-                value = false;
-                break;
+                break;            
             default:
                 value = true;
                 break;
@@ -357,7 +354,7 @@ public class credgestorBean implements Serializable {
             visitasBean vbean = new visitasBean();
             visita.setUsuario(usuario.getIdusuario());
             visita.setDescripcion(descripcion(visita.getAbrev()));
-            if (visita.getAbrev().equals("CC") || visita.getAbrev().equals("CT")){
+            if (visita.getAbrev().equals("CO")){
                 visita.setCompromiso(true);
             } else {
                 visita.setCompromiso(false);
@@ -375,28 +372,18 @@ public class credgestorBean implements Serializable {
     public String descripcion(String abrev) {
         String desc = new String();
         switch (abrev) {
-            case "CT":
-                desc = "Contacto con Titular";
+            case "CO":
+                desc = "Compromiso";
                 break;
-            case "CC":
-                desc = "Contacto con Cónyuge";
-                break;
-            case "CF":
-                desc = "Contacto con Familiar";
-                break;
-            case "C3":
-                desc = "Contacto con Terceros";
-                break;
-            case "FA":
-                desc = "Fallecido";
-                break;
-            case "BP":
-                desc = "Bajo puerta";
+            case "RV":
+                desc = "Re-visita";
                 break;
             case "IN":
                 desc = "Inubicable";
                 break;
-
+            case "PN":
+                desc = "Pendiente";
+                break;
         }
         return desc;
     }

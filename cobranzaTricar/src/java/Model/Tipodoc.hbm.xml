@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Tipodoc" table="tipodoc" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idtipodoc" type="int">
@@ -14,20 +14,29 @@
         <property name="abrev" type="string">
             <column name="abrev" length="2" />
         </property>
-        <property name="serie" type="string">
-            <column name="serie" length="5" />
-        </property>
         <property name="descripcion" type="string">
             <column name="descripcion" length="50" />
         </property>
-        <property name="correlativo" type="int">
+        <property name="serie" type="string">
+            <column name="serie" length="10" />
+        </property>
+        <property name="correlativo" type="java.lang.Integer">
             <column name="correlativo" />
         </property>
         <property name="tienda" type="string">
             <column name="tienda" length="2" />
-        </property>        
-        <property name="empresa" type="string">
-            <column name="empresa" length="2" />
         </property>
+        <set name="pagoses" table="pagos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idtipodoc" />
+            </key>
+            <one-to-many class="Model.Pagos" />
+        </set>
+        <set name="numeracions" table="numeracion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idtipodoc" />
+            </key>
+            <one-to-many class="Model.Numeracion" />
+        </set>
     </class>
 </hibernate-mapping>

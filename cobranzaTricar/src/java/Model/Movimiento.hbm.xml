@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Movimiento" table="movimiento" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="cantidad" type="java.lang.Integer">
+            <column name="cantidad" />
+        </property>
+        <property name="tipoingreso" type="string">
+            <column name="tipoingreso" length="10" />
+        </property>
+        <property name="preciocompra" type="big_decimal">
+            <column name="preciocompra" precision="18" />
+        </property>
+        <property name="precioventa" type="big_decimal">
+            <column name="precioventa" precision="18" />
+        </property>
+        <property name="idrepuesto" type="java.lang.Integer">
+            <column name="idrepuesto" />
+        </property>
+    </class>
+</hibernate-mapping>

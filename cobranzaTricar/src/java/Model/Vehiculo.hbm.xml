@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Vehiculo" table="vehiculo" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idvehiculo" type="int">
@@ -14,13 +14,13 @@
         <many-to-one name="modelo" class="Model.Modelo" fetch="select">
             <column name="idmodelo" not-null="true" />
         </many-to-one>
-        <property name="marca" type="string">
-            <column name="marca" length="2" />
+        <property name="marca" type="java.lang.Character">
+            <column name="marca" length="1" />
         </property>
         <property name="serie" type="string">
             <column name="serie" length="20" not-null="true" />
         </property>
-        <property name="anofabri" type="java.lang.Integer">
+        <property name="anofabri" type="int">
             <column name="anofabri" not-null="true" />
         </property>
         <property name="fechareg" type="timestamp">
@@ -32,8 +32,8 @@
         <property name="tipovehiculo" type="string">
             <column name="tipovehiculo" length="2" />
         </property>
-        <property name="estado" type="string">
-            <column name="estado" length="2" />
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
         </property>
         <set name="creditos" table="credito" inverse="true" lazy="true" fetch="select">
             <key>

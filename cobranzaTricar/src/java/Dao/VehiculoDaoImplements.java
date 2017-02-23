@@ -133,7 +133,7 @@ public class VehiculoDaoImplements implements VehiculoDao{
     }
     
     @Override
-    public List<Vehiculo> filtarDisponibleCotiza(String tipo, String idmodelo) {
+    public List<Vehiculo> filtarDisponibleCotiza(char tipo, String idmodelo) {
         Session session = null;
         List<Vehiculo> lista = null;        
         try {
@@ -143,8 +143,7 @@ public class VehiculoDaoImplements implements VehiculoDao{
             query.setParameter("u", idmodelo);
             lista = (List<Vehiculo>) query.list();
             for (int i = 0; i < lista.size(); i++) {
-                Vehiculo get = lista.get(i);
-                System.out.println("Estoy imprimiendo desde aca: "+get.getSerie());
+                Vehiculo get = lista.get(i);                
             }            
         } catch (HibernateException e) {
             System.out.println(e.getMessage());

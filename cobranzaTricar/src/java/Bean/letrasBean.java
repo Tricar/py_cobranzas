@@ -76,6 +76,27 @@ public class letrasBean implements Serializable {
         letras = letdao.mostrarSoloLetrasxCred(credito, "ND");
         return letras;
     }
+    
+    public List<Letras> mostrarLetrasxCredEstado(Credito cred) {
+        credito = cred;
+        LetrasDao letdao = new LetrasDaoImplements();
+        letras = letdao.mostrarLetrasxCredEstado(credito, "M", "CN");
+        return letras;
+    }
+    
+    public List<Letras> mostrarDebitosxCred(Credito cred) {
+        credito = cred;
+        LetrasDao letdao = new LetrasDaoImplements();
+        letras = letdao.mostrarDebitosxCred(credito);        
+        return letras;
+    }
+    
+    public List<Letras> mostrarDebitosxCredEstado(Credito cred) {
+        credito = cred;
+        LetrasDao letdao = new LetrasDaoImplements();
+        letras = letdao.mostrarDebitosxCredEstado(credito, "CN");        
+        return letras;
+    }
 
     public void insertar(Credito credito) {
         LetrasDao linkDao = new LetrasDaoImplements();

@@ -4,6 +4,7 @@ import Model.Credito;
 import Model.Letras;
 import Model.Pagos;
 import Persistencia.HibernateUtil;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -62,6 +63,45 @@ public class PagosDaoImp implements PagosDao {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Pagos WHERE idletras=:v");
             query.setParameter("v", idletra);
+            lista = (List<Pagos>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Pagos> filtrarFechas (Date date1, Date date2){
+        Session session = null;
+        List<Pagos> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Pagos WHERE fecreg BETWEEN :start_date AND :end_date");
+            query.setParameter("start_date", date1);
+            query.setParameter("end_date", date2);            
+            lista = (List<Pagos>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<Pagos> filtrarxRi (String recibo){
+        Session session = null;
+        List<Pagos> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Pagos WHERE operacion like:coinc");
+            query.setParameter("coinc", "%"+recibo+"%");                        
             lista = (List<Pagos>) query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());

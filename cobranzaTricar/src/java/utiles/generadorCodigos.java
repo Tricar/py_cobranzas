@@ -20,7 +20,7 @@ public class generadorCodigos {
             if (con == null) {
                 throw new NullPointerException();
             }
-            sql = "SELECT correlativo FROM credito where DATEPART(month, fechareg) = DATEPART(month, getdate()) AND DATEPART(year, fechareg) = DATEPART(year, GETDATE()) AND tienda = '" + tienda + "' ORDER BY correlativo";
+            sql = "SELECT correlativo FROM credito where DATEPART(month, fecaprob) = DATEPART(month, getdate()) AND DATEPART(year, fecaprob) = DATEPART(year, GETDATE()) AND tienda = '" + tienda + "' ORDER BY correlativo";
             PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
             ResultSet rs = st.executeQuery();
             rs.afterLast();
@@ -84,7 +84,7 @@ public class generadorCodigos {
                 vcorre = Integer.parseInt(rs.getString("correlativo"));
                 vcorre++;
             }
-            for (int i = 1; i < 5 - String.valueOf(vcorre).length(); i++) {
+            for (int i = 1; i < 6 - String.valueOf(vcorre).length(); i++) {
                 ceros = ceros + "0";
             }
             correlativo = abrev + serie + "-" + ceros + vcorre;

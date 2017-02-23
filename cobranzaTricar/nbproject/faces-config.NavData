@@ -23,13 +23,13 @@
         <Node id="mantenimiento/articulo.xhtml" x="400" y="150" zoom="false"/>
     </Scope>
     <Scope Scope="Project">
-        <Node id="mantenimiento/formIng.xhtml" x="400" y="750" zoom="true"/>
         <Node id="sistema/caja.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="mantenimiento/formIng.xhtml" x="400" y="750" zoom="true"/>
         <Node id="views/index.xhtml" x="37" y="290" zoom="true"/>
         <Node id="cotiza/index.xhtml" x="400" y="300" zoom="true"/>
         <Node id="venta/index.xhtml" x="709" y="294" zoom="false"/>
-        <Node id="refinanciar/index.xhtml" x="650" y="450" zoom="true"/>
         <Node id="sistema/usuario.xhtml" x="358" y="358" zoom="false"/>
+        <Node id="refinanciar/index.xhtml" x="650" y="450" zoom="true"/>
         <Node id="venta/formespecial.xhtml" x="400" y="600" zoom="true"/>
         <Node id="venta/tipocambio.xhtml" x="1400" y="150" zoom="true"/>
         <Node id="mantenimiento/modarticulo.xhtml" x="356" y="164" zoom="false"/>
@@ -42,24 +42,23 @@
         <Node id="refinanciar/formrefinancia.xhtml" x="150" y="450" zoom="true"/>
         <Node id="venta/consultac.xhtml" x="710" y="102" zoom="false"/>
         <Node id="mantenimiento/aval.xhtml" x="150" y="900" zoom="true"/>
-        <Node id="mantenimiento/articulo.xhtml" x="355" y="295" zoom="false"/>
         <Node id="mantenimiento/colorart.xhtml" x="39" y="359" zoom="false"/>
-        <Node id="cotiza/listarc.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="mantenimiento/articulo.xhtml" x="355" y="295" zoom="false"/>
         <Node id="despacho/form.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="cotiza/listarc.xhtml" x="150" y="300" zoom="true"/>
         <Node id="refinanciar/formaprobref.xhtml" x="650" y="300" zoom="true"/>
-        <Node id="despacho/index.xhtml" x="900" y="300" zoom="true"/>
         <Node id="cotiza/formcargarcotiza.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="despacho/index.xhtml" x="900" y="300" zoom="true"/>
         <Node id="mantenimiento/ingreso.xhtml" x="1650" y="150" zoom="true"/>
         <Node id="sistema/empleado.xhtml" x="357" y="100" zoom="false"/>
         <Node id="venta/formaprobar.xhtml" x="1150" y="300" zoom="true"/>
         <Node id="views/expirar.xhtml" x="650" y="600" zoom="true"/>
         <Node id="login.xhtml" x="709" y="39" zoom="false"/>
         <Node id="despacho/venta.xhtml" x="400" y="450" zoom="true"/>
-        <Node id="mantenimiento/cliente.xhtml" x="39" y="37" zoom="false"/>
         <Node id="views/template.xhtml" x="709" y="166" zoom="false"/>
-        <Node id="venta/listarv.xhtml" x="710" y="229" zoom="false"/>
-        <Node id="cotiza/form.xhtml" x="446" y="259" zoom="false"/>
+        <Node id="mantenimiento/cliente.xhtml" x="39" y="37" zoom="false"/>
         <Node id="sistema/distrito.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="cotiza/form.xhtml" x="446" y="259" zoom="false"/>
         <Node id="cotiza/consultar.xhtml" x="150" y="150" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations">

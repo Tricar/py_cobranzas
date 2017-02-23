@@ -20,9 +20,8 @@ public class estadoConverter implements Converter{
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         String estado ="";
-        if (value != null){
-            estado = (String) value;
-            switch (estado) {
+        if (value != null){            
+            switch (value.toString()) {
                 case "N": estado = "NO DISPONIBLE";
                     break;
                 case "D": estado = "DISPONIBLE";

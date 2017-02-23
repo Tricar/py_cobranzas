@@ -36,8 +36,10 @@ public class LoginBean implements Serializable {
     private String clave;
     private Integer ventasxdia;
     private Integer ventasxmes;
+    private Integer ventasvx3;
     private Integer creditoxaprobar;
     private Integer creditoaprobado;
+    private Integer creditoxapvx3;
     private Integer pagosxdia;
     private Integer pagosxmes;
     public List<Perfilsubmenu> perfilsubmenus;
@@ -74,15 +76,17 @@ public class LoginBean implements Serializable {
             usuario = usuarioDao.verByUsuario(this.session, this.tusuario);
             ventasxdia = creditodao.ventasXdia(this.session);
             ventasxmes = creditodao.ventasXmes(this.session);
+            ventasvx3 = creditodao.ventasvx3(this.session);
             creditoxaprobar = creditodao.creditoXaprobar(this.session);
             creditoaprobado = creditodao.creditoAprobado(this.session);
+            creditoxapvx3 = creditodao.creditoxaprobvx3(this.session);
             pagosxdia = creditodao.pagosxdia(this.session);
             pagosxmes = creditodao.pagosxmes(this.session);
             if (usuario != null) {
                 if (usuario.getClave().equals(Encrypt.sha512(this.clave))) {
                     loggedIn = true;
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.tusuario);
-                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", this.tusuario);
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.tusuario);                    
+                    msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", usuario.getAnexo().getNombre());
                     ruta = MyUtil.basepathlogin() + "views/index.xhtml";
                     this.perfilmenus = pdao.verTodoByPerfilmenu(this.session, usuario.getPerfil().getIdperfil(), Boolean.TRUE);
                 }
@@ -344,6 +348,22 @@ public class LoginBean implements Serializable {
 
     public void setPerfilmenus(List<Perfilmenu> perfilmenus) {
         this.perfilmenus = perfilmenus;
+    }
+
+    public Integer getVentasvx3() {
+        return ventasvx3;
+    }
+
+    public void setVentasvx3(Integer ventasvx3) {
+        this.ventasvx3 = ventasvx3;
+    }
+
+    public Integer getCreditoxapvx3() {
+        return creditoxapvx3;
+    }
+
+    public void setCreditoxapvx3(Integer creditoxapvx3) {
+        this.creditoxapvx3 = creditoxapvx3;
     }
 
 }

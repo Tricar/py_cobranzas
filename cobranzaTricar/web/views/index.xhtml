@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="Container25 Responsive">
+        <div class="Container50 Responsive">
             <div class="ContainerIndent">
                 <div class="Container100 TexAlCenter">
 
@@ -95,6 +95,19 @@
                                 <div class="EmptyBox10"></div>
                             </div>
                         </div>
+                        <div class="Wid45 BorderedBox Fright TexAlCenter">
+                            <div class="ContainerIndent">
+                                <div class="EmptyBox10"></div>
+                                <div class="Fs14 gray FontRalewayRegular">Ventas mes VX3</div>
+                                <div class="EmptyBox10"></div>
+                                <div class="Fs30 blue FontRalewayLight">
+                                    <h:form>                                        
+                                        <h:outputLabel id="ventasxmes" value="#{loginbean.ventasvx3}"/>
+                                    </h:form>
+                                </div>
+                                <div class="EmptyBox10"></div>
+                            </div>
+                        </div>
                         <div class="Wid45 BorderedBox Fleft TexAlCenter">
                             <div class="ContainerIndent">
                                 <div class="EmptyBox10"></div>
@@ -116,6 +129,20 @@
                                 <div class="Fs30 blue FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i>
                                     <h:form>                                        
                                         <h:outputLabel id="pend" value="#{loginbean.creditoaprobado}"/>
+                                    </h:form>
+                                    
+                                </div>
+                                <div class="EmptyBox10"></div>
+                            </div>
+                        </div>
+                        <div class="Wid45 BorderedBox Fright TexAlCenter">
+                            <div class="ContainerIndent">
+                                <div class="EmptyBox10"></div>
+                                <div class="Fs14 gray FontRalewayRegular">Creditos x Aprobar VX3</div>
+                                <div class="EmptyBox10"></div>
+                                <div class="Fs30 blue FontRalewayLight animated pulse infinite"><i class="fa fa-money Fs24"></i>
+                                    <h:form>                                        
+                                        <h:outputLabel id="pend" value="#{loginbean.creditoxapvx3}"/>
                                     </h:form>
                                     
                                 </div>
@@ -144,7 +171,7 @@
                 </div>
             </div>
         </div>
-        <div class="Container50 Responsive50">
+        <ui:remove><div class="Container50 Responsive50">
             <div class="ContainerIndent">
                 <h3 class="BigTopic">
                     <div class="Wid50 Responsive50 Fleft">Estadística de ventas mensuales</div>
@@ -181,7 +208,7 @@
                     </script>
                 </div>
             </div>
-        </div>
+        </div></ui:remove>
     </ui:define>
 </ui:composition>
 

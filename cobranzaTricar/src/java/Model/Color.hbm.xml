@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Color" table="color" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idcolor" type="int">
@@ -14,17 +14,17 @@
         <property name="fecreg" type="timestamp">
             <column name="fecreg" length="23" not-null="true" />
         </property>
+        <set name="articulos" table="articulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idcolor" />
+            </key>
+            <one-to-many class="Model.Articulo" />
+        </set>
         <set name="vehiculos" table="vehiculo" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idcolor" not-null="true" />
             </key>
             <one-to-many class="Model.Vehiculo" />
-        </set>
-        <set name="articulos" table="articulo" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="idcolor" not-null="true" />
-            </key>
-            <one-to-many class="Model.Articulo" />
         </set>
     </class>
 </hibernate-mapping>

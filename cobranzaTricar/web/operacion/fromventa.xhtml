@@ -40,7 +40,7 @@
                                                                 var="cliente" itemLabel="#{cliente.nombres}" itemValue="#{cliente}" required="true" 
                                                                 requiredMessage="Ingrese cliente">
                                                     <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                    <p:ajax event="mousemove" update="txtRUC txtDireccion"/>
+                                                    <p:ajax event="itemSelect" update="txtRUC txtDireccion"/>
                                                     <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="frmRealizarVentas:mensajeGeneral"/>
                                                     <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="frmRealizarVentas:mensajeGeneral"/>
                                                     <p:ajax event="itemSelect" process="frmRealizarVentas:mensajeGeneral" />

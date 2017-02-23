@@ -1,30 +1,27 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Pagos" table="pagos" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idpagos" type="int">
             <column name="idpagos" />
             <generator class="identity" />
         </id>
-        <many-to-one name="letras" class="Model.Letras" fetch="select">
-            <column name="idletras" />
+        <many-to-one name="caja" class="Model.Caja" fetch="select">
+            <column name="idcaja" />
         </many-to-one>
         <many-to-one name="conceptos" class="Model.Conceptos" fetch="select">
             <column name="idconceptos" />
         </many-to-one>
+        <many-to-one name="letras" class="Model.Letras" fetch="select">
+            <column name="idletras" />
+        </many-to-one>
         <many-to-one name="tipodoc" class="Model.Tipodoc" fetch="select">
             <column name="idtipodoc" />
         </many-to-one>
-        <many-to-one name="caja" class="Model.Caja" fetch="select">
-            <column name="idcaja" />
-        </many-to-one>
         <property name="operacion" type="string">
             <column name="operacion" length="50" />
-        </property>        
-        <property name="calificacion" type="string">
-            <column name="calificacion" length="15" />
         </property>
         <property name="monto" type="big_decimal">
             <column name="monto" precision="17" />
@@ -41,11 +38,11 @@
         <property name="usuario" type="java.lang.Integer">
             <column name="usuario" />
         </property>
+        <property name="calificacion" type="string">
+            <column name="calificacion" length="15" />
+        </property>
         <property name="diffdays" type="java.lang.Long">
             <column name="diffdays" />
-        </property>
-        <property name="mora" type="big_decimal">
-            <column name="mora" precision="17" />
         </property>
     </class>
 </hibernate-mapping>

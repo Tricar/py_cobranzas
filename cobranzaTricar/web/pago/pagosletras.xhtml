@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../views/template.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <p:commandButton value="Regresar" icon="fa fa-fast-backward white" action="#{pagosBean.indexPagos()}" />
+        </h:form>
+        <div class="layout-portlets-box">
+            <div class="Container100 ui-fluid">
+                <div class="ContainerIndent">
+                    <h2 align="center" class="BigTopic">Gestión de Pagos</h2>
+                    <h:form id="principal" prependId="false ">
+                        <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                            <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                                <p:growl id="msg12" showDetail="true"/>
+                                <div class="ui-grid-row">  
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <p:outputLabel value="Fecha Inicio:"/>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <span class="ui-calendar">
+                                            <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{pagosBean.fecha1}"/>
+                                        </span>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <p:outputLabel value="Ingrese RI:"/>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <div class="ui-grid-col-3">
+                                            <p:inputMask mask="9999" value="#{pagosBean.ri}"/>  
+                                        </div>                                        
+                                        <div class="ui-grid-col-5">
+                                            <p:commandButton value="Buscar" icon="fa fa-search white" actionListener="#{pagosBean.cargarxRi()}" ajax="false"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-grid-row">  
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <p:outputLabel value="Fecha Fin:"/>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <span class="ui-calendar">
+                                            <p:calendar navigator="true" showOn="button" pattern="dd/MM/yyyy" value="#{pagosBean.fecha2}"/>
+                                        </span>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <p:commandButton value="Mora" icon="fa fa-chevron-circle-up" action="#{pagosBean.formNotaDeb()}" />                                        
+                                    </div>
+                                </div>
+                                <div class="ui-grid-row">  
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">                                        
+                                        <p:commandButton value="Buscar" icon="fa fa-search white" action="#{pagosBean.filtrarFechas()}" />
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">                                        
+                                        <p:commandButton value="Nuevo Pago" icon="fa fa-plus blue" action="#{pagosBean.formPago()}" />
+                                    </div>
+                                </div>
+                                <div class="ui-grid-row">  
+
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+                <h:form id="formMostrar">
+                    <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                        <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                            Lista de Recibos
+                        </div>
+                        <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                            <p:dataTable var="pago" value="#{pagosBean.filtradafecha}" scrollable="true" scrollHeight="500"
+                                         emptyMessage="Ningún cliente coincide con su búsqueda" >
+                                <p:column headerText="FECHA">
+                                    <h:outputText value="#{pago.fecreg}">
+                                        <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                                    </h:outputText>                                
+                                </p:column>
+                                <p:column headerText="COMPROBANTE">
+                                    <h:outputText value="#{pago.operacion}" />
+                                </p:column>                        
+                                <p:column headerText="CLIENTE">
+                                    <h:outputText value="#{pago.anexo.nombres}" />
+                                </p:column>
+                                <p:column headerText="R.D.">
+                                    <h:outputText value="#{pago.caja.descripcion}" />
+                                </p:column>
+                                <p:column headerText="ESTADO">
+                                    <h:outputText value="#{pago.estado}" >
+                                        <f:converter converterId="estpagoconverter" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Operaciones">                            
+                                    <p:commandButton icon="fa fa-arrows white" title="Mostrar"
+                                                     action="#{pagosBean.cargarPago(pago)}" style="width: 40px" />
+                                    <p:commandButton icon="fa fa-remove red" title="Anular"
+                                                     action="#{pagosBean.lanzarAnular(pago)}" style="width: 40px"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>                
+        
+        <h:form id="formAnular">
+            <p:dialog id="dlg2" header="Anular Pago" showEffect="explode" hideEffect="explode" 
+                      widgetVar="dlganular" modal="true" resizable="false" minWidth="200">
+                <h:outputText class="fa fa-exclamation-circle" />
+                <h:outputText class="ui-confirm-dialog-message" value="¿Desea anular?" />
+                <p:commandButton value="Si" actionListener="#{pagosBean.anularPago()}" 
+                                 icon="ui-button-icon-left ui-icon ui-c ui-icon-check fa fa-check Fs14 white" />
+                <p:commandButton value="No" actionListener="#{pagosBean.cerrarAnular()}"
+                                 icon="ui-button-icon-left ui-icon ui-c ui-icon-close fa fa-close Fs14 white" />
+            </p:dialog>     
+        </h:form>
+                
+    </ui:define>
+</ui:composition>

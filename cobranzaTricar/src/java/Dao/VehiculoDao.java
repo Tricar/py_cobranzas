@@ -17,5 +17,5 @@ public interface VehiculoDao {
     public Vehiculo verBySerieDifer(Session session,Integer idvehiculo, String serie) throws Exception;
     public boolean modificar(Session session, Vehiculo vehiculo) throws Exception;
     public boolean eliminar (Session session, Vehiculo vehiculo) throws Exception;
-    public List<Vehiculo> filtarDisponibleCotiza(String tipo, String modelo);
+    public List<Vehiculo> filtarDisponibleCotiza(char tipo, String modelo);
 }

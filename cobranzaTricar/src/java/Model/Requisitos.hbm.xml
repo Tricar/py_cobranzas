@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Requisitos" table="requisitos" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="idrequisitos" type="int">
@@ -14,14 +14,14 @@
         <property name="copdni" type="string">
             <column name="copdni" length="50" />
         </property>
+        <property name="copdnicon" type="string">
+            <column name="copdnicon" length="50" />
+        </property>
         <property name="copdniaval" type="string">
             <column name="copdniaval" length="50" />
         </property>
         <property name="coptitulo" type="string">
             <column name="coptitulo" length="50" />
-        </property>
-        <property name="coprecibo" type="string">
-            <column name="coprecibo" length="50" />
         </property>
         <property name="recibagua" type="string">
             <column name="recibagua" length="50" />
@@ -32,8 +32,8 @@
         <property name="croq" type="string">
             <column name="croq" length="50" />
         </property>
-        <property name="copdnicon" type="string">
-            <column name="copdnicon" length="50" />
+        <property name="coprecibo" type="string">
+            <column name="coprecibo" length="50" />
         </property>
         <property name="otros" type="string">
             <column name="otros" length="100" />

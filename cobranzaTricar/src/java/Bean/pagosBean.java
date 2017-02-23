@@ -23,7 +23,6 @@ import Model.Usuario;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +31,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
-import utiles.generadorCodigos;
 
 @ManagedBean
 @SessionScoped
@@ -54,7 +52,7 @@ public class pagosBean implements Serializable {
     private cajaBean cajabean = new cajaBean();
     private List<Tipodoc> listafiltrada = new ArrayList();
     private List<Caja> listaFiltCaja = new ArrayList();
-    private boolean disablemonto = true;
+    private boolean disablecaja = true;
     private boolean disableoper = true;
     private boolean disablecomp = true;
     private movcajaBean movcbean = new movcajaBean();
@@ -69,7 +67,6 @@ public class pagosBean implements Serializable {
     private Anexo anexo = new Anexo();
     private Conceptos concepto = new Conceptos();
     private List<Conceptos> conceptos = new ArrayList();
-    private String texto;
 
     public pagosBean() {
     }
@@ -194,26 +191,18 @@ public class pagosBean implements Serializable {
         letra = letras;
         listafiltrada = new ArrayList();
         btnpago = "Pagar";
-        // if (letras.getMora().compareTo(BigDecimal.ZERO) == 0) {
-        numletra = letra.getDescripcion();
-        if (letra.getMora().compareTo(BigDecimal.ZERO) == 0) {
+        if (letras.getMora().compareTo(BigDecimal.ZERO) == 0) {
+            numletra = letra.getDescripcion();
             montopago = letra.getSaldo();
-            disablemonto = false;
+            descripcion = letra.getDescripcion();
+            CreditoDao linkdao = new CreditoDaoImp();
+            credito = linkdao.cargarCreditoxLetra(letra);
+            RequestContext.getCurrentInstance().update("formpagar");
+            RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
         } else {
-            if (letra.getMora().compareTo(BigDecimal.ZERO) == 1) {
-                montopago = letra.getSaldo().add(letra.getMora());
-                disablemonto = true;
-            }
+            RequestContext.getCurrentInstance().update("formAlerta");
+            RequestContext.getCurrentInstance().execute("PF('dlgalerta').show()");
         }
-        descripcion = letra.getDescripcion();
-        CreditoDao linkdao = new CreditoDaoImp();
-        credito = linkdao.cargarCreditoxLetra(letra);
-        RequestContext.getCurrentInstance().update("formpagar");
-        RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
-        //   } else {
-        //RequestContext.getCurrentInstance().update("formAlerta");
-        //RequestContext.getCurrentInstance().execute("PF('dlgalerta').show()");
-        // }
         //return letra;        
     }
 
@@ -243,8 +232,7 @@ public class pagosBean implements Serializable {
             RequestContext.getCurrentInstance().execute("PF('dlgmodnd').show()");
         } else {
             RequestContext.getCurrentInstance().update("formModificar");
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para cambiar mora.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos para cambiar mora."));
         }
     }
 
@@ -269,8 +257,7 @@ public class pagosBean implements Serializable {
             RequestContext.getCurrentInstance().update("formModificar");
             RequestContext.getCurrentInstance().execute("PF('dlgmodnd').hide()");
             pago = new Pagos();
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se modificó la mora del Cliente.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se modificó la mora del Cliente."));
         } catch (Exception e) {
         }
     }
@@ -282,7 +269,7 @@ public class pagosBean implements Serializable {
         Date fecha = new Date();
         try {
             credito = credao.cargarCreditoxLetra(letra);
-            letra.setMora(BigDecimal.ZERO);
+            letra.setMora(BigDecimal.ZERO);            
             difdays = letra.getDiffdays();
             letrasdao.modificarLetra(letra);
             letra = new Letras();
@@ -297,13 +284,13 @@ public class pagosBean implements Serializable {
             letra.setMora(BigDecimal.ZERO);
             letra.setEstado("CN");
             letra.setDiffdays(difdays);
-            letrasdao.insertarLetra(letra);
+            letrasdao.insertarLetra(letra);            
             pago.setFecreg(fecha);
             pago.setUsuario(usuario.getIdusuario());
             pago.setLetras(letra);
             pago.setFecreg(letra.getFecreg());
             String temp = pago.getOperacion();
-            pago.setOperacion(pago.getTipodoc().getAbrev().concat(" " + temp));
+            pago.setOperacion(pago.getTipodoc().getAbrev().concat(" " + temp));            
             pago.setMonto(montopago);
             pago.setCalificacion("Mora");
             pago.setDiffdays(difdays);
@@ -322,8 +309,7 @@ public class pagosBean implements Serializable {
             RequestContext.getCurrentInstance().update("formMostrar");
             RequestContext.getCurrentInstance().update("formModificar");
             RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').hide()");
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Insertó Nota Débito correctamente.");
-            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Insertó Nota Débito correctamente."));
         } catch (Exception e) {
             RequestContext.getCurrentInstance().update("formModificar");
             RequestContext.getCurrentInstance().execute("PF('dlgnotadebito').show()");
@@ -339,27 +325,36 @@ public class pagosBean implements Serializable {
         if (tipo.equals("NC")) {
             montopago = letra.getInteres();
             btnpago = "Aplicar";
-            disablemonto = false;            
         } else {
-            montopago = letra.getSaldo().add(letra.getMora());
-            btnpago = "Pagar";                   
-            if (letra.getMora().compareTo(BigDecimal.ZERO) == 1) {                
-                disablemonto = true;                
-            }
-        }
-    }   
-
-    public void disableDestDeb(String tipo) {
-        if (tipo.equals("ND")) {
-            disablemonto = false;
-        } else {
-            disablemonto = true;
+            montopago = letra.getSaldo();
+            btnpago = "Pagar";
         }
     }
 
-    public void disableNumOper(String tipodoc, Caja caja) throws SQLException {        
-        generadorCodigos gen = new generadorCodigos();
-        texto = gen.genCorreComp(tipodoc, caja.getTienda(), caja.getEmpresa());        
+    public void disableDest(String tipo) {
+        if (tipo.equals("LE")) {
+            disablecaja = false;
+        } else {
+            disablecaja = true;
+        }
+    }
+
+    public void disableDestDeb(String tipo) {
+        if (tipo.equals("ND")) {
+            disablecaja = false;
+        } else {
+            disablecaja = true;
+        }
+    }
+
+    public void disableNumOper(String tipo) {
+        if (tipo.equals("DB")) {
+            disableoper = false;
+            disablecomp = true;
+        } else {
+            disableoper = true;
+            disablecomp = false;
+        }
     }
 
     public void limpiar() {
@@ -399,7 +394,7 @@ public class pagosBean implements Serializable {
     public void pagovarios(Conceptos concepto) {
         btnpago = "Pagar";
         montopago = concepto.getMontopago();
-        disablemonto = true;
+        disablecaja = true;
         disableoper = true;
         disablecomp = true;
         RequestContext.getCurrentInstance().execute("PF('dlgpagar').show()");
@@ -523,12 +518,12 @@ public class pagosBean implements Serializable {
         this.listaFiltCaja = listaFiltCaja;
     }
 
-    public boolean isDisablemonto() {
-        return disablemonto;
+    public boolean isDisablecaja() {
+        return disablecaja;
     }
 
-    public void setDisablemonto(boolean disablemonto) {
-        this.disablemonto = disablemonto;
+    public void setDisablecaja(boolean disablecaja) {
+        this.disablecaja = disablecaja;
     }
 
     public boolean isDisableoper() {
@@ -642,13 +637,5 @@ public class pagosBean implements Serializable {
 
     public void setConceptos(List<Conceptos> conceptos) {
         this.conceptos = conceptos;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
     }
 }

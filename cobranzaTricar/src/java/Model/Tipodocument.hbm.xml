@@ -1,22 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="cobranzas" name="Model.Tipodocument" optimistic-lock="version" schema="dbo" table="tipodocument">
-    <id name="idtipodocument" type="int">
-      <column name="idtipodocument"/>
-    </id>
-    <property name="descripcion" type="string">
-      <column length="50" name="descripcion" not-null="true"/>
-    </property>    
-    <property name="codigocontable" type="string">
-      <column length="50" name="codigocontable" not-null="true"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="operacions" table="operacion">
-      <key>
-        <column name="idtipodocument" not-null="true"/>
-      </key>
-      <one-to-many class="Model.Operacion"/>
-    </set>
-  </class>
+    <class name="Model.Tipodocument" table="tipodocument" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idtipodocument" type="int">
+            <column name="idtipodocument" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="50" />
+        </property>
+        <property name="codigocontable" type="string">
+            <column name="codigocontable" length="50" />
+        </property>
+        <set name="operacions" table="operacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idtipodocument" />
+            </key>
+            <one-to-many class="Model.Operacion" />
+        </set>
+    </class>
 </hibernate-mapping>

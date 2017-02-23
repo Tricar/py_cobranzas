@@ -1,6 +1,8 @@
 package Dao;
 
+import Model.Caja;
 import Model.Movcaja;
+import Model.Pagos;
 import Persistencia.HibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -39,12 +41,11 @@ public class MovcajaDaoImp implements MovcajaDao {
             session.beginTransaction();
             session.save(movcaja);
             session.getTransaction().commit();
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -58,12 +59,11 @@ public class MovcajaDaoImp implements MovcajaDao {
             session.beginTransaction();
             session.update(movcaja);
             session.getTransaction().commit();
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -77,12 +77,11 @@ public class MovcajaDaoImp implements MovcajaDao {
             session.beginTransaction();
             session.delete(movcaja);
             session.getTransaction().commit();
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
             session.getTransaction().rollback();
-        }
-        finally {
-            if(session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -92,16 +91,15 @@ public class MovcajaDaoImp implements MovcajaDao {
     public Movcaja getbyId(Integer idmovcaja) {
         Session session = null;
         Movcaja caja = new Movcaja();
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Movcaja WHERE idmovcaja=:id" );
+            Query query = session.createQuery("FROM Movcaja WHERE idmovcaja=:id");
             query.setParameter("id", idmovcaja);
-            caja = (Movcaja) query.uniqueResult();            
-        }catch (HibernateException e){
+            caja = (Movcaja) query.uniqueResult();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
@@ -112,21 +110,40 @@ public class MovcajaDaoImp implements MovcajaDao {
     public Movcaja devolverxIdcajaIdconceptos(Integer idcaja, Integer idconceptos) {
         Session session = null;
         Movcaja caja = new Movcaja();
-        try{
+        try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Movcaja WHERE idcaja=:id and anticipo=:id2" );
+            Query query = session.createQuery("FROM Movcaja WHERE idcaja=:id and anticipo=:id2");
             query.setParameter("id", idcaja);
             query.setParameter("id2", idconceptos);
-            caja = (Movcaja) query.uniqueResult();            
-        }catch (HibernateException e){
+            caja = (Movcaja) query.uniqueResult();
+        } catch (HibernateException e) {
             System.out.println(e.getMessage());
-        }
-        finally{
-            if (session != null){
+        } finally {
+            if (session != null) {
                 session.close();
             }
         }
         return caja;
     }
-       
+
+    @Override
+    public Movcaja devolverCajaPagos(Caja caja, Pagos pago) {
+        Session session = null;
+        Movcaja movcaja = new Movcaja();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Movcaja where idcaja=:caja and origen=:pago");
+            query.setParameter("caja", caja.getIdcaja());
+            query.setParameter("pago", pago.getIdpagos());
+            movcaja = (Movcaja) query.uniqueResult();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return movcaja;
+    }
+
 }

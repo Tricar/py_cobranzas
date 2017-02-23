@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/04/2016 10:03:11 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Model.Distrito" table="distrito" schema="dbo" catalog="cobranzas" optimistic-lock="version">
         <id name="iddistrito" type="int">
@@ -9,13 +9,13 @@
             <generator class="identity" />
         </id>
         <property name="distrito" type="string">
-            <column name="distrito" length="50" not-null="true" />
+            <column name="distrito" length="50" />
         </property>
         <property name="abrev" type="string">
-            <column name="abrev" length="50" not-null="true" />
+            <column name="abrev" length="50" />
         </property>
         <property name="fechreg" type="timestamp">
-            <column name="fechreg" length="23" not-null="true" />
+            <column name="fechreg" length="23" />
         </property>
         <set name="anexos" table="anexo" inverse="true" lazy="true" fetch="select">
             <key>
