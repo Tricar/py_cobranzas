@@ -33,8 +33,7 @@ public class generadorCodigos {
             con.close();
             // vcodigofinalarticulo = objtipoarticulo.getAbreviatura() + vcodigoart;
         } catch (Exception e) {
-            e.getMessage();
-            System.out.println("aver");
+            e.getMessage();            
             System.out.println(e.getMessage());
         }
         for (int i = 1; i < 4 - String.valueOf(vcorre).length(); i++) {
@@ -57,6 +56,9 @@ public class generadorCodigos {
         codigo = codigo.concat(añoletras);
         variable = fecha.get(Calendar.MONTH) + 1;
         String mesletras = Integer.toString(variable);
+        if (mesletras.length() == 1){
+            mesletras = "0".concat(mesletras);
+        }
         codigo = codigo.concat(mesletras).concat(correlativo);
         return (codigo);
     }

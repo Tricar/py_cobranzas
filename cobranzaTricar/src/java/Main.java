@@ -1,5 +1,10 @@
 
+import Dao.CreditoDao;
+import Dao.CreditoDaoImp;
+import Model.Credito;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,19 +55,15 @@ public class Main {
         //            }
         //            System.out.println("fecha :"+i+" "+fechas.get(i).toString());
         //        }
-//        generadorCodigos gen = new generadorCodigos();
-//        String codigo = gen.genCodigoLiquid("V1");
-//        System.out.println("codigo: "+codigo);
-//        String ultimo = codigo.substring(codigo.length()-2);
-//        System.out.println("ultimo: "+ultimo);
-//        int corre = Integer.parseInt(ultimo);
-//        System.out.println("entero corre: "+corre);
-
-        Date fecha = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.add(cal.DATE, -22);
-        fecha = cal.getTime();
-        System.out.println("fecha :"+fecha);
+        generadorCodigos gen = new generadorCodigos();
+        String codigo = gen.genCodigoLiquid("V2");
+        System.out.println("codigo: "+codigo);
+        String ultimo = codigo.substring(codigo.length()-2);
+        System.out.println("ultimo: "+ultimo);
+        int corre = Integer.parseInt(ultimo);
+        System.out.println("entero corre: "+corre);
+        
+                
 
     }
 

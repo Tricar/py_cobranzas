@@ -253,11 +253,6 @@ public class anexoBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
-            if (daotanexo.verByDocumento(this.session, this.anexo.getNumdocumento()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Cliente ya existe en DB."));
-                this.anexo = new Anexo();
-                return;
-            }
             if (this.razonsocial != null) {
                 this.anexo.setNombre(this.razonsocial);
                 this.anexo.setApemat("");
@@ -271,8 +266,7 @@ public class anexoBean implements Serializable {
             Date d = new Date();
             this.anexo.setFechareg(d);
             this.anexo.setCodven("");
-            Date fechaNac = null;
-            System.out.println("nombre: "+anexo.getNombre());
+            Date fechaNac = null;            
             fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
             this.anexo.setFechanac(fechaNac);
             calcularEdad(fecnac);
@@ -308,12 +302,7 @@ public class anexoBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser aval por restricción de edad."));
                 this.anexo = new Anexo();
                 return;
-            }
-            if (daotanexo.verByDocumento(this.session, this.anexo.getNumdocumento()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Aval ya existe en DB."));
-                this.anexo = new Anexo();
-                return;
-            }
+            }            
             this.anexo.setTipodocumento("DNI");
             this.anexo.setTipoanexo("AV");
             Date d = new Date();
@@ -321,6 +310,11 @@ public class anexoBean implements Serializable {
             this.anexo.setCodven("");
             daotanexo.registrar(this.session, this.anexo);
             this.transaction.commit();
+            Date fechaNac = null;            
+            fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
+            this.anexo.setFechanac(fechaNac);
+            calcularEdad(fecnac);
+            this.anexo.setEdad(año);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "El registro fue satisfactorio."));
             this.anexo = new Anexo();
         } catch (Exception e) {
@@ -343,10 +337,6 @@ public class anexoBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
-            if (daotanexo.verByDocumentoDifer(this.session, this.anexo.getIdanexo(), this.anexo.getNumdocumento()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya Existe."));
-                return;
-            }
             if (this.razonsocial != null) {
                 this.anexo.setNombre(this.razonsocial);
                 this.anexo.setApemat("");

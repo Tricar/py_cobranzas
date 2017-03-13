@@ -362,14 +362,12 @@ public class creditoBean implements Serializable {
         }
     }
 
-    public void lanzarDlgModificar() {
-        System.out.println("a ver modificaré");
+    public void lanzarDlgModificar() {        
         if (credito.getEstado().equals("AP")) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Crédito Aprobado, no se puede modificar.");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
             return;
-        } else {
-            System.out.println("Entro");
+        } else {            
             avalesmod = new ArrayList();
             if (avalesant.isEmpty() == false && avales.isEmpty() == false) {
                 if (avalesant.size() > avales.size()) {
@@ -405,8 +403,7 @@ public class creditoBean implements Serializable {
                         }
                     }
                 }
-            }
-            System.out.println("bandera: " + banderaval);
+            }            
             RequestContext.getCurrentInstance().execute("PF('dlgmodificar').show()");
         }
     }
@@ -473,7 +470,7 @@ public class creditoBean implements Serializable {
                 reqsbean.eliminarParaModificar(credito);
                 reqsbean.modificar(credito, selectedReqs);
             } catch (Exception e) {
-            }
+            }            
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", "Se Modificó la solicitud de crédito"));
             credito.setSaldo(credito.getPrecio().subtract((credito.getInicial().add(credito.getSinicial()))));
             credao.modificarVenta(credito);
@@ -1256,8 +1253,7 @@ public class creditoBean implements Serializable {
         }
         inicia = credito.getInicial();
         precio = credito.getPrecio();
-        saldo = precio.subtract(inicia);
-        saldo = saldo.subtract(sinicial);
+        saldo = credito.getSaldo();
         anexo = credito.getAnexo();
         ocupsxanexo = ocupbean.cargarxCredito(credito);
         iniciapre = Inicial.inicialCredito(anexo.getDistrito().getAbrev(), credito.getVehi(), credito.getPrecio(), credito.getModelo().getModelo());
@@ -1610,7 +1606,7 @@ public class creditoBean implements Serializable {
                 //Date fechafin = new Date();
                 fechas = fechasLetras(fechaini, credito.getNletras());
                 //fechafin = sumaDias(fechaini, 30);                
-                if (credito.getSinicial().compareTo(BigDecimal.ZERO) == 1) {
+                if (credito.getSinicial().compareTo(BigDecimal.ZERO) == 1) {                    
                     letras.setCredito(credito);
                     letras.setMontoletra(credito.getSinicial());
                     letras.setInteres(BigDecimal.ZERO);
@@ -1689,7 +1685,7 @@ public class creditoBean implements Serializable {
                 concepto = new Conceptos();
             }
         } catch (Exception e) {
-        }
+        }        
         credao.modificarVenta(credito);
         letrascredito = letrasdao.mostrarLetrasXCred(credito);
     }
@@ -1698,7 +1694,16 @@ public class creditoBean implements Serializable {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
+        CreditoDao credao = new CreditoDaoImp();
+        credito = credao.veryLiqventa(codigo);
+        BigDecimal nroletras = BigDecimal.valueOf(credito.getNletras());
+        BigDecimal factor = nroletras.multiply(credito.getInteres());        
+        factor = factor.divide(BigDecimal.valueOf(100));        
+        BigDecimal montoletras = credito.getSaldo().multiply(factor).setScale(1, RoundingMode.UP);        
+        montoletras = montoletras.add(credito.getSaldo());        
+        montoletras = montoletras.divide(nroletras, 2).setScale(1,RoundingMode.UP);
         Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("montoletras", montoletras);
         parametros.put("liqventa", codigo);
         File jasper = new File("D:/reporte/solicitud.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
