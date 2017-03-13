@@ -25,7 +25,9 @@ public class marcaConverter implements Converter{
                 case "T": marca = "TRICAR";
                     break;
                 case "V": marca = "VELOREX";
-                    break;                                
+                    break;
+                case "Y": marca = "YAMAHA";
+                    break;                               
             }
         }
         return marca;

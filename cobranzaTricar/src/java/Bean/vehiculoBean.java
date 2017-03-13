@@ -66,6 +66,7 @@ public class vehiculoBean implements Serializable {
     }
 
     public void registrar(Usuario usuario) {
+        System.out.println("modelo: " + vehiculo.getModelo().getModelo());
         if (usuario.getPerfil().getAbrev().equals("AD") || usuario.getPerfil().getAbrev().equals("AS")) {
             this.session = null;
             this.transaction = null;
@@ -82,6 +83,7 @@ public class vehiculoBean implements Serializable {
                 Date d = new Date();
                 vehiculo.setFechareg(d);
                 vehiculo.setTipovehiculo(vehiculo.getModelo().getTipo());
+                System.out.println("modelo: " + vehiculo.getModelo().getModelo());
                 vehiculo.setMarca(obtenerMarca(vehiculo.getModelo().getModelo()));
                 dao.registrar(this.session, this.vehiculo);
                 this.transaction.commit();
@@ -234,8 +236,10 @@ public class vehiculoBean implements Serializable {
     }
 
     public char obtenerMarca(String modelo) {
-        char marca = 'v';
-        char ab = modelo.charAt(0);        
+        char marca = ' ';
+        System.out.println("modelo: " + modelo);
+        char ab = modelo.charAt(0);
+        System.out.println("Letra: " + ab);
         switch (ab) {
             case 'V':
                 marca = 'V';
@@ -248,6 +252,12 @@ public class vehiculoBean implements Serializable {
                 break;
             case 'G':
                 marca = 'T';
+                break;
+            case 'F':
+                marca = 'Y';
+                break;
+            case 'X':
+                marca = 'Y';
                 break;
         }        
         return marca;
