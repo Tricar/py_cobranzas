@@ -93,6 +93,13 @@ public class Color implements java.io.Serializable {
     public void setVehiculos(Set vehiculos) {
         this.vehiculos = vehiculos;
     }
+    
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idcolor != null)
+                ? idcolor.equals(((Color) other).idcolor)
+                : (other == this);
+    }
 
     @Override
     public int hashCode() {

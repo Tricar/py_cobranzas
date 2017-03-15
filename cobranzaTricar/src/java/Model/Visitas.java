@@ -15,8 +15,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "visitas",
-         schema = "dbo",
-         catalog = "cobranzas"
+        schema = "dbo",
+        catalog = "cobranzas"
 )
 public class Visitas implements java.io.Serializable {
 
@@ -54,7 +54,6 @@ public class Visitas implements java.io.Serializable {
     }
 
     @Id
-
     @Column(name = "idvisitas", unique = true, nullable = false)
     public Integer getIdvisitas() {
         return this.idvisitas;
@@ -171,5 +170,3 @@ public class Visitas implements java.io.Serializable {
     }
 
 }
-
-

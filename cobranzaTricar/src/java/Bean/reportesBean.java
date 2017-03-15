@@ -956,13 +956,13 @@ public class reportesBean implements Serializable {
             listafiltrada = linkdao.avales(cred);
             for (int i = 0; i < listafiltrada.size(); i++) {
                 Creditoaval get = listafiltrada.get(i);
-                avales.add(get.getAnexo());
+                avales.add(get.getAnexo());                
             }
             if (avales.size() >= 0) {
-                naval1 = avales.get(0).getNombre();
+                naval1 = avales.get(0).getNombre();                
                 apaval1 = avales.get(0).getApepat().concat(" ").concat(avales.get(0).getApemat());
                 dniaval1 = avales.get(0).getNumdocumento();
-                naval2 = avales.get(1).getNombre();
+                naval2 = avales.get(1).getNombre();                
                 apaval2 = avales.get(1).getApepat().concat(" ").concat(avales.get(1).getApemat());
                 dniaval2 = avales.get(1).getNumdocumento();
             }
@@ -1170,10 +1170,13 @@ public class reportesBean implements Serializable {
         BigDecimal totv1 = recorre.montosTotal("V1", "CA");
         BigDecimal penv2 = recorre.montosDet("V2", "CA", "PN");
         BigDecimal venv2 = recorre.montosDet("V2", "CA", "VN");
-        BigDecimal totv2 = recorre.montosTotal("V2", "CA");
-        BigDecimal penv3 = recorre.montosDet("YA", "CA", "PN");
-        BigDecimal venv3 = recorre.montosDet("YA", "CA", "VN");
-        BigDecimal totv3 = recorre.montosTotal("YA", "CA");
+        BigDecimal totv2 = recorre.montosTotal("V2", "CA");        
+        BigDecimal penv3 = recorre.montosDet("V3", "CA", "PN");
+        BigDecimal venv3 = recorre.montosDet("V3", "CA", "VN");
+        BigDecimal totv3 = recorre.montosTotal("V3", "CA");
+        BigDecimal penya = recorre.montosDet("YA", "CA", "PN");
+        BigDecimal venya = recorre.montosDet("YA", "CA", "VN");
+        BigDecimal totya = recorre.montosTotal("YA", "CA");
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("pendienteV1", penv1);
         parametros.put("vencidaV1", venv1);
@@ -1184,10 +1187,14 @@ public class reportesBean implements Serializable {
         parametros.put("pendienteV3", penv3);
         parametros.put("vencidaV3", venv3);
         parametros.put("totalV3", totv3);
+        parametros.put("pendienteya", penya);
+        parametros.put("vencidaya", venya);
+        parametros.put("totalya", totya);
         parametros.put("fecha", fecha);
         parametros.put("tienda1", "V1");
         parametros.put("tienda2", "V2");
-        parametros.put("tienda3", "YA");
+        parametros.put("tienda3", "V3");
+        parametros.put("tienda4", "YA");
         parametros.put("empresa", "CA");
         parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
         File jasper = new File("D:/reporte/consolidado/morosidad.jasper");

@@ -20,8 +20,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "vehiculo",
-         schema = "dbo",
-         catalog = "cobranzas"
+        schema = "dbo",
+        catalog = "cobranzas"
 )
 public class Vehiculo implements java.io.Serializable {
 
@@ -63,7 +63,6 @@ public class Vehiculo implements java.io.Serializable {
     }
 
     @Id
-
     @Column(name = "idvehiculo", unique = true, nullable = false)
     public Integer getIdvehiculo() {
         return this.idvehiculo;

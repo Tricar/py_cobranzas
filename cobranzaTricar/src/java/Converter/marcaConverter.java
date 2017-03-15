@@ -10,7 +10,7 @@ import javax.faces.convert.FacesConverter;
  * @author master
  */
 @FacesConverter("marcaconverter")
-public class marcaConverter implements Converter{
+public class marcaConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -19,18 +19,21 @@ public class marcaConverter implements Converter{
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        String marca = "";        
-        if (value != null){            
+        String marca = "";
+        if (value != null) {
             switch (value.toString()) {
-                case "T": marca = "TRICAR";
+                case "T":
+                    marca = "TRICAR";
                     break;
-                case "V": marca = "VELOREX";
+                case "V":
+                    marca = "VELOREX";
                     break;
-                case "Y": marca = "YAMAHA";
-                    break;                               
+                case "Y":
+                    marca = "YAMAHA";
+                    break;
             }
         }
         return marca;
     }
-    
+
 }

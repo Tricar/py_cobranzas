@@ -47,7 +47,6 @@ public class Perfil implements java.io.Serializable {
     }
 
     @Id
-
     @Column(name = "idperfil", unique = true, nullable = false)
     public Integer getIdperfil() {
         return this.idperfil;

@@ -90,10 +90,10 @@ public class precio {
                     precio = BigDecimal.valueOf(2890.00);
                     break;
                 case "TX110":
-                    precio = BigDecimal.valueOf(2890.00);
+                    precio = BigDecimal.valueOf(2390.00);
                     break;
                 case "TX150GY-11B":
-                    precio = BigDecimal.valueOf(2890.00);
+                    precio = BigDecimal.valueOf(3890.00);
                     break;
             }
         }
