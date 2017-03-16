@@ -6,9 +6,7 @@
 package Dao;
 
 import Model.Subfamilia;
-import Persistencia.HibernateUtil;
 import java.util.List;
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -19,8 +17,8 @@ import org.hibernate.Session;
 public class SubfamiliaDaoImplements implements SubfamiliaDao{    
 
     @Override
-    public boolean registrar(Session session, Subfamilia colo) throws Exception {
-        session.save(colo);
+    public boolean registrar(Session session, Subfamilia subfamilia) throws Exception {
+        session.save(subfamilia);
         return true;
     }
 
@@ -35,57 +33,39 @@ public class SubfamiliaDaoImplements implements SubfamiliaDao{
     }
 
     @Override
-    public Subfamilia verByCodigo(Session session, Integer idcolor) throws Exception {
-        return (Subfamilia) session.get(Subfamilia.class, idcolor);
+    public Subfamilia verByCodigo(Session session, Integer idsubfamilia) throws Exception {
+        return (Subfamilia) session.get(Subfamilia.class, idsubfamilia);
     }
 
     @Override
-    public Subfamilia verBySubfamilia(Session session, String color) throws Exception {
-        String hql = "FROM Subfamilia WHERE color=:color";
+    public Subfamilia verBySubfamilia(Session session, String subfamilia) throws Exception {
+        String hql = "FROM Subfamilia WHERE subfamilia=:subfamilia";
         Query query = session.createQuery(hql);
-        query.setParameter("color", color);
-        Subfamilia colo = (Subfamilia) query.uniqueResult();
-        return colo;
+        query.setParameter("subfamilia", subfamilia);
+        Subfamilia subfamily = (Subfamilia) query.uniqueResult();
+        return subfamily;
     }
 
     @Override
-    public Subfamilia verBySubfamiliaD(Session session, Integer idcolor, String color) throws Exception {
-        String hql = "FROM Subfamilia WHERE idcolor!=:idcolor and color=:color";
+    public Subfamilia verBySubfamiliaD(Session session, Integer idsubfamilia, String subfamilia) throws Exception {
+        String hql = "FROM Subfamilia WHERE idsubfamilia!=:idsubfamilia and subfamilia=:subfamilia";
         Query query = session.createQuery(hql);
-        query.setParameter("idcolor", idcolor);
-        query.setParameter("color", color);        
-        Subfamilia colo = (Subfamilia) query.uniqueResult();
-        return colo;
+        query.setParameter("idsubfamilia", idsubfamilia);
+        query.setParameter("subfamilia", subfamilia);        
+        Subfamilia subfamily = (Subfamilia) query.uniqueResult();
+        return subfamily;
     }
 
     @Override
-    public boolean modificar(Session session, Subfamilia colo) throws Exception {
-        session.update(colo);
+    public boolean modificar(Session session, Subfamilia subfamilia) throws Exception {
+        session.update(subfamilia);
         return true;
     }
 
     @Override
-    public boolean eliminar(Session session, Subfamilia colo) throws Exception {
-        session.delete(colo);
+    public boolean eliminar(Session session, Subfamilia subfamilia) throws Exception {
+        session.delete(subfamilia);
         return true;
-    }
-
-    @Override
-    public List<Subfamilia> filtarTipoDos() {
-        Session session = null;
-        List<Subfamilia> lista = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Subfamilia");           
-            lista = (List<Subfamilia>) query.list();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return lista;
     }
     
 }
