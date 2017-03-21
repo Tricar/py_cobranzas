@@ -78,4 +78,6 @@ Contributor(s):
   <table-filter match-name="morosidad"/>
   <table-filter match-name="tipocambio"/>
   <table-filter match-name="conceptos"/>
+  <table-filter match-name="familia"/>
+  <table-filter match-name="subfamilia"/>
 </hibernate-reverse-engineering>

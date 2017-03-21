@@ -52,5 +52,7 @@
     <mapping resource="Model/Sysdiagrams.hbm.xml"/>
     <mapping resource="Model/Requisitos.hbm.xml"/>
     <mapping resource="Model/Letras.hbm.xml"/>
+    <mapping resource="Model/Familia.hbm.xml"/>
+    <mapping resource="Model/Subfamilia.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

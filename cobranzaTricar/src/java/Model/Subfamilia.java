@@ -22,7 +22,7 @@ public class Subfamilia implements java.io.Serializable {
 
     private Integer idsubfamilia;
     private String subfamilia;
-    private Modelo familia;
+    private Familia familia;
     private Date created;
 
     public Subfamilia() {
@@ -32,7 +32,7 @@ public class Subfamilia implements java.io.Serializable {
         this.idsubfamilia = idsubfamilia;
     }
 
-    public Subfamilia(Integer idsubfamilia, String subfamilia, Modelo familia, Date created) {
+    public Subfamilia(Integer idsubfamilia, String subfamilia, Familia familia, Date created) {
         this.idsubfamilia = idsubfamilia;
         this.subfamilia = subfamilia;
         this.familia = familia;
@@ -61,11 +61,11 @@ public class Subfamilia implements java.io.Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idfamilia", nullable = false)
-    public Modelo getFamilia() {
+    public Familia getFamilia() {
         return this.familia;
     }
 
-    public void setFamilia(Modelo familia) {
+    public void setFamilia(Familia familia) {
         this.familia = familia;
     }
 

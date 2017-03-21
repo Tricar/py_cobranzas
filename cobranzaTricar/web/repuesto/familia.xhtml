@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../views/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="frmNuevo">
+            <p:commandButton value="Nuevo Familia" update=":formInsertar:panelcrearcolor" oncomplete="dlginsertar.show()" icon="fa fa-plus white"/>
+        </h:form>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                Lista de Familias
+            </div>
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="frmlistarperfil">
+                    <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
+                    <p:dataTable id="tablalistarcolor" var="item" value="#{familiaBean.verTodo()}" emptyMessage="No hay nada para mostrar"
+                                 paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
+                        <p:column headerText="DESCRIPCION">
+                            <h:outputText value="#{item.familia}"/>
+                        </p:column>
+                        <p:column width="10%" style="text-align: center">
+                            <p:commandButton actionListener="#{familiaBean.cargarColorEditar(item.idfamilia)}" icon="fa fa-pencil white"/>
+                            <p:commandButton actionListener="#{familiaBean.cargarColorEliminar(item.idfamilia)}" icon="fa fa-trash white"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </div>
+
+        <h:form id="formInsertar">
+            <p:dialog header="Nuevo Familia" widgetVar="dlginsertar" modal="true">                        
+                <h:panelGrid id="panelcrearcolor" columns="2">
+                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{familiaBean.familia.familia}" 
+                                 style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{familiaBean.registrar()}" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="frmEditarColor">
+            <p:dialog header="Datos Color" widgetVar="dialogoEditarColor" modal="true">
+                <h:panelGrid id="panelEditarColor" columns="2">
+                    <p:outputLabel value="Descripción:" for="txtDescripcion"/>
+                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{familiaBean.familia.familia}" style="text-transform: uppercase" 
+                                 autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{familiaBean.modificar()}"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="frmEliminarColor">
+            <p:dialog header="Datos Color" widgetVar="dialogoEliminarColor" modal="true">
+                <p:inputText type="hidden" value="#{familiaBean.familia.idfamilia}"/>
+                <h:outputText value="¿Desea eliminar?" />
+                <p:separator/>
+                <p:commandButton value="Si" actionListener="#{familiaBean.eliminar()}" ajax="false" icon="fa fa-check blue" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

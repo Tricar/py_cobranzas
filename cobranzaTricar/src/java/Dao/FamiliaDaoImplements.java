@@ -6,7 +6,9 @@
 package Dao;
 
 import Model.Familia;
+import Persistencia.HibernateUtil;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -39,7 +41,7 @@ public class FamiliaDaoImplements implements FamiliaDao{
     public Familia verByFamilia(Session session, String familia) throws Exception {
         String hql = "FROM Familia WHERE familia=:familia";
         Query query = session.createQuery(hql);
-        query.setParameter("color", familia);
+        query.setParameter("familia", familia);
         Familia family = (Familia) query.uniqueResult();
         return family;
     }
@@ -64,6 +66,24 @@ public class FamiliaDaoImplements implements FamiliaDao{
     public boolean eliminar(Session session, Familia familia) throws Exception {
         session.delete(familia);
         return true;
+    }
+
+    @Override
+    public List<Familia> filtarTipoDos() {
+        Session session = null;
+        List<Familia> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Familia");           
+            lista = (List<Familia>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
     }
     
 }

@@ -10,7 +10,8 @@ import org.hibernate.Session;
  */
 public interface FamiliaDao {    
     public boolean registrar(Session session, Familia familia)throws Exception;
-    public List<Familia> verTodo(Session session) throws Exception;
+    public List<Familia> verTodo(Session session) throws Exception;    
+    public List<Familia> filtarTipoDos();
     public Familia verByCodigo(Session session, Integer idfamilia) throws Exception;
     public Familia verByFamilia(Session session, String familia) throws Exception;
     public Familia verByFamiliaDifer(Session session,Integer idfamilia, String familia) throws Exception;
