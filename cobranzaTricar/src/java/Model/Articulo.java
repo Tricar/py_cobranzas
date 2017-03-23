@@ -27,6 +27,8 @@ import javax.persistence.TemporalType;
 public class Articulo implements java.io.Serializable {
 
     private Integer idarticulo;
+    private Familia familia;
+    private Subfamilia subfamilia;
     private Color color;
     private Modelo modelo;
     private Tipoarticulo tipoarticulo;
@@ -49,8 +51,10 @@ public class Articulo implements java.io.Serializable {
         this.idarticulo = idarticulo;
     }
 
-    public Articulo(Integer idarticulo, Color color, Modelo modelo, Tipoarticulo tipoarticulo, Integer consecutivo, String codigo, String descripcion1, String descripcion2, BigDecimal preciocompra, BigDecimal precioventa, BigDecimal costopromedio, String unidadmedida, Integer cantidad, Date created, Set operaciondetalles) {
+    public Articulo(Integer idarticulo, Familia familia, Subfamilia subfamilia, Color color, Modelo modelo, Tipoarticulo tipoarticulo, Integer consecutivo, String codigo, String descripcion1, String descripcion2, BigDecimal preciocompra, BigDecimal precioventa, BigDecimal costopromedio, String unidadmedida, Integer cantidad, Date created, Set operaciondetalles) {
         this.idarticulo = idarticulo;
+        this.familia = familia;
+        this.subfamilia = subfamilia;
         this.color = color;
         this.modelo = modelo;
         this.tipoarticulo = tipoarticulo;
@@ -76,6 +80,26 @@ public class Articulo implements java.io.Serializable {
 
     public void setIdarticulo(Integer idarticulo) {
         this.idarticulo = idarticulo;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idfamilia")
+    public Familia getFamilia() {
+        return this.familia;
+    }
+
+    public void setFamilia(Familia familia) {
+        this.familia = familia;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idsubfamilia")
+    public Subfamilia getSubfamilia() {
+        return this.subfamilia;
+    }
+
+    public void setSubfamilia(Subfamilia subfamilia) {
+        this.subfamilia = subfamilia;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

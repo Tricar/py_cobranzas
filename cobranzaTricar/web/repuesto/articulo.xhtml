@@ -54,6 +54,19 @@
                         <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                         <f:selectItems value="#{tipoarticuloBean.verTodo()}" var="tipoarticulo" itemLabel="#{tipoarticulo.descripcion}" itemValue="#{articulo}"/>
                     </p:selectOneMenu>
+                    
+                    <p:outputLabel for="familia" value="Familia: " />
+                    <p:selectOneMenu id="familia" value="#{articuloBean.articulo.familia}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+                        <p:ajax listener="#{articuloBean.onCountryChange}" update="city" />
+                        <f:selectItem itemLabel="Selecciona Familia" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{familiaBean.verTodo()}" var="familia" itemLabel="#{familia.familia}" itemValue="#{familia}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel for="city" value="Subfamilia: " />
+                    <p:selectOneMenu id="city" value="#{articuloBean.articulo.subfamilia}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+                        <f:selectItem itemLabel="Selecciona Subfamilia" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{articuloBean.subfamilia}" var="subfamilia" itemLabel="#{subfamilia.subfamilia}" itemValue="#{subfamilia}" />
+                    </p:selectOneMenu>
+                    
                     <p:outputLabel value="Color:" for="txtColor"/>
                     <p:autoComplete id="txtColor" value="#{articuloBean.articulo.color}" completeMethod="#{colorBean.filtrarColor}" var="coloreas" itemLabel="#{coloreas.color}" itemValue="#{coloreas}">
                         <o:converter converterId="omnifaces.ListConverter" list="#{colorBean.colores}"/>

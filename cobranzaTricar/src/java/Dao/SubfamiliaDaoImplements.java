@@ -67,5 +67,15 @@ public class SubfamiliaDaoImplements implements SubfamiliaDao{
         session.delete(subfamilia);
         return true;
     }
+
+    @Override
+    public List<Subfamilia> verByFamilia(Session session, Integer idfamilia) throws Exception {
+        String hql = "FROM Subfamilia WHERE idfamilia=:idfamilia";
+        Query query = session.createQuery(hql);
+        query.setParameter("idfamilia", idfamilia);
+        List<Subfamilia> lista = (List<Subfamilia>) query.list();
+
+        return lista;
+    }
     
 }

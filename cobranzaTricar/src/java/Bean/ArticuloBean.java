@@ -2,6 +2,8 @@ package Bean;
 
 import Dao.*;
 import Model.Articulo;
+import Model.Familia;
+import Model.Subfamilia;
 import Model.Tipoarticulo;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
@@ -11,7 +13,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -33,12 +38,44 @@ import utiles.dbManager;
 public class ArticuloBean implements Serializable {
 
     private Articulo articulo;
+    private Familia familia;
     private List<Articulo> articulos;
+    private List<Subfamilia> subfamilia;
 
     private Session session;
     private Transaction transaction;
 
     private List<SelectItem> SelectItemsColor;
+    
+    public void onCountryChange() {
+        if(familia !=null && !familia.equals(""))
+            subfamilia = null;
+        else
+            subfamilia = ListaSubFamilia(this.articulo.getFamilia().getIdfamilia());
+    }
+    
+    public List<Subfamilia> ListaSubFamilia(Integer idfamilia) {
+        this.session = null;
+        this.transaction = null;
+        try {
+            SubfamiliaDao daocolor = new SubfamiliaDaoImplements();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.subfamilia = daocolor.verByFamilia(this.session, idfamilia);
+            this.transaction.commit();
+            return subfamilia;
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
 
     public ArticuloBean() {
         this.articulo = new Articulo();
@@ -367,6 +404,14 @@ public class ArticuloBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+
+    public List<Subfamilia> getSubfamilia() {
+        return subfamilia;
+    }
+
+    public void setSubfamilia(List<Subfamilia> subfamilia) {
+        this.subfamilia = subfamilia;
     }
 
     public void setArticulos(List<Articulo> articulos) {

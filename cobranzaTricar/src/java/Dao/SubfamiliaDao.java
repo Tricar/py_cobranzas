@@ -11,7 +11,8 @@ import org.hibernate.Session;
 public interface SubfamiliaDao {    
     public boolean registrar(Session session, Subfamilia subfamilia)throws Exception;
     public List<Subfamilia> verTodo(Session session) throws Exception; 
-    public Subfamilia verByCodigo(Session session, Integer idsubfamilia) throws Exception;
+    public Subfamilia verByCodigo(Session session, Integer idsubfamilia) throws Exception;    
+    public List<Subfamilia> verByFamilia(Session session, Integer idfamilia) throws Exception;
     public Subfamilia verBySubfamilia(Session session, String subfamilia) throws Exception;
     public Subfamilia verBySubfamiliaD(Session session,Integer idsubfamilia, String subfamilia) throws Exception;
     public boolean modificar(Session session, Subfamilia subfamilia) throws Exception;

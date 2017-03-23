@@ -8,6 +8,12 @@
             <column name="idarticulo"/>
             <generator class="identity"/>
         </id>
+        <many-to-one name="familia" class="Model.Familia" fetch="select">
+            <column name="idfamilia" />
+        </many-to-one>
+        <many-to-one name="subfamilia" class="Model.Subfamilia" fetch="select">
+            <column name="idsubfamilia" />
+        </many-to-one>
         <many-to-one name="color" class="Model.Color" fetch="select">
             <column name="idcolor" />
         </many-to-one>
