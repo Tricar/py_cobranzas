@@ -26,11 +26,14 @@
                             <p:dataTable var="item" value="#{subfamiliaBean.verTodo()}" 
                                          emptyMessage="No hay nada para mostrar" paginator="true" rows="10" 
                                          paginatorPosition="top" rowsPerPageTemplate="10">
-                                <p:column headerText="Subfamilia">
+                                <p:column headerText="FAMILIA">
+                                    <h:outputText value="#{item.familia.familia}" />
+                                </p:column>
+                                <p:column headerText="SUBFAMILIA">
                                     <h:outputText value="#{item.subfamilia}" />
                                 </p:column>
-                                <p:column headerText="Familia">
-                                    <h:outputText value="#{item.familia.familia}" />
+                                <p:column headerText="NUMERO">
+                                    <h:outputText value="#{item.numero}"/>
                                 </p:column>
                                 <p:column>
                                     <p:commandButton actionListener="#{subfamiliaBean.cargarUsuarioEditar(item.idsubfamilia)}" icon="fa fa-pencil white"/>
@@ -44,16 +47,20 @@
                 <h:form id="formInsertar">
                     <p:dialog header="Registrar" widgetVar="dlginsertar" modal="true">                        
                         <h:panelGrid id="panelcrearperfil" columns="2">
-                            <p:outputLabel value="Subfamilia:" for="txtUsuario"/>
-                            <p:inputText id="txtUsuario" label="Submenu" value="#{subfamiliaBean.subfamilia.subfamilia}" 
-                                         style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
                             <p:outputLabel value="Familia:"/>
                             <p:selectOneMenu value="#{subfamiliaBean.subfamilia.familia}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                 <f:selectItems value="#{familiaBean.verTodo()}" var="familia" itemLabel="#{familia.familia}" itemValue="#{familia}"/>
                             </p:selectOneMenu>
+                            <p:outputLabel value="Subfamilia:" for="txtUsuario"/>
+                            <p:inputText id="txtUsuario" label="Submenu" value="#{subfamiliaBean.subfamilia.subfamilia}" 
+                                         style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="Numero:" for="txtnumero"/>
+                            <p:inputText id="txtnumero" value="#{subfamiliaBean.subfamilia.numero}" autocomplete="off" onkeyup="format(this)" onchange="format(this)" required="true" requiredMessage="Ingresa numero">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
                             <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{subfamiliaBean.registrar()}" />
                         </h:panelGrid>
                     </p:dialog>
@@ -64,15 +71,20 @@
                         <h:panelGrid id="panelEditarUsuario" columns="2">
                             <p:inputText type="hidden" value="#{subfamiliaBean.subfamilia.idsubfamilia}"/>
                             <h:panelGroup></h:panelGroup>
-                            <p:outputLabel value="Subfamilia:" for="txtUsuario"/>
-                            <p:inputText id="txtUsuario" label="Submenu" value="#{subfamiliaBean.subfamilia.subfamilia}" autocomplete="off">
-                                <f:validator validatorId="validatorVacio"/>
-                            </p:inputText>
                             <p:outputLabel value="Familia:"/>
                             <p:selectOneMenu value="#{subfamiliaBean.subfamilia.familia}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                 <f:selectItems value="#{familiaBean.verTodo()}" var="familia" itemLabel="#{familia.familia}" itemValue="#{familia}"/>
                             </p:selectOneMenu>
+                            <p:outputLabel value="Subfamilia:" for="txtUsuario"/>
+                            <p:inputText id="txtUsuario" label="Submenu" value="#{subfamiliaBean.subfamilia.subfamilia}" autocomplete="off"
+                                         style="text-transform: uppercase" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
+                            <p:outputLabel value="Numero:" for="txtnumero"/>
+                            <p:inputText id="txtnumero" value="#{subfamiliaBean.subfamilia.numero}" autocomplete="off" onkeyup="format(this)" onchange="format(this)" required="true" requiredMessage="Ingresa numero">
+                                <f:validator validatorId="validatorVacio"/>
+                            </p:inputText>
                             <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{subfamiliaBean.modificar()}"/>
                         </h:panelGrid>
                     </p:dialog>

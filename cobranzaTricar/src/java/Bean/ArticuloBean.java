@@ -3,6 +3,7 @@ package Bean;
 import Dao.*;
 import Model.Articulo;
 import Model.Familia;
+import Model.Modelo;
 import Model.Subfamilia;
 import Model.Tipoarticulo;
 import Persistencia.HibernateUtil;
@@ -224,44 +225,47 @@ public class ArticuloBean implements Serializable {
         this.session = null;
         this.transaction = null;
         String descripcionarticulo = "";
+        String codfamilia = "";
+        String codsubfamilia = "";
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             ArticuloDao linkDao = new ArticuloDaoImp();
-            if (this.articulo.getModelo() == null) {
-                if (this.articulo.getSubfamilia() == null) {
-                    descripcionarticulo = this.articulo.getDescripcion2();
-                } else {
-                    descripcionarticulo = this.articulo.getDescripcion2();
-                }
-            } else if (this.articulo.getSubfamilia() == null) {
-                if (this.articulo.getModelo() == null) {
-                    descripcionarticulo = this.articulo.getDescripcion2();
-                } else {
-                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
-                }                
+            
+            if(this.articulo.getFamilia() == null) {
+                codfamilia = "00";
             } else {
-                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
+                codfamilia = this.articulo.getFamilia().getNumero();
             }
+            
+            if(this.articulo.getSubfamilia() == null) {
+                codsubfamilia = "00";
+            } else {
+                codsubfamilia = this.articulo.getSubfamilia().getNumero();
+            }
+            
             if (linkDao.verByDescripcion(this.session, descripcionarticulo) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Repuesto/Servicio ya esta registrado."));
                 articulo = new Articulo();
                 return;
             }
-            String codigo = generar_codigo_Articulo(this.articulo.getTipoarticulo());
+            
+            String codigo = generar_codigo_Articulo(this.articulo.getTipoarticulo(), this.articulo.getModelo(), codfamilia, codsubfamilia);
             Integer numero = generar_consecutivo(this.articulo.getTipoarticulo());
+            
             if (codigo == null) {
                 this.articulo.setConsecutivo(1);
-                this.articulo.setCodigo(this.articulo.getTipoarticulo().getAbreviado() + "0001");
+                this.articulo.setCodigo(this.articulo.getTipoarticulo().getAbreviado() + codfamilia + codsubfamilia + "001");
             } else {
                 this.articulo.setConsecutivo(numero);
                 this.articulo.setCodigo(codigo);
             }
+            
+            descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
             Date d = new Date();
             this.articulo.setCreated(d);
             this.articulo.setDescripcion1(descripcionarticulo);
             this.articulo.setCostopromedio(BigDecimal.ZERO);
-            this.articulo.setPreciocompra(BigDecimal.ZERO);
             this.articulo.setCantidad(0);
             linkDao.registrar(this.session, this.articulo);
             this.transaction.commit();
@@ -310,7 +314,7 @@ public class ArticuloBean implements Serializable {
         return (vcorre);
     }
 
-    public String generar_codigo_Articulo(Tipoarticulo objtipoarticulo) {
+    public String generar_codigo_Articulo(Tipoarticulo objtipoarticulo, Modelo objtmodelo, String codfamilia, String codsubfamilia) {
         int vcorre = 1;
         String sql = "";
         String vcodigoart = "";
@@ -341,7 +345,7 @@ public class ArticuloBean implements Serializable {
             con.close();
             System.out.println(vcerosart + vcorre);
 
-            vcodigofinalarticulo = objtipoarticulo.getAbreviado() + vcodigoart;
+            vcodigofinalarticulo = objtipoarticulo.getAbreviado() + objtmodelo.getNumero() + codfamilia + codsubfamilia + vcodigoart;
 
         } catch (Exception e) {
             e.getMessage();

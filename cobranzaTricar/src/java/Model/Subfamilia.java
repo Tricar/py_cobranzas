@@ -24,6 +24,7 @@ public class Subfamilia implements java.io.Serializable {
     private String subfamilia;
     private Familia familia;
     private Date created;
+    private String numero;
 
     public Subfamilia() {
     }
@@ -32,11 +33,12 @@ public class Subfamilia implements java.io.Serializable {
         this.idsubfamilia = idsubfamilia;
     }
 
-    public Subfamilia(Integer idsubfamilia, String subfamilia, Familia familia, Date created) {
+    public Subfamilia(Integer idsubfamilia, String subfamilia, Familia familia, Date created, String numero) {
         this.idsubfamilia = idsubfamilia;
         this.subfamilia = subfamilia;
         this.familia = familia;
         this.created = created;
+        this.numero = numero;
     }
 
     @Id
@@ -77,6 +79,15 @@ public class Subfamilia implements java.io.Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    @Column(name = "numero", length = 2)
+    public String getNumero() {
+        return this.numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     @Override

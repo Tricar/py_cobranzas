@@ -27,6 +27,7 @@ public class Modelo implements java.io.Serializable {
     private String modelo;
     private Date fecreg;
     private String tipo;
+    private String numero;
     private Set articulos = new HashSet(0);
     private Set vehiculos = new HashSet(0);
 
@@ -37,11 +38,12 @@ public class Modelo implements java.io.Serializable {
         this.idmodelo = idmodelo;
     }
 
-    public Modelo(Integer idmodelo, String modelo, Date fecreg, String tipo, Set articulos, Set vehiculos) {
+    public Modelo(Integer idmodelo, String modelo, Date fecreg, String tipo, String numero, Set articulos, Set vehiculos) {
         this.idmodelo = idmodelo;
         this.modelo = modelo;
         this.fecreg = fecreg;
         this.tipo = tipo;
+        this.numero = numero;
         this.articulos = articulos;
         this.vehiculos = vehiculos;
     }
@@ -83,6 +85,15 @@ public class Modelo implements java.io.Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    @Column(name = "numero", length = 2)
+    public String getNumero() {
+        return this.numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "modelo")

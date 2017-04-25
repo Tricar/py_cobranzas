@@ -17,5 +17,8 @@
         <property name="created" type="timestamp">
             <column name="created" length="23" not-null="true" />
         </property>
+        <property name="numero" type="string">
+            <column name="numero" length="2" />
+        </property>
     </class>
 </hibernate-mapping>

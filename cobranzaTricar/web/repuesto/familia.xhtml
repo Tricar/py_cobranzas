@@ -20,8 +20,11 @@
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                     <p:dataTable id="tablalistarcolor" var="item" value="#{familiaBean.verTodo()}" emptyMessage="No hay nada para mostrar"
                                  paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
-                        <p:column headerText="DESCRIPCION">
+                        <p:column headerText="FAMILIA">
                             <h:outputText value="#{item.familia}"/>
+                        </p:column>
+                        <p:column headerText="NUMERO">
+                            <h:outputText value="#{item.numero}"/>
                         </p:column>
                         <p:column width="10%" style="text-align: center">
                             <p:commandButton actionListener="#{familiaBean.cargarColorEditar(item.idfamilia)}" icon="fa fa-pencil white"/>
@@ -36,8 +39,12 @@
             <p:dialog header="Nuevo Familia" widgetVar="dlginsertar" modal="true">                        
                 <h:panelGrid id="panelcrearcolor" columns="2">
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{familiaBean.familia.familia}" 
-                                 style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                    <p:inputText id="txtDescripcion" label="Descripcion" value="#{familiaBean.familia.familia}" autocomplete="off"
+                                 style="text-transform: uppercase" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Numero:" for="txtnumero"/>
+                    <p:inputText id="txtnumero" value="#{familiaBean.familia.numero}" autocomplete="off" onkeyup="format(this)" onchange="format(this)" required="true" requiredMessage="Ingresa numero">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{familiaBean.registrar()}" />
@@ -51,6 +58,10 @@
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
                     <p:inputText id="txtDescripcion" label="Descripcion" value="#{familiaBean.familia.familia}" style="text-transform: uppercase" 
                                  autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
+                    <p:outputLabel value="Numero:" for="txtnumero"/>
+                    <p:inputText id="txtnumero" value="#{familiaBean.familia.numero}" autocomplete="off" onkeyup="format(this)" onchange="format(this)" required="true" requiredMessage="Ingresa numero">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{familiaBean.modificar()}"/>

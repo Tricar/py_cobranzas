@@ -24,6 +24,7 @@ public class Familia implements java.io.Serializable {
     private Integer idfamilia;
     private String familia;
     private Date created;
+    private String numero;
     private Set subfamilias = new HashSet(0);
 
     public Familia() {
@@ -33,10 +34,11 @@ public class Familia implements java.io.Serializable {
         this.idfamilia = idfamilia;
     }
 
-    public Familia(Integer idfamilia, String familia, Date created, Set subfamilias) {
+    public Familia(Integer idfamilia, String familia, Date created, String numero, Set subfamilias) {
         this.idfamilia = idfamilia;
         this.familia = familia;
         this.created = created;
+        this.numero = numero;
         this.subfamilias = subfamilias;
     }
 
@@ -68,6 +70,15 @@ public class Familia implements java.io.Serializable {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    @Column(name = "numero", length = 2)
+    public String getNumero() {
+        return this.numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "familia")

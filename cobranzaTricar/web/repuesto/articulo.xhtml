@@ -10,7 +10,7 @@
 
     <ui:define name="content">
         <h:form id="frmNuevo">
-            <p:commandButton value="Nuevo" action="#{tipoarticuloBean.nuevo()}" icon="fa fa-plus white"/>
+            <p:commandButton value="Nuevo" action="#{articuloBean.nuevo()}" icon="fa fa-plus white"/>
             <p:commandButton action="#{tipoarticuloBean.codigo()}" ajax="false" value="Nueva Codigo de Barra" immediate="true" icon="fa fa-plus white"/>
         </h:form>
         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
@@ -67,7 +67,7 @@
                         <f:selectItems value="#{familiaBean.verTodo()}" var="familias" itemLabel="#{familias.familia}" itemValue="#{articulo}" />
                     </p:selectOneMenu>
                     <p:outputLabel for="txtsubfamilia" value="Sub-Familia:" />
-                    <p:selectOneMenu id="txtsubfamilia" value="#{articuloBean.articulo.subfamilia}" filter="true" filterMatchMode="startsWith">
+                    <p:selectOneMenu id="txtsubfamilia" value="#{articuloBean.articulo.subfamilia}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                         <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{articuloBean.subfamilia}" var="subfamilias" itemLabel="#{subfamilias.subfamilia}" itemValue="#{articulo}" />
                     </p:selectOneMenu>
@@ -84,7 +84,7 @@
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
-                    <p:inputText id="txtunidadmedida" value="#{articuloBean.articulo.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
+                    <p:inputText id="txtunidadmedida" value="#{articuloBean.articulo.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida" autocomplete="off" style="text-transform: uppercase" onkeyup="javascript:this.value = this.value.toUpperCase();">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:commandButton value="Guardar" icon="fa fa-save white" ajax="false" actionListener="#{articuloBean.registrar()}" />
@@ -112,12 +112,12 @@
                         <f:selectItems value="#{familiaBean.verTodo()}" var="familias" itemLabel="#{familias.familia}" itemValue="#{articulo}" />
                     </p:selectOneMenu>
                     <p:outputLabel for="txtsubfamilia" value="Sub-Familia:" />
-                    <p:selectOneMenu id="txtsubfamilia" value="#{articuloBean.articulo.subfamilia}" filter="true" filterMatchMode="startsWith">
+                    <p:selectOneMenu id="txtsubfamilia" value="#{articuloBean.articulo.subfamilia}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                         <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{articuloBean.subfamilia}" var="subfamilias" itemLabel="#{subfamilias.subfamilia}" itemValue="#{articulo}" />
                     </p:selectOneMenu>
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion2}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion2}" required="true" requiredMessage="Ingresa Descripcion" autocomplete="off" style="text-transform: uppercase" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:outputLabel value="Precio Compra:" for="txtprecioc"/>
@@ -127,7 +127,7 @@
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:outputLabel value="Unidad medida:" for="txtunidadmedida"/>
-                    <p:inputText id="txtunidadmedida" value="#{articuloBean.articulo.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida">
+                    <p:inputText id="txtunidadmedida" value="#{articuloBean.articulo.unidadmedida}" required="true" requiredMessage="Ingresa unidad medida" autocomplete="off" style="text-transform: uppercase" onkeyup="javascript:this.value = this.value.toUpperCase();">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{articuloBean.modificar()}"/>
