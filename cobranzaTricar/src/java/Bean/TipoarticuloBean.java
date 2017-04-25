@@ -63,6 +63,10 @@ public class TipoarticuloBean implements Serializable{
         RequestContext.getCurrentInstance().update("formInsertar");
         RequestContext.getCurrentInstance().execute("PF('dlginsertar').show()");
     }
+    
+    public String codigo() {
+        return "/repuesto/codigo";
+    }
 
     public void modificar() {
         this.session = null;

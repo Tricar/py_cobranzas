@@ -20,14 +20,14 @@
                         <div class="layout-portlets-box">
                             <div class="Container100 ui-fluid">
                                 <div class="ContainerIndent">
-                                    <h2 class="BigTopic">Venta de servicio y repuesto</h2>
+                                    <h2 class="BigTopic">Ingreso al Taller</h2>
                                     <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
                                     <div class="ui-grid-row">
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Tipo Venta:" for="txtTipoVenta"/>                        
+                                            <p:outputLabel value="Codigo:" for="txtCodigo"/>                        
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectOneMenu id="txtTipoVenta" value="#{ventaMBBean.venta.tipoventa}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Selecciona Tipo">
+                                            <p:selectOneMenu id="txtCodigo" value="#{ventaMBBean.venta.tipoventa}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Selecciona Tipo">
                                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                                 <f:selectItems value="#{tipoventaBean.verTodo()}" var="tipoventa" itemLabel="#{tipoventa.descripcion}" itemValue="#{tipoventa}"/>
                                             </p:selectOneMenu>
@@ -37,15 +37,11 @@
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <div class="ui-grid-col-9">
-                                                <p:autoComplete id="txtCliente" value="#{ventaMBBean.venta.anexo}" completeMethod="#{anexoBean.filtrarCliente}" 
-                                                                var="cliente" itemLabel="#{cliente.nombres}" itemValue="#{cliente}" required="true" 
-                                                                requiredMessage="Ingrese cliente">
-                                                    <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                    <p:ajax event="mousemove" update="txtRUC txtDireccion"/>
-                                                    <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="frmRealizarVentas:mensajeGeneral"/>
-                                                    <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="frmRealizarVentas:mensajeGeneral"/>
-                                                    <p:ajax event="itemSelect" process="frmRealizarVentas:mensajeGeneral" />
-                                                </p:autoComplete>
+                                                <p:selectOneMenu id="txtCliente" value="#{articuloBean.articulo.familia}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+                                                    <p:ajax listener="#{articuloBean.onCountryChange}" update="city" />
+                                                    <f:selectItem itemLabel="Selecciona Familia" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{familiaBean.verTodo()}" var="familia" itemLabel="#{familia.familia}" itemValue="#{familia}" />
+                                                </p:selectOneMenu>
                                             </div>
                                             <div class="ui-grid-col-1">
                                                 <p:commandButton icon="fa fa-plus white" action="#{ventaBean.nuevoanexo()}" immediate="true" />
@@ -54,16 +50,19 @@
                                     </div>
                                     <div class="ui-grid-row">
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="RUC / DNI:" for="txtRUC"/>                        
+                                            <p:outputLabel for="city" value="Subfamilia: " />
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="txtRUC" readonly="true" value="#{ventaMBBean.venta.anexo.numdocumento}"/>
+                                            <p:selectOneMenu id="city" value="#{articuloBean.articulo.subfamilia}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+                                                <f:selectItem itemLabel="Selecciona Subfamilia" itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{articuloBean.subfamilia}" var="subfamilia" itemLabel="#{subfamilia.subfamilia}" itemValue="#{subfamilia}" />
+                                            </p:selectOneMenu>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Direccion:" for="txtDireccion"/>
+
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="txtDireccion" readonly="true" value="#{ventaMBBean.venta.anexo.direccion}"/>
+
                                         </div>
                                     </div>
                                 </div>

@@ -13,10 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -119,19 +116,19 @@ public class ArticuloBean implements Serializable {
             this.transaction = session.beginTransaction();
             ArticuloDao linkDao = new ArticuloDaoImp();
             if (this.articulo.getModelo() == null) {
-                if (this.articulo.getColor() == null) {
+                if (this.articulo.getSubfamilia()== null) {
                     descripcionarticulo = this.articulo.getDescripcion2();
                 } else {
-                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getColor().getColor();
+                    descripcionarticulo = this.articulo.getDescripcion2();
                 }
-            } else if (this.articulo.getColor() == null) {
+            } else if (this.articulo.getSubfamilia()== null) {
                 if (this.articulo.getModelo() == null) {
                     descripcionarticulo = this.articulo.getDescripcion2();
                 } else {
                     descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
                 }                
             } else {
-                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo() + " " + this.articulo.getColor().getColor();
+                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
             }
             if (this.articulo.getPrecioventa().equals(new BigDecimal("0")) || this.articulo.getPrecioventa().equals(new BigDecimal("0.00")) || this.articulo.getPrecioventa().equals(new BigDecimal("0.0"))) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El precio debe ser mayor a cero."));
@@ -232,19 +229,19 @@ public class ArticuloBean implements Serializable {
             this.transaction = session.beginTransaction();
             ArticuloDao linkDao = new ArticuloDaoImp();
             if (this.articulo.getModelo() == null) {
-                if (this.articulo.getColor() == null) {
+                if (this.articulo.getSubfamilia() == null) {
                     descripcionarticulo = this.articulo.getDescripcion2();
                 } else {
-                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getColor().getColor();
+                    descripcionarticulo = this.articulo.getDescripcion2();
                 }
-            } else if (this.articulo.getColor() == null) {
+            } else if (this.articulo.getSubfamilia() == null) {
                 if (this.articulo.getModelo() == null) {
                     descripcionarticulo = this.articulo.getDescripcion2();
                 } else {
                     descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
                 }                
             } else {
-                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo() + " " + this.articulo.getColor().getColor();
+                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
             }
             if (linkDao.verByDescripcion(this.session, descripcionarticulo) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Repuesto/Servicio ya esta registrado."));

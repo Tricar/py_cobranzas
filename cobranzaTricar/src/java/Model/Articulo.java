@@ -29,7 +29,6 @@ public class Articulo implements java.io.Serializable {
     private Integer idarticulo;
     private Familia familia;
     private Subfamilia subfamilia;
-    private Color color;
     private Modelo modelo;
     private Tipoarticulo tipoarticulo;
     private Integer consecutivo;
@@ -51,11 +50,10 @@ public class Articulo implements java.io.Serializable {
         this.idarticulo = idarticulo;
     }
 
-    public Articulo(Integer idarticulo, Familia familia, Subfamilia subfamilia, Color color, Modelo modelo, Tipoarticulo tipoarticulo, Integer consecutivo, String codigo, String descripcion1, String descripcion2, BigDecimal preciocompra, BigDecimal precioventa, BigDecimal costopromedio, String unidadmedida, Integer cantidad, Date created, Set operaciondetalles) {
+    public Articulo(Integer idarticulo, Familia familia, Subfamilia subfamilia, Modelo modelo, Tipoarticulo tipoarticulo, Integer consecutivo, String codigo, String descripcion1, String descripcion2, BigDecimal preciocompra, BigDecimal precioventa, BigDecimal costopromedio, String unidadmedida, Integer cantidad, Date created, Set operaciondetalles) {
         this.idarticulo = idarticulo;
         this.familia = familia;
         this.subfamilia = subfamilia;
-        this.color = color;
         this.modelo = modelo;
         this.tipoarticulo = tipoarticulo;
         this.consecutivo = consecutivo;
@@ -100,16 +98,6 @@ public class Articulo implements java.io.Serializable {
 
     public void setSubfamilia(Subfamilia subfamilia) {
         this.subfamilia = subfamilia;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idcolor")
-    public Color getColor() {
-        return this.color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
