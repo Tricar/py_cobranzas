@@ -2,20 +2,29 @@
 import Dao.CreditoDao;
 import Dao.CreditoDaoImp;
 import Model.Credito;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import utiles.generadorCodigos;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class Main {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws IOException {
+        /**
+         * throws SQLException *
+         */
         //        List<Date> fechas = new ArrayList();
         //        Date fecha = new Date();
         //        int nletras = 10;
@@ -55,19 +64,39 @@ public class Main {
         //            }
         //            System.out.println("fecha :"+i+" "+fechas.get(i).toString());
         //        }
-        generadorCodigos gen = new generadorCodigos();
-        String codigo = gen.genCodigoLiquid("V2");
-        System.out.println("codigo: "+codigo);
-        String ultimo = codigo.substring(codigo.length()-2);
-        System.out.println("ultimo: "+ultimo);
-        int corre = Integer.parseInt(ultimo);
-        System.out.println("entero corre: "+corre);
-        
-                
+//        generadorCodigos gen = new generadorCodigos();
+//        String codigo = gen.genCodigoLiquid("V2");
+//        System.out.println("codigo: "+codigo);
+//        String ultimo = codigo.substring(codigo.length()-2);
+//        System.out.println("ultimo: "+ultimo);
+//        int corre = Integer.parseInt(ultimo);
+//        System.out.println("entero corre: "+corre);
+
+        try {
+            Document doc = Jsoup.connect("http://www.sunat.gob.pe/cl-at-ittipcam/tcS01Alias").get();
+            System.out.println(doc.title());
+            int cont = 0;
+            ArrayList<String> downServers = new ArrayList<>();
+            Element table = doc.select("table").get(1); //select the first table.
+            Elements rows = table.select("tr");
+
+            for (int i = 1; i < rows.size(); i++) { //first row is the col names so skip it.
+                Element row = rows.get(i);
+                Elements cols = row.select("td");
+
+                for (cont = 0; cont < cols.size(); cont++) {
+                    downServers.add(cols.get(cont).text());
+                }
+            }
+
+            String tipoCambioCompra = downServers.get(cont - 2);
+            System.out.println("Tipo de Cambio Compra " + tipoCambioCompra);
+            String tipoCambioVenta = downServers.get(cont - 1);
+            System.out.println("Tipo de Cambio Venta " + tipoCambioVenta);
+        } catch (Exception e) {
+            System.out.println("Error en la conexión a internet: " + e);
+        }
 
     }
 
-//    public static int esDomingo(Calendar d) {
-//        return d.get(Calendar.DAY_OF_WEEK);
-//    }
 }
