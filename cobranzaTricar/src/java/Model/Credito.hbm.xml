@@ -14,9 +14,9 @@
         <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
             <column name="idvehiculo" />
         </many-to-one>
-        <property name="idaval" type="java.lang.Integer">
+        <many-to-one name="idaval" class="Model.Anexo" fetch="select">
             <column name="idaval" />
-        </property>
+        </many-to-one>        
         <property name="liqventa" type="string">
             <column name="liqventa" length="15" unique="true" />
         </property>

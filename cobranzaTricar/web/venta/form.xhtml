@@ -203,10 +203,12 @@
                                     </div>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Precio:"/>
+                                            <p:outputLabel id="precio" value="Precio sugerido: #{creditoBean.precio}" />
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="precio" value="#{creditoBean.precio}" readonly="true"/>
+                                            <p:inputText id="precio1" value="#{creditoBean.precio1}" class="money" required="true" requiredMessage="Ingrese Precio">
+                                                <p:ajax event="keyup" listener="#{creditoBean.resSaldo()}"/>
+                                            </p:inputText>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel id="lblinicial" value="Inicial sugerida: #{creditoBean.iniciapre}" for="txtinicial"/>

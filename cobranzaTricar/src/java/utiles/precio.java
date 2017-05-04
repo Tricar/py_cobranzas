@@ -2,10 +2,6 @@ package utiles;
 
 import java.math.BigDecimal;
 
-/**
- *
- * @author master
- */
 public class precio {
 
     public BigDecimal precioModelo(String modelo) {
@@ -82,9 +78,12 @@ public class precio {
                     break;
                 case "VX200ZH-1":
                     precio = BigDecimal.valueOf(6890.00);
+                    break;                    
+                case "VX200ZH-1/R":
+                    precio = BigDecimal.valueOf(6770.00);
                     break;
                 case "TX150N":
-                    precio = BigDecimal.valueOf(5790.00);
+                    precio = BigDecimal.valueOf(7290.00);
                     break;
                 case "TX125":
                     precio = BigDecimal.valueOf(2890.00);

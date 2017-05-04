@@ -31,7 +31,7 @@ public class Credito implements java.io.Serializable {
     private Integer idventa;
     private Anexo anexo;
     private Vehiculo vehiculo;
-    private Integer idaval;
+    private Anexo idaval;
     private String liqventa;
     private String condicionpago;
     private int nletras;
@@ -89,7 +89,7 @@ public class Credito implements java.io.Serializable {
         this.inicial = inicial;
     }
 
-    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Integer idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Date fecaprob, Integer aprobado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, Date fecsinicial, BigDecimal sinicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, Integer elaborado, Integer modificado, Integer despachado, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, String resena, String obsver, Integer correlativo, Set creditoavals, Set ocupacions, Set conceptoses, Set letrases) {
+    public Credito(Integer idventa, Anexo anexo, Vehiculo vehiculo, Anexo idaval, String liqventa, String condicionpago, int nletras, Anexo codven, Date fechareg, Date fecaprob, Integer aprobado, String tienda, String empresa, BigDecimal precio, BigDecimal inicial, Date fecsinicial, BigDecimal sinicial, BigDecimal saldo, BigDecimal interes, Anexo verificado, Boolean cronograma, Boolean contrato, BigDecimal totaldeuda, BigDecimal deudactual, String estado, String vehi, Modelo modelo, String adicional, String guia, String comprobante, String comprobante2, Integer elaborado, Integer modificado, Integer despachado, String calificacion, Boolean swinicial, Boolean refinanciado, String estadoref, Integer anterior, String resena, String obsver, Integer correlativo, Set creditoavals, Set ocupacions, Set conceptoses, Set letrases) {
         this.idventa = idventa;
         this.anexo = anexo;
         this.vehiculo = vehiculo;
@@ -170,11 +170,11 @@ public class Credito implements java.io.Serializable {
     }
 
     @Column(name = "idaval")
-    public Integer getIdaval() {
+    public Anexo getIdaval() {
         return this.idaval;
     }
 
-    public void setIdaval(Integer idaval) {
+    public void setIdaval(Anexo idaval) {
         this.idaval = idaval;
     }
 
