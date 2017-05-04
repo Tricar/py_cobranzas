@@ -36,25 +36,20 @@ public class TipodocumentBean implements Serializable {
     }
 
     public List<Tipodocument> verTodo() {
-
         this.session = null;
         this.transaction = null;
-
         try {
-
-            TipodocumentDaoImpl daoperfil = new TipodocumentDaoImpl();
+            TipodocumentDao daoperfil = new TipodocumentDaoImpl();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
             this.tipodocuments = daoperfil.verTodo(this.session);
             this.transaction.commit();
             return tipodocuments;
-
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
-
             return null;
         } finally {
             if (this.session != null) {

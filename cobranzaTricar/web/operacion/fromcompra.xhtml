@@ -23,12 +23,12 @@
                                     <h2 class="BigTopic">Ingreso de Repuestos</h2>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="TIPO DOCUMENTO:" for="txtTipoDocumento"/>                        
+                                            <p:outputLabel value="TIPO DOCUMENTO:"/>                        
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectOneMenu id="txtTipoDocumento" value="#{compraBean.venta.tipodocument}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Seleccione Tipo">
+                                            <p:selectOneMenu value="#{compraBean.venta.tipodocument}" converter="omnifaces.SelectItemsConverter">
                                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                                <f:selectItems value="#{tipodocumentBean.verTodo()}" var="tipodocument" itemLabel="#{tipodocument.descripcion}" itemValue="#{tipodocument}"/>
+                                                <f:selectItems value="#{tipodocumentBean.verTodo()}" var="tipodocument" itemLabel="#{tipodocument.descripcion}" itemValue="#{venta}"/>
                                             </p:selectOneMenu>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">

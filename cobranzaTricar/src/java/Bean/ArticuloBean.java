@@ -5,7 +5,6 @@ import Model.Articulo;
 import Model.Familia;
 import Model.Modelo;
 import Model.Subfamilia;
-import Model.Tipoarticulo;
 import Persistencia.HibernateUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -39,19 +38,23 @@ public class ArticuloBean implements Serializable {
     private Familia familia;
     private List<Articulo> articulos;
     private List<Subfamilia> subfamilia;
+    private Modelo modelo;
+    private Familia familiacodigo;
+    private Subfamilia subfamiliacodigo;
 
     private Session session;
     private Transaction transaction;
 
     private List<SelectItem> SelectItemsColor;
-    
+
     public void onCountryChange() {
-        if(familia !=null && !familia.equals(""))
+        if (familia != null && !familia.equals("")) {
             subfamilia = null;
-        else
+        } else {
             subfamilia = ListaSubFamilia(this.articulo.getFamilia().getIdfamilia());
+        }
     }
-    
+
     public List<Subfamilia> ListaSubFamilia(Integer idfamilia) {
         this.session = null;
         this.transaction = null;
@@ -112,30 +115,62 @@ public class ArticuloBean implements Serializable {
         this.session = null;
         this.transaction = null;
         String descripcionarticulo = "";
+        String codmodelo = "";
+        String codfamilia = "";
+        String codsubfamilia = "";
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             ArticuloDao linkDao = new ArticuloDaoImp();
+
             if (this.articulo.getModelo() == null) {
-                if (this.articulo.getSubfamilia()== null) {
-                    descripcionarticulo = this.articulo.getDescripcion2();
-                } else {
-                    descripcionarticulo = this.articulo.getDescripcion2();
-                }
-            } else if (this.articulo.getSubfamilia()== null) {
-                if (this.articulo.getModelo() == null) {
-                    descripcionarticulo = this.articulo.getDescripcion2();
-                } else {
-                    descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
-                }                
+                codmodelo = "00";
             } else {
-                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
+                codmodelo = this.articulo.getModelo().getNumero();
             }
+
+            if (this.articulo.getFamilia() == null) {
+                codfamilia = "00";
+            } else {
+                codfamilia = this.articulo.getFamilia().getNumero();
+            }
+
+            if (this.articulo.getSubfamilia() == null) {
+                codsubfamilia = "00";
+            } else {
+                codsubfamilia = this.articulo.getSubfamilia().getNumero();
+            }
+
             if (this.articulo.getPrecioventa().equals(new BigDecimal("0")) || this.articulo.getPrecioventa().equals(new BigDecimal("0.00")) || this.articulo.getPrecioventa().equals(new BigDecimal("0.0"))) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El precio debe ser mayor a cero."));
                 articulo = new Articulo();
                 return;
             }
+
+            if (this.articulo.getModelo() == null) {
+                descripcionarticulo = this.articulo.getDescripcion2();
+            } else {
+                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
+            }
+            
+            
+            String codigo = actualizar_codigo_Articulo(this.articulo, codfamilia, codsubfamilia);            
+            Integer numero = generar_consecutivo(this.articulo);
+            
+            if (codigo == null) {
+                if (this.articulo.getTipoarticulo().getIdtipoarticulo() == 1) {
+                    this.articulo.setConsecutivo(0);
+                    this.articulo.setCodigo(this.articulo.getTipoarticulo().getAbreviado() + codfamilia + codsubfamilia + "000");
+                } else {
+                    this.articulo.setConsecutivo(1);
+                    this.articulo.setCodigo(this.articulo.getTipoarticulo().getAbreviado() + codfamilia + codsubfamilia + "001");
+                }
+            } else {
+                this.articulo.setConsecutivo(numero);
+                this.articulo.setCodigo(codigo);
+            }
+
+            this.articulo.setCodigo(codigo);
             this.articulo.setDescripcion1(descripcionarticulo);
             linkDao.modificar(this.session, this.articulo);
             this.transaction.commit();
@@ -161,6 +196,9 @@ public class ArticuloBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             this.articulo = daocolor.verByCodigo(this.session, idcolor);
+            this.modelo = this.articulo.getModelo();
+            this.familiacodigo = this.articulo.getFamilia();
+            this.subfamiliacodigo = this.articulo.getSubfamilia();
             this.transaction.commit();
             RequestContext.getCurrentInstance().update("frmEditarColor:panelEditarColor");
             RequestContext.getCurrentInstance().execute("PF('dialogoEditarColor').show()");
@@ -225,43 +263,60 @@ public class ArticuloBean implements Serializable {
         this.session = null;
         this.transaction = null;
         String descripcionarticulo = "";
+        String codmodelo = "";
         String codfamilia = "";
         String codsubfamilia = "";
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             ArticuloDao linkDao = new ArticuloDaoImp();
-            
-            if(this.articulo.getFamilia() == null) {
+
+            if (this.articulo.getModelo() == null) {
+                codmodelo = "00";
+            } else {
+                codmodelo = this.articulo.getModelo().getNumero();
+            }
+
+            if (this.articulo.getFamilia() == null) {
                 codfamilia = "00";
             } else {
                 codfamilia = this.articulo.getFamilia().getNumero();
             }
-            
-            if(this.articulo.getSubfamilia() == null) {
+
+            if (this.articulo.getSubfamilia() == null) {
                 codsubfamilia = "00";
             } else {
                 codsubfamilia = this.articulo.getSubfamilia().getNumero();
             }
-            
+
             if (linkDao.verByDescripcion(this.session, descripcionarticulo) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Repuesto/Servicio ya esta registrado."));
                 articulo = new Articulo();
                 return;
             }
-            
-            String codigo = generar_codigo_Articulo(this.articulo.getTipoarticulo(), this.articulo.getModelo(), codfamilia, codsubfamilia);
-            Integer numero = generar_consecutivo(this.articulo.getTipoarticulo());
-            
+
+            String codigo = generar_codigo_Articulo(this.articulo, codmodelo, codfamilia, codsubfamilia);
+            Integer numero = generar_consecutivo(this.articulo);
+
             if (codigo == null) {
-                this.articulo.setConsecutivo(1);
-                this.articulo.setCodigo(this.articulo.getTipoarticulo().getAbreviado() + codfamilia + codsubfamilia + "001");
+                if (this.articulo.getTipoarticulo().getIdtipoarticulo() == 1) {
+                    this.articulo.setConsecutivo(0);
+                    this.articulo.setCodigo(this.articulo.getTipoarticulo().getAbreviado() + codfamilia + codsubfamilia + "000");
+                } else {
+                    this.articulo.setConsecutivo(1);
+                    this.articulo.setCodigo(this.articulo.getTipoarticulo().getAbreviado() + codfamilia + codsubfamilia + "001");
+                }
             } else {
                 this.articulo.setConsecutivo(numero);
                 this.articulo.setCodigo(codigo);
             }
-            
-            descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
+
+            if (this.articulo.getModelo() == null) {
+                descripcionarticulo = this.articulo.getDescripcion2();
+            } else {
+                descripcionarticulo = this.articulo.getDescripcion2() + " " + this.articulo.getModelo().getModelo();
+            }
+
             Date d = new Date();
             this.articulo.setCreated(d);
             this.articulo.setDescripcion1(descripcionarticulo);
@@ -284,7 +339,7 @@ public class ArticuloBean implements Serializable {
 
     }
 
-    public Integer generar_consecutivo(Tipoarticulo objtipoarticulo) {
+    public Integer generar_consecutivo(Articulo objarticulo) {
         int vcorre = 1;
         String sql = "";
 
@@ -294,18 +349,32 @@ public class ArticuloBean implements Serializable {
             if (con == null) {
                 throw new NullPointerException(dbm.geterror());
             }
-            sql = "SELECT consecutivo FROM articulo where idtipoarticulo='" + objtipoarticulo.getIdtipoarticulo() + "'";
-            PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
-            ResultSet rs = st.executeQuery();
-            rs.afterLast();
-            if (rs.previous()) {
-                vcorre = Integer.parseInt(rs.getString("consecutivo"));
-                vcorre++;
+            if (objarticulo.getTipoarticulo().getDescripcion().equals("REPUESTO")) {
+                sql = "SELECT consecutivo FROM articulo where idtipoarticulo='" + objarticulo.getTipoarticulo().getIdtipoarticulo() + "' and idmodelo ='" + objarticulo.getModelo().getIdmodelo()
+                        + "' and idfamilia ='" + objarticulo.getFamilia().getIdfamilia() + "' and idsubfamilia ='" + objarticulo.getSubfamilia().getIdsubfamilia() + "'";
+                PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
+                ResultSet rs = st.executeQuery();
+                rs.afterLast();
+                if (rs.previous()) {
+                    vcorre = Integer.parseInt(rs.getString("consecutivo"));
+                    vcorre++;
+                }
+                rs.close();
+                st.close();
+                con.close();
+            } else {
+                sql = "SELECT consecutivo FROM articulo where idtipoarticulo='" + objarticulo.getTipoarticulo().getIdtipoarticulo() + "'";
+                PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
+                ResultSet rs = st.executeQuery();
+                rs.afterLast();
+                if (rs.previous()) {
+                    vcorre = Integer.parseInt(rs.getString("consecutivo"));
+                    vcorre++;
+                }
+                rs.close();
+                st.close();
+                con.close();
             }
-            rs.close();
-            st.close();
-            con.close();
-            System.out.println(vcorre);
 
         } catch (Exception e) {
             e.getMessage();
@@ -314,7 +383,7 @@ public class ArticuloBean implements Serializable {
         return (vcorre);
     }
 
-    public String generar_codigo_Articulo(Tipoarticulo objtipoarticulo, Modelo objtmodelo, String codfamilia, String codsubfamilia) {
+    public String generar_codigo_Articulo(Articulo objarticulo, String codmodelo, String codfamilia, String codsubfamilia) {
         int vcorre = 1;
         String sql = "";
         String vcodigoart = "";
@@ -327,26 +396,88 @@ public class ArticuloBean implements Serializable {
             if (con == null) {
                 throw new NullPointerException(dbm.geterror());
             }
-            sql = "SELECT consecutivo FROM articulo where idtipoarticulo='" + objtipoarticulo.getIdtipoarticulo() + "'";
-            PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
-            ResultSet rs = st.executeQuery();
-            rs.afterLast();
-            if (rs.previous()) {
-                vcorre = Integer.parseInt(rs.getString("consecutivo"));
-                vcorre++;
+            if (objarticulo.getTipoarticulo().getDescripcion().equals("REPUESTO")) {
+                sql = "SELECT consecutivo FROM articulo where idtipoarticulo='" + objarticulo.getTipoarticulo().getIdtipoarticulo() + "' and idmodelo ='" + objarticulo.getModelo().getIdmodelo()
+                        + "' and idfamilia ='" + objarticulo.getFamilia().getIdfamilia() + "' and idsubfamilia ='" + objarticulo.getSubfamilia().getIdsubfamilia() + "'";
+                PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
+                ResultSet rs = st.executeQuery();
+                rs.afterLast();
+                if (rs.previous()) {
+                    vcorre = Integer.parseInt(rs.getString("consecutivo"));
+                    vcorre++;
+                }
+                for (int i = 1; i < 4 - String.valueOf(vcorre).length(); i++) {
+                    vcerosart = vcerosart + "0";
+                }
+                vcodigoart = vcerosart + vcorre;
+                rs.close();
+                st.close();
+                con.close();
+            } else {
+                sql = "SELECT consecutivo FROM articulo where idtipoarticulo='" + objarticulo.getTipoarticulo().getIdtipoarticulo() + "'";
+                PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
+                ResultSet rs = st.executeQuery();
+                rs.afterLast();
+                if (rs.previous()) {
+                    vcorre = Integer.parseInt(rs.getString("consecutivo"));
+                    vcorre++;
+                }
+                for (int i = 1; i < 4 - String.valueOf(vcorre).length(); i++) {
+                    vcerosart = vcerosart + "0";
+                }
+                vcodigoart = vcerosart + vcorre;
+                rs.close();
+                st.close();
+                con.close();
             }
-            for (int i = 1; i < 4 - String.valueOf(vcorre).length(); i++) {
-                vcerosart = vcerosart + "0";
+
+            vcodigofinalarticulo = objarticulo.getTipoarticulo().getAbreviado() + codmodelo + codfamilia + codsubfamilia + vcodigoart;
+
+        } catch (Exception e) {
+            e.getMessage();
+            System.out.println(e.getMessage());
+        }
+        return (vcodigofinalarticulo);
+    }
+
+    public String actualizar_codigo_Articulo(Articulo objarticulo, String codfamilia, String codsubfamilia) {
+        int vcorre = 1;
+        String sql = "";
+        String vcodigoart = "";
+        String vcerosart = "";
+        String vcodigofinalarticulo = "";
+
+        try {
+            dbManager dbm = new dbManager();
+            Connection con = dbm.getConnection();
+            if (con == null) {
+                throw new NullPointerException(dbm.geterror());
             }
 
-            vcodigoart = vcerosart + vcorre;
-            rs.close();
-            st.close();
-            con.close();
-            System.out.println(vcerosart + vcorre);
-
-            vcodigofinalarticulo = objtipoarticulo.getAbreviado() + objtmodelo.getNumero() + codfamilia + codsubfamilia + vcodigoart;
-
+            if (modelo.getIdmodelo() != objarticulo.getModelo().getIdmodelo() || familiacodigo.getIdfamilia() != objarticulo.getFamilia().getIdfamilia() || subfamiliacodigo.getIdsubfamilia() != objarticulo.getSubfamilia().getIdsubfamilia()) {
+                sql = "SELECT consecutivo FROM articulo where idtipoarticulo='" + objarticulo.getTipoarticulo().getIdtipoarticulo() + "' and idmodelo ='" + objarticulo.getModelo().getIdmodelo()
+                        + "' and idfamilia ='" + objarticulo.getFamilia().getIdfamilia() + "' and idsubfamilia ='" + objarticulo.getSubfamilia().getIdsubfamilia() + "'";
+                PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
+                ResultSet rs = st.executeQuery();
+                rs.afterLast();
+                if (rs.previous()) {
+                    vcorre = Integer.parseInt(rs.getString("consecutivo"));
+                    vcorre++;
+                }
+                for (int i = 1; i < 4 - String.valueOf(vcorre).length(); i++) {
+                    vcerosart = vcerosart + "0";
+                }
+                vcodigoart = vcerosart + vcorre;
+                rs.close();
+                st.close();
+                con.close();
+            } else {
+                for (int i = 1; i < 4 - String.valueOf(objarticulo.getConsecutivo()).length(); i++) {
+                    vcerosart = vcerosart + "0";
+                }
+                vcodigoart = vcerosart + objarticulo.getConsecutivo();                
+            }
+            vcodigofinalarticulo = objarticulo.getTipoarticulo().getAbreviado() + objarticulo.getModelo().getNumero() + codfamilia + codsubfamilia + vcodigoart;
         } catch (Exception e) {
             e.getMessage();
             System.out.println(e.getMessage());
@@ -408,7 +539,25 @@ public class ArticuloBean implements Serializable {
     }
 
     public List<Subfamilia> getSubfamilia() {
-        return subfamilia;
+        this.session = null;
+        this.transaction = null;
+        try {
+            SubfamiliaDao daocolor = new SubfamiliaDaoImplements();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            subfamilia = daocolor.verByFamilia(session, this.articulo.getFamilia().getIdfamilia());
+            return subfamilia;
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
     }
 
     public void setSubfamilia(List<Subfamilia> subfamilia) {
@@ -422,4 +571,29 @@ public class ArticuloBean implements Serializable {
     public void setSelectItemsColor(List<SelectItem> SelectItemsColor) {
         this.SelectItemsColor = SelectItemsColor;
     }
+
+    public Modelo getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
+    }
+
+    public Familia getFamiliacodigo() {
+        return familiacodigo;
+    }
+
+    public void setFamiliacodigo(Familia familiacodigo) {
+        this.familiacodigo = familiacodigo;
+    }
+
+    public Subfamilia getSubfamiliacodigo() {
+        return subfamiliacodigo;
+    }
+
+    public void setSubfamiliacodigo(Subfamilia subfamiliacodigo) {
+        this.subfamiliacodigo = subfamiliacodigo;
+    }
+
 }

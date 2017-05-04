@@ -50,13 +50,13 @@
             <p:dialog header="Nuevo" widgetVar="dlginsertar" modal="true">   
                 <p:messages id="mesagges" autoUpdate="true" showDetail="true" closable="true"/>
                 <h:panelGrid columns="2">
-                    <p:outputLabel value="Tipo Articulo:"/>
-                    <p:selectOneMenu value="#{articuloBean.articulo.tipoarticulo}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Seleccionar Tipo Articulo">
+                    <p:outputLabel for="txtTipoArt" value="Tipo Articulo:"/>
+                    <p:selectOneMenu id="txtTipoArt" value="#{articuloBean.articulo.tipoarticulo}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Seleccionar Tipo Articulo">
                         <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                         <f:selectItems value="#{tipoarticuloBean.verTodo()}" var="tipoarticulo" itemLabel="#{tipoarticulo.descripcion}" itemValue="#{articulo}"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="Modelo:" for="txtCodigo"/>
-                    <p:selectOneMenu id="txtCodigo" value="#{articuloBean.articulo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith" required="true" requiredMessage="Seleccionar Modelo">
+                    <p:outputLabel value="Modelo:" for="txtModelo"/>
+                    <p:selectOneMenu id="txtModelo" value="#{articuloBean.articulo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                         <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{modeloBean.verTodo()}" var="modelos" itemLabel="#{modelos.modelo}" itemValue="#{articulo}" />
                     </p:selectOneMenu>
@@ -94,14 +94,16 @@
 
         <h:form id="frmEditarColor">
             <p:dialog header="Actualizar" widgetVar="dialogoEditarColor" modal="true">
-                <h:panelGrid id="panelEditarColor" columns="2">                    
-                    <p:outputLabel value="Tipo Articulo:"/>
-                    <p:selectOneMenu value="#{articuloBean.articulo.tipoarticulo}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Seleccionar Tipo Articulo">
+                <h:panelGrid id="panelEditarColor" columns="2">
+                    <p:inputText type="hidden" value="#{articuloBean.articulo.consecutivo}"/>
+                    <h:panelGroup></h:panelGroup>
+                    <p:outputLabel for="txtTipoArt" value="Tipo Articulo:"/>
+                    <p:selectOneMenu id="txtTipoArt" value="#{articuloBean.articulo.tipoarticulo}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Seleccionar Tipo Articulo">
                         <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                         <f:selectItems value="#{tipoarticuloBean.verTodo()}" var="tipoarticulo" itemLabel="#{tipoarticulo.descripcion}" itemValue="#{articulo}"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="Modelo:" for="txtCodigo"/>
-                    <p:selectOneMenu id="txtCodigo" value="#{articuloBean.articulo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith" required="true" requiredMessage="Seleccionar Modelo">
+                    <p:outputLabel value="Modelo:" for="txtModelo"/>
+                    <p:selectOneMenu id="txtModelo" value="#{articuloBean.articulo.modelo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                         <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
                         <f:selectItems value="#{modeloBean.verTodo()}" var="modelos" itemLabel="#{modelos.modelo}" itemValue="#{articulo}" />
                     </p:selectOneMenu>
@@ -113,15 +115,17 @@
                     </p:selectOneMenu>
                     <p:outputLabel for="txtsubfamilia" value="Sub-Familia:" />
                     <p:selectOneMenu id="txtsubfamilia" value="#{articuloBean.articulo.subfamilia}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
-                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" />
                         <f:selectItems value="#{articuloBean.subfamilia}" var="subfamilias" itemLabel="#{subfamilias.subfamilia}" itemValue="#{articulo}" />
                     </p:selectOneMenu>
                     <p:outputLabel value="Descripción:" for="txtDescripcion"/>
-                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion2}" required="true" requiredMessage="Ingresa Descripcion" autocomplete="off" style="text-transform: uppercase" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
+                    <p:inputText id="txtDescripcion" value="#{articuloBean.articulo.descripcion2}" required="true" requiredMessage="Ingresa Descripcion" style="text-transform: uppercase" autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();"> 
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
                     <p:outputLabel value="Precio Compra:" for="txtprecioc"/>
-                    <p:inputText onkeypress="return justNumbers(event);" id="txtprecioc" value="#{articuloBean.articulo.preciocompra}"></p:inputText>
+                    <p:inputText onkeypress="return justNumbers(event);" id="txtprecioc" value="#{articuloBean.articulo.preciocompra}" required="true" requiredMessage="Ingresa precio compra">
+                        <f:validator validatorId="validatorVacio"/>
+                    </p:inputText>
                     <p:outputLabel value="Precio Venta:" for="txtpreciov"/>
                     <p:inputText onkeypress="return justNumbers(event);" id="txtpreciov" value="#{articuloBean.articulo.precioventa}" required="true" requiredMessage="Ingresa precio venta">
                         <f:validator validatorId="validatorVacio"/>
