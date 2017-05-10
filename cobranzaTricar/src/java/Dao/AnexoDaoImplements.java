@@ -74,7 +74,7 @@ public class AnexoDaoImplements implements AnexoDao {
         }
         return lista;
     }
-    
+
     @Override
     public List<Anexo> buscarClienteNombre(String nombre, String tipo, String tipo1) {
         Session session = null;
@@ -85,12 +85,12 @@ public class AnexoDaoImplements implements AnexoDao {
             Query query = session.createQuery("FROM Anexo WHERE (tipoanexo=:t OR tipoanexo=:t1) and nombre LIKE :n ");
             query.setParameter("t", tipo);
             query.setParameter("t1", tipo1);
-            query.setParameter("n", "%"+nombre+"%");
-                     
+            query.setParameter("n", "%" + nombre + "%");
+
             //query.setParameter("m", "%"+nombre+"%");
             //query.setParameter("l", "%"+nombre+"%");
             lista = (List<Anexo>) query.list();
-            System.out.println("lista: "+lista);
+            System.out.println("lista: " + lista);
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -100,7 +100,7 @@ public class AnexoDaoImplements implements AnexoDao {
         }
         return lista;
     }
-    
+
     @Override
     public List<Anexo> buscarClienteDni(String dni, String tipo, String tipo1) {
         Session session = null;
@@ -111,7 +111,7 @@ public class AnexoDaoImplements implements AnexoDao {
             Query query = session.createQuery("FROM Anexo WHERE (tipoanexo=:t OR tipoanexo=:t1) and numdocumento LIKE :n");
             query.setParameter("t", tipo);
             query.setParameter("t1", tipo1);
-            query.setParameter("n", dni+"%");
+            query.setParameter("n", dni + "%");
             lista = (List<Anexo>) query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -145,7 +145,7 @@ public class AnexoDaoImplements implements AnexoDao {
     @Override
     public boolean registrar(Session session, Anexo anexo) throws Exception {
         Date d = new Date();
-        anexo.setFechareg(d);        
+        anexo.setFechareg(d);
         session.save(anexo);
         return true;
     }
@@ -154,39 +154,41 @@ public class AnexoDaoImplements implements AnexoDao {
     public List<Anexo> verTodo(Session session) throws Exception {
         String hql = "FROM Anexo";
         Query query = session.createQuery(hql);
-        
-        List<Anexo> listaanexo = (List<Anexo>)query.list();
-        
+
+        List<Anexo> listaanexo = (List<Anexo>) query.list();
+
         return listaanexo;
     }
 
     @Override
-    public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception {        
+    public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception {
         String hql = "FROM Anexo WHERE idanexo=:idanexo";
         Query query = session.createQuery(hql);
         query.setParameter("idanexo", idanexo);
         Anexo anexo = (Anexo) query.uniqueResult();
         return anexo;
     }
-    
-    /**
-     *
-     * @param idanexo
-     * @return
-     * @throws Exception
-     */
-    
-   
 
     @Override
     public Anexo verByDocumento(Session session, String dni) throws Exception {
         String hql = "FROM Anexo WHERE numdocumento=:documento";
         Query query = session.createQuery(hql);
         query.setParameter("documento", dni);
-        
+
         Anexo anexo = (Anexo) query.uniqueResult();
-        
+
         return anexo;
+    }
+
+    @Override
+    public List<Anexo> ListaConDocumento(Session session, String dni) throws Exception {
+        String hql = "FROM Anexo WHERE numdocumento=:documento";
+        Query query = session.createQuery(hql);
+        query.setParameter("documento", dni);
+
+        List<Anexo> anexos = (List<Anexo>) query.list();
+
+        return anexos;
     }
 
     @Override
@@ -195,9 +197,9 @@ public class AnexoDaoImplements implements AnexoDao {
         Query query = session.createQuery(hql);
         query.setParameter("idanexo", idanexo);
         query.setParameter("documento", dni);
-        
+
         Anexo anexo = (Anexo) query.uniqueResult();
-        
+
         return anexo;
     }
 
@@ -217,9 +219,9 @@ public class AnexoDaoImplements implements AnexoDao {
     public List<Anexo> verCliente(Session session) throws Exception {
         String hql = "FROM Anexo WHERE tipoanexo IN ('CN','CJ')";
         Query query = session.createQuery(hql);
-        
-        List<Anexo> listaanexo = (List<Anexo>)query.list();
-        
+
+        List<Anexo> listaanexo = (List<Anexo>) query.list();
+
         return listaanexo;
     }
 
@@ -227,35 +229,35 @@ public class AnexoDaoImplements implements AnexoDao {
     public List<Anexo> verProveedor(Session session) throws Exception {
         String hql = "FROM Anexo WHERE tipoanexo IN ('PO')";
         Query query = session.createQuery(hql);
-        
-        List<Anexo> listaanexo = (List<Anexo>)query.list();
-        
+
+        List<Anexo> listaanexo = (List<Anexo>) query.list();
+
         return listaanexo;
     }
-    
+
     @Override
     public List<Anexo> verAval(Session session) throws Exception {
         String hql = "FROM Anexo WHERE tipoanexo IN ('AV')";
         Query query = session.createQuery(hql);
-        
-        List<Anexo> listaanexo = (List<Anexo>)query.list();
-        
+
+        List<Anexo> listaanexo = (List<Anexo>) query.list();
+
         return listaanexo;
     }
 
     @Override
     public List<Anexo> verEmpleado(Session session) throws Exception {
         String hql = "FROM Anexo WHERE tipoanexo IN ('VE','AD','GE', 'AS', 'JE')";
-        Query query = session.createQuery(hql);        
-        List<Anexo> listaanexo = (List<Anexo>)query.list();        
+        Query query = session.createQuery(hql);
+        List<Anexo> listaanexo = (List<Anexo>) query.list();
         return listaanexo;
     }
-    
+
     @Override
     public List<Anexo> verVendedor(Session session) throws Exception {
         String hql = "FROM Anexo WHERE tipoanexo IN ('VE')";
-        Query query = session.createQuery(hql);        
-        List<Anexo> listaanexo = (List<Anexo>)query.list();        
+        Query query = session.createQuery(hql);
+        List<Anexo> listaanexo = (List<Anexo>) query.list();
         return listaanexo;
     }
 
@@ -291,7 +293,7 @@ public class AnexoDaoImplements implements AnexoDao {
             session = HibernateUtil.getSessionFactory().openSession();
             Query query = session.createQuery("FROM Anexo WHERE tipoanexo=:u OR tipoanexo=:v");
             query.setParameter("u", tipo);
-            query.setParameter("v", tipo1);            
+            query.setParameter("v", tipo1);
             lista = (List<Anexo>) query.list();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
@@ -313,7 +315,7 @@ public class AnexoDaoImplements implements AnexoDao {
             query.setParameter("n", dni);
             query.setParameter("t", tipo);
             query.setParameter("v", tipo1);
-            anexo = (Anexo)query.uniqueResult();
+            anexo = (Anexo) query.uniqueResult();
         } catch (HibernateException e) {
             System.out.println(e.getMessage());
         } finally {

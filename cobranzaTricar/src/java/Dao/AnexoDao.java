@@ -19,6 +19,7 @@ public interface AnexoDao {
     public List<Anexo> verVendedor(Session session) throws Exception;
     public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception;
     public Anexo verByDocumento(Session session, String dni) throws Exception;
+    public List<Anexo> ListaConDocumento(Session session, String dni) throws Exception;
     public Anexo verByDocumentoDifer(Session session,Integer idanexo, String dni) throws Exception;
     public boolean modificar(Session session, Anexo anexo) throws Exception;
     public boolean eliminar (Session session, Anexo anexo) throws Exception;   
