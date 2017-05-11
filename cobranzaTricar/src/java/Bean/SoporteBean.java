@@ -49,7 +49,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
  */
 @ManagedBean
 @ViewScoped
-public class ServicioBean implements Serializable {
+public class SoporteBean implements Serializable {
 
     private Session session;
     private Transaction transaction;
@@ -65,10 +65,17 @@ public class ServicioBean implements Serializable {
     private Date fecha2 = new Date();
 
     private String valorCodigoBarras;
+    private Boolean boton = false;
 
-    public ServicioBean() {
+    public SoporteBean() {
         this.venta = new Operacion();
         this.listaventadetalle = new ArrayList<>();
+    }
+
+    public String index() {
+        listaventa = new ArrayList();
+        listaventadetalle = new ArrayList();
+        return "/operacion/lista";
     }
 
     public List<Articulo> getAllProducto() {
@@ -93,6 +100,33 @@ public class ServicioBean implements Serializable {
             }
         }
     }
+    
+    public void calcularcostos() {
+        try {
+            BigDecimal totalventa = new BigDecimal(0);
+            for (Operaciondetalle item : this.listaventadetalle) {
+                if (item.getPrecioventa().equals(new BigDecimal("0"))) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Precio del articulo "+item.getDescripcion()+" debe ser mayor a cero."));
+                    RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
+                    return;
+                } else if (item.getCantidad() == 0) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La cantidad del articulo "+item.getDescripcion()+" debe ser mayor a cero."));
+                    RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
+                    return;
+                }
+            }
+            for (Operaciondetalle item : this.listaventadetalle) {
+                BigDecimal totalVentaPorProducto = item.getPrecioventa().multiply(new BigDecimal(item.getCantidad()));
+                item.setPreciototal(totalVentaPorProducto);
+                totalventa = totalventa.add(totalVentaPorProducto);
+            }
+            this.venta.setMontototal(totalventa);
+            RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
+            RequestContext.getCurrentInstance().update("frmRealizarVentas:panelFinalVenta");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+        }
+    }
 
     public void agegarListaVentaDetalle(Integer idProducto) {
         this.session = null;
@@ -115,7 +149,7 @@ public class ServicioBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), 0, 0, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
+            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 1, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -158,7 +192,7 @@ public class ServicioBean implements Serializable {
         }
     }
 
-    public void calcularcostos() {
+    public void calcularcostose() {
         try {
             BigDecimal totalventa = new BigDecimal(0);
             for (Operaciondetalle item : this.listaventadetalle) {
@@ -230,6 +264,7 @@ public class ServicioBean implements Serializable {
             this.transaction.commit();
             this.listaventadetalle = new ArrayList<>();
             this.venta = new Operacion();
+            this.boton = true;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se registro la venta."));
         } catch (Exception e) {
             if (this.transaction != null) {
@@ -251,18 +286,6 @@ public class ServicioBean implements Serializable {
         }
     }
 
-    public String index() {
-        listaventa = new ArrayList();
-        listaventadetalle = new ArrayList();
-        return "/operacion/lista";
-    }
-
-    public void nuevoanexo() {
-        anexo = new Anexo();
-        RequestContext.getCurrentInstance().update("formInsertar");
-        RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
-    }
-
     public String garantia() {
         return "/operacion/formgarantia";
     }
@@ -277,6 +300,16 @@ public class ServicioBean implements Serializable {
 
     public String reparacion() {
         return "/operacion/formreparacion";
+    }
+
+    public void nuevoanexo() {
+        anexo = new Anexo();
+        RequestContext.getCurrentInstance().update("formInsertar");
+        RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
+    }
+
+    public String nuevo() {
+        return "/operacion/fromventa";
     }
 
     public List<Operaciondetalle> cargarDetalleArray(Operacion compra) {
@@ -814,6 +847,14 @@ public class ServicioBean implements Serializable {
 
     public void setVentadetalle(Operaciondetalle ventadetalle) {
         this.ventadetalle = ventadetalle;
+    }
+
+    public Boolean getBoton() {
+        return boton;
+    }
+
+    public void setBoton(Boolean boton) {
+        this.boton = boton;
     }
 
 }

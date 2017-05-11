@@ -54,5 +54,8 @@
     <mapping resource="Model/Letras.hbm.xml"/>
     <mapping resource="Model/Familia.hbm.xml"/>
     <mapping resource="Model/Subfamilia.hbm.xml"/>
+    <mapping resource="Model/Tiposoporte.hbm.xml"/>
+    <mapping resource="Model/Vehiculoanexo.hbm.xml"/>
+    <mapping resource="Model/Soporte.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

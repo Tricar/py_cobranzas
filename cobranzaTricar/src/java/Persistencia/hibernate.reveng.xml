@@ -66,6 +66,9 @@ Contributor(s):
   <table-filter match-name="ocupacion"/>
   <table-filter match-name="requisitos"/>
   <table-filter match-name="tipoarticulo"/>
+  <table-filter match-name="tiposoporte"/>
+  <table-filter match-name="soporte"/>
+  <table-filter match-name="vehiculoanexo"/>
   <table-filter match-name="distrito"/>
   <table-filter match-name="vehiculo"/>
   <table-filter match-name="modelo"/>

@@ -36,6 +36,8 @@ public class Vehiculo implements java.io.Serializable {
     private String tipovehiculo;
     private Character estado;
     private Set creditos = new HashSet(0);
+    private Set soportes = new HashSet(0);
+    private Set vehiculoanexos = new HashSet(0);
 
     public Vehiculo() {
     }
@@ -48,7 +50,7 @@ public class Vehiculo implements java.io.Serializable {
         this.anofabri = anofabri;
     }
 
-    public Vehiculo(Integer idvehiculo, Color color, Modelo modelo, Character marca, String serie, int anofabri, Date fechareg, String motor, String tipovehiculo, Character estado, Set creditos) {
+    public Vehiculo(Integer idvehiculo, Color color, Modelo modelo, Character marca, String serie, int anofabri, Date fechareg, String motor, String tipovehiculo, Character estado, Set creditos, Set soportes, Set vehiculoanexos) {
         this.idvehiculo = idvehiculo;
         this.color = color;
         this.modelo = modelo;
@@ -60,6 +62,8 @@ public class Vehiculo implements java.io.Serializable {
         this.tipovehiculo = tipovehiculo;
         this.estado = estado;
         this.creditos = creditos;
+        this.soportes = soportes;
+        this.vehiculoanexos = vehiculoanexos;
     }
 
     @Id
@@ -163,6 +167,24 @@ public class Vehiculo implements java.io.Serializable {
 
     public void setCreditos(Set creditos) {
         this.creditos = creditos;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
+    public Set getSoportes() {
+        return this.soportes;
+    }
+
+    public void setSoportes(Set soportes) {
+        this.soportes = soportes;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehiculo")
+    public Set getVehiculoanexos() {
+        return this.vehiculoanexos;
+    }
+
+    public void setVehiculoanexos(Set vehiculoanexos) {
+        this.vehiculoanexos = vehiculoanexos;
     }
 
     @Override

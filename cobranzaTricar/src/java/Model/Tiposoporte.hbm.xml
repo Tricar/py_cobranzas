@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Tiposoporte" table="tiposoporte" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idtiposoporte" type="int">
+            <column name="idtiposoporte" />
+            <generator class="identity" />
+        </id>
+        <property name="tiposoporte" type="string">
+            <column name="tiposoporte" length="250" />
+        </property>
+        <property name="created" type="timestamp">
+            <column name="created" length="23" />
+        </property>
+        <set name="soportes" table="soporte" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idtiposoporte" />
+            </key>
+            <one-to-many class="Model.Soporte" />
+        </set>
+    </class>
+</hibernate-mapping>

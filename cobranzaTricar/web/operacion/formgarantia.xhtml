@@ -10,8 +10,8 @@
 
     <ui:define name="content">
         <h:form>
-            <p:commandButton action="#{servicioBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>            
-            <p:commandButton action="#{servicioBean.garantia()}" ajax="false" value="Nueva Ticket" immediate="true" icon="fa fa-plus white"/>
+            <p:commandButton action="#{SoporteBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>            
+            <p:commandButton action="#{SoporteBean.garantia()}" ajax="false" value="Nueva Ticket" immediate="true" icon="fa fa-plus white"/>
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form id="frmRealizarVentas">

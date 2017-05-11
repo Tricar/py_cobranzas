@@ -131,5 +131,17 @@
             </key>
             <one-to-many class="Model.Ocupacion" />
         </set>
+        <set name="soportes" table="soporte" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" />
+            </key>
+            <one-to-many class="Model.Soporte" />
+        </set>
+        <set name="vehiculoanexos" table="vehiculoanexo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idanexo" />
+            </key>
+            <one-to-many class="Model.Vehiculoanexo" />
+        </set>
     </class>
 </hibernate-mapping>

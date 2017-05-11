@@ -61,6 +61,8 @@ public class Anexo implements java.io.Serializable {
     private Set conceptoses = new HashSet(0);
     private Set creditoavals = new HashSet(0);
     private Set ocupacions = new HashSet(0);
+    private Set soportes = new HashSet(0);    
+    private Set vehiculoanexos = new HashSet(0);
     private String nombres;
 
     public Anexo() {
@@ -70,7 +72,7 @@ public class Anexo implements java.io.Serializable {
         this.idanexo = idanexo;
     }
 
-    public Anexo(Integer idanexo, Distrito distrito, String nombre, String apepat, String apemat, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String direccionconyu, String ocupacionconyu, String cpropia, String zona, Integer sueldo, String tienda, Set creditos, Set usuarios, Set operacions, Set conceptoses, Set creditoavals, Set ocupacions) {
+    public Anexo(Integer idanexo, Distrito distrito, String nombre, String apepat, String apemat, String tipodocumento, String numdocumento, String direccion, String aahh, String cpm, String sector, String referencia, String telefono, String celular, Integer edad, Date fechanac, Date fechareg, Character sexo, String email, String tipoanexo, String codven, String estcivil, String conyuge, String dniconyu, String direccionconyu, String ocupacionconyu, String cpropia, String zona, Integer sueldo, String tienda, Set creditos, Set usuarios, Set operacions, Set conceptoses, Set creditoavals, Set ocupacions, Set soportes, Set vehiculoanexos) {
         this.idanexo = idanexo;
         this.distrito = distrito;
         this.nombre = nombre;
@@ -107,6 +109,8 @@ public class Anexo implements java.io.Serializable {
         this.conceptoses = conceptoses;
         this.creditoavals = creditoavals;
         this.ocupacions = ocupacions;
+        this.soportes = soportes;
+        this.vehiculoanexos = vehiculoanexos;
     }
 
     @Id
@@ -436,6 +440,24 @@ public class Anexo implements java.io.Serializable {
 
     public void setOcupacions(Set ocupacions) {
         this.ocupacions = ocupacions;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "anexo")
+    public Set getSoportes() {
+        return this.soportes;
+    }
+
+    public void setSoportes(Set soportes) {
+        this.soportes = soportes;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "anexo")
+    public Set getVehiculoanexos() {
+        return this.vehiculoanexos;
+    }
+
+    public void setVehiculoanexos(Set vehiculoanexos) {
+        this.vehiculoanexos = vehiculoanexos;
     }
 
     public String getNombres() {

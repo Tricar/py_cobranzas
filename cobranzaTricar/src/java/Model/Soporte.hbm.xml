@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 8:23:40 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Model.Soporte" table="soporte" schema="dbo" catalog="cobranzas" optimistic-lock="version">
+        <id name="idsoporte" type="int">
+            <column name="idsoporte" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="tiposoporte" class="Model.Tiposoporte" fetch="select">
+            <column name="idtiposoporte" not-null="true" />
+        </many-to-one>
+        <many-to-one name="anexo" class="Model.Anexo" fetch="select">
+            <column name="idanexo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
+            <column name="idvehiculo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="vendedor" class="Model.Anexo" fetch="select">
+            <column name="idvendedor" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuario" class="Model.Anexo" fetch="select">
+            <column name="idusuario" not-null="true" />
+        </many-to-one>
+        <property name="recibo" type="java.lang.Character">
+            <column name="recibo" length="10" />
+        </property>
+        <property name="reporte" type="string">
+            <column name="reporte" length="250" not-null="true" />
+        </property>
+        <property name="condicion" type="string">
+            <column name="condicion" length="250" />
+        </property>
+        <property name="nota" type="string">
+            <column name="nota" length="50" />
+        </property>
+        <property name="estado" type="int">
+            <column name="estado" not-null="true" />
+        </property>
+        <property name="ingreso" type="timestamp">
+            <column name="ingreso" length="23" />
+        </property>
+        <property name="salida" type="timestamp">
+            <column name="salida" length="23" />
+        </property>
+        <property name="created" type="timestamp">
+            <column name="created" length="23" />
+        </property>
+    </class>
+</hibernate-mapping>
