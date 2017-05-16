@@ -48,8 +48,7 @@ public class LoginBean implements Serializable {
 
     public LoginBean() {
         miSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-//        miSession.setMaxInactiveInterval(400);
-//        System.out.println("Tiempo "+miSession.getMaxInactiveInterval()*1000);
+        miSession.setMaxInactiveInterval(900);        
     }
 
     public void sesionExpired() {
@@ -57,7 +56,7 @@ public class LoginBean implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext facescontext = FacesContext.getCurrentInstance();
         HttpSession sesion = (HttpSession) facescontext.getExternalContext().getSession(false);
-        sesion.invalidate();
+        sesion.invalidate();        
         context.addCallbackParam("loggetOut", true);
         context.addCallbackParam("ruta", ruta);
     }

@@ -5,7 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <ui:composition>        
-        <p:idleMonitor timeout="#{session.maxInactiveInterval * 1000}">
+        <p:idleMonitor timeout="900000">
             <p:ajax event="idle" listener="#{loginbean.sesionExpired()}" oncomplete="sessionTimeOutDialog.show()"/>            
         </p:idleMonitor>        
         <h:form>
