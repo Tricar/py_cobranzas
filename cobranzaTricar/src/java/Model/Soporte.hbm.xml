@@ -14,20 +14,17 @@
         <many-to-one name="anexo" class="Model.Anexo" fetch="select">
             <column name="idanexo" not-null="true" />
         </many-to-one>
-        <many-to-one name="vehiculo" class="Model.Vehiculo" fetch="select">
-            <column name="idvehiculo" not-null="true" />
-        </many-to-one>
-        <many-to-one name="vendedor" class="Model.Anexo" fetch="select">
-            <column name="idvendedor" not-null="true" />
+        <many-to-one name="Vehiculoanexo" class="Model.Vehiculoanexo" fetch="select">
+            <column name="idvehiculoanexo" not-null="true" />
         </many-to-one>
         <many-to-one name="usuario" class="Model.Anexo" fetch="select">
             <column name="idusuario" not-null="true" />
         </many-to-one>
-        <property name="recibo" type="java.lang.Character">
+        <property name="recibo" type="string">
             <column name="recibo" length="10" />
         </property>
         <property name="reporte" type="string">
-            <column name="reporte" length="250" not-null="true" />
+            <column name="reporte" length="2500" />
         </property>
         <property name="condicion" type="string">
             <column name="condicion" length="250" />
@@ -37,6 +34,9 @@
         </property>
         <property name="estado" type="int">
             <column name="estado" not-null="true" />
+        </property>
+        <property name="conteo" type="int">
+            <column name="conteo" not-null="true" />
         </property>
         <property name="ingreso" type="timestamp">
             <column name="ingreso" length="23" />

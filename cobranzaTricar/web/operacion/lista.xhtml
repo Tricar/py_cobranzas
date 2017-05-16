@@ -9,75 +9,105 @@
                 template="./../views/template.xhtml">
 
     <ui:define name="content">
-        <h2 class="BigTopic">Generar de Ticket</h2>
-        <div class="Container50 Responsive50">            
-            <div class="ContainerIndent">
-                <h1 class="BigTopic"><p:outputLabel value="Servicio de garantia"/></h1>
-                <h:form id="frm">
-                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                            <div class="ui-grid-row">
-                                <div class="ui-panelgrid-cell ui-grid-col-12">
-                                    <p:commandButton action="#{SoporteBean.garantia()}" value="Mantenimiento" immediate="true" icon="fa fa-plus white"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </h:form>
-            </div>
-
-            <div class="ContainerIndent">
-                <h1 class="BigTopic"><p:outputLabel value="Servicio de pago"/></h1>
-                <h:form>
-                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                            <div class="ui-grid-row">
-                                <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
-                                    <p:commandButton action="#{SoporteBean.mantenimiento()}" value="Mantenimiento" immediate="true" icon="fa fa-plus white"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </h:form>
-            </div>
-
-        </div>
-
-        <div class="Container50 Responsive50">                      
-            <div class="ContainerIndent">
-                <h1 class="BigTopic"><p:outputLabel value="Servicio de reclamo"/></h1>
-                <h:form>
-                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                            <div class="ui-grid-row">
-                                <div class="ui-panelgrid-cell ui-grid-col-12">
-                                    <p:commandButton action="#{SoporteBean.reclamo()}" value="Reparacion" immediate="true" icon="fa fa-plus white"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </h:form>
-            </div>
-
-            <div class="ContainerIndent">
-                <h1 class="BigTopic"><p:outputLabel value="Servicio de pago"/></h1>
-                <h:form>
-                    <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                        <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                            <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
-                            <div class="ui-grid-row">
-                                <div class="ui-panelgrid-cell ui-grid-col-12">
-                                    <p:commandButton action="#{SoporteBean.reparacion()}" value="Reparacion" immediate="true" icon="fa fa-plus white"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <h2 class="BigTopic">Ingresar a Taller</h2>
+        <h:form>            
+            <p:commandButton actionListener="#{soporteBean.cargarVentaAtendida()}" value="Internados" ajax="false" icon="fa fa-line-chart white"/>
+            <p:commandButton action="#{soporteBean.nuevo()}" value="Ingresar Unidad" immediate="true" icon="fa fa-plus white"/>
+        </h:form>
+        <hr/>
+        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                <h:form id="formMostrar">
+                    <p:dataTable id="tablamostrar" var="soporte" value="#{soporteBean.listasoporte}" scrollable="true" emptyMessage="Ningún cliente coincide con su búsqueda" >
+                        <p:column headerText="NOMBRE Y APELLIDO">
+                            <h:outputText value="#{soporte.anexo.nombres}" />
+                        </p:column>
+                        <p:column headerText="RUC / DNI">
+                            <h:outputText value="#{soporte.anexo.numdocumento}" />
+                        </p:column>
+                        <p:column headerText="VEHICULO">
+                            <h:outputText value="#{soporte.vehiculoanexo.vehiculo.serie}" />
+                        </p:column>
+                        <p:column headerText="TIPO">
+                            <h:outputText value="#{soporte.vehiculoanexo.vehiculo.tipovehiculo}" />
+                        </p:column>
+                        <p:column headerText="ESTADO">
+                            <h:outputText value="#{venta.estado == 1 ? '' : 'INTERNADO'}" />
+                        </p:column>
+                        <p:column headerText="FECHA">
+                            <h:outputText value="#{soporte.ingreso}">
+                                <f:convertDateTime pattern = "dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton disabled="#{soporte.recibo == null ? false : true}" update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{soporteBean.CargarDetalle(soporte)}"/>
+                            <p:commandButton disabled="#{soporte.recibo == null ? false : true}" class="GrayButton" actionListener="#{soporteBean.cargarPago(venta.idoperacion)}" icon="fa fa-money"/>
+                            <p:commandButton disabled="#{soporte.recibo == null ? true : false}" class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{soporteBean.Imprimir(soporte.idsoporte)}" />
+                        </p:column>
+                    </p:dataTable>
                 </h:form>
             </div>
         </div>
+
+        <h:form id="formModificar">
+            <p:dialog header="Detalle Venta" widgetVar="dialogoEliminarVenta" modal="true">
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                        <p:growl id="mensajeGeneral" showDetail="true" life="2000" />
+                        <p:dataTable id="tablaletras" var="detalle" value="#{ventaMBBean.listaventadetalle}" emptyMessage="No hay nada para mostrar" > 
+                            <p:column headerText="CODIGO">
+                                <h:outputText value="#{detalle.codigoproducto}"/>
+                            </p:column>
+                            <p:column headerText="ARTICULO">
+                                <h:outputText value="#{detalle.descripcion}"/>
+                            </p:column>
+                            <p:column headerText="CANTIDAD">
+                                <h:outputText value="#{detalle.cantidad}"/>
+                            </p:column>
+                            <p:column headerText="PRECIO UNI.">
+                                <h:outputText value="#{detalle.precioventa}"/>
+                            </p:column>
+                            <p:column headerText="PRECIO TOTAL">
+                                <h:outputText value="#{detalle.preciototal}"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{ventaMBBean.cargarEliminarDetalle(detalle.idoperaciondetalle, loginbean.usuario)}" />
+                            </p:column>                    
+                        </p:dataTable> 
+                    </div>
+                </div>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="frmEditar">
+            <p:dialog header="Generar Pago" widgetVar="dialogoEditar" modal="true">
+                <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
+                <h:panelGrid id="panelEditar" columns="2">
+                    <p:inputText type="hidden" value="#{ventaMBBean.venta.idoperacion}"/>               
+                    <h:panelGroup></h:panelGroup>
+                    <p:outputLabel value="Codigo:" for="txtNumero"/>
+                    <p:inputText id="txtNumero" value="#{ventaMBBean.venta.codigo}" autocomplete="off" required="true" requiredMessage="Ingrese el codigo"/>
+                    <p:outputLabel value="Precio:" for="txtPrecio"/>
+                    <p:inputText id="txtPrecio" value="#{ventaMBBean.venta.montototal}" disabled="true"/>
+                    <p:commandButton value="Actualizar" icon="fa fa-save white" actionListener="#{ventaMBBean.Pagar(loginbean.usuario)}"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="frmEliminarDetalle">
+            <p:dialog header="Eliminar" widgetVar="dialogoEliminarDetalle" modal="true">
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.idoperaciondetalle}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.operacion.idoperacion}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.codigoproducto}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.cantidad}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.cantidadanterior}"/>
+                <p:inputText type="hidden" value="#{ventaMBBean.ventadetalle.preciototal}"/>
+                <h:outputText class="ui-confirm-dialog-message" value="¿Desea eliminar?" />
+                <p:separator/>
+                <p:commandButton value="Si" actionListener="#{ventaMBBean.eliminarDetalle()}" icon="fa fa-check blue" oncomplete="dialogoEliminarDetalle.hide();" />
+                <p:commandButton value="No" onclick="dlg2.hide();" icon="fa fa-close red" />
+            </p:dialog>     
+        </h:form>
 
     </ui:define>
 </ui:composition>

@@ -25,14 +25,14 @@ public class Soporte implements java.io.Serializable {
     private Integer idsoporte;
     private Tiposoporte tiposoporte;
     private Anexo anexo;
-    private Vehiculo vehiculo;
-    private Anexo vendedor;
+    private Vehiculoanexo vehiculoanexo;
     private Anexo usuario;
-    private Character recibo;
+    private String recibo;
     private String reporte;
     private String condicion;
     private String nota;
     private Integer estado;
+    private Integer conteo;
     private Date ingreso;
     private Date salida;
     private Date created;
@@ -40,18 +40,18 @@ public class Soporte implements java.io.Serializable {
     public Soporte() {
     }
 
-    public Soporte(Integer idsoporte, Tiposoporte tiposoporte, Anexo anexo, Vehiculo vehiculo, Anexo vendedor, Anexo usuario, Character recibo, String reporte, String condicion, String nota, Integer estado, Date ingreso, Date salida, Date created) {
+    public Soporte(Integer idsoporte, Tiposoporte tiposoporte, Anexo anexo, Vehiculoanexo vehiculoanexo, Anexo usuario, String recibo, String reporte, String condicion, String nota, Integer estado, Integer conteo, Date ingreso, Date salida, Date created) {
         this.idsoporte = idsoporte;
         this.tiposoporte = tiposoporte;
         this.anexo = anexo;
-        this.vehiculo = vehiculo;
-        this.vendedor = vendedor;
+        this.vehiculoanexo = vehiculoanexo;
         this.usuario = usuario;
         this.recibo = recibo;
         this.reporte = reporte;
         this.condicion = condicion;
         this.nota = nota;
         this.estado = estado;
+        this.conteo = conteo;
         this.ingreso = ingreso;
         this.salida = salida;
         this.created = created;
@@ -88,23 +88,13 @@ public class Soporte implements java.io.Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idvehiculo", nullable = false)
-    public Vehiculo getVehiculo() {
-        return this.vehiculo;
+    @JoinColumn(name = "idvehiculoanexo", nullable = false)
+    public Vehiculoanexo getVehiculoanexo() {
+        return this.vehiculoanexo;
     }
 
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idvendedor", nullable = false)
-    public Anexo getVendedor() {
-        return this.vendedor;
-    }
-
-    public void setVendedor(Anexo vendedor) {
-        this.vendedor = vendedor;
+    public void setVehiculoanexo(Vehiculoanexo vehiculoanexo) {
+        this.vehiculoanexo = vehiculoanexo;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -118,15 +108,15 @@ public class Soporte implements java.io.Serializable {
     }
 
     @Column(name = "recibo", length = 10)
-    public Character getRecibo() {
+    public String getRecibo() {
         return this.recibo;
     }
 
-    public void setRecibo(Character recibo) {
+    public void setRecibo(String recibo) {
         this.recibo = recibo;
     }
 
-    @Column(name = "reporte", nullable = false, length = 250)
+    @Column(name = "reporte", nullable = false, length = 2500)
     public String getReporte() {
         return this.reporte;
     }
@@ -160,6 +150,15 @@ public class Soporte implements java.io.Serializable {
 
     public void setEstado(Integer estado) {
         this.estado = estado;
+    }
+
+    @Column(name = "conteo", nullable = false)
+    public Integer getConteo() {
+        return this.conteo;
+    }
+
+    public void setConteo(Integer conteo) {
+        this.conteo = conteo;
     }
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -20,5 +20,11 @@
         <property name="created" type="timestamp">
             <column name="created" length="23" />
         </property>
+        <set name="soportes" table="soporte" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idvehiculoanexo" />
+            </key>
+            <one-to-many class="Model.Soporte" />
+        </set>
     </class>
 </hibernate-mapping>

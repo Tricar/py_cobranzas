@@ -66,8 +66,6 @@ public class DistritoDaoImpl implements DistritoDao {
         Distrito tdistrito = (Distrito) query.uniqueResult();
         
         return tdistrito;
-    }
-
-    
+    }    
     
 }

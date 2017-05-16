@@ -22,10 +22,10 @@
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                     <p:dataTable id="tablalistarcolor" var="item" value="#{articuloBean.verTodo()}" emptyMessage="No hay nada para mostrar"
                                  paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
-                        <p:column headerText="CODIGO">
+                        <p:column headerText="CODIGO" filterBy="#{item.codigo}">
                             <h:outputText value="#{item.codigo}"/>
                         </p:column>
-                        <p:column headerText="DESCRIPCION">
+                        <p:column headerText="DESCRIPCION" filterBy="#{item.descripcion1}">
                             <h:outputText value="#{item.descripcion1}"/>
                         </p:column>
                         <p:column headerText="PRECIO">
