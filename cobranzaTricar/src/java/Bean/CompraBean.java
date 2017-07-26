@@ -91,7 +91,7 @@ public class CompraBean implements Serializable {
             }
             this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 0, null, this.producto.getPreciocompra(), null, null, new BigDecimal("0"), null, null));
             this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el articulo a la lista."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
             RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
         } catch (Exception e) {
@@ -168,6 +168,11 @@ public class CompraBean implements Serializable {
             OperacionDao ventadao = new OperacionDaoImp();
             OperaciondetalleDao ventadetalledao = new OperaciondetalleDaoImp();
             this.transaction = this.session.beginTransaction();
+            if(ventadao.verByCodigoVenta(this.venta.getCodigo()) != null){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Codigo ya existe en DB."));
+                this.venta = new Operacion();
+                return;
+            }
             if (this.listaventadetalle.size() == 0) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No ha ingresado ningun articulo."));
                 RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");

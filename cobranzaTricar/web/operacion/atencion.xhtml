@@ -7,7 +7,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"                
                 template="./../views/template.xhtml">
     <ui:define name="content">
-        <h2 class="BigTopic">Atencion de Pedido R-S</h2>
+        <h2 class="BigTopic">ATENDER PEDIDO DE VENTA</h2>
         <h:form>            
             <p:commandButton actionListener="#{ventaMBBean.cargarVentaAtendida()}" value="Pedidos" ajax="false" icon="fa fa-line-chart white"/>
         </h:form>
@@ -83,10 +83,12 @@
                     <p:inputText type="hidden" value="#{ventaMBBean.venta.idoperacion}"/>               
                     <h:panelGroup></h:panelGroup>
                     <p:outputLabel value="Codigo:" for="txtNumero"/>
-                    <p:inputText id="txtNumero" value="#{ventaMBBean.venta.codigo}" autocomplete="off" required="true" requiredMessage="Ingrese el codigo"/>
-                    <p:outputLabel value="Precio:" for="txtPrecio"/>
+                    <p:inputMask mask="9999-999999" id="txtNumero" value="#{ventaMBBean.venta.codigo}" autocomplete="off" required="true" requiredMessage="Ingrese el Codigo"/>
+                    <p:outputLabel value="Recibo:" for="txtRecibo"/>
+                    <p:inputText id="txtRecibo" value="#{ventaMBBean.venta.recibo}" autocomplete="off" required="true" requiredMessage="Ingrese el Recibo"/>
+                    <p:outputLabel value="Total:" for="txtPrecio"/>
                     <p:inputText id="txtPrecio" value="#{ventaMBBean.venta.montototal}" disabled="true"/>
-                    <p:commandButton value="Actualizar" icon="fa fa-save white" actionListener="#{ventaMBBean.Pagar(loginbean.usuario)}"/>
+                    <p:commandButton value="Grabar" icon="fa fa-save white" actionListener="#{ventaMBBean.Pagar(loginbean.usuario)}"/>
                 </h:panelGrid>
             </p:dialog>
         </h:form>

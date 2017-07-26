@@ -13,73 +13,85 @@
             <p:commandButton action="#{soporteBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>            
             <p:commandButton action="#{soporteBean.nuevo()}" ajax="false" value="Nueva Ticket" immediate="true" icon="fa fa-plus white"/>
         </h:form>
-        <f:view afterPhase="#{anexoBean.phaseListener}">
-            <h:form id="frmRealizarVentas">
-                <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
-                    <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
-                        <div class="layout-portlets-box">
-                            <div class="Container100 ui-fluid">
-                                <div class="ContainerIndent">
-                                    <h2 class="BigTopic">Servicio de mantenimiento por garantia</h2>
-                                    <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Recibo:" for="txtrecibo"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <div class="ui-grid-col-9">
-                                                <p:inputText id="txtrecibo" disabled="true" value="#{soporteBean.soporte.recibo}"/>
-                                                <p:inputText type="hidden" value="#{soporteBean.soporte.recibo}"/>
-                                            </div>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Tipo Soporte:" for="txttiposoporte"/>                        
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectOneMenu id="txttiposoporte" value="#{soporteBean.soporte.tiposoporte}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
-                                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                                <f:selectItems value="#{tiposoporteBean.verTodo()}" var="tiposoportes" itemLabel="#{tiposoportes.tiposoporte}" itemValue="#{soporte}" />
-                                            </p:selectOneMenu>
-                                        </div>
-                                    </div>
-                                    <div class="ui-grid-row">
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Cliente:" for="txtCliente"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <div class="ui-grid-col-9">
-                                                <p:selectOneMenu id="txtCliente" value="#{soporteBean.soporte.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith" required="true" requiredMessage="Seleccionar cliente">
-                                                    <p:ajax listener="#{soporteBean.onCountryChange}" update="txtvehiculoanexo" />
-                                                    <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                                    <f:selectItems value="#{anexoBean.verCliente()}" var="clientes" itemLabel="#{clientes.nombres}" itemValue="#{soporte}" />
-                                                </p:selectOneMenu>
-                                            </div>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="Vehiculo:" for="txtvehiculoanexo"/>                        
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectOneMenu id="txtvehiculoanexo" value="#{soporteBean.soporte.vehiculoanexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
-                                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                                <f:selectItems value="#{soporteBean.vehiculoanexo}" var="vehiculoanexos" itemLabel="#{vehiculoanexos.vehiculo.serie}" itemValue="#{soporte}" />
-                                            </p:selectOneMenu>
-                                        </div>
-                                    </div>
-                                    <div class="ui-grid-row">
 
+        <h:form id="frmRealizarVentas">
+            <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
+                <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
+                    <div class="layout-portlets-box">
+                        <div class="Container100 ui-fluid">
+                            <div class="ContainerIndent">
+                                <h2 class="BigTopic">Servicio de Tecnico</h2>
+                                <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
+                                <div class="ui-grid-row">
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <p:outputLabel value="Recibo: " for="txtrecibo"/>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <div class="ui-grid-col-9">
+                                            <p:inputText id="txtrecibo" value="#{soporteBean.soporte.recibo}" readonly="true" />
+                                        </div>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <p:outputLabel value="Tipo Soporte:" for="txttiposoporte"/>                        
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <p:selectOneMenu id="txttiposoporte" value="#{soporteBean.soporte.tiposoporte}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
+                                            <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{tiposoporteBean.verTodo()}" var="tiposoportes" itemLabel="#{tiposoportes.tiposoporte}" itemValue="#{soporte}" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <p:outputLabel value="Cliente:" for="txtCliente"/>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <div class="ui-grid-col-9">
+                                            <p:selectOneMenu id="txtCliente" value="#{soporteBean.soporte.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith" required="true" requiredMessage="Seleccionar cliente">
+                                                <p:ajax listener="#{soporteBean.onCountryChange}" update="txtvehiculoanexo" />
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{anexoBean.verCliente()}" var="clientes" itemLabel="#{clientes.nombres}" itemValue="#{soporte}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <p:outputLabel value="Vehiculo:" for="txtvehiculoanexo"/>                        
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <p:selectOneMenu id="txtvehiculoanexo" value="#{soporteBean.soporte.vehiculoanexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
+                                            <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{soporteBean.vehiculoanexo}" var="vehiculoanexos" itemLabel="#{vehiculoanexos.vehiculo.serie}" itemValue="#{soporte}" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="ui-grid-row">
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <p:outputLabel value="Reporte de Falla: " for="txtreporte"/>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <div class="ui-grid-col-9">
+                                            <p:inputTextarea id="txtreporte" value="#{soporteBean.soporte.reporte}" />
+                                        </div>
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-2">
+                                        <p:outputLabel value="Condicion de la Unidad:" for="txtcondicion"/>                        
+                                    </div>
+                                    <div class="ui-panelgrid-cell ui-grid-col-4">
+                                        <p:inputTextarea id="txtcondicion" value="#{soporteBean.soporte.condicion}" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <p:panelGrid id="panelFinalVenta" columns="1">
-                            <h:panelGroup>
-                                <p:commandButton value="Generar" actionListener="#{soporteBean.realizarSoporte(loginbean.usuario)}"/>
-                            </h:panelGroup>
-                        </p:panelGrid>
                     </div>
+
+                    <p:panelGrid id="panelFinalVenta" columns="1">
+                        <h:panelGroup>
+                            <p:commandButton value="Generar" actionListener="#{soporteBean.realizarSoporte(loginbean.usuario)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
                 </div>
-            </h:form>
-        </f:view>
+            </div>
+        </h:form>
+
     </ui:define>
 </ui:composition>

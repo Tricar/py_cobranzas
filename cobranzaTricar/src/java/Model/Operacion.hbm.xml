@@ -23,6 +23,9 @@
         <property name="codigo" type="string">
             <column name="codigo" length="20" />
         </property>
+        <property name="recibo" type="string">
+            <column name="recibo" length="10" />
+        </property>
         <property name="montototal" type="big_decimal">
             <column name="montototal" precision="18" />
         </property>

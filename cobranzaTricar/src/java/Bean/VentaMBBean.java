@@ -94,17 +94,17 @@ public class VentaMBBean implements Serializable {
             }
         }
     }
-    
+
     public void calcularcostos() {
         try {
             BigDecimal totalventa = new BigDecimal(0);
             for (Operaciondetalle item : this.listaventadetalle) {
                 if (item.getPrecioventa().equals(new BigDecimal("0"))) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Precio del articulo "+item.getDescripcion()+" debe ser mayor a cero."));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Precio del articulo " + item.getDescripcion() + " debe ser mayor a cero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
                 } else if (item.getCantidad() == 0) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La cantidad del articulo "+item.getDescripcion()+" debe ser mayor a cero."));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La cantidad del articulo " + item.getDescripcion() + " debe ser mayor a cero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
                 }
@@ -145,7 +145,7 @@ public class VentaMBBean implements Serializable {
             }
             this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 1, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
             this.transaction.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el producto a la venta."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el articulo a la lista."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
             RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
         } catch (Exception e) {
@@ -259,7 +259,7 @@ public class VentaMBBean implements Serializable {
             this.listaventadetalle = new ArrayList<>();
             this.venta = new Operacion();
             this.boton = true;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se registro la venta."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se registro el pedido de la venta."));
         } catch (Exception e) {
             if (this.transaction != null) {
                 this.transaction.rollback();
@@ -633,6 +633,7 @@ public class VentaMBBean implements Serializable {
             PagosDao pagosdao = new PagosDaoImp();
             CajaDao cajadao = new CajaDaoImp();
             String codigo = this.venta.getCodigo();
+            String recibo = this.venta.getRecibo();
 
             if (ventadao.verByCodigoVenta(this.venta.getCodigo()) != null) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Codigo ya Existe."));
@@ -653,6 +654,7 @@ public class VentaMBBean implements Serializable {
                     return;
                 }
             }
+
             for (Operaciondetalle item : this.listaventadetalle) {
                 this.producto = productodao.getByCodigoBarras(this.session, item.getCodigoproducto());
                 if (this.producto.getTipoarticulo().getIdtipoarticulo() == 1) {
@@ -660,6 +662,8 @@ public class VentaMBBean implements Serializable {
                     productodao.modificar(session, this.producto);
                 }
             }
+            
+            System.out.print("codigo: " + codigo);
 
             caja = cajadao.veryId(12);
             caja.setTotal(caja.getTotal().add(this.venta.getMontototal()));
@@ -675,6 +679,7 @@ public class VentaMBBean implements Serializable {
             pagosdao.insertarPago(pago);
 
             this.venta.setCodigo(codigo);
+            this.venta.setRecibo(recibo);
             ventadao.modificar(this.session, this.venta);
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "La Actualizacion fue satifactorio."));

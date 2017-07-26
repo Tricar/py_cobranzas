@@ -85,7 +85,7 @@ public class menuBean implements Serializable {
 
             MenuDao daotusuario = new MenuDaoImpl();
             if (daotusuario.verByDescripcion(this.session, this.menu.getMenu()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Usuario ya existe en DB."));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Usuario ya existe en DB."));
                 this.menu = new Menu();
                 return;
             }

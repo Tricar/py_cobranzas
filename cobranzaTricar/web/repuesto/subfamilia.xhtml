@@ -50,7 +50,7 @@
                             <p:outputLabel value="Familia:"/>
                             <p:selectOneMenu value="#{subfamiliaBean.subfamilia.familia}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                <f:selectItems value="#{familiaBean.verTodo()}" var="familia" itemLabel="#{familia.familia}" itemValue="#{familia}"/>
+                                <f:selectItems value="#{familiaBean.verTodo()}" var="familias" itemLabel="#{familias.familia}" itemValue="#{subfamilia}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Subfamilia:" for="txtUsuario"/>
                             <p:inputText id="txtUsuario" label="Submenu" value="#{subfamiliaBean.subfamilia.subfamilia}" 
@@ -74,7 +74,7 @@
                             <p:outputLabel value="Familia:"/>
                             <p:selectOneMenu value="#{subfamiliaBean.subfamilia.familia}" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                <f:selectItems value="#{familiaBean.verTodo()}" var="familia" itemLabel="#{familia.familia}" itemValue="#{familia}"/>
+                                <f:selectItems value="#{familiaBean.verTodo()}" var="familias" itemLabel="#{familias.familia}" itemValue="#{subfamilia}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Subfamilia:" for="txtUsuario"/>
                             <p:inputText id="txtUsuario" label="Submenu" value="#{subfamiliaBean.subfamilia.subfamilia}" autocomplete="off"

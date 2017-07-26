@@ -20,7 +20,7 @@ import javax.persistence.Table;
 )
 public class Tipodocument implements java.io.Serializable {
 
-    private int idtipodocument;
+    private Integer idtipodocument;
     private String descripcion;
     private String codigocontable;
     private Set operacions = new HashSet(0);
@@ -28,11 +28,11 @@ public class Tipodocument implements java.io.Serializable {
     public Tipodocument() {
     }
 
-    public Tipodocument(int idtipodocument) {
+    public Tipodocument(Integer idtipodocument) {
         this.idtipodocument = idtipodocument;
     }
 
-    public Tipodocument(int idtipodocument, String descripcion, String codigocontable, Set operacions) {
+    public Tipodocument(Integer idtipodocument, String descripcion, String codigocontable, Set operacions) {
         this.idtipodocument = idtipodocument;
         this.descripcion = descripcion;
         this.codigocontable = codigocontable;
@@ -42,11 +42,11 @@ public class Tipodocument implements java.io.Serializable {
     @Id
 
     @Column(name = "idtipodocument", unique = true, nullable = false)
-    public int getIdtipodocument() {
+    public Integer getIdtipodocument() {
         return this.idtipodocument;
     }
 
-    public void setIdtipodocument(int idtipodocument) {
+    public void setIdtipodocument(Integer idtipodocument) {
         this.idtipodocument = idtipodocument;
     }
 
@@ -75,6 +75,20 @@ public class Tipodocument implements java.io.Serializable {
 
     public void setOperacions(Set operacions) {
         this.operacions = operacions;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return (other != null && getClass() == other.getClass() && idtipodocument != null)
+                ? idtipodocument.equals(((Tipodocument) other).idtipodocument)
+                : (other == this);
+    }
+
+    @Override
+    public int hashCode() {
+        return (idtipodocument != null)
+                ? (getClass().hashCode() + idtipodocument.hashCode())
+                : super.hashCode();
     }
 
 }

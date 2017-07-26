@@ -11,7 +11,7 @@
     <ui:define name="content">
         <h:form>
             <p:commandButton action="#{compraBean.index()}" value="Regresar" immediate="true" icon="fa fa-mail-reply-all white"/>
-            <p:commandButton action="#{compraBean.nuevo()}" ajax="false" value="Nueva compra" immediate="true" icon="fa fa-plus white"/>
+            <p:commandButton action="#{compraBean.nuevo()}" ajax="false" value="Nueva Nota de Ingreso" immediate="true" icon="fa fa-plus white"/>
         </h:form>
         <f:view afterPhase="#{anexoBean.phaseListener}">
             <h:form id="frmRealizarVentas">
@@ -20,7 +20,7 @@
                         <div class="layout-portlets-box">
                             <div class="Container100 ui-fluid">
                                 <div class="ContainerIndent">
-                                    <h2 class="BigTopic">Ingreso de Repuestos</h2>
+                                    <h2 class="BigTopic">NOTA DE INGRESO</h2>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="TIPO DOCUMENTO:"/>                        
@@ -28,7 +28,7 @@
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <p:selectOneMenu value="#{compraBean.venta.tipodocument}" converter="omnifaces.SelectItemsConverter">
                                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
-                                                <f:selectItems value="#{tipodocumentBean.verTodo()}" var="tipodocument" itemLabel="#{tipodocument.descripcion}" itemValue="#{venta}"/>
+                                                <f:selectItems value="#{tipodocumentBean.verTodo()}" var="tipodocuments" itemLabel="#{tipodocuments.descripcion}" itemValue="#{venta}"/>
                                             </p:selectOneMenu>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
@@ -83,12 +83,15 @@
                         </div>
                         <hr/>
                         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                                LISTA DE REPUESTOS
+                            </div>
                             <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                                 <p:dataTable value="#{compraBean.allProducto}" var="item" scrollable="true" scrollHeight="200">
-                                    <p:column headerText="CODIGO DE BARRA" width="10%" style="text-align: center">
+                                    <p:column headerText="CODIGO DE BARRA" filterBy="codigo">
                                         <h:outputText value="#{item.codigo}"/>
                                     </p:column>
-                                    <p:column headerText="SERVICIO Y REPUESTO" filterBy="descripcion1">
+                                    <p:column headerText="REPUESTO" filterBy="descripcion1">
                                         <h:outputText value="#{item.descripcion1}"/>
                                     </p:column>
                                     <p:column headerText="PRECIO COMPRA">
@@ -100,7 +103,7 @@
                                     <p:column headerText="STOCK">
                                         <h:outputText value="#{item.cantidad}"/>
                                     </p:column>
-                                    <p:column width="10%" style="text-align: center">
+                                    <p:column headerText="AGREGAR">
                                         <p:commandButton icon="fa fa-check-square-o white" ajax="true" actionListener="#{compraBean.agegarListaVentaDetalle(item.idarticulo)}"/>
                                     </p:column>
                                 </p:dataTable>
@@ -108,6 +111,9 @@
                         </div>
                         <hr/>
                         <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                            <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                                LISTA DE INGRESO
+                            </div>
                             <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
                             <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
                                 <p:dataTable id="tablaListaProductosVenta" value="#{compraBean.listaventadetalle}" var="detalle">
@@ -126,7 +132,7 @@
                                     <p:column headerText="TOTAL">
                                         S/. <h:outputText value="#{detalle.preciototal}"/>
                                     </p:column>
-                                    <p:column width="10%" style="text-align: center;">
+                                    <p:column headerText="QUITAR">
                                         <p:commandButton icon="fa fa-times-circle white" actionListener="#{compraBean.retirarListaVentaDetalle(detalle.codigoproducto)}"/>
                                     </p:column>
                                 </p:dataTable>
@@ -134,10 +140,10 @@
                         </div>
                         <p:panelGrid id="panelFinalVenta" columns="1" style="text-align: right; width: 100%;">
                             <h:panelGroup>
-                                <p:commandButton value="Actualizar monto de compra" actionListener="#{compraBean.calcularcostos()}" />
+                                <p:commandButton value="Calcular Monto" actionListener="#{compraBean.calcularcostos()}" />
                                 S/. <h:outputText value="#{compraBean.venta.montototal}" style="box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);padding: 7px;" />
                                 ----------------
-                                <p:commandButton value="Comprar" actionListener="#{compraBean.realizarCompra(loginbean.usuario)}"/>
+                                <p:commandButton value="Grabar" actionListener="#{compraBean.realizarCompra(loginbean.usuario)}"/>
                             </h:panelGroup>
                         </p:panelGrid>
                     </div>

@@ -20,7 +20,7 @@
                     <p:growl id="mensajeGeneral" showDetail="true" sticky="false"/>
                     <p:dataTable id="tablalistarperfil" var="item" value="#{modeloBean.verTodo()}" emptyMessage="No hay nada para mostrar"
                                  paginator="true" rows="10" paginatorPosition="top" rowsPerPageTemplate="10 20 30 40 50 60 70">                        
-                        <p:column headerText="DESCRIPCION">
+                        <p:column headerText="DESCRIPCION" filterBy="#{item.modelo}">
                             <h:outputText value="#{item.modelo}"/>
                         </p:column>
                         <p:column headerText="TIPO">
@@ -63,6 +63,13 @@
                                  autocomplete="off" onkeyup="javascript:this.value = this.value.toUpperCase();">
                         <f:validator validatorId="validatorVacio"/>
                     </p:inputText>
+                    <p:outputLabel value="Tipo Vehículo:"/>
+                    <p:selectOneMenu value="#{modeloBean.model.tipo}" >                        
+                        <f:selectItem itemLabel="MTX" itemValue="MX" />
+                        <f:selectItem itemLabel="ML" itemValue="ML" />
+                        <f:selectItem itemLabel="MTF" itemValue="MF" />
+                        <f:selectItem itemLabel="MTC" itemValue="MC" />                                
+                    </p:selectOneMenu>
                     <p:commandButton value="Actualizar" icon="fa fa-save white" ajax="false" actionListener="#{modeloBean.modificar()}"/>
                 </h:panelGrid>
             </p:dialog>

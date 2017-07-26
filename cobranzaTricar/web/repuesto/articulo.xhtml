@@ -28,7 +28,13 @@
                         <p:column headerText="DESCRIPCION" filterBy="#{item.descripcion1}">
                             <h:outputText value="#{item.descripcion1}"/>
                         </p:column>
-                        <p:column headerText="PRECIO">
+                        <p:column headerText="MODELO" filterBy="#{item.modelo.modelo}">
+                            <h:outputText value="#{item.modelo.modelo}"/>
+                        </p:column>                        
+                        <p:column headerText="PRECIO C">
+                            <h:outputText value="#{item.preciocompra}"/>
+                        </p:column>
+                        <p:column headerText="PRECIO V">
                             <h:outputText value="#{item.precioventa}"/>
                         </p:column>
                         <p:column headerText="COSTO PROM.">

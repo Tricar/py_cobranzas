@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletOutputStream;
@@ -41,7 +41,7 @@ import utiles.dbManager;
  * @author Ricardo
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class SoporteBean implements Serializable {
 
     private Session session;
@@ -53,6 +53,7 @@ public class SoporteBean implements Serializable {
     private List<Soporte> listasoporte;
     public Anexo anexo;
     public List<Vehiculoanexo> vehiculoanexo;
+    String recibo = new String();
 
     private String valorCodigoBarras;
     private Boolean boton = false;
@@ -78,7 +79,6 @@ public class SoporteBean implements Serializable {
     public String nuevo() {
         String codigo = generar_codigo_Articulo();
         this.soporte.setRecibo(codigo);
-        System.out.println("Codigo de recibo: " + this.soporte.getRecibo());
         return "/operacion/formgarantia";
     }
 
@@ -215,6 +215,8 @@ public class SoporteBean implements Serializable {
                 RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                 return;
             }
+            Integer numero = generar_consecutivo();
+            this.soporte.setConteo(numero);
             Date d = new Date();
             this.soporte.setIngreso(d);
             this.soporte.setCreated(d);
@@ -406,7 +408,7 @@ public class SoporteBean implements Serializable {
         }
     }
 
-    public void cargarPago(int codigoUsuario) {
+    public void cargarSalida(int codigoUsuario) {
         this.session = null;
         this.transaction = null;
 
@@ -510,6 +512,14 @@ public class SoporteBean implements Serializable {
 
     public void setListasoporte(List<Soporte> listasoporte) {
         this.listasoporte = listasoporte;
+    }
+    
+    public String getRecibo() {
+        return recibo;
+    }
+
+    public void setRecibo(String recibo) {
+        this.recibo = recibo;
     }
 
 }

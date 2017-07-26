@@ -32,6 +32,7 @@ public class Operacion implements java.io.Serializable {
     private Integer idtipooperacioncontable;
     private Tipoventa tipoventa;
     private String codigo;
+    private String recibo;
     private BigDecimal montototal;
     private Date created;
     private Integer idusuario;
@@ -45,13 +46,14 @@ public class Operacion implements java.io.Serializable {
         this.idoperacion = idoperacion;
     }
 
-    public Operacion(Integer idoperacion, Anexo anexo, Tipodocument tipodocument, Integer idtipooperacioncontable, Tipoventa tipoventa, String codigo, BigDecimal montototal, Date created, Integer idusuario, Integer estado, Set operaciondetalles) {
+    public Operacion(Integer idoperacion, Anexo anexo, Tipodocument tipodocument, Integer idtipooperacioncontable, Tipoventa tipoventa, String codigo, String recibo, BigDecimal montototal, Date created, Integer idusuario, Integer estado, Set operaciondetalles) {
         this.idoperacion = idoperacion;
         this.anexo = anexo;
         this.tipodocument = tipodocument;
         this.idtipooperacioncontable = idtipooperacioncontable;
         this.tipoventa = tipoventa;
         this.codigo = codigo;
+        this.recibo = recibo;
         this.montototal = montototal;
         this.created = created;
         this.idusuario = idusuario;
@@ -117,6 +119,15 @@ public class Operacion implements java.io.Serializable {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    @Column(name = "recibo", length = 20)
+    public String getRecibo() {
+        return this.recibo;
+    }
+
+    public void setRecibo(String recibo) {
+        this.recibo = recibo;
     }
 
     @Column(name = "montototal", precision = 18)
