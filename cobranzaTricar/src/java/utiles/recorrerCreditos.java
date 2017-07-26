@@ -20,7 +20,14 @@ public class recorrerCreditos {
             dbManager dbm = new dbManager();
             Connection con = dbm.getConnection();
             String sql = "";
-            sql = "select sum(letras.saldo) sumapendientes from anexo INNER JOIN (letras INNER JOIN credito ON letras.idventa = credito.idventa and credito.tienda = '" + tienda + "' and credito.empresa='" + empresa + "' AND letras.estado ='" + estado + "' and letras.descripcion <> 'ND') ON anexo.idanexo = credito.idanexo";
+            sql = "select sum(letras.saldo) sumapendientes \n"
+                    + "from credito, letras \n"
+                    + "where letras.idventa = credito.idventa \n"
+                    + "and credito.empresa = '"+empresa+"'\n"
+                    + "and credito.tienda = '"+tienda+"'\n"
+                    + "and credito.estado = 'DP'\n"
+                    + "and letras.estado = '"+estado+"'\n"
+                    + "and letras.descripcion < > 'ND'";
             PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -46,7 +53,12 @@ public class recorrerCreditos {
             dbManager dbm = new dbManager();
             Connection con = dbm.getConnection();
             String sql = "";
-            sql = "select sum(credito.deudactual) suma from credito where credito.estado <> 'CN' and credito.tienda = '" + tienda + "' AND credito.empresa = '" + empresa + "' and credito.estado <> 'EM'";
+            sql = "select sum(credito.deudactual) suma \n"
+                    + "from credito \n"
+                    + "where credito.estado <> 'CN' \n"
+                    + "and credito.tienda = '" + tienda + "' \n"
+                    + "and credito.empresa = '" + empresa + "' \n"
+                    + "and credito.estado = 'DP'";
             PreparedStatement st = con.prepareStatement(sql, 1005, 1007);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -132,7 +144,7 @@ public class recorrerCreditos {
                 if (sum.compareTo(BigDecimal.valueOf(250000)) >= 0) {
                     sum = sum.multiply(BigDecimal.valueOf(0.009)).setScale(1, RoundingMode.UP);;
                 } else {
-                    sum =BigDecimal.ZERO;
+                    sum = BigDecimal.ZERO;
                 }
             }
         }

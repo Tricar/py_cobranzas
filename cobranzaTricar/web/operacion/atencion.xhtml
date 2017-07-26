@@ -85,7 +85,7 @@
                     <p:outputLabel value="Codigo:" for="txtNumero"/>
                     <p:inputMask mask="9999-999999" id="txtNumero" value="#{ventaMBBean.venta.codigo}" autocomplete="off" required="true" requiredMessage="Ingrese el Codigo"/>
                     <p:outputLabel value="Recibo:" for="txtRecibo"/>
-                    <p:inputText id="txtRecibo" value="#{ventaMBBean.venta.recibo}" autocomplete="off" required="true" requiredMessage="Ingrese el Recibo"/>
+                    <p:inputText id="txtRecibo" value="#{ventaMBBean.venta.recibo}" autocomplete="off" required="true" requiredMessage="Ingrese el Recibo" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" />
                     <p:outputLabel value="Total:" for="txtPrecio"/>
                     <p:inputText id="txtPrecio" value="#{ventaMBBean.venta.montototal}" disabled="true"/>
                     <p:commandButton value="Grabar" icon="fa fa-save white" actionListener="#{ventaMBBean.Pagar(loginbean.usuario)}"/>

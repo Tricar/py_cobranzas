@@ -44,10 +44,11 @@ public class LoginBean implements Serializable {
     private Integer pagosxmes;
     public List<Perfilsubmenu> perfilsubmenus;
     public List<Perfilmenu> perfilmenus;
+    private HttpSession miSession;
 
     public LoginBean() {
-        HttpSession miSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        miSession.setMaxInactiveInterval(300);
+        miSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        miSession.setMaxInactiveInterval(900);        
     }
 
     public void sesionExpired() {
@@ -55,7 +56,7 @@ public class LoginBean implements Serializable {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext facescontext = FacesContext.getCurrentInstance();
         HttpSession sesion = (HttpSession) facescontext.getExternalContext().getSession(false);
-        sesion.invalidate();
+        sesion.invalidate();        
         context.addCallbackParam("loggetOut", true);
         context.addCallbackParam("ruta", ruta);
     }
@@ -364,6 +365,14 @@ public class LoginBean implements Serializable {
 
     public void setCreditoxapvx3(Integer creditoxapvx3) {
         this.creditoxapvx3 = creditoxapvx3;
+    }
+
+    public HttpSession getMiSession() {
+        return miSession;
+    }
+
+    public void setMiSession(HttpSession miSession) {
+        this.miSession = miSession;
     }
 
 }

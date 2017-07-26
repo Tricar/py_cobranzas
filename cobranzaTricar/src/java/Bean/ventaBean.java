@@ -1,5 +1,6 @@
 package Bean;
 
+import Dao.AnexoDao;
 import Dao.AnexoDaoImplements;
 import Dao.ConceptosDao;
 import Dao.ConceptosDaoImp;
@@ -145,9 +146,9 @@ public class ventaBean implements Serializable {
         filtradafecha = new ArrayList();
         return "/despacho/venta.xhtml";
     }
-    
-    public void actualizarCampos(String tipodoc){
-        if (tipodoc.equals("DNI")){
+
+    public void actualizarCampos(String tipodoc) {
+        if (tipodoc.equals("DNI")) {
             numdigitos = "99999999";
         } else {
             numdigitos = "99999999999";
@@ -175,12 +176,10 @@ public class ventaBean implements Serializable {
         try {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            AnexoDaoImplements daotanexo = new AnexoDaoImplements();
-            if (daotanexo.verByDocumento(this.session, this.anexo.getNumdocumento()) != null) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Aval ya existe en DB."));
-                this.anexo = new Anexo();
-                return;
-            }
+            AnexoDao daotanexo = new AnexoDaoImplements();
+            List<Anexo> clientes = new ArrayList();
+            clientes = daotanexo.ListaConDocumento(this.session, anexo.getNumdocumento());
+            boolean valida = false;
             if (this.razonsocial != null) {
                 this.anexo.setNombre(this.razonsocial);
                 this.anexo.setApemat("");
@@ -190,6 +189,17 @@ public class ventaBean implements Serializable {
                 this.anexo.setTipoanexo("CN");
             } else {
                 this.anexo.setTipoanexo("CJ");
+            }
+            for (int i = 0; i < clientes.size(); i++) {
+                Anexo get = clientes.get(i);
+                if ((get != null) && (get.getTipoanexo().equals(anexo.getTipoanexo()))) {
+                    valida = true;
+                }
+            }
+            if (valida) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "El Anexo ya existe en la Base de Datos."));
+                this.anexo = new Anexo();
+                return;
             }
             Date d = new Date();
             this.anexo.setFechareg(d);
