@@ -104,6 +104,29 @@ public class ArticuloBean implements Serializable {
         }
     }
 
+    public List<Articulo> verRepuestos() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            ArticuloDao daocolor = new ArticuloDaoImp();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.articulos = daocolor.verTodos(this.session);
+            this.transaction.commit();
+            return articulos;
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+
     public void nuevo() {
         articulo = new Articulo();
         RequestContext.getCurrentInstance().update("formInsertar");

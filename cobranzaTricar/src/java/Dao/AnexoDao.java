@@ -18,6 +18,7 @@ public interface AnexoDao {
     public List<Anexo> verEmpleado(Session session) throws Exception;
     public List<Anexo> verVendedor(Session session) throws Exception;
     public Anexo verByIdanexo(Session session, Integer idanexo) throws Exception;
+    public List<Anexo> verByTipoventa(Session session, String tipoventa) throws Exception;
     public Anexo verByDocumento(Session session, String dni) throws Exception;
     public List<Anexo> ListaConDocumento(Session session, String dni) throws Exception;
     public Anexo verByDocumentoDifer(Session session,Integer idanexo, String dni) throws Exception;

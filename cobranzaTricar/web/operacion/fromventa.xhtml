@@ -26,7 +26,8 @@
                                             <p:outputLabel value="Tipo Venta:" for="txtTipoVenta"/>                        
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectOneMenu id="txtTipoVenta" value="#{ventaMBBean.venta.tipoventa}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Selecciona Tipo">
+                                            <p:selectOneMenu style="width: 100%" id="txtTipoVenta" value="#{ventaMBBean.venta.tipoventa}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Selecciona Tipo">
+                                                <p:ajax listener="#{ventaMBBean.onCountryChange}" update="txtCliente" />
                                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                                 <f:selectItems value="#{tipoventaBean.verTodo()}" var="tipoventa" itemLabel="#{tipoventa.descripcion}" itemValue="#{tipoventa}"/>
                                             </p:selectOneMenu>
@@ -35,16 +36,12 @@
                                             <p:outputLabel value="Cliente:" for="txtCliente"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <div class="ui-grid-col-9">
-                                                <p:autoComplete id="txtCliente" value="#{ventaMBBean.venta.anexo}" completeMethod="#{anexoBean.filtrarCliente}" 
-                                                                var="cliente" itemLabel="#{cliente.nombres}" itemValue="#{cliente}" required="true" 
-                                                                requiredMessage="Ingrese cliente">
-                                                    <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                    <p:ajax event="mousemove" update="txtRUC txtDireccion"/>
-                                                    <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="frmRealizarVentas:mensajeGeneral"/>
-                                                    <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="frmRealizarVentas:mensajeGeneral"/>
-                                                    <p:ajax event="itemSelect" process="frmRealizarVentas:mensajeGeneral" />
-                                                </p:autoComplete>
+                                            <div class="ui-grid-col-6">
+                                                <p:selectOneMenu style="width: 100%" id="txtCliente" value="#{ventaMBBean.venta.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith" required="true" requiredMessage="Selecciona Cliente">
+                                                    <p:ajax update="txtRUC txtDireccion"/>
+                                                    <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{ventaMBBean.anexos}" var="anexoss" itemLabel="#{anexoss.nombres}" itemValue="#{anexo}" />
+                                                </p:selectOneMenu>
                                             </div>
                                             <div class="ui-grid-col-1">
                                                 <p:commandButton icon="fa fa-plus white" action="#{ventaBean.nuevoanexo()}" immediate="true" />
@@ -68,73 +65,70 @@
                                 </div>
                             </div>
                         </div>
-                        <hr/>
-                        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-                            <div class="ui-datatable-header ui-widget-header ui-corner-top">
-                                LISTA DE REPUESTOS Y SERVICIOS
-                            </div>
-                            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                                <p:dataTable value="#{ventaMBBean.allProducto}" var="item" scrollable="true" scrollHeight="200">
-                                    <p:column headerText="CODIGO DE BARRA" filterBy="codigo">
-                                        <h:outputText value="#{item.codigo}"/>
-                                    </p:column>
-                                    <p:column headerText="SERVICIO Y REPUESTO" filterBy="descripcion1">
-                                        <h:outputText value="#{item.descripcion1}"/>
-                                    </p:column>
-                                    <p:column headerText="UNIDAD">
-                                        <h:outputText value="#{item.unidadmedida}"/>
-                                    </p:column>
-                                    <p:column headerText="PRECIO UNITARIO">
-                                        <h:outputText value="#{item.precioventa}"/>
-                                    </p:column>
-                                    <p:column headerText="STOCK">
-                                        <h:outputText value="#{item.cantidad}"/>
-                                    </p:column>
-                                    <p:column headerText="AGREGAR">
-                                        <p:commandButton icon="fa fa-check-square-o white" ajax="true" actionListener="#{ventaMBBean.agegarListaVentaDetalle(item.idarticulo)}"/>
-                                    </p:column>
-                                </p:dataTable>
+                        <div class="layout-portlets-box">
+                            <div class="Container100 ui-fluid">
+                                <div class="ContainerIndent">
+                                    <h2 class="BigTopic">LISTA DE REPUESTOS Y SERVICIOS</h2>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Articulo:" for="txtProducto"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-6">                                        
+                                            <p:selectOneMenu style="width: 100%" id="txtProducto" value="#{ventaMBBean.producto}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{articuloBean.verTodo()}" var="productos" itemLabel="#{productos.repuestos}" itemValue="#{producto}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <div class="ui-grid-col-1">
+                                                <p:commandButton icon="fa fa-check-square-o white" ajax="true" actionListener="#{ventaMBBean.agegarListaVentaDetalle(ventaMBBean.producto.idarticulo)}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <hr/>
-                        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-                            <div class="ui-datatable-header ui-widget-header ui-corner-top">
-                                LISTA DE PEDIDOS
-                            </div>
-                            <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
-                            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                                <p:dataTable id="tablaListaProductosVenta" value="#{ventaMBBean.listaventadetalle}" var="detalle">
-                                    <p:column headerText="CODIGO" width="10%" style="text-align: center">
-                                        <h:outputText value="#{detalle.codigoproducto}"/>
-                                    </p:column>
-                                    <p:column headerText="SERVICIO Y REPUESTO">
-                                        <h:outputText value="#{detalle.descripcion}"/>
-                                    </p:column>
-                                    <p:column headerText="PRECIO UNITARIO" width="10%" style="text-align: center;">
-                                        <p:inputText value="#{detalle.precioventa}" onkeypress="return justNumbers(event);" size="8"/>
-                                    </p:column>
-                                    <p:column headerText="CANTIDAD" width="10%" style="text-align: center;">
-                                        <p:inputText value="#{detalle.cantidad}" onkeyup="format(this)" onchange="format(this)" size="8"/>
-                                    </p:column>
-                                    <p:column headerText="TOTAL">
-                                        S/. <h:outputText value="#{detalle.preciototal}"/>
-                                    </p:column>
-                                    <p:column headerText="QUITAR">
-                                        <p:commandButton icon="fa fa-times-circle white" actionListener="#{ventaMBBean.retirarListaVentaDetalle(detalle.codigoproducto)}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </div>
-                        </div>
-                        <p:panelGrid id="panelFinalVenta" columns="1" style="text-align: right; width: 100%;">
-                            <h:panelGroup>
-                                <p:commandButton value="Calcular Monto" actionListener="#{ventaMBBean.calcularcostos()}" />
-                                S/. <h:outputText value="#{ventaMBBean.venta.montototal}" style="box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);padding: 7px;" />
-                                ----------------
-                                <p:commandButton value="Grabar" disabled="#{ventaMBBean.boton}" actionListener="#{ventaMBBean.realizarVenta(loginbean.usuario)}"/>
-                            </h:panelGroup>
-                        </p:panelGrid>
                     </div>
                 </div>
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                        LISTA DE PEDIDOS
+                    </div>
+                    <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                        <p:dataTable id="tablaListaProductosVenta" emptyMessage="No hay nada para mostrar" value="#{ventaMBBean.listaventadetalle}" var="detalle">
+                            <p:column headerText="CODIGO" width="10%" style="text-align: center">
+                                <h:outputText value="#{detalle.codigoproducto}"/>
+                            </p:column>
+                            <p:column headerText="SERVICIO Y REPUESTO">
+                                <h:outputText value="#{detalle.descripcion}"/>
+                            </p:column>
+                            <p:column headerText="PRECIO UNITARIO" width="10%" style="text-align: center;">
+                                <p:inputText value="#{detalle.precioventa}" onkeypress="return justNumbers(event);" size="8"/>
+                            </p:column>
+                            <p:column headerText="CANTIDAD" width="10%" style="text-align: center;">
+                                <p:inputText value="#{detalle.cantidad}" onkeyup="format(this)" onchange="format(this)" size="8"/>
+                            </p:column>                                    
+                            <p:column headerText="UNIDAD" style="text-align: center;">
+                                <h:outputText value="#{detalle.articulo.unidadmedida}"/>
+                            </p:column>
+                            <p:column headerText="TOTAL">
+                                S/. <h:outputText value="#{detalle.preciototal}"/>
+                            </p:column>
+                            <p:column headerText="QUITAR" style="text-align: center;">
+                                <p:commandButton icon="fa fa-times-circle white" actionListener="#{ventaMBBean.retirarListaVentaDetalle(detalle.codigoproducto)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+                <p:panelGrid id="panelFinalVenta" columns="1" style="text-align: right; width: 100%;">
+                    <h:panelGroup>
+                        <p:commandButton value="Calcular Monto" actionListener="#{ventaMBBean.calcularcostos()}" />
+                        S/. <h:outputText value="#{ventaMBBean.venta.montototal}" style="box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);padding: 7px;" />
+                        ----------------
+                        <p:commandButton value="Grabar" disabled="#{ventaMBBean.boton}" actionListener="#{ventaMBBean.realizarVenta(loginbean.usuario)}"/>
+                    </h:panelGroup>
+                </p:panelGrid>
             </h:form>           
         </f:view>    
 

@@ -89,7 +89,7 @@ public class CompraBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 0, null, this.producto.getPreciocompra(), null, null, new BigDecimal("0"), null, null));
+            this.listaventadetalle.add(new Operaciondetalle(null, this.producto, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 0, null, this.producto.getPreciocompra(), null, null, null, null, new BigDecimal("0")));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el articulo a la lista."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -184,7 +184,7 @@ public class CompraBean implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El Precio de compra debe ser mayor a cero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
-                } else if (item.getPreciototal().equals(new BigDecimal("0"))) {
+                } else if (item.getPreciototal().equals(new BigDecimal("0")) || item.getPreciototal().equals("") || item.getPreciototal() == null) {
                     System.out.println("primer comparacion");
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Actualize el monto primero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");

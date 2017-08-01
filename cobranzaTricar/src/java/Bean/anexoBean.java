@@ -79,7 +79,7 @@ public class anexoBean implements Serializable {
             }
         }
     }
-    
+
     public List<Anexo> verProveedor() {
         this.session = null;
         this.transaction = null;
@@ -136,8 +136,8 @@ public class anexoBean implements Serializable {
         RequestContext.getCurrentInstance().update("formInsertar");
         RequestContext.getCurrentInstance().execute("PF('dlginsert').show()");
     }
-    
-    public void dir (String dir){
+
+    public void dir(String dir) {
         this.dir = dir;
     }
 
@@ -266,12 +266,12 @@ public class anexoBean implements Serializable {
             Date d = new Date();
             this.anexo.setFechareg(d);
             this.anexo.setCodven("");
-            Date fechaNac = null;            
+            Date fechaNac = null;
             fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
             this.anexo.setFechanac(fechaNac);
             calcularEdad(fecnac);
             this.anexo.setEdad(año);
-            if (anexo.getEstcivil().equals("CA") || anexo.getEstcivil().equals("CO")){
+            if (anexo.getEstcivil().equals("CA") || anexo.getEstcivil().equals("CO")) {
                 anexo.setDireccionconyu(dir);
             }
             daotanexo.registrar(this.session, this.anexo);
@@ -302,7 +302,7 @@ public class anexoBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No puede ser aval por restricción de edad."));
                 this.anexo = new Anexo();
                 return;
-            }            
+            }
             this.anexo.setTipodocumento("DNI");
             this.anexo.setTipoanexo("AV");
             Date d = new Date();
@@ -310,7 +310,7 @@ public class anexoBean implements Serializable {
             this.anexo.setCodven("");
             daotanexo.registrar(this.session, this.anexo);
             this.transaction.commit();
-            Date fechaNac = null;            
+            Date fechaNac = null;
             fechaNac = new SimpleDateFormat("dd-MM-yyyy").parse(fecnac);
             this.anexo.setFechanac(fechaNac);
             calcularEdad(fecnac);
@@ -369,7 +369,7 @@ public class anexoBean implements Serializable {
             }
         }
     }
-    
+
     public void modificarProveedor() {
         this.session = null;
         this.transaction = null;
@@ -458,7 +458,7 @@ public class anexoBean implements Serializable {
             AnexoDaoImplements daotanexo = new AnexoDaoImplements();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            System.out.println("ID anexo: "+idanexo);
+            System.out.println("ID anexo: " + idanexo);
             anexo = daotanexo.verByIdanexo(this.session, idanexo);
             actualizarCampos(anexo.getTipodocumento());
             datosConyu(anexo.getEstcivil());
@@ -476,7 +476,7 @@ public class anexoBean implements Serializable {
         }
         DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
         String convertido = fecha.format(anexo.getFechanac());
-        fecnac = convertido;        
+        fecnac = convertido;
         RequestContext.getCurrentInstance().update("frmEditarAnexo:panelEditarAnexo");
         RequestContext.getCurrentInstance().execute("PF('dialogoEditarAnexo').show()");
     }
@@ -551,7 +551,7 @@ public class anexoBean implements Serializable {
         }
         return query;
     }
-    
+
     public List<Anexo> filtrarProveedor(String name) {
         this.query = new ArrayList<Anexo>();
         AnexoDao anexoDao = new AnexoDaoImplements();
@@ -575,7 +575,7 @@ public class anexoBean implements Serializable {
             }
         }
         return query;
-    } 
+    }
 
     public List<Anexo> filtrarGestor(String name) {
         this.query = new ArrayList<Anexo>();
@@ -588,7 +588,7 @@ public class anexoBean implements Serializable {
         }
         return query;
     }
-    
+
     public List<Anexo> getGestor() {
         List<Anexo> gestors = new ArrayList();
         AnexoDao andao = new AnexoDaoImplements();
@@ -651,12 +651,10 @@ public class anexoBean implements Serializable {
             credito = creditos.get(i);
             if (dni.equals("")) {
                 filtradaCredito = new ArrayList();
-            } else {
-                if (credito.getAnexo().getNumdocumento().startsWith(dni)) {
-                    sw = 1;
-                    anexito = anexodao.cargarxCredito(credito.getAnexo().getIdanexo());
-                    filtradaCredito.add(anexito);
-                }
+            } else if (credito.getAnexo().getNumdocumento().startsWith(dni)) {
+                sw = 1;
+                anexito = anexodao.cargarxCredito(credito.getAnexo().getIdanexo());
+                filtradaCredito.add(anexito);
             }
         }
         if (sw == 1) {
@@ -675,6 +673,29 @@ public class anexoBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = this.session.beginTransaction();
             this.anexos = daotanexo.verTodo(this.session);
+            this.transaction.commit();
+            return anexos;
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public List<Anexo> verTodo() {
+        this.session = null;
+        this.transaction = null;
+        try {
+            AnexoDao daocolor = new AnexoDaoImplements();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.anexos = daocolor.verTodo(this.session);
             this.transaction.commit();
             return anexos;
         } catch (Exception e) {
@@ -731,9 +752,9 @@ public class anexoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "NOTA:", "Cliente NO necesitará aval o garante"));
         }
     }
-    
-    public void actualizarCampos(String tipodoc){
-        if (tipodoc.equals("DNI")){
+
+    public void actualizarCampos(String tipodoc) {
+        if (tipodoc.equals("DNI")) {
             numdigitos = "99999999";
             empresa = true;
             persona = false;
@@ -744,13 +765,13 @@ public class anexoBean implements Serializable {
         }
         System.out.println("ejecuté campos");
     }
-    
-    public void datosConyu(String estcivil){
-        if (estcivil.equals("CO") || estcivil.equals("CA")){
+
+    public void datosConyu(String estcivil) {
+        if (estcivil.equals("CO") || estcivil.equals("CA")) {
             conyuge = false;
         } else {
             conyuge = true;
-        }        
+        }
         System.out.println("ejecuté conyuge");
     }
 

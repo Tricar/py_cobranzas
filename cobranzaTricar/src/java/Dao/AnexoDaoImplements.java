@@ -362,4 +362,14 @@ public class AnexoDaoImplements implements AnexoDao {
             }
         }
     }
+    
+    @Override
+    public List<Anexo> verByTipoventa(Session session, String tipoventa) throws Exception {
+        String hql = "FROM Anexo WHERE tipodocumento=:tipoventa";
+        Query query = session.createQuery(hql);
+        query.setParameter("tipoventa", tipoventa);
+        List<Anexo> lista = (List<Anexo>) query.list();
+
+        return lista;
+    }
 }

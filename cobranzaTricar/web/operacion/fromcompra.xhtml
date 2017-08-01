@@ -23,10 +23,10 @@
                                     <h2 class="BigTopic">NOTA DE INGRESO</h2>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="TIPO DOCUMENTO:"/>                        
+                                            <p:outputLabel value="TIPO DOCUMENTO:" for="txtTipoDoc"/>                        
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:selectOneMenu value="#{compraBean.venta.tipodocument}" converter="omnifaces.SelectItemsConverter">
+                                            <p:selectOneMenu style="width: 100%" id="txtTipoDoc" value="#{compraBean.venta.tipodocument}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="Selecciona Tipo Documento">
                                                 <f:selectItem itemLabel="-- Seleccione --" itemValue=""/>
                                                 <f:selectItems value="#{tipodocumentBean.verTodo()}" var="tipodocuments" itemLabel="#{tipodocuments.descripcion}" itemValue="#{venta}"/>
                                             </p:selectOneMenu>
@@ -36,14 +36,11 @@
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
                                             <div class="ui-grid-col-9">
-                                                <p:autoComplete id="txtproveedor" value="#{compraBean.venta.anexo}" completeMethod="#{anexoBean.filtrarProveedor}" 
-                                                                var="proveedor" itemLabel="#{proveedor.nombres}" itemValue="#{proveedor}" required="true" requiredMessage="Ingrese Proveedor">
-                                                    <o:converter converterId="omnifaces.ListConverter" list="#{anexoBean.anexos}"/>
-                                                    <p:ajax event="itemSelect" update="txtRUC txtDireccion"/>
-                                                    <p:ajax event="itemSelect" listener="#{anexoBean.handleSelect}" update="frmRealizarVentas:mensajeGeneral"/>
-                                                    <p:ajax event="itemUnselect" listener="#{anexoBean.handleUnSelect}" update="frmRealizarVentas:mensajeGeneral"/>
-                                                    <p:ajax event="itemSelect" process="frmRealizarVentas:mensajeGeneral" />
-                                                </p:autoComplete>
+                                                <p:selectOneMenu style="width: 100%" id="txtproveedor" value="#{compraBean.venta.anexo}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith" required="true" requiredMessage="Selecciona Proveedor">
+                                                    <p:ajax update="txtRUC txtDireccion txtReferencia"/>
+                                                    <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItems value="#{anexoBean.verProveedor()}" var="proveedores" itemLabel="#{proveedores.nombres}" itemValue="#{anexo}" />
+                                                </p:selectOneMenu>
                                             </div>
                                             <div class="ui-grid-col-1">
                                                 <p:commandButton icon="fa fa-plus white" action="#{compraBean.nuevoanexo()}" immediate="true" />
@@ -55,21 +52,7 @@
                                             <p:outputLabel value="NUMERO:" for="txtNumero"/>                        
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputMask mask="9999-999999" id="txtNumero" value="#{compraBean.venta.codigo}" required="true" requiredMessage="Ingrese Numero"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="DIRECCION:" for="txtDireccion"/>
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="txtDireccion" readonly="true" value="#{compraBean.venta.anexo.direccion}"/>
-                                        </div>
-                                    </div>
-                                    <div class="ui-grid-row">  
-                                        <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="REFERENCIA:" for="txtReferencia"/>                        
-                                        </div>
-                                        <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="txtReferencia" readonly="true" value="#{compraBean.venta.anexo.referencia}"/>
+                                            <p:inputText id="txtNumero" value="#{compraBean.venta.codigo}" required="true" requiredMessage="Ingrese Numero"/>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="RUC:" for="txtRUC"/>
@@ -78,76 +61,84 @@
                                             <p:inputText id="txtRUC" readonly="true" value="#{compraBean.venta.anexo.numdocumento}"/>
                                         </div>
                                     </div>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="DIRECCION:" for="txtDireccion"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="txtDireccion" readonly="true" value="#{compraBean.venta.anexo.direccion}"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="REFERENCIA:" for="txtReferencia"/>                        
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <p:inputText id="txtReferencia" readonly="true" value="#{compraBean.venta.anexo.referencia}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="layout-portlets-box">
+                            <div class="Container100 ui-fluid">
+                                <div class="ContainerIndent">
+                                    <h2 class="BigTopic">LISTA DE REPUESTOS</h2>
+                                    <div class="ui-grid-row">
+                                        <div class="ui-panelgrid-cell ui-grid-col-2">
+                                            <p:outputLabel value="Articulo:" for="txtProducto"/>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-6">                                        
+                                            <p:selectOneMenu style="width: 100%" id="txtProducto" value="#{compraBean.producto}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith" required="true" requiredMessage="Selecciona Repuesto">
+                                                <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
+                                                <f:selectItems value="#{articuloBean.verRepuestos()}" var="productos" itemLabel="#{productos.repuestos}" itemValue="#{producto}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                        <div class="ui-panelgrid-cell ui-grid-col-4">
+                                            <div class="ui-grid-col-1">
+                                                <p:commandButton icon="fa fa-check-square-o white" ajax="true" actionListener="#{compraBean.agegarListaVentaDetalle(compraBean.producto.idarticulo)}"/>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <hr/>
-                        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-                            <div class="ui-datatable-header ui-widget-header ui-corner-top">
-                                LISTA DE REPUESTOS
-                            </div>
-                            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                                <p:dataTable value="#{compraBean.allProducto}" var="item" scrollable="true" scrollHeight="200">
-                                    <p:column headerText="CODIGO DE BARRA" filterBy="codigo">
-                                        <h:outputText value="#{item.codigo}"/>
-                                    </p:column>
-                                    <p:column headerText="REPUESTO" filterBy="descripcion1">
-                                        <h:outputText value="#{item.descripcion1}"/>
-                                    </p:column>
-                                    <p:column headerText="PRECIO COMPRA">
-                                        <h:outputText value="#{item.preciocompra}"/>
-                                    </p:column>
-                                    <p:column headerText="PRECIO VENTA">
-                                        <h:outputText value="#{item.precioventa}"/>
-                                    </p:column>
-                                    <p:column headerText="STOCK">
-                                        <h:outputText value="#{item.cantidad}"/>
-                                    </p:column>
-                                    <p:column headerText="AGREGAR">
-                                        <p:commandButton icon="fa fa-check-square-o white" ajax="true" actionListener="#{compraBean.agegarListaVentaDetalle(item.idarticulo)}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </div>
-                        </div>
-                        <hr/>
-                        <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
-                            <div class="ui-datatable-header ui-widget-header ui-corner-top">
-                                LISTA DE INGRESO
-                            </div>
-                            <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
-                            <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
-                                <p:dataTable id="tablaListaProductosVenta" value="#{compraBean.listaventadetalle}" var="detalle">
-                                    <p:column headerText="CODIGO" width="10%" style="text-align: center">
-                                        <h:outputText value="#{detalle.codigoproducto}"/>
-                                    </p:column>
-                                    <p:column headerText="REPUESTO">
-                                        <h:outputText value="#{detalle.descripcion}"/>
-                                    </p:column>
-                                    <p:column headerText="PRECIO UNITARIO" width="10%" style="text-align: center;">
-                                        <p:inputText value="#{detalle.preciocompra}" onkeypress="return justNumbers(event);" size="8"/>
-                                    </p:column>
-                                    <p:column headerText="CANTIDAD" style="text-align: center;">
-                                        <p:inputText value="#{detalle.cantidad}" onkeyup="format(this)" onchange="format(this)" size="8"/>
-                                    </p:column>
-                                    <p:column headerText="TOTAL">
-                                        S/. <h:outputText value="#{detalle.preciototal}"/>
-                                    </p:column>
-                                    <p:column headerText="QUITAR">
-                                        <p:commandButton icon="fa fa-times-circle white" actionListener="#{compraBean.retirarListaVentaDetalle(detalle.codigoproducto)}"/>
-                                    </p:column>
-                                </p:dataTable>
-                            </div>
-                        </div>
-                        <p:panelGrid id="panelFinalVenta" columns="1" style="text-align: right; width: 100%;">
-                            <h:panelGroup>
-                                <p:commandButton value="Calcular Monto" actionListener="#{compraBean.calcularcostos()}" />
-                                S/. <h:outputText value="#{compraBean.venta.montototal}" style="box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);padding: 7px;" />
-                                ----------------
-                                <p:commandButton value="Grabar" actionListener="#{compraBean.realizarCompra(loginbean.usuario)}"/>
-                            </h:panelGroup>
-                        </p:panelGrid>
                     </div>
                 </div>
+                <div id="form:singleDT" class="ui-datatable ui-widget ui-datatable-reflow">
+                    <div class="ui-datatable-header ui-widget-header ui-corner-top">
+                        LISTA DE INGRESO
+                    </div>
+                    <p:messages id="mensajeGeneral" showDetail="true" autoUpdate="true" closable="true"/>
+                    <div class="ui-paginator ui-paginator-top ui-widget-header" role="navigation">
+                        <p:dataTable id="tablaListaProductosVenta" value="#{compraBean.listaventadetalle}" emptyMessage="No hay nada para mostrar" var="detalle">
+                            <p:column headerText="CODIGO" width="10%" style="text-align: center">
+                                <h:outputText value="#{detalle.codigoproducto}"/>
+                            </p:column>
+                            <p:column headerText="REPUESTO">
+                                <h:outputText value="#{detalle.descripcion}"/>
+                            </p:column>
+                            <p:column headerText="PRECIO UNITARIO" width="10%" style="text-align: center;">
+                                <p:inputText value="#{detalle.preciocompra}" onkeypress="return justNumbers(event);" size="8"/>
+                            </p:column>
+                            <p:column headerText="CANTIDAD" style="text-align: center;">
+                                <p:inputText value="#{detalle.cantidad}" onkeyup="format(this)" onchange="format(this)" size="8"/>
+                            </p:column>
+                            <p:column headerText="TOTAL">
+                                S/. <h:outputText value="#{detalle.preciototal}"/>
+                            </p:column>
+                            <p:column headerText="QUITAR">
+                                <p:commandButton icon="fa fa-times-circle white" actionListener="#{compraBean.retirarListaVentaDetalle(detalle.codigoproducto)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+                <p:panelGrid id="panelFinalVenta" columns="1" style="text-align: right; width: 100%;">
+                    <h:panelGroup>
+                        <p:commandButton value="Calcular Monto" actionListener="#{compraBean.calcularcostos()}" />
+                        S/. <h:outputText value="#{compraBean.venta.montototal}" style="box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);padding: 7px;" />
+                        ----------------
+                        <p:commandButton value="Grabar" actionListener="#{compraBean.realizarCompra(loginbean.usuario)}"/>
+                    </h:panelGroup>
+                </p:panelGrid>
             </h:form>           
         </f:view>    
 

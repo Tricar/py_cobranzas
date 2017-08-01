@@ -55,7 +55,9 @@ public class VentaMBBean implements Serializable {
     private Transaction transaction;
 
     private Articulo producto;
+    private Tipoventa tipoventa;
     private List<Articulo> listaproducto;
+    private List<Anexo> anexos;
     private Operacion venta;
     private List<Operacion> listaventa;
     private Operaciondetalle ventadetalle;
@@ -70,6 +72,43 @@ public class VentaMBBean implements Serializable {
     public VentaMBBean() {
         this.venta = new Operacion();
         this.listaventadetalle = new ArrayList<>();
+    }
+
+    public void onCountryChange() {
+        String tipoventas;
+        if (tipoventa != null && !tipoventa.equals("")) {
+            anexos = null;
+        } else {
+            if (this.venta.getTipoventa().getIdtipoventa() == 1) {
+                tipoventas = "RUC";
+            } else {
+                tipoventas = "DNI";
+            }
+            anexos = ListaCliente(tipoventas);
+        }
+    }
+
+    public List<Anexo> ListaCliente(String tipoventa) {
+        this.session = null;
+        this.transaction = null;
+        try {
+            AnexoDao daocolor = new AnexoDaoImplements();
+            this.session = HibernateUtil.getSessionFactory().openSession();
+            this.transaction = this.session.beginTransaction();
+            this.anexos = daocolor.verByTipoventa(this.session, tipoventa);
+            this.transaction.commit();
+            return anexos;
+        } catch (Exception e) {
+            if (this.transaction != null) {
+                this.transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error Fatal:", "Por favor contacte con su administrador " + e.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
     }
 
     public List<Articulo> getAllProducto() {
@@ -143,7 +182,7 @@ public class VentaMBBean implements Serializable {
                     return;
                 }
             }
-            this.listaventadetalle.add(new Operaciondetalle(null, null, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 1, null, null, null, this.producto.getPrecioventa(), new BigDecimal("0"), null, null));
+            this.listaventadetalle.add(new Operaciondetalle(null, this.producto, null, this.producto.getCodigo(), this.producto.getDescripcion1(), null, 1, null, null, null, this.producto.getPrecioventa(), null, null, new BigDecimal("0")));
             this.transaction.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se agrego el articulo a la lista."));
             RequestContext.getCurrentInstance().update("frmRealizarVentas:tablaListaProductosVenta");
@@ -226,7 +265,7 @@ public class VentaMBBean implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "La cantidad del articulo " + item.getDescripcion() + " debe ser mayor a cero."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
-                } else if (item.getPreciototal().equals(new BigDecimal("0"))) {
+                } else if (item.getPreciototal().equals(new BigDecimal("0")) || item.getPreciototal().equals("") || item.getPreciototal() == null) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Antes de realizar la venta debe actualizar el monto de la venta."));
                     RequestContext.getCurrentInstance().update("frmRealizarVentas:mensajeGeneral");
                     return;
@@ -319,9 +358,7 @@ public class VentaMBBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             this.venta = ventadao.verByCodigo(this.session, codigo);
-
             this.transaction.commit();
-
             RequestContext.getCurrentInstance().update("frmEliminarCompra");
             RequestContext.getCurrentInstance().execute("PF('dialogoEliminarCompra').show()");
 
@@ -347,9 +384,7 @@ public class VentaMBBean implements Serializable {
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
             this.venta = ventadao.verByCodigo(this.session, codigo);
-
             this.transaction.commit();
-
             RequestContext.getCurrentInstance().update("frmAnularCompra");
             RequestContext.getCurrentInstance().execute("PF('dialogoAnularCompra').show()");
 
@@ -372,19 +407,15 @@ public class VentaMBBean implements Serializable {
         try {
 
             OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
-
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             if (!usuario.getPerfil().getAbrev().equals("AD")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos."));
                 RequestContext.getCurrentInstance().update("formMostrar");
                 RequestContext.getCurrentInstance().update("formModificar");
                 return;
             }
-
             this.ventadetalle = detalledao.verByCodigo(this.session, codigo);
-
             this.transaction.commit();
 
             RequestContext.getCurrentInstance().update("frmEliminarDetalle");
@@ -410,12 +441,9 @@ public class VentaMBBean implements Serializable {
 
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-
             OperacionDao ventadao = new OperacionDaoImp();
             ventadao.eliminar(this.session, this.venta);
-
             this.transaction.commit();
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Se Elimino Correctamente."));
             this.venta = new Operacion();
             RequestContext.getCurrentInstance().update("formMostrar");
@@ -662,7 +690,7 @@ public class VentaMBBean implements Serializable {
                     productodao.modificar(session, this.producto);
                 }
             }
-            
+
             System.out.print("codigo: " + codigo);
 
             caja = cajadao.veryId(12);
@@ -844,6 +872,22 @@ public class VentaMBBean implements Serializable {
 
     public void setBoton(Boolean boton) {
         this.boton = boton;
+    }
+
+    public Tipoventa getTipoventa() {
+        return tipoventa;
+    }
+
+    public void setTipoventa(Tipoventa tipoventa) {
+        this.tipoventa = tipoventa;
+    }
+
+    public List<Anexo> getAnexos() {
+        return anexos;
+    }
+
+    public void setAnexos(List<Anexo> anexos) {
+        this.anexos = anexos;
     }
 
 }

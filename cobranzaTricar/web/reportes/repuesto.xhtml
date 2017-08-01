@@ -77,20 +77,6 @@
                                     <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarArticulo()}" /> 
                                 </div>
                             </div>
-                            <ui:remove>
-                                <div class="ui-grid-row">
-                                    <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
-                                        <p:autoComplete id="cliente" value="#{reportesBean.operaciondetalle.articulo}" completeMethod="#{articuloBean.filtrarArticulo}" 
-                                                        var="articulo" itemLabel="#{articulo.descripcion1}" itemValue="#{articulo}" required="true" 
-                                                        requiredMessage="Ingrese cliente">
-                                            <o:converter converterId="omnifaces.ListConverter" list="#{articuloBean.articulos}"/>
-                                            <p:ajax event="itemSelect" process="@form" />
-                                            <p:ajax event="itemSelect" listener="#{articuloBean.handleSelect}" update="@form"/>
-                                            <p:ajax event="itemUnselect" listener="#{articuloBean.handleUnSelect}" />
-                                        </p:autoComplete>
-                                    </div>
-                                </div>
-                            </ui:remove>
                         </div>
                     </div>
                 </h:form>

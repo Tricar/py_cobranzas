@@ -461,7 +461,16 @@ public class Anexo implements java.io.Serializable {
     }
 
     public String getNombres() {
-        return nombres= nombre+" "+apepat+" "+apemat;
+        if(apepat == null){
+            nombres = nombre + " " + apemat;
+        } else if(apemat == null){
+            nombres = nombre + " " +apepat;
+        } else if(apepat == null && apemat == null) {
+            nombres = nombre;
+        } else {
+            nombres = nombre + " " +apepat + " " + apemat;
+        }
+        return nombres;
     }
 
     public void setNombres(String nombres) {

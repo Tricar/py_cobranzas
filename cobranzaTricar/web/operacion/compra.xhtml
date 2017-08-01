@@ -79,9 +79,11 @@
                             <p:column headerText="PRECIO TOTAL">
                                 <h:outputText value="#{detalle.preciototal}"/>
                             </p:column>
-                            <p:column>
-                                <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{compraBean.cargarEliminarDetalle(detalle.idoperaciondetalle, loginbean.usuario)}" />
-                            </p:column>                    
+                            <ui:remove>
+                                <p:column>
+                                    <p:commandButton icon="fa fa-bitbucket white" title="Eliminar" actionListener="#{compraBean.cargarEliminarDetalle(detalle.idoperaciondetalle, loginbean.usuario)}" />
+                                </p:column>
+                            </ui:remove>
                         </p:dataTable> 
                     </div>
                 </div>   
