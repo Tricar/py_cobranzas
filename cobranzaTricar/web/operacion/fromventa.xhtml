@@ -76,7 +76,7 @@
                                         <div class="ui-panelgrid-cell ui-grid-col-6">                                        
                                             <p:selectOneMenu style="width: 100%" id="txtProducto" value="#{ventaMBBean.producto}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
                                                 <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                                <f:selectItems value="#{articuloBean.verTodo()}" var="productos" itemLabel="#{productos.repuestos}" itemValue="#{producto}" />
+                                                <f:selectItems value="#{articuloBean.verTodo()}" var="productos" itemLabel="#{productos.pedidoventa}" itemValue="#{producto}" />
                                             </p:selectOneMenu>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">

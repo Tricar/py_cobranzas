@@ -49,10 +49,12 @@
                                     </div>
                                     <div class="ui-grid-row">  
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
-                                            <p:outputLabel value="NUMERO:" for="txtNumero"/>                        
+                                            <p:outputLabel value="N° COMPROBANTE:" for="txtNumero"/>                        
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">
-                                            <p:inputText id="txtNumero" value="#{compraBean.venta.codigo}" required="true" requiredMessage="Ingrese Numero"/>
+                                            <p:inputText id="txtNumero" value="#{compraBean.venta.codigo}" required="true" requiredMessage="Ingrese N° Comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                                                <f:validateLength minimum="11" maximum="11" />
+                                            </p:inputText>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-2">
                                             <p:outputLabel value="RUC:" for="txtRUC"/>
@@ -89,7 +91,7 @@
                                         <div class="ui-panelgrid-cell ui-grid-col-6">                                        
                                             <p:selectOneMenu style="width: 100%" id="txtProducto" value="#{compraBean.producto}" converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith" required="true" requiredMessage="Selecciona Repuesto">
                                                 <f:selectItem itemLabel="-- Seleccione --" itemValue="" noSelectionOption="true" />
-                                                <f:selectItems value="#{articuloBean.verRepuestos()}" var="productos" itemLabel="#{productos.repuestos}" itemValue="#{producto}" />
+                                                <f:selectItems value="#{articuloBean.verRepuestos()}" var="productos" itemLabel="#{productos.notaingreso}" itemValue="#{producto}" />
                                             </p:selectOneMenu>
                                         </div>
                                         <div class="ui-panelgrid-cell ui-grid-col-4">

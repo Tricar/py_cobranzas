@@ -25,6 +25,8 @@ public interface CreditoDao {
     public Integer creditoxaprobvx3(Session session);
     public Integer pagosxdia(Session session);
     public Integer pagosxmes(Session session);
+    public Integer ventaRSXdia(Session session);
+    public Integer ventaRSXmes(Session session);
     public List<Credito> filtrarCreditoxAnexo(Anexo anexo);
     public Credito cargarxCodigoEstado (String codigo, String estado);
     public List<Credito> cargarxEstado (String estado);

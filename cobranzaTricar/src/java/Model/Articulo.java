@@ -42,7 +42,8 @@ public class Articulo implements java.io.Serializable {
     private Integer cantidad;
     private Date created;
     private Set operaciondetalles = new HashSet(0);
-    private String repuestos;
+    private String pedidoventa;
+    private String notaingreso;
 
     public Articulo() {
     }
@@ -212,12 +213,20 @@ public class Articulo implements java.io.Serializable {
         this.created = created;
     }
 
-    public String getRepuestos() {
-        return descripcion1 + " Stock: " + cantidad;
+    public String getPedidoventa() {
+        return descripcion1 + " -- Stock: " + cantidad + " -- Precio: " + precioventa;
     }
 
-    public void setRepuestos(String repuestos) {
-        this.repuestos = repuestos;
+    public void setPedidoventa(String pedidoventa) {
+        this.pedidoventa = pedidoventa;
+    }
+
+    public String getNotaingreso() {
+        return descripcion1 + " - Stock: " + cantidad + " -- Precio: " + preciocompra;
+    }
+
+    public void setNotaingreso(String notaingreso) {
+        this.notaingreso = notaingreso;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")

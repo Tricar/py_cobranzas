@@ -42,6 +42,8 @@ public class LoginBean implements Serializable {
     private Integer creditoxapvx3;
     private Integer pagosxdia;
     private Integer pagosxmes;
+    private Integer ventaRSxdia;
+    private Integer ventaRSxmes;
     public List<Perfilsubmenu> perfilsubmenus;
     public List<Perfilmenu> perfilmenus;
     private HttpSession miSession;
@@ -82,7 +84,9 @@ public class LoginBean implements Serializable {
             creditoaprobado = creditodao.creditoAprobado(this.session);
             creditoxapvx3 = creditodao.creditoxaprobvx3(this.session);
             pagosxdia = creditodao.pagosxdia(this.session);
-            pagosxmes = creditodao.pagosxmes(this.session);
+            pagosxmes = creditodao.pagosxmes(this.session);           
+            ventaRSxmes = creditodao.ventaRSXmes(this.session);
+            ventaRSxdia = creditodao.ventaRSXdia(this.session); 
             if (usuario != null) {
                 if (usuario.getClave().equals(Encrypt.sha512(this.clave))) {
                     loggedIn = true;
@@ -365,6 +369,22 @@ public class LoginBean implements Serializable {
 
     public void setCreditoxapvx3(Integer creditoxapvx3) {
         this.creditoxapvx3 = creditoxapvx3;
+    }
+
+    public Integer getVentaRSxdia() {
+        return ventaRSxdia;
+    }
+
+    public void setVentaRSxdia(Integer ventaRSxdia) {
+        this.ventaRSxdia = ventaRSxdia;
+    }
+
+    public Integer getVentaRSxmes() {
+        return ventaRSxmes;
+    }
+
+    public void setVentaRSxmes(Integer ventaRSxmes) {
+        this.ventaRSxmes = ventaRSxmes;
     }
 
     public HttpSession getMiSession() {

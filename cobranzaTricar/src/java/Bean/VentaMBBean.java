@@ -409,7 +409,7 @@ public class VentaMBBean implements Serializable {
             OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            if (!usuario.getPerfil().getAbrev().equals("AD")) {
+            if (!usuario.getPerfil().getAbrev().equals("AD") || !usuario.getPerfil().getAbrev().equals("AS")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos."));
                 RequestContext.getCurrentInstance().update("formMostrar");
                 RequestContext.getCurrentInstance().update("formModificar");

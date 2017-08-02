@@ -526,4 +526,18 @@ public class CreditoDaoImp implements CreditoDao {
         return (int) consulta;
     }
 
+    @Override
+    public Integer ventaRSXdia(Session session) {
+        String hql = "SELECT COUNT(*) FROM Operacion WHERE DATEPART(wk, created) = DATEPART(wk, getdate()) AND DATEPART(year, created) = DATEPART(year, GETDATE()) AND estado = '1'";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
+
+    @Override
+    public Integer ventaRSXmes(Session session) {
+        String hql = "SELECT COUNT(*) FROM Operacion WHERE DATEPART(month, created) = DATEPART(month, getdate()) AND DATEPART(year, created) = DATEPART(year, GETDATE()) AND estado = '1'";
+        int consulta = ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        return (int) consulta;
+    }
+
 }

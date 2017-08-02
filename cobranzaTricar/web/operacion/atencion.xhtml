@@ -82,8 +82,10 @@
                 <h:panelGrid id="panelEditar" columns="2">
                     <p:inputText type="hidden" value="#{ventaMBBean.venta.idoperacion}"/>               
                     <h:panelGroup></h:panelGroup>
-                    <p:outputLabel value="Codigo:" for="txtNumero"/>
-                    <p:inputMask mask="9999-999999" id="txtNumero" value="#{ventaMBBean.venta.codigo}" autocomplete="off" required="true" requiredMessage="Ingrese el Codigo"/>
+                    <p:outputLabel value="N° Comprobante" for="txtNumero"/>
+                    <p:inputText id="txtNumero" value="#{ventaMBBean.venta.codigo}" autocomplete="off" required="true" requiredMessage="Ingrese el N° Comprobante" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase">
+                        <f:validateLength minimum="11" maximum="11" />
+                    </p:inputText>
                     <p:outputLabel value="Recibo:" for="txtRecibo"/>
                     <p:inputText id="txtRecibo" value="#{ventaMBBean.venta.recibo}" autocomplete="off" required="true" requiredMessage="Ingrese el Recibo" onkeyup="javascript:this.value = this.value.toUpperCase();" style="text-transform: uppercase" />
                     <p:outputLabel value="Total:" for="txtPrecio"/>
