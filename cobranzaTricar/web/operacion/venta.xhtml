@@ -49,7 +49,7 @@
                         </p:column>
                         <p:column headerText="Mostrar">                       
                             <p:commandButton disabled="#{venta.estado == 0 ? true : false}" update=":formModificar" icon="fa fa-hand-o-down white" title="Mostrar" actionListener="#{ventaMBBean.CargarDetalle(venta)}"/>
-                            <p:commandButton disabled="#{venta.estado == 0 ? true : false}" class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Boleta(venta.codigo)}" />
+                            <p:commandButton disabled="#{venta.estado == 0 ? true : false}" class="OrangeButton" ajax="false" icon="fa fa-print white" title="Imprimir" actionListener="#{ventaMBBean.Imprimir(venta.codigo, venta.tipoventa.idtipoventa)}" />
                         </p:column>
                     </p:dataTable>
                 </div>

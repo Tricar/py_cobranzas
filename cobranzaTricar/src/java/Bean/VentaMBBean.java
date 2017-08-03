@@ -409,7 +409,7 @@ public class VentaMBBean implements Serializable {
             OperaciondetalleDao detalledao = new OperaciondetalleDaoImp();
             this.session = HibernateUtil.getSessionFactory().openSession();
             this.transaction = session.beginTransaction();
-            if (!usuario.getPerfil().getAbrev().equals("AD") || !usuario.getPerfil().getAbrev().equals("AS")) {
+            if (!usuario.getPerfil().getAbrev().equals("AD") && !usuario.getPerfil().getAbrev().equals("AS")) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No cuenta con permisos."));
                 RequestContext.getCurrentInstance().update("formMostrar");
                 RequestContext.getCurrentInstance().update("formModificar");
@@ -572,31 +572,6 @@ public class VentaMBBean implements Serializable {
         }
     }
 
-    public void Boleta(String codigo) throws JRException, NamingException, SQLException, IOException {
-        dbManager conn = new dbManager();
-        OperacionDao ventadao = new OperacionDaoImp();
-        Connection con = null;
-        con = conn.getConnection();
-        Map<String, Object> parametros = new HashMap<String, Object>();
-        this.venta = ventadao.verByCodigoVenta(codigo);
-        String pagoletra = dimeElNumeroEnLetras4ceros(this.venta.getMontototal());
-        parametros.put("numeroorden", codigo);
-        parametros.put("letra", pagoletra);
-        File jasper = new File("D:/reporte/boleta.jasper");
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=BOLETA-" + codigo + ".xls");
-        ServletOutputStream stream = response.getOutputStream();
-        JRXlsxExporter docxExporter = new JRXlsxExporter();
-        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
-        docxExporter.exportReport();
-        stream.flush();
-        stream.close();
-        FacesContext.getCurrentInstance().responseComplete();
-        con.close();
-    }
-
     public String dimeElNumeroEnLetras4ceros(BigDecimal numero) {
         String numeroletras = "";
         int partentera = numero.intValue();
@@ -725,6 +700,47 @@ public class VentaMBBean implements Serializable {
             if (this.session != null) {
                 this.session.close();
             }
+        }
+    }
+
+    public void Imprimir(String codigo, Integer tipoventa) throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        OperacionDao ventadao = new OperacionDaoImp();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("numeroorden", codigo);
+        this.venta = ventadao.verByCodigoVenta(codigo);
+        if (tipoventa == 2) {
+            String pagoletra = dimeElNumeroEnLetras4ceros(this.venta.getMontototal());
+            File jasper = new File("D:/reporte/boleta.jasper");
+            parametros.put("letra", pagoletra);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=BOLETA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
+        } else {
+            File jasper = new File("D:/reporte/factura.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition", "attachment; filename=FACTURA-" + codigo + ".xls");
+            ServletOutputStream stream = response.getOutputStream();
+            JRXlsxExporter docxExporter = new JRXlsxExporter();
+            docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+            docxExporter.exportReport();
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+            con.close();
         }
     }
 
