@@ -190,5 +190,48 @@ public class OperacionDaoImp implements OperacionDao {
         }
         return lista;
     }
+    
+    @Override
+    public List<Operacion> filtrarFechasTipo(Date date1, Integer estado, Integer ope) {
+        Session session = null;
+        List<Operacion> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Operacion WHERE created =:start_date and estado=:estado and idtipooperacioncontable=:ope");
+            query.setParameter("start_date", date1);
+            query.setParameter("estado", estado);
+            query.setParameter("ope", ope);
+            lista = (List<Operacion>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Operacion> filtrarFechasOpe(Date date1, Date date2, Integer estado, Integer ope) {
+        Session session = null;
+        List<Operacion> lista = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("FROM Operacion WHERE created BETWEEN :start_date AND :end_date and estado=:estado and idtipooperacioncontable=:ope");
+            query.setParameter("start_date", date1);
+            query.setParameter("end_date", date2);
+            query.setParameter("estado", estado);
+            query.setParameter("ope", ope);
+            lista = (List<Operacion>) query.list();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return lista;
+    }
 
 }

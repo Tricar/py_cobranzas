@@ -11,7 +11,7 @@
         <h1 class="BigTopic">Reporte de Compra y Venta de Repuesto</h1>
         <div class="Container50 Responsive50">            
             <div class="ContainerIndent">
-                <h1 class="BigTopic"><p:outputLabel value="Lista de compra y venta"/></h1>
+                <h1 class="BigTopic"><p:outputLabel value="Lista de compra"/></h1>
                 <h:form id="frm">
                     <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
                         <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
@@ -25,7 +25,7 @@
                                     <p:calendar pattern="dd/MM/yyyy" value="#{reportesBean.fecha3}"/>
                                 </div>
                                 <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
-                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarDetallado()}" /> 
+                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarCompra()}" /> 
                                 </div>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
             </div>
 
             <div class="ContainerIndent">
-                <h1 class="BigTopic"><p:outputLabel value="Detalle de compra y venta"/></h1>
+                <h1 class="BigTopic"><p:outputLabel value="Lista de venta"/></h1>
                 <h:form>
                     <div class="ui-panelgrid ui-widget ui-panelgrid-blank">
                         <div class="ui-panelgrid-content ui-widget-content ui-grid ui-grid-responsive">
@@ -48,7 +48,7 @@
                                     <p:calendar pattern="dd/MM/yyyy" value="#{reportesBean.fecha4}"/>
                                 </div>
                                 <div class="ui-panelgrid-cell ui-grid-col-12">                                                                                        
-                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarEspecifico()}" /> 
+                                    <p:commandButton value="Generar" icon="fa fa-print white" ajax="false" actionListener="#{reportesBean.exportarVenta()}" /> 
                                 </div>
                             </div>
                         </div>

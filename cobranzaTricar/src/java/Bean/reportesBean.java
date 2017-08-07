@@ -65,7 +65,8 @@ public class reportesBean implements Serializable {
     private Date fecha3 = new Date();
     private Date fecha4 = new Date();
     private Date fecha5 = new Date();
-    private List<Operacion> listaventa;
+    private List<Operacion> listaventa1;
+    private List<Operacion> listaventa2;
 
     /**
      * Creates a new instance of reportesBean
@@ -99,7 +100,7 @@ public class reportesBean implements Serializable {
         con.close();
     }
 
-    public void exportarDetallado() throws JRException, NamingException, SQLException, IOException {
+    public void exportarCompra() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
@@ -107,16 +108,16 @@ public class reportesBean implements Serializable {
         parametros.put("fecha1", fecha1);
         parametros.put("fecha2", fecha3);
         OperacionDao ventadao = new OperacionDaoImp();
-        listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
-        if (this.listaventa.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe compra o venta."));
+        listaventa1 = ventadao.filtrarFechasOpe(fecha1, fecha2, 1, 2);
+        if (this.listaventa1.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe compra."));
             RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
             return;
         }
-        File jasper = new File("D:/reporte/detalle.jasper");
+        File jasper = new File("D:/reporte/compra.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=Detalle.xls");
+        response.addHeader("Content-disposition", "attachment; filename=Compra.xls");
         ServletOutputStream stream = response.getOutputStream();
         JRXlsxExporter docxExporter = new JRXlsxExporter();
         docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -128,7 +129,7 @@ public class reportesBean implements Serializable {
         con.close();
     }
 
-    public void exportarEspecifico() throws JRException, NamingException, SQLException, IOException {
+    public void exportarVenta() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
@@ -136,16 +137,16 @@ public class reportesBean implements Serializable {
         parametros.put("fecha1", fecha1);
         parametros.put("fecha2", fecha4);        
         OperacionDao ventadao = new OperacionDaoImp();
-        listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
-        if (this.listaventa.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe compra o venta."));
+        listaventa1 = ventadao.filtrarFechasOpe(fecha1, fecha2, 1, 1);
+        if (this.listaventa1.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe venta."));
             RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
             return;
         }
-        File jasper = new File("D:/reporte/especifico.jasper");
+        File jasper = new File("D:/reporte/venta.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=Especificacion.xls");
+        response.addHeader("Content-disposition", "attachment; filename=Venta.xls");
         ServletOutputStream stream = response.getOutputStream();
         JRXlsxExporter docxExporter = new JRXlsxExporter();
         docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -169,6 +170,7 @@ public class reportesBean implements Serializable {
         JRXlsxExporter docxExporter = new JRXlsxExporter();
         docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
         docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.setParameter(JRExporterParameter.IGNORE_PAGE_MARGINS, true);
         docxExporter.exportReport();
         stream.flush();
         stream.close();
@@ -184,8 +186,9 @@ public class reportesBean implements Serializable {
         parametros.put("fecha1", fecha1);
         parametros.put("fecha2", fecha5);
         OperacionDao ventadao = new OperacionDaoImp();
-        listaventa = ventadao.filtrarFechasEstado(fecha1, fecha2, 1);
-        if (this.listaventa.isEmpty()) {
+        listaventa1 = ventadao.filtrarFechasOpe(fecha1, fecha2, 1, 1);
+        listaventa2 = ventadao.filtrarFechasOpe(fecha1, fecha2, 1, 2);
+        if (this.listaventa1.isEmpty() && this.listaventa2.isEmpty()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe Movimientos."));
             RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
             return;
@@ -211,6 +214,13 @@ public class reportesBean implements Serializable {
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("fecha", fecha1);
+        OperacionDao ventadao = new OperacionDaoImp();
+        listaventa1 = ventadao.filtrarFechasTipo(fecha1, 1, 1);
+        if (this.listaventa1.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe venta."));
+            RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
+            return;
+        }
         File jasper = new File("D:/reporte/caja.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -1467,12 +1477,20 @@ public class reportesBean implements Serializable {
         this.operaciondetalle = operaciondetalle;
     }
 
-    public List<Operacion> getListaventa() {
-        return listaventa;
+    public List<Operacion> getListaventa1() {
+        return listaventa1;
     }
 
-    public void setListaventa(List<Operacion> listaventa) {
-        this.listaventa = listaventa;
+    public void setListaventa1(List<Operacion> listaventa1) {
+        this.listaventa1 = listaventa1;
+    }
+
+    public List<Operacion> getListaventa2() {
+        return listaventa2;
+    }
+
+    public void setListaventa2(List<Operacion> listaventa2) {
+        this.listaventa2 = listaventa2;
     }
 
 }

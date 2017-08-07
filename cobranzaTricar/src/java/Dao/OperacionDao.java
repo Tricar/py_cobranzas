@@ -25,6 +25,8 @@ public interface OperacionDao {
     public List<Operacion> filtrarFechas (Date date1, Date date2, Integer tipo);
     public List<Operacion> filtrarFechasEstado (Date date1, Date date2, Integer estado);
     public List<Operacion> filtrarFechasTipo (Date date1, Date date2);
+    public List<Operacion> filtrarFechasOpe (Date date1, Date date2, Integer estado,Integer ope);
+    public List<Operacion> filtrarFechasTipo (Date date1, Integer estado,Integer ope);
     public Operacion verByCodigo(Session session, Integer codigo) throws Exception;
     public boolean eliminar (Session session, Operacion perfil) throws Exception;
     public boolean modificar(Session session, Operacion articulo) throws Exception;
