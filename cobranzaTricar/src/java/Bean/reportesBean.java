@@ -240,7 +240,7 @@ public class reportesBean implements Serializable {
         con.close();
     }
     
-    public void exportarMOA() throws JRException, NamingException, SQLException, IOException {
+    public void exportarMOR() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
@@ -260,7 +260,7 @@ public class reportesBean implements Serializable {
         File jasper = new File("D:/reporte/movimiento.jasper");
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.addHeader("Content-disposition", "attachment; filename=MOA.xls");
+        response.addHeader("Content-disposition", "attachment; filename=MOR.xls");
         ServletOutputStream stream = response.getOutputStream();
         JRXlsxExporter docxExporter = new JRXlsxExporter();
         docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
