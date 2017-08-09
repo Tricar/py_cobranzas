@@ -135,7 +135,7 @@ public class reportesBean implements Serializable {
         con = conn.getConnection();
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("fecha1", fecha1);
-        parametros.put("fecha2", fecha4);        
+        parametros.put("fecha2", fecha4);
         OperacionDao ventadao = new OperacionDaoImp();
         listaventa1 = ventadao.filtrarFechasOpe(fecha1, fecha2, 1, 1);
         if (this.listaventa1.isEmpty()) {
@@ -207,7 +207,7 @@ public class reportesBean implements Serializable {
         FacesContext.getCurrentInstance().responseComplete();
         con.close();
     }
-    
+
     public void exportarCaja() throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
@@ -215,7 +215,11 @@ public class reportesBean implements Serializable {
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("fecha", fecha1);
         OperacionDao ventadao = new OperacionDaoImp();
-        listaventa1 = ventadao.filtrarFechasTipo(fecha1, 1, 1);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.HOUR, cal.get(Calendar.DAY_OF_MONTH) + 1);
+        Date tempDate = cal.getTime();
+        listaventa1 = ventadao.filtrarFechasTipo(fecha1, tempDate, 1, 1);
         if (this.listaventa1.isEmpty()) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existe venta."));
             RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
@@ -229,6 +233,39 @@ public class reportesBean implements Serializable {
         JRXlsxExporter docxExporter = new JRXlsxExporter();
         docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
         docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.exportReport();
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
+        con.close();
+    }
+    
+    public void exportarMOA() throws JRException, NamingException, SQLException, IOException {
+        dbManager conn = new dbManager();
+        Connection con = null;
+        con = conn.getConnection();
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("fecha", fecha1);
+        OperacionDao ventadao = new OperacionDaoImp();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.HOUR, cal.get(Calendar.DAY_OF_MONTH) + 1);
+        Date tempDate = cal.getTime();
+        listaventa1 = ventadao.filtrarFechasTipo(fecha1, tempDate, 1, 1);
+        if (this.listaventa1.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se realizaron ventas."));
+            RequestContext.getCurrentInstance().update("frm:mensajeGeneral");
+            return;
+        }
+        File jasper = new File("D:/reporte/movimiento.jasper");
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=MOA.xls");
+        ServletOutputStream stream = response.getOutputStream();
+        JRXlsxExporter docxExporter = new JRXlsxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
+        docxExporter.setParameter(JRExporterParameter.IGNORE_PAGE_MARGINS, true);
         docxExporter.exportReport();
         stream.flush();
         stream.close();
@@ -471,7 +508,7 @@ public class reportesBean implements Serializable {
 
             JRXlsExporter exporter = new JRXlsExporter();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);            
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
             exporter.exportReport();
 
             stream.flush();
@@ -480,9 +517,9 @@ public class reportesBean implements Serializable {
         }
         con.close();
     }
-    
+
     public void nivelVentas() throws JRException, NamingException, SQLException, IOException {
-        dbManager conn = new dbManager();        
+        dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
         String meses = null;
@@ -530,14 +567,14 @@ public class reportesBean implements Serializable {
             }
             String tienda1 = "V1";
             String tienda2 = "V2";
-            String tienda3 = "V3";            
+            String tienda3 = "V3";
             parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
             parametros.put("nombremes", meses);
             parametros.put("anio", ano.toString());
             parametros.put("mes", mes.toString());
             parametros.put("tienda1", tienda1);
             parametros.put("tienda2", tienda2);
-            parametros.put("tienda3", tienda3);            
+            parametros.put("tienda3", tienda3);
             File jasper = new File("D:/reporte/ventas/nivelventas.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -555,9 +592,9 @@ public class reportesBean implements Serializable {
         }
         con.close();
     }
-    
+
     public void totalVentas() throws JRException, NamingException, SQLException, IOException {
-        dbManager conn = new dbManager();        
+        dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
         String meses = null;
@@ -605,14 +642,14 @@ public class reportesBean implements Serializable {
             }
             String tienda1 = "V1";
             String tienda2 = "V2";
-            String tienda3 = "V3";            
+            String tienda3 = "V3";
             parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
             parametros.put("nombremes", meses);
             parametros.put("anio", ano.toString());
             parametros.put("mes", mes.toString());
             parametros.put("tienda1", tienda1);
             parametros.put("tienda2", tienda2);
-            parametros.put("tienda3", tienda3);            
+            parametros.put("tienda3", tienda3);
             File jasper = new File("D:/reporte/ventas/totalizado.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -630,9 +667,9 @@ public class reportesBean implements Serializable {
         }
         con.close();
     }
-    
+
     public void ventasModelo() throws JRException, NamingException, SQLException, IOException {
-        dbManager conn = new dbManager();        
+        dbManager conn = new dbManager();
         Connection con = null;
         con = conn.getConnection();
         String meses = null;
@@ -680,14 +717,14 @@ public class reportesBean implements Serializable {
             }
             String tienda1 = "V1";
             String tienda2 = "V2";
-            String tienda3 = "V3";            
+            String tienda3 = "V3";
             parametros.put(JRParameter.IS_IGNORE_PAGINATION, true);
             parametros.put("nombremes", meses);
             parametros.put("anio", ano.toString());
             parametros.put("mes", mes.toString());
             parametros.put("tienda1", tienda1);
             parametros.put("tienda2", tienda2);
-            parametros.put("tienda3", tienda3);            
+            parametros.put("tienda3", tienda3);
             File jasper = new File("D:/reporte/ventas/ventasmodelo.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, con);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -705,7 +742,7 @@ public class reportesBean implements Serializable {
         }
         con.close();
     }
-    
+
     public void comisionesGestor(Usuario usuario) throws JRException, NamingException, SQLException, IOException {
         dbManager conn = new dbManager();
         Connection con = null;
@@ -966,13 +1003,13 @@ public class reportesBean implements Serializable {
             listafiltrada = linkdao.avales(cred);
             for (int i = 0; i < listafiltrada.size(); i++) {
                 Creditoaval get = listafiltrada.get(i);
-                avales.add(get.getAnexo());                
+                avales.add(get.getAnexo());
             }
             if (avales.size() >= 0) {
-                naval1 = avales.get(0).getNombre();                
+                naval1 = avales.get(0).getNombre();
                 apaval1 = avales.get(0).getApepat().concat(" ").concat(avales.get(0).getApemat());
                 dniaval1 = avales.get(0).getNumdocumento();
-                naval2 = avales.get(1).getNombre();                
+                naval2 = avales.get(1).getNombre();
                 apaval2 = avales.get(1).getApepat().concat(" ").concat(avales.get(1).getApemat());
                 dniaval2 = avales.get(1).getNumdocumento();
             }
@@ -1180,7 +1217,7 @@ public class reportesBean implements Serializable {
         BigDecimal totv1 = recorre.montosTotal("V1", "CA");
         BigDecimal penv2 = recorre.montosDet("V2", "CA", "PN");
         BigDecimal venv2 = recorre.montosDet("V2", "CA", "VN");
-        BigDecimal totv2 = recorre.montosTotal("V2", "CA");        
+        BigDecimal totv2 = recorre.montosTotal("V2", "CA");
         BigDecimal penv3 = recorre.montosDet("V3", "CA", "PN");
         BigDecimal venv3 = recorre.montosDet("V3", "CA", "VN");
         BigDecimal totv3 = recorre.montosTotal("V3", "CA");

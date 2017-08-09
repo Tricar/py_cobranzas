@@ -192,13 +192,14 @@ public class OperacionDaoImp implements OperacionDao {
     }
     
     @Override
-    public List<Operacion> filtrarFechasTipo(Date date1, Integer estado, Integer ope) {
+    public List<Operacion> filtrarFechasTipo(Date date1, Date date2, Integer estado, Integer ope) {
         Session session = null;
         List<Operacion> lista = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("FROM Operacion WHERE created =:start_date and estado=:estado and idtipooperacioncontable=:ope");
+            Query query = session.createQuery("FROM Operacion WHERE created BETWEEN :start_date AND :end_date and estado=:estado and idtipooperacioncontable=:ope");
             query.setParameter("start_date", date1);
+            query.setParameter("end_date", date2);
             query.setParameter("estado", estado);
             query.setParameter("ope", ope);
             lista = (List<Operacion>) query.list();
